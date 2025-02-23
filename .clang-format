@@ -1,0 +1,20 @@
+---
+ColumnLimit: 0
+BreakBeforeBraces: Allman
+BreakTemplateDeclarations: Yes
+Language: Cpp
+UseTab: Never
+IndentWidth: 4
+TabWidth: 4
+PointerAlignment: Left
+AccessModifierOffset: -4
+BinPackArguments: false
+BinPackParameters: false
+AllowAllArgumentsOnNextLine: false
+AlignAfterOpenBracket: Align
+AlignConsecutiveDeclarations: true
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
+...
