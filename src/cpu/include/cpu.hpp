@@ -3,6 +3,7 @@
 #include <cstdint>
 
 #include "cpu_register.hpp"
+#include "joypad.hpp"
 
 namespace pgb::cpu
 {
