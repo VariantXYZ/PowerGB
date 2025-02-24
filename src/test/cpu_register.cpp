@@ -1,7 +1,5 @@
 #include "../cpu/include/cpu.hpp"
 
-#include <type_traits>
-
 #include "include/acutest.h"
 
 void test_cpu_register_gp(void);
@@ -13,7 +11,8 @@ TEST_LIST = {
     {"State Management Registers", test_cpu_register_sm},
     {"Accumulator/Flag Registers", test_cpu_register_af},
 
-    {NULL, NULL}};
+    {NULL, NULL}
+};
 
 void test_cpu_register_gp(void)
 {

@@ -1,20 +1,23 @@
 #pragma once
 
-#include "cpu_register.hpp"
 #include <cstdint>
+
+#include "cpu_register.hpp"
 
 namespace pgb::cpu
 {
 
 class CPU
 {
-protected:
-    GBCPURegister16<true, true, true, true>     _af;
-    GBCPURegister16<true, true, true, true>     _bc;
-    GBCPURegister16<true, true, true, true>     _de;
-    GBCPURegister16<true, true, true, true>     _hl;
-    GBCPURegister16<false, false, false, false> _sp;
-    GBCPURegister16<false, false, false, false> _pc;
+private:
+    GBCCPURegister<true, true, true, true>     _af;
+    GBCCPURegister<true, true, true, true>     _bc;
+    GBCCPURegister<true, true, true, true>     _de;
+    GBCCPURegister<true, true, true, true>     _hl;
+    GBCCPURegister<false, false, false, false> _sp;
+    GBCCPURegister<false, false, false, false> _pc;
+
+    //uint8_t _io[0x70];
 
 public:
     // CPU Register Access
@@ -48,6 +51,8 @@ public:
     [[nodiscard]] bool FlagN() const { return ((_af.Lo() & (1 << 6)) != 0); } // Subtraction
     [[nodiscard]] bool FlagH() const { return ((_af.Lo() & (1 << 5)) != 0); } // Half-Carry
     [[nodiscard]] bool FlagC() const { return ((_af.Lo() & (1 << 4)) != 0); } // Carry
+
+    // IO Registers
 };
 
 } // namespace pgb::cpu

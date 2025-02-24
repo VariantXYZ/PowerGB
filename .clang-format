@@ -11,7 +11,7 @@ AccessModifierOffset: -4
 BinPackArguments: false
 BinPackParameters: false
 AllowAllArgumentsOnNextLine: false
-AlignAfterOpenBracket: Align
+AlignAfterOpenBracket: BlockIndent
 AlignConsecutiveDeclarations: true
 AlignConsecutiveAssignments:
   Enabled: true
