@@ -33,6 +33,7 @@ LIBRARIES := $(foreach MODULE,$(MODULES),$(addsuffix $(LIB_TYPE),$(addprefix $(B
 # Every test should be a standalone file, so the build is simplified
 # Also expect none of the built libraries to conflict with each other when all are linked together
 TESTS := $(foreach OBJECT,$(notdir $(basename $(wildcard $(SRC_DIR)/test/*$(CXX_SOURCE_TYPE)))),$(addprefix $(BUILD_DIR)/test/,$(OBJECT)))
+RUN_ALL_TESTS := $(foreach TEST,$(TESTS),$(addprefix run_test_,$(notdir $(basename $(TEST)))))
 
 # Explicit file dependencies
 test_ADDITIONAL := $(foreach MODULE,$(MODULES),$(wildcard $(SRC_DIR)/$(MODULE)/**/*$(CXX_HEADER_TYPE)))
@@ -47,12 +48,18 @@ ESCAPE = $(subst ','\'',$(1))
 pc := %
 
 # Rules
-.PHONY: default clean
+.PHONY: default clean run_all_tests
 .SECONDARY:
 
 default: $(TESTS)
 clean:
 	rm -r $(BUILD_DIR) || exit 0
+
+run_all_tests: $(RUN_ALL_TESTS)
+	echo "All tests finished"
+
+run_test_%: $(BUILD_DIR)/test/%
+	$<
 
 # Link executables
 # Dependency is the same named object and all libraries
@@ -69,7 +76,7 @@ $(BUILD_DIR)/lib$(PROJECT_NAME)_%$(LIB_TYPE): $(filter $*%$(INT_TYPE),$(OBJECTS)
 # build/module.X depends on module/X.cpp, and optionally: X.hpp, module/include/*.hpp, common/*, and anything flagged under module_X_ADDITIONAL, module_ADDITIONAL
 .SECONDEXPANSION:
 $(BUILD_DIR)/%.cxx$(INT_TYPE): $(SRC_DIR)/$$(firstword $$(subst ., ,$$*))/$$(lastword $$(subst ., ,$$*))$(CXX_SOURCE_TYPE) $(wildcard $(SRC_DIR)/$$(firstword $$(subst ., ,$$*))/$$(lastword $$(subst ., ,$$*))$(CXX_HEADER_TYPE)) $$(wildcard $(SRC_DIR)/$$(firstword $$(subst ., ,$$*))/include/*$(CPP_HEADER_TYPE)) $(COMMON_SRC) $$($$(firstword $$(subst ., ,$$*))_ADDITIONAL) $$($$(firstword $$(subst ., ,$$*))_$$(lastword $$(subst ., ,$$*))_ADDITIONAL) | $$(patsubst $$(pc)/,$$(pc),$$(dir $$@))
-	$(CXX) -fno-exceptions -std=c++20 -Wall -Wextra $(CXXFLAGS) -I$(SRC_DIR) -o $@ -c $<
+	$(CXX) -fno-exceptions -std=c++20 -Wall -Wextra -fno-exceptions $(CXXFLAGS) -I$(SRC_DIR) -o $@ -c $<
 
 #Make directories if necessary
 $(BUILD_DIR):
