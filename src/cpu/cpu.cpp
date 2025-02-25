@@ -1,4 +1,4 @@
-#include "include/cpu.hpp"
+#include <cpu/include/cpu.hpp>
 
 #include <cstdint>
 

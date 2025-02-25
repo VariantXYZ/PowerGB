@@ -11,6 +11,7 @@ PROJECT_NAME := powergb
 BASE_DIR := .
 BUILD_DIR := $(BASE_DIR)/build
 SRC_DIR := $(BASE_DIR)/src
+COMMON_SRC_DIR := $(SRC_DIR)/common
 
 MODULES := \
 cpu
@@ -20,6 +21,9 @@ CXX_HEADER_TYPE := .hpp
 INT_TYPE := .o
 LIB_TYPE := .a
 EXE_TYPE :=
+
+# Common Source
+COMMON_SRC := $(wildcard $(COMMON_SRC_DIR)/*)
 
 # Generate files
 CXX_OBJECTS := $(foreach MODULE,$(MODULES),$(addprefix $(MODULE)., $(addsuffix .cxx$(INT_TYPE), $(notdir $(basename $(wildcard $(SRC_DIR)/$(MODULE)/*$(CXX_SOURCE_TYPE)))))))
@@ -65,7 +69,7 @@ $(BUILD_DIR)/lib$(PROJECT_NAME)_%$(LIB_TYPE): $(filter $*%$(INT_TYPE),$(OBJECTS)
 # build/module.X depends on module/X.cpp, and optionally: X.hpp, module/include/*.hpp, common/*, and anything flagged under module_X_ADDITIONAL, module_ADDITIONAL
 .SECONDEXPANSION:
 $(BUILD_DIR)/%.cxx$(INT_TYPE): $(SRC_DIR)/$$(firstword $$(subst ., ,$$*))/$$(lastword $$(subst ., ,$$*))$(CXX_SOURCE_TYPE) $(wildcard $(SRC_DIR)/$$(firstword $$(subst ., ,$$*))/$$(lastword $$(subst ., ,$$*))$(CXX_HEADER_TYPE)) $$(wildcard $(SRC_DIR)/$$(firstword $$(subst ., ,$$*))/include/*$(CPP_HEADER_TYPE)) $(COMMON_SRC) $$($$(firstword $$(subst ., ,$$*))_ADDITIONAL) $$($$(firstword $$(subst ., ,$$*))_$$(lastword $$(subst ., ,$$*))_ADDITIONAL) | $$(patsubst $$(pc)/,$$(pc),$$(dir $$@))
-	$(CXX) -fno-exceptions -std=c++20 -Wall -Wextra $(CXXFLAGS) -o $@ -c $<
+	$(CXX) -fno-exceptions -std=c++20 -Wall -Wextra $(CXXFLAGS) -I$(SRC_DIR) -o $@ -c $<
 
 #Make directories if necessary
 $(BUILD_DIR):

@@ -1,6 +1,5 @@
-#include "../cpu/include/cpu.hpp"
-
-#include "include/acutest.h"
+#include <cpu/include/cpu.hpp>
+#include <test/include/acutest.h>
 
 void test_cpu_register_gp(void);
 void test_cpu_register_sm(void);

@@ -1,7 +1,8 @@
 #pragma once
 
-#include <bit>
-#include <cstdint>
+#include <cstddef>
+
+#include <common/util.hpp>
 
 namespace pgb::cpu
 {
@@ -10,11 +11,11 @@ template <bool EnableReadHi, bool EnableWriteHi, bool EnableReadLo, bool EnableW
 class GBCCPURegister
 {
 private:
-    constexpr static size_t LowBit  = (std::endian::native == std::endian::little) ? 0 : 1;
-    constexpr static size_t HighBit = (std::endian::native == std::endian::little) ? 1 : 0;
+    constexpr static unsigned char LowByte  = util::is_little_endian<uint16_t>() ? 0 : 1;
+    constexpr static unsigned char HighByte = util::is_little_endian<uint16_t>() ? 1 : 0;
 
-    std::uint8_t   reg8[2];
-    std::uint16_t& reg16 = reinterpret_cast<std::uint16_t&>(*reg8);
+    std::uint16_t reg16;
+    std::uint8_t(&reg8)[2] = reinterpret_cast<std::uint8_t (&)[2]>(reg16);
 
 public:
     GBCCPURegister() { reg16 = 0; }
@@ -42,25 +43,25 @@ public:
     [[nodiscard]] constexpr std::uint8_t Hi() const
         requires EnableReadHi
     {
-        return reg8[HighBit];
+        return reg8[HighByte];
     }
 
     constexpr std::uint8_t& Hi()
         requires EnableWriteHi
     {
-        return reg8[HighBit];
+        return reg8[HighByte];
     }
 
     [[nodiscard]] constexpr std::uint8_t Lo() const
         requires EnableReadLo
     {
-        return reg8[LowBit];
+        return reg8[LowByte];
     }
 
     constexpr std::uint8_t& Lo()
         requires EnableWriteLo
     {
-        return reg8[LowBit];
+        return reg8[LowByte];
     }
 };
 

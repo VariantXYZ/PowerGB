@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "cpu_register.hpp"
+#include <cpu/include/cpu_register.hpp>
 
 namespace pgb::cpu
 {
@@ -17,7 +17,7 @@ private:
     GBCCPURegister<false, false, false, false> _sp;
     GBCCPURegister<false, false, false, false> _pc;
 
-    //uint8_t _io[0x70];
+    // uint8_t _io[0x70];
 
 public:
     // CPU Register Access
