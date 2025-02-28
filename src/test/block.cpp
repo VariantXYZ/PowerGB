@@ -1,38 +1,42 @@
 #include <cstddef>
 
-#include <cpu/include/register.hpp>
+#include <common/block.hpp>
 #include <test/include/acutest.h>
 
-using namespace pgb::cpu;
+using namespace pgb::common;
+using namespace pgb::common::block;
 
 template <typename Datatype>
-void test_register_type(void);
+void test_block_type(void);
 
 template <std::size_t AccessWidth>
-void test_register8(void);
-void test_register8_access4(void);
-void test_register8_access8(void);
+void test_block8(void);
+void test_block8_access4(void);
+void test_block8_access8(void);
 
 template <std::size_t AccessWidth>
-void test_register16(void);
-void test_register16_access4(void);
-void test_register16_access8(void);
-void test_register16_access16(void);
+void test_block16(void);
+void test_block16_access4(void);
+void test_block16_access8(void);
+void test_block16_access16(void);
+void test_large_block_access8(void);
+
 TEST_LIST = {
-    {"RegisterWidth 8 AccessWidth 4", test_register8_access4},
-    {"RegisterWidth 8 AccessWidth 8", test_register8_access8},
-    {"RegisterWidth 16 AccessWidth 4", test_register16_access4},
-    {"RegisterWidth 16 AccessWidth 8", test_register16_access8},
-    {"RegisterWidth 16 AccessWidth 16", test_register16_access16},
+    {"BlockWidth 8 AccessWidth 4", test_block8_access4},
+    {"BlockWidth 8 AccessWidth 8", test_block8_access8},
+    {"BlockWidth 16 AccessWidth 4", test_block16_access4},
+    {"BlockWidth 16 AccessWidth 8", test_block16_access8},
+    {"BlockWidth 16 AccessWidth 16", test_block16_access16},
+    {"Large Block, AccessWidth 8", test_large_block_access8},
     {NULL, NULL}
 };
 
 // If the size and access width are the same, the tests are simple
 // Datatype tests themselves are handled elsewhere
 template <typename Datatype>
-void test_register_type(void)
+void test_block_type(void)
 {
-    Register<Datatype::TypeWidth, Datatype::TypeWidth> reg;
+    Block<Datatype::TypeWidth, Datatype::TypeWidth> reg;
 
     // Initialization, set, and check
     TEST_CHECK(reg.template Self<0>() == Datatype::MinValue);
@@ -42,7 +46,7 @@ void test_register_type(void)
 }
 
 template <std::size_t AccessWidth>
-void test_register8(Register<8, AccessWidth>& reg)
+void test_block8(Block<8, AccessWidth>& reg)
 {
     // Initialization
     TEST_CHECK(reg.template Nibble<0>() == 0);
@@ -57,6 +61,8 @@ void test_register8(Register<8, AccessWidth>& reg)
 
     // Set value via Byte
     reg.template Byte<0>(0x34);
+    TEST_CHECK(reg.template Nibble<0>() == 0x3);
+    TEST_CHECK(reg.template Nibble<1>() == 0x4);
     TEST_CHECK(reg.template Byte<0>() == 0x34);
 
     // Set back to 0 before returning
@@ -64,11 +70,11 @@ void test_register8(Register<8, AccessWidth>& reg)
     TEST_CHECK(reg.template Byte<0>() == 0);
 }
 
-void test_register8_access4(void)
+void test_block8_access4(void)
 {
-    Register<8, 4> reg;
+    Block<8, 4> reg;
 
-    test_register8(reg);
+    test_block8(reg);
 
     // Reference Nibbles directly
     auto& high = reg.Nibble<0>();
@@ -83,17 +89,17 @@ void test_register8_access4(void)
     TEST_CHECK(reg.Byte<0>() == 0xDA);
 }
 
-void test_register8_access8(void)
+void test_block8_access8(void)
 {
-    test_register_type<datatypes::Byte>();
+    test_block_type<datatypes::Byte>();
 
-    Register<8, 8> reg;
+    Block<8, 8> reg;
 
-    test_register8(reg);
+    test_block8(reg);
 }
 
 template <std::size_t AccessWidth>
-void test_register16(Register<16, AccessWidth>& reg)
+void test_block16(Block<16, AccessWidth>& reg)
 {
     // Initialization
     TEST_CHECK(reg.template Nibble<0>() == 0);
@@ -133,11 +139,11 @@ void test_register16(Register<16, AccessWidth>& reg)
     TEST_CHECK(reg.template Word<0>() == 0);
 }
 
-void test_register16_access4(void)
+void test_block16_access4(void)
 {
-    Register<16, 4> reg;
+    Block<16, 4> reg;
 
-    test_register16(reg);
+    test_block16(reg);
 
     // Reference Nibbles directly
     auto& n0 = reg.Nibble<0>();
@@ -155,11 +161,11 @@ void test_register16_access4(void)
     TEST_CHECK(reg.Word<0>() == 0x1234);
 }
 
-void test_register16_access8(void)
+void test_block16_access8(void)
 {
-    Register<16, 8> reg;
+    Block<16, 8> reg;
 
-    test_register16(reg);
+    test_block16(reg);
 
     // Reference Bytes directly
     auto& b0 = reg.Byte<0>();
@@ -171,10 +177,35 @@ void test_register16_access8(void)
     TEST_CHECK(reg.Word<0>() == 0x1234);
 }
 
-void test_register16_access16(void)
+void test_block16_access16(void)
 {
-    test_register_type<datatypes::Word>();
+    test_block_type<datatypes::Word>();
 
-    Register<16, 16> reg;
-    test_register16(reg);
+    Block<16, 16> reg;
+    test_block16(reg);
+}
+
+void test_large_block_access8(void)
+{
+    // Register/Access widths are in bits
+    Block<0x4000 * 0x8, 0x8> block;
+
+    block.Byte<0x3FFF>() = 0x2F;
+    block.Byte<0x2000>() = 0x01;
+
+    for (std::size_t i = 0; i < block.Size(); ++i)
+    {
+        switch (i)
+        {
+        case 0x2000:
+            TEST_CHECK(block[i] == 0x01);
+            break;
+        case 0x3FFF:
+            TEST_CHECK(block[i] == 0x2F);
+            break;
+        default:
+            TEST_CHECK(block[i] == 0x00);
+            break;
+        }
+    }
 }

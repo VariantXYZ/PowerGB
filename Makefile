@@ -14,7 +14,8 @@ SRC_DIR := $(BASE_DIR)/src
 COMMON_SRC_DIR := $(SRC_DIR)/common
 
 MODULES := \
-cpu
+cpu\
+memory
 
 CXX_SOURCE_TYPE := .cpp
 CXX_HEADER_TYPE := .hpp

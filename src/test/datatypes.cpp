@@ -1,9 +1,9 @@
 #include <cstddef>
 
-#include <cpu/include/datatypes.hpp>
+#include <common/datatypes.hpp>
 #include <test/include/acutest.h>
 
-using namespace pgb::cpu::datatypes;
+using namespace pgb::common::datatypes;
 
 template <typename D>
 void test_basic_datatype(void);

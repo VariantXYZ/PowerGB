@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <type_traits>
 
-namespace pgb::util
+namespace pgb::common::util
 {
 
 template <typename T>
@@ -20,4 +20,4 @@ constexpr static bool is_little_endian()
     return std::bit_cast<Bytes>(data).b[0] == std::byte{1};
 }
 
-} // namespace pgb::util
+} // namespace pgb::common::util

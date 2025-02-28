@@ -1,16 +1,15 @@
 #pragma once
 
 #include <cstddef>
-#include <cstdint>
 
+#include <common/datatypes.hpp>
 #include <common/util.hpp>
-#include <cpu/include/datatypes.hpp>
 
-namespace pgb::cpu
+namespace pgb::common::block
 {
 
-template <std::size_t RegisterWidth>
-concept IsValidRegisterWidth = RegisterWidth == 16 || RegisterWidth == 8;
+template <std::size_t BlockWidth>
+concept IsValidBlockWidth = BlockWidth >= 8 && (BlockWidth % 8 == 0);
 
 template <std::size_t AccessWidth>
 concept IsValidAccessWidth = AccessWidth == 16 || AccessWidth == 8 || AccessWidth == 4;
@@ -18,18 +17,21 @@ concept IsValidAccessWidth = AccessWidth == 16 || AccessWidth == 8 || AccessWidt
 // Some registers (IO, flags) will heavily use nibbles, whereas others will just operate as 8 or 16-bit data.
 // This class aims to provide a register reprsentation that handles arbitrary lengths and access priorities, while maintaining portability.
 // It explicitly avoids use of functions and features that are not mandated on every implementation (this includes certain fixed-width types).
-template <std::size_t RegisterWidth, std::size_t AccessWidth>
-    requires IsValidRegisterWidth<RegisterWidth> && IsValidAccessWidth<RegisterWidth>
-class Register
+template <std::size_t BlockWidth, std::size_t AccessWidth>
+    requires IsValidBlockWidth<BlockWidth> && IsValidAccessWidth<AccessWidth>
+class Block
 {
 private:
-    static_assert(RegisterWidth >= AccessWidth, "AccessWidth cannot be higher than the RegisterWidth");
-    static_assert(RegisterWidth % AccessWidth == 0, "RegisterWidth must be a multiple of the AccessWidth");
-    static constexpr std::size_t ElementCount = RegisterWidth / AccessWidth;
+    static_assert(BlockWidth >= AccessWidth, "AccessWidth cannot be higher than the BlockWidth");
+    static_assert(BlockWidth % AccessWidth == 0, "BlockWidth must be a multiple of the AccessWidth");
+    static constexpr std::size_t ElementCount = BlockWidth / AccessWidth;
     using AccessType                          = std::conditional_t<AccessWidth == 4, datatypes::Nibble, typename std::conditional_t<AccessWidth == 8, datatypes::Byte, datatypes::Word>>;
     AccessType _register[ElementCount]{};
 
 public:
+    constexpr static std::size_t Size() { return ElementCount; }
+    constexpr static std::size_t Granularity() { return AccessWidth; }
+
     // Provide direct data if the access width is the same
     template <std::size_t N>
     [[nodiscard]] constexpr AccessType Self() const
@@ -43,6 +45,16 @@ public:
     {
         static_assert(N < ElementCount);
         return _register[N];
+    }
+
+    constexpr AccessType& operator[](int n)
+    {
+        return _register[n];
+    }
+
+    [[nodiscard]] constexpr const AccessType& operator[](int n) const
+    {
+        return _register[n];
     }
 
     template <std::size_t N>
@@ -132,7 +144,7 @@ public:
     //// Byte operations
     template <std::size_t N>
     [[nodiscard]] constexpr datatypes::Byte Byte() const
-        requires(RegisterWidth >= 8) && (AccessWidth == 4 || AccessWidth == 16)
+        requires(BlockWidth >= 8) && (AccessWidth == 4 || AccessWidth == 16)
     {
         if constexpr (AccessWidth == 4)
         {
@@ -157,7 +169,7 @@ public:
 
     template <std::size_t N>
     constexpr void Byte(const datatypes::Nibble& high, const datatypes::Nibble& low)
-        requires(RegisterWidth >= 8) && (AccessWidth == 4 || AccessWidth == 16)
+        requires(BlockWidth >= 8) && (AccessWidth == 4 || AccessWidth == 16)
     {
         if constexpr (AccessWidth == 4)
         {
@@ -191,7 +203,7 @@ public:
 
     template <std::size_t N>
     constexpr void Byte(const datatypes::Byte& value)
-        requires(RegisterWidth >= 8)
+        requires(BlockWidth >= 8)
     {
         if constexpr (AccessWidth == 4)
         {
@@ -225,7 +237,7 @@ public:
     //// Word operations
     template <std::size_t N>
     [[nodiscard]] constexpr datatypes::Word Word() const
-        requires(RegisterWidth >= 16) && (AccessWidth == 4 || AccessWidth == 8)
+        requires(BlockWidth >= 16) && (AccessWidth == 4 || AccessWidth == 8)
     {
         static_assert(N < ElementCount / (datatypes::Word::TypeWidth / AccessWidth));
         constexpr std::size_t StartIndex = (N * (datatypes::Word::TypeWidth / AccessWidth));
@@ -248,7 +260,7 @@ public:
 
     template <std::size_t N>
     constexpr void Word(const datatypes::Byte& high, const datatypes::Byte& low)
-        requires(RegisterWidth >= 16)
+        requires(BlockWidth >= 16)
     {
         static_assert(N < ElementCount / (datatypes::Word::TypeWidth / AccessWidth));
         constexpr std::size_t StartIndex = (N * (datatypes::Word::TypeWidth / AccessWidth));
@@ -274,7 +286,7 @@ public:
 
     template <std::size_t N>
     constexpr void Word(const datatypes::Word& value)
-        requires(RegisterWidth >= 16)
+        requires(BlockWidth >= 16)
     {
         static_assert(N < ElementCount / (datatypes::Word::TypeWidth / AccessWidth));
         constexpr std::size_t StartIndex = (N * (datatypes::Word::TypeWidth / AccessWidth));
@@ -298,4 +310,4 @@ public:
     }
 };
 
-} // namespace pgb::cpu
+} // namespace pgb::common::block

@@ -5,7 +5,7 @@
 
 // Common accessed datatypes
 
-namespace pgb::cpu::datatypes
+namespace pgb::common::datatypes
 {
 
 namespace
