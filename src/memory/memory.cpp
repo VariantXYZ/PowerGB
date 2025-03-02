@@ -11,7 +11,7 @@ namespace pgb::memory
 
 using namespace pgb::common::datatypes;
 
-const Byte& MemoryMap::AccessByte(std::size_t bank, std::size_t address) const
+const Byte& MemoryMap::AccessByte(std::size_t bank, std::size_t address) const noexcept
 {
     if (address <= 0x7FFF)
     {
@@ -64,7 +64,7 @@ const Byte& MemoryMap::AccessByte(std::size_t bank, std::size_t address) const
     }
 }
 
-void MemoryMap::WriteByte(std::size_t bank, std::size_t address, const Byte& value)
+void MemoryMap::WriteByte(std::size_t bank, std::size_t address, const Byte& value) noexcept
 {
     const_cast<Byte&>(AccessByte(bank, address)) = value;
 }

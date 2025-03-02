@@ -48,8 +48,8 @@ private:
 
 public:
     using AccessResultSet = common::ResultSet<const Byte, common::ResultSuccess, ResultAccessInvalidBank, ResultAccessInvalidAddress>;
-    const Byte& AccessByte(std::size_t bank, std::size_t address) const;
-    void        WriteByte(std::size_t bank, std::size_t address, const Byte& value);
+    const Byte& AccessByte(std::size_t bank, std::size_t address) const noexcept;
+    void        WriteByte(std::size_t bank, std::size_t address, const Byte& value) noexcept;
 };
 
 } // namespace pgb::memory

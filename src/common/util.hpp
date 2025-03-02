@@ -9,7 +9,7 @@ namespace pgb::common::util
 {
 
 template <typename T>
-constexpr static bool IsLittleEndian()
+constexpr static bool IsLittleEndian() noexcept
 {
     static_assert(std::is_trivial_v<T>, "Type must be trivial");
     static_assert(sizeof(T) > 1, "Cannot determine endianness of type of size 1");
@@ -26,7 +26,7 @@ struct StringLiteral
 {
 public:
     char value[N];
-    constexpr StringLiteral(const char (&str)[N])
+    constexpr StringLiteral(const char (&str)[N]) noexcept
     {
         std::copy_n(str, N, value);
     }

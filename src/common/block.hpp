@@ -29,36 +29,36 @@ private:
     AccessType _register[ElementCount]{};
 
 public:
-    constexpr static std::size_t Size() { return ElementCount; }
-    constexpr static std::size_t Granularity() { return AccessWidth; }
+    constexpr static std::size_t Size() noexcept { return ElementCount; }
+    constexpr static std::size_t Granularity() noexcept { return AccessWidth; }
 
     // Provide direct data if the access width is the same
     template <std::size_t N>
-    [[nodiscard]] constexpr AccessType Self() const
+    [[nodiscard]] constexpr AccessType Self() const noexcept
     {
         static_assert(N < ElementCount);
         return _register[N];
     }
 
     template <std::size_t N>
-    constexpr AccessType& Self()
+    constexpr AccessType& Self() noexcept
     {
         static_assert(N < ElementCount);
         return _register[N];
     }
 
-    constexpr AccessType& operator[](int n)
+    constexpr AccessType& operator[](int n) noexcept
     {
         return _register[n];
     }
 
-    [[nodiscard]] constexpr const AccessType& operator[](int n) const
+    [[nodiscard]] constexpr const AccessType& operator[](int n) const noexcept
     {
         return _register[n];
     }
 
     template <std::size_t N>
-    [[nodiscard]] constexpr datatypes::Nibble Nibble() const
+    [[nodiscard]] constexpr datatypes::Nibble Nibble() const noexcept
         requires(std::is_same_v<AccessType, datatypes::Nibble>)
     {
         static_assert(N < ElementCount);
@@ -66,7 +66,7 @@ public:
     }
 
     template <std::size_t N>
-    constexpr datatypes::Nibble& Nibble()
+    constexpr datatypes::Nibble& Nibble() noexcept
         requires(std::is_same_v<AccessType, datatypes::Nibble>)
     {
         static_assert(N < ElementCount);
@@ -74,7 +74,7 @@ public:
     }
 
     template <std::size_t N>
-    [[nodiscard]] constexpr datatypes::Byte Byte() const
+    [[nodiscard]] constexpr datatypes::Byte Byte() const noexcept
         requires(std::is_same_v<AccessType, datatypes::Byte>)
     {
         static_assert(N < ElementCount);
@@ -82,7 +82,7 @@ public:
     }
 
     template <std::size_t N>
-    datatypes::Byte& Byte()
+    datatypes::Byte& Byte() noexcept
         requires(std::is_same_v<AccessType, datatypes::Byte>)
     {
         static_assert(N < ElementCount);
@@ -90,7 +90,7 @@ public:
     }
 
     template <std::size_t N>
-    [[nodiscard]] constexpr datatypes::Word Word() const
+    [[nodiscard]] constexpr datatypes::Word Word() const noexcept
         requires(std::is_same_v<AccessType, datatypes::Word>)
     {
         static_assert(N < ElementCount);
@@ -98,7 +98,7 @@ public:
     }
 
     template <std::size_t N>
-    datatypes::Word& Word()
+    datatypes::Word& Word() noexcept
         requires(std::is_same_v<AccessType, datatypes::Word>)
     {
         static_assert(N < ElementCount);
@@ -110,7 +110,7 @@ public:
 
     //// Nibble operations
     template <std::size_t N>
-    [[nodiscard]] constexpr datatypes::Nibble Nibble() const
+    [[nodiscard]] constexpr datatypes::Nibble Nibble() const noexcept
         requires(AccessWidth > 4)
     {
         static_assert(N < ElementCount * (AccessWidth / datatypes::Nibble::TypeWidth));
@@ -121,7 +121,7 @@ public:
     }
 
     template <std::size_t N>
-    constexpr void Nibble(const datatypes::Nibble& value)
+    constexpr void Nibble(const datatypes::Nibble& value) noexcept
     {
         static_assert(N < ElementCount * (AccessWidth / datatypes::Nibble::TypeWidth));
 
@@ -143,7 +143,7 @@ public:
 
     //// Byte operations
     template <std::size_t N>
-    [[nodiscard]] constexpr datatypes::Byte Byte() const
+    [[nodiscard]] constexpr datatypes::Byte Byte() const noexcept
         requires(BlockWidth >= 8) && (AccessWidth == 4 || AccessWidth == 16)
     {
         if constexpr (AccessWidth == 4)
@@ -168,7 +168,7 @@ public:
     }
 
     template <std::size_t N>
-    constexpr void Byte(const datatypes::Nibble& high, const datatypes::Nibble& low)
+    constexpr void Byte(const datatypes::Nibble& high, const datatypes::Nibble& low) noexcept
         requires(BlockWidth >= 8) && (AccessWidth == 4 || AccessWidth == 16)
     {
         if constexpr (AccessWidth == 4)
@@ -202,7 +202,7 @@ public:
     }
 
     template <std::size_t N>
-    constexpr void Byte(const datatypes::Byte& value)
+    constexpr void Byte(const datatypes::Byte& value) noexcept
         requires(BlockWidth >= 8)
     {
         if constexpr (AccessWidth == 4)
@@ -236,7 +236,7 @@ public:
 
     //// Word operations
     template <std::size_t N>
-    [[nodiscard]] constexpr datatypes::Word Word() const
+    [[nodiscard]] constexpr datatypes::Word Word() const noexcept
         requires(BlockWidth >= 16) && (AccessWidth == 4 || AccessWidth == 8)
     {
         static_assert(N < ElementCount / (datatypes::Word::TypeWidth / AccessWidth));
@@ -259,7 +259,7 @@ public:
     }
 
     template <std::size_t N>
-    constexpr void Word(const datatypes::Byte& high, const datatypes::Byte& low)
+    constexpr void Word(const datatypes::Byte& high, const datatypes::Byte& low) noexcept
         requires(BlockWidth >= 16)
     {
         static_assert(N < ElementCount / (datatypes::Word::TypeWidth / AccessWidth));
@@ -285,7 +285,7 @@ public:
     }
 
     template <std::size_t N>
-    constexpr void Word(const datatypes::Word& value)
+    constexpr void Word(const datatypes::Word& value) noexcept
         requires(BlockWidth >= 16)
     {
         static_assert(N < ElementCount / (datatypes::Word::TypeWidth / AccessWidth));

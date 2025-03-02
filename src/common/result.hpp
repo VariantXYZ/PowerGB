@@ -22,11 +22,11 @@ private:
     bool _isSuccess;
 
 public:
-    constexpr Result(bool isSuccess) : _isSuccess(isSuccess) {}
-    static constexpr const char* GetDescription() { return Description.value; }
+    constexpr Result(bool isSuccess) noexcept : _isSuccess(isSuccess) {}
+    static constexpr const char* GetDescription() noexcept { return Description.value; }
 
-    constexpr bool IsSuccess() const { return _isSuccess; }
-    constexpr bool IsFailure() const { return !_isSuccess; }
+    constexpr bool IsSuccess() const noexcept { return _isSuccess; }
+    constexpr bool IsFailure() const noexcept { return !_isSuccess; }
 };
 
 // A generic success and failure result
@@ -65,28 +65,28 @@ private:
 
 public:
     // Constructor will implicitly cast a result into the variant
-    constexpr ResultSet(const ResultOptions& result, const Type& value) : _result(result), _value(value) {}
+    constexpr ResultSet(const ResultOptions& result, const Type& value) noexcept : _result(result), _value(value) {}
 
-    constexpr bool IsSuccess() const
+    constexpr bool IsSuccess() const noexcept
     {
         static_assert(std::size(_isSuccessVisitor) == sizeof...(Results));
         return _isSuccessVisitor[_result.index()](_result);
     }
 
-    constexpr bool IsFailure() const
+    constexpr bool IsFailure() const noexcept
     {
         static_assert(std::size(_isFailureVisitor) == sizeof...(Results));
         return _isFailureVisitor[_result.index()](_result);
     }
 
-    constexpr const char* GetStatusDescription() const
+    constexpr const char* GetStatusDescription() const noexcept
     {
         static_assert(std::size(_descriptions) == sizeof...(Results));
         return _descriptions[_result.index()];
     }
 
     template <typename Rx>
-    constexpr bool IsResult() const
+    constexpr bool IsResult() const noexcept
         requires(std::is_same_v<Rx, Results> || ...)
     {
         return std::holds_alternative<Rx>(_result);
