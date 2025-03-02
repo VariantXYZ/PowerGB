@@ -9,11 +9,13 @@ using namespace pgb::common;
 void test_result_basic(void);
 void test_result_custom(void);
 void test_resultset(void);
+void test_resultset_casting(void);
 
 TEST_LIST = {
     {"Provided Results", test_result_basic},
     {"Custom Results", test_result_custom},
     {"ResultSet", test_resultset},
+    {"ResultSet casting", test_resultset_casting},
     {NULL, NULL}
 };
 
@@ -54,5 +56,35 @@ void test_resultset(void)
         TEST_CHECK(strcmp(resultS.GetStatusDescription(), "Success") == 0);
         TEST_CHECK(resultS.IsResult<ResultSuccess>());
         TEST_CHECK(!resultS.IsResult<ResultFailure>());
+    }
+}
+
+void test_resultset_casting(void)
+{
+    // Basic integer type
+    {
+        using ResultSetTest = ResultSet<int, ResultSuccess>;
+        auto result         = ResultSetTest(ResultSuccess(true), 1);
+        // Implicit casting
+        TEST_CHECK(result == 1);
+        // Explicit casting
+        TEST_CHECK(static_cast<int>(result) == 1);
+    }
+
+    // Reference type
+    {
+        using ResultSetTest = ResultSet<int&, ResultSuccess>;
+        int  a              = 0xFF;
+        auto result         = ResultSetTest(ResultSuccess(true), a);
+
+        TEST_CHECK(a == 0xFF);
+        TEST_CHECK(result == 0xFF);
+        a = 0xAF;
+        TEST_CHECK(result == 0xAF);
+        TEST_CHECK(result == a);
+
+        const_cast<int&>(static_cast<const int&>(result)) = 0x23;
+        TEST_CHECK(a == 0x23);
+        TEST_CHECK(result == a);
     }
 }

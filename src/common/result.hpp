@@ -3,6 +3,7 @@
 #include <concepts>
 #include <cstddef>
 #include <iterator>
+#include <tuple>
 #include <variant>
 
 #include <common/util.hpp>
@@ -52,6 +53,8 @@ private:
     const ResultOptions _result;
     const Type          _value;
 
+    using DefaultResultType                          = std::tuple_element_t<0, std::tuple<Results...>>;
+
     // To 'dynamically' access various Result types from std::variant via its index, we do two things:
     // * For descriptions, which are static methods, we can prepopulate the static array
     // * For Result member functions, have an ordered list of visitors based on type
@@ -66,6 +69,20 @@ private:
 public:
     // Constructor will implicitly cast a result into the variant
     constexpr ResultSet(const ResultOptions& result, const Type& value) noexcept : _result(result), _value(value) {}
+
+    constexpr operator Type() { return _value; }
+
+    // Utility function for default result as success
+    constexpr static ResultSet DefaultResultSuccess(const Type& value) noexcept
+    {
+        return ResultSet(DefaultResultType(true), value);
+    }
+
+    // Utility function for default result as failure
+    constexpr static ResultSet DefaultResultFailure(const Type& value) noexcept
+    {
+        return ResultSet(DefaultResultType(false), value);
+    }
 
     constexpr bool IsSuccess() const noexcept
     {
