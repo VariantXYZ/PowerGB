@@ -4,7 +4,8 @@
 #include <cstdint>
 
 // Common accessed datatypes
-
+// The ultimate goal of this is portability
+// Regardless of platform register width, endianness or type sizes, a fixed representation is provided
 namespace pgb::common::datatypes
 {
 
@@ -126,4 +127,4 @@ struct Word : Datatype<std::uint_fast16_t, 16, 0, 0xFFFF>
     }
 };
 
-} // namespace pgb::cpu::datatypes
+} // namespace pgb::common::datatypes
