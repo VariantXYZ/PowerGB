@@ -7,6 +7,50 @@ namespace pgb::memory
 
 using namespace pgb::common::datatypes;
 
+MemoryMap::InitializeResultSet MemoryMap::Initialize(const Byte (&rom)[], const std::size_t size) noexcept
+{
+    // Reset all memory regions
+    for (auto& b : _rom)
+    {
+        b.Reset();
+    }
+
+    for (auto& b : _vram)
+    {
+        b.Reset();
+    }
+
+    for (auto& b : _eram)
+    {
+        b.Reset();
+    }
+
+    for (auto& b : _wram)
+    {
+        b.Reset();
+    }
+
+    _oam.Reset();
+    _hram.Reset();
+    _io.Reset();
+
+    if ((size % RomBankSize) > 0)
+    {
+        return InitializeResultSet(ResultInitializeInvalidAlignment(false));
+    }
+
+    std::size_t offset = 0;
+    std::size_t bank   = 0;
+    while (offset < size)
+    {
+        std::copy(&rom[offset], &rom[offset + RomBankSize], &_rom[bank++][0]);
+        offset += RomBankSize;
+    }
+
+    _isInitialized = true;
+    return InitializeResultSet::DefaultResultSuccess();
+}
+
 MemoryMap::AccessResultSet MemoryMap::AccessByte(const MemoryAddress& maddr) const noexcept
 {
     auto bank    = maddr.bank;
@@ -14,19 +58,19 @@ MemoryMap::AccessResultSet MemoryMap::AccessByte(const MemoryAddress& maddr) con
 
     if (address <= 0x7FFF)
     {
-        return (bank >= _romBankCount) ? AccessResultSet(ResultAccessInvalidBank(false), bank) : AccessResultSet::DefaultResultSuccess(_rom[bank][address]);
+        return (bank >= _romBankCount) ? AccessResultSet(ResultAccessInvalidBank(false), 0) : AccessResultSet::DefaultResultSuccess(_rom[bank][address]);
     }
     else if (address <= 0x9FFF)
     {
-        return (bank >= _vramBankCount) ? AccessResultSet(ResultAccessInvalidBank(false), bank) : AccessResultSet::DefaultResultSuccess(_vram[bank][address - 0x8000]);
+        return (bank >= _vramBankCount) ? AccessResultSet(ResultAccessInvalidBank(false), 0) : AccessResultSet::DefaultResultSuccess(_vram[bank][address - 0x8000]);
     }
     else if (address <= 0xBFFF)
     {
-        return bank >= _eramBankCount ? AccessResultSet(ResultAccessInvalidBank(false), bank) : AccessResultSet::DefaultResultSuccess(_eram[bank][address - 0xA000]);
+        return bank >= _eramBankCount ? AccessResultSet(ResultAccessInvalidBank(false), 0) : AccessResultSet::DefaultResultSuccess(_eram[bank][address - 0xA000]);
     }
     else if (address <= 0xDFFF)
     {
-        return bank >= _wramBankCount ? AccessResultSet(ResultAccessInvalidBank(false), bank) : AccessResultSet::DefaultResultSuccess(_wram[bank][address - 0xC000]);
+        return bank >= _wramBankCount ? AccessResultSet(ResultAccessInvalidBank(false), 0) : AccessResultSet::DefaultResultSuccess(_wram[bank][address - 0xC000]);
     }
     else if (address <= 0xFDFF)
     {
@@ -34,7 +78,7 @@ MemoryMap::AccessResultSet MemoryMap::AccessByte(const MemoryAddress& maddr) con
         // From pandocs: "The range E000-FDFF is mapped to WRAM, but only the lower 13 bits of the address lines are connected"
         // Return a prohibited address warning, but otherwise the value is still returned
         address = address & 0b0001111111111111;
-        return bank >= _wramBankCount ? AccessResultSet(ResultAccessInvalidBank(false), bank) : AccessResultSet(ResultAccessProhibitedAddress(true), _wram[bank][address - 0xC000]);
+        return bank >= _wramBankCount ? AccessResultSet(ResultAccessInvalidBank(false), 0) : AccessResultSet(ResultAccessProhibitedAddress(true), _wram[bank][address - 0xC000]);
     }
     else if (address <= 0xFE9F)
     {
@@ -63,33 +107,34 @@ MemoryMap::AccessResultSet MemoryMap::AccessByte(const MemoryAddress& maddr) con
     }
     else if (address == 0xFFFF)
     {
-        return AccessResultSet::DefaultResultSuccess(_ie[0]);
+        return AccessResultSet::DefaultResultSuccess(_cpu.IE());
     }
     else
     {
-        return AccessResultSet(ResultAccessInvalidAddress(false), address);
+        return AccessResultSet(ResultAccessInvalidAddress(false), 0);
     }
 }
 
 MemoryMap::AccessResultSet MemoryMap::WriteByte(const MemoryAddress& maddr, const Byte& value) noexcept
 {
     AccessResultSet accessResult = AccessByte(maddr);
-
     if (accessResult.IsFailure())
     {
         return accessResult;
     }
 
-    // Make sure we propagate prohibited access issues up
-    const_cast<Byte&>(static_cast<const Byte&>(accessResult)) = value;
+    auto&      valueRef = const_cast<Byte&>(static_cast<const Byte&>(accessResult));
+    const Byte oldValue = valueRef;
+    valueRef            = value;
 
+    // Make sure we propagate prohibited access issues up
     if (accessResult.IsResult<ResultAccessProhibitedAddress>())
     {
-        return AccessResultSet(ResultAccessProhibitedAddress(true), value);
+        return AccessResultSet(ResultAccessProhibitedAddress(true), oldValue);
     }
     else
     {
-        return AccessResultSet::DefaultResultSuccess(value);
+        return AccessResultSet::DefaultResultSuccess(oldValue);
     }
 }
 
