@@ -17,6 +17,7 @@ namespace pgb::common
 // * Allow the called function to define it as success or failure
 // * Allow for a trivial integer-based comparison for result handling or explicit handling based on the type
 // * Hold the function's useful return value if there is one
+// This should encourage a design that allows function callers to know the possible inner results of functions and plan accordingly
 template <util::StringLiteral Description>
 class Result
 {
@@ -44,6 +45,7 @@ concept ResultType =
     };
 
 template <typename Type, ResultType... Results>
+    requires util::types_are_unique<Results...>
 class ResultSet
 {
     static_assert(sizeof...(Results) > 0, "There must be at least one result in a set.");
@@ -83,6 +85,13 @@ public:
 
     constexpr ResultSet(const ResultOptions& result) noexcept
         requires(std::is_void_v<Type>)
+        : _result(result)
+    {
+    }
+
+    template <ResultType Rx>
+    constexpr ResultSet(const Rx& result) noexcept
+        requires((std::is_same_v<Rx, Results> || ...) && std::is_void_v<Type>)
         : _result(result)
     {
     }

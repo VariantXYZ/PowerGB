@@ -32,6 +32,11 @@ public:
     constexpr static std::size_t Size() noexcept { return ElementCount; }
     constexpr static std::size_t Granularity() noexcept { return AccessWidth; }
 
+    constexpr void Reset()
+    {
+        std::fill_n(_register, ElementCount, 0);
+    }
+
     // Provide direct data if the access width is the same
     template <std::size_t N>
     [[nodiscard]] constexpr AccessType Self() const noexcept
