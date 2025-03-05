@@ -45,14 +45,14 @@ void test_resultset(void)
     }
 
     {
-        using ResultSetTest = ResultSet<int, ResultSuccess, ResultFailure>;
-        auto resultF        = ResultSetTest(ResultFailure(false), -1);
+        using ResultSetTest = ResultSet<void, ResultSuccess, ResultFailure>;
+        auto resultF        = ResultSetTest(ResultFailure(false));
         TEST_CHECK(strcmp(resultF.GetStatusDescription(), "Failure") == 0);
         TEST_CHECK(resultF.IsFailure());
         TEST_CHECK(!resultF.IsResult<ResultSuccess>());
         TEST_CHECK(resultF.IsResult<ResultFailure>());
 
-        auto resultS = ResultSetTest(ResultSuccess(true), -1);
+        auto resultS = ResultSetTest(ResultSuccess(true));
         TEST_CHECK(strcmp(resultS.GetStatusDescription(), "Success") == 0);
         TEST_CHECK(resultS.IsResult<ResultSuccess>());
         TEST_CHECK(!resultS.IsResult<ResultFailure>());

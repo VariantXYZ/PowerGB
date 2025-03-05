@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <iterator>
 #include <tuple>
+#include <type_traits>
 #include <variant>
 
 #include <common/util.hpp>
@@ -51,7 +52,14 @@ private:
     // Use of std::variant allows for use of 'holds_alternative'
     using ResultOptions = std::variant<Results...>;
     const ResultOptions _result;
-    const Type          _value;
+
+    // Value isn't necesary if it's void
+    // We define a type wrapper to provide a valid type even if the input is void
+    struct Empty
+    {
+    };
+    using TypeWrapper = std::conditional_t<std::is_void_v<Type>, Empty, Type>;
+    [[no_unique_address]] const TypeWrapper _value;
 
     using DefaultResultType                          = std::tuple_element_t<0, std::tuple<Results...>>;
 
@@ -67,21 +75,48 @@ private:
                                                         { return std::get<Results>(v).IsFailure(); }...};
 
 public:
-    // Constructor will implicitly cast a result into the variant
-    constexpr ResultSet(const ResultOptions& result, const Type& value) noexcept : _result(result), _value(value) {}
+    constexpr ResultSet(const ResultOptions& result, const TypeWrapper& value) noexcept
+        requires(!std::is_void_v<Type>)
+        : _result(result), _value(value)
+    {
+    }
 
-    constexpr operator Type() { return _value; }
+    constexpr ResultSet(const ResultOptions& result) noexcept
+        requires(std::is_void_v<Type>)
+        : _result(result)
+    {
+    }
 
-    // Utility function for default result as success
-    constexpr static ResultSet DefaultResultSuccess(const Type& value) noexcept
+    constexpr operator Type()
+        requires(!std::is_void_v<Type>)
+    {
+        return _value;
+    }
+
+    // Utility function for default (1st) result as success
+    constexpr static ResultSet DefaultResultSuccess(const TypeWrapper& value) noexcept
+        requires(!std::is_void_v<Type>)
     {
         return ResultSet(DefaultResultType(true), value);
     }
 
-    // Utility function for default result as failure
-    constexpr static ResultSet DefaultResultFailure(const Type& value) noexcept
+    constexpr static ResultSet DefaultResultSuccess() noexcept
+        requires(std::is_void_v<Type>)
+    {
+        return ResultSet(DefaultResultType(true));
+    }
+
+    // Utility function for default (1st) result as failure
+    constexpr static ResultSet DefaultResultFailure(const TypeWrapper& value) noexcept
+        requires(!std::is_void_v<Type>)
     {
         return ResultSet(DefaultResultType(false), value);
+    }
+
+    constexpr static ResultSet DefaultResultFailure() noexcept
+        requires(std::is_void_v<Type>)
+    {
+        return ResultSet(DefaultResultType(false));
     }
 
     constexpr bool IsSuccess() const noexcept
