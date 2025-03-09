@@ -2,7 +2,7 @@
 #include <initializer_list>
 #include <memory>
 
-#include <cpu/include/cpu.hpp>
+#include <cpu/include/registers.hpp>
 #include <memory/include/memory.hpp>
 #include <test/include/acutest.h>
 
@@ -38,7 +38,7 @@ void test_initialize(void)
 {
     // Test initialization failure cases
     {
-        auto cpu  = std::make_unique<pgb::cpu::CPU>();
+        auto cpu  = std::make_unique<pgb::cpu::RegisterFile>();
         auto mmap = std::make_unique<MemoryMap>(*cpu);
 
         test_initialize_failure_helper<MemoryMap::ResultInitializeInvalidRomBankCount, 0>(mmap, {0, 1, 3, 513});
@@ -49,7 +49,7 @@ void test_initialize(void)
 
     // Test valid initialization with minimal banks
     {
-        auto cpu  = std::make_unique<pgb::cpu::CPU>();
+        auto cpu  = std::make_unique<pgb::cpu::RegisterFile>();
         auto mmap = std::make_unique<MemoryMap>(*cpu);
 
         TEST_ASSERT(!mmap->IsInitialized());
@@ -60,7 +60,7 @@ void test_initialize(void)
 
     // Test valid initialization with max banks
     {
-        auto cpu  = std::make_unique<pgb::cpu::CPU>();
+        auto cpu  = std::make_unique<pgb::cpu::RegisterFile>();
         auto mmap = std::make_unique<MemoryMap>(*cpu);
 
         TEST_ASSERT(!mmap->IsInitialized());
@@ -71,7 +71,7 @@ void test_initialize(void)
 
     // Verify reinitialization fails without a reset
     {
-        auto cpu  = std::make_unique<pgb::cpu::CPU>();
+        auto cpu  = std::make_unique<pgb::cpu::RegisterFile>();
         auto mmap = std::make_unique<MemoryMap>(*cpu);
 
         TEST_ASSERT(!mmap->IsInitialized());

@@ -164,7 +164,7 @@ MemoryMap::AccessResultSet MemoryMap::AccessByte(const MemoryAddress& maddr) con
     }
     else if (address == 0xFFFF)
     {
-        return AccessResultSet::DefaultResultSuccess(_cpu.IE());
+        return AccessResultSet::DefaultResultSuccess(_registers.IE());
     }
     else
     {

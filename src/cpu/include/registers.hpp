@@ -14,13 +14,13 @@ namespace pgb::cpu
 using namespace pgb::common::block;
 using namespace pgb::common::datatypes;
 
-class CPU
+class RegisterFile
 {
 private:
     // CPU registers
 
     //// Instruction Register
-     Block<8, 8> _IR;
+    Block<8, 8> _IR;
 
     //// Interrupt Enable
     Block<8, 8> _IE;

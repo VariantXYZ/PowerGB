@@ -6,7 +6,7 @@
 #include <common/block.hpp>
 #include <common/datatypes.hpp>
 #include <common/result.hpp>
-#include <cpu/include/cpu.hpp>
+#include <cpu/include/registers.hpp>
 
 using namespace pgb::common::block;
 using namespace pgb::common::datatypes;
@@ -70,7 +70,7 @@ public:
 
 private:
     // The bus maps references to the CPU IE
-    const cpu::CPU& _cpu;
+    const cpu::RegisterFile& _registers;
 
     std::size_t _romBankCount;
     std::size_t _vramBankCount;
@@ -96,8 +96,8 @@ public:
         uint_fast16_t address : std::bit_width(static_cast<uint_fast16_t>(MaxAddressValue));
     };
 
-    constexpr MemoryMap(cpu::CPU& cpu) noexcept
-        : _cpu(cpu) {}
+    constexpr MemoryMap(cpu::RegisterFile& registers) noexcept
+        : _registers(registers) {}
 
     // Initialize memory based on an input ROM, will handle parsing the cartridge header to pull necessary metadata
     // All non-default results (anything that is not ResultSuccess) are considered failure cases and will not initialize the map
