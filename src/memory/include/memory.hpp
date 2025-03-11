@@ -15,7 +15,9 @@ namespace pgb::memory
 {
 
 constexpr static const std::size_t ValidRomBankCount[]         = {2, 4, 8, 16, 32, 64, 128, 256, 512, 72, 80, 96};
+constexpr static const std::size_t ValidVramBankCount[]        = {1, 2};
 constexpr static const std::size_t ValidExternalRamBankCount[] = {0, 1, 4, 16, 8};
+constexpr static const std::size_t ValidWramBankCount[]        = {2, 8};
 
 // Pre-emptively statically allocate all necessary buffers
 constexpr static std::size_t MaxBankValue                      = 0x1FF;
@@ -39,16 +41,18 @@ class MemoryMap
 public:
     // Function results
     //// Access
-    using ResultAccessInvalidBank       = common::Result<"Bank not in valid range">;
-    using ResultAccessInvalidAddress    = common::Result<"Address not in valid range">;
-    using ResultAccessProhibitedAddress = common::Result<"Accessing vendor prohibited address">;
+    using ResultAccessInvalidBank               = common::Result<"Bank not in valid range">;
+    using ResultAccessInvalidAddress            = common::Result<"Address not in valid range">;
+    using ResultAccessProhibitedAddress         = common::Result<"Accessing prohibited address">;
+    using ResultAccessReadOnlyProhibitedAddress = common::Result<"Accessing read-only prohibited address">;
     using AccessResultSet =
         common::ResultSet<
             /* Type */ const Byte&,
             common::ResultSuccess,
             ResultAccessInvalidBank,
             ResultAccessInvalidAddress,
-            ResultAccessProhibitedAddress>;
+            ResultAccessProhibitedAddress,
+            ResultAccessReadOnlyProhibitedAddress>;
 
     //// Initialization
     using ResultInitializeInvalidAlignment     = common::Result<"ROM size is not a multiple of 0x4000">;
@@ -110,14 +114,16 @@ public:
     constexpr bool IsInitialized() { return _isInitialized; }
 
     // Access a byte at a specific address, the stored result is only valid if it is marked successful.
-    // ResultAccessInvalidBank is always a failure case
-    // ResultAccessInvalidAddress is always a failure case
-    // ResultAccessProhibitedAddress is sometimes returned as a failure case
+    // ResultAccessInvalidBank is always a failure case.
+    // ResultAccessInvalidAddress is always a failure case.
+    // ResultAccessProhibitedAddress is sometimes returned as a failure case.
+    // ResultAccessReadOnlyProhibitedAddress is never a failure case.
     AccessResultSet AccessByte(const MemoryAddress&) const noexcept;
 
-    // Write a byte at a specific address if it is accessible and returns the previous value.
+    // Write a byte at a specific address if it is accessible and returns the const reference to the value.
     // If the address is not accessible, the function will propagate the AccessByte error.
-    // Note that this function will write as long as the address is within a valid range.
+    // If access returns ResultAccessReadOnlyProhibitedAddress, the result of this function is a failure and the read value is in the result.
+    // Note that this function will write as long as the address is within a valid range and the address is not ReadOnlyProhibited.
     AccessResultSet WriteByte(const MemoryAddress&, const Byte& value) noexcept;
 };
 

@@ -7,6 +7,16 @@ namespace pgb::memory
 
 using namespace pgb::common::datatypes;
 
+namespace
+{
+template <std::size_t N>
+constexpr static bool IsValidBankCount(const std::size_t (&range)[N], std::size_t value)
+{
+    return !(std::find(std::begin(range), std::end(range), value) == std::end(range));
+}
+
+} // namespace
+
 MemoryMap::InitializeResultSet MemoryMap::Initialize(const Byte (&rom)[], const std::size_t size) noexcept
 {
     // TODO: Parse cartridge header
@@ -39,23 +49,23 @@ MemoryMap::InitializeResultSet MemoryMap::Initialize(std::size_t romBankCount, s
         return ResultInitializeAlreadyInitialized(false);
     }
 
-    if (std::find(std::begin(ValidRomBankCount), std::end(ValidRomBankCount), romBankCount) == std::end(ValidRomBankCount))
+    if (!IsValidBankCount(ValidRomBankCount, romBankCount))
     {
         return ResultInitializeInvalidRomBankCount(false);
     }
 
-    if (vramBankCount != 1 && vramBankCount != 2)
+    if (!IsValidBankCount(ValidVramBankCount, vramBankCount))
     {
         // Either 1 in GB or 2 in CGB
         return ResultInitializeInvalidVramBankCount(false);
     }
 
-    if (std::find(std::begin(ValidExternalRamBankCount), std::end(ValidExternalRamBankCount), eramBankCount) == std::end(ValidExternalRamBankCount))
+    if (!IsValidBankCount(ValidExternalRamBankCount, eramBankCount))
     {
         return ResultInitializeInvalidEramBankCount(false);
     }
 
-    if (wramBankCount != 2 && wramBankCount != 8)
+    if (!IsValidBankCount(ValidWramBankCount, wramBankCount))
     {
         // Either 2 in GB or 8 in CGB
         return ResultInitializeInvalidWramBankCount(false);
@@ -134,8 +144,21 @@ MemoryMap::AccessResultSet MemoryMap::AccessByte(const MemoryAddress& maddr) con
         // Echo RAM
         // From pandocs: "The range E000-FDFF is mapped to WRAM, but only the lower 13 bits of the address lines are connected"
         // Return a prohibited address warning, but otherwise the value is still returned
-        address = address & 0b0001111111111111;
-        return bank >= _wramBankCount ? AccessResultSet(ResultAccessInvalidBank(false), 0) : AccessResultSet(ResultAccessProhibitedAddress(true), _wram[bank][address - 0xC000]);
+        address -= 0x2000;
+        if (bank >= _wramBankCount)
+        {
+            return AccessResultSet(ResultAccessInvalidBank(false), 0);
+        }
+
+        auto value = AccessByte({bank, address});
+        if (value.IsSuccess())
+        {
+            return AccessResultSet(ResultAccessProhibitedAddress(true), value);
+        }
+        else
+        {
+            return AccessResultSet(ResultAccessProhibitedAddress(false), value);
+        }
     }
     else if (address <= 0xFE9F)
     {
@@ -151,7 +174,7 @@ MemoryMap::AccessResultSet MemoryMap::AccessByte(const MemoryAddress& maddr) con
         // For ease of implementation, just use CGB Revision E that returns the high nibble of the lower address byte twice
         // TODO: This area should be treated similarly to IO registers with a special handler that relies on OAM state
         static const Byte _FEA0_FEFF[] = {0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
-        return AccessResultSet(ResultAccessProhibitedAddress(true), _FEA0_FEFF[((address & 0x00F0) >> 4) - 0xA]);
+        return AccessResultSet(ResultAccessReadOnlyProhibitedAddress(true), _FEA0_FEFF[((address & 0x00F0) >> 4) - 0xA]);
     }
     else if (address <= 0xFF7F)
     {
@@ -180,18 +203,22 @@ MemoryMap::AccessResultSet MemoryMap::WriteByte(const MemoryAddress& maddr, cons
         return accessResult;
     }
 
-    auto&      valueRef = const_cast<Byte&>(static_cast<const Byte&>(accessResult));
-    const Byte oldValue = valueRef;
-    valueRef            = value;
+    if (accessResult.IsResult<ResultAccessReadOnlyProhibitedAddress>())
+    {
+        return AccessResultSet(ResultAccessReadOnlyProhibitedAddress(false), static_cast<const Byte&>(accessResult));
+    }
+
+    auto& valueRef = const_cast<Byte&>(static_cast<const Byte&>(accessResult));
+    valueRef       = value;
 
     // Make sure we propagate prohibited access issues up
     if (accessResult.IsResult<ResultAccessProhibitedAddress>())
     {
-        return AccessResultSet(ResultAccessProhibitedAddress(true), oldValue);
+        return AccessResultSet(ResultAccessProhibitedAddress(true), valueRef);
     }
     else
     {
-        return AccessResultSet::DefaultResultSuccess(oldValue);
+        return AccessResultSet::DefaultResultSuccess(valueRef);
     }
 }
 
