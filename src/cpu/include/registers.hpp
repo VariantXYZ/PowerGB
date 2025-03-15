@@ -14,6 +14,29 @@ namespace pgb::cpu
 using namespace pgb::common::block;
 using namespace pgb::common::datatypes;
 
+enum RegisterType
+{
+    // 8-bit
+    IR,
+    IE,
+    A,
+    F,
+    B,
+    C,
+    D,
+    E,
+    H,
+    L,
+
+    // 16-bit
+    AF,
+    BC,
+    CD,
+    HL,
+    PC,
+    SP,
+};
+
 class RegisterFile
 {
 private:

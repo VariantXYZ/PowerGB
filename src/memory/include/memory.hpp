@@ -45,6 +45,7 @@ public:
     using ResultAccessInvalidAddress            = common::Result<"Address not in valid range">;
     using ResultAccessProhibitedAddress         = common::Result<"Accessing prohibited address">;
     using ResultAccessReadOnlyProhibitedAddress = common::Result<"Accessing read-only prohibited address">;
+    using ResultAccessCrossesRegionBoundary     = common::Result<"Access width would result in crossing region boundaries">;
     using AccessResultSet =
         common::ResultSet<
             /* Type */ const Byte&,
@@ -52,7 +53,18 @@ public:
             ResultAccessInvalidBank,
             ResultAccessInvalidAddress,
             ResultAccessProhibitedAddress,
-            ResultAccessReadOnlyProhibitedAddress>;
+            ResultAccessReadOnlyProhibitedAddress,
+            ResultAccessCrossesRegionBoundary>;
+
+    using WordAccessResultSet =
+        common::ResultSet<
+            /* Type */ const Word,
+            common::ResultSuccess,
+            ResultAccessInvalidBank,
+            ResultAccessInvalidAddress,
+            ResultAccessProhibitedAddress,
+            ResultAccessReadOnlyProhibitedAddress,
+            ResultAccessCrossesRegionBoundary>;
 
     //// Initialization
     using ResultInitializeInvalidAlignment     = common::Result<"ROM size is not a multiple of 0x4000">;
@@ -91,7 +103,7 @@ private:
     Block<0x80 * Byte::TypeWidth, Byte::TypeWidth>         _hram;
     Block<0x80 * Byte::TypeWidth, Byte::TypeWidth>         _io;
 
-    bool _isInitialized            = false;
+    bool _isInitialized                      = false;
 
     constexpr static const Byte _FEA0_FEFF[] = {0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
 
@@ -115,24 +127,34 @@ public:
 
     constexpr bool IsInitialized() { return _isInitialized; }
 
-    // Access a byte at a specific address, the stored result is only valid if it is marked successful.
+    // Access a byte at a specific address, the stored result is a reference and is only valid if it is marked successful.
     // ResultAccessInvalidBank is always a failure case.
     // ResultAccessInvalidAddress is always a failure case.
     // ResultAccessProhibitedAddress is sometimes returned as a failure case.
     // ResultAccessReadOnlyProhibitedAddress is never a failure case.
-    constexpr AccessResultSet AccessByte(const MemoryAddress&) const noexcept;
+    constexpr AccessResultSet ReadByte(const MemoryAddress&) const noexcept;
 
     // Write a byte at a specific address if it is accessible and returns the const reference to the value.
     // If the address is not accessible, the function will propagate the AccessByte error.
     // If access returns ResultAccessReadOnlyProhibitedAddress, the result of this function is a failure and the read value is in the result.
     // Note that this function will write as long as the address is within a valid range and the address is not ReadOnlyProhibited.
     constexpr AccessResultSet WriteByte(const MemoryAddress&, const Byte& value) noexcept;
+
+    // Access a word at a specific address, the stored result is a value and only valid if it is marked successful.
+    // Treats the value in memory as being stored as little endian, so a byteswap will happen prior to returning.
+    // The result behavior is the same as ReadByte except it can also return ResultAccessCrossesRegionBoundary which will never be a failure (consider it a warning).
+    constexpr WordAccessResultSet ReadWordLE(const MemoryAddress&) const noexcept;
+
+    // Write a word at a specific address if it is accessible and returns a value.
+    // Treats the value in memory as being stored as little endian, so a byteswap will happen prior to storing.
+    // The result behavior is the same as WriteByte, except ReadWordLE is used instead of ReadByte.
+    constexpr WordAccessResultSet WriteWordLE(const MemoryAddress&, const Word& value) noexcept;
 };
 
 namespace
 {
 template <std::size_t N>
-constexpr static bool IsValidBankCount(const std::size_t (&range)[N], std::size_t value)
+constexpr static bool IsValidRange(const std::size_t (&range)[N], std::size_t value)
 {
     return !(std::find(std::begin(range), std::end(range), value) == std::end(range));
 }
@@ -171,23 +193,23 @@ constexpr MemoryMap::InitializeResultSet MemoryMap::Initialize(std::size_t romBa
         return ResultInitializeAlreadyInitialized(false);
     }
 
-    if (!IsValidBankCount(ValidRomBankCount, romBankCount))
+    if (!IsValidRange(ValidRomBankCount, romBankCount))
     {
         return ResultInitializeInvalidRomBankCount(false);
     }
 
-    if (!IsValidBankCount(ValidVramBankCount, vramBankCount))
+    if (!IsValidRange(ValidVramBankCount, vramBankCount))
     {
         // Either 1 in GB or 2 in CGB
         return ResultInitializeInvalidVramBankCount(false);
     }
 
-    if (!IsValidBankCount(ValidExternalRamBankCount, eramBankCount))
+    if (!IsValidRange(ValidExternalRamBankCount, eramBankCount))
     {
         return ResultInitializeInvalidEramBankCount(false);
     }
 
-    if (!IsValidBankCount(ValidWramBankCount, wramBankCount))
+    if (!IsValidRange(ValidWramBankCount, wramBankCount))
     {
         // Either 2 in GB or 8 in CGB
         return ResultInitializeInvalidWramBankCount(false);
@@ -232,7 +254,7 @@ constexpr void MemoryMap::Reset() noexcept
     _isInitialized = false;
 }
 
-constexpr MemoryMap::AccessResultSet MemoryMap::AccessByte(const MemoryAddress& maddr) const noexcept
+constexpr MemoryMap::AccessResultSet MemoryMap::ReadByte(const MemoryAddress& maddr) const noexcept
 {
     auto bank    = maddr.bank;
     auto address = maddr.address;
@@ -272,7 +294,7 @@ constexpr MemoryMap::AccessResultSet MemoryMap::AccessByte(const MemoryAddress& 
             return AccessResultSet(ResultAccessInvalidBank(false), 0);
         }
 
-        auto value = AccessByte({bank, address});
+        auto value = ReadByte({bank, address});
         if (value.IsSuccess())
         {
             return AccessResultSet(ResultAccessProhibitedAddress(true), value);
@@ -318,7 +340,7 @@ constexpr MemoryMap::AccessResultSet MemoryMap::AccessByte(const MemoryAddress& 
 
 constexpr MemoryMap::AccessResultSet MemoryMap::WriteByte(const MemoryAddress& maddr, const Byte& value) noexcept
 {
-    AccessResultSet accessResult = AccessByte(maddr);
+    AccessResultSet accessResult = ReadByte(maddr);
     if (accessResult.IsFailure())
     {
         return accessResult;
@@ -341,6 +363,89 @@ constexpr MemoryMap::AccessResultSet MemoryMap::WriteByte(const MemoryAddress& m
     {
         return AccessResultSet::DefaultResultSuccess(valueRef);
     }
+}
+
+constexpr MemoryMap::WordAccessResultSet MemoryMap::ReadWordLE(const MemoryAddress& maddr) const noexcept
+{
+    uint_fast16_t bank    = maddr.bank;
+    uint_fast16_t address = maddr.address;
+
+    if (address == 0xFFFF)
+    {
+        return WordAccessResultSet(ResultAccessInvalidAddress(false), 0);
+    }
+
+    auto low = ReadByte(maddr);
+    if (low.IsFailure())
+    {
+
+        return static_cast<WordAccessResultSet>(low);
+    }
+
+    auto high = ReadByte({bank, ++address});
+    if (high.IsFailure())
+    {
+        return static_cast<WordAccessResultSet>(high);
+    }
+
+    Word w(high, low);
+
+    if (!IsValidRange({
+                          0x7FFF, // ROM Boundary
+                          0x9FFF, // VRAM Boundary
+                          0xBFFF, // ERAM Boundary
+                          0xDFFF, // WRAM Boundary
+                          0xFE9F, // OAM Boundary
+                          0xFF7F, // IO Boundary
+                          0xFFFE, // HRAM Boundary
+                      },
+                      address))
+    {
+        return WordAccessResultSet(ResultAccessCrossesRegionBoundary(true), w);
+    }
+
+    return WordAccessResultSet::DefaultResultSuccess(w);
+}
+
+constexpr MemoryMap::WordAccessResultSet MemoryMap::WriteWordLE(const MemoryAddress& maddr, const Word& value) noexcept
+{
+    uint_fast16_t bank    = maddr.bank;
+    uint_fast16_t address = maddr.address;
+
+    if (address == 0xFFFF)
+    {
+        return WordAccessResultSet(ResultAccessInvalidAddress(false), 0);
+    }
+
+    auto low = WriteByte(maddr, value.LowByte());
+    if (low.IsFailure())
+    {
+        return static_cast<WordAccessResultSet>(low);
+    }
+
+    auto high = WriteByte({bank, ++address}, value.HighByte());
+    if (high.IsFailure())
+    {
+        return static_cast<WordAccessResultSet>(high);
+    }
+
+    Word w(high, low);
+
+    if (!IsValidRange({
+                          0x7FFF, // ROM Boundary
+                          0x9FFF, // VRAM Boundary
+                          0xBFFF, // ERAM Boundary
+                          0xDFFF, // WRAM Boundary
+                          0xFE9F, // OAM Boundary
+                          0xFF7F, // IO Boundary
+                          0xFFFE, // HRAM Boundary
+                      },
+                      address))
+    {
+        return WordAccessResultSet(ResultAccessCrossesRegionBoundary(true), w);
+    }
+
+    return WordAccessResultSet::DefaultResultSuccess(w);
 }
 
 } // namespace pgb::memory

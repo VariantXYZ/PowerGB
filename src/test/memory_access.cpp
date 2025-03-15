@@ -1,11 +1,14 @@
-#include "common/result.hpp"
+
 #include <cstddef>
 #include <cstdint>
 #include <memory>
 
+#include <common/result.hpp>
 #include <cpu/include/registers.hpp>
 #include <memory/include/memory.hpp>
 #include <test/include/acutest.h>
+
+#include <iostream>
 
 using namespace pgb::memory;
 
@@ -16,6 +19,7 @@ void test_access_helper(void);
 void test_access_echo_ram(void);
 void test_access_FEA0_FEFF(void);
 void test_access_IE(void);
+void test_access_write_word(void);
 
 TEST_LIST = {
     {"Access Basic Tests", test_access_basic},
@@ -31,6 +35,7 @@ TEST_LIST = {
     {"Access I/O", test_access_helper<0, 0, 0xFF00, 0xFF7F, 0xFF>},
     {"Access HRAM", test_access_helper<0, 0, 0xFF80, 0xFFFE, 0xFF>},
     {"Access IE", test_access_IE},
+    {"Access Word Write", test_access_write_word},
     {NULL, NULL}
 };
 
@@ -43,21 +48,21 @@ void test_access_basic(void)
     // Invalid bank
     {
         // VRAM Bank 3 is invalid
-        auto r = mmap->AccessByte({3, 0x9000});
+        auto r = mmap->ReadByte({3, 0x9000});
         TEST_ASSERT(r.IsFailure());
         TEST_ASSERT(r.IsResult<MemoryMap::ResultAccessInvalidBank>());
     }
 
     // Simple R/W
     {
-        auto r = mmap->AccessByte({0, 0x3000});
+        auto r = mmap->ReadByte({0, 0x3000});
         TEST_ASSERT(r.IsSuccess());
         TEST_ASSERT(static_cast<const Byte&>(r) == 0);
 
         auto rW = mmap->WriteByte({0, 0x3000}, 26);
         TEST_ASSERT(rW.IsSuccess());
 
-        auto rR = mmap->AccessByte({0, 0x3000});
+        auto rR = mmap->ReadByte({0, 0x3000});
         TEST_ASSERT(rR.IsSuccess());
         TEST_ASSERT(static_cast<const Byte&>(rR) == 26);
     }
@@ -74,7 +79,7 @@ void test_access_helper(void)
     {
         for (std::uint_fast16_t address = AddressStart; address <= AddressEnd; ++address)
         {
-            auto r = mmap->AccessByte({bank, address});
+            auto r = mmap->ReadByte({bank, address});
             TEST_ASSERT(r.IsSuccess());
             TEST_ASSERT(r.IsResult<pgb::common::ResultSuccess>());
             TEST_ASSERT(static_cast<const Byte&>(r) == 0);
@@ -83,7 +88,7 @@ void test_access_helper(void)
             TEST_ASSERT(rW.IsSuccess());
             TEST_ASSERT(r.IsResult<pgb::common::ResultSuccess>());
 
-            auto rR = mmap->AccessByte({bank, address});
+            auto rR = mmap->ReadByte({bank, address});
             TEST_ASSERT(rR.IsSuccess());
             TEST_ASSERT(r.IsResult<pgb::common::ResultSuccess>());
             TEST_ASSERT(static_cast<const Byte&>(rR) == 0xFF);
@@ -103,11 +108,11 @@ void test_access_echo_ram(void)
     {
         auto echo_address = static_cast<uint_fast16_t>(address + 0x2000);
 
-        auto r            = mmap->AccessByte({0, address});
+        auto r            = mmap->ReadByte({0, address});
         TEST_ASSERT(r.IsSuccess());
         TEST_ASSERT(static_cast<const Byte&>(r) == 0);
 
-        auto rE = mmap->AccessByte({0, echo_address});
+        auto rE = mmap->ReadByte({0, echo_address});
         TEST_ASSERT(rE.IsSuccess());
         TEST_ASSERT(rE.IsResult<MemoryMap::ResultAccessProhibitedAddress>());
         TEST_ASSERT(static_cast<const Byte&>(rE) == 0);
@@ -116,7 +121,7 @@ void test_access_echo_ram(void)
         TEST_ASSERT(rW.IsSuccess());
         TEST_ASSERT(static_cast<const Byte&>(rW) == 2);
 
-        auto rER = mmap->AccessByte({0, echo_address});
+        auto rER = mmap->ReadByte({0, echo_address});
         TEST_ASSERT(rER.IsSuccess());
         TEST_ASSERT(rER.IsResult<MemoryMap::ResultAccessProhibitedAddress>());
         TEST_ASSERT(static_cast<const Byte&>(rER) == 2);
@@ -126,7 +131,7 @@ void test_access_echo_ram(void)
         TEST_ASSERT(rEW.IsResult<MemoryMap::ResultAccessProhibitedAddress>());
         TEST_ASSERT(static_cast<const Byte&>(rEW) == 1);
 
-        auto rR = mmap->AccessByte({0, address});
+        auto rR = mmap->ReadByte({0, address});
         TEST_ASSERT(rR.IsSuccess());
         TEST_ASSERT(static_cast<const Byte&>(rR) == 1);
     }
@@ -137,11 +142,11 @@ void test_access_echo_ram(void)
         {
             auto echo_address = static_cast<uint_fast16_t>(address + 0x2000);
 
-            auto r            = mmap->AccessByte({bank, address});
+            auto r            = mmap->ReadByte({bank, address});
             TEST_ASSERT(r.IsSuccess());
             TEST_ASSERT(static_cast<const Byte&>(r) == 0);
 
-            auto rE = mmap->AccessByte({bank, echo_address});
+            auto rE = mmap->ReadByte({bank, echo_address});
             TEST_ASSERT(rE.IsSuccess());
             TEST_ASSERT(rE.IsResult<MemoryMap::ResultAccessProhibitedAddress>());
             TEST_ASSERT(static_cast<const Byte&>(rE) == 0);
@@ -150,7 +155,7 @@ void test_access_echo_ram(void)
             TEST_ASSERT(rW.IsSuccess());
             TEST_ASSERT(static_cast<const Byte&>(rW) == 2);
 
-            auto rER = mmap->AccessByte({bank, echo_address});
+            auto rER = mmap->ReadByte({bank, echo_address});
             TEST_ASSERT(rER.IsSuccess());
             TEST_ASSERT(rER.IsResult<MemoryMap::ResultAccessProhibitedAddress>());
             TEST_ASSERT(static_cast<const Byte&>(rER) == 2);
@@ -160,7 +165,7 @@ void test_access_echo_ram(void)
             TEST_ASSERT(rEW.IsResult<MemoryMap::ResultAccessProhibitedAddress>());
             TEST_ASSERT(static_cast<const Byte&>(rEW) == 1);
 
-            auto rR = mmap->AccessByte({bank, address});
+            auto rR = mmap->ReadByte({bank, address});
             TEST_ASSERT(rR.IsSuccess());
             TEST_ASSERT(static_cast<const Byte&>(rR) == 1);
         }
@@ -181,7 +186,7 @@ void test_access_FEA0_FEFF(void)
         for (std::uint_fast16_t address = 0xFEA0; address < 0xFF00; ++address)
         {
             auto value = _FEA0_FEFF[((address & 0x00F0) >> 4) - 0xA];
-            auto r     = mmap->AccessByte({bank, address});
+            auto r     = mmap->ReadByte({bank, address});
             TEST_ASSERT(r.IsSuccess());
             TEST_ASSERT(r.IsResult<MemoryMap::ResultAccessReadOnlyProhibitedAddress>());
             TEST_ASSERT(static_cast<const Byte&>(r) == value);
@@ -196,7 +201,7 @@ void test_access_IE(void)
     auto mmap      = std::make_unique<MemoryMap>(*cpu);
     TEST_ASSERT(mmap->Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
-    auto r = mmap->AccessByte({0, 0xFFFF});
+    auto r = mmap->ReadByte({0, 0xFFFF});
     TEST_ASSERT(r.IsSuccess());
     TEST_ASSERT(static_cast<const Byte&>(r) == 0);
     TEST_ASSERT(static_cast<const Byte&>(r) == const_cpu->IE());
@@ -205,8 +210,29 @@ void test_access_IE(void)
     TEST_ASSERT(rW.IsSuccess());
     TEST_ASSERT(static_cast<const Byte&>(rW) == 0xFF);
     TEST_ASSERT(static_cast<const Byte&>(rW) == const_cpu->IE());
-    
-    auto rR = mmap->AccessByte({0, 0xFFFF});
+
+    auto rR = mmap->ReadByte({0, 0xFFFF});
     TEST_ASSERT(rR.IsSuccess());
     TEST_ASSERT(static_cast<const Byte&>(rR) == 0xFF);
+}
+
+void test_access_write_word(void)
+{
+    auto cpu  = std::make_unique<pgb::cpu::RegisterFile>();
+    auto mmap = std::make_unique<MemoryMap>(*cpu);
+    TEST_ASSERT(mmap->Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+
+    Word w{0x12, 0x34};
+
+    auto r = mmap->ReadWordLE({0, 0xD000});
+    TEST_ASSERT(r.IsSuccess());
+    TEST_ASSERT(static_cast<const Word>(r) == 0x0000);
+
+    auto rW = mmap->WriteWordLE({0, 0xD000}, w);
+    TEST_ASSERT(rW.IsSuccess());
+    TEST_ASSERT(static_cast<const Word>(rW) == 0x1234);
+
+    auto rR = mmap->ReadWordLE({0, 0xD000});
+    TEST_ASSERT(rR.IsSuccess());
+    TEST_ASSERT(static_cast<const Word>(rR) == 0x1234);
 }
