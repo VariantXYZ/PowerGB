@@ -87,4 +87,17 @@ void test_resultset_casting(void)
         TEST_CHECK(a == 0x23);
         TEST_CHECK(result == a);
     }
+
+    // To different result type
+    {
+        using ResultSetTestInt   = ResultSet<int, ResultSuccess>;
+        using ResultSetTestFloat = ResultSet<float, ResultSuccess, ResultFailure>;
+
+        int  a                   = 255;
+        auto resultInt           = ResultSetTestInt::DefaultResultSuccess(a);
+        TEST_CHECK(static_cast<int>(resultInt) == 0xFF);
+
+        auto resultFloat = static_cast<ResultSetTestFloat>(resultInt);
+        TEST_CHECK(static_cast<float>(resultFloat) == 255.0f);
+    }
 }

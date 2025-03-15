@@ -2,7 +2,6 @@
 
 #include <concepts>
 #include <cstddef>
-#include <iterator>
 #include <tuple>
 #include <type_traits>
 #include <variant>
@@ -89,6 +88,25 @@ public:
     {
     }
 
+    template <typename T, ResultType... R>
+    constexpr operator ResultSet<T, R...>() noexcept
+        requires(!std::is_void_v<Type> && !std::is_void_v<T>)
+    {
+        using NewResultSetType    = ResultSet<T, R...>;
+        using NewResultSetVisitor = NewResultSetType (*)(T, std::size_t);
+        NewResultSetVisitor fn[]  = {[](T t, std::size_t idx)
+                                     { return NewResultSetType(Results(_isSuccessVisitor[idx]), t); }...
+        };
+        return fn[_result.index()](static_cast<T>(_value), _result.index());
+    }
+
+    template <typename T, ResultType... R>
+    constexpr operator ResultSet<T, R...>() noexcept
+        requires(std::is_void_v<Type> || std::is_void_v<T>)
+    {
+        return ResultSet<T, R...>(_result);
+    }
+
     template <ResultType Rx>
     constexpr ResultSet(const Rx& result) noexcept
         requires((std::is_same_v<Rx, Results> || ...) && std::is_void_v<Type>)
@@ -153,5 +171,13 @@ public:
         return std::holds_alternative<Rx>(_result);
     }
 };
+
+template <class R>
+concept ResultSetType =
+    requires(R r) {
+        {
+            ResultSet{r}
+        } -> std::same_as<R>;
+    };
 
 } // namespace pgb::common

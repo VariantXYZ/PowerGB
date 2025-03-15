@@ -24,7 +24,7 @@ struct Datatype
     constexpr Datatype()                   = default;
     constexpr Datatype(Type value) : data(value) {};
 
-    [[nodiscard]] operator Type() const noexcept { return data; }
+    [[nodiscard]] constexpr operator Type() const noexcept { return data; }
 
     constexpr Datatype& operator++() noexcept
     {
