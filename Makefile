@@ -79,7 +79,7 @@ $(BUILD_DIR)/lib$(PROJECT_NAME)_%$(LIB_TYPE): $(filter $*%$(INT_TYPE),$(OBJECTS)
 # build/module.X depends on module/X.cpp, and optionally: X.hpp, module/include/*.hpp, common/*, and anything flagged under module_X_ADDITIONAL, module_ADDITIONAL
 .SECONDEXPANSION:
 $(BUILD_DIR)/%.cxx$(INT_TYPE): $(SRC_DIR)/$$(firstword $$(subst ., ,$$*))/$$(lastword $$(subst ., ,$$*))$(CXX_SOURCE_TYPE) $(wildcard $(SRC_DIR)/$$(firstword $$(subst ., ,$$*))/$$(lastword $$(subst ., ,$$*))$(CXX_HEADER_TYPE)) $$(wildcard $(SRC_DIR)/$$(firstword $$(subst ., ,$$*))/include/*$(CPP_HEADER_TYPE)) $(COMMON_SRC) $$($$(firstword $$(subst ., ,$$*))_ADDITIONAL) $$($$(firstword $$(subst ., ,$$*))_$$(lastword $$(subst ., ,$$*))_ADDITIONAL) | $$(patsubst $$(pc)/,$$(pc),$$(dir $$@))
-	$(CXX) $(CC_OPT_FLAGS) -fno-exceptions -std=c++20 -Wall -Wextra -fno-exceptions $(CXXFLAGS) -I$(SRC_DIR) -o $@ -c $<
+	$(CXX) $(CC_OPT_FLAGS) -fno-exceptions -std=c++20 -Wall -Wextra -Werror -fno-exceptions $(CXXFLAGS) -I$(SRC_DIR) -o $@ -c $<
 
 #Make directories if necessary
 $(BUILD_DIR):
