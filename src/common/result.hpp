@@ -102,7 +102,20 @@ public:
 
     template <typename T, ResultType... R>
     constexpr operator ResultSet<T, R...>() noexcept
-        requires(std::is_void_v<Type> || std::is_void_v<T>)
+        requires(!std::is_void_v<Type> && std::is_void_v<T>)
+    {
+        using NewResultSetType    = ResultSet<T, R...>;
+        using NewResultSetVisitor = NewResultSetType (*)(std::size_t);
+        NewResultSetVisitor fn[]  = {[](std::size_t idx)
+                                     { return NewResultSetType(Results(_isSuccessVisitor[idx])); }...
+        };
+        // Casting to void throws away the underlying value
+        return fn[_result.index()](_result.index());
+    }
+
+    template <typename T, ResultType... R>
+    constexpr operator ResultSet<T, R...>() noexcept
+        requires(std::is_void_v<Type> && std::is_void_v<T>)
     {
         return ResultSet<T, R...>(_result);
     }

@@ -21,11 +21,12 @@ constexpr static bool IsLittleEndian() noexcept
     return std::bit_cast<Bytes>(data).b[0] == std::byte{1};
 }
 
-template <size_t N>
+template <std::size_t N>
 struct StringLiteral
 {
 public:
-    char value[N];
+    char                         value[N];
+    static constexpr std::size_t Size = N;
     constexpr StringLiteral(const char (&str)[N]) noexcept
     {
         std::copy_n(str, N, value);

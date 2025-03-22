@@ -42,6 +42,7 @@ private:
     using OperationVisitor                          = bool (*)(memory::MemoryMap&);
     static constexpr OperationVisitor _operations[] = {[](memory::MemoryMap& memory)
                                                        { return Operations(memory).IsSuccess(); }...};
+
 public:
     static constexpr std::size_t Ticks = sizeof...(Operations);
     Instruction()                      = delete;
@@ -68,5 +69,13 @@ public:
         return _operations[T](memory);
     }
 };
+
+template <class I>
+concept InstructionType =
+    requires(I i) {
+        {
+            Instruction{i}
+        } -> std::same_as<I>;
+    };
 
 } // namespace pgb::cpu

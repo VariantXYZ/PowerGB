@@ -100,4 +100,17 @@ void test_resultset_casting(void)
         auto resultFloat = static_cast<ResultSetTestFloat>(resultInt);
         TEST_CHECK(static_cast<float>(resultFloat) == 255.0f);
     }
+
+    // To a void result type
+    {
+        using ResultSetTestInt   = ResultSet<int, ResultSuccess>;
+        using ResultSetTestVoid = ResultSet<void, ResultSuccess, ResultFailure>;
+
+        int  a                   = 255;
+        auto resultInt           = ResultSetTestInt::DefaultResultSuccess(a);
+        TEST_CHECK(static_cast<int>(resultInt) == 0xFF);
+
+        auto resultVoid = static_cast<ResultSetTestVoid>(resultInt);
+        TEST_CHECK(resultVoid.IsResult<ResultSuccess>());
+    }
 }
