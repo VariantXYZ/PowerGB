@@ -67,6 +67,30 @@ void test_access_basic(void)
         TEST_ASSERT(rR.IsSuccess());
         TEST_ASSERT(static_cast<const Byte&>(rR) == 26);
     }
+
+    // Simple R/W with set bank
+    {
+        auto r = mmap->ReadByte({2, 0x4001});
+        TEST_ASSERT(r.IsSuccess());
+        TEST_ASSERT(static_cast<const Byte&>(r) == 0);
+
+        TEST_ASSERT(mmap->SetRomBank(2).IsSuccess());
+        auto rW = mmap->WriteByte(0x4001, 26);
+        TEST_ASSERT(rW.IsSuccess());
+
+        auto rR = mmap->ReadByte({2, 0x4001});
+        TEST_ASSERT(rR.IsSuccess());
+        TEST_ASSERT(static_cast<const Byte&>(rR) == 26);
+
+        auto rR2 = mmap->ReadByte(0x4001);
+        TEST_ASSERT(rR2.IsSuccess());
+        TEST_ASSERT(static_cast<const Byte&>(rR2) == 26);
+
+        TEST_ASSERT(mmap->SetRomBank(1).IsSuccess());
+        auto rR3 = mmap->ReadByte(0x4001);
+        TEST_ASSERT(rR3.IsSuccess());
+        TEST_ASSERT(static_cast<const Byte&>(rR3) == 0);
+    }
 }
 
 template <std::uint_fast16_t BankStart, std::uint_fast16_t BankEnd, std::uint_fast16_t AddressStart, std::uint_fast16_t AddressEnd, std::uint_fast8_t Value>
@@ -109,7 +133,7 @@ void test_access_echo_ram(void)
     {
         auto echo_address = static_cast<uint_fast16_t>(address + 0x2000);
 
-        auto r            = mmap->ReadByte({0, address});
+        auto r            = mmap->ReadByte(address);
         TEST_ASSERT(r.IsSuccess());
         TEST_ASSERT(static_cast<const Byte&>(r) == 0);
 

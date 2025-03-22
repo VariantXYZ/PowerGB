@@ -107,6 +107,30 @@ void MemoryMap::Reset() noexcept
     _isInitialized = false;
 }
 
+MemoryMap::BankSetResultSet MemoryMap::SetRomBank(std::uint_fast16_t bank) noexcept
+{
+    if (bank >= _romBankCount)
+    {
+        return ResultAccessInvalidBank(false);
+    }
+
+    _romBankSelect = bank;
+
+    return BankSetResultSet::DefaultResultSuccess();
+}
+
+MemoryMap::BankSetResultSet MemoryMap::SetEramBank(std::uint_fast16_t bank) noexcept
+{
+    if (bank >= _eramBankCount)
+    {
+        return ResultAccessInvalidBank(false);
+    }
+
+    _eramBankSelect = bank;
+
+    return BankSetResultSet::DefaultResultSuccess();
+}
+
 MemoryMap::AccessResultSet MemoryMap::ReadByte(const MemoryAddress& maddr, bool useCurrentBank) const noexcept
 {
     std::uint_fast16_t address = maddr.address;
