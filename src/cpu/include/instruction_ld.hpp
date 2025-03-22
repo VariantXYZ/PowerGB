@@ -19,7 +19,7 @@ concept LdOperand = std::is_same_v<decltype(V), RegisterType> || std::is_same_v<
 template <auto V>
 concept LdOperandIs8Bit = !std::is_same_v<decltype(V), RegisterType> || cpu::IsRegister8Bit<V>;
 
-// This must 
+// This must
 template <typename T>
 using LoadResultSet =
     common::ResultSet<
@@ -32,8 +32,8 @@ using LoadResultSet =
         MemoryMap::ResultAccessCrossesRegionBoundary,
         MemoryMap::ResultAccessRegisterInvalidWidth>;
 
-using ResultInstructionLoadRegister8  = LoadResultSet<const Byte>;
-using ResultInstructionLoadRegister16 = LoadResultSet<const Word>;
+using ResultInstructionLoadRegister8    = LoadResultSet<const Byte>;
+using ResultInstructionLoadRegister16   = LoadResultSet<const Word>;
 using ResultInstructionLoadRegisterVoid = LoadResultSet<void>;
 
 // 8 -> 8
@@ -67,15 +67,21 @@ template <auto Destination, auto Source>
     requires(IsRegister8Bit<Destination> && IsRegister16Bit<Source>)
 constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap)
 {
-    const Word address = mmap.ReadWord(Source);
-    auto src = mmap.ReadByte({ mmap.RomBankSelect, address });
-
+    auto src = mmap.ReadWord(Source);
     if (src.IsFailure())
     {
         return src;
     }
 
-    return mmap.WriteByte(Destination, static_cast<const Byte>(src));
+    const Word address = static_cast<Word>(src);
+
+    auto result        = mmap.ReadByte(static_cast<uint_fast16_t>(address));
+    if (result.IsFailure())
+    {
+        return result;
+    }
+
+    return mmap.WriteByte(Destination, static_cast<const Byte&>(result));
 }
 
 // 8 -> [Reg16]
@@ -88,14 +94,15 @@ constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap)
     {
         return src;
     }
-    
+
     auto dstAddr = mmap.ReadWord(Destination);
     if (dstAddr.IsFailure())
     {
         return dstAddr;
     }
+    const Word w = static_cast<Word>(dstAddr);
 
-    return mmap.WriteByte(Destination, static_cast<const Byte>(src));
+    return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), static_cast<const Byte>(src));
 }
 
 template <auto Destination, auto Source>

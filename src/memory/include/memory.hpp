@@ -58,6 +58,12 @@ public:
             ResultAccessReadOnlyProhibitedAddress,
             ResultAccessCrossesRegionBoundary>;
 
+    using BankSetResultSet =
+        common::ResultSet<
+            void,
+            common::ResultSuccess,
+            ResultAccessInvalidBank>;
+
     using AccessResultSet                  = BaseAccessResultSet<const Byte&>;
     using WriteAccessResultSet             = BaseAccessResultSet<const Byte>;
     using WordAccessResultSet              = BaseAccessResultSet<const Word>;
@@ -91,6 +97,12 @@ public:
             ResultInitializeInvalidEramBankCount,
             ResultInitializeInvalidWramBankCount>;
 
+    struct MemoryAddress
+    {
+        uint_fast16_t bank : std::bit_width(static_cast<uint_fast16_t>(MaxBankValue));
+        uint_fast16_t address : std::bit_width(static_cast<uint_fast16_t>(MaxAddressValue));
+    };
+
 private:
     // The bus maps references to the CPU IE
     cpu::RegisterFile& _registers;
@@ -99,6 +111,10 @@ private:
     std::size_t _vramBankCount;
     std::size_t _eramBankCount;
     std::size_t _wramBankCount;
+
+    // VRAM/WRAM bank select is managed by IO registers
+    std::uint_fast16_t _romBankSelect : std::bit_width(static_cast<uint_fast16_t>(MaxRomBankCount));
+    std::uint_fast16_t _eramBankSelect : std::bit_width(static_cast<uint_fast16_t>(MaxEramBankCount));
 
     // IO Registers should be handled as individual registers
     // We could be more memory efficient, but doing this allows for statically allocating this entire class
@@ -114,13 +130,12 @@ private:
 
     constexpr static const Byte _FEA0_FEFF[] = {0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
 
-public:
-    struct MemoryAddress
-    {
-        uint_fast16_t bank : std::bit_width(static_cast<uint_fast16_t>(MaxBankValue));
-        uint_fast16_t address : std::bit_width(static_cast<uint_fast16_t>(MaxAddressValue));
-    };
+    AccessResultSet      ReadByte(const MemoryAddress&, bool) const noexcept;
+    WriteAccessResultSet WriteByte(const MemoryAddress&, const Byte&, bool) noexcept;
+    WordAccessResultSet  ReadWordLE(const MemoryAddress&, bool) const noexcept;
+    WordAccessResultSet  WriteWordLE(const MemoryAddress&, const Word&, bool) noexcept;
 
+public:
     constexpr MemoryMap(cpu::RegisterFile& registers) noexcept
         : _registers(registers) {}
 
@@ -140,10 +155,6 @@ public:
     {
     }
 
-    // VRAM/WRAM bank select is managed by IO registers
-    std::uint_fast16_t RomBankSelect : std::bit_width(static_cast<uint_fast16_t>(MaxRomBankCount));
-    std::uint_fast16_t EramBankSelect : std::bit_width(static_cast<uint_fast16_t>(MaxEramBankCount));
-
     // Initialize memory based on an input ROM, will handle parsing the cartridge header to pull necessary metadata
     // All non-default results (anything that is not ResultSuccess) are considered failure cases and will not initialize the map
     InitializeResultSet Initialize(const Byte (&rom)[], const std::size_t size) noexcept;
@@ -154,28 +165,47 @@ public:
 
     bool IsInitialized() { return _isInitialized; }
 
+    // Sets the active ROM Bank
+    // ResultAccessInvalidBank is always a failure case.
+    BankSetResultSet SetRomBank(std::uint_fast16_t) noexcept;
+
+    // Sets the active ERAM Bank
+    // ResultAccessInvalidBank is always a failure case.
+    BankSetResultSet SetEramBank(std::uint_fast16_t) noexcept;
+
+    auto GetEramBank() const noexcept { return static_cast<std::uint_fast16_t>(_eramBankSelect); }
+    auto GetRomBank() const noexcept { return static_cast<std::uint_fast16_t>(_romBankSelect); };
+
     // Access a byte at a specific address, the stored result is a reference and is only valid if it is marked successful.
     // ResultAccessInvalidBank is always a failure case.
     // ResultAccessInvalidAddress is always a failure case.
     // ResultAccessProhibitedAddress is sometimes returned as a failure case.
     // ResultAccessReadOnlyProhibitedAddress is never a failure case.
     AccessResultSet ReadByte(const MemoryAddress&) const noexcept;
+    // Same as above, but use the active bank
+    AccessResultSet ReadByte(const std::uint_fast16_t) const noexcept;
 
     // Write a byte at a specific address if it is accessible and returns the previous value.
     // If the address is not accessible, the function will propagate the AccessByte error.
     // If access returns ResultAccessReadOnlyProhibitedAddress, the result of this function is a failure and the read value is in the result.
     // Note that this function will write as long as the address is within a valid range and the address is not ReadOnlyProhibited.
-    WriteAccessResultSet WriteByte(const MemoryAddress&, const Byte& value) noexcept;
+    WriteAccessResultSet WriteByte(const MemoryAddress&, const Byte&) noexcept;
+    // Same as above, but use the active bank
+    WriteAccessResultSet WriteByte(const std::uint_fast16_t, const Byte&) noexcept;
 
     // Access a word at a specific address, the stored result is a value and only valid if it is marked successful.
     // Treats the value in memory as being stored as little endian, so a byteswap will happen prior to returning.
     // The result behavior is the same as ReadByte except it can also return ResultAccessCrossesRegionBoundary which will never be a failure (consider it a warning).
     WordAccessResultSet ReadWordLE(const MemoryAddress&) const noexcept;
+    // Same as above, but use the active bank
+    WordAccessResultSet ReadWordLE(const std::uint_fast16_t) const noexcept;
 
     // Write a word at a specific address if it is accessible and returns the previous value.
     // Treats the value in memory as being stored as little endian, so a byteswap will happen prior to storing.
     // The result behavior is the same as WriteByte, except ReadWordLE is used instead of ReadByte.
-    WordAccessResultSet WriteWordLE(const MemoryAddress&, const Word& value) noexcept;
+    WordAccessResultSet WriteWordLE(const MemoryAddress&, const Word&) noexcept;
+    // Same as above, but use the active bank
+    WordAccessResultSet WriteWordLE(const std::uint_fast16_t, const Word&) noexcept;
 
     // Read byte stored in 8-bit register, the stored result is a value and only valid if it is marked successful.
     // Returns ResultAccessRegisterInvalidWidth if this register is not accessible at that width.

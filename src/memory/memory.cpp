@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <memory/include/memory.hpp>
 
 namespace pgb::memory
@@ -106,10 +107,9 @@ void MemoryMap::Reset() noexcept
     _isInitialized = false;
 }
 
-MemoryMap::AccessResultSet MemoryMap::ReadByte(const MemoryAddress& maddr) const noexcept
+MemoryMap::AccessResultSet MemoryMap::ReadByte(const MemoryAddress& maddr, bool useCurrentBank) const noexcept
 {
-    auto bank    = maddr.bank;
-    auto address = maddr.address;
+    std::uint_fast16_t address = maddr.address;
 
     if (address <= 0x3FFF)
     {
@@ -117,14 +117,17 @@ MemoryMap::AccessResultSet MemoryMap::ReadByte(const MemoryAddress& maddr) const
     }
     else if (address <= 0x7FFF)
     {
+        std::uint_fast16_t bank = useCurrentBank ? GetRomBank() : maddr.bank;
         return (bank >= _romBankCount) ? AccessResultSet(ResultAccessInvalidBank(false), 0) : AccessResultSet::DefaultResultSuccess(_rom[bank][address - 0x4000]);
     }
     else if (address <= 0x9FFF)
     {
+        std::uint_fast16_t bank = useCurrentBank ? _io[0x4F].data : maddr.bank;
         return (bank >= _vramBankCount) ? AccessResultSet(ResultAccessInvalidBank(false), 0) : AccessResultSet::DefaultResultSuccess(_vram[bank][address - 0x8000]);
     }
     else if (address <= 0xBFFF)
     {
+        std::uint_fast16_t bank = useCurrentBank ? GetEramBank() : maddr.bank;
         return bank >= _eramBankCount ? AccessResultSet(ResultAccessInvalidBank(false), 0) : AccessResultSet::DefaultResultSuccess(_eram[bank][address - 0xA000]);
     }
     else if (address <= 0xCFFF)
@@ -133,10 +136,12 @@ MemoryMap::AccessResultSet MemoryMap::ReadByte(const MemoryAddress& maddr) const
     }
     else if (address <= 0xDFFF)
     {
+        std::uint_fast16_t bank = useCurrentBank ? _io[0x70].data : maddr.bank;
         return bank >= _wramBankCount ? AccessResultSet(ResultAccessInvalidBank(false), 0) : AccessResultSet::DefaultResultSuccess(_wram[bank][address - 0xD000]);
     }
     else if (address <= 0xFDFF)
     {
+        std::uint_fast16_t bank = useCurrentBank ? _io[0x70].data : maddr.bank;
         // Echo RAM
         // From pandocs: "The range E000-FDFF is mapped to WRAM, but only the lower 13 bits of the address lines are connected"
         // Return a prohibited address warning, but otherwise the value is still returned
@@ -190,9 +195,12 @@ MemoryMap::AccessResultSet MemoryMap::ReadByte(const MemoryAddress& maddr) const
     }
 }
 
-MemoryMap::WriteAccessResultSet MemoryMap::WriteByte(const MemoryAddress& maddr, const Byte& value) noexcept
+MemoryMap::AccessResultSet MemoryMap::ReadByte(const MemoryAddress& maddr) const noexcept { return ReadByte(maddr, false); }
+MemoryMap::AccessResultSet MemoryMap::ReadByte(const std::uint_fast16_t address) const noexcept { return ReadByte({0, address}, true); }
+
+MemoryMap::WriteAccessResultSet MemoryMap::WriteByte(const MemoryAddress& maddr, const Byte& value, bool useCurrentBank) noexcept
 {
-    AccessResultSet accessResult = ReadByte(maddr);
+    AccessResultSet accessResult = ReadByte(maddr, useCurrentBank);
     if (accessResult.IsFailure())
     {
         return accessResult;
@@ -218,7 +226,10 @@ MemoryMap::WriteAccessResultSet MemoryMap::WriteByte(const MemoryAddress& maddr,
     }
 }
 
-MemoryMap::WordAccessResultSet MemoryMap::ReadWordLE(const MemoryAddress& maddr) const noexcept
+MemoryMap::WriteAccessResultSet MemoryMap::WriteByte(const MemoryAddress& maddr, const Byte& value) noexcept { return WriteByte(maddr, value, false); }
+MemoryMap::WriteAccessResultSet MemoryMap::WriteByte(const std::uint_fast16_t address, const Byte& value) noexcept { return WriteByte({0, address}, value, true); }
+
+MemoryMap::WordAccessResultSet MemoryMap::ReadWordLE(const MemoryAddress& maddr, bool useCurrentBank) const noexcept
 {
     uint_fast16_t bank    = maddr.bank;
     uint_fast16_t address = maddr.address;
@@ -235,7 +246,7 @@ MemoryMap::WordAccessResultSet MemoryMap::ReadWordLE(const MemoryAddress& maddr)
         return static_cast<WordAccessResultSet>(low);
     }
 
-    auto high = ReadByte({bank, ++address});
+    auto high = ReadByte({bank, ++address}, useCurrentBank);
     if (high.IsFailure())
     {
         return static_cast<WordAccessResultSet>(high);
@@ -259,8 +270,10 @@ MemoryMap::WordAccessResultSet MemoryMap::ReadWordLE(const MemoryAddress& maddr)
 
     return WordAccessResultSet::DefaultResultSuccess(w);
 }
+MemoryMap::WordAccessResultSet MemoryMap::ReadWordLE(const MemoryAddress& maddr) const noexcept { return ReadWordLE(maddr, false); }
+MemoryMap::WordAccessResultSet MemoryMap::ReadWordLE(const std::uint_fast16_t address) const noexcept { return ReadWordLE({0, address}, true); }
 
-MemoryMap::WordAccessResultSet MemoryMap::WriteWordLE(const MemoryAddress& maddr, const Word& value) noexcept
+MemoryMap::WordAccessResultSet MemoryMap::WriteWordLE(const MemoryAddress& maddr, const Word& value, bool useCurrentBank) noexcept
 {
     uint_fast16_t bank    = maddr.bank;
     uint_fast16_t address = maddr.address;
@@ -276,7 +289,7 @@ MemoryMap::WordAccessResultSet MemoryMap::WriteWordLE(const MemoryAddress& maddr
         return static_cast<WordAccessResultSet>(low);
     }
 
-    auto high = WriteByte({bank, ++address}, value.HighByte());
+    auto high = WriteByte({bank, ++address}, value.HighByte(), useCurrentBank);
     if (high.IsFailure())
     {
         return static_cast<WordAccessResultSet>(high);
@@ -300,6 +313,9 @@ MemoryMap::WordAccessResultSet MemoryMap::WriteWordLE(const MemoryAddress& maddr
 
     return WordAccessResultSet::DefaultResultSuccess(w);
 }
+
+MemoryMap::WordAccessResultSet MemoryMap::WriteWordLE(const MemoryAddress& maddr, const Word& value) noexcept { return WriteWordLE(maddr, value, false); }
+MemoryMap::WordAccessResultSet MemoryMap::WriteWordLE(const std::uint_fast16_t address, const Word& value) noexcept { return WriteWordLE({0, address}, value, true); }
 
 MemoryMap::Register8AccessResultSet MemoryMap::ReadByte(const cpu::RegisterType& type) const noexcept
 {
