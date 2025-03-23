@@ -23,8 +23,8 @@ namespace pgb::cpu::instruction
 template <util::StringLiteral Name, std::uint_fast8_t OpCode, InstructionType InstructionHandler>
 class InstructionDecoder
 {
+public:
     InstructionDecoder()              = delete;
-
     constexpr static auto Instruction = Name.value;
     constexpr static auto Bytes       = OpCode;
 
