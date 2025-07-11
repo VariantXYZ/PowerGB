@@ -279,13 +279,13 @@ MemoryMap::WordAccessResultSet MemoryMap::ReadWordLE(const MemoryAddress& maddr,
     Word w(high, low);
 
     if (!IsValidRange({
-                          0x7FFF, // ROM Boundary
-                          0x9FFF, // VRAM Boundary
-                          0xBFFF, // ERAM Boundary
-                          0xDFFF, // WRAM Boundary
-                          0xFE9F, // OAM Boundary
-                          0xFF7F, // IO Boundary
-                          0xFFFE, // HRAM Boundary
+                          RomXBoundary,
+                          VramBoundary,
+                          EramBoundary,
+                          WramXBoundary,
+                          OamBoundary,
+                          IOBoundary,
+                          HramBoundary,
                       },
                       address))
     {
@@ -322,13 +322,13 @@ MemoryMap::WordAccessResultSet MemoryMap::WriteWordLE(const MemoryAddress& maddr
     Word w(high, low);
 
     if (!IsValidRange({
-                          0x7FFF, // ROM Boundary
-                          0x9FFF, // VRAM Boundary
-                          0xBFFF, // ERAM Boundary
-                          0xDFFF, // WRAM Boundary
-                          0xFE9F, // OAM Boundary
-                          0xFF7F, // IO Boundary
-                          0xFFFE, // HRAM Boundary
+                          RomXBoundary,
+                          VramBoundary,
+                          EramBoundary,
+                          WramXBoundary,
+                          OamBoundary,
+                          IOBoundary,
+                          HramBoundary,
                       },
                       address))
     {

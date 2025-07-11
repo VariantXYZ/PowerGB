@@ -32,6 +32,20 @@ constexpr static std::size_t RomBankSize                       = 0x4000;
 constexpr static std::size_t VramBankSize                      = 0x2000;
 constexpr static std::size_t EramBankSize                      = 0x2000;
 constexpr static std::size_t WramBankSize                      = 0x1000;
+constexpr static std::size_t OamSize                           = 0xA0;
+constexpr static std::size_t IOSize                            = 0x80;
+constexpr static std::size_t HramSize                          = 0x7F;
+
+constexpr static std::size_t Rom0Boundary                      = 0x3FFF;
+constexpr static std::size_t RomXBoundary                      = Rom0Boundary + RomBankSize;
+constexpr static std::size_t VramBoundary                      = RomXBoundary + VramBankSize;
+constexpr static std::size_t EramBoundary                      = VramBoundary + EramBankSize;
+constexpr static std::size_t Wram0Boundary                     = EramBoundary + WramBankSize;
+constexpr static std::size_t WramXBoundary                     = Wram0Boundary + WramBankSize;
+constexpr static std::size_t OamBoundary                       = 0xFE00 + OamSize - 1;
+// FEA0 to FEFF is prohibited
+constexpr static std::size_t IOBoundary                        = 0xFF00 + IOSize - 1;
+constexpr static std::size_t HramBoundary                      = IOBoundary + HramSize;
 
 // GB has a 16-bit address space to map IO, ROM, & RAM
 // This class provides an interface to the raw underlying memory representation of this address space.
