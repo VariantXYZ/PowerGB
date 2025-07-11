@@ -1,6 +1,7 @@
 #pragma once
 
 #include "cpu/include/decoder.hpp"
+#include "cpu/include/instruction_nop.hpp"
 #include <type_traits>
 
 #include <common/result.hpp>
@@ -113,8 +114,19 @@ using Ld = Instruction<
     NoOp,
     NoOp>;
 
+// TODO: Confirm identity loads are actually just NoOps
+using Ld_A_A_Decoder  = InstructionDecoder<"ld a, a", 0x7F, NOP>;
+using Ld_B_B_Decoder  = InstructionDecoder<"ld b, b", 0x40, NOP>;
+using Ld_C_C_Decoder  = InstructionDecoder<"ld c, c", 0x49, NOP>;
+using Ld_D_D_Decoder  = InstructionDecoder<"ld d, d", 0x52, NOP>;
+using Ld_E_E_Decoder  = InstructionDecoder<"ld e, e", 0x5B, NOP>;
+using Ld_H_H_Decoder  = InstructionDecoder<"ld h, h", 0x64, NOP>;
+using Ld_L_L_Decoder  = InstructionDecoder<"ld l, l", 0x6D, NOP>;
+
 // 0 parameter / length 1 instructions
 using Ld_BC_A_Decoder = InstructionDecoder<"ld [bc], a", 0x02, Ld<RegisterType::BC, RegisterType::A>>;
 using Ld_A_BC_Decoder = InstructionDecoder<"ld a, [bc]", 0x12, Ld<RegisterType::A, RegisterType::BC>>;
+using Ld_A_B_Decoder  = InstructionDecoder<"ld a, b", 0x78, Ld<RegisterType::A, RegisterType::B>>;
+using Ld_B_A_Decoder  = InstructionDecoder<"ld b, a", 0x47, Ld<RegisterType::B, RegisterType::A>>;
 
 } // namespace pgb::cpu::instruction
