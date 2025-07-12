@@ -1,3 +1,4 @@
+#include "cpu/include/registers.hpp"
 #include <cstdint>
 #include <memory/include/memory.hpp>
 

@@ -136,9 +136,9 @@ private:
     Block<VramBankSize * Byte::TypeWidth, Byte::TypeWidth> _vram[MaxVramBankCount];
     Block<EramBankSize * Byte::TypeWidth, Byte::TypeWidth> _eram[MaxEramBankCount];
     Block<WramBankSize * Byte::TypeWidth, Byte::TypeWidth> _wram[MaxWramBankCount];
-    Block<0xA0 * Byte::TypeWidth, Byte::TypeWidth>         _oam;
-    Block<0x80 * Byte::TypeWidth, Byte::TypeWidth>         _hram;
-    Block<0x80 * Byte::TypeWidth, Byte::TypeWidth>         _io;
+    Block<OamSize * Byte::TypeWidth, Byte::TypeWidth>      _oam;
+    Block<HramSize * Byte::TypeWidth, Byte::TypeWidth>     _hram;
+    Block<IOSize * Byte::TypeWidth, Byte::TypeWidth>       _io;
 
     bool _isInitialized                      = false;
 
@@ -233,7 +233,7 @@ public:
     // Returns ResultAccessRegisterInvalidWidth if this register is not accessible at that width.
     Register16AccessResultSet ReadWord(const cpu::RegisterType&) const noexcept;
 
-    // Write byte into 8-bit register, the stored result is the previous value and only valid if it is marked successful.
+    // Write word into a 16-bit register, the stored result is the previous value and only valid if it is marked successful.
     // Returns ResultAccessRegisterInvalidWidth if this register is not accessible at that width.
     Register16AccessResultSet WriteWord(const cpu::RegisterType&, const Word&) noexcept;
 

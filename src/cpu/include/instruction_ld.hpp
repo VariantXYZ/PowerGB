@@ -20,7 +20,6 @@ concept LdOperand = std::is_same_v<decltype(V), RegisterType> || std::is_same_v<
 template <auto V>
 concept LdOperandIs8Bit = !std::is_same_v<decltype(V), RegisterType> || cpu::IsRegister8Bit<V>;
 
-// This must
 template <typename T>
 using LoadResultSet =
     common::ResultSet<
@@ -40,7 +39,7 @@ using ResultInstructionLoadRegisterVoid = LoadResultSet<void>;
 // 8 -> 8
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source> && LdOperandIs8Bit<Destination> && LdOperandIs8Bit<Source>)
-constexpr ResultInstructionLoadRegister8 Load(MemoryMap& mmap)
+constexpr ResultInstructionLoadRegister8 Load(MemoryMap& mmap) noexcept
 {
     auto src = mmap.ReadByte(Source);
     if (src.IsFailure())
@@ -53,7 +52,7 @@ constexpr ResultInstructionLoadRegister8 Load(MemoryMap& mmap)
 // 16 -> 16
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source> && !LdOperandIs8Bit<Destination> && !LdOperandIs8Bit<Source>)
-constexpr ResultInstructionLoadRegister16 Load(MemoryMap& mmap)
+constexpr ResultInstructionLoadRegister16 Load(MemoryMap& mmap) noexcept
 {
     auto src = mmap.ReadWord(Source);
     if (src.IsFailure())
@@ -66,7 +65,7 @@ constexpr ResultInstructionLoadRegister16 Load(MemoryMap& mmap)
 // [Reg16] -> 8
 template <auto Destination, auto Source>
     requires(IsRegister8Bit<Destination> && IsRegister16Bit<Source>)
-constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap)
+constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap) noexcept
 {
     auto src = mmap.ReadWord(Source);
     if (src.IsFailure())
@@ -88,7 +87,7 @@ constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap)
 // 8 -> [Reg16]
 template <auto Destination, auto Source>
     requires(IsRegister8Bit<Source> && IsRegister16Bit<Destination>)
-constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap)
+constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap) noexcept
 {
     auto src = mmap.ReadByte(Source);
     if (src.IsFailure())
