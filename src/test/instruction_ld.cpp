@@ -110,7 +110,7 @@ void test_bc_a(void)
 
     TEST_ASSERT(mmap.WriteByte(RegisterType::A, 0x50).IsSuccess());
     TEST_ASSERT(mmap.WriteWord(RegisterType::BC, 0x6000).IsSuccess());
-    TEST_ASSERT(instruction::Ld_BC_A_Decoder::Execute(mmap) == 4);
+    TEST_ASSERT(instruction::Ld_BC_A_Decoder::Execute(mmap) == 8);
 
     auto r2 = mmap.ReadByte(0x6000);
     TEST_ASSERT(r2.IsSuccess());
@@ -121,7 +121,7 @@ void test_bc_a(void)
     TEST_ASSERT(r3.IsSuccess());
     TEST_ASSERT(static_cast<const Byte&>(r3) == 0x01);
 
-    TEST_ASSERT(instruction::Ld_A_BC_Decoder::Execute(mmap) == 4);
+    TEST_ASSERT(instruction::Ld_A_BC_Decoder::Execute(mmap) == 8);
     auto r4 = mmap.ReadByte(RegisterType::A);
     TEST_ASSERT(r4.IsSuccess());
     TEST_ASSERT(static_cast<const Byte&>(r4) == 0x50);

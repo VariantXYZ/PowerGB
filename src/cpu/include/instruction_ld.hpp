@@ -108,8 +108,20 @@ constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap)
 
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source>)
-using Ld = Instruction<
+using LdReg = Instruction<
     Load<Destination, Source>,
+    NoOp,
+    NoOp,
+    NoOp>;
+
+template <auto Destination, auto Source>
+    requires(LdOperand<Destination> && LdOperand<Source>)
+using LdMem = Instruction<
+    Load<Destination, Source>,
+    NoOp,
+    NoOp,
+    NoOp,
+    NoOp,
     NoOp,
     NoOp,
     NoOp>;
@@ -124,9 +136,11 @@ using Ld_H_H_Decoder  = InstructionDecoder<"ld h, h", 0x64, NOP>;
 using Ld_L_L_Decoder  = InstructionDecoder<"ld l, l", 0x6D, NOP>;
 
 // 0 parameter / length 1 instructions
-using Ld_BC_A_Decoder = InstructionDecoder<"ld [bc], a", 0x02, Ld<RegisterType::BC, RegisterType::A>>;
-using Ld_A_BC_Decoder = InstructionDecoder<"ld a, [bc]", 0x12, Ld<RegisterType::A, RegisterType::BC>>;
-using Ld_A_B_Decoder  = InstructionDecoder<"ld a, b", 0x78, Ld<RegisterType::A, RegisterType::B>>;
-using Ld_B_A_Decoder  = InstructionDecoder<"ld b, a", 0x47, Ld<RegisterType::B, RegisterType::A>>;
+using Ld_BC_A_Decoder = InstructionDecoder<"ld [bc], a", 0x02, LdMem<RegisterType::BC, RegisterType::A>>;
+using Ld_A_BC_Decoder = InstructionDecoder<"ld a, [bc]", 0x12, LdMem<RegisterType::A, RegisterType::BC>>;
+using Ld_A_B_Decoder  = InstructionDecoder<"ld a, b", 0x78, LdReg<RegisterType::A, RegisterType::B>>;
+using Ld_B_A_Decoder  = InstructionDecoder<"ld b, a", 0x47, LdReg<RegisterType::B, RegisterType::A>>;
+
+
 
 } // namespace pgb::cpu::instruction
