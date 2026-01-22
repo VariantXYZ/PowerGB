@@ -1,12 +1,11 @@
 export LC_CTYPE=C
 
 # Configure tools accordingly
-# (Note that we don't conditionally set LD)
-CXX ?= g++
+CXX := c++
 LD := $(CXX)
-AR ?= ar
-CC_OPT_FLAGS := -flto -O3
-LD_OPT_FLAGS := -flto
+AR := ar
+CC_OPT_FLAGS := -flto=thin -O3
+LD_OPT_FLAGS := -flto=thin
 
 # Build parameters
 PROJECT_NAME := powergb
