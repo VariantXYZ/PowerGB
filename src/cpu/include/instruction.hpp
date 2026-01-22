@@ -12,7 +12,7 @@ namespace pgb::cpu
 // An "instruction" is a set operations on state that takes some fixed duration
 // Here, it is defined as:
 // * A set of 'Operands'
-// * A set of 'Operations' (one per tick) that may affects the memory state
+// * A set of 'Operations' (one per tick) that may affect the memory state
 
 template <common::ResultSetType RS>
 class Operation
@@ -30,7 +30,7 @@ public:
 };
 
 using NoOpResultSet = common::ResultSet<void, common::ResultSuccess>;
-NoOpResultSet NoOp(memory::MemoryMap&) noexcept
+inline NoOpResultSet NoOp(memory::MemoryMap&) noexcept
 {
     return NoOpResultSet::DefaultResultSuccess();
 }
