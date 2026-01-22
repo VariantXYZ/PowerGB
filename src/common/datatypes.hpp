@@ -9,7 +9,7 @@
 namespace pgb::common::datatypes
 {
 
-namespace
+namespace internal
 {
 template <typename T, std::size_t TW, T MiV, T MaV>
 struct Datatype
@@ -54,12 +54,12 @@ struct Datatype
 };
 } // namespace
 
-struct Nibble : Datatype<std::uint_fast8_t, 4, 0, 0xF>
+struct Nibble : internal::Datatype<std::uint_fast8_t, 4, 0, 0xF>
 {
     using Datatype::Datatype;
 };
 
-struct Byte : Datatype<std::uint_fast8_t, 8, 0, 0xFF>
+struct Byte : internal::Datatype<std::uint_fast8_t, 8, 0, 0xFF>
 {
     using Datatype::Datatype;
 
@@ -93,7 +93,7 @@ struct Byte : Datatype<std::uint_fast8_t, 8, 0, 0xFF>
     }
 };
 
-struct Word : Datatype<std::uint_fast16_t, 16, 0, 0xFFFF>
+struct Word : internal::Datatype<std::uint_fast16_t, 16, 0, 0xFFFF>
 {
     using Datatype::Datatype;
 
@@ -106,13 +106,13 @@ struct Word : Datatype<std::uint_fast16_t, 16, 0, 0xFFFF>
 
     [[nodiscard]] constexpr Byte HighByte() const noexcept
     {
-        struct Byte b = {static_cast<const Byte::Type>((data & 0xFF00) >> (TypeWidth / 2))};
+        struct Byte b = {static_cast<Byte::Type>((data & 0xFF00) >> (TypeWidth / 2))};
         return b;
     }
 
     [[nodiscard]] constexpr Byte LowByte() const noexcept
     {
-        struct Byte b{static_cast<const Byte::Type>(data & 0x00FF)};
+        struct Byte b{static_cast<Byte::Type>(data & 0x00FF)};
         return b;
     }
 

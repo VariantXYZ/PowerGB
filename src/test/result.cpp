@@ -103,11 +103,11 @@ void test_resultset_casting(void)
 
     // To a void result type
     {
-        using ResultSetTestInt   = ResultSet<int, ResultSuccess>;
+        using ResultSetTestInt  = ResultSet<int, ResultSuccess>;
         using ResultSetTestVoid = ResultSet<void, ResultSuccess, ResultFailure>;
 
-        int  a                   = 255;
-        auto resultInt           = ResultSetTestInt::DefaultResultSuccess(a);
+        int  a                  = 255;
+        auto resultInt          = ResultSetTestInt::DefaultResultSuccess(a);
         TEST_CHECK(static_cast<int>(resultInt) == 0xFF);
 
         auto resultVoid = static_cast<ResultSetTestVoid>(resultInt);

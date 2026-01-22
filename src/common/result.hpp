@@ -5,6 +5,7 @@
 #include <tuple>
 #include <type_traits>
 #include <variant>
+#include <iterator>
 
 #include <common/util.hpp>
 
@@ -60,7 +61,7 @@ private:
     {
     };
     using TypeWrapper = std::conditional_t<std::is_void_v<Type>, Empty, Type>;
-    [[no_unique_address]] const TypeWrapper _value;
+    [[no_unique_address]] const TypeWrapper _value = {};
 
     using DefaultResultType                          = std::tuple_element_t<0, std::tuple<Results...>>;
 

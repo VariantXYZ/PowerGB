@@ -22,7 +22,7 @@ using namespace pgb;
 using namespace pgb::memory;
 
 using Op0ResultSet = memory::MemoryMap::AccessResultSet;
-constexpr Op0ResultSet op0(memory::MemoryMap& mmap)
+Op0ResultSet op0(memory::MemoryMap& mmap)
 {
     return mmap.WriteByte({0, 0xFFFF}, 0xFF);
 }
