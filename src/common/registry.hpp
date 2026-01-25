@@ -1,8 +1,12 @@
 #pragma once
 
 #include <cstddef>
+#include <type_traits>
 
-// A utility class definition that provides a compile-time, global, append-only list of types
+#include <common/util.hpp>
+
+// A utility class definition that provides a compile-time append-able registry of types within the same TU
+// Intended to be used to allow for grouping various template instantiations within the same TU (e.g., define operations in different headers and automatically have them registered)
 // Takes advantage of friend-injection and some other compile-time tricks
 
 namespace pgb::common::registry
@@ -10,6 +14,7 @@ namespace pgb::common::registry
 
 // List object that stores all types
 template <class... Ts>
+    requires(sizeof...(Ts) == 0 || util::types_are_unique<Ts...>)
 struct List
 {
     constexpr static std::size_t Size = sizeof...(Ts);
@@ -24,7 +29,7 @@ template <typename Tag, auto>
 struct Nth
 {
     // Friend-injection: Forward-declare friend function (defined via ADL in 'Set')
-    auto friend Get(Nth);
+    auto friend Get(Nth) noexcept;
 };
 
 // For a particular Tag + N, set 'T'
@@ -33,12 +38,12 @@ template <typename Tag, auto N, class T>
 struct Set
 {
     // 'Get' is defined to return T, used in Append later to allow for "updating" List with a new type'
-    auto friend Get(Nth<Tag, N>) { return T{}; }
+    auto friend Get(Nth<Tag, N>) noexcept { return T{}; }
 };
 
 // Create a new type list based on an old one and a new type added to the end
 template <class T, template <class...> class TList, class... Ts>
-auto Append(TList<Ts...>) -> TList<Ts..., T>{};
+auto Append(TList<Ts...>) noexcept -> TList<Ts..., T>{};
 
 } // namespace detail
 
@@ -46,10 +51,12 @@ auto Append(TList<Ts...>) -> TList<Ts..., T>{};
 // Uses the existence of Get to see if the Tag + N is accounted for
 // Either create a new list if nothing else exists, or eventually call detail::Append to update the type list
 template <class T, typename Tag, auto N = 0>
-constexpr auto Append()
+constexpr auto Append() noexcept
 {
     if constexpr (requires { Get(detail::Nth<Tag, N>{}); })
     {
+        // As we go down the list, make sure this type isn't already registered'
+        static_assert(!std::is_same<T, decltype(Get(detail::Nth<Tag, N>{}))>::value, "Type is already registered");
         Append<T, Tag, N + 1>();
     }
     else if constexpr (N == 0)
@@ -66,7 +73,7 @@ constexpr auto Append()
 // Return the underlying compile-time List for a given Tag
 // Will recursively search until an empty slot is found and return the N-1 entry
 template <typename Tag, auto N = 0>
-constexpr auto Registry()
+constexpr auto Registry() noexcept
 {
     if constexpr (requires { Get(detail::Nth<Tag, N>{}); })
     {

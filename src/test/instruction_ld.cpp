@@ -1,3 +1,4 @@
+#include "cpu/include/decoder.hpp"
 #include <cpu/include/instruction_ld.hpp>
 #include <memory/include/memory.hpp>
 #include <test/include/acutest.h>
@@ -18,7 +19,8 @@ using namespace pgb::cpu;
 using namespace pgb::memory;
 
 // NOP + 11 ld instructions
-static_assert(decltype(registry::Registry<instruction::InstructionRegistry>())::Size == 11);
+// Note how we explicitly only include instruction_ld in this test
+static_assert(decltype(registry::Registry<instruction::InstructionRegistryNoPrefix>())::Size == 11);
 
 static auto registers = RegisterFile();
 static auto mmap      = MemoryMap(registers, MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount);
