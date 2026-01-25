@@ -1,11 +1,9 @@
 #pragma once
 
-#include "cpu/include/decoder.hpp"
-#include "cpu/include/instruction_nop.hpp"
-#include <type_traits>
-
 #include <common/result.hpp>
+#include <cpu/include/decoder.hpp>
 #include <cpu/include/instruction.hpp>
+#include <cpu/include/instruction_nop.hpp>
 #include <cpu/include/registers.hpp>
 #include <memory/include/memory.hpp>
 
@@ -126,20 +124,18 @@ using LdMem = Instruction<
     NoOp>;
 
 // TODO: Confirm identity loads are actually just NoOps
-using Ld_A_A_Decoder  = InstructionDecoder<"ld a, a", 0x7F, NOP>;
-using Ld_B_B_Decoder  = InstructionDecoder<"ld b, b", 0x40, NOP>;
-using Ld_C_C_Decoder  = InstructionDecoder<"ld c, c", 0x49, NOP>;
-using Ld_D_D_Decoder  = InstructionDecoder<"ld d, d", 0x52, NOP>;
-using Ld_E_E_Decoder  = InstructionDecoder<"ld e, e", 0x5B, NOP>;
-using Ld_H_H_Decoder  = InstructionDecoder<"ld h, h", 0x64, NOP>;
-using Ld_L_L_Decoder  = InstructionDecoder<"ld l, l", 0x6D, NOP>;
+using Ld_A_A_Decoder  = Instantiate<InstructionDecoder<"ld a, a", 0x7F, NOP>>::Type;
+using Ld_D_D_Decoder  = Instantiate<InstructionDecoder<"ld d, d", 0x52, NOP>>::Type;
+using Ld_E_E_Decoder  = Instantiate<InstructionDecoder<"ld e, e", 0x5B, NOP>>::Type;
+using Ld_B_B_Decoder  = Instantiate<InstructionDecoder<"ld b, b", 0x40, NOP>>::Type;
+using Ld_H_H_Decoder  = Instantiate<InstructionDecoder<"ld h, h", 0x64, NOP>>::Type;
+using Ld_C_C_Decoder  = Instantiate<InstructionDecoder<"ld c, c", 0x49, NOP>>::Type;
+using Ld_L_L_Decoder  = Instantiate<InstructionDecoder<"ld l, l", 0x6D, NOP>>::Type;
 
 // 0 parameter / length 1 instructions
-using Ld_BC_A_Decoder = InstructionDecoder<"ld [bc], a", 0x02, LdMem<RegisterType::BC, RegisterType::A>>;
-using Ld_A_BC_Decoder = InstructionDecoder<"ld a, [bc]", 0x12, LdMem<RegisterType::A, RegisterType::BC>>;
-using Ld_A_B_Decoder  = InstructionDecoder<"ld a, b", 0x78, LdReg<RegisterType::A, RegisterType::B>>;
-using Ld_B_A_Decoder  = InstructionDecoder<"ld b, a", 0x47, LdReg<RegisterType::B, RegisterType::A>>;
-
-
+using Ld_A_BC_Decoder = Instantiate<InstructionDecoder<"ld a, [bc]", 0x12, LdMem<RegisterType::A, RegisterType::BC>>>::Type;
+using Ld_BC_A_Decoder = Instantiate<InstructionDecoder<"ld [bc], a", 0x02, LdMem<RegisterType::BC, RegisterType::A>>>::Type;
+using Ld_A_B_Decoder  = Instantiate<InstructionDecoder<"ld a, b", 0x78, LdReg<RegisterType::A, RegisterType::B>>>::Type;
+using Ld_B_A_Decoder  = Instantiate<InstructionDecoder<"ld b, a", 0x47, LdReg<RegisterType::B, RegisterType::A>>>::Type;
 
 } // namespace pgb::cpu::instruction

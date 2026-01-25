@@ -13,8 +13,12 @@ TEST_LIST = {
     {NULL, NULL}
 };
 
+using namespace pgb::common;
 using namespace pgb::cpu;
 using namespace pgb::memory;
+
+// NOP + 11 ld instructions
+static_assert(decltype(registry::Registry<instruction::InstructionRegistry>())::Size == 11);
 
 static auto registers = RegisterFile();
 static auto mmap      = MemoryMap(registers, MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount);

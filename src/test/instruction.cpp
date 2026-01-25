@@ -28,16 +28,14 @@ Op0ResultSet op0(memory::MemoryMap& mmap)
 }
 
 using Op1ResultSet = common::ResultSet<void, common::ResultSuccess, common::ResultFailure>;
-constexpr Op1ResultSet op1(memory::MemoryMap& mmap)
+constexpr Op1ResultSet op1(memory::MemoryMap&)
 {
-    (void)mmap;
     return Op1ResultSet::DefaultResultSuccess();
 }
 
 using Op2ResultSet = common::ResultSet<void, common::ResultSuccess, common::ResultFailure>;
-constexpr Op1ResultSet op2(memory::MemoryMap& mmap)
+constexpr Op1ResultSet op2(memory::MemoryMap&)
 {
-    (void)mmap;
     return Op1ResultSet::DefaultResultFailure();
 }
 
