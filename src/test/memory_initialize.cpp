@@ -1,4 +1,3 @@
-
 #include <cstddef>
 #include <initializer_list>
 #include <memory>

@@ -1,0 +1,4 @@
+[submodule "scripts/sm83"]
+	path = scripts/sm83
+	url = git@github.com:SingleStepTests/sm83.git
+	update = none

@@ -1,4 +1,4 @@
-#include "cpu/include/decoder.hpp"
+#include <cpu/include/decoder.hpp>
 #include <cpu/include/instruction_ld.hpp>
 #include <memory/include/memory.hpp>
 #include <test/include/acutest.h>

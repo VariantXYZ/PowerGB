@@ -6,13 +6,16 @@ LD := $(CXX)
 AR := ar
 CC_OPT_FLAGS := -flto=thin -O3
 LD_OPT_FLAGS := -flto=thin
+PYTHON := python3
 
 # Build parameters
 PROJECT_NAME := powergb
 BASE_DIR := .
 BUILD_DIR := $(BASE_DIR)/build
 SRC_DIR := $(BASE_DIR)/src
+TEST_DIR := $(SRC_DIR)/test
 COMMON_SRC_DIR := $(SRC_DIR)/common
+SCRIPTS_DIR := $(BASE_DIR)/scripts
 
 MODULES := \
 cpu\
@@ -34,7 +37,7 @@ LIBRARIES := $(foreach MODULE,$(MODULES),$(addsuffix $(LIB_TYPE),$(addprefix $(B
 
 # Every test should be a standalone file, so the build is simplified
 # Also expect none of the built libraries to conflict with each other when all are linked together
-TESTS := $(foreach OBJECT,$(notdir $(basename $(wildcard $(SRC_DIR)/test/*$(CXX_SOURCE_TYPE)))),$(addprefix $(BUILD_DIR)/test/,$(OBJECT)))
+TESTS := $(foreach OBJECT,$(notdir $(basename $(wildcard $(TEST_DIR)/*$(CXX_SOURCE_TYPE)))),$(addprefix $(BUILD_DIR)/test/,$(OBJECT)))
 RUN_ALL_TESTS := $(foreach TEST,$(TESTS),$(addprefix run_test_,$(notdir $(basename $(TEST)))))
 
 # Explicit file dependencies
@@ -50,7 +53,7 @@ ESCAPE = $(subst ','\'',$(1))
 pc := %
 
 # Rules
-.PHONY: default clean run_all_tests
+.PHONY: default clean run_all_tests generate_tests_sm83
 .SECONDARY:
 
 default: $(TESTS)
@@ -62,6 +65,10 @@ run_all_tests: $(RUN_ALL_TESTS)
 
 run_test_%: $(BUILD_DIR)/test/%
 	$<
+
+# Auto-generate scripts
+generate_tests_sm83:
+	$(PYTHON) $(SCRIPTS_DIR)/generate_tests_sm83.py "$(TEST_DIR)/" "$(SCRIPTS_DIR)/sm83"
 
 # Link executables
 # Dependency is the same named object and all libraries
