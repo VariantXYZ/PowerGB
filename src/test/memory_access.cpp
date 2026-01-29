@@ -20,6 +20,7 @@ void test_access_FEA0_FEFF(void);
 void test_access_IE(void);
 void test_access_write_word(void);
 void test_access_registers(void);
+void test_increment_pc(void);
 
 TEST_LIST = {
     {"Access Basic Tests", test_access_basic},
@@ -37,6 +38,7 @@ TEST_LIST = {
     {"Access IE", test_access_IE},
     {"Access Word Write", test_access_write_word},
     {"Access Registers", test_access_registers},
+    {"Increment/Decrement PC", test_increment_pc},
     {NULL, NULL}
 };
 
@@ -387,4 +389,57 @@ void test_access_registers(void)
     test_access_registers_helper<cpu::RegisterType::BC, cpu::RegisterType::B, cpu::RegisterType::C>();
     test_access_registers_helper<cpu::RegisterType::DE, cpu::RegisterType::D, cpu::RegisterType::E>();
     test_access_registers_helper<cpu::RegisterType::HL, cpu::RegisterType::H, cpu::RegisterType::L>();
+}
+
+void test_increment_pc(void)
+{
+    auto cpu  = std::make_unique<pgb::cpu::RegisterFile>();
+    auto mmap = std::make_unique<MemoryMap>(*cpu);
+    TEST_ASSERT(mmap->Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+
+    {
+        auto result = mmap->WriteWord(pgb::cpu::RegisterType::PC, 0x4DDF);
+        TEST_ASSERT(result.IsSuccess());
+
+        auto resultIncrement = mmap->IncrementPC();
+        TEST_ASSERT(resultIncrement.IsSuccess());
+        TEST_ASSERT(static_cast<const Word>(resultIncrement) == 0x4DE0);
+
+        auto resultPC1 = mmap->ReadWord(pgb::cpu::RegisterType::PC);
+        TEST_ASSERT(resultPC1.IsSuccess() && static_cast<const Word>(resultPC1) == 0x4DE0);
+
+        auto resultDecrement = mmap->DecrementPC();
+        TEST_ASSERT(resultDecrement.IsSuccess());
+        TEST_ASSERT(static_cast<const Word>(resultDecrement) == 0x4DDF);
+
+        auto resultPC2 = mmap->ReadWord(pgb::cpu::RegisterType::PC);
+        TEST_ASSERT(resultPC2.IsSuccess() && static_cast<const Word>(resultPC2) == 0x4DDF);
+    }
+
+    // Check overflow results
+    {
+        auto result = mmap->WriteWord(pgb::cpu::RegisterType::PC, 0x7FFF);
+        TEST_ASSERT(result.IsSuccess());
+
+        auto resultIncrement = mmap->IncrementPC();
+        TEST_ASSERT(resultIncrement.IsSuccess());
+        TEST_ASSERT(static_cast<const Word>(resultIncrement) == 0x8000);
+        TEST_ASSERT(resultIncrement.IsResult<MemoryMap::ResultRegisterOverflow>());
+
+        auto resultPC1 = mmap->ReadWord(pgb::cpu::RegisterType::PC);
+        TEST_ASSERT(resultPC1.IsSuccess() && static_cast<const Word>(resultPC1) == 0x8000);
+    }
+
+    {
+        auto result = mmap->WriteWord(pgb::cpu::RegisterType::PC, 0x0);
+        TEST_ASSERT(result.IsSuccess());
+
+        auto resultDecrement = mmap->DecrementPC();
+        TEST_ASSERT(resultDecrement.IsSuccess());
+        TEST_ASSERT(static_cast<const Word>(resultDecrement) == 0xFFFF);
+        TEST_ASSERT(resultDecrement.IsResult<MemoryMap::ResultRegisterOverflow>());
+
+        auto resultPC1 = mmap->ReadWord(pgb::cpu::RegisterType::PC);
+        TEST_ASSERT(resultPC1.IsSuccess() && static_cast<const Word>(resultPC1) == 0xFFFF);
+    }
 }

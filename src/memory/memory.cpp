@@ -515,4 +515,27 @@ Nibble MemoryMap::WriteFlag(const Nibble& value) noexcept
     _registers.F() = value;
     return oldValue;
 }
+
+MemoryMap::ModifyStateRegisterResultSet MemoryMap::IncrementPC() noexcept
+{
+    ++_registers.PC();
+    if (_registers.PC() > 0x7FFF)
+    {
+        // We still return a 'success', but just note that the result is an overflow
+        return ModifyStateRegisterResultSet(ResultRegisterOverflow(true), _registers.PC());
+    }
+    return ModifyStateRegisterResultSet::DefaultResultSuccess(_registers.PC());
+}
+
+MemoryMap::ModifyStateRegisterResultSet MemoryMap::DecrementPC() noexcept
+{
+    --_registers.PC();
+    if (_registers.PC() > 0x7FFF)
+    {
+        // We still return a 'success', but just note that the result is an overflow
+        return ModifyStateRegisterResultSet(ResultRegisterOverflow(true), _registers.PC());
+    }
+    return ModifyStateRegisterResultSet::DefaultResultSuccess(_registers.PC());
+}
+
 } // namespace pgb::memory

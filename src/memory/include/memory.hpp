@@ -111,6 +111,13 @@ public:
             ResultInitializeInvalidEramBankCount,
             ResultInitializeInvalidWramBankCount>;
 
+    using ResultRegisterOverflow = common::Result<"Register modification would pass expected boundaries">;
+    using ModifyStateRegisterResultSet =
+        common::ResultSet<
+            /* Type */ const Word,
+            common::ResultSuccess,
+            ResultRegisterOverflow>;
+
     struct MemoryAddress
     {
         uint_fast16_t bank : std::bit_width(static_cast<uint_fast16_t>(MaxBankValue));
@@ -229,7 +236,7 @@ public:
     // Returns ResultAccessRegisterInvalidWidth if this register is not accessible at that width.
     Register8AccessResultSet WriteByte(const cpu::RegisterType&, const Byte&) noexcept;
 
-    // Read byte stored in 16-bit register, the stored result is a value and only valid if it is marked successful.
+    // Read word stored in 16-bit register, the stored result is a value and only valid if it is marked successful.
     // Returns ResultAccessRegisterInvalidWidth if this register is not accessible at that width.
     Register16AccessResultSet ReadWord(const cpu::RegisterType&) const noexcept;
 
@@ -239,6 +246,11 @@ public:
 
     const Nibble& ReadFlag() const noexcept;
     Nibble        WriteFlag(const Nibble&) noexcept;
+
+    // Increments/Decrements PC register, returns the current value of PC
+    // Returns ResultRegisterOverflow if the value would overflow into an unexpected bank.
+    ModifyStateRegisterResultSet IncrementPC() noexcept;
+    ModifyStateRegisterResultSet DecrementPC() noexcept;
 };
 
 } // namespace pgb::memory
