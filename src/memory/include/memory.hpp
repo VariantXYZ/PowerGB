@@ -124,6 +124,18 @@ public:
         uint_fast16_t address : std::bit_width(static_cast<uint_fast16_t>(MaxAddressValue));
     };
 
+    constexpr static MemoryAddress FromRealAddress(std::size_t absoluteAddress)
+    {
+        if (absoluteAddress > 0x4000)
+        {
+            return {static_cast<uint_fast16_t>(absoluteAddress / 0x4000), 0x4000 + static_cast<uint_fast16_t>(absoluteAddress % 0x4000)};
+        }
+        else
+        {
+            return {0, absoluteAddress};
+        }
+    }
+
 private:
     // The bus maps references to the CPU IE
     cpu::RegisterFile& _registers;

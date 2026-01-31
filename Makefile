@@ -63,8 +63,9 @@ clean:
 run_all_tests: $(RUN_ALL_TESTS)
 	echo "All tests finished"
 
+# exec=never is to prevent child processes from being spawned
 run_test_%: $(BUILD_DIR)/test/%
-	$<
+	$< --exec=never
 
 # Auto-generate scripts
 generate_tests_sm83:

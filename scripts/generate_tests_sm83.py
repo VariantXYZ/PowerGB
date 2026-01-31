@@ -36,11 +36,24 @@ for info in SUPPORTED_OPCODES:
         output_fn.write(f"#include <cpu/include/registers.hpp>\n")
         output_fn.write(f"#include <memory/include/memory.hpp>\n\n")
 
+        output_fn.write(f"using namespace pgb::common;\n")
         output_fn.write(f"using namespace pgb::memory;\n")
         output_fn.write(f"using namespace pgb::cpu;\n\n")
 
         output_fn.write(f"static auto registers = RegisterFile();\n")
         output_fn.write(f"static auto mmap      = MemoryMap(registers, MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount);\n\n")
+
+        output_fn.write(f"""
+#define WriteRegisterWord(register, value) do {{ auto result = mmap.WriteWord(register, value); TEST_ASSERT(result.IsSuccess()); }} while(0)
+#define WriteRegisterByte(register, value) do {{ auto result = mmap.WriteByte(register, value); TEST_ASSERT(result.IsSuccess()); }} while(0)
+#define WriteRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Nibble>(mmap.WriteFlag(value)) == 0x00); }} while(0)
+#define WriteMemory(address, value) do {{ auto result = mmap.WriteByte(MemoryMap::FromRealAddress(static_cast<std::size_t>(address)), value); TEST_ASSERT(result.IsSuccess()); }} while(0)
+
+#define CheckRegisterWord(register, value) do {{ auto result = mmap.ReadWord(register); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Word&>(result) == value); }} while(0)
+#define CheckRegisterByte(register, value) do {{ auto result = mmap.ReadByte(register); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); }} while(0)
+#define CheckRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Nibble>(mmap.ReadFlag()) == value); }} while(0)
+#define CheckMemory(address, value) do {{ auto result = mmap.ReadByte(MemoryMap::FromRealAddress(static_cast<std::size_t>(address))); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); }} while(0)
+        """)
 
         test_names = []
         test_content = []
@@ -55,55 +68,50 @@ void test_{test_name}()
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
     // Initial state
+""")
+            for val in test['initial']:
+                if val in ("pc", "sp"):
+                    test_content.append(f"    WriteRegisterWord(RegisterType::{val.upper()}, 0x{test['initial'][val]:04X});")
+                elif val in ("a", "b", "c", "d", "e", "h", "l", "ie"):
+                    test_content.append(f"    WriteRegisterByte(RegisterType::{val.upper()}, 0x{test['initial'][val]:02X});")
+                elif val == 'f':
+                    test_content.append(f"    WriteRegisterFlag(0x{test['initial'][val]:02X});")
+                elif val == "ram":
+                    for ram in test['initial'][val]:
+                        test_content.append(f"    WriteMemory(0x{ram[0]:04X}, 0x{ram[1]:02X});")
+
+            test_content.append(f"""
+    // Execute single step
     {{
-        auto result = mmap.WriteWord(RegisterType::PC, 0x{test['initial']['pc']:04X});
-        TEST_ASSERT(result.IsSuccess());
+         auto resultByte = mmap.ReadByte(mmap.ReadPC());
+         TEST_ASSERT(resultByte.IsSuccess());
+         auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
+         TEST_ASSERT(ticks % 4 == 0);
     }}
-    {{
-        auto result = mmap.WriteWord(RegisterType::SP, 0x{test['initial']['sp']:04X});
-        TEST_ASSERT(result.IsSuccess());
-    }}
-    {{
-        auto result = mmap.WriteByte(RegisterType::A, 0x{test['initial']['a']:02X});
-        TEST_ASSERT(result.IsSuccess());
-    }}
-    {{
-        auto result = mmap.WriteByte(RegisterType::B, 0x{test['initial']['b']:02X});
-        TEST_ASSERT(result.IsSuccess());
-    }}
-    {{
-        auto result = mmap.WriteByte(RegisterType::C, 0x{test['initial']['c']:02X});
-        TEST_ASSERT(result.IsSuccess());
-    }}
-    {{
-        auto result = mmap.WriteByte(RegisterType::D, 0x{test['initial']['d']:02X});
-        TEST_ASSERT(result.IsSuccess());
-    }}
-    {{
-        auto result = mmap.WriteByte(RegisterType::E, 0x{test['initial']['e']:02X});
-        TEST_ASSERT(result.IsSuccess());
-    }}
-    {{
-        TEST_ASSERT(static_cast<const Nibble>(mmap.WriteFlag(0x{test['initial']['f']:02X})) == 0x00);
-    }}
-    {{
-        auto result = mmap.WriteByte(RegisterType::H, 0x{test['initial']['h']:02X});
-        TEST_ASSERT(result.IsSuccess());
-    }}
-    {{
-        auto result = mmap.WriteByte(RegisterType::L, 0x{test['initial']['l']:02X});
-        TEST_ASSERT(result.IsSuccess());
-    }}
-}}
+
+    // Final state
             """)
+
+            for val in test['final']:
+                if val in ("pc", "sp"):
+                    test_content.append(f"    CheckRegisterWord(RegisterType::{val.upper()}, 0x{test['final'][val]:04X});")
+                elif val in ("a", "b", "c", "d", "e", "h", "l", "ie"):
+                    test_content.append(f"    CheckRegisterByte(RegisterType::{val.upper()}, 0x{test['final'][val]:02X});")
+                elif val == 'f':
+                    test_content.append(f"    CheckRegisterFlag(0x{test['final'][val]:02X});")
+                elif val == "ram":
+                    for ram in test['final'][val]:
+                        test_content.append(f"    CheckMemory(0x{ram[0]:04X}, 0x{ram[1]:02X});")
+
+            test_content.append(f"}}")
 
         for name in test_names:
             output_fn.write(f"void test_{name}(void);\n")
 
         output_fn.write(f"TEST_LIST = {{\n")
         for name in test_names:
-            output_fn.write(f"  {{ \"{name}\", test_{name} }},\n")
-        output_fn.write(f"  {{NULL, NULL}}\n")
+            output_fn.write(f"    {{ \"{name}\", test_{name} }},\n")
+        output_fn.write(f"    {{NULL, NULL}}\n")
         output_fn.write(f"}};\n")
 
         for content in test_content:
