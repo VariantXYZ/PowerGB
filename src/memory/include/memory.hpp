@@ -247,6 +247,9 @@ public:
     const Nibble& ReadFlag() const noexcept;
     Nibble        WriteFlag(const Nibble&) noexcept;
 
+    const Word& ReadPC() const noexcept;
+    const Byte& ReadIR() const noexcept;
+
     // Increments/Decrements PC register, returns the current value of PC
     // Returns ResultRegisterOverflow if the value would overflow into an unexpected bank.
     ModifyStateRegisterResultSet IncrementPC() noexcept;

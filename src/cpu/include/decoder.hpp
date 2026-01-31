@@ -32,9 +32,9 @@ struct DecoderHelper<registry::List<Decoders...>>
 {
     static constexpr auto CreateCallbackMap() noexcept
     {
-        // For opcode decoding, we only care about going from an 8-bit integer to a specific Decoder class, so just create a 255 element array
+        // For opcode decoding, we only care about going from an 8-bit integer to a specific Decoder class, so just create a 256 element array
         // Doing this also lets us flag errors for unsupported opcodes
-        constexpr std::size_t Size = 0xFF;
+        constexpr std::size_t Size = 0xFF + 1;
 
         // Initialize all elements to nullptr by default
         std::array<std::size_t (*)(memory::MemoryMap&) noexcept, Size> callbacks{nullptr};

@@ -30,9 +30,29 @@ public:
 };
 
 using NoOpResultSet = common::ResultSet<void, common::ResultSuccess>;
+// nop
 inline NoOpResultSet NoOp(memory::MemoryMap&) noexcept
 {
     return NoOpResultSet::DefaultResultSuccess();
+}
+
+using LoadIrResultSet = memory::MemoryMap::BaseAccessResultSet<void>;
+// IR <- [PC]; ++PC;
+inline LoadIrResultSet LoadIR(memory::MemoryMap& mmap) noexcept
+{
+    auto pc     = mmap.ReadPC();
+    auto result = mmap.ReadByte(pc);
+    if (result.IsSuccess())
+    {
+        mmap.WriteByte(cpu::RegisterType::IR, result);
+        auto pcIncResult = mmap.IncrementPC();
+        if (pcIncResult.IsFailure())
+        {
+            // TODO: Need to support result sets concatenating result sets so I can just add the result for this to it
+            return LoadIrResultSet::DefaultResultFailure();
+        }
+    }
+    return result;
 }
 
 template <Operation... Operations>

@@ -106,16 +106,16 @@ constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap) noexcept
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source>)
 using LdReg = Instruction<
+    LoadIR,
     Load<Destination, Source>,
-    NoOp,
     NoOp,
     NoOp>;
 
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source>)
 using LdMem = Instruction<
+    LoadIR,
     Load<Destination, Source>,
-    NoOp,
     NoOp,
     NoOp,
     NoOp,

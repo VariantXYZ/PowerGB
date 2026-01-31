@@ -5,7 +5,7 @@
 
 namespace pgb::cpu::instruction
 {
-using NOP         = Instruction<NoOp, NoOp, NoOp, NoOp>;
-using Nop_Decoder = InstructionDecoder<"nop", 0x00, NOP>;
+using NOP         = Instruction<LoadIR, NoOp, NoOp, NoOp>;
+using Nop_Decoder = Instantiate<InstructionDecoder<"nop", 0x00, NOP>>;
 
 } // namespace pgb::cpu::instruction

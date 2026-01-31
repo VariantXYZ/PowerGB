@@ -516,6 +516,16 @@ Nibble MemoryMap::WriteFlag(const Nibble& value) noexcept
     return oldValue;
 }
 
+const Word& MemoryMap::ReadPC() const noexcept
+{
+    return _registers.PC();
+}
+
+const Byte& MemoryMap::ReadIR() const noexcept
+{
+    return _registers.IR();
+}
+
 MemoryMap::ModifyStateRegisterResultSet MemoryMap::IncrementPC() noexcept
 {
     ++_registers.PC();
