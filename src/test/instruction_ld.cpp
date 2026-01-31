@@ -144,7 +144,7 @@ void test_b_a(void)
     TEST_ASSERT(static_cast<const Byte&>(r1) == 0xF3);
 
     auto r2 = mmap.ReadByte(RegisterType::B);
-    TEST_ASSERT(r1.IsSuccess());
+    TEST_ASSERT(r2.IsSuccess());
     TEST_ASSERT(static_cast<const Byte&>(r2) == 0x00);
 
     TEST_ASSERT(instruction::Ld_B_A_Decoder::Execute(mmap) == 4);

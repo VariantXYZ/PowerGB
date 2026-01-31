@@ -114,6 +114,22 @@ public:
     constexpr const Word  HL() const { return _HL.Word<0>(); }
     constexpr const Word& PC() const { return _PC[0]; }
     constexpr const Word& SP() const { return _SP[0]; }
+
+    void Reset()
+    {
+        PC() = 0;
+        SP() = 0;
+        IR() = 0;
+        IE() = 0;
+        A() = 0;
+        B() = 0;
+        C() = 0;
+        D() = 0;
+        E() = 0;
+        H() = 0;
+        L() = 0;
+        F() = 0;
+    }
 };
 
 } // namespace pgb::cpu

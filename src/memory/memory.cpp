@@ -104,6 +104,7 @@ void MemoryMap::Reset() noexcept
     _oam.Reset();
     _hram.Reset();
     _io.Reset();
+    _registers.Reset();
 
     _isInitialized = false;
 }

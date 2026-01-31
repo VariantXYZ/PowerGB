@@ -9,23 +9,23 @@ assert os.path.exists(f"{repository_path}/v1/00.json"), "sm83 directory is not c
 
 SUPPORTED_OPCODES = ([
     (0x00,"nop"), # NOP
-    # (0x02,"ld"), # LD [BC], A
-    # (0x12,"ld"), # LD A, [BC]
-    # (0x40,"ld"), # LD B, B
-    # (0x47,"ld"), # LD B, A
-    # (0x49,"ld"), # LD C, C
-    # (0x52,"ld"), # LD D, D
-    # (0x5B,"ld"), # LD E, E
-    # (0x64,"ld"), # LD H, H
-    # (0x6D,"ld"), # LD L, L
-    # (0x78,"ld"), # LD A, B
-    # (0x7F,"ld"), # LD A, A
+    (0x02,"ld"), # LD [BC], A
+    (0x12,"ld"), # LD A, [BC]
+    (0x40,"ld"), # LD B, B
+    (0x47,"ld"), # LD B, A
+    (0x49,"ld"), # LD C, C
+    (0x52,"ld"), # LD D, D
+    (0x5B,"ld"), # LD E, E
+    (0x64,"ld"), # LD H, H
+    (0x6D,"ld"), # LD L, L
+    (0x78,"ld"), # LD A, B
+    (0x7F,"ld"), # LD A, A
 ])
 
 for info in SUPPORTED_OPCODES:
     opcode = info[0]
     insn = info[1]
-    input_filename = os.path.join(f"{repository_path}/v1", f"{opcode:02X}.json")
+    input_filename = os.path.join(f"{repository_path}/v1", (f"{opcode:02X}.json").lower())
     output_filename = f"{tests_path}/sm83_{opcode:02X}.cpp"
     with open(input_filename, "r") as input_fn, open(output_filename, "w", encoding="utf-8") as output_fn:
         input_json = json.load(input_fn)
