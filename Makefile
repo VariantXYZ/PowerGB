@@ -27,6 +27,12 @@ INT_TYPE := .o
 LIB_TYPE := .a
 EXE_TYPE :=
 
+# Helper
+TOUPPER = $(shell echo '$1' | tr '[:lower:]' '[:upper:]')
+FILTER = $(strip $(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),)))
+FILTER_OUT = $(strip $(foreach v,$(2),$(if $(findstring $(1),$(v)),,$(v))))
+ESCAPE = $(subst ','\'',$(1))
+
 # Common Source
 COMMON_SRC := $(wildcard $(COMMON_SRC_DIR)/*)
 
@@ -37,38 +43,41 @@ LIBRARIES := $(foreach MODULE,$(MODULES),$(addsuffix $(LIB_TYPE),$(addprefix $(B
 
 # Every test should be a standalone file, so the build is simplified
 # Also expect none of the built libraries to conflict with each other when all are linked together
-TESTS := $(foreach OBJECT,$(notdir $(basename $(wildcard $(TEST_DIR)/*$(CXX_SOURCE_TYPE)))),$(addprefix $(BUILD_DIR)/test/,$(OBJECT)))
-RUN_ALL_TESTS := $(foreach TEST,$(TESTS),$(addprefix run_test_,$(notdir $(basename $(TEST)))))
+TESTS_SM83 := $(foreach OBJECT,$(notdir $(basename $(wildcard $(TEST_DIR)/sm83_*$(CXX_SOURCE_TYPE)))),$(addprefix $(BUILD_DIR)/test/,$(OBJECT)))
+TESTS_BASIC := $(filter-out $(TESTS_SM83), $(foreach OBJECT,$(notdir $(basename $(wildcard $(TEST_DIR)/*$(CXX_SOURCE_TYPE)))),$(addprefix $(BUILD_DIR)/test/,$(OBJECT))))
+RUN_ALL_TESTS_SM83 := $(foreach TEST,$(TESTS_SM83),$(addprefix run_test_,$(notdir $(basename $(TEST)))))
+RUN_ALL_TESTS_BASIC := $(foreach TEST,$(TESTS_BASIC),$(addprefix run_test_,$(notdir $(basename $(TEST)))))
 
 # Explicit file dependencies
 test_ADDITIONAL := $(foreach MODULE,$(MODULES),$(wildcard $(SRC_DIR)/$(MODULE)/**/*$(CXX_HEADER_TYPE)))
 
-# Helper
-TOUPPER = $(shell echo '$1' | tr '[:lower:]' '[:upper:]')
-FILTER = $(strip $(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),)))
-FILTER_OUT = $(strip $(foreach v,$(2),$(if $(findstring $(1),$(v)),,$(v))))
-ESCAPE = $(subst ','\'',$(1))
 
 # Necessary for patsubst expansion
 pc := %
 
 # Rules
-.PHONY: default clean run_all_tests generate_tests_sm83
+.PHONY: default clean run_all_tests generate_tests_sm83 run_all_tests_basic run_all_tests_sm83
 .SECONDARY:
 
-default: $(TESTS)
+default: $(TESTS_BASIC)
 clean:
 	rm -r $(BUILD_DIR) || exit 0
 
-run_all_tests: $(RUN_ALL_TESTS)
+run_all_tests: run_all_tests_basic run_all_tests_sm83
 	echo "All tests finished"
+
+run_all_tests_basic: $(RUN_ALL_TESTS_BASIC)
+	echo "All basic finished"
+
+run_all_tests_sm83: $(RUN_ALL_TESTS_SM83)
+	echo "All sm83 finished"
 
 # exec=never is to prevent child processes from being spawned
 run_test_%: $(BUILD_DIR)/test/%
 	$< --exec=never
 
 # Auto-generate scripts
-generate_tests_sm83:
+generate_tests_sm83: $(TEST_DIR_SM83)
 	$(PYTHON) $(SCRIPTS_DIR)/generate_tests_sm83.py "$(TEST_DIR)/" "$(SCRIPTS_DIR)/sm83"
 
 # Link executables
