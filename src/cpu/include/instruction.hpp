@@ -55,7 +55,7 @@ inline LoadIrResultSet LoadIR(memory::MemoryMap& mmap) noexcept
     return result;
 }
 
-template <Operation... Operations>
+template <std::size_t Ticks_, Operation... Operations>
 class Instruction
 {
 private:
@@ -64,18 +64,19 @@ private:
                                                        { return Operations(memory).IsSuccess(); }...};
 
 public:
-    static constexpr std::size_t Ticks = sizeof...(Operations);
+    static constexpr std::size_t Ticks = Ticks_;
     Instruction()                      = delete;
 
     // Execute all operations until a failure occurs
+    // Returns the failing operation index, otherwise the total number of ticks expected
     constexpr static std::size_t ExecuteAll(memory::MemoryMap& memory) noexcept
     {
         std::size_t t = 0;
         (void)((Operations(memory).IsSuccess() ? (++t, true) : false) && ...);
-        return t;
+        return t == sizeof...(Operations) ? Ticks : t;
     }
 
-    // Execute specific cycle
+    // Execute specific operation
     template <std::size_t T>
     constexpr static auto ExecuteCycle(memory::MemoryMap& memory) noexcept
         requires(T < Ticks)
@@ -83,7 +84,7 @@ public:
         return std::get<T>(std::forward_as_tuple(Operations...))(memory);
     }
 
-    // Execute specific cycle, does not retain the result value
+    // Execute specific operation, does not retain the result value
     constexpr static bool ExecuteCycle(memory::MemoryMap& memory, std::size_t T) noexcept
     {
         return _operations[T](memory);

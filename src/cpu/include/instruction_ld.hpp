@@ -106,21 +106,15 @@ constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap) noexcept
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source>)
 using LdReg = Instruction<
+    /*Ticks*/ 4,
     Load<Destination, Source>,
-    NoOp,
-    NoOp,
     LoadIR>;
 
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source>)
 using LdMem = Instruction<
+    /*Ticks*/ 8,
     Load<Destination, Source>,
-    NoOp,
-    NoOp,
-    NoOp,
-    NoOp,
-    NoOp,
-    NoOp,
     LoadIR>;
 
 // TODO: Confirm identity loads are actually just NoOps

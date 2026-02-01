@@ -47,7 +47,7 @@ void test_basic_instruction_template(void)
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
-    using Instruction1 = cpu::Instruction<op0, op1>;
+    using Instruction1 = cpu::Instruction<2, op0, op1>;
     static_assert(Instruction1::Ticks == 2);
     auto result0 = Instruction1::ExecuteCycle<0>(mmap);
     TEST_ASSERT(result0.IsSuccess());
@@ -64,7 +64,7 @@ void test_basic_instruction_index(void)
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
-    using Instruction1 = cpu::Instruction<op0, op1>;
+    using Instruction1 = cpu::Instruction<2, op0, op1>;
     static_assert(Instruction1::Ticks == 2);
     auto result0 = Instruction1::ExecuteCycle(mmap, 0);
     TEST_ASSERT(result0);
@@ -76,7 +76,7 @@ void test_basic_instruction_index(void)
 
 void test_execute_all(void)
 {
-    using Instruction0 = cpu::Instruction<op0>;
+    using Instruction0 = cpu::Instruction<1, op0>;
     static_assert(Instruction0::Ticks == 1);
     std::size_t ticks = Instruction0::ExecuteAll(mmap);
     Byte        value = mmap.ReadByte({0, 0xFFFF});
@@ -89,14 +89,14 @@ void test_execute_failure(void)
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
     {
-        using Instruction0 = cpu::Instruction<op2, op1, op0>;
+        using Instruction0 = cpu::Instruction<3, op2, op1, op0>;
         static_assert(Instruction0::Ticks == 3);
         auto ticks = Instruction0::ExecuteAll(mmap);
         TEST_ASSERT(ticks == 0);
     }
 
     {
-        using Instruction0 = cpu::Instruction<op1, op2, op0>;
+        using Instruction0 = cpu::Instruction<3, op1, op2, op0>;
         static_assert(Instruction0::Ticks == 3);
         auto ticks = Instruction0::ExecuteAll(mmap);
         TEST_ASSERT(ticks == 1);
