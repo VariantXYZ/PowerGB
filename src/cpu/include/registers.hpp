@@ -54,6 +54,9 @@ private:
     //// Interrupt Enable
     Block<8, 8> _IE;
 
+    //// Interrupt Master Enable
+    bool _IME{true};
+
     //// Accumulator
     Block<8, 8> _A;
 
@@ -92,6 +95,9 @@ protected:
     constexpr Word& PC() { return _PC[0]; }
     constexpr Word& SP() { return _SP[0]; }
 
+    constexpr bool&       IME() { return _IME; }
+    constexpr const bool& IME() const { return _IME; }
+
 public:
     // Flag read
     constexpr const Nibble& F() const { return _F[0]; }
@@ -115,20 +121,31 @@ public:
     constexpr const Word& PC() const { return _PC[0]; }
     constexpr const Word& SP() const { return _SP[0]; }
 
-    void Reset()
+    constexpr void Reset() noexcept
     {
-        PC() = 0;
-        SP() = 0;
-        IR() = 0;
-        IE() = 0;
-        A() = 0;
-        B() = 0;
-        C() = 0;
-        D() = 0;
-        E() = 0;
-        H() = 0;
-        L() = 0;
-        F() = 0;
+        PC()  = 0;
+        SP()  = 0;
+        IR()  = 0;
+        IE()  = 0;
+        A()   = 0;
+        B()   = 0;
+        C()   = 0;
+        D()   = 0;
+        E()   = 0;
+        H()   = 0;
+        L()   = 0;
+        F()   = 0;
+        IME() = true;
+    }
+
+    constexpr void EnableIME() noexcept
+    {
+        _IME = true;
+    }
+
+    constexpr void DisableIME() noexcept
+    {
+        _IME = false;
     }
 };
 

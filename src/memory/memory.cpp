@@ -15,6 +15,7 @@ constexpr inline static bool IsValidRange(const std::size_t (&range)[N], std::si
 
 } // namespace
 
+// TODO: CPU should be separate and manage register states, including IME
 MemoryMap::InitializeResultSet MemoryMap::Initialize(const Byte (&rom)[], const std::size_t size) noexcept
 {
     // TODO: Parse cartridge header

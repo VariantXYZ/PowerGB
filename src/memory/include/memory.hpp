@@ -266,6 +266,10 @@ public:
     // Returns ResultRegisterOverflow if the value would overflow into an unexpected bank.
     ModifyStateRegisterResultSet IncrementPC() noexcept;
     ModifyStateRegisterResultSet DecrementPC() noexcept;
+
+    void EnableIME() noexcept { _registers.EnableIME(); }
+    void DisableIME() noexcept { _registers.DisableIME(); }
+    bool IMEEnabled() const noexcept { return _registers.IME(); }
 };
 
 } // namespace pgb::memory

@@ -76,6 +76,13 @@ void test_{test_name}()
                     test_content.append(f"    WriteRegisterByte(RegisterType::{val.upper()}, 0x{test['initial'][val]:02X});")
                 elif val == 'f':
                     test_content.append(f"    WriteRegisterFlag(0x{test['initial'][val]:02X});")
+                elif val == 'ime':
+                    v = test['initial'][val]
+                    assert v in (0, 1)
+                    if v == 0:
+                        test_content.append(f"    mmap.DisableIME();")
+                    else:
+                        test_content.append(f"    mmap.EnableIME();")
                 elif val == "ram":
                     for ram in test['initial'][val]:
                         test_content.append(f"    WriteMemory(0x{ram[0]:04X}, 0x{ram[1]:02X});")
@@ -99,6 +106,13 @@ void test_{test_name}()
                     test_content.append(f"    CheckRegisterByte(RegisterType::{val.upper()}, 0x{test['final'][val]:02X});")
                 elif val == 'f':
                     test_content.append(f"    CheckRegisterFlag(0x{test['final'][val]:02X});")
+                elif val == 'ime':
+                    v = test['final'][val]
+                    assert v in (0, 1)
+                    if v == 0:
+                        test_content.append(f"    TEST_ASSERT(!mmap.IMEEnabled());")
+                    else:
+                        test_content.append(f"    TEST_ASSERT(mmap.IMEEnabled());")
                 elif val == "ram":
                     for ram in test['final'][val]:
                         test_content.append(f"    CheckMemory(0x{ram[0]:04X}, 0x{ram[1]:02X});")
