@@ -106,22 +106,22 @@ constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap) noexcept
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source>)
 using LdReg = Instruction<
-    LoadIR,
     Load<Destination, Source>,
     NoOp,
-    NoOp>;
+    NoOp,
+    LoadIR>;
 
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source>)
 using LdMem = Instruction<
-    LoadIR,
     Load<Destination, Source>,
     NoOp,
     NoOp,
     NoOp,
     NoOp,
     NoOp,
-    NoOp>;
+    NoOp,
+    LoadIR>;
 
 // TODO: Confirm identity loads are actually just NoOps
 using Ld_A_A_Decoder  = Instantiate<InstructionDecoder<"ld a, a", 0x7F, NOP>>::Type;

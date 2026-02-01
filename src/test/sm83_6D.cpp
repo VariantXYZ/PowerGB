@@ -2043,6 +2043,7 @@ void test_6D_0000()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xA1);
     WriteRegisterByte(RegisterType::L, 0xF9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA30F, 0x6D);
 
@@ -2066,6 +2067,7 @@ void test_6D_0000()
     CheckRegisterByte(RegisterType::L, 0xF9);
     CheckRegisterWord(RegisterType::PC, 0xA310);
     CheckRegisterWord(RegisterType::SP, 0xF606);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA30F, 0x6D);
 }
 
@@ -2086,6 +2088,7 @@ void test_6D_0001()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xB4);
     WriteRegisterByte(RegisterType::L, 0xDB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x66C7, 0x6D);
 
@@ -2109,6 +2112,7 @@ void test_6D_0001()
     CheckRegisterByte(RegisterType::L, 0xDB);
     CheckRegisterWord(RegisterType::PC, 0x66C8);
     CheckRegisterWord(RegisterType::SP, 0x6F23);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x66C7, 0x6D);
 }
 
@@ -2129,6 +2133,7 @@ void test_6D_0002()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x43);
     WriteRegisterByte(RegisterType::L, 0x95);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x69BA, 0x6D);
 
@@ -2152,6 +2157,7 @@ void test_6D_0002()
     CheckRegisterByte(RegisterType::L, 0x95);
     CheckRegisterWord(RegisterType::PC, 0x69BB);
     CheckRegisterWord(RegisterType::SP, 0xD1B0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x69BA, 0x6D);
 }
 
@@ -2172,6 +2178,7 @@ void test_6D_0003()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xAD);
     WriteRegisterByte(RegisterType::L, 0xB3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x147A, 0x6D);
 
@@ -2195,6 +2202,7 @@ void test_6D_0003()
     CheckRegisterByte(RegisterType::L, 0xB3);
     CheckRegisterWord(RegisterType::PC, 0x147B);
     CheckRegisterWord(RegisterType::SP, 0x6982);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x147A, 0x6D);
 }
 
@@ -2215,6 +2223,7 @@ void test_6D_0004()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x7C);
     WriteRegisterByte(RegisterType::L, 0x71);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD7AF, 0x6D);
 
@@ -2238,6 +2247,7 @@ void test_6D_0004()
     CheckRegisterByte(RegisterType::L, 0x71);
     CheckRegisterWord(RegisterType::PC, 0xD7B0);
     CheckRegisterWord(RegisterType::SP, 0x086A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD7AF, 0x6D);
 }
 
@@ -2258,6 +2268,7 @@ void test_6D_0005()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x77);
     WriteRegisterByte(RegisterType::L, 0x8D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF0D2, 0x6D);
 
@@ -2281,6 +2292,7 @@ void test_6D_0005()
     CheckRegisterByte(RegisterType::L, 0x8D);
     CheckRegisterWord(RegisterType::PC, 0xF0D3);
     CheckRegisterWord(RegisterType::SP, 0x242E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF0D2, 0x6D);
 }
 
@@ -2301,6 +2313,7 @@ void test_6D_0006()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xEF);
     WriteRegisterByte(RegisterType::L, 0x0D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x047C, 0x6D);
 
@@ -2324,6 +2337,7 @@ void test_6D_0006()
     CheckRegisterByte(RegisterType::L, 0x0D);
     CheckRegisterWord(RegisterType::PC, 0x047D);
     CheckRegisterWord(RegisterType::SP, 0x0C07);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x047C, 0x6D);
 }
 
@@ -2344,6 +2358,7 @@ void test_6D_0007()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xA6);
     WriteRegisterByte(RegisterType::L, 0x8C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA6A7, 0x6D);
 
@@ -2367,6 +2382,7 @@ void test_6D_0007()
     CheckRegisterByte(RegisterType::L, 0x8C);
     CheckRegisterWord(RegisterType::PC, 0xA6A8);
     CheckRegisterWord(RegisterType::SP, 0x5FB1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA6A7, 0x6D);
 }
 
@@ -2387,6 +2403,7 @@ void test_6D_0008()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x98);
     WriteRegisterByte(RegisterType::L, 0x01);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFC03, 0x6D);
 
@@ -2410,6 +2427,7 @@ void test_6D_0008()
     CheckRegisterByte(RegisterType::L, 0x01);
     CheckRegisterWord(RegisterType::PC, 0xFC04);
     CheckRegisterWord(RegisterType::SP, 0xBA3E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFC03, 0x6D);
 }
 
@@ -2430,6 +2448,7 @@ void test_6D_0009()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xA3);
     WriteRegisterByte(RegisterType::L, 0x97);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE2BE, 0x6D);
 
@@ -2453,6 +2472,7 @@ void test_6D_0009()
     CheckRegisterByte(RegisterType::L, 0x97);
     CheckRegisterWord(RegisterType::PC, 0xE2BF);
     CheckRegisterWord(RegisterType::SP, 0xB79C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE2BE, 0x6D);
 }
 
@@ -2473,6 +2493,7 @@ void test_6D_000A()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xD6);
     WriteRegisterByte(RegisterType::L, 0x75);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF2AF, 0x6D);
 
@@ -2496,6 +2517,7 @@ void test_6D_000A()
     CheckRegisterByte(RegisterType::L, 0x75);
     CheckRegisterWord(RegisterType::PC, 0xF2B0);
     CheckRegisterWord(RegisterType::SP, 0x0A33);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF2AF, 0x6D);
 }
 
@@ -2516,6 +2538,7 @@ void test_6D_000B()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x35);
     WriteRegisterByte(RegisterType::L, 0xFA);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE2BF, 0x6D);
 
@@ -2539,6 +2562,7 @@ void test_6D_000B()
     CheckRegisterByte(RegisterType::L, 0xFA);
     CheckRegisterWord(RegisterType::PC, 0xE2C0);
     CheckRegisterWord(RegisterType::SP, 0x5211);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE2BF, 0x6D);
 }
 
@@ -2559,6 +2583,7 @@ void test_6D_000C()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x05);
     WriteRegisterByte(RegisterType::L, 0x24);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9D93, 0x6D);
 
@@ -2582,6 +2607,7 @@ void test_6D_000C()
     CheckRegisterByte(RegisterType::L, 0x24);
     CheckRegisterWord(RegisterType::PC, 0x9D94);
     CheckRegisterWord(RegisterType::SP, 0x2BD1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9D93, 0x6D);
 }
 
@@ -2602,6 +2628,7 @@ void test_6D_000D()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xF9);
     WriteRegisterByte(RegisterType::L, 0x5C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0C23, 0x6D);
 
@@ -2625,6 +2652,7 @@ void test_6D_000D()
     CheckRegisterByte(RegisterType::L, 0x5C);
     CheckRegisterWord(RegisterType::PC, 0x0C24);
     CheckRegisterWord(RegisterType::SP, 0x2F3C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0C23, 0x6D);
 }
 
@@ -2645,6 +2673,7 @@ void test_6D_000E()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xD3);
     WriteRegisterByte(RegisterType::L, 0x79);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xEA74, 0x6D);
 
@@ -2668,6 +2697,7 @@ void test_6D_000E()
     CheckRegisterByte(RegisterType::L, 0x79);
     CheckRegisterWord(RegisterType::PC, 0xEA75);
     CheckRegisterWord(RegisterType::SP, 0xBFE3);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEA74, 0x6D);
 }
 
@@ -2688,6 +2718,7 @@ void test_6D_000F()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x9F);
     WriteRegisterByte(RegisterType::L, 0x06);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0158, 0x6D);
 
@@ -2711,6 +2742,7 @@ void test_6D_000F()
     CheckRegisterByte(RegisterType::L, 0x06);
     CheckRegisterWord(RegisterType::PC, 0x0159);
     CheckRegisterWord(RegisterType::SP, 0xD3C5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0158, 0x6D);
 }
 
@@ -2731,6 +2763,7 @@ void test_6D_0010()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x1D);
     WriteRegisterByte(RegisterType::L, 0xDE);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6C82, 0x6D);
 
@@ -2754,6 +2787,7 @@ void test_6D_0010()
     CheckRegisterByte(RegisterType::L, 0xDE);
     CheckRegisterWord(RegisterType::PC, 0x6C83);
     CheckRegisterWord(RegisterType::SP, 0x455B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6C82, 0x6D);
 }
 
@@ -2774,6 +2808,7 @@ void test_6D_0011()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x40);
     WriteRegisterByte(RegisterType::L, 0xA1);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xCF57, 0x6D);
 
@@ -2797,6 +2832,7 @@ void test_6D_0011()
     CheckRegisterByte(RegisterType::L, 0xA1);
     CheckRegisterWord(RegisterType::PC, 0xCF58);
     CheckRegisterWord(RegisterType::SP, 0xB819);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCF57, 0x6D);
 }
 
@@ -2817,6 +2853,7 @@ void test_6D_0012()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xCB);
     WriteRegisterByte(RegisterType::L, 0x1C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x9A76, 0x6D);
 
@@ -2840,6 +2877,7 @@ void test_6D_0012()
     CheckRegisterByte(RegisterType::L, 0x1C);
     CheckRegisterWord(RegisterType::PC, 0x9A77);
     CheckRegisterWord(RegisterType::SP, 0x317D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9A76, 0x6D);
 }
 
@@ -2860,6 +2898,7 @@ void test_6D_0013()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xB8);
     WriteRegisterByte(RegisterType::L, 0xDD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4C7F, 0x6D);
 
@@ -2883,6 +2922,7 @@ void test_6D_0013()
     CheckRegisterByte(RegisterType::L, 0xDD);
     CheckRegisterWord(RegisterType::PC, 0x4C80);
     CheckRegisterWord(RegisterType::SP, 0x8DF3);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4C7F, 0x6D);
 }
 
@@ -2903,6 +2943,7 @@ void test_6D_0014()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x8A);
     WriteRegisterByte(RegisterType::L, 0x30);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1B00, 0x6D);
 
@@ -2926,6 +2967,7 @@ void test_6D_0014()
     CheckRegisterByte(RegisterType::L, 0x30);
     CheckRegisterWord(RegisterType::PC, 0x1B01);
     CheckRegisterWord(RegisterType::SP, 0x64EE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1B00, 0x6D);
 }
 
@@ -2946,6 +2988,7 @@ void test_6D_0015()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x82);
     WriteRegisterByte(RegisterType::L, 0xBC);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF0B9, 0x6D);
 
@@ -2969,6 +3012,7 @@ void test_6D_0015()
     CheckRegisterByte(RegisterType::L, 0xBC);
     CheckRegisterWord(RegisterType::PC, 0xF0BA);
     CheckRegisterWord(RegisterType::SP, 0x42FE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF0B9, 0x6D);
 }
 
@@ -2989,6 +3033,7 @@ void test_6D_0016()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x0E);
     WriteRegisterByte(RegisterType::L, 0x5A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2498, 0x6D);
 
@@ -3012,6 +3057,7 @@ void test_6D_0016()
     CheckRegisterByte(RegisterType::L, 0x5A);
     CheckRegisterWord(RegisterType::PC, 0x2499);
     CheckRegisterWord(RegisterType::SP, 0xDDF8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2498, 0x6D);
 }
 
@@ -3032,6 +3078,7 @@ void test_6D_0017()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x11);
     WriteRegisterByte(RegisterType::L, 0x71);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xADB9, 0x6D);
 
@@ -3055,6 +3102,7 @@ void test_6D_0017()
     CheckRegisterByte(RegisterType::L, 0x71);
     CheckRegisterWord(RegisterType::PC, 0xADBA);
     CheckRegisterWord(RegisterType::SP, 0x9F23);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xADB9, 0x6D);
 }
 
@@ -3075,6 +3123,7 @@ void test_6D_0018()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x22);
     WriteRegisterByte(RegisterType::L, 0xEF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFC07, 0x6D);
 
@@ -3098,6 +3147,7 @@ void test_6D_0018()
     CheckRegisterByte(RegisterType::L, 0xEF);
     CheckRegisterWord(RegisterType::PC, 0xFC08);
     CheckRegisterWord(RegisterType::SP, 0x9C1C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFC07, 0x6D);
 }
 
@@ -3118,6 +3168,7 @@ void test_6D_0019()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x68);
     WriteRegisterByte(RegisterType::L, 0x21);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA802, 0x6D);
 
@@ -3141,6 +3192,7 @@ void test_6D_0019()
     CheckRegisterByte(RegisterType::L, 0x21);
     CheckRegisterWord(RegisterType::PC, 0xA803);
     CheckRegisterWord(RegisterType::SP, 0x2C40);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA802, 0x6D);
 }
 
@@ -3161,6 +3213,7 @@ void test_6D_001A()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xD4);
     WriteRegisterByte(RegisterType::L, 0xFB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4CA7, 0x6D);
 
@@ -3184,6 +3237,7 @@ void test_6D_001A()
     CheckRegisterByte(RegisterType::L, 0xFB);
     CheckRegisterWord(RegisterType::PC, 0x4CA8);
     CheckRegisterWord(RegisterType::SP, 0x535B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4CA7, 0x6D);
 }
 
@@ -3204,6 +3258,7 @@ void test_6D_001B()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x62);
     WriteRegisterByte(RegisterType::L, 0xE4);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA751, 0x6D);
 
@@ -3227,6 +3282,7 @@ void test_6D_001B()
     CheckRegisterByte(RegisterType::L, 0xE4);
     CheckRegisterWord(RegisterType::PC, 0xA752);
     CheckRegisterWord(RegisterType::SP, 0x0CC5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA751, 0x6D);
 }
 
@@ -3247,6 +3303,7 @@ void test_6D_001C()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xDB);
     WriteRegisterByte(RegisterType::L, 0x42);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x12D0, 0x6D);
 
@@ -3270,6 +3327,7 @@ void test_6D_001C()
     CheckRegisterByte(RegisterType::L, 0x42);
     CheckRegisterWord(RegisterType::PC, 0x12D1);
     CheckRegisterWord(RegisterType::SP, 0xB98A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x12D0, 0x6D);
 }
 
@@ -3290,6 +3348,7 @@ void test_6D_001D()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xA9);
     WriteRegisterByte(RegisterType::L, 0xA0);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xED98, 0x6D);
 
@@ -3313,6 +3372,7 @@ void test_6D_001D()
     CheckRegisterByte(RegisterType::L, 0xA0);
     CheckRegisterWord(RegisterType::PC, 0xED99);
     CheckRegisterWord(RegisterType::SP, 0x9111);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xED98, 0x6D);
 }
 
@@ -3333,6 +3393,7 @@ void test_6D_001E()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x42);
     WriteRegisterByte(RegisterType::L, 0xE5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1DBF, 0x6D);
 
@@ -3356,6 +3417,7 @@ void test_6D_001E()
     CheckRegisterByte(RegisterType::L, 0xE5);
     CheckRegisterWord(RegisterType::PC, 0x1DC0);
     CheckRegisterWord(RegisterType::SP, 0xAD6A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1DBF, 0x6D);
 }
 
@@ -3376,6 +3438,7 @@ void test_6D_001F()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x11);
     WriteRegisterByte(RegisterType::L, 0x95);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB52A, 0x6D);
 
@@ -3399,6 +3462,7 @@ void test_6D_001F()
     CheckRegisterByte(RegisterType::L, 0x95);
     CheckRegisterWord(RegisterType::PC, 0xB52B);
     CheckRegisterWord(RegisterType::SP, 0xB9DF);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB52A, 0x6D);
 }
 
@@ -3419,6 +3483,7 @@ void test_6D_0020()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x37);
     WriteRegisterByte(RegisterType::L, 0x1D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE8C4, 0x6D);
 
@@ -3442,6 +3507,7 @@ void test_6D_0020()
     CheckRegisterByte(RegisterType::L, 0x1D);
     CheckRegisterWord(RegisterType::PC, 0xE8C5);
     CheckRegisterWord(RegisterType::SP, 0xC8D5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE8C4, 0x6D);
 }
 
@@ -3462,6 +3528,7 @@ void test_6D_0021()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x39);
     WriteRegisterByte(RegisterType::L, 0x3D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE27B, 0x6D);
 
@@ -3485,6 +3552,7 @@ void test_6D_0021()
     CheckRegisterByte(RegisterType::L, 0x3D);
     CheckRegisterWord(RegisterType::PC, 0xE27C);
     CheckRegisterWord(RegisterType::SP, 0x7CB6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE27B, 0x6D);
 }
 
@@ -3505,6 +3573,7 @@ void test_6D_0022()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xEE);
     WriteRegisterByte(RegisterType::L, 0xDB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1B05, 0x6D);
 
@@ -3528,6 +3597,7 @@ void test_6D_0022()
     CheckRegisterByte(RegisterType::L, 0xDB);
     CheckRegisterWord(RegisterType::PC, 0x1B06);
     CheckRegisterWord(RegisterType::SP, 0x7408);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1B05, 0x6D);
 }
 
@@ -3548,6 +3618,7 @@ void test_6D_0023()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x88);
     WriteRegisterByte(RegisterType::L, 0xDE);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDD05, 0x6D);
 
@@ -3571,6 +3642,7 @@ void test_6D_0023()
     CheckRegisterByte(RegisterType::L, 0xDE);
     CheckRegisterWord(RegisterType::PC, 0xDD06);
     CheckRegisterWord(RegisterType::SP, 0x47F5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDD05, 0x6D);
 }
 
@@ -3591,6 +3663,7 @@ void test_6D_0024()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x04);
     WriteRegisterByte(RegisterType::L, 0x85);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1E08, 0x6D);
 
@@ -3614,6 +3687,7 @@ void test_6D_0024()
     CheckRegisterByte(RegisterType::L, 0x85);
     CheckRegisterWord(RegisterType::PC, 0x1E09);
     CheckRegisterWord(RegisterType::SP, 0xBD4E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1E08, 0x6D);
 }
 
@@ -3634,6 +3708,7 @@ void test_6D_0025()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x2A);
     WriteRegisterByte(RegisterType::L, 0xD6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF90B, 0x6D);
 
@@ -3657,6 +3732,7 @@ void test_6D_0025()
     CheckRegisterByte(RegisterType::L, 0xD6);
     CheckRegisterWord(RegisterType::PC, 0xF90C);
     CheckRegisterWord(RegisterType::SP, 0x7E28);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF90B, 0x6D);
 }
 
@@ -3677,6 +3753,7 @@ void test_6D_0026()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xBC);
     WriteRegisterByte(RegisterType::L, 0xB4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6A57, 0x6D);
 
@@ -3700,6 +3777,7 @@ void test_6D_0026()
     CheckRegisterByte(RegisterType::L, 0xB4);
     CheckRegisterWord(RegisterType::PC, 0x6A58);
     CheckRegisterWord(RegisterType::SP, 0x4DFE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6A57, 0x6D);
 }
 
@@ -3720,6 +3798,7 @@ void test_6D_0027()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x1F);
     WriteRegisterByte(RegisterType::L, 0x29);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5CD8, 0x6D);
 
@@ -3743,6 +3822,7 @@ void test_6D_0027()
     CheckRegisterByte(RegisterType::L, 0x29);
     CheckRegisterWord(RegisterType::PC, 0x5CD9);
     CheckRegisterWord(RegisterType::SP, 0x56A9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5CD8, 0x6D);
 }
 
@@ -3763,6 +3843,7 @@ void test_6D_0028()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x10);
     WriteRegisterByte(RegisterType::L, 0x32);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x55C2, 0x6D);
 
@@ -3786,6 +3867,7 @@ void test_6D_0028()
     CheckRegisterByte(RegisterType::L, 0x32);
     CheckRegisterWord(RegisterType::PC, 0x55C3);
     CheckRegisterWord(RegisterType::SP, 0x14AB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x55C2, 0x6D);
 }
 
@@ -3806,6 +3888,7 @@ void test_6D_0029()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x68);
     WriteRegisterByte(RegisterType::L, 0x4F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFA13, 0x6D);
 
@@ -3829,6 +3912,7 @@ void test_6D_0029()
     CheckRegisterByte(RegisterType::L, 0x4F);
     CheckRegisterWord(RegisterType::PC, 0xFA14);
     CheckRegisterWord(RegisterType::SP, 0xEA64);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFA13, 0x6D);
 }
 
@@ -3849,6 +3933,7 @@ void test_6D_002A()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xEF);
     WriteRegisterByte(RegisterType::L, 0x40);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8A53, 0x6D);
 
@@ -3872,6 +3957,7 @@ void test_6D_002A()
     CheckRegisterByte(RegisterType::L, 0x40);
     CheckRegisterWord(RegisterType::PC, 0x8A54);
     CheckRegisterWord(RegisterType::SP, 0xA565);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8A53, 0x6D);
 }
 
@@ -3892,6 +3978,7 @@ void test_6D_002B()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xE1);
     WriteRegisterByte(RegisterType::L, 0x05);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1B44, 0x6D);
 
@@ -3915,6 +4002,7 @@ void test_6D_002B()
     CheckRegisterByte(RegisterType::L, 0x05);
     CheckRegisterWord(RegisterType::PC, 0x1B45);
     CheckRegisterWord(RegisterType::SP, 0x8320);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1B44, 0x6D);
 }
 
@@ -3935,6 +4023,7 @@ void test_6D_002C()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x88);
     WriteRegisterByte(RegisterType::L, 0xAE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3D35, 0x6D);
 
@@ -3958,6 +4047,7 @@ void test_6D_002C()
     CheckRegisterByte(RegisterType::L, 0xAE);
     CheckRegisterWord(RegisterType::PC, 0x3D36);
     CheckRegisterWord(RegisterType::SP, 0x4D02);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3D35, 0x6D);
 }
 
@@ -3978,6 +4068,7 @@ void test_6D_002D()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xC6);
     WriteRegisterByte(RegisterType::L, 0xD4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5366, 0x6D);
 
@@ -4001,6 +4092,7 @@ void test_6D_002D()
     CheckRegisterByte(RegisterType::L, 0xD4);
     CheckRegisterWord(RegisterType::PC, 0x5367);
     CheckRegisterWord(RegisterType::SP, 0xE416);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5366, 0x6D);
 }
 
@@ -4021,6 +4113,7 @@ void test_6D_002E()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x15);
     WriteRegisterByte(RegisterType::L, 0x4C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1D0C, 0x6D);
 
@@ -4044,6 +4137,7 @@ void test_6D_002E()
     CheckRegisterByte(RegisterType::L, 0x4C);
     CheckRegisterWord(RegisterType::PC, 0x1D0D);
     CheckRegisterWord(RegisterType::SP, 0xF174);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1D0C, 0x6D);
 }
 
@@ -4064,6 +4158,7 @@ void test_6D_002F()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x03);
     WriteRegisterByte(RegisterType::L, 0x35);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDD48, 0x6D);
 
@@ -4087,6 +4182,7 @@ void test_6D_002F()
     CheckRegisterByte(RegisterType::L, 0x35);
     CheckRegisterWord(RegisterType::PC, 0xDD49);
     CheckRegisterWord(RegisterType::SP, 0xD12A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDD48, 0x6D);
 }
 
@@ -4107,6 +4203,7 @@ void test_6D_0030()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xD4);
     WriteRegisterByte(RegisterType::L, 0xA1);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xAFF9, 0x6D);
 
@@ -4130,6 +4227,7 @@ void test_6D_0030()
     CheckRegisterByte(RegisterType::L, 0xA1);
     CheckRegisterWord(RegisterType::PC, 0xAFFA);
     CheckRegisterWord(RegisterType::SP, 0xC43D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAFF9, 0x6D);
 }
 
@@ -4150,6 +4248,7 @@ void test_6D_0031()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xC6);
     WriteRegisterByte(RegisterType::L, 0x17);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x616A, 0x6D);
 
@@ -4173,6 +4272,7 @@ void test_6D_0031()
     CheckRegisterByte(RegisterType::L, 0x17);
     CheckRegisterWord(RegisterType::PC, 0x616B);
     CheckRegisterWord(RegisterType::SP, 0x1BBA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x616A, 0x6D);
 }
 
@@ -4193,6 +4293,7 @@ void test_6D_0032()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x02);
     WriteRegisterByte(RegisterType::L, 0xED);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7B6C, 0x6D);
 
@@ -4216,6 +4317,7 @@ void test_6D_0032()
     CheckRegisterByte(RegisterType::L, 0xED);
     CheckRegisterWord(RegisterType::PC, 0x7B6D);
     CheckRegisterWord(RegisterType::SP, 0xD54E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7B6C, 0x6D);
 }
 
@@ -4236,6 +4338,7 @@ void test_6D_0033()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xD8);
     WriteRegisterByte(RegisterType::L, 0xC8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEB3A, 0x6D);
 
@@ -4259,6 +4362,7 @@ void test_6D_0033()
     CheckRegisterByte(RegisterType::L, 0xC8);
     CheckRegisterWord(RegisterType::PC, 0xEB3B);
     CheckRegisterWord(RegisterType::SP, 0xB3F2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEB3A, 0x6D);
 }
 
@@ -4279,6 +4383,7 @@ void test_6D_0034()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xF7);
     WriteRegisterByte(RegisterType::L, 0xC9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBEA2, 0x6D);
 
@@ -4302,6 +4407,7 @@ void test_6D_0034()
     CheckRegisterByte(RegisterType::L, 0xC9);
     CheckRegisterWord(RegisterType::PC, 0xBEA3);
     CheckRegisterWord(RegisterType::SP, 0xFD5A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBEA2, 0x6D);
 }
 
@@ -4322,6 +4428,7 @@ void test_6D_0035()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xAC);
     WriteRegisterByte(RegisterType::L, 0xA0);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6426, 0x6D);
 
@@ -4345,6 +4452,7 @@ void test_6D_0035()
     CheckRegisterByte(RegisterType::L, 0xA0);
     CheckRegisterWord(RegisterType::PC, 0x6427);
     CheckRegisterWord(RegisterType::SP, 0x5140);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6426, 0x6D);
 }
 
@@ -4365,6 +4473,7 @@ void test_6D_0036()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x6B);
     WriteRegisterByte(RegisterType::L, 0x7B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5C35, 0x6D);
 
@@ -4388,6 +4497,7 @@ void test_6D_0036()
     CheckRegisterByte(RegisterType::L, 0x7B);
     CheckRegisterWord(RegisterType::PC, 0x5C36);
     CheckRegisterWord(RegisterType::SP, 0x49E8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5C35, 0x6D);
 }
 
@@ -4408,6 +4518,7 @@ void test_6D_0037()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xFD);
     WriteRegisterByte(RegisterType::L, 0x80);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x80BB, 0x6D);
 
@@ -4431,6 +4542,7 @@ void test_6D_0037()
     CheckRegisterByte(RegisterType::L, 0x80);
     CheckRegisterWord(RegisterType::PC, 0x80BC);
     CheckRegisterWord(RegisterType::SP, 0x2819);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x80BB, 0x6D);
 }
 
@@ -4451,6 +4563,7 @@ void test_6D_0038()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xC5);
     WriteRegisterByte(RegisterType::L, 0xDE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2332, 0x6D);
 
@@ -4474,6 +4587,7 @@ void test_6D_0038()
     CheckRegisterByte(RegisterType::L, 0xDE);
     CheckRegisterWord(RegisterType::PC, 0x2333);
     CheckRegisterWord(RegisterType::SP, 0x26A6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2332, 0x6D);
 }
 
@@ -4494,6 +4608,7 @@ void test_6D_0039()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x1F);
     WriteRegisterByte(RegisterType::L, 0x19);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xBB82, 0x6D);
 
@@ -4517,6 +4632,7 @@ void test_6D_0039()
     CheckRegisterByte(RegisterType::L, 0x19);
     CheckRegisterWord(RegisterType::PC, 0xBB83);
     CheckRegisterWord(RegisterType::SP, 0xD25E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBB82, 0x6D);
 }
 
@@ -4537,6 +4653,7 @@ void test_6D_003A()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xF2);
     WriteRegisterByte(RegisterType::L, 0xA6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x9BED, 0x6D);
 
@@ -4560,6 +4677,7 @@ void test_6D_003A()
     CheckRegisterByte(RegisterType::L, 0xA6);
     CheckRegisterWord(RegisterType::PC, 0x9BEE);
     CheckRegisterWord(RegisterType::SP, 0x2934);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9BED, 0x6D);
 }
 
@@ -4580,6 +4698,7 @@ void test_6D_003B()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x11);
     WriteRegisterByte(RegisterType::L, 0xE9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD42D, 0x6D);
 
@@ -4603,6 +4722,7 @@ void test_6D_003B()
     CheckRegisterByte(RegisterType::L, 0xE9);
     CheckRegisterWord(RegisterType::PC, 0xD42E);
     CheckRegisterWord(RegisterType::SP, 0x4BBD);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD42D, 0x6D);
 }
 
@@ -4623,6 +4743,7 @@ void test_6D_003C()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xCB);
     WriteRegisterByte(RegisterType::L, 0x56);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFBC8, 0x6D);
 
@@ -4646,6 +4767,7 @@ void test_6D_003C()
     CheckRegisterByte(RegisterType::L, 0x56);
     CheckRegisterWord(RegisterType::PC, 0xFBC9);
     CheckRegisterWord(RegisterType::SP, 0x605A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFBC8, 0x6D);
 }
 
@@ -4666,6 +4788,7 @@ void test_6D_003D()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xD7);
     WriteRegisterByte(RegisterType::L, 0x64);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF960, 0x6D);
 
@@ -4689,6 +4812,7 @@ void test_6D_003D()
     CheckRegisterByte(RegisterType::L, 0x64);
     CheckRegisterWord(RegisterType::PC, 0xF961);
     CheckRegisterWord(RegisterType::SP, 0xE9EC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF960, 0x6D);
 }
 
@@ -4709,6 +4833,7 @@ void test_6D_003E()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xC7);
     WriteRegisterByte(RegisterType::L, 0x65);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF64B, 0x6D);
 
@@ -4732,6 +4857,7 @@ void test_6D_003E()
     CheckRegisterByte(RegisterType::L, 0x65);
     CheckRegisterWord(RegisterType::PC, 0xF64C);
     CheckRegisterWord(RegisterType::SP, 0x4669);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF64B, 0x6D);
 }
 
@@ -4752,6 +4878,7 @@ void test_6D_003F()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x36);
     WriteRegisterByte(RegisterType::L, 0x4A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD63C, 0x6D);
 
@@ -4775,6 +4902,7 @@ void test_6D_003F()
     CheckRegisterByte(RegisterType::L, 0x4A);
     CheckRegisterWord(RegisterType::PC, 0xD63D);
     CheckRegisterWord(RegisterType::SP, 0xC1F6);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD63C, 0x6D);
 }
 
@@ -4795,6 +4923,7 @@ void test_6D_0040()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xDF);
     WriteRegisterByte(RegisterType::L, 0xCB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x81A3, 0x6D);
 
@@ -4818,6 +4947,7 @@ void test_6D_0040()
     CheckRegisterByte(RegisterType::L, 0xCB);
     CheckRegisterWord(RegisterType::PC, 0x81A4);
     CheckRegisterWord(RegisterType::SP, 0x214F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x81A3, 0x6D);
 }
 
@@ -4838,6 +4968,7 @@ void test_6D_0041()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x57);
     WriteRegisterByte(RegisterType::L, 0x3A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x77DA, 0x6D);
 
@@ -4861,6 +4992,7 @@ void test_6D_0041()
     CheckRegisterByte(RegisterType::L, 0x3A);
     CheckRegisterWord(RegisterType::PC, 0x77DB);
     CheckRegisterWord(RegisterType::SP, 0x87C8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x77DA, 0x6D);
 }
 
@@ -4881,6 +5013,7 @@ void test_6D_0042()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x8A);
     WriteRegisterByte(RegisterType::L, 0x22);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3650, 0x6D);
 
@@ -4904,6 +5037,7 @@ void test_6D_0042()
     CheckRegisterByte(RegisterType::L, 0x22);
     CheckRegisterWord(RegisterType::PC, 0x3651);
     CheckRegisterWord(RegisterType::SP, 0x7251);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3650, 0x6D);
 }
 
@@ -4924,6 +5058,7 @@ void test_6D_0043()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xCD);
     WriteRegisterByte(RegisterType::L, 0x76);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x27F7, 0x6D);
 
@@ -4947,6 +5082,7 @@ void test_6D_0043()
     CheckRegisterByte(RegisterType::L, 0x76);
     CheckRegisterWord(RegisterType::PC, 0x27F8);
     CheckRegisterWord(RegisterType::SP, 0x7084);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x27F7, 0x6D);
 }
 
@@ -4967,6 +5103,7 @@ void test_6D_0044()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x37);
     WriteRegisterByte(RegisterType::L, 0x06);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC375, 0x6D);
 
@@ -4990,6 +5127,7 @@ void test_6D_0044()
     CheckRegisterByte(RegisterType::L, 0x06);
     CheckRegisterWord(RegisterType::PC, 0xC376);
     CheckRegisterWord(RegisterType::SP, 0x96AC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC375, 0x6D);
 }
 
@@ -5010,6 +5148,7 @@ void test_6D_0045()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xAC);
     WriteRegisterByte(RegisterType::L, 0x4A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x80F0, 0x6D);
 
@@ -5033,6 +5172,7 @@ void test_6D_0045()
     CheckRegisterByte(RegisterType::L, 0x4A);
     CheckRegisterWord(RegisterType::PC, 0x80F1);
     CheckRegisterWord(RegisterType::SP, 0x6DED);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x80F0, 0x6D);
 }
 
@@ -5053,6 +5193,7 @@ void test_6D_0046()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x85);
     WriteRegisterByte(RegisterType::L, 0x6B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4E58, 0x6D);
 
@@ -5076,6 +5217,7 @@ void test_6D_0046()
     CheckRegisterByte(RegisterType::L, 0x6B);
     CheckRegisterWord(RegisterType::PC, 0x4E59);
     CheckRegisterWord(RegisterType::SP, 0x8C99);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4E58, 0x6D);
 }
 
@@ -5096,6 +5238,7 @@ void test_6D_0047()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xF5);
     WriteRegisterByte(RegisterType::L, 0xD6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xDA06, 0x6D);
 
@@ -5119,6 +5262,7 @@ void test_6D_0047()
     CheckRegisterByte(RegisterType::L, 0xD6);
     CheckRegisterWord(RegisterType::PC, 0xDA07);
     CheckRegisterWord(RegisterType::SP, 0x7B0B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDA06, 0x6D);
 }
 
@@ -5139,6 +5283,7 @@ void test_6D_0048()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x89);
     WriteRegisterByte(RegisterType::L, 0xF2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7A41, 0x6D);
 
@@ -5162,6 +5307,7 @@ void test_6D_0048()
     CheckRegisterByte(RegisterType::L, 0xF2);
     CheckRegisterWord(RegisterType::PC, 0x7A42);
     CheckRegisterWord(RegisterType::SP, 0x5594);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7A41, 0x6D);
 }
 
@@ -5182,6 +5328,7 @@ void test_6D_0049()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x65);
     WriteRegisterByte(RegisterType::L, 0xAE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3C9A, 0x6D);
 
@@ -5205,6 +5352,7 @@ void test_6D_0049()
     CheckRegisterByte(RegisterType::L, 0xAE);
     CheckRegisterWord(RegisterType::PC, 0x3C9B);
     CheckRegisterWord(RegisterType::SP, 0x5F2D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3C9A, 0x6D);
 }
 
@@ -5225,6 +5373,7 @@ void test_6D_004A()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x11);
     WriteRegisterByte(RegisterType::L, 0xE0);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF3B9, 0x6D);
 
@@ -5248,6 +5397,7 @@ void test_6D_004A()
     CheckRegisterByte(RegisterType::L, 0xE0);
     CheckRegisterWord(RegisterType::PC, 0xF3BA);
     CheckRegisterWord(RegisterType::SP, 0x5CF3);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF3B9, 0x6D);
 }
 
@@ -5268,6 +5418,7 @@ void test_6D_004B()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x8F);
     WriteRegisterByte(RegisterType::L, 0xA3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4BEF, 0x6D);
 
@@ -5291,6 +5442,7 @@ void test_6D_004B()
     CheckRegisterByte(RegisterType::L, 0xA3);
     CheckRegisterWord(RegisterType::PC, 0x4BF0);
     CheckRegisterWord(RegisterType::SP, 0x6012);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4BEF, 0x6D);
 }
 
@@ -5311,6 +5463,7 @@ void test_6D_004C()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xD3);
     WriteRegisterByte(RegisterType::L, 0x2C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEC35, 0x6D);
 
@@ -5334,6 +5487,7 @@ void test_6D_004C()
     CheckRegisterByte(RegisterType::L, 0x2C);
     CheckRegisterWord(RegisterType::PC, 0xEC36);
     CheckRegisterWord(RegisterType::SP, 0xE993);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEC35, 0x6D);
 }
 
@@ -5354,6 +5508,7 @@ void test_6D_004D()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xB6);
     WriteRegisterByte(RegisterType::L, 0x34);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF7EC, 0x6D);
 
@@ -5377,6 +5532,7 @@ void test_6D_004D()
     CheckRegisterByte(RegisterType::L, 0x34);
     CheckRegisterWord(RegisterType::PC, 0xF7ED);
     CheckRegisterWord(RegisterType::SP, 0x31E0);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF7EC, 0x6D);
 }
 
@@ -5397,6 +5553,7 @@ void test_6D_004E()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x66);
     WriteRegisterByte(RegisterType::L, 0xB4);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5C5A, 0x6D);
 
@@ -5420,6 +5577,7 @@ void test_6D_004E()
     CheckRegisterByte(RegisterType::L, 0xB4);
     CheckRegisterWord(RegisterType::PC, 0x5C5B);
     CheckRegisterWord(RegisterType::SP, 0x259B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5C5A, 0x6D);
 }
 
@@ -5440,6 +5598,7 @@ void test_6D_004F()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x14);
     WriteRegisterByte(RegisterType::L, 0x25);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7CBF, 0x6D);
 
@@ -5463,6 +5622,7 @@ void test_6D_004F()
     CheckRegisterByte(RegisterType::L, 0x25);
     CheckRegisterWord(RegisterType::PC, 0x7CC0);
     CheckRegisterWord(RegisterType::SP, 0x5266);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7CBF, 0x6D);
 }
 
@@ -5483,6 +5643,7 @@ void test_6D_0050()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x3F);
     WriteRegisterByte(RegisterType::L, 0x93);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x92D8, 0x6D);
 
@@ -5506,6 +5667,7 @@ void test_6D_0050()
     CheckRegisterByte(RegisterType::L, 0x93);
     CheckRegisterWord(RegisterType::PC, 0x92D9);
     CheckRegisterWord(RegisterType::SP, 0xC2F2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x92D8, 0x6D);
 }
 
@@ -5526,6 +5688,7 @@ void test_6D_0051()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x21);
     WriteRegisterByte(RegisterType::L, 0xED);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x22AE, 0x6D);
 
@@ -5549,6 +5712,7 @@ void test_6D_0051()
     CheckRegisterByte(RegisterType::L, 0xED);
     CheckRegisterWord(RegisterType::PC, 0x22AF);
     CheckRegisterWord(RegisterType::SP, 0x86C1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x22AE, 0x6D);
 }
 
@@ -5569,6 +5733,7 @@ void test_6D_0052()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x27);
     WriteRegisterByte(RegisterType::L, 0xEC);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD6DD, 0x6D);
 
@@ -5592,6 +5757,7 @@ void test_6D_0052()
     CheckRegisterByte(RegisterType::L, 0xEC);
     CheckRegisterWord(RegisterType::PC, 0xD6DE);
     CheckRegisterWord(RegisterType::SP, 0x5F9A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD6DD, 0x6D);
 }
 
@@ -5612,6 +5778,7 @@ void test_6D_0053()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xD5);
     WriteRegisterByte(RegisterType::L, 0x7E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xBB45, 0x6D);
 
@@ -5635,6 +5802,7 @@ void test_6D_0053()
     CheckRegisterByte(RegisterType::L, 0x7E);
     CheckRegisterWord(RegisterType::PC, 0xBB46);
     CheckRegisterWord(RegisterType::SP, 0xFC6F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBB45, 0x6D);
 }
 
@@ -5655,6 +5823,7 @@ void test_6D_0054()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xD0);
     WriteRegisterByte(RegisterType::L, 0xBB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3496, 0x6D);
 
@@ -5678,6 +5847,7 @@ void test_6D_0054()
     CheckRegisterByte(RegisterType::L, 0xBB);
     CheckRegisterWord(RegisterType::PC, 0x3497);
     CheckRegisterWord(RegisterType::SP, 0xA306);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3496, 0x6D);
 }
 
@@ -5698,6 +5868,7 @@ void test_6D_0055()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x3F);
     WriteRegisterByte(RegisterType::L, 0xCA);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x49FC, 0x6D);
 
@@ -5721,6 +5892,7 @@ void test_6D_0055()
     CheckRegisterByte(RegisterType::L, 0xCA);
     CheckRegisterWord(RegisterType::PC, 0x49FD);
     CheckRegisterWord(RegisterType::SP, 0x5E84);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x49FC, 0x6D);
 }
 
@@ -5741,6 +5913,7 @@ void test_6D_0056()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x2F);
     WriteRegisterByte(RegisterType::L, 0xD5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2C46, 0x6D);
 
@@ -5764,6 +5937,7 @@ void test_6D_0056()
     CheckRegisterByte(RegisterType::L, 0xD5);
     CheckRegisterWord(RegisterType::PC, 0x2C47);
     CheckRegisterWord(RegisterType::SP, 0x58E1);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2C46, 0x6D);
 }
 
@@ -5784,6 +5958,7 @@ void test_6D_0057()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x8D);
     WriteRegisterByte(RegisterType::L, 0x4D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x71CE, 0x6D);
 
@@ -5807,6 +5982,7 @@ void test_6D_0057()
     CheckRegisterByte(RegisterType::L, 0x4D);
     CheckRegisterWord(RegisterType::PC, 0x71CF);
     CheckRegisterWord(RegisterType::SP, 0xBD75);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x71CE, 0x6D);
 }
 
@@ -5827,6 +6003,7 @@ void test_6D_0058()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xFB);
     WriteRegisterByte(RegisterType::L, 0xD0);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x55AE, 0x6D);
 
@@ -5850,6 +6027,7 @@ void test_6D_0058()
     CheckRegisterByte(RegisterType::L, 0xD0);
     CheckRegisterWord(RegisterType::PC, 0x55AF);
     CheckRegisterWord(RegisterType::SP, 0xE557);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x55AE, 0x6D);
 }
 
@@ -5870,6 +6048,7 @@ void test_6D_0059()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x75);
     WriteRegisterByte(RegisterType::L, 0x2F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDCC3, 0x6D);
 
@@ -5893,6 +6072,7 @@ void test_6D_0059()
     CheckRegisterByte(RegisterType::L, 0x2F);
     CheckRegisterWord(RegisterType::PC, 0xDCC4);
     CheckRegisterWord(RegisterType::SP, 0xE238);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDCC3, 0x6D);
 }
 
@@ -5913,6 +6093,7 @@ void test_6D_005A()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xF1);
     WriteRegisterByte(RegisterType::L, 0x41);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB756, 0x6D);
 
@@ -5936,6 +6117,7 @@ void test_6D_005A()
     CheckRegisterByte(RegisterType::L, 0x41);
     CheckRegisterWord(RegisterType::PC, 0xB757);
     CheckRegisterWord(RegisterType::SP, 0xE37D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB756, 0x6D);
 }
 
@@ -5956,6 +6138,7 @@ void test_6D_005B()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x3B);
     WriteRegisterByte(RegisterType::L, 0x56);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xED00, 0x6D);
 
@@ -5979,6 +6162,7 @@ void test_6D_005B()
     CheckRegisterByte(RegisterType::L, 0x56);
     CheckRegisterWord(RegisterType::PC, 0xED01);
     CheckRegisterWord(RegisterType::SP, 0xE9E6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xED00, 0x6D);
 }
 
@@ -5999,6 +6183,7 @@ void test_6D_005C()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x6B);
     WriteRegisterByte(RegisterType::L, 0x00);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA6C3, 0x6D);
 
@@ -6022,6 +6207,7 @@ void test_6D_005C()
     CheckRegisterByte(RegisterType::L, 0x00);
     CheckRegisterWord(RegisterType::PC, 0xA6C4);
     CheckRegisterWord(RegisterType::SP, 0x4737);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA6C3, 0x6D);
 }
 
@@ -6042,6 +6228,7 @@ void test_6D_005D()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x2A);
     WriteRegisterByte(RegisterType::L, 0x68);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xCB94, 0x6D);
 
@@ -6065,6 +6252,7 @@ void test_6D_005D()
     CheckRegisterByte(RegisterType::L, 0x68);
     CheckRegisterWord(RegisterType::PC, 0xCB95);
     CheckRegisterWord(RegisterType::SP, 0xAC90);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCB94, 0x6D);
 }
 
@@ -6085,6 +6273,7 @@ void test_6D_005E()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x83);
     WriteRegisterByte(RegisterType::L, 0xCB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD53C, 0x6D);
 
@@ -6108,6 +6297,7 @@ void test_6D_005E()
     CheckRegisterByte(RegisterType::L, 0xCB);
     CheckRegisterWord(RegisterType::PC, 0xD53D);
     CheckRegisterWord(RegisterType::SP, 0xDA08);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD53C, 0x6D);
 }
 
@@ -6128,6 +6318,7 @@ void test_6D_005F()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x4D);
     WriteRegisterByte(RegisterType::L, 0x61);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8CBD, 0x6D);
 
@@ -6151,6 +6342,7 @@ void test_6D_005F()
     CheckRegisterByte(RegisterType::L, 0x61);
     CheckRegisterWord(RegisterType::PC, 0x8CBE);
     CheckRegisterWord(RegisterType::SP, 0xFA91);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8CBD, 0x6D);
 }
 
@@ -6171,6 +6363,7 @@ void test_6D_0060()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x40);
     WriteRegisterByte(RegisterType::L, 0xF4);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2FF9, 0x6D);
 
@@ -6194,6 +6387,7 @@ void test_6D_0060()
     CheckRegisterByte(RegisterType::L, 0xF4);
     CheckRegisterWord(RegisterType::PC, 0x2FFA);
     CheckRegisterWord(RegisterType::SP, 0xA245);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2FF9, 0x6D);
 }
 
@@ -6214,6 +6408,7 @@ void test_6D_0061()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xAE);
     WriteRegisterByte(RegisterType::L, 0xAC);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9B58, 0x6D);
 
@@ -6237,6 +6432,7 @@ void test_6D_0061()
     CheckRegisterByte(RegisterType::L, 0xAC);
     CheckRegisterWord(RegisterType::PC, 0x9B59);
     CheckRegisterWord(RegisterType::SP, 0x1053);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9B58, 0x6D);
 }
 
@@ -6257,6 +6453,7 @@ void test_6D_0062()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x8E);
     WriteRegisterByte(RegisterType::L, 0xC0);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE072, 0x6D);
 
@@ -6280,6 +6477,7 @@ void test_6D_0062()
     CheckRegisterByte(RegisterType::L, 0xC0);
     CheckRegisterWord(RegisterType::PC, 0xE073);
     CheckRegisterWord(RegisterType::SP, 0x6216);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE072, 0x6D);
 }
 
@@ -6300,6 +6498,7 @@ void test_6D_0063()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x11);
     WriteRegisterByte(RegisterType::L, 0xA4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x45B7, 0x6D);
 
@@ -6323,6 +6522,7 @@ void test_6D_0063()
     CheckRegisterByte(RegisterType::L, 0xA4);
     CheckRegisterWord(RegisterType::PC, 0x45B8);
     CheckRegisterWord(RegisterType::SP, 0x4280);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x45B7, 0x6D);
 }
 
@@ -6343,6 +6543,7 @@ void test_6D_0064()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xEC);
     WriteRegisterByte(RegisterType::L, 0xF9);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x215A, 0x6D);
 
@@ -6366,6 +6567,7 @@ void test_6D_0064()
     CheckRegisterByte(RegisterType::L, 0xF9);
     CheckRegisterWord(RegisterType::PC, 0x215B);
     CheckRegisterWord(RegisterType::SP, 0xA67D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x215A, 0x6D);
 }
 
@@ -6386,6 +6588,7 @@ void test_6D_0065()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x67);
     WriteRegisterByte(RegisterType::L, 0x04);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x144B, 0x6D);
 
@@ -6409,6 +6612,7 @@ void test_6D_0065()
     CheckRegisterByte(RegisterType::L, 0x04);
     CheckRegisterWord(RegisterType::PC, 0x144C);
     CheckRegisterWord(RegisterType::SP, 0x4D65);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x144B, 0x6D);
 }
 
@@ -6429,6 +6633,7 @@ void test_6D_0066()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xE6);
     WriteRegisterByte(RegisterType::L, 0x7A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x06CF, 0x6D);
 
@@ -6452,6 +6657,7 @@ void test_6D_0066()
     CheckRegisterByte(RegisterType::L, 0x7A);
     CheckRegisterWord(RegisterType::PC, 0x06D0);
     CheckRegisterWord(RegisterType::SP, 0xBF10);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x06CF, 0x6D);
 }
 
@@ -6472,6 +6678,7 @@ void test_6D_0067()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x79);
     WriteRegisterByte(RegisterType::L, 0xDB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5872, 0x6D);
 
@@ -6495,6 +6702,7 @@ void test_6D_0067()
     CheckRegisterByte(RegisterType::L, 0xDB);
     CheckRegisterWord(RegisterType::PC, 0x5873);
     CheckRegisterWord(RegisterType::SP, 0x1E46);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5872, 0x6D);
 }
 
@@ -6515,6 +6723,7 @@ void test_6D_0068()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x3E);
     WriteRegisterByte(RegisterType::L, 0x4F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x9791, 0x6D);
 
@@ -6538,6 +6747,7 @@ void test_6D_0068()
     CheckRegisterByte(RegisterType::L, 0x4F);
     CheckRegisterWord(RegisterType::PC, 0x9792);
     CheckRegisterWord(RegisterType::SP, 0x290B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9791, 0x6D);
 }
 
@@ -6558,6 +6768,7 @@ void test_6D_0069()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xBE);
     WriteRegisterByte(RegisterType::L, 0x0C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7AA6, 0x6D);
 
@@ -6581,6 +6792,7 @@ void test_6D_0069()
     CheckRegisterByte(RegisterType::L, 0x0C);
     CheckRegisterWord(RegisterType::PC, 0x7AA7);
     CheckRegisterWord(RegisterType::SP, 0x38E1);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7AA6, 0x6D);
 }
 
@@ -6601,6 +6813,7 @@ void test_6D_006A()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x09);
     WriteRegisterByte(RegisterType::L, 0x70);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1316, 0x6D);
 
@@ -6624,6 +6837,7 @@ void test_6D_006A()
     CheckRegisterByte(RegisterType::L, 0x70);
     CheckRegisterWord(RegisterType::PC, 0x1317);
     CheckRegisterWord(RegisterType::SP, 0xA8FA);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1316, 0x6D);
 }
 
@@ -6644,6 +6858,7 @@ void test_6D_006B()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xA6);
     WriteRegisterByte(RegisterType::L, 0x90);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x555A, 0x6D);
 
@@ -6667,6 +6882,7 @@ void test_6D_006B()
     CheckRegisterByte(RegisterType::L, 0x90);
     CheckRegisterWord(RegisterType::PC, 0x555B);
     CheckRegisterWord(RegisterType::SP, 0xD0B2);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x555A, 0x6D);
 }
 
@@ -6687,6 +6903,7 @@ void test_6D_006C()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xF8);
     WriteRegisterByte(RegisterType::L, 0x72);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5E7F, 0x6D);
 
@@ -6710,6 +6927,7 @@ void test_6D_006C()
     CheckRegisterByte(RegisterType::L, 0x72);
     CheckRegisterWord(RegisterType::PC, 0x5E80);
     CheckRegisterWord(RegisterType::SP, 0xB8B9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5E7F, 0x6D);
 }
 
@@ -6730,6 +6948,7 @@ void test_6D_006D()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xE4);
     WriteRegisterByte(RegisterType::L, 0xF0);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDD04, 0x6D);
 
@@ -6753,6 +6972,7 @@ void test_6D_006D()
     CheckRegisterByte(RegisterType::L, 0xF0);
     CheckRegisterWord(RegisterType::PC, 0xDD05);
     CheckRegisterWord(RegisterType::SP, 0xD591);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDD04, 0x6D);
 }
 
@@ -6773,6 +6993,7 @@ void test_6D_006E()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x3C);
     WriteRegisterByte(RegisterType::L, 0x5A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB7D7, 0x6D);
 
@@ -6796,6 +7017,7 @@ void test_6D_006E()
     CheckRegisterByte(RegisterType::L, 0x5A);
     CheckRegisterWord(RegisterType::PC, 0xB7D8);
     CheckRegisterWord(RegisterType::SP, 0x2866);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB7D7, 0x6D);
 }
 
@@ -6816,6 +7038,7 @@ void test_6D_006F()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x0B);
     WriteRegisterByte(RegisterType::L, 0x05);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA0A4, 0x6D);
 
@@ -6839,6 +7062,7 @@ void test_6D_006F()
     CheckRegisterByte(RegisterType::L, 0x05);
     CheckRegisterWord(RegisterType::PC, 0xA0A5);
     CheckRegisterWord(RegisterType::SP, 0xAAD3);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA0A4, 0x6D);
 }
 
@@ -6859,6 +7083,7 @@ void test_6D_0070()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xBD);
     WriteRegisterByte(RegisterType::L, 0x87);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF4DE, 0x6D);
 
@@ -6882,6 +7107,7 @@ void test_6D_0070()
     CheckRegisterByte(RegisterType::L, 0x87);
     CheckRegisterWord(RegisterType::PC, 0xF4DF);
     CheckRegisterWord(RegisterType::SP, 0x37FB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF4DE, 0x6D);
 }
 
@@ -6902,6 +7128,7 @@ void test_6D_0071()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xF1);
     WriteRegisterByte(RegisterType::L, 0xB4);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD645, 0x6D);
 
@@ -6925,6 +7152,7 @@ void test_6D_0071()
     CheckRegisterByte(RegisterType::L, 0xB4);
     CheckRegisterWord(RegisterType::PC, 0xD646);
     CheckRegisterWord(RegisterType::SP, 0xCEF2);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD645, 0x6D);
 }
 
@@ -6945,6 +7173,7 @@ void test_6D_0072()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xF6);
     WriteRegisterByte(RegisterType::L, 0x82);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE77A, 0x6D);
 
@@ -6968,6 +7197,7 @@ void test_6D_0072()
     CheckRegisterByte(RegisterType::L, 0x82);
     CheckRegisterWord(RegisterType::PC, 0xE77B);
     CheckRegisterWord(RegisterType::SP, 0x8E16);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE77A, 0x6D);
 }
 
@@ -6988,6 +7218,7 @@ void test_6D_0073()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xD5);
     WriteRegisterByte(RegisterType::L, 0xB5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1879, 0x6D);
 
@@ -7011,6 +7242,7 @@ void test_6D_0073()
     CheckRegisterByte(RegisterType::L, 0xB5);
     CheckRegisterWord(RegisterType::PC, 0x187A);
     CheckRegisterWord(RegisterType::SP, 0xE0D2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1879, 0x6D);
 }
 
@@ -7031,6 +7263,7 @@ void test_6D_0074()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xA5);
     WriteRegisterByte(RegisterType::L, 0xAA);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5947, 0x6D);
 
@@ -7054,6 +7287,7 @@ void test_6D_0074()
     CheckRegisterByte(RegisterType::L, 0xAA);
     CheckRegisterWord(RegisterType::PC, 0x5948);
     CheckRegisterWord(RegisterType::SP, 0xCA15);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5947, 0x6D);
 }
 
@@ -7074,6 +7308,7 @@ void test_6D_0075()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x6C);
     WriteRegisterByte(RegisterType::L, 0x61);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDB13, 0x6D);
 
@@ -7097,6 +7332,7 @@ void test_6D_0075()
     CheckRegisterByte(RegisterType::L, 0x61);
     CheckRegisterWord(RegisterType::PC, 0xDB14);
     CheckRegisterWord(RegisterType::SP, 0x9449);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDB13, 0x6D);
 }
 
@@ -7117,6 +7353,7 @@ void test_6D_0076()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xBE);
     WriteRegisterByte(RegisterType::L, 0xB7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD721, 0x6D);
 
@@ -7140,6 +7377,7 @@ void test_6D_0076()
     CheckRegisterByte(RegisterType::L, 0xB7);
     CheckRegisterWord(RegisterType::PC, 0xD722);
     CheckRegisterWord(RegisterType::SP, 0x9E51);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD721, 0x6D);
 }
 
@@ -7160,6 +7398,7 @@ void test_6D_0077()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xFE);
     WriteRegisterByte(RegisterType::L, 0x39);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xEE15, 0x6D);
 
@@ -7183,6 +7422,7 @@ void test_6D_0077()
     CheckRegisterByte(RegisterType::L, 0x39);
     CheckRegisterWord(RegisterType::PC, 0xEE16);
     CheckRegisterWord(RegisterType::SP, 0xF193);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEE15, 0x6D);
 }
 
@@ -7203,6 +7443,7 @@ void test_6D_0078()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x01);
     WriteRegisterByte(RegisterType::L, 0xBD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1591, 0x6D);
 
@@ -7226,6 +7467,7 @@ void test_6D_0078()
     CheckRegisterByte(RegisterType::L, 0xBD);
     CheckRegisterWord(RegisterType::PC, 0x1592);
     CheckRegisterWord(RegisterType::SP, 0xF3CB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1591, 0x6D);
 }
 
@@ -7246,6 +7488,7 @@ void test_6D_0079()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x02);
     WriteRegisterByte(RegisterType::L, 0x9C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5C8B, 0x6D);
 
@@ -7269,6 +7512,7 @@ void test_6D_0079()
     CheckRegisterByte(RegisterType::L, 0x9C);
     CheckRegisterWord(RegisterType::PC, 0x5C8C);
     CheckRegisterWord(RegisterType::SP, 0x8A15);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5C8B, 0x6D);
 }
 
@@ -7289,6 +7533,7 @@ void test_6D_007A()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x25);
     WriteRegisterByte(RegisterType::L, 0x9D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x78D1, 0x6D);
 
@@ -7312,6 +7557,7 @@ void test_6D_007A()
     CheckRegisterByte(RegisterType::L, 0x9D);
     CheckRegisterWord(RegisterType::PC, 0x78D2);
     CheckRegisterWord(RegisterType::SP, 0x9974);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x78D1, 0x6D);
 }
 
@@ -7332,6 +7578,7 @@ void test_6D_007B()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x76);
     WriteRegisterByte(RegisterType::L, 0xDF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x93F7, 0x6D);
 
@@ -7355,6 +7602,7 @@ void test_6D_007B()
     CheckRegisterByte(RegisterType::L, 0xDF);
     CheckRegisterWord(RegisterType::PC, 0x93F8);
     CheckRegisterWord(RegisterType::SP, 0x880F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x93F7, 0x6D);
 }
 
@@ -7375,6 +7623,7 @@ void test_6D_007C()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xB6);
     WriteRegisterByte(RegisterType::L, 0xF3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB10A, 0x6D);
 
@@ -7398,6 +7647,7 @@ void test_6D_007C()
     CheckRegisterByte(RegisterType::L, 0xF3);
     CheckRegisterWord(RegisterType::PC, 0xB10B);
     CheckRegisterWord(RegisterType::SP, 0x1B72);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB10A, 0x6D);
 }
 
@@ -7418,6 +7668,7 @@ void test_6D_007D()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xCD);
     WriteRegisterByte(RegisterType::L, 0x8E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x545D, 0x6D);
 
@@ -7441,6 +7692,7 @@ void test_6D_007D()
     CheckRegisterByte(RegisterType::L, 0x8E);
     CheckRegisterWord(RegisterType::PC, 0x545E);
     CheckRegisterWord(RegisterType::SP, 0x8406);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x545D, 0x6D);
 }
 
@@ -7461,6 +7713,7 @@ void test_6D_007E()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xAA);
     WriteRegisterByte(RegisterType::L, 0xA9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5F59, 0x6D);
 
@@ -7484,6 +7737,7 @@ void test_6D_007E()
     CheckRegisterByte(RegisterType::L, 0xA9);
     CheckRegisterWord(RegisterType::PC, 0x5F5A);
     CheckRegisterWord(RegisterType::SP, 0x9C7C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5F59, 0x6D);
 }
 
@@ -7504,6 +7758,7 @@ void test_6D_007F()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x78);
     WriteRegisterByte(RegisterType::L, 0x9E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x990A, 0x6D);
 
@@ -7527,6 +7782,7 @@ void test_6D_007F()
     CheckRegisterByte(RegisterType::L, 0x9E);
     CheckRegisterWord(RegisterType::PC, 0x990B);
     CheckRegisterWord(RegisterType::SP, 0xE3C9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x990A, 0x6D);
 }
 
@@ -7547,6 +7803,7 @@ void test_6D_0080()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x9D);
     WriteRegisterByte(RegisterType::L, 0xD3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7D09, 0x6D);
 
@@ -7570,6 +7827,7 @@ void test_6D_0080()
     CheckRegisterByte(RegisterType::L, 0xD3);
     CheckRegisterWord(RegisterType::PC, 0x7D0A);
     CheckRegisterWord(RegisterType::SP, 0xC66E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7D09, 0x6D);
 }
 
@@ -7590,6 +7848,7 @@ void test_6D_0081()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x72);
     WriteRegisterByte(RegisterType::L, 0xE3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x36ED, 0x6D);
 
@@ -7613,6 +7872,7 @@ void test_6D_0081()
     CheckRegisterByte(RegisterType::L, 0xE3);
     CheckRegisterWord(RegisterType::PC, 0x36EE);
     CheckRegisterWord(RegisterType::SP, 0x488D);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x36ED, 0x6D);
 }
 
@@ -7633,6 +7893,7 @@ void test_6D_0082()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x8C);
     WriteRegisterByte(RegisterType::L, 0x11);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x75F5, 0x6D);
 
@@ -7656,6 +7917,7 @@ void test_6D_0082()
     CheckRegisterByte(RegisterType::L, 0x11);
     CheckRegisterWord(RegisterType::PC, 0x75F6);
     CheckRegisterWord(RegisterType::SP, 0x2F34);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x75F5, 0x6D);
 }
 
@@ -7676,6 +7938,7 @@ void test_6D_0083()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xCB);
     WriteRegisterByte(RegisterType::L, 0x8B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x29DC, 0x6D);
 
@@ -7699,6 +7962,7 @@ void test_6D_0083()
     CheckRegisterByte(RegisterType::L, 0x8B);
     CheckRegisterWord(RegisterType::PC, 0x29DD);
     CheckRegisterWord(RegisterType::SP, 0xD72C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x29DC, 0x6D);
 }
 
@@ -7719,6 +7983,7 @@ void test_6D_0084()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x23);
     WriteRegisterByte(RegisterType::L, 0x9F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6932, 0x6D);
 
@@ -7742,6 +8007,7 @@ void test_6D_0084()
     CheckRegisterByte(RegisterType::L, 0x9F);
     CheckRegisterWord(RegisterType::PC, 0x6933);
     CheckRegisterWord(RegisterType::SP, 0x36D8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6932, 0x6D);
 }
 
@@ -7762,6 +8028,7 @@ void test_6D_0085()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x66);
     WriteRegisterByte(RegisterType::L, 0x0C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xEC56, 0x6D);
 
@@ -7785,6 +8052,7 @@ void test_6D_0085()
     CheckRegisterByte(RegisterType::L, 0x0C);
     CheckRegisterWord(RegisterType::PC, 0xEC57);
     CheckRegisterWord(RegisterType::SP, 0xBD32);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEC56, 0x6D);
 }
 
@@ -7805,6 +8073,7 @@ void test_6D_0086()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x76);
     WriteRegisterByte(RegisterType::L, 0x0E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x86CB, 0x6D);
 
@@ -7828,6 +8097,7 @@ void test_6D_0086()
     CheckRegisterByte(RegisterType::L, 0x0E);
     CheckRegisterWord(RegisterType::PC, 0x86CC);
     CheckRegisterWord(RegisterType::SP, 0x7864);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x86CB, 0x6D);
 }
 
@@ -7848,6 +8118,7 @@ void test_6D_0087()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x11);
     WriteRegisterByte(RegisterType::L, 0x16);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2007, 0x6D);
 
@@ -7871,6 +8142,7 @@ void test_6D_0087()
     CheckRegisterByte(RegisterType::L, 0x16);
     CheckRegisterWord(RegisterType::PC, 0x2008);
     CheckRegisterWord(RegisterType::SP, 0x36E4);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2007, 0x6D);
 }
 
@@ -7891,6 +8163,7 @@ void test_6D_0088()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x7F);
     WriteRegisterByte(RegisterType::L, 0xEA);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5366, 0x6D);
 
@@ -7914,6 +8187,7 @@ void test_6D_0088()
     CheckRegisterByte(RegisterType::L, 0xEA);
     CheckRegisterWord(RegisterType::PC, 0x5367);
     CheckRegisterWord(RegisterType::SP, 0x5537);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5366, 0x6D);
 }
 
@@ -7934,6 +8208,7 @@ void test_6D_0089()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x89);
     WriteRegisterByte(RegisterType::L, 0x47);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x789D, 0x6D);
 
@@ -7957,6 +8232,7 @@ void test_6D_0089()
     CheckRegisterByte(RegisterType::L, 0x47);
     CheckRegisterWord(RegisterType::PC, 0x789E);
     CheckRegisterWord(RegisterType::SP, 0x16B6);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x789D, 0x6D);
 }
 
@@ -7977,6 +8253,7 @@ void test_6D_008A()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xFA);
     WriteRegisterByte(RegisterType::L, 0xCD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB5DD, 0x6D);
 
@@ -8000,6 +8277,7 @@ void test_6D_008A()
     CheckRegisterByte(RegisterType::L, 0xCD);
     CheckRegisterWord(RegisterType::PC, 0xB5DE);
     CheckRegisterWord(RegisterType::SP, 0xC1E2);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB5DD, 0x6D);
 }
 
@@ -8020,6 +8298,7 @@ void test_6D_008B()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x98);
     WriteRegisterByte(RegisterType::L, 0x59);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEB6C, 0x6D);
 
@@ -8043,6 +8322,7 @@ void test_6D_008B()
     CheckRegisterByte(RegisterType::L, 0x59);
     CheckRegisterWord(RegisterType::PC, 0xEB6D);
     CheckRegisterWord(RegisterType::SP, 0xD2DF);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEB6C, 0x6D);
 }
 
@@ -8063,6 +8343,7 @@ void test_6D_008C()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x5D);
     WriteRegisterByte(RegisterType::L, 0xD2);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x58EF, 0x6D);
 
@@ -8086,6 +8367,7 @@ void test_6D_008C()
     CheckRegisterByte(RegisterType::L, 0xD2);
     CheckRegisterWord(RegisterType::PC, 0x58F0);
     CheckRegisterWord(RegisterType::SP, 0x17FB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x58EF, 0x6D);
 }
 
@@ -8106,6 +8388,7 @@ void test_6D_008D()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x3D);
     WriteRegisterByte(RegisterType::L, 0x66);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5E1C, 0x6D);
 
@@ -8129,6 +8412,7 @@ void test_6D_008D()
     CheckRegisterByte(RegisterType::L, 0x66);
     CheckRegisterWord(RegisterType::PC, 0x5E1D);
     CheckRegisterWord(RegisterType::SP, 0xDB56);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5E1C, 0x6D);
 }
 
@@ -8149,6 +8433,7 @@ void test_6D_008E()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xC7);
     WriteRegisterByte(RegisterType::L, 0xCF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x900B, 0x6D);
 
@@ -8172,6 +8457,7 @@ void test_6D_008E()
     CheckRegisterByte(RegisterType::L, 0xCF);
     CheckRegisterWord(RegisterType::PC, 0x900C);
     CheckRegisterWord(RegisterType::SP, 0x2B88);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x900B, 0x6D);
 }
 
@@ -8192,6 +8478,7 @@ void test_6D_008F()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xA2);
     WriteRegisterByte(RegisterType::L, 0x34);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC396, 0x6D);
 
@@ -8215,6 +8502,7 @@ void test_6D_008F()
     CheckRegisterByte(RegisterType::L, 0x34);
     CheckRegisterWord(RegisterType::PC, 0xC397);
     CheckRegisterWord(RegisterType::SP, 0x07DA);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC396, 0x6D);
 }
 
@@ -8235,6 +8523,7 @@ void test_6D_0090()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xCE);
     WriteRegisterByte(RegisterType::L, 0x04);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1491, 0x6D);
 
@@ -8258,6 +8547,7 @@ void test_6D_0090()
     CheckRegisterByte(RegisterType::L, 0x04);
     CheckRegisterWord(RegisterType::PC, 0x1492);
     CheckRegisterWord(RegisterType::SP, 0xF2D0);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1491, 0x6D);
 }
 
@@ -8278,6 +8568,7 @@ void test_6D_0091()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x37);
     WriteRegisterByte(RegisterType::L, 0xC3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x88F9, 0x6D);
 
@@ -8301,6 +8592,7 @@ void test_6D_0091()
     CheckRegisterByte(RegisterType::L, 0xC3);
     CheckRegisterWord(RegisterType::PC, 0x88FA);
     CheckRegisterWord(RegisterType::SP, 0x29AB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x88F9, 0x6D);
 }
 
@@ -8321,6 +8613,7 @@ void test_6D_0092()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xB4);
     WriteRegisterByte(RegisterType::L, 0xD2);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x64AE, 0x6D);
 
@@ -8344,6 +8637,7 @@ void test_6D_0092()
     CheckRegisterByte(RegisterType::L, 0xD2);
     CheckRegisterWord(RegisterType::PC, 0x64AF);
     CheckRegisterWord(RegisterType::SP, 0x142D);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x64AE, 0x6D);
 }
 
@@ -8364,6 +8658,7 @@ void test_6D_0093()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x0E);
     WriteRegisterByte(RegisterType::L, 0xA8);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x25BE, 0x6D);
 
@@ -8387,6 +8682,7 @@ void test_6D_0093()
     CheckRegisterByte(RegisterType::L, 0xA8);
     CheckRegisterWord(RegisterType::PC, 0x25BF);
     CheckRegisterWord(RegisterType::SP, 0xDABC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x25BE, 0x6D);
 }
 
@@ -8407,6 +8703,7 @@ void test_6D_0094()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x0B);
     WriteRegisterByte(RegisterType::L, 0x52);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x23B6, 0x6D);
 
@@ -8430,6 +8727,7 @@ void test_6D_0094()
     CheckRegisterByte(RegisterType::L, 0x52);
     CheckRegisterWord(RegisterType::PC, 0x23B7);
     CheckRegisterWord(RegisterType::SP, 0xD755);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x23B6, 0x6D);
 }
 
@@ -8450,6 +8748,7 @@ void test_6D_0095()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xF3);
     WriteRegisterByte(RegisterType::L, 0x20);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xCD72, 0x6D);
 
@@ -8473,6 +8772,7 @@ void test_6D_0095()
     CheckRegisterByte(RegisterType::L, 0x20);
     CheckRegisterWord(RegisterType::PC, 0xCD73);
     CheckRegisterWord(RegisterType::SP, 0x0757);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCD72, 0x6D);
 }
 
@@ -8493,6 +8793,7 @@ void test_6D_0096()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xED);
     WriteRegisterByte(RegisterType::L, 0x30);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0711, 0x6D);
 
@@ -8516,6 +8817,7 @@ void test_6D_0096()
     CheckRegisterByte(RegisterType::L, 0x30);
     CheckRegisterWord(RegisterType::PC, 0x0712);
     CheckRegisterWord(RegisterType::SP, 0x2D5C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0711, 0x6D);
 }
 
@@ -8536,6 +8838,7 @@ void test_6D_0097()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x79);
     WriteRegisterByte(RegisterType::L, 0x02);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF5CA, 0x6D);
 
@@ -8559,6 +8862,7 @@ void test_6D_0097()
     CheckRegisterByte(RegisterType::L, 0x02);
     CheckRegisterWord(RegisterType::PC, 0xF5CB);
     CheckRegisterWord(RegisterType::SP, 0x88C9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF5CA, 0x6D);
 }
 
@@ -8579,6 +8883,7 @@ void test_6D_0098()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x14);
     WriteRegisterByte(RegisterType::L, 0x45);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDCD7, 0x6D);
 
@@ -8602,6 +8907,7 @@ void test_6D_0098()
     CheckRegisterByte(RegisterType::L, 0x45);
     CheckRegisterWord(RegisterType::PC, 0xDCD8);
     CheckRegisterWord(RegisterType::SP, 0xBFA1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDCD7, 0x6D);
 }
 
@@ -8622,6 +8928,7 @@ void test_6D_0099()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xD6);
     WriteRegisterByte(RegisterType::L, 0x2E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA29D, 0x6D);
 
@@ -8645,6 +8952,7 @@ void test_6D_0099()
     CheckRegisterByte(RegisterType::L, 0x2E);
     CheckRegisterWord(RegisterType::PC, 0xA29E);
     CheckRegisterWord(RegisterType::SP, 0x7B1A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA29D, 0x6D);
 }
 
@@ -8665,6 +8973,7 @@ void test_6D_009A()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x40);
     WriteRegisterByte(RegisterType::L, 0x8B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC72D, 0x6D);
 
@@ -8688,6 +8997,7 @@ void test_6D_009A()
     CheckRegisterByte(RegisterType::L, 0x8B);
     CheckRegisterWord(RegisterType::PC, 0xC72E);
     CheckRegisterWord(RegisterType::SP, 0x3A2A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC72D, 0x6D);
 }
 
@@ -8708,6 +9018,7 @@ void test_6D_009B()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x13);
     WriteRegisterByte(RegisterType::L, 0x9C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9D31, 0x6D);
 
@@ -8731,6 +9042,7 @@ void test_6D_009B()
     CheckRegisterByte(RegisterType::L, 0x9C);
     CheckRegisterWord(RegisterType::PC, 0x9D32);
     CheckRegisterWord(RegisterType::SP, 0x7F3B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9D31, 0x6D);
 }
 
@@ -8751,6 +9063,7 @@ void test_6D_009C()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xB0);
     WriteRegisterByte(RegisterType::L, 0xA2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3B7A, 0x6D);
 
@@ -8774,6 +9087,7 @@ void test_6D_009C()
     CheckRegisterByte(RegisterType::L, 0xA2);
     CheckRegisterWord(RegisterType::PC, 0x3B7B);
     CheckRegisterWord(RegisterType::SP, 0xF327);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3B7A, 0x6D);
 }
 
@@ -8794,6 +9108,7 @@ void test_6D_009D()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x95);
     WriteRegisterByte(RegisterType::L, 0x96);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFC17, 0x6D);
 
@@ -8817,6 +9132,7 @@ void test_6D_009D()
     CheckRegisterByte(RegisterType::L, 0x96);
     CheckRegisterWord(RegisterType::PC, 0xFC18);
     CheckRegisterWord(RegisterType::SP, 0x4308);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFC17, 0x6D);
 }
 
@@ -8837,6 +9153,7 @@ void test_6D_009E()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x67);
     WriteRegisterByte(RegisterType::L, 0xDB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x25B2, 0x6D);
 
@@ -8860,6 +9177,7 @@ void test_6D_009E()
     CheckRegisterByte(RegisterType::L, 0xDB);
     CheckRegisterWord(RegisterType::PC, 0x25B3);
     CheckRegisterWord(RegisterType::SP, 0x7CF3);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x25B2, 0x6D);
 }
 
@@ -8880,6 +9198,7 @@ void test_6D_009F()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xED);
     WriteRegisterByte(RegisterType::L, 0x7F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4701, 0x6D);
 
@@ -8903,6 +9222,7 @@ void test_6D_009F()
     CheckRegisterByte(RegisterType::L, 0x7F);
     CheckRegisterWord(RegisterType::PC, 0x4702);
     CheckRegisterWord(RegisterType::SP, 0xB86A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4701, 0x6D);
 }
 
@@ -8923,6 +9243,7 @@ void test_6D_00A0()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xE8);
     WriteRegisterByte(RegisterType::L, 0x0A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0923, 0x6D);
 
@@ -8946,6 +9267,7 @@ void test_6D_00A0()
     CheckRegisterByte(RegisterType::L, 0x0A);
     CheckRegisterWord(RegisterType::PC, 0x0924);
     CheckRegisterWord(RegisterType::SP, 0x7A61);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0923, 0x6D);
 }
 
@@ -8966,6 +9288,7 @@ void test_6D_00A1()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x8E);
     WriteRegisterByte(RegisterType::L, 0x28);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3055, 0x6D);
 
@@ -8989,6 +9312,7 @@ void test_6D_00A1()
     CheckRegisterByte(RegisterType::L, 0x28);
     CheckRegisterWord(RegisterType::PC, 0x3056);
     CheckRegisterWord(RegisterType::SP, 0x8AFF);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3055, 0x6D);
 }
 
@@ -9009,6 +9333,7 @@ void test_6D_00A2()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x2D);
     WriteRegisterByte(RegisterType::L, 0x20);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7435, 0x6D);
 
@@ -9032,6 +9357,7 @@ void test_6D_00A2()
     CheckRegisterByte(RegisterType::L, 0x20);
     CheckRegisterWord(RegisterType::PC, 0x7436);
     CheckRegisterWord(RegisterType::SP, 0xCA86);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7435, 0x6D);
 }
 
@@ -9052,6 +9378,7 @@ void test_6D_00A3()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x8D);
     WriteRegisterByte(RegisterType::L, 0x53);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3ED6, 0x6D);
 
@@ -9075,6 +9402,7 @@ void test_6D_00A3()
     CheckRegisterByte(RegisterType::L, 0x53);
     CheckRegisterWord(RegisterType::PC, 0x3ED7);
     CheckRegisterWord(RegisterType::SP, 0x60A5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3ED6, 0x6D);
 }
 
@@ -9095,6 +9423,7 @@ void test_6D_00A4()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xD7);
     WriteRegisterByte(RegisterType::L, 0x3F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x30E9, 0x6D);
 
@@ -9118,6 +9447,7 @@ void test_6D_00A4()
     CheckRegisterByte(RegisterType::L, 0x3F);
     CheckRegisterWord(RegisterType::PC, 0x30EA);
     CheckRegisterWord(RegisterType::SP, 0xC242);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x30E9, 0x6D);
 }
 
@@ -9138,6 +9468,7 @@ void test_6D_00A5()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x03);
     WriteRegisterByte(RegisterType::L, 0xCB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC383, 0x6D);
 
@@ -9161,6 +9492,7 @@ void test_6D_00A5()
     CheckRegisterByte(RegisterType::L, 0xCB);
     CheckRegisterWord(RegisterType::PC, 0xC384);
     CheckRegisterWord(RegisterType::SP, 0xEA9B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC383, 0x6D);
 }
 
@@ -9181,6 +9513,7 @@ void test_6D_00A6()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xDF);
     WriteRegisterByte(RegisterType::L, 0xCA);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xC941, 0x6D);
 
@@ -9204,6 +9537,7 @@ void test_6D_00A6()
     CheckRegisterByte(RegisterType::L, 0xCA);
     CheckRegisterWord(RegisterType::PC, 0xC942);
     CheckRegisterWord(RegisterType::SP, 0xEAAA);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC941, 0x6D);
 }
 
@@ -9224,6 +9558,7 @@ void test_6D_00A7()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xAA);
     WriteRegisterByte(RegisterType::L, 0xFE);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA41E, 0x6D);
 
@@ -9247,6 +9582,7 @@ void test_6D_00A7()
     CheckRegisterByte(RegisterType::L, 0xFE);
     CheckRegisterWord(RegisterType::PC, 0xA41F);
     CheckRegisterWord(RegisterType::SP, 0xA6DC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA41E, 0x6D);
 }
 
@@ -9267,6 +9603,7 @@ void test_6D_00A8()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xC2);
     WriteRegisterByte(RegisterType::L, 0x4F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x353C, 0x6D);
 
@@ -9290,6 +9627,7 @@ void test_6D_00A8()
     CheckRegisterByte(RegisterType::L, 0x4F);
     CheckRegisterWord(RegisterType::PC, 0x353D);
     CheckRegisterWord(RegisterType::SP, 0xD0FD);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x353C, 0x6D);
 }
 
@@ -9310,6 +9648,7 @@ void test_6D_00A9()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x3F);
     WriteRegisterByte(RegisterType::L, 0x53);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x80ED, 0x6D);
 
@@ -9333,6 +9672,7 @@ void test_6D_00A9()
     CheckRegisterByte(RegisterType::L, 0x53);
     CheckRegisterWord(RegisterType::PC, 0x80EE);
     CheckRegisterWord(RegisterType::SP, 0x6361);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x80ED, 0x6D);
 }
 
@@ -9353,6 +9693,7 @@ void test_6D_00AA()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xA6);
     WriteRegisterByte(RegisterType::L, 0xF7);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8E1A, 0x6D);
 
@@ -9376,6 +9717,7 @@ void test_6D_00AA()
     CheckRegisterByte(RegisterType::L, 0xF7);
     CheckRegisterWord(RegisterType::PC, 0x8E1B);
     CheckRegisterWord(RegisterType::SP, 0x3D26);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8E1A, 0x6D);
 }
 
@@ -9396,6 +9738,7 @@ void test_6D_00AB()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xDE);
     WriteRegisterByte(RegisterType::L, 0xE8);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x36FD, 0x6D);
 
@@ -9419,6 +9762,7 @@ void test_6D_00AB()
     CheckRegisterByte(RegisterType::L, 0xE8);
     CheckRegisterWord(RegisterType::PC, 0x36FE);
     CheckRegisterWord(RegisterType::SP, 0x95ED);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x36FD, 0x6D);
 }
 
@@ -9439,6 +9783,7 @@ void test_6D_00AC()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x76);
     WriteRegisterByte(RegisterType::L, 0x7A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2F2B, 0x6D);
 
@@ -9462,6 +9807,7 @@ void test_6D_00AC()
     CheckRegisterByte(RegisterType::L, 0x7A);
     CheckRegisterWord(RegisterType::PC, 0x2F2C);
     CheckRegisterWord(RegisterType::SP, 0xCEFB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2F2B, 0x6D);
 }
 
@@ -9482,6 +9828,7 @@ void test_6D_00AD()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x22);
     WriteRegisterByte(RegisterType::L, 0x99);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xC3AD, 0x6D);
 
@@ -9505,6 +9852,7 @@ void test_6D_00AD()
     CheckRegisterByte(RegisterType::L, 0x99);
     CheckRegisterWord(RegisterType::PC, 0xC3AE);
     CheckRegisterWord(RegisterType::SP, 0x38E5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC3AD, 0x6D);
 }
 
@@ -9525,6 +9873,7 @@ void test_6D_00AE()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x86);
     WriteRegisterByte(RegisterType::L, 0x04);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xAFAD, 0x6D);
 
@@ -9548,6 +9897,7 @@ void test_6D_00AE()
     CheckRegisterByte(RegisterType::L, 0x04);
     CheckRegisterWord(RegisterType::PC, 0xAFAE);
     CheckRegisterWord(RegisterType::SP, 0x784D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAFAD, 0x6D);
 }
 
@@ -9568,6 +9918,7 @@ void test_6D_00AF()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x9D);
     WriteRegisterByte(RegisterType::L, 0x35);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3481, 0x6D);
 
@@ -9591,6 +9942,7 @@ void test_6D_00AF()
     CheckRegisterByte(RegisterType::L, 0x35);
     CheckRegisterWord(RegisterType::PC, 0x3482);
     CheckRegisterWord(RegisterType::SP, 0xCC8A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3481, 0x6D);
 }
 
@@ -9611,6 +9963,7 @@ void test_6D_00B0()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x68);
     WriteRegisterByte(RegisterType::L, 0xFB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x80C6, 0x6D);
 
@@ -9634,6 +9987,7 @@ void test_6D_00B0()
     CheckRegisterByte(RegisterType::L, 0xFB);
     CheckRegisterWord(RegisterType::PC, 0x80C7);
     CheckRegisterWord(RegisterType::SP, 0x6ABA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x80C6, 0x6D);
 }
 
@@ -9654,6 +10008,7 @@ void test_6D_00B1()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x2C);
     WriteRegisterByte(RegisterType::L, 0x6E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA7BD, 0x6D);
 
@@ -9677,6 +10032,7 @@ void test_6D_00B1()
     CheckRegisterByte(RegisterType::L, 0x6E);
     CheckRegisterWord(RegisterType::PC, 0xA7BE);
     CheckRegisterWord(RegisterType::SP, 0x4DB4);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA7BD, 0x6D);
 }
 
@@ -9697,6 +10053,7 @@ void test_6D_00B2()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x4E);
     WriteRegisterByte(RegisterType::L, 0x56);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8806, 0x6D);
 
@@ -9720,6 +10077,7 @@ void test_6D_00B2()
     CheckRegisterByte(RegisterType::L, 0x56);
     CheckRegisterWord(RegisterType::PC, 0x8807);
     CheckRegisterWord(RegisterType::SP, 0xDC72);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8806, 0x6D);
 }
 
@@ -9740,6 +10098,7 @@ void test_6D_00B3()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x41);
     WriteRegisterByte(RegisterType::L, 0x87);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDEC6, 0x6D);
 
@@ -9763,6 +10122,7 @@ void test_6D_00B3()
     CheckRegisterByte(RegisterType::L, 0x87);
     CheckRegisterWord(RegisterType::PC, 0xDEC7);
     CheckRegisterWord(RegisterType::SP, 0x2D8E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDEC6, 0x6D);
 }
 
@@ -9783,6 +10143,7 @@ void test_6D_00B4()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x94);
     WriteRegisterByte(RegisterType::L, 0xE9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6EC4, 0x6D);
 
@@ -9806,6 +10167,7 @@ void test_6D_00B4()
     CheckRegisterByte(RegisterType::L, 0xE9);
     CheckRegisterWord(RegisterType::PC, 0x6EC5);
     CheckRegisterWord(RegisterType::SP, 0x26C5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6EC4, 0x6D);
 }
 
@@ -9826,6 +10188,7 @@ void test_6D_00B5()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x2F);
     WriteRegisterByte(RegisterType::L, 0x1D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB1A4, 0x6D);
 
@@ -9849,6 +10212,7 @@ void test_6D_00B5()
     CheckRegisterByte(RegisterType::L, 0x1D);
     CheckRegisterWord(RegisterType::PC, 0xB1A5);
     CheckRegisterWord(RegisterType::SP, 0x081C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB1A4, 0x6D);
 }
 
@@ -9869,6 +10233,7 @@ void test_6D_00B6()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x7C);
     WriteRegisterByte(RegisterType::L, 0xE5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7C7E, 0x6D);
 
@@ -9892,6 +10257,7 @@ void test_6D_00B6()
     CheckRegisterByte(RegisterType::L, 0xE5);
     CheckRegisterWord(RegisterType::PC, 0x7C7F);
     CheckRegisterWord(RegisterType::SP, 0xB935);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7C7E, 0x6D);
 }
 
@@ -9912,6 +10278,7 @@ void test_6D_00B7()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xEC);
     WriteRegisterByte(RegisterType::L, 0xFF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1F19, 0x6D);
 
@@ -9935,6 +10302,7 @@ void test_6D_00B7()
     CheckRegisterByte(RegisterType::L, 0xFF);
     CheckRegisterWord(RegisterType::PC, 0x1F1A);
     CheckRegisterWord(RegisterType::SP, 0x32A8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1F19, 0x6D);
 }
 
@@ -9955,6 +10323,7 @@ void test_6D_00B8()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xF5);
     WriteRegisterByte(RegisterType::L, 0x74);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x77FE, 0x6D);
 
@@ -9978,6 +10347,7 @@ void test_6D_00B8()
     CheckRegisterByte(RegisterType::L, 0x74);
     CheckRegisterWord(RegisterType::PC, 0x77FF);
     CheckRegisterWord(RegisterType::SP, 0xF049);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x77FE, 0x6D);
 }
 
@@ -9998,6 +10368,7 @@ void test_6D_00B9()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xC8);
     WriteRegisterByte(RegisterType::L, 0x88);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1A6B, 0x6D);
 
@@ -10021,6 +10392,7 @@ void test_6D_00B9()
     CheckRegisterByte(RegisterType::L, 0x88);
     CheckRegisterWord(RegisterType::PC, 0x1A6C);
     CheckRegisterWord(RegisterType::SP, 0x6AEE);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1A6B, 0x6D);
 }
 
@@ -10041,6 +10413,7 @@ void test_6D_00BA()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x42);
     WriteRegisterByte(RegisterType::L, 0x74);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x301E, 0x6D);
 
@@ -10064,6 +10437,7 @@ void test_6D_00BA()
     CheckRegisterByte(RegisterType::L, 0x74);
     CheckRegisterWord(RegisterType::PC, 0x301F);
     CheckRegisterWord(RegisterType::SP, 0xCAE8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x301E, 0x6D);
 }
 
@@ -10084,6 +10458,7 @@ void test_6D_00BB()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xD6);
     WriteRegisterByte(RegisterType::L, 0xF8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3D68, 0x6D);
 
@@ -10107,6 +10482,7 @@ void test_6D_00BB()
     CheckRegisterByte(RegisterType::L, 0xF8);
     CheckRegisterWord(RegisterType::PC, 0x3D69);
     CheckRegisterWord(RegisterType::SP, 0x380B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3D68, 0x6D);
 }
 
@@ -10127,6 +10503,7 @@ void test_6D_00BC()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x2F);
     WriteRegisterByte(RegisterType::L, 0xE3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xCF5E, 0x6D);
 
@@ -10150,6 +10527,7 @@ void test_6D_00BC()
     CheckRegisterByte(RegisterType::L, 0xE3);
     CheckRegisterWord(RegisterType::PC, 0xCF5F);
     CheckRegisterWord(RegisterType::SP, 0xB2D9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCF5E, 0x6D);
 }
 
@@ -10170,6 +10548,7 @@ void test_6D_00BD()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x9E);
     WriteRegisterByte(RegisterType::L, 0xE9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE951, 0x6D);
 
@@ -10193,6 +10572,7 @@ void test_6D_00BD()
     CheckRegisterByte(RegisterType::L, 0xE9);
     CheckRegisterWord(RegisterType::PC, 0xE952);
     CheckRegisterWord(RegisterType::SP, 0x7928);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE951, 0x6D);
 }
 
@@ -10213,6 +10593,7 @@ void test_6D_00BE()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x03);
     WriteRegisterByte(RegisterType::L, 0xEB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x95DE, 0x6D);
 
@@ -10236,6 +10617,7 @@ void test_6D_00BE()
     CheckRegisterByte(RegisterType::L, 0xEB);
     CheckRegisterWord(RegisterType::PC, 0x95DF);
     CheckRegisterWord(RegisterType::SP, 0xDD94);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x95DE, 0x6D);
 }
 
@@ -10256,6 +10638,7 @@ void test_6D_00BF()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xD4);
     WriteRegisterByte(RegisterType::L, 0x60);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x807E, 0x6D);
 
@@ -10279,6 +10662,7 @@ void test_6D_00BF()
     CheckRegisterByte(RegisterType::L, 0x60);
     CheckRegisterWord(RegisterType::PC, 0x807F);
     CheckRegisterWord(RegisterType::SP, 0x0F8A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x807E, 0x6D);
 }
 
@@ -10299,6 +10683,7 @@ void test_6D_00C0()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x0C);
     WriteRegisterByte(RegisterType::L, 0x7A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9E23, 0x6D);
 
@@ -10322,6 +10707,7 @@ void test_6D_00C0()
     CheckRegisterByte(RegisterType::L, 0x7A);
     CheckRegisterWord(RegisterType::PC, 0x9E24);
     CheckRegisterWord(RegisterType::SP, 0x6378);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9E23, 0x6D);
 }
 
@@ -10342,6 +10728,7 @@ void test_6D_00C1()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xF6);
     WriteRegisterByte(RegisterType::L, 0x40);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x334C, 0x6D);
 
@@ -10365,6 +10752,7 @@ void test_6D_00C1()
     CheckRegisterByte(RegisterType::L, 0x40);
     CheckRegisterWord(RegisterType::PC, 0x334D);
     CheckRegisterWord(RegisterType::SP, 0x686E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x334C, 0x6D);
 }
 
@@ -10385,6 +10773,7 @@ void test_6D_00C2()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x9A);
     WriteRegisterByte(RegisterType::L, 0x01);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xCC62, 0x6D);
 
@@ -10408,6 +10797,7 @@ void test_6D_00C2()
     CheckRegisterByte(RegisterType::L, 0x01);
     CheckRegisterWord(RegisterType::PC, 0xCC63);
     CheckRegisterWord(RegisterType::SP, 0xADB1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCC62, 0x6D);
 }
 
@@ -10428,6 +10818,7 @@ void test_6D_00C3()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x68);
     WriteRegisterByte(RegisterType::L, 0x5E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBADB, 0x6D);
 
@@ -10451,6 +10842,7 @@ void test_6D_00C3()
     CheckRegisterByte(RegisterType::L, 0x5E);
     CheckRegisterWord(RegisterType::PC, 0xBADC);
     CheckRegisterWord(RegisterType::SP, 0x8306);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBADB, 0x6D);
 }
 
@@ -10471,6 +10863,7 @@ void test_6D_00C4()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x83);
     WriteRegisterByte(RegisterType::L, 0x08);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xCC61, 0x6D);
 
@@ -10494,6 +10887,7 @@ void test_6D_00C4()
     CheckRegisterByte(RegisterType::L, 0x08);
     CheckRegisterWord(RegisterType::PC, 0xCC62);
     CheckRegisterWord(RegisterType::SP, 0xD58A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCC61, 0x6D);
 }
 
@@ -10514,6 +10908,7 @@ void test_6D_00C5()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xDD);
     WriteRegisterByte(RegisterType::L, 0xC7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD056, 0x6D);
 
@@ -10537,6 +10932,7 @@ void test_6D_00C5()
     CheckRegisterByte(RegisterType::L, 0xC7);
     CheckRegisterWord(RegisterType::PC, 0xD057);
     CheckRegisterWord(RegisterType::SP, 0xE4BE);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD056, 0x6D);
 }
 
@@ -10557,6 +10953,7 @@ void test_6D_00C6()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x3E);
     WriteRegisterByte(RegisterType::L, 0x35);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1134, 0x6D);
 
@@ -10580,6 +10977,7 @@ void test_6D_00C6()
     CheckRegisterByte(RegisterType::L, 0x35);
     CheckRegisterWord(RegisterType::PC, 0x1135);
     CheckRegisterWord(RegisterType::SP, 0x29A6);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1134, 0x6D);
 }
 
@@ -10600,6 +10998,7 @@ void test_6D_00C7()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x7C);
     WriteRegisterByte(RegisterType::L, 0x17);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x82B2, 0x6D);
 
@@ -10623,6 +11022,7 @@ void test_6D_00C7()
     CheckRegisterByte(RegisterType::L, 0x17);
     CheckRegisterWord(RegisterType::PC, 0x82B3);
     CheckRegisterWord(RegisterType::SP, 0x0F53);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x82B2, 0x6D);
 }
 
@@ -10643,6 +11043,7 @@ void test_6D_00C8()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xED);
     WriteRegisterByte(RegisterType::L, 0xF8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB96A, 0x6D);
 
@@ -10666,6 +11067,7 @@ void test_6D_00C8()
     CheckRegisterByte(RegisterType::L, 0xF8);
     CheckRegisterWord(RegisterType::PC, 0xB96B);
     CheckRegisterWord(RegisterType::SP, 0xC612);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB96A, 0x6D);
 }
 
@@ -10686,6 +11088,7 @@ void test_6D_00C9()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xAF);
     WriteRegisterByte(RegisterType::L, 0xA2);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2FB6, 0x6D);
 
@@ -10709,6 +11112,7 @@ void test_6D_00C9()
     CheckRegisterByte(RegisterType::L, 0xA2);
     CheckRegisterWord(RegisterType::PC, 0x2FB7);
     CheckRegisterWord(RegisterType::SP, 0x3A74);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2FB6, 0x6D);
 }
 
@@ -10729,6 +11133,7 @@ void test_6D_00CA()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x21);
     WriteRegisterByte(RegisterType::L, 0x2C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x73AF, 0x6D);
 
@@ -10752,6 +11157,7 @@ void test_6D_00CA()
     CheckRegisterByte(RegisterType::L, 0x2C);
     CheckRegisterWord(RegisterType::PC, 0x73B0);
     CheckRegisterWord(RegisterType::SP, 0x4E6F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x73AF, 0x6D);
 }
 
@@ -10772,6 +11178,7 @@ void test_6D_00CB()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x18);
     WriteRegisterByte(RegisterType::L, 0xA8);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x52D7, 0x6D);
 
@@ -10795,6 +11202,7 @@ void test_6D_00CB()
     CheckRegisterByte(RegisterType::L, 0xA8);
     CheckRegisterWord(RegisterType::PC, 0x52D8);
     CheckRegisterWord(RegisterType::SP, 0xE46B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x52D7, 0x6D);
 }
 
@@ -10815,6 +11223,7 @@ void test_6D_00CC()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x15);
     WriteRegisterByte(RegisterType::L, 0x01);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA356, 0x6D);
 
@@ -10838,6 +11247,7 @@ void test_6D_00CC()
     CheckRegisterByte(RegisterType::L, 0x01);
     CheckRegisterWord(RegisterType::PC, 0xA357);
     CheckRegisterWord(RegisterType::SP, 0x9F05);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA356, 0x6D);
 }
 
@@ -10858,6 +11268,7 @@ void test_6D_00CD()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xD6);
     WriteRegisterByte(RegisterType::L, 0x9E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBDE4, 0x6D);
 
@@ -10881,6 +11292,7 @@ void test_6D_00CD()
     CheckRegisterByte(RegisterType::L, 0x9E);
     CheckRegisterWord(RegisterType::PC, 0xBDE5);
     CheckRegisterWord(RegisterType::SP, 0x53AD);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBDE4, 0x6D);
 }
 
@@ -10901,6 +11313,7 @@ void test_6D_00CE()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x9B);
     WriteRegisterByte(RegisterType::L, 0x8A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5381, 0x6D);
 
@@ -10924,6 +11337,7 @@ void test_6D_00CE()
     CheckRegisterByte(RegisterType::L, 0x8A);
     CheckRegisterWord(RegisterType::PC, 0x5382);
     CheckRegisterWord(RegisterType::SP, 0x701B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5381, 0x6D);
 }
 
@@ -10944,6 +11358,7 @@ void test_6D_00CF()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xB1);
     WriteRegisterByte(RegisterType::L, 0x55);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB04A, 0x6D);
 
@@ -10967,6 +11382,7 @@ void test_6D_00CF()
     CheckRegisterByte(RegisterType::L, 0x55);
     CheckRegisterWord(RegisterType::PC, 0xB04B);
     CheckRegisterWord(RegisterType::SP, 0xA0B9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB04A, 0x6D);
 }
 
@@ -10987,6 +11403,7 @@ void test_6D_00D0()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xF8);
     WriteRegisterByte(RegisterType::L, 0x9C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5E99, 0x6D);
 
@@ -11010,6 +11427,7 @@ void test_6D_00D0()
     CheckRegisterByte(RegisterType::L, 0x9C);
     CheckRegisterWord(RegisterType::PC, 0x5E9A);
     CheckRegisterWord(RegisterType::SP, 0x6708);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5E99, 0x6D);
 }
 
@@ -11030,6 +11448,7 @@ void test_6D_00D1()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x16);
     WriteRegisterByte(RegisterType::L, 0xD4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5EC8, 0x6D);
 
@@ -11053,6 +11472,7 @@ void test_6D_00D1()
     CheckRegisterByte(RegisterType::L, 0xD4);
     CheckRegisterWord(RegisterType::PC, 0x5EC9);
     CheckRegisterWord(RegisterType::SP, 0x7C20);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5EC8, 0x6D);
 }
 
@@ -11073,6 +11493,7 @@ void test_6D_00D2()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xC8);
     WriteRegisterByte(RegisterType::L, 0x16);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB11B, 0x6D);
 
@@ -11096,6 +11517,7 @@ void test_6D_00D2()
     CheckRegisterByte(RegisterType::L, 0x16);
     CheckRegisterWord(RegisterType::PC, 0xB11C);
     CheckRegisterWord(RegisterType::SP, 0x77D4);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB11B, 0x6D);
 }
 
@@ -11116,6 +11538,7 @@ void test_6D_00D3()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xDA);
     WriteRegisterByte(RegisterType::L, 0x05);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF276, 0x6D);
 
@@ -11139,6 +11562,7 @@ void test_6D_00D3()
     CheckRegisterByte(RegisterType::L, 0x05);
     CheckRegisterWord(RegisterType::PC, 0xF277);
     CheckRegisterWord(RegisterType::SP, 0x6CD2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF276, 0x6D);
 }
 
@@ -11159,6 +11583,7 @@ void test_6D_00D4()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x70);
     WriteRegisterByte(RegisterType::L, 0xB8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x78C3, 0x6D);
 
@@ -11182,6 +11607,7 @@ void test_6D_00D4()
     CheckRegisterByte(RegisterType::L, 0xB8);
     CheckRegisterWord(RegisterType::PC, 0x78C4);
     CheckRegisterWord(RegisterType::SP, 0x7BD3);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x78C3, 0x6D);
 }
 
@@ -11202,6 +11628,7 @@ void test_6D_00D5()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xDE);
     WriteRegisterByte(RegisterType::L, 0xCD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3DE3, 0x6D);
 
@@ -11225,6 +11652,7 @@ void test_6D_00D5()
     CheckRegisterByte(RegisterType::L, 0xCD);
     CheckRegisterWord(RegisterType::PC, 0x3DE4);
     CheckRegisterWord(RegisterType::SP, 0x6990);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3DE3, 0x6D);
 }
 
@@ -11245,6 +11673,7 @@ void test_6D_00D6()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x0D);
     WriteRegisterByte(RegisterType::L, 0x45);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6DA8, 0x6D);
 
@@ -11268,6 +11697,7 @@ void test_6D_00D6()
     CheckRegisterByte(RegisterType::L, 0x45);
     CheckRegisterWord(RegisterType::PC, 0x6DA9);
     CheckRegisterWord(RegisterType::SP, 0xC3EB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6DA8, 0x6D);
 }
 
@@ -11288,6 +11718,7 @@ void test_6D_00D7()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xC0);
     WriteRegisterByte(RegisterType::L, 0x3C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7EDF, 0x6D);
 
@@ -11311,6 +11742,7 @@ void test_6D_00D7()
     CheckRegisterByte(RegisterType::L, 0x3C);
     CheckRegisterWord(RegisterType::PC, 0x7EE0);
     CheckRegisterWord(RegisterType::SP, 0xD680);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7EDF, 0x6D);
 }
 
@@ -11331,6 +11763,7 @@ void test_6D_00D8()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xCA);
     WriteRegisterByte(RegisterType::L, 0x49);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBA2C, 0x6D);
 
@@ -11354,6 +11787,7 @@ void test_6D_00D8()
     CheckRegisterByte(RegisterType::L, 0x49);
     CheckRegisterWord(RegisterType::PC, 0xBA2D);
     CheckRegisterWord(RegisterType::SP, 0x5AFA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBA2C, 0x6D);
 }
 
@@ -11374,6 +11808,7 @@ void test_6D_00D9()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xA8);
     WriteRegisterByte(RegisterType::L, 0xF6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x12A8, 0x6D);
 
@@ -11397,6 +11832,7 @@ void test_6D_00D9()
     CheckRegisterByte(RegisterType::L, 0xF6);
     CheckRegisterWord(RegisterType::PC, 0x12A9);
     CheckRegisterWord(RegisterType::SP, 0x44DD);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x12A8, 0x6D);
 }
 
@@ -11417,6 +11853,7 @@ void test_6D_00DA()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xE0);
     WriteRegisterByte(RegisterType::L, 0xAA);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x77C3, 0x6D);
 
@@ -11440,6 +11877,7 @@ void test_6D_00DA()
     CheckRegisterByte(RegisterType::L, 0xAA);
     CheckRegisterWord(RegisterType::PC, 0x77C4);
     CheckRegisterWord(RegisterType::SP, 0x0735);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x77C3, 0x6D);
 }
 
@@ -11460,6 +11898,7 @@ void test_6D_00DB()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xDD);
     WriteRegisterByte(RegisterType::L, 0x48);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x38EA, 0x6D);
 
@@ -11483,6 +11922,7 @@ void test_6D_00DB()
     CheckRegisterByte(RegisterType::L, 0x48);
     CheckRegisterWord(RegisterType::PC, 0x38EB);
     CheckRegisterWord(RegisterType::SP, 0xB917);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x38EA, 0x6D);
 }
 
@@ -11503,6 +11943,7 @@ void test_6D_00DC()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x70);
     WriteRegisterByte(RegisterType::L, 0x46);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x394E, 0x6D);
 
@@ -11526,6 +11967,7 @@ void test_6D_00DC()
     CheckRegisterByte(RegisterType::L, 0x46);
     CheckRegisterWord(RegisterType::PC, 0x394F);
     CheckRegisterWord(RegisterType::SP, 0xABC0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x394E, 0x6D);
 }
 
@@ -11546,6 +11988,7 @@ void test_6D_00DD()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x46);
     WriteRegisterByte(RegisterType::L, 0x6D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF3E0, 0x6D);
 
@@ -11569,6 +12012,7 @@ void test_6D_00DD()
     CheckRegisterByte(RegisterType::L, 0x6D);
     CheckRegisterWord(RegisterType::PC, 0xF3E1);
     CheckRegisterWord(RegisterType::SP, 0x2B25);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF3E0, 0x6D);
 }
 
@@ -11589,6 +12033,7 @@ void test_6D_00DE()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x5A);
     WriteRegisterByte(RegisterType::L, 0x43);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x29BF, 0x6D);
 
@@ -11612,6 +12057,7 @@ void test_6D_00DE()
     CheckRegisterByte(RegisterType::L, 0x43);
     CheckRegisterWord(RegisterType::PC, 0x29C0);
     CheckRegisterWord(RegisterType::SP, 0xC8CC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x29BF, 0x6D);
 }
 
@@ -11632,6 +12078,7 @@ void test_6D_00DF()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x48);
     WriteRegisterByte(RegisterType::L, 0x41);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4A9F, 0x6D);
 
@@ -11655,6 +12102,7 @@ void test_6D_00DF()
     CheckRegisterByte(RegisterType::L, 0x41);
     CheckRegisterWord(RegisterType::PC, 0x4AA0);
     CheckRegisterWord(RegisterType::SP, 0x70D2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4A9F, 0x6D);
 }
 
@@ -11675,6 +12123,7 @@ void test_6D_00E0()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x5B);
     WriteRegisterByte(RegisterType::L, 0x5A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBD2A, 0x6D);
 
@@ -11698,6 +12147,7 @@ void test_6D_00E0()
     CheckRegisterByte(RegisterType::L, 0x5A);
     CheckRegisterWord(RegisterType::PC, 0xBD2B);
     CheckRegisterWord(RegisterType::SP, 0x2E04);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBD2A, 0x6D);
 }
 
@@ -11718,6 +12168,7 @@ void test_6D_00E1()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x34);
     WriteRegisterByte(RegisterType::L, 0xBE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0061, 0x6D);
 
@@ -11741,6 +12192,7 @@ void test_6D_00E1()
     CheckRegisterByte(RegisterType::L, 0xBE);
     CheckRegisterWord(RegisterType::PC, 0x0062);
     CheckRegisterWord(RegisterType::SP, 0xA363);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0061, 0x6D);
 }
 
@@ -11761,6 +12213,7 @@ void test_6D_00E2()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xC6);
     WriteRegisterByte(RegisterType::L, 0x69);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2D25, 0x6D);
 
@@ -11784,6 +12237,7 @@ void test_6D_00E2()
     CheckRegisterByte(RegisterType::L, 0x69);
     CheckRegisterWord(RegisterType::PC, 0x2D26);
     CheckRegisterWord(RegisterType::SP, 0x1CA9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2D25, 0x6D);
 }
 
@@ -11804,6 +12258,7 @@ void test_6D_00E3()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x2A);
     WriteRegisterByte(RegisterType::L, 0x7A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5352, 0x6D);
 
@@ -11827,6 +12282,7 @@ void test_6D_00E3()
     CheckRegisterByte(RegisterType::L, 0x7A);
     CheckRegisterWord(RegisterType::PC, 0x5353);
     CheckRegisterWord(RegisterType::SP, 0xBE6D);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5352, 0x6D);
 }
 
@@ -11847,6 +12303,7 @@ void test_6D_00E4()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x37);
     WriteRegisterByte(RegisterType::L, 0x2B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xDB96, 0x6D);
 
@@ -11870,6 +12327,7 @@ void test_6D_00E4()
     CheckRegisterByte(RegisterType::L, 0x2B);
     CheckRegisterWord(RegisterType::PC, 0xDB97);
     CheckRegisterWord(RegisterType::SP, 0x1722);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDB96, 0x6D);
 }
 
@@ -11890,6 +12348,7 @@ void test_6D_00E5()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x4A);
     WriteRegisterByte(RegisterType::L, 0xEA);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4923, 0x6D);
 
@@ -11913,6 +12372,7 @@ void test_6D_00E5()
     CheckRegisterByte(RegisterType::L, 0xEA);
     CheckRegisterWord(RegisterType::PC, 0x4924);
     CheckRegisterWord(RegisterType::SP, 0xFF04);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4923, 0x6D);
 }
 
@@ -11933,6 +12393,7 @@ void test_6D_00E6()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x44);
     WriteRegisterByte(RegisterType::L, 0x48);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xCE4B, 0x6D);
 
@@ -11956,6 +12417,7 @@ void test_6D_00E6()
     CheckRegisterByte(RegisterType::L, 0x48);
     CheckRegisterWord(RegisterType::PC, 0xCE4C);
     CheckRegisterWord(RegisterType::SP, 0xD680);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCE4B, 0x6D);
 }
 
@@ -11976,6 +12438,7 @@ void test_6D_00E7()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xD6);
     WriteRegisterByte(RegisterType::L, 0x08);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE354, 0x6D);
 
@@ -11999,6 +12462,7 @@ void test_6D_00E7()
     CheckRegisterByte(RegisterType::L, 0x08);
     CheckRegisterWord(RegisterType::PC, 0xE355);
     CheckRegisterWord(RegisterType::SP, 0xB66D);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE354, 0x6D);
 }
 
@@ -12019,6 +12483,7 @@ void test_6D_00E8()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xA5);
     WriteRegisterByte(RegisterType::L, 0xD3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xC5DA, 0x6D);
 
@@ -12042,6 +12507,7 @@ void test_6D_00E8()
     CheckRegisterByte(RegisterType::L, 0xD3);
     CheckRegisterWord(RegisterType::PC, 0xC5DB);
     CheckRegisterWord(RegisterType::SP, 0x54DC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC5DA, 0x6D);
 }
 
@@ -12062,6 +12528,7 @@ void test_6D_00E9()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xD5);
     WriteRegisterByte(RegisterType::L, 0xDF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4C2C, 0x6D);
 
@@ -12085,6 +12552,7 @@ void test_6D_00E9()
     CheckRegisterByte(RegisterType::L, 0xDF);
     CheckRegisterWord(RegisterType::PC, 0x4C2D);
     CheckRegisterWord(RegisterType::SP, 0x5603);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4C2C, 0x6D);
 }
 
@@ -12105,6 +12573,7 @@ void test_6D_00EA()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xB2);
     WriteRegisterByte(RegisterType::L, 0x9E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF1F2, 0x6D);
 
@@ -12128,6 +12597,7 @@ void test_6D_00EA()
     CheckRegisterByte(RegisterType::L, 0x9E);
     CheckRegisterWord(RegisterType::PC, 0xF1F3);
     CheckRegisterWord(RegisterType::SP, 0x2EFB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF1F2, 0x6D);
 }
 
@@ -12148,6 +12618,7 @@ void test_6D_00EB()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x4A);
     WriteRegisterByte(RegisterType::L, 0x56);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFE2A, 0x6D);
 
@@ -12171,6 +12642,7 @@ void test_6D_00EB()
     CheckRegisterByte(RegisterType::L, 0x56);
     CheckRegisterWord(RegisterType::PC, 0xFE2B);
     CheckRegisterWord(RegisterType::SP, 0x6D08);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFE2A, 0x6D);
 }
 
@@ -12191,6 +12663,7 @@ void test_6D_00EC()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x14);
     WriteRegisterByte(RegisterType::L, 0xFC);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF4DB, 0x6D);
 
@@ -12214,6 +12687,7 @@ void test_6D_00EC()
     CheckRegisterByte(RegisterType::L, 0xFC);
     CheckRegisterWord(RegisterType::PC, 0xF4DC);
     CheckRegisterWord(RegisterType::SP, 0xEB15);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF4DB, 0x6D);
 }
 
@@ -12234,6 +12708,7 @@ void test_6D_00ED()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x29);
     WriteRegisterByte(RegisterType::L, 0x85);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7DC3, 0x6D);
 
@@ -12257,6 +12732,7 @@ void test_6D_00ED()
     CheckRegisterByte(RegisterType::L, 0x85);
     CheckRegisterWord(RegisterType::PC, 0x7DC4);
     CheckRegisterWord(RegisterType::SP, 0x111E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7DC3, 0x6D);
 }
 
@@ -12277,6 +12753,7 @@ void test_6D_00EE()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x20);
     WriteRegisterByte(RegisterType::L, 0xCF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2D4F, 0x6D);
 
@@ -12300,6 +12777,7 @@ void test_6D_00EE()
     CheckRegisterByte(RegisterType::L, 0xCF);
     CheckRegisterWord(RegisterType::PC, 0x2D50);
     CheckRegisterWord(RegisterType::SP, 0x1891);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2D4F, 0x6D);
 }
 
@@ -12320,6 +12798,7 @@ void test_6D_00EF()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x5C);
     WriteRegisterByte(RegisterType::L, 0x3C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBF0D, 0x6D);
 
@@ -12343,6 +12822,7 @@ void test_6D_00EF()
     CheckRegisterByte(RegisterType::L, 0x3C);
     CheckRegisterWord(RegisterType::PC, 0xBF0E);
     CheckRegisterWord(RegisterType::SP, 0xAE0B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBF0D, 0x6D);
 }
 
@@ -12363,6 +12843,7 @@ void test_6D_00F0()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xB8);
     WriteRegisterByte(RegisterType::L, 0x6C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x35B9, 0x6D);
 
@@ -12386,6 +12867,7 @@ void test_6D_00F0()
     CheckRegisterByte(RegisterType::L, 0x6C);
     CheckRegisterWord(RegisterType::PC, 0x35BA);
     CheckRegisterWord(RegisterType::SP, 0xA4F3);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x35B9, 0x6D);
 }
 
@@ -12406,6 +12888,7 @@ void test_6D_00F1()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x35);
     WriteRegisterByte(RegisterType::L, 0x90);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x815B, 0x6D);
 
@@ -12429,6 +12912,7 @@ void test_6D_00F1()
     CheckRegisterByte(RegisterType::L, 0x90);
     CheckRegisterWord(RegisterType::PC, 0x815C);
     CheckRegisterWord(RegisterType::SP, 0x6D2B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x815B, 0x6D);
 }
 
@@ -12449,6 +12933,7 @@ void test_6D_00F2()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x44);
     WriteRegisterByte(RegisterType::L, 0x73);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3B25, 0x6D);
 
@@ -12472,6 +12957,7 @@ void test_6D_00F2()
     CheckRegisterByte(RegisterType::L, 0x73);
     CheckRegisterWord(RegisterType::PC, 0x3B26);
     CheckRegisterWord(RegisterType::SP, 0x301F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3B25, 0x6D);
 }
 
@@ -12492,6 +12978,7 @@ void test_6D_00F3()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x33);
     WriteRegisterByte(RegisterType::L, 0x2A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xCD6D, 0x6D);
 
@@ -12515,6 +13002,7 @@ void test_6D_00F3()
     CheckRegisterByte(RegisterType::L, 0x2A);
     CheckRegisterWord(RegisterType::PC, 0xCD6E);
     CheckRegisterWord(RegisterType::SP, 0x5A5F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCD6D, 0x6D);
 }
 
@@ -12535,6 +13023,7 @@ void test_6D_00F4()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x0E);
     WriteRegisterByte(RegisterType::L, 0x92);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB974, 0x6D);
 
@@ -12558,6 +13047,7 @@ void test_6D_00F4()
     CheckRegisterByte(RegisterType::L, 0x92);
     CheckRegisterWord(RegisterType::PC, 0xB975);
     CheckRegisterWord(RegisterType::SP, 0xE847);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB974, 0x6D);
 }
 
@@ -12578,6 +13068,7 @@ void test_6D_00F5()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x29);
     WriteRegisterByte(RegisterType::L, 0xCE);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x22D4, 0x6D);
 
@@ -12601,6 +13092,7 @@ void test_6D_00F5()
     CheckRegisterByte(RegisterType::L, 0xCE);
     CheckRegisterWord(RegisterType::PC, 0x22D5);
     CheckRegisterWord(RegisterType::SP, 0x507C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x22D4, 0x6D);
 }
 
@@ -12621,6 +13113,7 @@ void test_6D_00F6()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x65);
     WriteRegisterByte(RegisterType::L, 0x2C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x84ED, 0x6D);
 
@@ -12644,6 +13137,7 @@ void test_6D_00F6()
     CheckRegisterByte(RegisterType::L, 0x2C);
     CheckRegisterWord(RegisterType::PC, 0x84EE);
     CheckRegisterWord(RegisterType::SP, 0xBF87);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x84ED, 0x6D);
 }
 
@@ -12664,6 +13158,7 @@ void test_6D_00F7()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x81);
     WriteRegisterByte(RegisterType::L, 0x28);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1313, 0x6D);
 
@@ -12687,6 +13182,7 @@ void test_6D_00F7()
     CheckRegisterByte(RegisterType::L, 0x28);
     CheckRegisterWord(RegisterType::PC, 0x1314);
     CheckRegisterWord(RegisterType::SP, 0x1ECA);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1313, 0x6D);
 }
 
@@ -12707,6 +13203,7 @@ void test_6D_00F8()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xE8);
     WriteRegisterByte(RegisterType::L, 0x64);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD2B7, 0x6D);
 
@@ -12730,6 +13227,7 @@ void test_6D_00F8()
     CheckRegisterByte(RegisterType::L, 0x64);
     CheckRegisterWord(RegisterType::PC, 0xD2B8);
     CheckRegisterWord(RegisterType::SP, 0x10BE);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD2B7, 0x6D);
 }
 
@@ -12750,6 +13248,7 @@ void test_6D_00F9()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x6A);
     WriteRegisterByte(RegisterType::L, 0x30);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8C55, 0x6D);
 
@@ -12773,6 +13272,7 @@ void test_6D_00F9()
     CheckRegisterByte(RegisterType::L, 0x30);
     CheckRegisterWord(RegisterType::PC, 0x8C56);
     CheckRegisterWord(RegisterType::SP, 0xFD3D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8C55, 0x6D);
 }
 
@@ -12793,6 +13293,7 @@ void test_6D_00FA()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xEC);
     WriteRegisterByte(RegisterType::L, 0xC5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8FCD, 0x6D);
 
@@ -12816,6 +13317,7 @@ void test_6D_00FA()
     CheckRegisterByte(RegisterType::L, 0xC5);
     CheckRegisterWord(RegisterType::PC, 0x8FCE);
     CheckRegisterWord(RegisterType::SP, 0xC905);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8FCD, 0x6D);
 }
 
@@ -12836,6 +13338,7 @@ void test_6D_00FB()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x5D);
     WriteRegisterByte(RegisterType::L, 0x9F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x82CD, 0x6D);
 
@@ -12859,6 +13362,7 @@ void test_6D_00FB()
     CheckRegisterByte(RegisterType::L, 0x9F);
     CheckRegisterWord(RegisterType::PC, 0x82CE);
     CheckRegisterWord(RegisterType::SP, 0x3DE0);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x82CD, 0x6D);
 }
 
@@ -12879,6 +13383,7 @@ void test_6D_00FC()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x64);
     WriteRegisterByte(RegisterType::L, 0x4E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x06D4, 0x6D);
 
@@ -12902,6 +13407,7 @@ void test_6D_00FC()
     CheckRegisterByte(RegisterType::L, 0x4E);
     CheckRegisterWord(RegisterType::PC, 0x06D5);
     CheckRegisterWord(RegisterType::SP, 0x88F0);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x06D4, 0x6D);
 }
 
@@ -12922,6 +13428,7 @@ void test_6D_00FD()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x18);
     WriteRegisterByte(RegisterType::L, 0xEC);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1BBE, 0x6D);
 
@@ -12945,6 +13452,7 @@ void test_6D_00FD()
     CheckRegisterByte(RegisterType::L, 0xEC);
     CheckRegisterWord(RegisterType::PC, 0x1BBF);
     CheckRegisterWord(RegisterType::SP, 0x0547);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1BBE, 0x6D);
 }
 
@@ -12965,6 +13473,7 @@ void test_6D_00FE()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x44);
     WriteRegisterByte(RegisterType::L, 0x4B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xDC51, 0x6D);
 
@@ -12988,6 +13497,7 @@ void test_6D_00FE()
     CheckRegisterByte(RegisterType::L, 0x4B);
     CheckRegisterWord(RegisterType::PC, 0xDC52);
     CheckRegisterWord(RegisterType::SP, 0x5F6B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDC51, 0x6D);
 }
 
@@ -13008,6 +13518,7 @@ void test_6D_00FF()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x55);
     WriteRegisterByte(RegisterType::L, 0x50);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD14A, 0x6D);
 
@@ -13031,6 +13542,7 @@ void test_6D_00FF()
     CheckRegisterByte(RegisterType::L, 0x50);
     CheckRegisterWord(RegisterType::PC, 0xD14B);
     CheckRegisterWord(RegisterType::SP, 0x8A18);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD14A, 0x6D);
 }
 
@@ -13051,6 +13563,7 @@ void test_6D_0100()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x24);
     WriteRegisterByte(RegisterType::L, 0x55);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x01E9, 0x6D);
 
@@ -13074,6 +13587,7 @@ void test_6D_0100()
     CheckRegisterByte(RegisterType::L, 0x55);
     CheckRegisterWord(RegisterType::PC, 0x01EA);
     CheckRegisterWord(RegisterType::SP, 0x409B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x01E9, 0x6D);
 }
 
@@ -13094,6 +13608,7 @@ void test_6D_0101()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x94);
     WriteRegisterByte(RegisterType::L, 0xE7);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB5C5, 0x6D);
 
@@ -13117,6 +13632,7 @@ void test_6D_0101()
     CheckRegisterByte(RegisterType::L, 0xE7);
     CheckRegisterWord(RegisterType::PC, 0xB5C6);
     CheckRegisterWord(RegisterType::SP, 0xA8CD);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB5C5, 0x6D);
 }
 
@@ -13137,6 +13653,7 @@ void test_6D_0102()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x07);
     WriteRegisterByte(RegisterType::L, 0xE4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x054D, 0x6D);
 
@@ -13160,6 +13677,7 @@ void test_6D_0102()
     CheckRegisterByte(RegisterType::L, 0xE4);
     CheckRegisterWord(RegisterType::PC, 0x054E);
     CheckRegisterWord(RegisterType::SP, 0x2800);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x054D, 0x6D);
 }
 
@@ -13180,6 +13698,7 @@ void test_6D_0103()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xD4);
     WriteRegisterByte(RegisterType::L, 0xD8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8903, 0x6D);
 
@@ -13203,6 +13722,7 @@ void test_6D_0103()
     CheckRegisterByte(RegisterType::L, 0xD8);
     CheckRegisterWord(RegisterType::PC, 0x8904);
     CheckRegisterWord(RegisterType::SP, 0xAA08);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8903, 0x6D);
 }
 
@@ -13223,6 +13743,7 @@ void test_6D_0104()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x21);
     WriteRegisterByte(RegisterType::L, 0x09);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1BBD, 0x6D);
 
@@ -13246,6 +13767,7 @@ void test_6D_0104()
     CheckRegisterByte(RegisterType::L, 0x09);
     CheckRegisterWord(RegisterType::PC, 0x1BBE);
     CheckRegisterWord(RegisterType::SP, 0xCFDD);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1BBD, 0x6D);
 }
 
@@ -13266,6 +13788,7 @@ void test_6D_0105()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x73);
     WriteRegisterByte(RegisterType::L, 0x44);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4AFB, 0x6D);
 
@@ -13289,6 +13812,7 @@ void test_6D_0105()
     CheckRegisterByte(RegisterType::L, 0x44);
     CheckRegisterWord(RegisterType::PC, 0x4AFC);
     CheckRegisterWord(RegisterType::SP, 0xB1CD);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4AFB, 0x6D);
 }
 
@@ -13309,6 +13833,7 @@ void test_6D_0106()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x90);
     WriteRegisterByte(RegisterType::L, 0x3E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0763, 0x6D);
 
@@ -13332,6 +13857,7 @@ void test_6D_0106()
     CheckRegisterByte(RegisterType::L, 0x3E);
     CheckRegisterWord(RegisterType::PC, 0x0764);
     CheckRegisterWord(RegisterType::SP, 0xAF16);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0763, 0x6D);
 }
 
@@ -13352,6 +13878,7 @@ void test_6D_0107()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xD7);
     WriteRegisterByte(RegisterType::L, 0xBB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC661, 0x6D);
 
@@ -13375,6 +13902,7 @@ void test_6D_0107()
     CheckRegisterByte(RegisterType::L, 0xBB);
     CheckRegisterWord(RegisterType::PC, 0xC662);
     CheckRegisterWord(RegisterType::SP, 0xDA11);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC661, 0x6D);
 }
 
@@ -13395,6 +13923,7 @@ void test_6D_0108()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x48);
     WriteRegisterByte(RegisterType::L, 0x29);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8A42, 0x6D);
 
@@ -13418,6 +13947,7 @@ void test_6D_0108()
     CheckRegisterByte(RegisterType::L, 0x29);
     CheckRegisterWord(RegisterType::PC, 0x8A43);
     CheckRegisterWord(RegisterType::SP, 0x8E4B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8A42, 0x6D);
 }
 
@@ -13438,6 +13968,7 @@ void test_6D_0109()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x4D);
     WriteRegisterByte(RegisterType::L, 0x23);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1EA9, 0x6D);
 
@@ -13461,6 +13992,7 @@ void test_6D_0109()
     CheckRegisterByte(RegisterType::L, 0x23);
     CheckRegisterWord(RegisterType::PC, 0x1EAA);
     CheckRegisterWord(RegisterType::SP, 0xF17C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1EA9, 0x6D);
 }
 
@@ -13481,6 +14013,7 @@ void test_6D_010A()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xF0);
     WriteRegisterByte(RegisterType::L, 0x7A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x10EE, 0x6D);
 
@@ -13504,6 +14037,7 @@ void test_6D_010A()
     CheckRegisterByte(RegisterType::L, 0x7A);
     CheckRegisterWord(RegisterType::PC, 0x10EF);
     CheckRegisterWord(RegisterType::SP, 0x43D5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x10EE, 0x6D);
 }
 
@@ -13524,6 +14058,7 @@ void test_6D_010B()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x07);
     WriteRegisterByte(RegisterType::L, 0x5B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9782, 0x6D);
 
@@ -13547,6 +14082,7 @@ void test_6D_010B()
     CheckRegisterByte(RegisterType::L, 0x5B);
     CheckRegisterWord(RegisterType::PC, 0x9783);
     CheckRegisterWord(RegisterType::SP, 0x4B9C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9782, 0x6D);
 }
 
@@ -13567,6 +14103,7 @@ void test_6D_010C()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x5B);
     WriteRegisterByte(RegisterType::L, 0xA4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xFF86, 0x6D);
 
@@ -13590,6 +14127,7 @@ void test_6D_010C()
     CheckRegisterByte(RegisterType::L, 0xA4);
     CheckRegisterWord(RegisterType::PC, 0xFF87);
     CheckRegisterWord(RegisterType::SP, 0xAB83);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFF86, 0x6D);
 }
 
@@ -13610,6 +14148,7 @@ void test_6D_010D()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x6F);
     WriteRegisterByte(RegisterType::L, 0x09);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF147, 0x6D);
 
@@ -13633,6 +14172,7 @@ void test_6D_010D()
     CheckRegisterByte(RegisterType::L, 0x09);
     CheckRegisterWord(RegisterType::PC, 0xF148);
     CheckRegisterWord(RegisterType::SP, 0x49AE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF147, 0x6D);
 }
 
@@ -13653,6 +14193,7 @@ void test_6D_010E()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x13);
     WriteRegisterByte(RegisterType::L, 0xDF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA825, 0x6D);
 
@@ -13676,6 +14217,7 @@ void test_6D_010E()
     CheckRegisterByte(RegisterType::L, 0xDF);
     CheckRegisterWord(RegisterType::PC, 0xA826);
     CheckRegisterWord(RegisterType::SP, 0xE3FB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA825, 0x6D);
 }
 
@@ -13696,6 +14238,7 @@ void test_6D_010F()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x6C);
     WriteRegisterByte(RegisterType::L, 0x11);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6F4A, 0x6D);
 
@@ -13719,6 +14262,7 @@ void test_6D_010F()
     CheckRegisterByte(RegisterType::L, 0x11);
     CheckRegisterWord(RegisterType::PC, 0x6F4B);
     CheckRegisterWord(RegisterType::SP, 0x560A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6F4A, 0x6D);
 }
 
@@ -13739,6 +14283,7 @@ void test_6D_0110()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x7E);
     WriteRegisterByte(RegisterType::L, 0xCF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6746, 0x6D);
 
@@ -13762,6 +14307,7 @@ void test_6D_0110()
     CheckRegisterByte(RegisterType::L, 0xCF);
     CheckRegisterWord(RegisterType::PC, 0x6747);
     CheckRegisterWord(RegisterType::SP, 0x87F0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6746, 0x6D);
 }
 
@@ -13782,6 +14328,7 @@ void test_6D_0111()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x14);
     WriteRegisterByte(RegisterType::L, 0x82);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7C22, 0x6D);
 
@@ -13805,6 +14352,7 @@ void test_6D_0111()
     CheckRegisterByte(RegisterType::L, 0x82);
     CheckRegisterWord(RegisterType::PC, 0x7C23);
     CheckRegisterWord(RegisterType::SP, 0x3B42);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7C22, 0x6D);
 }
 
@@ -13825,6 +14373,7 @@ void test_6D_0112()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xA0);
     WriteRegisterByte(RegisterType::L, 0x6E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x02CF, 0x6D);
 
@@ -13848,6 +14397,7 @@ void test_6D_0112()
     CheckRegisterByte(RegisterType::L, 0x6E);
     CheckRegisterWord(RegisterType::PC, 0x02D0);
     CheckRegisterWord(RegisterType::SP, 0x0FD6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x02CF, 0x6D);
 }
 
@@ -13868,6 +14418,7 @@ void test_6D_0113()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x4F);
     WriteRegisterByte(RegisterType::L, 0x9D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF641, 0x6D);
 
@@ -13891,6 +14442,7 @@ void test_6D_0113()
     CheckRegisterByte(RegisterType::L, 0x9D);
     CheckRegisterWord(RegisterType::PC, 0xF642);
     CheckRegisterWord(RegisterType::SP, 0xBA73);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF641, 0x6D);
 }
 
@@ -13911,6 +14463,7 @@ void test_6D_0114()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x1C);
     WriteRegisterByte(RegisterType::L, 0x58);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xC689, 0x6D);
 
@@ -13934,6 +14487,7 @@ void test_6D_0114()
     CheckRegisterByte(RegisterType::L, 0x58);
     CheckRegisterWord(RegisterType::PC, 0xC68A);
     CheckRegisterWord(RegisterType::SP, 0x508E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC689, 0x6D);
 }
 
@@ -13954,6 +14508,7 @@ void test_6D_0115()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xE0);
     WriteRegisterByte(RegisterType::L, 0x15);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4F01, 0x6D);
 
@@ -13977,6 +14532,7 @@ void test_6D_0115()
     CheckRegisterByte(RegisterType::L, 0x15);
     CheckRegisterWord(RegisterType::PC, 0x4F02);
     CheckRegisterWord(RegisterType::SP, 0x1705);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4F01, 0x6D);
 }
 
@@ -13997,6 +14553,7 @@ void test_6D_0116()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x32);
     WriteRegisterByte(RegisterType::L, 0x21);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6A7E, 0x6D);
 
@@ -14020,6 +14577,7 @@ void test_6D_0116()
     CheckRegisterByte(RegisterType::L, 0x21);
     CheckRegisterWord(RegisterType::PC, 0x6A7F);
     CheckRegisterWord(RegisterType::SP, 0x25FF);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6A7E, 0x6D);
 }
 
@@ -14040,6 +14598,7 @@ void test_6D_0117()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x58);
     WriteRegisterByte(RegisterType::L, 0x9A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8915, 0x6D);
 
@@ -14063,6 +14622,7 @@ void test_6D_0117()
     CheckRegisterByte(RegisterType::L, 0x9A);
     CheckRegisterWord(RegisterType::PC, 0x8916);
     CheckRegisterWord(RegisterType::SP, 0x4A66);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8915, 0x6D);
 }
 
@@ -14083,6 +14643,7 @@ void test_6D_0118()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xE1);
     WriteRegisterByte(RegisterType::L, 0x34);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xDCA9, 0x6D);
 
@@ -14106,6 +14667,7 @@ void test_6D_0118()
     CheckRegisterByte(RegisterType::L, 0x34);
     CheckRegisterWord(RegisterType::PC, 0xDCAA);
     CheckRegisterWord(RegisterType::SP, 0x5158);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDCA9, 0x6D);
 }
 
@@ -14126,6 +14688,7 @@ void test_6D_0119()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x87);
     WriteRegisterByte(RegisterType::L, 0x12);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD8DC, 0x6D);
 
@@ -14149,6 +14712,7 @@ void test_6D_0119()
     CheckRegisterByte(RegisterType::L, 0x12);
     CheckRegisterWord(RegisterType::PC, 0xD8DD);
     CheckRegisterWord(RegisterType::SP, 0xDE5B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD8DC, 0x6D);
 }
 
@@ -14169,6 +14733,7 @@ void test_6D_011A()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x45);
     WriteRegisterByte(RegisterType::L, 0x01);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1CD1, 0x6D);
 
@@ -14192,6 +14757,7 @@ void test_6D_011A()
     CheckRegisterByte(RegisterType::L, 0x01);
     CheckRegisterWord(RegisterType::PC, 0x1CD2);
     CheckRegisterWord(RegisterType::SP, 0xCAB9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1CD1, 0x6D);
 }
 
@@ -14212,6 +14778,7 @@ void test_6D_011B()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xD7);
     WriteRegisterByte(RegisterType::L, 0x3B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8DE3, 0x6D);
 
@@ -14235,6 +14802,7 @@ void test_6D_011B()
     CheckRegisterByte(RegisterType::L, 0x3B);
     CheckRegisterWord(RegisterType::PC, 0x8DE4);
     CheckRegisterWord(RegisterType::SP, 0xDC41);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8DE3, 0x6D);
 }
 
@@ -14255,6 +14823,7 @@ void test_6D_011C()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xD3);
     WriteRegisterByte(RegisterType::L, 0x31);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5A81, 0x6D);
 
@@ -14278,6 +14847,7 @@ void test_6D_011C()
     CheckRegisterByte(RegisterType::L, 0x31);
     CheckRegisterWord(RegisterType::PC, 0x5A82);
     CheckRegisterWord(RegisterType::SP, 0xF4DB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5A81, 0x6D);
 }
 
@@ -14298,6 +14868,7 @@ void test_6D_011D()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x9D);
     WriteRegisterByte(RegisterType::L, 0x31);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3073, 0x6D);
 
@@ -14321,6 +14892,7 @@ void test_6D_011D()
     CheckRegisterByte(RegisterType::L, 0x31);
     CheckRegisterWord(RegisterType::PC, 0x3074);
     CheckRegisterWord(RegisterType::SP, 0x31B6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3073, 0x6D);
 }
 
@@ -14341,6 +14913,7 @@ void test_6D_011E()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x77);
     WriteRegisterByte(RegisterType::L, 0xCF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0F52, 0x6D);
 
@@ -14364,6 +14937,7 @@ void test_6D_011E()
     CheckRegisterByte(RegisterType::L, 0xCF);
     CheckRegisterWord(RegisterType::PC, 0x0F53);
     CheckRegisterWord(RegisterType::SP, 0x791F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0F52, 0x6D);
 }
 
@@ -14384,6 +14958,7 @@ void test_6D_011F()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xD3);
     WriteRegisterByte(RegisterType::L, 0x1C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2A77, 0x6D);
 
@@ -14407,6 +14982,7 @@ void test_6D_011F()
     CheckRegisterByte(RegisterType::L, 0x1C);
     CheckRegisterWord(RegisterType::PC, 0x2A78);
     CheckRegisterWord(RegisterType::SP, 0xC80B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2A77, 0x6D);
 }
 
@@ -14427,6 +15003,7 @@ void test_6D_0120()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x28);
     WriteRegisterByte(RegisterType::L, 0xAA);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4682, 0x6D);
 
@@ -14450,6 +15027,7 @@ void test_6D_0120()
     CheckRegisterByte(RegisterType::L, 0xAA);
     CheckRegisterWord(RegisterType::PC, 0x4683);
     CheckRegisterWord(RegisterType::SP, 0x2A10);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4682, 0x6D);
 }
 
@@ -14470,6 +15048,7 @@ void test_6D_0121()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x56);
     WriteRegisterByte(RegisterType::L, 0x21);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB387, 0x6D);
 
@@ -14493,6 +15072,7 @@ void test_6D_0121()
     CheckRegisterByte(RegisterType::L, 0x21);
     CheckRegisterWord(RegisterType::PC, 0xB388);
     CheckRegisterWord(RegisterType::SP, 0xDE25);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB387, 0x6D);
 }
 
@@ -14513,6 +15093,7 @@ void test_6D_0122()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x83);
     WriteRegisterByte(RegisterType::L, 0xE4);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3B31, 0x6D);
 
@@ -14536,6 +15117,7 @@ void test_6D_0122()
     CheckRegisterByte(RegisterType::L, 0xE4);
     CheckRegisterWord(RegisterType::PC, 0x3B32);
     CheckRegisterWord(RegisterType::SP, 0x3639);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3B31, 0x6D);
 }
 
@@ -14556,6 +15138,7 @@ void test_6D_0123()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xA2);
     WriteRegisterByte(RegisterType::L, 0xE8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3817, 0x6D);
 
@@ -14579,6 +15162,7 @@ void test_6D_0123()
     CheckRegisterByte(RegisterType::L, 0xE8);
     CheckRegisterWord(RegisterType::PC, 0x3818);
     CheckRegisterWord(RegisterType::SP, 0xD31A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3817, 0x6D);
 }
 
@@ -14599,6 +15183,7 @@ void test_6D_0124()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xF1);
     WriteRegisterByte(RegisterType::L, 0x6A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xAEF0, 0x6D);
 
@@ -14622,6 +15207,7 @@ void test_6D_0124()
     CheckRegisterByte(RegisterType::L, 0x6A);
     CheckRegisterWord(RegisterType::PC, 0xAEF1);
     CheckRegisterWord(RegisterType::SP, 0x4E6D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAEF0, 0x6D);
 }
 
@@ -14642,6 +15228,7 @@ void test_6D_0125()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x86);
     WriteRegisterByte(RegisterType::L, 0xB6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6A7B, 0x6D);
 
@@ -14665,6 +15252,7 @@ void test_6D_0125()
     CheckRegisterByte(RegisterType::L, 0xB6);
     CheckRegisterWord(RegisterType::PC, 0x6A7C);
     CheckRegisterWord(RegisterType::SP, 0xF51A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6A7B, 0x6D);
 }
 
@@ -14685,6 +15273,7 @@ void test_6D_0126()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x60);
     WriteRegisterByte(RegisterType::L, 0x56);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1339, 0x6D);
 
@@ -14708,6 +15297,7 @@ void test_6D_0126()
     CheckRegisterByte(RegisterType::L, 0x56);
     CheckRegisterWord(RegisterType::PC, 0x133A);
     CheckRegisterWord(RegisterType::SP, 0x6CCA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1339, 0x6D);
 }
 
@@ -14728,6 +15318,7 @@ void test_6D_0127()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x3D);
     WriteRegisterByte(RegisterType::L, 0xD2);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2BB0, 0x6D);
 
@@ -14751,6 +15342,7 @@ void test_6D_0127()
     CheckRegisterByte(RegisterType::L, 0xD2);
     CheckRegisterWord(RegisterType::PC, 0x2BB1);
     CheckRegisterWord(RegisterType::SP, 0xEB1F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2BB0, 0x6D);
 }
 
@@ -14771,6 +15363,7 @@ void test_6D_0128()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xD2);
     WriteRegisterByte(RegisterType::L, 0x65);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xAFBC, 0x6D);
 
@@ -14794,6 +15387,7 @@ void test_6D_0128()
     CheckRegisterByte(RegisterType::L, 0x65);
     CheckRegisterWord(RegisterType::PC, 0xAFBD);
     CheckRegisterWord(RegisterType::SP, 0x7CE8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAFBC, 0x6D);
 }
 
@@ -14814,6 +15408,7 @@ void test_6D_0129()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x73);
     WriteRegisterByte(RegisterType::L, 0xAF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5534, 0x6D);
 
@@ -14837,6 +15432,7 @@ void test_6D_0129()
     CheckRegisterByte(RegisterType::L, 0xAF);
     CheckRegisterWord(RegisterType::PC, 0x5535);
     CheckRegisterWord(RegisterType::SP, 0x2A63);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5534, 0x6D);
 }
 
@@ -14857,6 +15453,7 @@ void test_6D_012A()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x09);
     WriteRegisterByte(RegisterType::L, 0x03);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDA4C, 0x6D);
 
@@ -14880,6 +15477,7 @@ void test_6D_012A()
     CheckRegisterByte(RegisterType::L, 0x03);
     CheckRegisterWord(RegisterType::PC, 0xDA4D);
     CheckRegisterWord(RegisterType::SP, 0xCFA3);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDA4C, 0x6D);
 }
 
@@ -14900,6 +15498,7 @@ void test_6D_012B()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x9D);
     WriteRegisterByte(RegisterType::L, 0xD3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBE8C, 0x6D);
 
@@ -14923,6 +15522,7 @@ void test_6D_012B()
     CheckRegisterByte(RegisterType::L, 0xD3);
     CheckRegisterWord(RegisterType::PC, 0xBE8D);
     CheckRegisterWord(RegisterType::SP, 0xC0D5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBE8C, 0x6D);
 }
 
@@ -14943,6 +15543,7 @@ void test_6D_012C()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x74);
     WriteRegisterByte(RegisterType::L, 0xED);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4595, 0x6D);
 
@@ -14966,6 +15567,7 @@ void test_6D_012C()
     CheckRegisterByte(RegisterType::L, 0xED);
     CheckRegisterWord(RegisterType::PC, 0x4596);
     CheckRegisterWord(RegisterType::SP, 0xAE7D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4595, 0x6D);
 }
 
@@ -14986,6 +15588,7 @@ void test_6D_012D()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xB7);
     WriteRegisterByte(RegisterType::L, 0xA5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xCFF5, 0x6D);
 
@@ -15009,6 +15612,7 @@ void test_6D_012D()
     CheckRegisterByte(RegisterType::L, 0xA5);
     CheckRegisterWord(RegisterType::PC, 0xCFF6);
     CheckRegisterWord(RegisterType::SP, 0x9295);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCFF5, 0x6D);
 }
 
@@ -15029,6 +15633,7 @@ void test_6D_012E()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x79);
     WriteRegisterByte(RegisterType::L, 0x8B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1E1A, 0x6D);
 
@@ -15052,6 +15657,7 @@ void test_6D_012E()
     CheckRegisterByte(RegisterType::L, 0x8B);
     CheckRegisterWord(RegisterType::PC, 0x1E1B);
     CheckRegisterWord(RegisterType::SP, 0x2C4C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1E1A, 0x6D);
 }
 
@@ -15072,6 +15678,7 @@ void test_6D_012F()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xB8);
     WriteRegisterByte(RegisterType::L, 0x36);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1E75, 0x6D);
 
@@ -15095,6 +15702,7 @@ void test_6D_012F()
     CheckRegisterByte(RegisterType::L, 0x36);
     CheckRegisterWord(RegisterType::PC, 0x1E76);
     CheckRegisterWord(RegisterType::SP, 0xC38E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1E75, 0x6D);
 }
 
@@ -15115,6 +15723,7 @@ void test_6D_0130()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x49);
     WriteRegisterByte(RegisterType::L, 0x6E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x114F, 0x6D);
 
@@ -15138,6 +15747,7 @@ void test_6D_0130()
     CheckRegisterByte(RegisterType::L, 0x6E);
     CheckRegisterWord(RegisterType::PC, 0x1150);
     CheckRegisterWord(RegisterType::SP, 0x9317);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x114F, 0x6D);
 }
 
@@ -15158,6 +15768,7 @@ void test_6D_0131()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x5F);
     WriteRegisterByte(RegisterType::L, 0xC3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF727, 0x6D);
 
@@ -15181,6 +15792,7 @@ void test_6D_0131()
     CheckRegisterByte(RegisterType::L, 0xC3);
     CheckRegisterWord(RegisterType::PC, 0xF728);
     CheckRegisterWord(RegisterType::SP, 0x63A9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF727, 0x6D);
 }
 
@@ -15201,6 +15813,7 @@ void test_6D_0132()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x76);
     WriteRegisterByte(RegisterType::L, 0xD9);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD6EE, 0x6D);
 
@@ -15224,6 +15837,7 @@ void test_6D_0132()
     CheckRegisterByte(RegisterType::L, 0xD9);
     CheckRegisterWord(RegisterType::PC, 0xD6EF);
     CheckRegisterWord(RegisterType::SP, 0x0B8F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD6EE, 0x6D);
 }
 
@@ -15244,6 +15858,7 @@ void test_6D_0133()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x4E);
     WriteRegisterByte(RegisterType::L, 0x71);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDC28, 0x6D);
 
@@ -15267,6 +15882,7 @@ void test_6D_0133()
     CheckRegisterByte(RegisterType::L, 0x71);
     CheckRegisterWord(RegisterType::PC, 0xDC29);
     CheckRegisterWord(RegisterType::SP, 0xB906);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDC28, 0x6D);
 }
 
@@ -15287,6 +15903,7 @@ void test_6D_0134()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xBC);
     WriteRegisterByte(RegisterType::L, 0xFA);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x25E4, 0x6D);
 
@@ -15310,6 +15927,7 @@ void test_6D_0134()
     CheckRegisterByte(RegisterType::L, 0xFA);
     CheckRegisterWord(RegisterType::PC, 0x25E5);
     CheckRegisterWord(RegisterType::SP, 0xD3F9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x25E4, 0x6D);
 }
 
@@ -15330,6 +15948,7 @@ void test_6D_0135()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xC4);
     WriteRegisterByte(RegisterType::L, 0xDD);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xBC14, 0x6D);
 
@@ -15353,6 +15972,7 @@ void test_6D_0135()
     CheckRegisterByte(RegisterType::L, 0xDD);
     CheckRegisterWord(RegisterType::PC, 0xBC15);
     CheckRegisterWord(RegisterType::SP, 0xFDB7);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBC14, 0x6D);
 }
 
@@ -15373,6 +15993,7 @@ void test_6D_0136()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xBE);
     WriteRegisterByte(RegisterType::L, 0xC4);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5FDF, 0x6D);
 
@@ -15396,6 +16017,7 @@ void test_6D_0136()
     CheckRegisterByte(RegisterType::L, 0xC4);
     CheckRegisterWord(RegisterType::PC, 0x5FE0);
     CheckRegisterWord(RegisterType::SP, 0x8F26);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5FDF, 0x6D);
 }
 
@@ -15416,6 +16038,7 @@ void test_6D_0137()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xED);
     WriteRegisterByte(RegisterType::L, 0x9E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8FDD, 0x6D);
 
@@ -15439,6 +16062,7 @@ void test_6D_0137()
     CheckRegisterByte(RegisterType::L, 0x9E);
     CheckRegisterWord(RegisterType::PC, 0x8FDE);
     CheckRegisterWord(RegisterType::SP, 0x7514);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8FDD, 0x6D);
 }
 
@@ -15459,6 +16083,7 @@ void test_6D_0138()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x02);
     WriteRegisterByte(RegisterType::L, 0x25);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6ACF, 0x6D);
 
@@ -15482,6 +16107,7 @@ void test_6D_0138()
     CheckRegisterByte(RegisterType::L, 0x25);
     CheckRegisterWord(RegisterType::PC, 0x6AD0);
     CheckRegisterWord(RegisterType::SP, 0x42B0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6ACF, 0x6D);
 }
 
@@ -15502,6 +16128,7 @@ void test_6D_0139()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x34);
     WriteRegisterByte(RegisterType::L, 0xF9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5784, 0x6D);
 
@@ -15525,6 +16152,7 @@ void test_6D_0139()
     CheckRegisterByte(RegisterType::L, 0xF9);
     CheckRegisterWord(RegisterType::PC, 0x5785);
     CheckRegisterWord(RegisterType::SP, 0xE4C9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5784, 0x6D);
 }
 
@@ -15545,6 +16173,7 @@ void test_6D_013A()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x91);
     WriteRegisterByte(RegisterType::L, 0xAF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x48C5, 0x6D);
 
@@ -15568,6 +16197,7 @@ void test_6D_013A()
     CheckRegisterByte(RegisterType::L, 0xAF);
     CheckRegisterWord(RegisterType::PC, 0x48C6);
     CheckRegisterWord(RegisterType::SP, 0xA183);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x48C5, 0x6D);
 }
 
@@ -15588,6 +16218,7 @@ void test_6D_013B()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x48);
     WriteRegisterByte(RegisterType::L, 0xD0);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x57BF, 0x6D);
 
@@ -15611,6 +16242,7 @@ void test_6D_013B()
     CheckRegisterByte(RegisterType::L, 0xD0);
     CheckRegisterWord(RegisterType::PC, 0x57C0);
     CheckRegisterWord(RegisterType::SP, 0x9AD4);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x57BF, 0x6D);
 }
 
@@ -15631,6 +16263,7 @@ void test_6D_013C()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xA1);
     WriteRegisterByte(RegisterType::L, 0x62);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEF01, 0x6D);
 
@@ -15654,6 +16287,7 @@ void test_6D_013C()
     CheckRegisterByte(RegisterType::L, 0x62);
     CheckRegisterWord(RegisterType::PC, 0xEF02);
     CheckRegisterWord(RegisterType::SP, 0x5F49);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEF01, 0x6D);
 }
 
@@ -15674,6 +16308,7 @@ void test_6D_013D()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x83);
     WriteRegisterByte(RegisterType::L, 0xAA);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x113D, 0x6D);
 
@@ -15697,6 +16332,7 @@ void test_6D_013D()
     CheckRegisterByte(RegisterType::L, 0xAA);
     CheckRegisterWord(RegisterType::PC, 0x113E);
     CheckRegisterWord(RegisterType::SP, 0xACB2);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x113D, 0x6D);
 }
 
@@ -15717,6 +16353,7 @@ void test_6D_013E()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x87);
     WriteRegisterByte(RegisterType::L, 0xC4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xEAC2, 0x6D);
 
@@ -15740,6 +16377,7 @@ void test_6D_013E()
     CheckRegisterByte(RegisterType::L, 0xC4);
     CheckRegisterWord(RegisterType::PC, 0xEAC3);
     CheckRegisterWord(RegisterType::SP, 0xED28);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEAC2, 0x6D);
 }
 
@@ -15760,6 +16398,7 @@ void test_6D_013F()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x17);
     WriteRegisterByte(RegisterType::L, 0x32);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4619, 0x6D);
 
@@ -15783,6 +16422,7 @@ void test_6D_013F()
     CheckRegisterByte(RegisterType::L, 0x32);
     CheckRegisterWord(RegisterType::PC, 0x461A);
     CheckRegisterWord(RegisterType::SP, 0x0F67);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4619, 0x6D);
 }
 
@@ -15803,6 +16443,7 @@ void test_6D_0140()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x85);
     WriteRegisterByte(RegisterType::L, 0x90);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0F6D, 0x6D);
 
@@ -15826,6 +16467,7 @@ void test_6D_0140()
     CheckRegisterByte(RegisterType::L, 0x90);
     CheckRegisterWord(RegisterType::PC, 0x0F6E);
     CheckRegisterWord(RegisterType::SP, 0xECBC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0F6D, 0x6D);
 }
 
@@ -15846,6 +16488,7 @@ void test_6D_0141()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x1A);
     WriteRegisterByte(RegisterType::L, 0x6C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5A60, 0x6D);
 
@@ -15869,6 +16512,7 @@ void test_6D_0141()
     CheckRegisterByte(RegisterType::L, 0x6C);
     CheckRegisterWord(RegisterType::PC, 0x5A61);
     CheckRegisterWord(RegisterType::SP, 0xE0B8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5A60, 0x6D);
 }
 
@@ -15889,6 +16533,7 @@ void test_6D_0142()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x51);
     WriteRegisterByte(RegisterType::L, 0xB9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xC5DF, 0x6D);
 
@@ -15912,6 +16557,7 @@ void test_6D_0142()
     CheckRegisterByte(RegisterType::L, 0xB9);
     CheckRegisterWord(RegisterType::PC, 0xC5E0);
     CheckRegisterWord(RegisterType::SP, 0x3CAE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC5DF, 0x6D);
 }
 
@@ -15932,6 +16578,7 @@ void test_6D_0143()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x8C);
     WriteRegisterByte(RegisterType::L, 0x4E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xACC5, 0x6D);
 
@@ -15955,6 +16602,7 @@ void test_6D_0143()
     CheckRegisterByte(RegisterType::L, 0x4E);
     CheckRegisterWord(RegisterType::PC, 0xACC6);
     CheckRegisterWord(RegisterType::SP, 0xD305);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xACC5, 0x6D);
 }
 
@@ -15975,6 +16623,7 @@ void test_6D_0144()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x84);
     WriteRegisterByte(RegisterType::L, 0x98);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x62F9, 0x6D);
 
@@ -15998,6 +16647,7 @@ void test_6D_0144()
     CheckRegisterByte(RegisterType::L, 0x98);
     CheckRegisterWord(RegisterType::PC, 0x62FA);
     CheckRegisterWord(RegisterType::SP, 0xF41B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x62F9, 0x6D);
 }
 
@@ -16018,6 +16668,7 @@ void test_6D_0145()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x44);
     WriteRegisterByte(RegisterType::L, 0x6E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA242, 0x6D);
 
@@ -16041,6 +16692,7 @@ void test_6D_0145()
     CheckRegisterByte(RegisterType::L, 0x6E);
     CheckRegisterWord(RegisterType::PC, 0xA243);
     CheckRegisterWord(RegisterType::SP, 0x23BB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA242, 0x6D);
 }
 
@@ -16061,6 +16713,7 @@ void test_6D_0146()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x23);
     WriteRegisterByte(RegisterType::L, 0x87);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x31DC, 0x6D);
 
@@ -16084,6 +16737,7 @@ void test_6D_0146()
     CheckRegisterByte(RegisterType::L, 0x87);
     CheckRegisterWord(RegisterType::PC, 0x31DD);
     CheckRegisterWord(RegisterType::SP, 0x83CE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x31DC, 0x6D);
 }
 
@@ -16104,6 +16758,7 @@ void test_6D_0147()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x23);
     WriteRegisterByte(RegisterType::L, 0x46);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9087, 0x6D);
 
@@ -16127,6 +16782,7 @@ void test_6D_0147()
     CheckRegisterByte(RegisterType::L, 0x46);
     CheckRegisterWord(RegisterType::PC, 0x9088);
     CheckRegisterWord(RegisterType::SP, 0xB259);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9087, 0x6D);
 }
 
@@ -16147,6 +16803,7 @@ void test_6D_0148()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x98);
     WriteRegisterByte(RegisterType::L, 0xC2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2506, 0x6D);
 
@@ -16170,6 +16827,7 @@ void test_6D_0148()
     CheckRegisterByte(RegisterType::L, 0xC2);
     CheckRegisterWord(RegisterType::PC, 0x2507);
     CheckRegisterWord(RegisterType::SP, 0xD28E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2506, 0x6D);
 }
 
@@ -16190,6 +16848,7 @@ void test_6D_0149()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x9E);
     WriteRegisterByte(RegisterType::L, 0x4C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xCB22, 0x6D);
 
@@ -16213,6 +16872,7 @@ void test_6D_0149()
     CheckRegisterByte(RegisterType::L, 0x4C);
     CheckRegisterWord(RegisterType::PC, 0xCB23);
     CheckRegisterWord(RegisterType::SP, 0xBE50);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCB22, 0x6D);
 }
 
@@ -16233,6 +16893,7 @@ void test_6D_014A()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xB4);
     WriteRegisterByte(RegisterType::L, 0x15);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8C8A, 0x6D);
 
@@ -16256,6 +16917,7 @@ void test_6D_014A()
     CheckRegisterByte(RegisterType::L, 0x15);
     CheckRegisterWord(RegisterType::PC, 0x8C8B);
     CheckRegisterWord(RegisterType::SP, 0x7396);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8C8A, 0x6D);
 }
 
@@ -16276,6 +16938,7 @@ void test_6D_014B()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x17);
     WriteRegisterByte(RegisterType::L, 0x40);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x60A3, 0x6D);
 
@@ -16299,6 +16962,7 @@ void test_6D_014B()
     CheckRegisterByte(RegisterType::L, 0x40);
     CheckRegisterWord(RegisterType::PC, 0x60A4);
     CheckRegisterWord(RegisterType::SP, 0xFE7C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x60A3, 0x6D);
 }
 
@@ -16319,6 +16983,7 @@ void test_6D_014C()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xE6);
     WriteRegisterByte(RegisterType::L, 0xB0);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6976, 0x6D);
 
@@ -16342,6 +17007,7 @@ void test_6D_014C()
     CheckRegisterByte(RegisterType::L, 0xB0);
     CheckRegisterWord(RegisterType::PC, 0x6977);
     CheckRegisterWord(RegisterType::SP, 0x176C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6976, 0x6D);
 }
 
@@ -16362,6 +17028,7 @@ void test_6D_014D()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x17);
     WriteRegisterByte(RegisterType::L, 0xEA);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3E8B, 0x6D);
 
@@ -16385,6 +17052,7 @@ void test_6D_014D()
     CheckRegisterByte(RegisterType::L, 0xEA);
     CheckRegisterWord(RegisterType::PC, 0x3E8C);
     CheckRegisterWord(RegisterType::SP, 0x59B6);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3E8B, 0x6D);
 }
 
@@ -16405,6 +17073,7 @@ void test_6D_014E()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x00);
     WriteRegisterByte(RegisterType::L, 0x1B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0EEF, 0x6D);
 
@@ -16428,6 +17097,7 @@ void test_6D_014E()
     CheckRegisterByte(RegisterType::L, 0x1B);
     CheckRegisterWord(RegisterType::PC, 0x0EF0);
     CheckRegisterWord(RegisterType::SP, 0x77B3);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0EEF, 0x6D);
 }
 
@@ -16448,6 +17118,7 @@ void test_6D_014F()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x74);
     WriteRegisterByte(RegisterType::L, 0x92);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF579, 0x6D);
 
@@ -16471,6 +17142,7 @@ void test_6D_014F()
     CheckRegisterByte(RegisterType::L, 0x92);
     CheckRegisterWord(RegisterType::PC, 0xF57A);
     CheckRegisterWord(RegisterType::SP, 0x9E13);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF579, 0x6D);
 }
 
@@ -16491,6 +17163,7 @@ void test_6D_0150()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x0F);
     WriteRegisterByte(RegisterType::L, 0x4B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA867, 0x6D);
 
@@ -16514,6 +17187,7 @@ void test_6D_0150()
     CheckRegisterByte(RegisterType::L, 0x4B);
     CheckRegisterWord(RegisterType::PC, 0xA868);
     CheckRegisterWord(RegisterType::SP, 0x8FC8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA867, 0x6D);
 }
 
@@ -16534,6 +17208,7 @@ void test_6D_0151()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x2D);
     WriteRegisterByte(RegisterType::L, 0x21);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEC3F, 0x6D);
 
@@ -16557,6 +17232,7 @@ void test_6D_0151()
     CheckRegisterByte(RegisterType::L, 0x21);
     CheckRegisterWord(RegisterType::PC, 0xEC40);
     CheckRegisterWord(RegisterType::SP, 0x2137);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEC3F, 0x6D);
 }
 
@@ -16577,6 +17253,7 @@ void test_6D_0152()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x18);
     WriteRegisterByte(RegisterType::L, 0xDB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x55B0, 0x6D);
 
@@ -16600,6 +17277,7 @@ void test_6D_0152()
     CheckRegisterByte(RegisterType::L, 0xDB);
     CheckRegisterWord(RegisterType::PC, 0x55B1);
     CheckRegisterWord(RegisterType::SP, 0x5414);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x55B0, 0x6D);
 }
 
@@ -16620,6 +17298,7 @@ void test_6D_0153()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x37);
     WriteRegisterByte(RegisterType::L, 0x52);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xDB98, 0x6D);
 
@@ -16643,6 +17322,7 @@ void test_6D_0153()
     CheckRegisterByte(RegisterType::L, 0x52);
     CheckRegisterWord(RegisterType::PC, 0xDB99);
     CheckRegisterWord(RegisterType::SP, 0x1D75);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDB98, 0x6D);
 }
 
@@ -16663,6 +17343,7 @@ void test_6D_0154()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x48);
     WriteRegisterByte(RegisterType::L, 0xEB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE1DD, 0x6D);
 
@@ -16686,6 +17367,7 @@ void test_6D_0154()
     CheckRegisterByte(RegisterType::L, 0xEB);
     CheckRegisterWord(RegisterType::PC, 0xE1DE);
     CheckRegisterWord(RegisterType::SP, 0x030F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE1DD, 0x6D);
 }
 
@@ -16706,6 +17388,7 @@ void test_6D_0155()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xDE);
     WriteRegisterByte(RegisterType::L, 0x17);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5404, 0x6D);
 
@@ -16729,6 +17412,7 @@ void test_6D_0155()
     CheckRegisterByte(RegisterType::L, 0x17);
     CheckRegisterWord(RegisterType::PC, 0x5405);
     CheckRegisterWord(RegisterType::SP, 0xC1D7);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5404, 0x6D);
 }
 
@@ -16749,6 +17433,7 @@ void test_6D_0156()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xFF);
     WriteRegisterByte(RegisterType::L, 0xDA);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA8C2, 0x6D);
 
@@ -16772,6 +17457,7 @@ void test_6D_0156()
     CheckRegisterByte(RegisterType::L, 0xDA);
     CheckRegisterWord(RegisterType::PC, 0xA8C3);
     CheckRegisterWord(RegisterType::SP, 0x75C6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA8C2, 0x6D);
 }
 
@@ -16792,6 +17478,7 @@ void test_6D_0157()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x4D);
     WriteRegisterByte(RegisterType::L, 0x62);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5A4C, 0x6D);
 
@@ -16815,6 +17502,7 @@ void test_6D_0157()
     CheckRegisterByte(RegisterType::L, 0x62);
     CheckRegisterWord(RegisterType::PC, 0x5A4D);
     CheckRegisterWord(RegisterType::SP, 0x15DB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5A4C, 0x6D);
 }
 
@@ -16835,6 +17523,7 @@ void test_6D_0158()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x13);
     WriteRegisterByte(RegisterType::L, 0x40);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF84F, 0x6D);
 
@@ -16858,6 +17547,7 @@ void test_6D_0158()
     CheckRegisterByte(RegisterType::L, 0x40);
     CheckRegisterWord(RegisterType::PC, 0xF850);
     CheckRegisterWord(RegisterType::SP, 0x38F2);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF84F, 0x6D);
 }
 
@@ -16878,6 +17568,7 @@ void test_6D_0159()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x79);
     WriteRegisterByte(RegisterType::L, 0xCB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD4AA, 0x6D);
 
@@ -16901,6 +17592,7 @@ void test_6D_0159()
     CheckRegisterByte(RegisterType::L, 0xCB);
     CheckRegisterWord(RegisterType::PC, 0xD4AB);
     CheckRegisterWord(RegisterType::SP, 0x91E5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD4AA, 0x6D);
 }
 
@@ -16921,6 +17613,7 @@ void test_6D_015A()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x92);
     WriteRegisterByte(RegisterType::L, 0x52);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD3BC, 0x6D);
 
@@ -16944,6 +17637,7 @@ void test_6D_015A()
     CheckRegisterByte(RegisterType::L, 0x52);
     CheckRegisterWord(RegisterType::PC, 0xD3BD);
     CheckRegisterWord(RegisterType::SP, 0xFC08);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD3BC, 0x6D);
 }
 
@@ -16964,6 +17658,7 @@ void test_6D_015B()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x52);
     WriteRegisterByte(RegisterType::L, 0x81);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8E7C, 0x6D);
 
@@ -16987,6 +17682,7 @@ void test_6D_015B()
     CheckRegisterByte(RegisterType::L, 0x81);
     CheckRegisterWord(RegisterType::PC, 0x8E7D);
     CheckRegisterWord(RegisterType::SP, 0xF9ED);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8E7C, 0x6D);
 }
 
@@ -17007,6 +17703,7 @@ void test_6D_015C()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x54);
     WriteRegisterByte(RegisterType::L, 0xA1);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8D89, 0x6D);
 
@@ -17030,6 +17727,7 @@ void test_6D_015C()
     CheckRegisterByte(RegisterType::L, 0xA1);
     CheckRegisterWord(RegisterType::PC, 0x8D8A);
     CheckRegisterWord(RegisterType::SP, 0xC63B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8D89, 0x6D);
 }
 
@@ -17050,6 +17748,7 @@ void test_6D_015D()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x3F);
     WriteRegisterByte(RegisterType::L, 0xD8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x45C5, 0x6D);
 
@@ -17073,6 +17772,7 @@ void test_6D_015D()
     CheckRegisterByte(RegisterType::L, 0xD8);
     CheckRegisterWord(RegisterType::PC, 0x45C6);
     CheckRegisterWord(RegisterType::SP, 0xA599);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x45C5, 0x6D);
 }
 
@@ -17093,6 +17793,7 @@ void test_6D_015E()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x10);
     WriteRegisterByte(RegisterType::L, 0x26);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x32CB, 0x6D);
 
@@ -17116,6 +17817,7 @@ void test_6D_015E()
     CheckRegisterByte(RegisterType::L, 0x26);
     CheckRegisterWord(RegisterType::PC, 0x32CC);
     CheckRegisterWord(RegisterType::SP, 0xAAB6);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x32CB, 0x6D);
 }
 
@@ -17136,6 +17838,7 @@ void test_6D_015F()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xD4);
     WriteRegisterByte(RegisterType::L, 0x51);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x612D, 0x6D);
 
@@ -17159,6 +17862,7 @@ void test_6D_015F()
     CheckRegisterByte(RegisterType::L, 0x51);
     CheckRegisterWord(RegisterType::PC, 0x612E);
     CheckRegisterWord(RegisterType::SP, 0x5A82);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x612D, 0x6D);
 }
 
@@ -17179,6 +17883,7 @@ void test_6D_0160()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x43);
     WriteRegisterByte(RegisterType::L, 0x56);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x61C9, 0x6D);
 
@@ -17202,6 +17907,7 @@ void test_6D_0160()
     CheckRegisterByte(RegisterType::L, 0x56);
     CheckRegisterWord(RegisterType::PC, 0x61CA);
     CheckRegisterWord(RegisterType::SP, 0x4C34);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x61C9, 0x6D);
 }
 
@@ -17222,6 +17928,7 @@ void test_6D_0161()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x17);
     WriteRegisterByte(RegisterType::L, 0x1A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8145, 0x6D);
 
@@ -17245,6 +17952,7 @@ void test_6D_0161()
     CheckRegisterByte(RegisterType::L, 0x1A);
     CheckRegisterWord(RegisterType::PC, 0x8146);
     CheckRegisterWord(RegisterType::SP, 0x4C43);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8145, 0x6D);
 }
 
@@ -17265,6 +17973,7 @@ void test_6D_0162()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x31);
     WriteRegisterByte(RegisterType::L, 0xE1);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6FD2, 0x6D);
 
@@ -17288,6 +17997,7 @@ void test_6D_0162()
     CheckRegisterByte(RegisterType::L, 0xE1);
     CheckRegisterWord(RegisterType::PC, 0x6FD3);
     CheckRegisterWord(RegisterType::SP, 0x4232);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6FD2, 0x6D);
 }
 
@@ -17308,6 +18018,7 @@ void test_6D_0163()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x69);
     WriteRegisterByte(RegisterType::L, 0x4E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6B15, 0x6D);
 
@@ -17331,6 +18042,7 @@ void test_6D_0163()
     CheckRegisterByte(RegisterType::L, 0x4E);
     CheckRegisterWord(RegisterType::PC, 0x6B16);
     CheckRegisterWord(RegisterType::SP, 0xAC1A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6B15, 0x6D);
 }
 
@@ -17351,6 +18063,7 @@ void test_6D_0164()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x2E);
     WriteRegisterByte(RegisterType::L, 0x72);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3B15, 0x6D);
 
@@ -17374,6 +18087,7 @@ void test_6D_0164()
     CheckRegisterByte(RegisterType::L, 0x72);
     CheckRegisterWord(RegisterType::PC, 0x3B16);
     CheckRegisterWord(RegisterType::SP, 0x066A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3B15, 0x6D);
 }
 
@@ -17394,6 +18108,7 @@ void test_6D_0165()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xA3);
     WriteRegisterByte(RegisterType::L, 0x8D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0B8E, 0x6D);
 
@@ -17417,6 +18132,7 @@ void test_6D_0165()
     CheckRegisterByte(RegisterType::L, 0x8D);
     CheckRegisterWord(RegisterType::PC, 0x0B8F);
     CheckRegisterWord(RegisterType::SP, 0x9AE8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0B8E, 0x6D);
 }
 
@@ -17437,6 +18153,7 @@ void test_6D_0166()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x9D);
     WriteRegisterByte(RegisterType::L, 0x77);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6BBE, 0x6D);
 
@@ -17460,6 +18177,7 @@ void test_6D_0166()
     CheckRegisterByte(RegisterType::L, 0x77);
     CheckRegisterWord(RegisterType::PC, 0x6BBF);
     CheckRegisterWord(RegisterType::SP, 0x9B5E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6BBE, 0x6D);
 }
 
@@ -17480,6 +18198,7 @@ void test_6D_0167()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x9A);
     WriteRegisterByte(RegisterType::L, 0x05);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2637, 0x6D);
 
@@ -17503,6 +18222,7 @@ void test_6D_0167()
     CheckRegisterByte(RegisterType::L, 0x05);
     CheckRegisterWord(RegisterType::PC, 0x2638);
     CheckRegisterWord(RegisterType::SP, 0x4B27);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2637, 0x6D);
 }
 
@@ -17523,6 +18243,7 @@ void test_6D_0168()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xE3);
     WriteRegisterByte(RegisterType::L, 0x44);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2796, 0x6D);
 
@@ -17546,6 +18267,7 @@ void test_6D_0168()
     CheckRegisterByte(RegisterType::L, 0x44);
     CheckRegisterWord(RegisterType::PC, 0x2797);
     CheckRegisterWord(RegisterType::SP, 0x02EC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2796, 0x6D);
 }
 
@@ -17566,6 +18288,7 @@ void test_6D_0169()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xFB);
     WriteRegisterByte(RegisterType::L, 0x4F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xAE7E, 0x6D);
 
@@ -17589,6 +18312,7 @@ void test_6D_0169()
     CheckRegisterByte(RegisterType::L, 0x4F);
     CheckRegisterWord(RegisterType::PC, 0xAE7F);
     CheckRegisterWord(RegisterType::SP, 0x5BD1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAE7E, 0x6D);
 }
 
@@ -17609,6 +18333,7 @@ void test_6D_016A()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x05);
     WriteRegisterByte(RegisterType::L, 0xBF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5932, 0x6D);
 
@@ -17632,6 +18357,7 @@ void test_6D_016A()
     CheckRegisterByte(RegisterType::L, 0xBF);
     CheckRegisterWord(RegisterType::PC, 0x5933);
     CheckRegisterWord(RegisterType::SP, 0x9D38);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5932, 0x6D);
 }
 
@@ -17652,6 +18378,7 @@ void test_6D_016B()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x17);
     WriteRegisterByte(RegisterType::L, 0x27);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x281B, 0x6D);
 
@@ -17675,6 +18402,7 @@ void test_6D_016B()
     CheckRegisterByte(RegisterType::L, 0x27);
     CheckRegisterWord(RegisterType::PC, 0x281C);
     CheckRegisterWord(RegisterType::SP, 0x54BF);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x281B, 0x6D);
 }
 
@@ -17695,6 +18423,7 @@ void test_6D_016C()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xE4);
     WriteRegisterByte(RegisterType::L, 0xF1);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA305, 0x6D);
 
@@ -17718,6 +18447,7 @@ void test_6D_016C()
     CheckRegisterByte(RegisterType::L, 0xF1);
     CheckRegisterWord(RegisterType::PC, 0xA306);
     CheckRegisterWord(RegisterType::SP, 0x6F40);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA305, 0x6D);
 }
 
@@ -17738,6 +18468,7 @@ void test_6D_016D()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x6D);
     WriteRegisterByte(RegisterType::L, 0xA7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEE0B, 0x6D);
 
@@ -17761,6 +18492,7 @@ void test_6D_016D()
     CheckRegisterByte(RegisterType::L, 0xA7);
     CheckRegisterWord(RegisterType::PC, 0xEE0C);
     CheckRegisterWord(RegisterType::SP, 0xEDC8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEE0B, 0x6D);
 }
 
@@ -17781,6 +18513,7 @@ void test_6D_016E()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xD1);
     WriteRegisterByte(RegisterType::L, 0x36);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3B83, 0x6D);
 
@@ -17804,6 +18537,7 @@ void test_6D_016E()
     CheckRegisterByte(RegisterType::L, 0x36);
     CheckRegisterWord(RegisterType::PC, 0x3B84);
     CheckRegisterWord(RegisterType::SP, 0x5017);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3B83, 0x6D);
 }
 
@@ -17824,6 +18558,7 @@ void test_6D_016F()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xEC);
     WriteRegisterByte(RegisterType::L, 0x92);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xFE9E, 0x6D);
 
@@ -17847,6 +18582,7 @@ void test_6D_016F()
     CheckRegisterByte(RegisterType::L, 0x92);
     CheckRegisterWord(RegisterType::PC, 0xFE9F);
     CheckRegisterWord(RegisterType::SP, 0x6DC0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFE9E, 0x6D);
 }
 
@@ -17867,6 +18603,7 @@ void test_6D_0170()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xEF);
     WriteRegisterByte(RegisterType::L, 0x81);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xBFF8, 0x6D);
 
@@ -17890,6 +18627,7 @@ void test_6D_0170()
     CheckRegisterByte(RegisterType::L, 0x81);
     CheckRegisterWord(RegisterType::PC, 0xBFF9);
     CheckRegisterWord(RegisterType::SP, 0x6C79);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBFF8, 0x6D);
 }
 
@@ -17910,6 +18648,7 @@ void test_6D_0171()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xAA);
     WriteRegisterByte(RegisterType::L, 0xB1);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x556E, 0x6D);
 
@@ -17933,6 +18672,7 @@ void test_6D_0171()
     CheckRegisterByte(RegisterType::L, 0xB1);
     CheckRegisterWord(RegisterType::PC, 0x556F);
     CheckRegisterWord(RegisterType::SP, 0x3EF4);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x556E, 0x6D);
 }
 
@@ -17953,6 +18693,7 @@ void test_6D_0172()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xDA);
     WriteRegisterByte(RegisterType::L, 0x7E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF93C, 0x6D);
 
@@ -17976,6 +18717,7 @@ void test_6D_0172()
     CheckRegisterByte(RegisterType::L, 0x7E);
     CheckRegisterWord(RegisterType::PC, 0xF93D);
     CheckRegisterWord(RegisterType::SP, 0x788D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF93C, 0x6D);
 }
 
@@ -17996,6 +18738,7 @@ void test_6D_0173()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x58);
     WriteRegisterByte(RegisterType::L, 0x82);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7AF7, 0x6D);
 
@@ -18019,6 +18762,7 @@ void test_6D_0173()
     CheckRegisterByte(RegisterType::L, 0x82);
     CheckRegisterWord(RegisterType::PC, 0x7AF8);
     CheckRegisterWord(RegisterType::SP, 0xEF19);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7AF7, 0x6D);
 }
 
@@ -18039,6 +18783,7 @@ void test_6D_0174()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x93);
     WriteRegisterByte(RegisterType::L, 0xCB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8392, 0x6D);
 
@@ -18062,6 +18807,7 @@ void test_6D_0174()
     CheckRegisterByte(RegisterType::L, 0xCB);
     CheckRegisterWord(RegisterType::PC, 0x8393);
     CheckRegisterWord(RegisterType::SP, 0xEE88);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8392, 0x6D);
 }
 
@@ -18082,6 +18828,7 @@ void test_6D_0175()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x4D);
     WriteRegisterByte(RegisterType::L, 0xF7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE43F, 0x6D);
 
@@ -18105,6 +18852,7 @@ void test_6D_0175()
     CheckRegisterByte(RegisterType::L, 0xF7);
     CheckRegisterWord(RegisterType::PC, 0xE440);
     CheckRegisterWord(RegisterType::SP, 0x95D2);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE43F, 0x6D);
 }
 
@@ -18125,6 +18873,7 @@ void test_6D_0176()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xAF);
     WriteRegisterByte(RegisterType::L, 0x68);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE9E6, 0x6D);
 
@@ -18148,6 +18897,7 @@ void test_6D_0176()
     CheckRegisterByte(RegisterType::L, 0x68);
     CheckRegisterWord(RegisterType::PC, 0xE9E7);
     CheckRegisterWord(RegisterType::SP, 0x0BE5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE9E6, 0x6D);
 }
 
@@ -18168,6 +18918,7 @@ void test_6D_0177()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x64);
     WriteRegisterByte(RegisterType::L, 0x30);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA572, 0x6D);
 
@@ -18191,6 +18942,7 @@ void test_6D_0177()
     CheckRegisterByte(RegisterType::L, 0x30);
     CheckRegisterWord(RegisterType::PC, 0xA573);
     CheckRegisterWord(RegisterType::SP, 0xC1D9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA572, 0x6D);
 }
 
@@ -18211,6 +18963,7 @@ void test_6D_0178()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xB6);
     WriteRegisterByte(RegisterType::L, 0xBA);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0313, 0x6D);
 
@@ -18234,6 +18987,7 @@ void test_6D_0178()
     CheckRegisterByte(RegisterType::L, 0xBA);
     CheckRegisterWord(RegisterType::PC, 0x0314);
     CheckRegisterWord(RegisterType::SP, 0xC2B7);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0313, 0x6D);
 }
 
@@ -18254,6 +19008,7 @@ void test_6D_0179()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xEB);
     WriteRegisterByte(RegisterType::L, 0xE8);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x979E, 0x6D);
 
@@ -18277,6 +19032,7 @@ void test_6D_0179()
     CheckRegisterByte(RegisterType::L, 0xE8);
     CheckRegisterWord(RegisterType::PC, 0x979F);
     CheckRegisterWord(RegisterType::SP, 0xBD5F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x979E, 0x6D);
 }
 
@@ -18297,6 +19053,7 @@ void test_6D_017A()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x93);
     WriteRegisterByte(RegisterType::L, 0x86);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x775A, 0x6D);
 
@@ -18320,6 +19077,7 @@ void test_6D_017A()
     CheckRegisterByte(RegisterType::L, 0x86);
     CheckRegisterWord(RegisterType::PC, 0x775B);
     CheckRegisterWord(RegisterType::SP, 0x92BE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x775A, 0x6D);
 }
 
@@ -18340,6 +19098,7 @@ void test_6D_017B()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x91);
     WriteRegisterByte(RegisterType::L, 0xCB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3489, 0x6D);
 
@@ -18363,6 +19122,7 @@ void test_6D_017B()
     CheckRegisterByte(RegisterType::L, 0xCB);
     CheckRegisterWord(RegisterType::PC, 0x348A);
     CheckRegisterWord(RegisterType::SP, 0x6CDE);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3489, 0x6D);
 }
 
@@ -18383,6 +19143,7 @@ void test_6D_017C()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xBF);
     WriteRegisterByte(RegisterType::L, 0xA1);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x84DE, 0x6D);
 
@@ -18406,6 +19167,7 @@ void test_6D_017C()
     CheckRegisterByte(RegisterType::L, 0xA1);
     CheckRegisterWord(RegisterType::PC, 0x84DF);
     CheckRegisterWord(RegisterType::SP, 0xFF35);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x84DE, 0x6D);
 }
 
@@ -18426,6 +19188,7 @@ void test_6D_017D()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x49);
     WriteRegisterByte(RegisterType::L, 0x34);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x326F, 0x6D);
 
@@ -18449,6 +19212,7 @@ void test_6D_017D()
     CheckRegisterByte(RegisterType::L, 0x34);
     CheckRegisterWord(RegisterType::PC, 0x3270);
     CheckRegisterWord(RegisterType::SP, 0x140B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x326F, 0x6D);
 }
 
@@ -18469,6 +19233,7 @@ void test_6D_017E()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xEB);
     WriteRegisterByte(RegisterType::L, 0xDF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xCFCC, 0x6D);
 
@@ -18492,6 +19257,7 @@ void test_6D_017E()
     CheckRegisterByte(RegisterType::L, 0xDF);
     CheckRegisterWord(RegisterType::PC, 0xCFCD);
     CheckRegisterWord(RegisterType::SP, 0x98D1);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCFCC, 0x6D);
 }
 
@@ -18512,6 +19278,7 @@ void test_6D_017F()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xC8);
     WriteRegisterByte(RegisterType::L, 0xFE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF35E, 0x6D);
 
@@ -18535,6 +19302,7 @@ void test_6D_017F()
     CheckRegisterByte(RegisterType::L, 0xFE);
     CheckRegisterWord(RegisterType::PC, 0xF35F);
     CheckRegisterWord(RegisterType::SP, 0x4017);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF35E, 0x6D);
 }
 
@@ -18555,6 +19323,7 @@ void test_6D_0180()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x9A);
     WriteRegisterByte(RegisterType::L, 0xA5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3C4A, 0x6D);
 
@@ -18578,6 +19347,7 @@ void test_6D_0180()
     CheckRegisterByte(RegisterType::L, 0xA5);
     CheckRegisterWord(RegisterType::PC, 0x3C4B);
     CheckRegisterWord(RegisterType::SP, 0x66FD);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3C4A, 0x6D);
 }
 
@@ -18598,6 +19368,7 @@ void test_6D_0181()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xB2);
     WriteRegisterByte(RegisterType::L, 0x82);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2ECF, 0x6D);
 
@@ -18621,6 +19392,7 @@ void test_6D_0181()
     CheckRegisterByte(RegisterType::L, 0x82);
     CheckRegisterWord(RegisterType::PC, 0x2ED0);
     CheckRegisterWord(RegisterType::SP, 0x4E77);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2ECF, 0x6D);
 }
 
@@ -18641,6 +19413,7 @@ void test_6D_0182()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x33);
     WriteRegisterByte(RegisterType::L, 0x03);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xC9AD, 0x6D);
 
@@ -18664,6 +19437,7 @@ void test_6D_0182()
     CheckRegisterByte(RegisterType::L, 0x03);
     CheckRegisterWord(RegisterType::PC, 0xC9AE);
     CheckRegisterWord(RegisterType::SP, 0x88C4);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC9AD, 0x6D);
 }
 
@@ -18684,6 +19458,7 @@ void test_6D_0183()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x6B);
     WriteRegisterByte(RegisterType::L, 0x15);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x02F9, 0x6D);
 
@@ -18707,6 +19482,7 @@ void test_6D_0183()
     CheckRegisterByte(RegisterType::L, 0x15);
     CheckRegisterWord(RegisterType::PC, 0x02FA);
     CheckRegisterWord(RegisterType::SP, 0x0D3A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x02F9, 0x6D);
 }
 
@@ -18727,6 +19503,7 @@ void test_6D_0184()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xCA);
     WriteRegisterByte(RegisterType::L, 0x74);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4226, 0x6D);
 
@@ -18750,6 +19527,7 @@ void test_6D_0184()
     CheckRegisterByte(RegisterType::L, 0x74);
     CheckRegisterWord(RegisterType::PC, 0x4227);
     CheckRegisterWord(RegisterType::SP, 0xA8F9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4226, 0x6D);
 }
 
@@ -18770,6 +19548,7 @@ void test_6D_0185()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x58);
     WriteRegisterByte(RegisterType::L, 0x93);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5049, 0x6D);
 
@@ -18793,6 +19572,7 @@ void test_6D_0185()
     CheckRegisterByte(RegisterType::L, 0x93);
     CheckRegisterWord(RegisterType::PC, 0x504A);
     CheckRegisterWord(RegisterType::SP, 0x9540);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5049, 0x6D);
 }
 
@@ -18813,6 +19593,7 @@ void test_6D_0186()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xDB);
     WriteRegisterByte(RegisterType::L, 0xB7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6808, 0x6D);
 
@@ -18836,6 +19617,7 @@ void test_6D_0186()
     CheckRegisterByte(RegisterType::L, 0xB7);
     CheckRegisterWord(RegisterType::PC, 0x6809);
     CheckRegisterWord(RegisterType::SP, 0x32B6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6808, 0x6D);
 }
 
@@ -18856,6 +19638,7 @@ void test_6D_0187()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xBD);
     WriteRegisterByte(RegisterType::L, 0x54);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x04D8, 0x6D);
 
@@ -18879,6 +19662,7 @@ void test_6D_0187()
     CheckRegisterByte(RegisterType::L, 0x54);
     CheckRegisterWord(RegisterType::PC, 0x04D9);
     CheckRegisterWord(RegisterType::SP, 0xF208);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x04D8, 0x6D);
 }
 
@@ -18899,6 +19683,7 @@ void test_6D_0188()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x81);
     WriteRegisterByte(RegisterType::L, 0x1C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x907E, 0x6D);
 
@@ -18922,6 +19707,7 @@ void test_6D_0188()
     CheckRegisterByte(RegisterType::L, 0x1C);
     CheckRegisterWord(RegisterType::PC, 0x907F);
     CheckRegisterWord(RegisterType::SP, 0x00FB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x907E, 0x6D);
 }
 
@@ -18942,6 +19728,7 @@ void test_6D_0189()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xA5);
     WriteRegisterByte(RegisterType::L, 0xF1);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x37C6, 0x6D);
 
@@ -18965,6 +19752,7 @@ void test_6D_0189()
     CheckRegisterByte(RegisterType::L, 0xF1);
     CheckRegisterWord(RegisterType::PC, 0x37C7);
     CheckRegisterWord(RegisterType::SP, 0x6B90);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x37C6, 0x6D);
 }
 
@@ -18985,6 +19773,7 @@ void test_6D_018A()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x71);
     WriteRegisterByte(RegisterType::L, 0x77);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x96C5, 0x6D);
 
@@ -19008,6 +19797,7 @@ void test_6D_018A()
     CheckRegisterByte(RegisterType::L, 0x77);
     CheckRegisterWord(RegisterType::PC, 0x96C6);
     CheckRegisterWord(RegisterType::SP, 0xDEB7);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x96C5, 0x6D);
 }
 
@@ -19028,6 +19818,7 @@ void test_6D_018B()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xFE);
     WriteRegisterByte(RegisterType::L, 0x44);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4698, 0x6D);
 
@@ -19051,6 +19842,7 @@ void test_6D_018B()
     CheckRegisterByte(RegisterType::L, 0x44);
     CheckRegisterWord(RegisterType::PC, 0x4699);
     CheckRegisterWord(RegisterType::SP, 0x6C71);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4698, 0x6D);
 }
 
@@ -19071,6 +19863,7 @@ void test_6D_018C()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xA8);
     WriteRegisterByte(RegisterType::L, 0xFD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x06C0, 0x6D);
 
@@ -19094,6 +19887,7 @@ void test_6D_018C()
     CheckRegisterByte(RegisterType::L, 0xFD);
     CheckRegisterWord(RegisterType::PC, 0x06C1);
     CheckRegisterWord(RegisterType::SP, 0x0F53);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x06C0, 0x6D);
 }
 
@@ -19114,6 +19908,7 @@ void test_6D_018D()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xD0);
     WriteRegisterByte(RegisterType::L, 0x4F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8CCD, 0x6D);
 
@@ -19137,6 +19932,7 @@ void test_6D_018D()
     CheckRegisterByte(RegisterType::L, 0x4F);
     CheckRegisterWord(RegisterType::PC, 0x8CCE);
     CheckRegisterWord(RegisterType::SP, 0x5E9A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8CCD, 0x6D);
 }
 
@@ -19157,6 +19953,7 @@ void test_6D_018E()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x52);
     WriteRegisterByte(RegisterType::L, 0x8A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x47E0, 0x6D);
 
@@ -19180,6 +19977,7 @@ void test_6D_018E()
     CheckRegisterByte(RegisterType::L, 0x8A);
     CheckRegisterWord(RegisterType::PC, 0x47E1);
     CheckRegisterWord(RegisterType::SP, 0x39EC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x47E0, 0x6D);
 }
 
@@ -19200,6 +19998,7 @@ void test_6D_018F()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x4B);
     WriteRegisterByte(RegisterType::L, 0x34);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8C54, 0x6D);
 
@@ -19223,6 +20022,7 @@ void test_6D_018F()
     CheckRegisterByte(RegisterType::L, 0x34);
     CheckRegisterWord(RegisterType::PC, 0x8C55);
     CheckRegisterWord(RegisterType::SP, 0xCE05);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8C54, 0x6D);
 }
 
@@ -19243,6 +20043,7 @@ void test_6D_0190()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x98);
     WriteRegisterByte(RegisterType::L, 0x54);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x88F6, 0x6D);
 
@@ -19266,6 +20067,7 @@ void test_6D_0190()
     CheckRegisterByte(RegisterType::L, 0x54);
     CheckRegisterWord(RegisterType::PC, 0x88F7);
     CheckRegisterWord(RegisterType::SP, 0x7B72);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x88F6, 0x6D);
 }
 
@@ -19286,6 +20088,7 @@ void test_6D_0191()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x94);
     WriteRegisterByte(RegisterType::L, 0xA0);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x17DA, 0x6D);
 
@@ -19309,6 +20112,7 @@ void test_6D_0191()
     CheckRegisterByte(RegisterType::L, 0xA0);
     CheckRegisterWord(RegisterType::PC, 0x17DB);
     CheckRegisterWord(RegisterType::SP, 0x4D3E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x17DA, 0x6D);
 }
 
@@ -19329,6 +20133,7 @@ void test_6D_0192()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xD0);
     WriteRegisterByte(RegisterType::L, 0x2E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7F38, 0x6D);
 
@@ -19352,6 +20157,7 @@ void test_6D_0192()
     CheckRegisterByte(RegisterType::L, 0x2E);
     CheckRegisterWord(RegisterType::PC, 0x7F39);
     CheckRegisterWord(RegisterType::SP, 0x809F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7F38, 0x6D);
 }
 
@@ -19372,6 +20178,7 @@ void test_6D_0193()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x95);
     WriteRegisterByte(RegisterType::L, 0xBE);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD929, 0x6D);
 
@@ -19395,6 +20202,7 @@ void test_6D_0193()
     CheckRegisterByte(RegisterType::L, 0xBE);
     CheckRegisterWord(RegisterType::PC, 0xD92A);
     CheckRegisterWord(RegisterType::SP, 0x8059);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD929, 0x6D);
 }
 
@@ -19415,6 +20223,7 @@ void test_6D_0194()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xC6);
     WriteRegisterByte(RegisterType::L, 0xC0);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0A81, 0x6D);
 
@@ -19438,6 +20247,7 @@ void test_6D_0194()
     CheckRegisterByte(RegisterType::L, 0xC0);
     CheckRegisterWord(RegisterType::PC, 0x0A82);
     CheckRegisterWord(RegisterType::SP, 0x479E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0A81, 0x6D);
 }
 
@@ -19458,6 +20268,7 @@ void test_6D_0195()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x72);
     WriteRegisterByte(RegisterType::L, 0xB0);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9E23, 0x6D);
 
@@ -19481,6 +20292,7 @@ void test_6D_0195()
     CheckRegisterByte(RegisterType::L, 0xB0);
     CheckRegisterWord(RegisterType::PC, 0x9E24);
     CheckRegisterWord(RegisterType::SP, 0xDE67);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9E23, 0x6D);
 }
 
@@ -19501,6 +20313,7 @@ void test_6D_0196()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xA4);
     WriteRegisterByte(RegisterType::L, 0x14);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB47D, 0x6D);
 
@@ -19524,6 +20337,7 @@ void test_6D_0196()
     CheckRegisterByte(RegisterType::L, 0x14);
     CheckRegisterWord(RegisterType::PC, 0xB47E);
     CheckRegisterWord(RegisterType::SP, 0x94D3);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB47D, 0x6D);
 }
 
@@ -19544,6 +20358,7 @@ void test_6D_0197()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x87);
     WriteRegisterByte(RegisterType::L, 0x99);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEFD3, 0x6D);
 
@@ -19567,6 +20382,7 @@ void test_6D_0197()
     CheckRegisterByte(RegisterType::L, 0x99);
     CheckRegisterWord(RegisterType::PC, 0xEFD4);
     CheckRegisterWord(RegisterType::SP, 0x7232);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEFD3, 0x6D);
 }
 
@@ -19587,6 +20403,7 @@ void test_6D_0198()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x68);
     WriteRegisterByte(RegisterType::L, 0x49);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4BA8, 0x6D);
 
@@ -19610,6 +20427,7 @@ void test_6D_0198()
     CheckRegisterByte(RegisterType::L, 0x49);
     CheckRegisterWord(RegisterType::PC, 0x4BA9);
     CheckRegisterWord(RegisterType::SP, 0x6F85);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4BA8, 0x6D);
 }
 
@@ -19630,6 +20448,7 @@ void test_6D_0199()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x09);
     WriteRegisterByte(RegisterType::L, 0x61);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2991, 0x6D);
 
@@ -19653,6 +20472,7 @@ void test_6D_0199()
     CheckRegisterByte(RegisterType::L, 0x61);
     CheckRegisterWord(RegisterType::PC, 0x2992);
     CheckRegisterWord(RegisterType::SP, 0x7D13);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2991, 0x6D);
 }
 
@@ -19673,6 +20493,7 @@ void test_6D_019A()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xD5);
     WriteRegisterByte(RegisterType::L, 0xC6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF27E, 0x6D);
 
@@ -19696,6 +20517,7 @@ void test_6D_019A()
     CheckRegisterByte(RegisterType::L, 0xC6);
     CheckRegisterWord(RegisterType::PC, 0xF27F);
     CheckRegisterWord(RegisterType::SP, 0x8B85);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF27E, 0x6D);
 }
 
@@ -19716,6 +20538,7 @@ void test_6D_019B()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x49);
     WriteRegisterByte(RegisterType::L, 0x1D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x51EC, 0x6D);
 
@@ -19739,6 +20562,7 @@ void test_6D_019B()
     CheckRegisterByte(RegisterType::L, 0x1D);
     CheckRegisterWord(RegisterType::PC, 0x51ED);
     CheckRegisterWord(RegisterType::SP, 0xFA24);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x51EC, 0x6D);
 }
 
@@ -19759,6 +20583,7 @@ void test_6D_019C()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x7C);
     WriteRegisterByte(RegisterType::L, 0x82);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x53F1, 0x6D);
 
@@ -19782,6 +20607,7 @@ void test_6D_019C()
     CheckRegisterByte(RegisterType::L, 0x82);
     CheckRegisterWord(RegisterType::PC, 0x53F2);
     CheckRegisterWord(RegisterType::SP, 0x4F74);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x53F1, 0x6D);
 }
 
@@ -19802,6 +20628,7 @@ void test_6D_019D()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x6E);
     WriteRegisterByte(RegisterType::L, 0x57);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3E38, 0x6D);
 
@@ -19825,6 +20652,7 @@ void test_6D_019D()
     CheckRegisterByte(RegisterType::L, 0x57);
     CheckRegisterWord(RegisterType::PC, 0x3E39);
     CheckRegisterWord(RegisterType::SP, 0x0519);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3E38, 0x6D);
 }
 
@@ -19845,6 +20673,7 @@ void test_6D_019E()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xAD);
     WriteRegisterByte(RegisterType::L, 0xD0);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBDB7, 0x6D);
 
@@ -19868,6 +20697,7 @@ void test_6D_019E()
     CheckRegisterByte(RegisterType::L, 0xD0);
     CheckRegisterWord(RegisterType::PC, 0xBDB8);
     CheckRegisterWord(RegisterType::SP, 0x52A9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBDB7, 0x6D);
 }
 
@@ -19888,6 +20718,7 @@ void test_6D_019F()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x56);
     WriteRegisterByte(RegisterType::L, 0xF5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF638, 0x6D);
 
@@ -19911,6 +20742,7 @@ void test_6D_019F()
     CheckRegisterByte(RegisterType::L, 0xF5);
     CheckRegisterWord(RegisterType::PC, 0xF639);
     CheckRegisterWord(RegisterType::SP, 0x17E5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF638, 0x6D);
 }
 
@@ -19931,6 +20763,7 @@ void test_6D_01A0()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xCA);
     WriteRegisterByte(RegisterType::L, 0x96);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x88C7, 0x6D);
 
@@ -19954,6 +20787,7 @@ void test_6D_01A0()
     CheckRegisterByte(RegisterType::L, 0x96);
     CheckRegisterWord(RegisterType::PC, 0x88C8);
     CheckRegisterWord(RegisterType::SP, 0x74BB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x88C7, 0x6D);
 }
 
@@ -19974,6 +20808,7 @@ void test_6D_01A1()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xE1);
     WriteRegisterByte(RegisterType::L, 0x32);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF3AB, 0x6D);
 
@@ -19997,6 +20832,7 @@ void test_6D_01A1()
     CheckRegisterByte(RegisterType::L, 0x32);
     CheckRegisterWord(RegisterType::PC, 0xF3AC);
     CheckRegisterWord(RegisterType::SP, 0x68EF);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF3AB, 0x6D);
 }
 
@@ -20017,6 +20853,7 @@ void test_6D_01A2()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x04);
     WriteRegisterByte(RegisterType::L, 0x5B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4718, 0x6D);
 
@@ -20040,6 +20877,7 @@ void test_6D_01A2()
     CheckRegisterByte(RegisterType::L, 0x5B);
     CheckRegisterWord(RegisterType::PC, 0x4719);
     CheckRegisterWord(RegisterType::SP, 0xF01F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4718, 0x6D);
 }
 
@@ -20060,6 +20898,7 @@ void test_6D_01A3()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x96);
     WriteRegisterByte(RegisterType::L, 0xC7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB73A, 0x6D);
 
@@ -20083,6 +20922,7 @@ void test_6D_01A3()
     CheckRegisterByte(RegisterType::L, 0xC7);
     CheckRegisterWord(RegisterType::PC, 0xB73B);
     CheckRegisterWord(RegisterType::SP, 0x7F8A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB73A, 0x6D);
 }
 
@@ -20103,6 +20943,7 @@ void test_6D_01A4()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x80);
     WriteRegisterByte(RegisterType::L, 0xF2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEB51, 0x6D);
 
@@ -20126,6 +20967,7 @@ void test_6D_01A4()
     CheckRegisterByte(RegisterType::L, 0xF2);
     CheckRegisterWord(RegisterType::PC, 0xEB52);
     CheckRegisterWord(RegisterType::SP, 0xB4BD);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEB51, 0x6D);
 }
 
@@ -20146,6 +20988,7 @@ void test_6D_01A5()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x10);
     WriteRegisterByte(RegisterType::L, 0x26);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x40F3, 0x6D);
 
@@ -20169,6 +21012,7 @@ void test_6D_01A5()
     CheckRegisterByte(RegisterType::L, 0x26);
     CheckRegisterWord(RegisterType::PC, 0x40F4);
     CheckRegisterWord(RegisterType::SP, 0x03DE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x40F3, 0x6D);
 }
 
@@ -20189,6 +21033,7 @@ void test_6D_01A6()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xD0);
     WriteRegisterByte(RegisterType::L, 0x60);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFD0B, 0x6D);
 
@@ -20212,6 +21057,7 @@ void test_6D_01A6()
     CheckRegisterByte(RegisterType::L, 0x60);
     CheckRegisterWord(RegisterType::PC, 0xFD0C);
     CheckRegisterWord(RegisterType::SP, 0x29ED);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFD0B, 0x6D);
 }
 
@@ -20232,6 +21078,7 @@ void test_6D_01A7()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x00);
     WriteRegisterByte(RegisterType::L, 0xDD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF300, 0x6D);
 
@@ -20255,6 +21102,7 @@ void test_6D_01A7()
     CheckRegisterByte(RegisterType::L, 0xDD);
     CheckRegisterWord(RegisterType::PC, 0xF301);
     CheckRegisterWord(RegisterType::SP, 0xCEAD);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF300, 0x6D);
 }
 
@@ -20275,6 +21123,7 @@ void test_6D_01A8()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xD1);
     WriteRegisterByte(RegisterType::L, 0x05);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2DF4, 0x6D);
 
@@ -20298,6 +21147,7 @@ void test_6D_01A8()
     CheckRegisterByte(RegisterType::L, 0x05);
     CheckRegisterWord(RegisterType::PC, 0x2DF5);
     CheckRegisterWord(RegisterType::SP, 0x4D96);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2DF4, 0x6D);
 }
 
@@ -20318,6 +21168,7 @@ void test_6D_01A9()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x5B);
     WriteRegisterByte(RegisterType::L, 0xC5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2CEA, 0x6D);
 
@@ -20341,6 +21192,7 @@ void test_6D_01A9()
     CheckRegisterByte(RegisterType::L, 0xC5);
     CheckRegisterWord(RegisterType::PC, 0x2CEB);
     CheckRegisterWord(RegisterType::SP, 0x9292);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2CEA, 0x6D);
 }
 
@@ -20361,6 +21213,7 @@ void test_6D_01AA()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xBA);
     WriteRegisterByte(RegisterType::L, 0x90);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD8AF, 0x6D);
 
@@ -20384,6 +21237,7 @@ void test_6D_01AA()
     CheckRegisterByte(RegisterType::L, 0x90);
     CheckRegisterWord(RegisterType::PC, 0xD8B0);
     CheckRegisterWord(RegisterType::SP, 0x6EEB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD8AF, 0x6D);
 }
 
@@ -20404,6 +21258,7 @@ void test_6D_01AB()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x5F);
     WriteRegisterByte(RegisterType::L, 0x82);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3590, 0x6D);
 
@@ -20427,6 +21282,7 @@ void test_6D_01AB()
     CheckRegisterByte(RegisterType::L, 0x82);
     CheckRegisterWord(RegisterType::PC, 0x3591);
     CheckRegisterWord(RegisterType::SP, 0x9E85);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3590, 0x6D);
 }
 
@@ -20447,6 +21303,7 @@ void test_6D_01AC()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x27);
     WriteRegisterByte(RegisterType::L, 0x02);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x417E, 0x6D);
 
@@ -20470,6 +21327,7 @@ void test_6D_01AC()
     CheckRegisterByte(RegisterType::L, 0x02);
     CheckRegisterWord(RegisterType::PC, 0x417F);
     CheckRegisterWord(RegisterType::SP, 0xC692);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x417E, 0x6D);
 }
 
@@ -20490,6 +21348,7 @@ void test_6D_01AD()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x7C);
     WriteRegisterByte(RegisterType::L, 0x97);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC12E, 0x6D);
 
@@ -20513,6 +21372,7 @@ void test_6D_01AD()
     CheckRegisterByte(RegisterType::L, 0x97);
     CheckRegisterWord(RegisterType::PC, 0xC12F);
     CheckRegisterWord(RegisterType::SP, 0xE0F4);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC12E, 0x6D);
 }
 
@@ -20533,6 +21393,7 @@ void test_6D_01AE()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xD8);
     WriteRegisterByte(RegisterType::L, 0x54);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5AB1, 0x6D);
 
@@ -20556,6 +21417,7 @@ void test_6D_01AE()
     CheckRegisterByte(RegisterType::L, 0x54);
     CheckRegisterWord(RegisterType::PC, 0x5AB2);
     CheckRegisterWord(RegisterType::SP, 0xA1E2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5AB1, 0x6D);
 }
 
@@ -20576,6 +21438,7 @@ void test_6D_01AF()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x67);
     WriteRegisterByte(RegisterType::L, 0x45);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8C93, 0x6D);
 
@@ -20599,6 +21462,7 @@ void test_6D_01AF()
     CheckRegisterByte(RegisterType::L, 0x45);
     CheckRegisterWord(RegisterType::PC, 0x8C94);
     CheckRegisterWord(RegisterType::SP, 0x9502);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8C93, 0x6D);
 }
 
@@ -20619,6 +21483,7 @@ void test_6D_01B0()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xF3);
     WriteRegisterByte(RegisterType::L, 0x62);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4F94, 0x6D);
 
@@ -20642,6 +21507,7 @@ void test_6D_01B0()
     CheckRegisterByte(RegisterType::L, 0x62);
     CheckRegisterWord(RegisterType::PC, 0x4F95);
     CheckRegisterWord(RegisterType::SP, 0x686E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4F94, 0x6D);
 }
 
@@ -20662,6 +21528,7 @@ void test_6D_01B1()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x06);
     WriteRegisterByte(RegisterType::L, 0x44);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x978D, 0x6D);
 
@@ -20685,6 +21552,7 @@ void test_6D_01B1()
     CheckRegisterByte(RegisterType::L, 0x44);
     CheckRegisterWord(RegisterType::PC, 0x978E);
     CheckRegisterWord(RegisterType::SP, 0x2DBC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x978D, 0x6D);
 }
 
@@ -20705,6 +21573,7 @@ void test_6D_01B2()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x5E);
     WriteRegisterByte(RegisterType::L, 0xC3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3D17, 0x6D);
 
@@ -20728,6 +21597,7 @@ void test_6D_01B2()
     CheckRegisterByte(RegisterType::L, 0xC3);
     CheckRegisterWord(RegisterType::PC, 0x3D18);
     CheckRegisterWord(RegisterType::SP, 0x9E30);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3D17, 0x6D);
 }
 
@@ -20748,6 +21618,7 @@ void test_6D_01B3()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xBD);
     WriteRegisterByte(RegisterType::L, 0x36);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5639, 0x6D);
 
@@ -20771,6 +21642,7 @@ void test_6D_01B3()
     CheckRegisterByte(RegisterType::L, 0x36);
     CheckRegisterWord(RegisterType::PC, 0x563A);
     CheckRegisterWord(RegisterType::SP, 0x0562);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5639, 0x6D);
 }
 
@@ -20791,6 +21663,7 @@ void test_6D_01B4()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xC3);
     WriteRegisterByte(RegisterType::L, 0x5D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x437F, 0x6D);
 
@@ -20814,6 +21687,7 @@ void test_6D_01B4()
     CheckRegisterByte(RegisterType::L, 0x5D);
     CheckRegisterWord(RegisterType::PC, 0x4380);
     CheckRegisterWord(RegisterType::SP, 0x805A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x437F, 0x6D);
 }
 
@@ -20834,6 +21708,7 @@ void test_6D_01B5()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xFD);
     WriteRegisterByte(RegisterType::L, 0xCF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x192D, 0x6D);
 
@@ -20857,6 +21732,7 @@ void test_6D_01B5()
     CheckRegisterByte(RegisterType::L, 0xCF);
     CheckRegisterWord(RegisterType::PC, 0x192E);
     CheckRegisterWord(RegisterType::SP, 0xDEA8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x192D, 0x6D);
 }
 
@@ -20877,6 +21753,7 @@ void test_6D_01B6()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x66);
     WriteRegisterByte(RegisterType::L, 0x1D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x56A2, 0x6D);
 
@@ -20900,6 +21777,7 @@ void test_6D_01B6()
     CheckRegisterByte(RegisterType::L, 0x1D);
     CheckRegisterWord(RegisterType::PC, 0x56A3);
     CheckRegisterWord(RegisterType::SP, 0x88A1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x56A2, 0x6D);
 }
 
@@ -20920,6 +21798,7 @@ void test_6D_01B7()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xD0);
     WriteRegisterByte(RegisterType::L, 0xEA);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x51DC, 0x6D);
 
@@ -20943,6 +21822,7 @@ void test_6D_01B7()
     CheckRegisterByte(RegisterType::L, 0xEA);
     CheckRegisterWord(RegisterType::PC, 0x51DD);
     CheckRegisterWord(RegisterType::SP, 0x7725);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x51DC, 0x6D);
 }
 
@@ -20963,6 +21843,7 @@ void test_6D_01B8()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x99);
     WriteRegisterByte(RegisterType::L, 0xF0);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1EEF, 0x6D);
 
@@ -20986,6 +21867,7 @@ void test_6D_01B8()
     CheckRegisterByte(RegisterType::L, 0xF0);
     CheckRegisterWord(RegisterType::PC, 0x1EF0);
     CheckRegisterWord(RegisterType::SP, 0xD8CC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1EEF, 0x6D);
 }
 
@@ -21006,6 +21888,7 @@ void test_6D_01B9()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x87);
     WriteRegisterByte(RegisterType::L, 0x2C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x543D, 0x6D);
 
@@ -21029,6 +21912,7 @@ void test_6D_01B9()
     CheckRegisterByte(RegisterType::L, 0x2C);
     CheckRegisterWord(RegisterType::PC, 0x543E);
     CheckRegisterWord(RegisterType::SP, 0x9E29);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x543D, 0x6D);
 }
 
@@ -21049,6 +21933,7 @@ void test_6D_01BA()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x35);
     WriteRegisterByte(RegisterType::L, 0x7F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD96C, 0x6D);
 
@@ -21072,6 +21957,7 @@ void test_6D_01BA()
     CheckRegisterByte(RegisterType::L, 0x7F);
     CheckRegisterWord(RegisterType::PC, 0xD96D);
     CheckRegisterWord(RegisterType::SP, 0x33CC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD96C, 0x6D);
 }
 
@@ -21092,6 +21978,7 @@ void test_6D_01BB()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xA5);
     WriteRegisterByte(RegisterType::L, 0x5A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE9D8, 0x6D);
 
@@ -21115,6 +22002,7 @@ void test_6D_01BB()
     CheckRegisterByte(RegisterType::L, 0x5A);
     CheckRegisterWord(RegisterType::PC, 0xE9D9);
     CheckRegisterWord(RegisterType::SP, 0x3E9D);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE9D8, 0x6D);
 }
 
@@ -21135,6 +22023,7 @@ void test_6D_01BC()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x3A);
     WriteRegisterByte(RegisterType::L, 0xF0);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xAF13, 0x6D);
 
@@ -21158,6 +22047,7 @@ void test_6D_01BC()
     CheckRegisterByte(RegisterType::L, 0xF0);
     CheckRegisterWord(RegisterType::PC, 0xAF14);
     CheckRegisterWord(RegisterType::SP, 0x58F0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAF13, 0x6D);
 }
 
@@ -21178,6 +22068,7 @@ void test_6D_01BD()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x23);
     WriteRegisterByte(RegisterType::L, 0x6B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x071D, 0x6D);
 
@@ -21201,6 +22092,7 @@ void test_6D_01BD()
     CheckRegisterByte(RegisterType::L, 0x6B);
     CheckRegisterWord(RegisterType::PC, 0x071E);
     CheckRegisterWord(RegisterType::SP, 0x80F9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x071D, 0x6D);
 }
 
@@ -21221,6 +22113,7 @@ void test_6D_01BE()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xA9);
     WriteRegisterByte(RegisterType::L, 0x88);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8D12, 0x6D);
 
@@ -21244,6 +22137,7 @@ void test_6D_01BE()
     CheckRegisterByte(RegisterType::L, 0x88);
     CheckRegisterWord(RegisterType::PC, 0x8D13);
     CheckRegisterWord(RegisterType::SP, 0x8818);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8D12, 0x6D);
 }
 
@@ -21264,6 +22158,7 @@ void test_6D_01BF()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x75);
     WriteRegisterByte(RegisterType::L, 0x7C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8B34, 0x6D);
 
@@ -21287,6 +22182,7 @@ void test_6D_01BF()
     CheckRegisterByte(RegisterType::L, 0x7C);
     CheckRegisterWord(RegisterType::PC, 0x8B35);
     CheckRegisterWord(RegisterType::SP, 0xE777);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8B34, 0x6D);
 }
 
@@ -21307,6 +22203,7 @@ void test_6D_01C0()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xA4);
     WriteRegisterByte(RegisterType::L, 0x5B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE8B5, 0x6D);
 
@@ -21330,6 +22227,7 @@ void test_6D_01C0()
     CheckRegisterByte(RegisterType::L, 0x5B);
     CheckRegisterWord(RegisterType::PC, 0xE8B6);
     CheckRegisterWord(RegisterType::SP, 0xA24D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE8B5, 0x6D);
 }
 
@@ -21350,6 +22248,7 @@ void test_6D_01C1()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x3B);
     WriteRegisterByte(RegisterType::L, 0x52);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC3F0, 0x6D);
 
@@ -21373,6 +22272,7 @@ void test_6D_01C1()
     CheckRegisterByte(RegisterType::L, 0x52);
     CheckRegisterWord(RegisterType::PC, 0xC3F1);
     CheckRegisterWord(RegisterType::SP, 0x2C5F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC3F0, 0x6D);
 }
 
@@ -21393,6 +22293,7 @@ void test_6D_01C2()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x39);
     WriteRegisterByte(RegisterType::L, 0x7F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x469B, 0x6D);
 
@@ -21416,6 +22317,7 @@ void test_6D_01C2()
     CheckRegisterByte(RegisterType::L, 0x7F);
     CheckRegisterWord(RegisterType::PC, 0x469C);
     CheckRegisterWord(RegisterType::SP, 0x2548);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x469B, 0x6D);
 }
 
@@ -21436,6 +22338,7 @@ void test_6D_01C3()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x41);
     WriteRegisterByte(RegisterType::L, 0x77);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD33A, 0x6D);
 
@@ -21459,6 +22362,7 @@ void test_6D_01C3()
     CheckRegisterByte(RegisterType::L, 0x77);
     CheckRegisterWord(RegisterType::PC, 0xD33B);
     CheckRegisterWord(RegisterType::SP, 0x078C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD33A, 0x6D);
 }
 
@@ -21479,6 +22383,7 @@ void test_6D_01C4()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x06);
     WriteRegisterByte(RegisterType::L, 0x3C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEEFC, 0x6D);
 
@@ -21502,6 +22407,7 @@ void test_6D_01C4()
     CheckRegisterByte(RegisterType::L, 0x3C);
     CheckRegisterWord(RegisterType::PC, 0xEEFD);
     CheckRegisterWord(RegisterType::SP, 0x6C76);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEEFC, 0x6D);
 }
 
@@ -21522,6 +22428,7 @@ void test_6D_01C5()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xCE);
     WriteRegisterByte(RegisterType::L, 0x0A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0F73, 0x6D);
 
@@ -21545,6 +22452,7 @@ void test_6D_01C5()
     CheckRegisterByte(RegisterType::L, 0x0A);
     CheckRegisterWord(RegisterType::PC, 0x0F74);
     CheckRegisterWord(RegisterType::SP, 0x436B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0F73, 0x6D);
 }
 
@@ -21565,6 +22473,7 @@ void test_6D_01C6()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x5F);
     WriteRegisterByte(RegisterType::L, 0x44);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6559, 0x6D);
 
@@ -21588,6 +22497,7 @@ void test_6D_01C6()
     CheckRegisterByte(RegisterType::L, 0x44);
     CheckRegisterWord(RegisterType::PC, 0x655A);
     CheckRegisterWord(RegisterType::SP, 0x1852);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6559, 0x6D);
 }
 
@@ -21608,6 +22518,7 @@ void test_6D_01C7()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x47);
     WriteRegisterByte(RegisterType::L, 0x3B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x373A, 0x6D);
 
@@ -21631,6 +22542,7 @@ void test_6D_01C7()
     CheckRegisterByte(RegisterType::L, 0x3B);
     CheckRegisterWord(RegisterType::PC, 0x373B);
     CheckRegisterWord(RegisterType::SP, 0xCB52);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x373A, 0x6D);
 }
 
@@ -21651,6 +22563,7 @@ void test_6D_01C8()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xE3);
     WriteRegisterByte(RegisterType::L, 0x55);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7425, 0x6D);
 
@@ -21674,6 +22587,7 @@ void test_6D_01C8()
     CheckRegisterByte(RegisterType::L, 0x55);
     CheckRegisterWord(RegisterType::PC, 0x7426);
     CheckRegisterWord(RegisterType::SP, 0xCE88);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7425, 0x6D);
 }
 
@@ -21694,6 +22608,7 @@ void test_6D_01C9()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xCE);
     WriteRegisterByte(RegisterType::L, 0xD2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x320E, 0x6D);
 
@@ -21717,6 +22632,7 @@ void test_6D_01C9()
     CheckRegisterByte(RegisterType::L, 0xD2);
     CheckRegisterWord(RegisterType::PC, 0x320F);
     CheckRegisterWord(RegisterType::SP, 0x0DFC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x320E, 0x6D);
 }
 
@@ -21737,6 +22653,7 @@ void test_6D_01CA()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x12);
     WriteRegisterByte(RegisterType::L, 0x42);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB524, 0x6D);
 
@@ -21760,6 +22677,7 @@ void test_6D_01CA()
     CheckRegisterByte(RegisterType::L, 0x42);
     CheckRegisterWord(RegisterType::PC, 0xB525);
     CheckRegisterWord(RegisterType::SP, 0x0AF1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB524, 0x6D);
 }
 
@@ -21780,6 +22698,7 @@ void test_6D_01CB()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xFD);
     WriteRegisterByte(RegisterType::L, 0x35);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3477, 0x6D);
 
@@ -21803,6 +22722,7 @@ void test_6D_01CB()
     CheckRegisterByte(RegisterType::L, 0x35);
     CheckRegisterWord(RegisterType::PC, 0x3478);
     CheckRegisterWord(RegisterType::SP, 0x0D36);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3477, 0x6D);
 }
 
@@ -21823,6 +22743,7 @@ void test_6D_01CC()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xE3);
     WriteRegisterByte(RegisterType::L, 0x5E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1E82, 0x6D);
 
@@ -21846,6 +22767,7 @@ void test_6D_01CC()
     CheckRegisterByte(RegisterType::L, 0x5E);
     CheckRegisterWord(RegisterType::PC, 0x1E83);
     CheckRegisterWord(RegisterType::SP, 0xA735);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1E82, 0x6D);
 }
 
@@ -21866,6 +22788,7 @@ void test_6D_01CD()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x4C);
     WriteRegisterByte(RegisterType::L, 0xCD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC62A, 0x6D);
 
@@ -21889,6 +22812,7 @@ void test_6D_01CD()
     CheckRegisterByte(RegisterType::L, 0xCD);
     CheckRegisterWord(RegisterType::PC, 0xC62B);
     CheckRegisterWord(RegisterType::SP, 0x4F4F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC62A, 0x6D);
 }
 
@@ -21909,6 +22833,7 @@ void test_6D_01CE()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xB3);
     WriteRegisterByte(RegisterType::L, 0x45);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x23EE, 0x6D);
 
@@ -21932,6 +22857,7 @@ void test_6D_01CE()
     CheckRegisterByte(RegisterType::L, 0x45);
     CheckRegisterWord(RegisterType::PC, 0x23EF);
     CheckRegisterWord(RegisterType::SP, 0xF4FE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x23EE, 0x6D);
 }
 
@@ -21952,6 +22878,7 @@ void test_6D_01CF()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xE3);
     WriteRegisterByte(RegisterType::L, 0x00);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x42CB, 0x6D);
 
@@ -21975,6 +22902,7 @@ void test_6D_01CF()
     CheckRegisterByte(RegisterType::L, 0x00);
     CheckRegisterWord(RegisterType::PC, 0x42CC);
     CheckRegisterWord(RegisterType::SP, 0xBDAA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x42CB, 0x6D);
 }
 
@@ -21995,6 +22923,7 @@ void test_6D_01D0()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x52);
     WriteRegisterByte(RegisterType::L, 0x3C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA818, 0x6D);
 
@@ -22018,6 +22947,7 @@ void test_6D_01D0()
     CheckRegisterByte(RegisterType::L, 0x3C);
     CheckRegisterWord(RegisterType::PC, 0xA819);
     CheckRegisterWord(RegisterType::SP, 0x4AC5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA818, 0x6D);
 }
 
@@ -22038,6 +22968,7 @@ void test_6D_01D1()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x3F);
     WriteRegisterByte(RegisterType::L, 0xC3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8C4A, 0x6D);
 
@@ -22061,6 +22992,7 @@ void test_6D_01D1()
     CheckRegisterByte(RegisterType::L, 0xC3);
     CheckRegisterWord(RegisterType::PC, 0x8C4B);
     CheckRegisterWord(RegisterType::SP, 0x2786);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8C4A, 0x6D);
 }
 
@@ -22081,6 +23013,7 @@ void test_6D_01D2()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x17);
     WriteRegisterByte(RegisterType::L, 0x17);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7DEE, 0x6D);
 
@@ -22104,6 +23037,7 @@ void test_6D_01D2()
     CheckRegisterByte(RegisterType::L, 0x17);
     CheckRegisterWord(RegisterType::PC, 0x7DEF);
     CheckRegisterWord(RegisterType::SP, 0x7A0C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7DEE, 0x6D);
 }
 
@@ -22124,6 +23058,7 @@ void test_6D_01D3()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xFB);
     WriteRegisterByte(RegisterType::L, 0x2B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5064, 0x6D);
 
@@ -22147,6 +23082,7 @@ void test_6D_01D3()
     CheckRegisterByte(RegisterType::L, 0x2B);
     CheckRegisterWord(RegisterType::PC, 0x5065);
     CheckRegisterWord(RegisterType::SP, 0xDF0B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5064, 0x6D);
 }
 
@@ -22167,6 +23103,7 @@ void test_6D_01D4()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x4C);
     WriteRegisterByte(RegisterType::L, 0x0F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6DE1, 0x6D);
 
@@ -22190,6 +23127,7 @@ void test_6D_01D4()
     CheckRegisterByte(RegisterType::L, 0x0F);
     CheckRegisterWord(RegisterType::PC, 0x6DE2);
     CheckRegisterWord(RegisterType::SP, 0xC994);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6DE1, 0x6D);
 }
 
@@ -22210,6 +23148,7 @@ void test_6D_01D5()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xDA);
     WriteRegisterByte(RegisterType::L, 0x84);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x41CC, 0x6D);
 
@@ -22233,6 +23172,7 @@ void test_6D_01D5()
     CheckRegisterByte(RegisterType::L, 0x84);
     CheckRegisterWord(RegisterType::PC, 0x41CD);
     CheckRegisterWord(RegisterType::SP, 0x9CE0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x41CC, 0x6D);
 }
 
@@ -22253,6 +23193,7 @@ void test_6D_01D6()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x0D);
     WriteRegisterByte(RegisterType::L, 0x6C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFE9B, 0x6D);
 
@@ -22276,6 +23217,7 @@ void test_6D_01D6()
     CheckRegisterByte(RegisterType::L, 0x6C);
     CheckRegisterWord(RegisterType::PC, 0xFE9C);
     CheckRegisterWord(RegisterType::SP, 0x8D3A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFE9B, 0x6D);
 }
 
@@ -22296,6 +23238,7 @@ void test_6D_01D7()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xF8);
     WriteRegisterByte(RegisterType::L, 0x82);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3635, 0x6D);
 
@@ -22319,6 +23262,7 @@ void test_6D_01D7()
     CheckRegisterByte(RegisterType::L, 0x82);
     CheckRegisterWord(RegisterType::PC, 0x3636);
     CheckRegisterWord(RegisterType::SP, 0x0454);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3635, 0x6D);
 }
 
@@ -22339,6 +23283,7 @@ void test_6D_01D8()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x0B);
     WriteRegisterByte(RegisterType::L, 0xB5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFA52, 0x6D);
 
@@ -22362,6 +23307,7 @@ void test_6D_01D8()
     CheckRegisterByte(RegisterType::L, 0xB5);
     CheckRegisterWord(RegisterType::PC, 0xFA53);
     CheckRegisterWord(RegisterType::SP, 0x6BE9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFA52, 0x6D);
 }
 
@@ -22382,6 +23328,7 @@ void test_6D_01D9()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xC4);
     WriteRegisterByte(RegisterType::L, 0xCA);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xDE0D, 0x6D);
 
@@ -22405,6 +23352,7 @@ void test_6D_01D9()
     CheckRegisterByte(RegisterType::L, 0xCA);
     CheckRegisterWord(RegisterType::PC, 0xDE0E);
     CheckRegisterWord(RegisterType::SP, 0xC92A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDE0D, 0x6D);
 }
 
@@ -22425,6 +23373,7 @@ void test_6D_01DA()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xD7);
     WriteRegisterByte(RegisterType::L, 0xA0);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7BA9, 0x6D);
 
@@ -22448,6 +23397,7 @@ void test_6D_01DA()
     CheckRegisterByte(RegisterType::L, 0xA0);
     CheckRegisterWord(RegisterType::PC, 0x7BAA);
     CheckRegisterWord(RegisterType::SP, 0x1DBF);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7BA9, 0x6D);
 }
 
@@ -22468,6 +23418,7 @@ void test_6D_01DB()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xA5);
     WriteRegisterByte(RegisterType::L, 0xC7);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC310, 0x6D);
 
@@ -22491,6 +23442,7 @@ void test_6D_01DB()
     CheckRegisterByte(RegisterType::L, 0xC7);
     CheckRegisterWord(RegisterType::PC, 0xC311);
     CheckRegisterWord(RegisterType::SP, 0x6BDB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC310, 0x6D);
 }
 
@@ -22511,6 +23463,7 @@ void test_6D_01DC()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x0F);
     WriteRegisterByte(RegisterType::L, 0x8E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x66CF, 0x6D);
 
@@ -22534,6 +23487,7 @@ void test_6D_01DC()
     CheckRegisterByte(RegisterType::L, 0x8E);
     CheckRegisterWord(RegisterType::PC, 0x66D0);
     CheckRegisterWord(RegisterType::SP, 0x0AAA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x66CF, 0x6D);
 }
 
@@ -22554,6 +23508,7 @@ void test_6D_01DD()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x2A);
     WriteRegisterByte(RegisterType::L, 0x4F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xFF2A, 0x6D);
 
@@ -22577,6 +23532,7 @@ void test_6D_01DD()
     CheckRegisterByte(RegisterType::L, 0x4F);
     CheckRegisterWord(RegisterType::PC, 0xFF2B);
     CheckRegisterWord(RegisterType::SP, 0x563A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFF2A, 0x6D);
 }
 
@@ -22597,6 +23553,7 @@ void test_6D_01DE()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xE8);
     WriteRegisterByte(RegisterType::L, 0x16);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xDD1B, 0x6D);
 
@@ -22620,6 +23577,7 @@ void test_6D_01DE()
     CheckRegisterByte(RegisterType::L, 0x16);
     CheckRegisterWord(RegisterType::PC, 0xDD1C);
     CheckRegisterWord(RegisterType::SP, 0x03C0);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDD1B, 0x6D);
 }
 
@@ -22640,6 +23598,7 @@ void test_6D_01DF()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x39);
     WriteRegisterByte(RegisterType::L, 0xCE);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0B8C, 0x6D);
 
@@ -22663,6 +23622,7 @@ void test_6D_01DF()
     CheckRegisterByte(RegisterType::L, 0xCE);
     CheckRegisterWord(RegisterType::PC, 0x0B8D);
     CheckRegisterWord(RegisterType::SP, 0x4562);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0B8C, 0x6D);
 }
 
@@ -22683,6 +23643,7 @@ void test_6D_01E0()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x42);
     WriteRegisterByte(RegisterType::L, 0x35);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5345, 0x6D);
 
@@ -22706,6 +23667,7 @@ void test_6D_01E0()
     CheckRegisterByte(RegisterType::L, 0x35);
     CheckRegisterWord(RegisterType::PC, 0x5346);
     CheckRegisterWord(RegisterType::SP, 0x1539);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5345, 0x6D);
 }
 
@@ -22726,6 +23688,7 @@ void test_6D_01E1()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xFE);
     WriteRegisterByte(RegisterType::L, 0xC8);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xAA1D, 0x6D);
 
@@ -22749,6 +23712,7 @@ void test_6D_01E1()
     CheckRegisterByte(RegisterType::L, 0xC8);
     CheckRegisterWord(RegisterType::PC, 0xAA1E);
     CheckRegisterWord(RegisterType::SP, 0x4482);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAA1D, 0x6D);
 }
 
@@ -22769,6 +23733,7 @@ void test_6D_01E2()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x4D);
     WriteRegisterByte(RegisterType::L, 0xA2);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x84EC, 0x6D);
 
@@ -22792,6 +23757,7 @@ void test_6D_01E2()
     CheckRegisterByte(RegisterType::L, 0xA2);
     CheckRegisterWord(RegisterType::PC, 0x84ED);
     CheckRegisterWord(RegisterType::SP, 0xE621);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x84EC, 0x6D);
 }
 
@@ -22812,6 +23778,7 @@ void test_6D_01E3()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xFD);
     WriteRegisterByte(RegisterType::L, 0xF0);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFE40, 0x6D);
 
@@ -22835,6 +23802,7 @@ void test_6D_01E3()
     CheckRegisterByte(RegisterType::L, 0xF0);
     CheckRegisterWord(RegisterType::PC, 0xFE41);
     CheckRegisterWord(RegisterType::SP, 0x16D6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFE40, 0x6D);
 }
 
@@ -22855,6 +23823,7 @@ void test_6D_01E4()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x30);
     WriteRegisterByte(RegisterType::L, 0x8A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xEB02, 0x6D);
 
@@ -22878,6 +23847,7 @@ void test_6D_01E4()
     CheckRegisterByte(RegisterType::L, 0x8A);
     CheckRegisterWord(RegisterType::PC, 0xEB03);
     CheckRegisterWord(RegisterType::SP, 0xCC57);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEB02, 0x6D);
 }
 
@@ -22898,6 +23868,7 @@ void test_6D_01E5()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x69);
     WriteRegisterByte(RegisterType::L, 0xF3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5D89, 0x6D);
 
@@ -22921,6 +23892,7 @@ void test_6D_01E5()
     CheckRegisterByte(RegisterType::L, 0xF3);
     CheckRegisterWord(RegisterType::PC, 0x5D8A);
     CheckRegisterWord(RegisterType::SP, 0xDADD);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5D89, 0x6D);
 }
 
@@ -22941,6 +23913,7 @@ void test_6D_01E6()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x90);
     WriteRegisterByte(RegisterType::L, 0xF3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1F06, 0x6D);
 
@@ -22964,6 +23937,7 @@ void test_6D_01E6()
     CheckRegisterByte(RegisterType::L, 0xF3);
     CheckRegisterWord(RegisterType::PC, 0x1F07);
     CheckRegisterWord(RegisterType::SP, 0xB909);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1F06, 0x6D);
 }
 
@@ -22984,6 +23958,7 @@ void test_6D_01E7()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xBB);
     WriteRegisterByte(RegisterType::L, 0x4C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xAA91, 0x6D);
 
@@ -23007,6 +23982,7 @@ void test_6D_01E7()
     CheckRegisterByte(RegisterType::L, 0x4C);
     CheckRegisterWord(RegisterType::PC, 0xAA92);
     CheckRegisterWord(RegisterType::SP, 0x1DFB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAA91, 0x6D);
 }
 
@@ -23027,6 +24003,7 @@ void test_6D_01E8()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x30);
     WriteRegisterByte(RegisterType::L, 0x58);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x935B, 0x6D);
 
@@ -23050,6 +24027,7 @@ void test_6D_01E8()
     CheckRegisterByte(RegisterType::L, 0x58);
     CheckRegisterWord(RegisterType::PC, 0x935C);
     CheckRegisterWord(RegisterType::SP, 0xAC6F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x935B, 0x6D);
 }
 
@@ -23070,6 +24048,7 @@ void test_6D_01E9()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x4B);
     WriteRegisterByte(RegisterType::L, 0x40);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6B2B, 0x6D);
 
@@ -23093,6 +24072,7 @@ void test_6D_01E9()
     CheckRegisterByte(RegisterType::L, 0x40);
     CheckRegisterWord(RegisterType::PC, 0x6B2C);
     CheckRegisterWord(RegisterType::SP, 0x1EC6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6B2B, 0x6D);
 }
 
@@ -23113,6 +24093,7 @@ void test_6D_01EA()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xD1);
     WriteRegisterByte(RegisterType::L, 0x32);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7160, 0x6D);
 
@@ -23136,6 +24117,7 @@ void test_6D_01EA()
     CheckRegisterByte(RegisterType::L, 0x32);
     CheckRegisterWord(RegisterType::PC, 0x7161);
     CheckRegisterWord(RegisterType::SP, 0x6317);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7160, 0x6D);
 }
 
@@ -23156,6 +24138,7 @@ void test_6D_01EB()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xD2);
     WriteRegisterByte(RegisterType::L, 0xB1);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8E3F, 0x6D);
 
@@ -23179,6 +24162,7 @@ void test_6D_01EB()
     CheckRegisterByte(RegisterType::L, 0xB1);
     CheckRegisterWord(RegisterType::PC, 0x8E40);
     CheckRegisterWord(RegisterType::SP, 0x40E2);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8E3F, 0x6D);
 }
 
@@ -23199,6 +24183,7 @@ void test_6D_01EC()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x1D);
     WriteRegisterByte(RegisterType::L, 0xC6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4C60, 0x6D);
 
@@ -23222,6 +24207,7 @@ void test_6D_01EC()
     CheckRegisterByte(RegisterType::L, 0xC6);
     CheckRegisterWord(RegisterType::PC, 0x4C61);
     CheckRegisterWord(RegisterType::SP, 0xF2A9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4C60, 0x6D);
 }
 
@@ -23242,6 +24228,7 @@ void test_6D_01ED()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x5F);
     WriteRegisterByte(RegisterType::L, 0x6D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1C7D, 0x6D);
 
@@ -23265,6 +24252,7 @@ void test_6D_01ED()
     CheckRegisterByte(RegisterType::L, 0x6D);
     CheckRegisterWord(RegisterType::PC, 0x1C7E);
     CheckRegisterWord(RegisterType::SP, 0x91DF);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1C7D, 0x6D);
 }
 
@@ -23285,6 +24273,7 @@ void test_6D_01EE()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xF0);
     WriteRegisterByte(RegisterType::L, 0x87);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD9C5, 0x6D);
 
@@ -23308,6 +24297,7 @@ void test_6D_01EE()
     CheckRegisterByte(RegisterType::L, 0x87);
     CheckRegisterWord(RegisterType::PC, 0xD9C6);
     CheckRegisterWord(RegisterType::SP, 0x919F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD9C5, 0x6D);
 }
 
@@ -23328,6 +24318,7 @@ void test_6D_01EF()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x04);
     WriteRegisterByte(RegisterType::L, 0xE8);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFCFC, 0x6D);
 
@@ -23351,6 +24342,7 @@ void test_6D_01EF()
     CheckRegisterByte(RegisterType::L, 0xE8);
     CheckRegisterWord(RegisterType::PC, 0xFCFD);
     CheckRegisterWord(RegisterType::SP, 0x2564);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFCFC, 0x6D);
 }
 
@@ -23371,6 +24363,7 @@ void test_6D_01F0()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xAF);
     WriteRegisterByte(RegisterType::L, 0x36);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE678, 0x6D);
 
@@ -23394,6 +24387,7 @@ void test_6D_01F0()
     CheckRegisterByte(RegisterType::L, 0x36);
     CheckRegisterWord(RegisterType::PC, 0xE679);
     CheckRegisterWord(RegisterType::SP, 0x1812);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE678, 0x6D);
 }
 
@@ -23414,6 +24408,7 @@ void test_6D_01F1()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xD2);
     WriteRegisterByte(RegisterType::L, 0x6F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6362, 0x6D);
 
@@ -23437,6 +24432,7 @@ void test_6D_01F1()
     CheckRegisterByte(RegisterType::L, 0x6F);
     CheckRegisterWord(RegisterType::PC, 0x6363);
     CheckRegisterWord(RegisterType::SP, 0x1E3E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6362, 0x6D);
 }
 
@@ -23457,6 +24453,7 @@ void test_6D_01F2()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xD2);
     WriteRegisterByte(RegisterType::L, 0xD5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC24C, 0x6D);
 
@@ -23480,6 +24477,7 @@ void test_6D_01F2()
     CheckRegisterByte(RegisterType::L, 0xD5);
     CheckRegisterWord(RegisterType::PC, 0xC24D);
     CheckRegisterWord(RegisterType::SP, 0xB7C7);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC24C, 0x6D);
 }
 
@@ -23500,6 +24498,7 @@ void test_6D_01F3()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xE5);
     WriteRegisterByte(RegisterType::L, 0xE2);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFCC3, 0x6D);
 
@@ -23523,6 +24522,7 @@ void test_6D_01F3()
     CheckRegisterByte(RegisterType::L, 0xE2);
     CheckRegisterWord(RegisterType::PC, 0xFCC4);
     CheckRegisterWord(RegisterType::SP, 0x6A5B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFCC3, 0x6D);
 }
 
@@ -23543,6 +24543,7 @@ void test_6D_01F4()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xF5);
     WriteRegisterByte(RegisterType::L, 0xA4);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x598D, 0x6D);
 
@@ -23566,6 +24567,7 @@ void test_6D_01F4()
     CheckRegisterByte(RegisterType::L, 0xA4);
     CheckRegisterWord(RegisterType::PC, 0x598E);
     CheckRegisterWord(RegisterType::SP, 0x2785);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x598D, 0x6D);
 }
 
@@ -23586,6 +24588,7 @@ void test_6D_01F5()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xE1);
     WriteRegisterByte(RegisterType::L, 0x80);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8248, 0x6D);
 
@@ -23609,6 +24612,7 @@ void test_6D_01F5()
     CheckRegisterByte(RegisterType::L, 0x80);
     CheckRegisterWord(RegisterType::PC, 0x8249);
     CheckRegisterWord(RegisterType::SP, 0xFFAA);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8248, 0x6D);
 }
 
@@ -23629,6 +24633,7 @@ void test_6D_01F6()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x4C);
     WriteRegisterByte(RegisterType::L, 0x4A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE074, 0x6D);
 
@@ -23652,6 +24657,7 @@ void test_6D_01F6()
     CheckRegisterByte(RegisterType::L, 0x4A);
     CheckRegisterWord(RegisterType::PC, 0xE075);
     CheckRegisterWord(RegisterType::SP, 0xDB0C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE074, 0x6D);
 }
 
@@ -23672,6 +24678,7 @@ void test_6D_01F7()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xDC);
     WriteRegisterByte(RegisterType::L, 0x67);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBA31, 0x6D);
 
@@ -23695,6 +24702,7 @@ void test_6D_01F7()
     CheckRegisterByte(RegisterType::L, 0x67);
     CheckRegisterWord(RegisterType::PC, 0xBA32);
     CheckRegisterWord(RegisterType::SP, 0xF220);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBA31, 0x6D);
 }
 
@@ -23715,6 +24723,7 @@ void test_6D_01F8()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x50);
     WriteRegisterByte(RegisterType::L, 0xBF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x65E2, 0x6D);
 
@@ -23738,6 +24747,7 @@ void test_6D_01F8()
     CheckRegisterByte(RegisterType::L, 0xBF);
     CheckRegisterWord(RegisterType::PC, 0x65E3);
     CheckRegisterWord(RegisterType::SP, 0xB599);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x65E2, 0x6D);
 }
 
@@ -23758,6 +24768,7 @@ void test_6D_01F9()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xDC);
     WriteRegisterByte(RegisterType::L, 0x8F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x96BC, 0x6D);
 
@@ -23781,6 +24792,7 @@ void test_6D_01F9()
     CheckRegisterByte(RegisterType::L, 0x8F);
     CheckRegisterWord(RegisterType::PC, 0x96BD);
     CheckRegisterWord(RegisterType::SP, 0xE48F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x96BC, 0x6D);
 }
 
@@ -23801,6 +24813,7 @@ void test_6D_01FA()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x3C);
     WriteRegisterByte(RegisterType::L, 0x57);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3DC3, 0x6D);
 
@@ -23824,6 +24837,7 @@ void test_6D_01FA()
     CheckRegisterByte(RegisterType::L, 0x57);
     CheckRegisterWord(RegisterType::PC, 0x3DC4);
     CheckRegisterWord(RegisterType::SP, 0xFA29);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3DC3, 0x6D);
 }
 
@@ -23844,6 +24858,7 @@ void test_6D_01FB()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xFE);
     WriteRegisterByte(RegisterType::L, 0x7E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x224F, 0x6D);
 
@@ -23867,6 +24882,7 @@ void test_6D_01FB()
     CheckRegisterByte(RegisterType::L, 0x7E);
     CheckRegisterWord(RegisterType::PC, 0x2250);
     CheckRegisterWord(RegisterType::SP, 0x8A10);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x224F, 0x6D);
 }
 
@@ -23887,6 +24903,7 @@ void test_6D_01FC()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xFD);
     WriteRegisterByte(RegisterType::L, 0x3C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x515B, 0x6D);
 
@@ -23910,6 +24927,7 @@ void test_6D_01FC()
     CheckRegisterByte(RegisterType::L, 0x3C);
     CheckRegisterWord(RegisterType::PC, 0x515C);
     CheckRegisterWord(RegisterType::SP, 0xED93);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x515B, 0x6D);
 }
 
@@ -23930,6 +24948,7 @@ void test_6D_01FD()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x14);
     WriteRegisterByte(RegisterType::L, 0x76);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x39E5, 0x6D);
 
@@ -23953,6 +24972,7 @@ void test_6D_01FD()
     CheckRegisterByte(RegisterType::L, 0x76);
     CheckRegisterWord(RegisterType::PC, 0x39E6);
     CheckRegisterWord(RegisterType::SP, 0x5D61);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x39E5, 0x6D);
 }
 
@@ -23973,6 +24993,7 @@ void test_6D_01FE()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xC6);
     WriteRegisterByte(RegisterType::L, 0xF1);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB764, 0x6D);
 
@@ -23996,6 +25017,7 @@ void test_6D_01FE()
     CheckRegisterByte(RegisterType::L, 0xF1);
     CheckRegisterWord(RegisterType::PC, 0xB765);
     CheckRegisterWord(RegisterType::SP, 0x6F3A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB764, 0x6D);
 }
 
@@ -24016,6 +25038,7 @@ void test_6D_01FF()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xC0);
     WriteRegisterByte(RegisterType::L, 0x0C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4F3C, 0x6D);
 
@@ -24039,6 +25062,7 @@ void test_6D_01FF()
     CheckRegisterByte(RegisterType::L, 0x0C);
     CheckRegisterWord(RegisterType::PC, 0x4F3D);
     CheckRegisterWord(RegisterType::SP, 0x9F17);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4F3C, 0x6D);
 }
 
@@ -24059,6 +25083,7 @@ void test_6D_0200()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xD3);
     WriteRegisterByte(RegisterType::L, 0x5B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x71F4, 0x6D);
 
@@ -24082,6 +25107,7 @@ void test_6D_0200()
     CheckRegisterByte(RegisterType::L, 0x5B);
     CheckRegisterWord(RegisterType::PC, 0x71F5);
     CheckRegisterWord(RegisterType::SP, 0x73B0);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x71F4, 0x6D);
 }
 
@@ -24102,6 +25128,7 @@ void test_6D_0201()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xAA);
     WriteRegisterByte(RegisterType::L, 0xD6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1B60, 0x6D);
 
@@ -24125,6 +25152,7 @@ void test_6D_0201()
     CheckRegisterByte(RegisterType::L, 0xD6);
     CheckRegisterWord(RegisterType::PC, 0x1B61);
     CheckRegisterWord(RegisterType::SP, 0x095E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1B60, 0x6D);
 }
 
@@ -24145,6 +25173,7 @@ void test_6D_0202()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x8D);
     WriteRegisterByte(RegisterType::L, 0x52);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD82D, 0x6D);
 
@@ -24168,6 +25197,7 @@ void test_6D_0202()
     CheckRegisterByte(RegisterType::L, 0x52);
     CheckRegisterWord(RegisterType::PC, 0xD82E);
     CheckRegisterWord(RegisterType::SP, 0x59C0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD82D, 0x6D);
 }
 
@@ -24188,6 +25218,7 @@ void test_6D_0203()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x46);
     WriteRegisterByte(RegisterType::L, 0x5A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x27D4, 0x6D);
 
@@ -24211,6 +25242,7 @@ void test_6D_0203()
     CheckRegisterByte(RegisterType::L, 0x5A);
     CheckRegisterWord(RegisterType::PC, 0x27D5);
     CheckRegisterWord(RegisterType::SP, 0xE8A8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x27D4, 0x6D);
 }
 
@@ -24231,6 +25263,7 @@ void test_6D_0204()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x01);
     WriteRegisterByte(RegisterType::L, 0x95);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x613B, 0x6D);
 
@@ -24254,6 +25287,7 @@ void test_6D_0204()
     CheckRegisterByte(RegisterType::L, 0x95);
     CheckRegisterWord(RegisterType::PC, 0x613C);
     CheckRegisterWord(RegisterType::SP, 0x7C21);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x613B, 0x6D);
 }
 
@@ -24274,6 +25308,7 @@ void test_6D_0205()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xD0);
     WriteRegisterByte(RegisterType::L, 0xA6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6D2C, 0x6D);
 
@@ -24297,6 +25332,7 @@ void test_6D_0205()
     CheckRegisterByte(RegisterType::L, 0xA6);
     CheckRegisterWord(RegisterType::PC, 0x6D2D);
     CheckRegisterWord(RegisterType::SP, 0x647F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6D2C, 0x6D);
 }
 
@@ -24317,6 +25353,7 @@ void test_6D_0206()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x3C);
     WriteRegisterByte(RegisterType::L, 0xD1);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB4C3, 0x6D);
 
@@ -24340,6 +25377,7 @@ void test_6D_0206()
     CheckRegisterByte(RegisterType::L, 0xD1);
     CheckRegisterWord(RegisterType::PC, 0xB4C4);
     CheckRegisterWord(RegisterType::SP, 0x11C5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB4C3, 0x6D);
 }
 
@@ -24360,6 +25398,7 @@ void test_6D_0207()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xD5);
     WriteRegisterByte(RegisterType::L, 0xFB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6DB9, 0x6D);
 
@@ -24383,6 +25422,7 @@ void test_6D_0207()
     CheckRegisterByte(RegisterType::L, 0xFB);
     CheckRegisterWord(RegisterType::PC, 0x6DBA);
     CheckRegisterWord(RegisterType::SP, 0xD709);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6DB9, 0x6D);
 }
 
@@ -24403,6 +25443,7 @@ void test_6D_0208()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x5D);
     WriteRegisterByte(RegisterType::L, 0xFE);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6697, 0x6D);
 
@@ -24426,6 +25467,7 @@ void test_6D_0208()
     CheckRegisterByte(RegisterType::L, 0xFE);
     CheckRegisterWord(RegisterType::PC, 0x6698);
     CheckRegisterWord(RegisterType::SP, 0x8DB8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6697, 0x6D);
 }
 
@@ -24446,6 +25488,7 @@ void test_6D_0209()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x88);
     WriteRegisterByte(RegisterType::L, 0x7D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1A79, 0x6D);
 
@@ -24469,6 +25512,7 @@ void test_6D_0209()
     CheckRegisterByte(RegisterType::L, 0x7D);
     CheckRegisterWord(RegisterType::PC, 0x1A7A);
     CheckRegisterWord(RegisterType::SP, 0x0308);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1A79, 0x6D);
 }
 
@@ -24489,6 +25533,7 @@ void test_6D_020A()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xB5);
     WriteRegisterByte(RegisterType::L, 0x97);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA38B, 0x6D);
 
@@ -24512,6 +25557,7 @@ void test_6D_020A()
     CheckRegisterByte(RegisterType::L, 0x97);
     CheckRegisterWord(RegisterType::PC, 0xA38C);
     CheckRegisterWord(RegisterType::SP, 0x7041);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA38B, 0x6D);
 }
 
@@ -24532,6 +25578,7 @@ void test_6D_020B()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xF9);
     WriteRegisterByte(RegisterType::L, 0x5F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3F71, 0x6D);
 
@@ -24555,6 +25602,7 @@ void test_6D_020B()
     CheckRegisterByte(RegisterType::L, 0x5F);
     CheckRegisterWord(RegisterType::PC, 0x3F72);
     CheckRegisterWord(RegisterType::SP, 0x701A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3F71, 0x6D);
 }
 
@@ -24575,6 +25623,7 @@ void test_6D_020C()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xDC);
     WriteRegisterByte(RegisterType::L, 0xD6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3B12, 0x6D);
 
@@ -24598,6 +25647,7 @@ void test_6D_020C()
     CheckRegisterByte(RegisterType::L, 0xD6);
     CheckRegisterWord(RegisterType::PC, 0x3B13);
     CheckRegisterWord(RegisterType::SP, 0xC986);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3B12, 0x6D);
 }
 
@@ -24618,6 +25668,7 @@ void test_6D_020D()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x3A);
     WriteRegisterByte(RegisterType::L, 0x0B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6117, 0x6D);
 
@@ -24641,6 +25692,7 @@ void test_6D_020D()
     CheckRegisterByte(RegisterType::L, 0x0B);
     CheckRegisterWord(RegisterType::PC, 0x6118);
     CheckRegisterWord(RegisterType::SP, 0x0E14);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6117, 0x6D);
 }
 
@@ -24661,6 +25713,7 @@ void test_6D_020E()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x2B);
     WriteRegisterByte(RegisterType::L, 0x5A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x64DD, 0x6D);
 
@@ -24684,6 +25737,7 @@ void test_6D_020E()
     CheckRegisterByte(RegisterType::L, 0x5A);
     CheckRegisterWord(RegisterType::PC, 0x64DE);
     CheckRegisterWord(RegisterType::SP, 0x4BC6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x64DD, 0x6D);
 }
 
@@ -24704,6 +25758,7 @@ void test_6D_020F()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xA1);
     WriteRegisterByte(RegisterType::L, 0x4D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB70E, 0x6D);
 
@@ -24727,6 +25782,7 @@ void test_6D_020F()
     CheckRegisterByte(RegisterType::L, 0x4D);
     CheckRegisterWord(RegisterType::PC, 0xB70F);
     CheckRegisterWord(RegisterType::SP, 0x53DA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB70E, 0x6D);
 }
 
@@ -24747,6 +25803,7 @@ void test_6D_0210()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xAF);
     WriteRegisterByte(RegisterType::L, 0x74);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA3D9, 0x6D);
 
@@ -24770,6 +25827,7 @@ void test_6D_0210()
     CheckRegisterByte(RegisterType::L, 0x74);
     CheckRegisterWord(RegisterType::PC, 0xA3DA);
     CheckRegisterWord(RegisterType::SP, 0xDBEE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA3D9, 0x6D);
 }
 
@@ -24790,6 +25848,7 @@ void test_6D_0211()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xB6);
     WriteRegisterByte(RegisterType::L, 0xBF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5D42, 0x6D);
 
@@ -24813,6 +25872,7 @@ void test_6D_0211()
     CheckRegisterByte(RegisterType::L, 0xBF);
     CheckRegisterWord(RegisterType::PC, 0x5D43);
     CheckRegisterWord(RegisterType::SP, 0x7312);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5D42, 0x6D);
 }
 
@@ -24833,6 +25893,7 @@ void test_6D_0212()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xDC);
     WriteRegisterByte(RegisterType::L, 0xAF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x21D7, 0x6D);
 
@@ -24856,6 +25917,7 @@ void test_6D_0212()
     CheckRegisterByte(RegisterType::L, 0xAF);
     CheckRegisterWord(RegisterType::PC, 0x21D8);
     CheckRegisterWord(RegisterType::SP, 0x866C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x21D7, 0x6D);
 }
 
@@ -24876,6 +25938,7 @@ void test_6D_0213()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xE4);
     WriteRegisterByte(RegisterType::L, 0xFE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x097D, 0x6D);
 
@@ -24899,6 +25962,7 @@ void test_6D_0213()
     CheckRegisterByte(RegisterType::L, 0xFE);
     CheckRegisterWord(RegisterType::PC, 0x097E);
     CheckRegisterWord(RegisterType::SP, 0x4F01);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x097D, 0x6D);
 }
 
@@ -24919,6 +25983,7 @@ void test_6D_0214()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x2B);
     WriteRegisterByte(RegisterType::L, 0xCE);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8A16, 0x6D);
 
@@ -24942,6 +26007,7 @@ void test_6D_0214()
     CheckRegisterByte(RegisterType::L, 0xCE);
     CheckRegisterWord(RegisterType::PC, 0x8A17);
     CheckRegisterWord(RegisterType::SP, 0xCB47);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8A16, 0x6D);
 }
 
@@ -24962,6 +26028,7 @@ void test_6D_0215()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x89);
     WriteRegisterByte(RegisterType::L, 0xAE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4F0B, 0x6D);
 
@@ -24985,6 +26052,7 @@ void test_6D_0215()
     CheckRegisterByte(RegisterType::L, 0xAE);
     CheckRegisterWord(RegisterType::PC, 0x4F0C);
     CheckRegisterWord(RegisterType::SP, 0x9DE0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4F0B, 0x6D);
 }
 
@@ -25005,6 +26073,7 @@ void test_6D_0216()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x78);
     WriteRegisterByte(RegisterType::L, 0xB8);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA2F9, 0x6D);
 
@@ -25028,6 +26097,7 @@ void test_6D_0216()
     CheckRegisterByte(RegisterType::L, 0xB8);
     CheckRegisterWord(RegisterType::PC, 0xA2FA);
     CheckRegisterWord(RegisterType::SP, 0xBFAC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA2F9, 0x6D);
 }
 
@@ -25048,6 +26118,7 @@ void test_6D_0217()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x50);
     WriteRegisterByte(RegisterType::L, 0xDD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7C58, 0x6D);
 
@@ -25071,6 +26142,7 @@ void test_6D_0217()
     CheckRegisterByte(RegisterType::L, 0xDD);
     CheckRegisterWord(RegisterType::PC, 0x7C59);
     CheckRegisterWord(RegisterType::SP, 0xA43E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7C58, 0x6D);
 }
 
@@ -25091,6 +26163,7 @@ void test_6D_0218()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x0E);
     WriteRegisterByte(RegisterType::L, 0x5F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xFBC5, 0x6D);
 
@@ -25114,6 +26187,7 @@ void test_6D_0218()
     CheckRegisterByte(RegisterType::L, 0x5F);
     CheckRegisterWord(RegisterType::PC, 0xFBC6);
     CheckRegisterWord(RegisterType::SP, 0x026A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFBC5, 0x6D);
 }
 
@@ -25134,6 +26208,7 @@ void test_6D_0219()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x54);
     WriteRegisterByte(RegisterType::L, 0x71);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD8BF, 0x6D);
 
@@ -25157,6 +26232,7 @@ void test_6D_0219()
     CheckRegisterByte(RegisterType::L, 0x71);
     CheckRegisterWord(RegisterType::PC, 0xD8C0);
     CheckRegisterWord(RegisterType::SP, 0x37EB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD8BF, 0x6D);
 }
 
@@ -25177,6 +26253,7 @@ void test_6D_021A()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x8A);
     WriteRegisterByte(RegisterType::L, 0xF1);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD37B, 0x6D);
 
@@ -25200,6 +26277,7 @@ void test_6D_021A()
     CheckRegisterByte(RegisterType::L, 0xF1);
     CheckRegisterWord(RegisterType::PC, 0xD37C);
     CheckRegisterWord(RegisterType::SP, 0x43F9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD37B, 0x6D);
 }
 
@@ -25220,6 +26298,7 @@ void test_6D_021B()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x99);
     WriteRegisterByte(RegisterType::L, 0x71);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1059, 0x6D);
 
@@ -25243,6 +26322,7 @@ void test_6D_021B()
     CheckRegisterByte(RegisterType::L, 0x71);
     CheckRegisterWord(RegisterType::PC, 0x105A);
     CheckRegisterWord(RegisterType::SP, 0x61F3);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1059, 0x6D);
 }
 
@@ -25263,6 +26343,7 @@ void test_6D_021C()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x89);
     WriteRegisterByte(RegisterType::L, 0xBF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0A57, 0x6D);
 
@@ -25286,6 +26367,7 @@ void test_6D_021C()
     CheckRegisterByte(RegisterType::L, 0xBF);
     CheckRegisterWord(RegisterType::PC, 0x0A58);
     CheckRegisterWord(RegisterType::SP, 0x6FB9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0A57, 0x6D);
 }
 
@@ -25306,6 +26388,7 @@ void test_6D_021D()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x0A);
     WriteRegisterByte(RegisterType::L, 0xE6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9347, 0x6D);
 
@@ -25329,6 +26412,7 @@ void test_6D_021D()
     CheckRegisterByte(RegisterType::L, 0xE6);
     CheckRegisterWord(RegisterType::PC, 0x9348);
     CheckRegisterWord(RegisterType::SP, 0x983C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9347, 0x6D);
 }
 
@@ -25349,6 +26433,7 @@ void test_6D_021E()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x43);
     WriteRegisterByte(RegisterType::L, 0x70);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB00D, 0x6D);
 
@@ -25372,6 +26457,7 @@ void test_6D_021E()
     CheckRegisterByte(RegisterType::L, 0x70);
     CheckRegisterWord(RegisterType::PC, 0xB00E);
     CheckRegisterWord(RegisterType::SP, 0x7DC9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB00D, 0x6D);
 }
 
@@ -25392,6 +26478,7 @@ void test_6D_021F()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xC1);
     WriteRegisterByte(RegisterType::L, 0x9E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7D21, 0x6D);
 
@@ -25415,6 +26502,7 @@ void test_6D_021F()
     CheckRegisterByte(RegisterType::L, 0x9E);
     CheckRegisterWord(RegisterType::PC, 0x7D22);
     CheckRegisterWord(RegisterType::SP, 0xF3B7);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7D21, 0x6D);
 }
 
@@ -25435,6 +26523,7 @@ void test_6D_0220()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x53);
     WriteRegisterByte(RegisterType::L, 0x1F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x95CA, 0x6D);
 
@@ -25458,6 +26547,7 @@ void test_6D_0220()
     CheckRegisterByte(RegisterType::L, 0x1F);
     CheckRegisterWord(RegisterType::PC, 0x95CB);
     CheckRegisterWord(RegisterType::SP, 0x0A2D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x95CA, 0x6D);
 }
 
@@ -25478,6 +26568,7 @@ void test_6D_0221()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x25);
     WriteRegisterByte(RegisterType::L, 0xC9);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x00B0, 0x6D);
 
@@ -25501,6 +26592,7 @@ void test_6D_0221()
     CheckRegisterByte(RegisterType::L, 0xC9);
     CheckRegisterWord(RegisterType::PC, 0x00B1);
     CheckRegisterWord(RegisterType::SP, 0x168D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x00B0, 0x6D);
 }
 
@@ -25521,6 +26613,7 @@ void test_6D_0222()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x34);
     WriteRegisterByte(RegisterType::L, 0x15);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x9502, 0x6D);
 
@@ -25544,6 +26637,7 @@ void test_6D_0222()
     CheckRegisterByte(RegisterType::L, 0x15);
     CheckRegisterWord(RegisterType::PC, 0x9503);
     CheckRegisterWord(RegisterType::SP, 0x1804);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9502, 0x6D);
 }
 
@@ -25564,6 +26658,7 @@ void test_6D_0223()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x0E);
     WriteRegisterByte(RegisterType::L, 0x7C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1247, 0x6D);
 
@@ -25587,6 +26682,7 @@ void test_6D_0223()
     CheckRegisterByte(RegisterType::L, 0x7C);
     CheckRegisterWord(RegisterType::PC, 0x1248);
     CheckRegisterWord(RegisterType::SP, 0x109C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1247, 0x6D);
 }
 
@@ -25607,6 +26703,7 @@ void test_6D_0224()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x1D);
     WriteRegisterByte(RegisterType::L, 0x5A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2F10, 0x6D);
 
@@ -25630,6 +26727,7 @@ void test_6D_0224()
     CheckRegisterByte(RegisterType::L, 0x5A);
     CheckRegisterWord(RegisterType::PC, 0x2F11);
     CheckRegisterWord(RegisterType::SP, 0xFC97);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2F10, 0x6D);
 }
 
@@ -25650,6 +26748,7 @@ void test_6D_0225()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xD4);
     WriteRegisterByte(RegisterType::L, 0x2B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x96F3, 0x6D);
 
@@ -25673,6 +26772,7 @@ void test_6D_0225()
     CheckRegisterByte(RegisterType::L, 0x2B);
     CheckRegisterWord(RegisterType::PC, 0x96F4);
     CheckRegisterWord(RegisterType::SP, 0xDF41);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x96F3, 0x6D);
 }
 
@@ -25693,6 +26793,7 @@ void test_6D_0226()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x2D);
     WriteRegisterByte(RegisterType::L, 0x54);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x747E, 0x6D);
 
@@ -25716,6 +26817,7 @@ void test_6D_0226()
     CheckRegisterByte(RegisterType::L, 0x54);
     CheckRegisterWord(RegisterType::PC, 0x747F);
     CheckRegisterWord(RegisterType::SP, 0x6FCC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x747E, 0x6D);
 }
 
@@ -25736,6 +26838,7 @@ void test_6D_0227()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xC8);
     WriteRegisterByte(RegisterType::L, 0x0E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2287, 0x6D);
 
@@ -25759,6 +26862,7 @@ void test_6D_0227()
     CheckRegisterByte(RegisterType::L, 0x0E);
     CheckRegisterWord(RegisterType::PC, 0x2288);
     CheckRegisterWord(RegisterType::SP, 0xC18C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2287, 0x6D);
 }
 
@@ -25779,6 +26883,7 @@ void test_6D_0228()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x85);
     WriteRegisterByte(RegisterType::L, 0x00);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE9DB, 0x6D);
 
@@ -25802,6 +26907,7 @@ void test_6D_0228()
     CheckRegisterByte(RegisterType::L, 0x00);
     CheckRegisterWord(RegisterType::PC, 0xE9DC);
     CheckRegisterWord(RegisterType::SP, 0xF9A0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE9DB, 0x6D);
 }
 
@@ -25822,6 +26928,7 @@ void test_6D_0229()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x1A);
     WriteRegisterByte(RegisterType::L, 0x29);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3F71, 0x6D);
 
@@ -25845,6 +26952,7 @@ void test_6D_0229()
     CheckRegisterByte(RegisterType::L, 0x29);
     CheckRegisterWord(RegisterType::PC, 0x3F72);
     CheckRegisterWord(RegisterType::SP, 0x9EEA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3F71, 0x6D);
 }
 
@@ -25865,6 +26973,7 @@ void test_6D_022A()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x9C);
     WriteRegisterByte(RegisterType::L, 0x69);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6A4E, 0x6D);
 
@@ -25888,6 +26997,7 @@ void test_6D_022A()
     CheckRegisterByte(RegisterType::L, 0x69);
     CheckRegisterWord(RegisterType::PC, 0x6A4F);
     CheckRegisterWord(RegisterType::SP, 0x0A73);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6A4E, 0x6D);
 }
 
@@ -25908,6 +27018,7 @@ void test_6D_022B()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xD3);
     WriteRegisterByte(RegisterType::L, 0x12);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5445, 0x6D);
 
@@ -25931,6 +27042,7 @@ void test_6D_022B()
     CheckRegisterByte(RegisterType::L, 0x12);
     CheckRegisterWord(RegisterType::PC, 0x5446);
     CheckRegisterWord(RegisterType::SP, 0x5D55);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5445, 0x6D);
 }
 
@@ -25951,6 +27063,7 @@ void test_6D_022C()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xFE);
     WriteRegisterByte(RegisterType::L, 0x61);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x13EE, 0x6D);
 
@@ -25974,6 +27087,7 @@ void test_6D_022C()
     CheckRegisterByte(RegisterType::L, 0x61);
     CheckRegisterWord(RegisterType::PC, 0x13EF);
     CheckRegisterWord(RegisterType::SP, 0xCC9D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x13EE, 0x6D);
 }
 
@@ -25994,6 +27108,7 @@ void test_6D_022D()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x83);
     WriteRegisterByte(RegisterType::L, 0x88);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE396, 0x6D);
 
@@ -26017,6 +27132,7 @@ void test_6D_022D()
     CheckRegisterByte(RegisterType::L, 0x88);
     CheckRegisterWord(RegisterType::PC, 0xE397);
     CheckRegisterWord(RegisterType::SP, 0x63DB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE396, 0x6D);
 }
 
@@ -26037,6 +27153,7 @@ void test_6D_022E()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x03);
     WriteRegisterByte(RegisterType::L, 0xD5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x05A5, 0x6D);
 
@@ -26060,6 +27177,7 @@ void test_6D_022E()
     CheckRegisterByte(RegisterType::L, 0xD5);
     CheckRegisterWord(RegisterType::PC, 0x05A6);
     CheckRegisterWord(RegisterType::SP, 0xD016);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x05A5, 0x6D);
 }
 
@@ -26080,6 +27198,7 @@ void test_6D_022F()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x7F);
     WriteRegisterByte(RegisterType::L, 0x06);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xED7E, 0x6D);
 
@@ -26103,6 +27222,7 @@ void test_6D_022F()
     CheckRegisterByte(RegisterType::L, 0x06);
     CheckRegisterWord(RegisterType::PC, 0xED7F);
     CheckRegisterWord(RegisterType::SP, 0x389C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xED7E, 0x6D);
 }
 
@@ -26123,6 +27243,7 @@ void test_6D_0230()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xC8);
     WriteRegisterByte(RegisterType::L, 0x4B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2D99, 0x6D);
 
@@ -26146,6 +27267,7 @@ void test_6D_0230()
     CheckRegisterByte(RegisterType::L, 0x4B);
     CheckRegisterWord(RegisterType::PC, 0x2D9A);
     CheckRegisterWord(RegisterType::SP, 0xF9FB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2D99, 0x6D);
 }
 
@@ -26166,6 +27288,7 @@ void test_6D_0231()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x63);
     WriteRegisterByte(RegisterType::L, 0xED);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x709C, 0x6D);
 
@@ -26189,6 +27312,7 @@ void test_6D_0231()
     CheckRegisterByte(RegisterType::L, 0xED);
     CheckRegisterWord(RegisterType::PC, 0x709D);
     CheckRegisterWord(RegisterType::SP, 0x250F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x709C, 0x6D);
 }
 
@@ -26209,6 +27333,7 @@ void test_6D_0232()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xBC);
     WriteRegisterByte(RegisterType::L, 0x6F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x31A2, 0x6D);
 
@@ -26232,6 +27357,7 @@ void test_6D_0232()
     CheckRegisterByte(RegisterType::L, 0x6F);
     CheckRegisterWord(RegisterType::PC, 0x31A3);
     CheckRegisterWord(RegisterType::SP, 0xE49C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x31A2, 0x6D);
 }
 
@@ -26252,6 +27378,7 @@ void test_6D_0233()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x86);
     WriteRegisterByte(RegisterType::L, 0x16);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7BCF, 0x6D);
 
@@ -26275,6 +27402,7 @@ void test_6D_0233()
     CheckRegisterByte(RegisterType::L, 0x16);
     CheckRegisterWord(RegisterType::PC, 0x7BD0);
     CheckRegisterWord(RegisterType::SP, 0x5C47);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7BCF, 0x6D);
 }
 
@@ -26295,6 +27423,7 @@ void test_6D_0234()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x51);
     WriteRegisterByte(RegisterType::L, 0x32);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6366, 0x6D);
 
@@ -26318,6 +27447,7 @@ void test_6D_0234()
     CheckRegisterByte(RegisterType::L, 0x32);
     CheckRegisterWord(RegisterType::PC, 0x6367);
     CheckRegisterWord(RegisterType::SP, 0xB15F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6366, 0x6D);
 }
 
@@ -26338,6 +27468,7 @@ void test_6D_0235()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x06);
     WriteRegisterByte(RegisterType::L, 0xD0);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xADAE, 0x6D);
 
@@ -26361,6 +27492,7 @@ void test_6D_0235()
     CheckRegisterByte(RegisterType::L, 0xD0);
     CheckRegisterWord(RegisterType::PC, 0xADAF);
     CheckRegisterWord(RegisterType::SP, 0xBD50);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xADAE, 0x6D);
 }
 
@@ -26381,6 +27513,7 @@ void test_6D_0236()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x2A);
     WriteRegisterByte(RegisterType::L, 0xCF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x11B2, 0x6D);
 
@@ -26404,6 +27537,7 @@ void test_6D_0236()
     CheckRegisterByte(RegisterType::L, 0xCF);
     CheckRegisterWord(RegisterType::PC, 0x11B3);
     CheckRegisterWord(RegisterType::SP, 0xA321);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x11B2, 0x6D);
 }
 
@@ -26424,6 +27558,7 @@ void test_6D_0237()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x2A);
     WriteRegisterByte(RegisterType::L, 0x0E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF3EC, 0x6D);
 
@@ -26447,6 +27582,7 @@ void test_6D_0237()
     CheckRegisterByte(RegisterType::L, 0x0E);
     CheckRegisterWord(RegisterType::PC, 0xF3ED);
     CheckRegisterWord(RegisterType::SP, 0x116E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF3EC, 0x6D);
 }
 
@@ -26467,6 +27603,7 @@ void test_6D_0238()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xC6);
     WriteRegisterByte(RegisterType::L, 0x32);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xFF4E, 0x6D);
 
@@ -26490,6 +27627,7 @@ void test_6D_0238()
     CheckRegisterByte(RegisterType::L, 0x32);
     CheckRegisterWord(RegisterType::PC, 0xFF4F);
     CheckRegisterWord(RegisterType::SP, 0xD302);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFF4E, 0x6D);
 }
 
@@ -26510,6 +27648,7 @@ void test_6D_0239()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x98);
     WriteRegisterByte(RegisterType::L, 0x81);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9316, 0x6D);
 
@@ -26533,6 +27672,7 @@ void test_6D_0239()
     CheckRegisterByte(RegisterType::L, 0x81);
     CheckRegisterWord(RegisterType::PC, 0x9317);
     CheckRegisterWord(RegisterType::SP, 0x69EC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9316, 0x6D);
 }
 
@@ -26553,6 +27693,7 @@ void test_6D_023A()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x84);
     WriteRegisterByte(RegisterType::L, 0x0D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4D53, 0x6D);
 
@@ -26576,6 +27717,7 @@ void test_6D_023A()
     CheckRegisterByte(RegisterType::L, 0x0D);
     CheckRegisterWord(RegisterType::PC, 0x4D54);
     CheckRegisterWord(RegisterType::SP, 0x579A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4D53, 0x6D);
 }
 
@@ -26596,6 +27738,7 @@ void test_6D_023B()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xDB);
     WriteRegisterByte(RegisterType::L, 0x3D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6D5A, 0x6D);
 
@@ -26619,6 +27762,7 @@ void test_6D_023B()
     CheckRegisterByte(RegisterType::L, 0x3D);
     CheckRegisterWord(RegisterType::PC, 0x6D5B);
     CheckRegisterWord(RegisterType::SP, 0x079C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6D5A, 0x6D);
 }
 
@@ -26639,6 +27783,7 @@ void test_6D_023C()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xF1);
     WriteRegisterByte(RegisterType::L, 0xD4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7709, 0x6D);
 
@@ -26662,6 +27807,7 @@ void test_6D_023C()
     CheckRegisterByte(RegisterType::L, 0xD4);
     CheckRegisterWord(RegisterType::PC, 0x770A);
     CheckRegisterWord(RegisterType::SP, 0x2F18);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7709, 0x6D);
 }
 
@@ -26682,6 +27828,7 @@ void test_6D_023D()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x0D);
     WriteRegisterByte(RegisterType::L, 0xB2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x9912, 0x6D);
 
@@ -26705,6 +27852,7 @@ void test_6D_023D()
     CheckRegisterByte(RegisterType::L, 0xB2);
     CheckRegisterWord(RegisterType::PC, 0x9913);
     CheckRegisterWord(RegisterType::SP, 0xC185);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9912, 0x6D);
 }
 
@@ -26725,6 +27873,7 @@ void test_6D_023E()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x36);
     WriteRegisterByte(RegisterType::L, 0x1E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x672B, 0x6D);
 
@@ -26748,6 +27897,7 @@ void test_6D_023E()
     CheckRegisterByte(RegisterType::L, 0x1E);
     CheckRegisterWord(RegisterType::PC, 0x672C);
     CheckRegisterWord(RegisterType::SP, 0x6D35);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x672B, 0x6D);
 }
 
@@ -26768,6 +27918,7 @@ void test_6D_023F()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x42);
     WriteRegisterByte(RegisterType::L, 0x9B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE0A9, 0x6D);
 
@@ -26791,6 +27942,7 @@ void test_6D_023F()
     CheckRegisterByte(RegisterType::L, 0x9B);
     CheckRegisterWord(RegisterType::PC, 0xE0AA);
     CheckRegisterWord(RegisterType::SP, 0x6A9B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE0A9, 0x6D);
 }
 
@@ -26811,6 +27963,7 @@ void test_6D_0240()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x66);
     WriteRegisterByte(RegisterType::L, 0x48);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA982, 0x6D);
 
@@ -26834,6 +27987,7 @@ void test_6D_0240()
     CheckRegisterByte(RegisterType::L, 0x48);
     CheckRegisterWord(RegisterType::PC, 0xA983);
     CheckRegisterWord(RegisterType::SP, 0xB811);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA982, 0x6D);
 }
 
@@ -26854,6 +28008,7 @@ void test_6D_0241()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xEF);
     WriteRegisterByte(RegisterType::L, 0xF5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xAD8D, 0x6D);
 
@@ -26877,6 +28032,7 @@ void test_6D_0241()
     CheckRegisterByte(RegisterType::L, 0xF5);
     CheckRegisterWord(RegisterType::PC, 0xAD8E);
     CheckRegisterWord(RegisterType::SP, 0x0CF9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAD8D, 0x6D);
 }
 
@@ -26897,6 +28053,7 @@ void test_6D_0242()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x00);
     WriteRegisterByte(RegisterType::L, 0xDE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE7B9, 0x6D);
 
@@ -26920,6 +28077,7 @@ void test_6D_0242()
     CheckRegisterByte(RegisterType::L, 0xDE);
     CheckRegisterWord(RegisterType::PC, 0xE7BA);
     CheckRegisterWord(RegisterType::SP, 0x7193);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE7B9, 0x6D);
 }
 
@@ -26940,6 +28098,7 @@ void test_6D_0243()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x33);
     WriteRegisterByte(RegisterType::L, 0x48);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1D49, 0x6D);
 
@@ -26963,6 +28122,7 @@ void test_6D_0243()
     CheckRegisterByte(RegisterType::L, 0x48);
     CheckRegisterWord(RegisterType::PC, 0x1D4A);
     CheckRegisterWord(RegisterType::SP, 0x303B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1D49, 0x6D);
 }
 
@@ -26983,6 +28143,7 @@ void test_6D_0244()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xB5);
     WriteRegisterByte(RegisterType::L, 0x7D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF6E3, 0x6D);
 
@@ -27006,6 +28167,7 @@ void test_6D_0244()
     CheckRegisterByte(RegisterType::L, 0x7D);
     CheckRegisterWord(RegisterType::PC, 0xF6E4);
     CheckRegisterWord(RegisterType::SP, 0xF41A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF6E3, 0x6D);
 }
 
@@ -27026,6 +28188,7 @@ void test_6D_0245()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x28);
     WriteRegisterByte(RegisterType::L, 0x44);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA115, 0x6D);
 
@@ -27049,6 +28212,7 @@ void test_6D_0245()
     CheckRegisterByte(RegisterType::L, 0x44);
     CheckRegisterWord(RegisterType::PC, 0xA116);
     CheckRegisterWord(RegisterType::SP, 0x933F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA115, 0x6D);
 }
 
@@ -27069,6 +28233,7 @@ void test_6D_0246()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x9C);
     WriteRegisterByte(RegisterType::L, 0xC6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x07FE, 0x6D);
 
@@ -27092,6 +28257,7 @@ void test_6D_0246()
     CheckRegisterByte(RegisterType::L, 0xC6);
     CheckRegisterWord(RegisterType::PC, 0x07FF);
     CheckRegisterWord(RegisterType::SP, 0x3D2C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x07FE, 0x6D);
 }
 
@@ -27112,6 +28278,7 @@ void test_6D_0247()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xCE);
     WriteRegisterByte(RegisterType::L, 0x78);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7600, 0x6D);
 
@@ -27135,6 +28302,7 @@ void test_6D_0247()
     CheckRegisterByte(RegisterType::L, 0x78);
     CheckRegisterWord(RegisterType::PC, 0x7601);
     CheckRegisterWord(RegisterType::SP, 0xFC02);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7600, 0x6D);
 }
 
@@ -27155,6 +28323,7 @@ void test_6D_0248()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x99);
     WriteRegisterByte(RegisterType::L, 0x27);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x44CE, 0x6D);
 
@@ -27178,6 +28347,7 @@ void test_6D_0248()
     CheckRegisterByte(RegisterType::L, 0x27);
     CheckRegisterWord(RegisterType::PC, 0x44CF);
     CheckRegisterWord(RegisterType::SP, 0x3C02);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x44CE, 0x6D);
 }
 
@@ -27198,6 +28368,7 @@ void test_6D_0249()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x3F);
     WriteRegisterByte(RegisterType::L, 0xC3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA20A, 0x6D);
 
@@ -27221,6 +28392,7 @@ void test_6D_0249()
     CheckRegisterByte(RegisterType::L, 0xC3);
     CheckRegisterWord(RegisterType::PC, 0xA20B);
     CheckRegisterWord(RegisterType::SP, 0x186C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA20A, 0x6D);
 }
 
@@ -27241,6 +28413,7 @@ void test_6D_024A()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xA7);
     WriteRegisterByte(RegisterType::L, 0xB8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x145E, 0x6D);
 
@@ -27264,6 +28437,7 @@ void test_6D_024A()
     CheckRegisterByte(RegisterType::L, 0xB8);
     CheckRegisterWord(RegisterType::PC, 0x145F);
     CheckRegisterWord(RegisterType::SP, 0xFE35);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x145E, 0x6D);
 }
 
@@ -27284,6 +28458,7 @@ void test_6D_024B()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x11);
     WriteRegisterByte(RegisterType::L, 0xF7);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9306, 0x6D);
 
@@ -27307,6 +28482,7 @@ void test_6D_024B()
     CheckRegisterByte(RegisterType::L, 0xF7);
     CheckRegisterWord(RegisterType::PC, 0x9307);
     CheckRegisterWord(RegisterType::SP, 0x1A01);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9306, 0x6D);
 }
 
@@ -27327,6 +28503,7 @@ void test_6D_024C()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x41);
     WriteRegisterByte(RegisterType::L, 0xCA);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x17FC, 0x6D);
 
@@ -27350,6 +28527,7 @@ void test_6D_024C()
     CheckRegisterByte(RegisterType::L, 0xCA);
     CheckRegisterWord(RegisterType::PC, 0x17FD);
     CheckRegisterWord(RegisterType::SP, 0xAEB5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x17FC, 0x6D);
 }
 
@@ -27370,6 +28548,7 @@ void test_6D_024D()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x75);
     WriteRegisterByte(RegisterType::L, 0x23);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x22AB, 0x6D);
 
@@ -27393,6 +28572,7 @@ void test_6D_024D()
     CheckRegisterByte(RegisterType::L, 0x23);
     CheckRegisterWord(RegisterType::PC, 0x22AC);
     CheckRegisterWord(RegisterType::SP, 0x9736);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x22AB, 0x6D);
 }
 
@@ -27413,6 +28593,7 @@ void test_6D_024E()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x05);
     WriteRegisterByte(RegisterType::L, 0x10);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x65C1, 0x6D);
 
@@ -27436,6 +28617,7 @@ void test_6D_024E()
     CheckRegisterByte(RegisterType::L, 0x10);
     CheckRegisterWord(RegisterType::PC, 0x65C2);
     CheckRegisterWord(RegisterType::SP, 0x2680);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x65C1, 0x6D);
 }
 
@@ -27456,6 +28638,7 @@ void test_6D_024F()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xAC);
     WriteRegisterByte(RegisterType::L, 0x82);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2C6A, 0x6D);
 
@@ -27479,6 +28662,7 @@ void test_6D_024F()
     CheckRegisterByte(RegisterType::L, 0x82);
     CheckRegisterWord(RegisterType::PC, 0x2C6B);
     CheckRegisterWord(RegisterType::SP, 0xD135);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2C6A, 0x6D);
 }
 
@@ -27499,6 +28683,7 @@ void test_6D_0250()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x90);
     WriteRegisterByte(RegisterType::L, 0xF6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x67FB, 0x6D);
 
@@ -27522,6 +28707,7 @@ void test_6D_0250()
     CheckRegisterByte(RegisterType::L, 0xF6);
     CheckRegisterWord(RegisterType::PC, 0x67FC);
     CheckRegisterWord(RegisterType::SP, 0x092D);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x67FB, 0x6D);
 }
 
@@ -27542,6 +28728,7 @@ void test_6D_0251()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x73);
     WriteRegisterByte(RegisterType::L, 0x0F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1A3E, 0x6D);
 
@@ -27565,6 +28752,7 @@ void test_6D_0251()
     CheckRegisterByte(RegisterType::L, 0x0F);
     CheckRegisterWord(RegisterType::PC, 0x1A3F);
     CheckRegisterWord(RegisterType::SP, 0x2AD9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1A3E, 0x6D);
 }
 
@@ -27585,6 +28773,7 @@ void test_6D_0252()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x0D);
     WriteRegisterByte(RegisterType::L, 0x1A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5736, 0x6D);
 
@@ -27608,6 +28797,7 @@ void test_6D_0252()
     CheckRegisterByte(RegisterType::L, 0x1A);
     CheckRegisterWord(RegisterType::PC, 0x5737);
     CheckRegisterWord(RegisterType::SP, 0x74B8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5736, 0x6D);
 }
 
@@ -27628,6 +28818,7 @@ void test_6D_0253()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x6C);
     WriteRegisterByte(RegisterType::L, 0x9B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xDE6D, 0x6D);
 
@@ -27651,6 +28842,7 @@ void test_6D_0253()
     CheckRegisterByte(RegisterType::L, 0x9B);
     CheckRegisterWord(RegisterType::PC, 0xDE6E);
     CheckRegisterWord(RegisterType::SP, 0xF057);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDE6D, 0x6D);
 }
 
@@ -27671,6 +28863,7 @@ void test_6D_0254()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x66);
     WriteRegisterByte(RegisterType::L, 0xFB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0D59, 0x6D);
 
@@ -27694,6 +28887,7 @@ void test_6D_0254()
     CheckRegisterByte(RegisterType::L, 0xFB);
     CheckRegisterWord(RegisterType::PC, 0x0D5A);
     CheckRegisterWord(RegisterType::SP, 0xC553);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0D59, 0x6D);
 }
 
@@ -27714,6 +28908,7 @@ void test_6D_0255()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x88);
     WriteRegisterByte(RegisterType::L, 0xE7);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0B6A, 0x6D);
 
@@ -27737,6 +28932,7 @@ void test_6D_0255()
     CheckRegisterByte(RegisterType::L, 0xE7);
     CheckRegisterWord(RegisterType::PC, 0x0B6B);
     CheckRegisterWord(RegisterType::SP, 0xA254);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0B6A, 0x6D);
 }
 
@@ -27757,6 +28953,7 @@ void test_6D_0256()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x79);
     WriteRegisterByte(RegisterType::L, 0x71);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xAA9B, 0x6D);
 
@@ -27780,6 +28977,7 @@ void test_6D_0256()
     CheckRegisterByte(RegisterType::L, 0x71);
     CheckRegisterWord(RegisterType::PC, 0xAA9C);
     CheckRegisterWord(RegisterType::SP, 0x4F62);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAA9B, 0x6D);
 }
 
@@ -27800,6 +28998,7 @@ void test_6D_0257()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x10);
     WriteRegisterByte(RegisterType::L, 0xC7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6468, 0x6D);
 
@@ -27823,6 +29022,7 @@ void test_6D_0257()
     CheckRegisterByte(RegisterType::L, 0xC7);
     CheckRegisterWord(RegisterType::PC, 0x6469);
     CheckRegisterWord(RegisterType::SP, 0xC4AC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6468, 0x6D);
 }
 
@@ -27843,6 +29043,7 @@ void test_6D_0258()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x06);
     WriteRegisterByte(RegisterType::L, 0x05);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBE9F, 0x6D);
 
@@ -27866,6 +29067,7 @@ void test_6D_0258()
     CheckRegisterByte(RegisterType::L, 0x05);
     CheckRegisterWord(RegisterType::PC, 0xBEA0);
     CheckRegisterWord(RegisterType::SP, 0xCA45);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBE9F, 0x6D);
 }
 
@@ -27886,6 +29088,7 @@ void test_6D_0259()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xC4);
     WriteRegisterByte(RegisterType::L, 0xF9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xC591, 0x6D);
 
@@ -27909,6 +29112,7 @@ void test_6D_0259()
     CheckRegisterByte(RegisterType::L, 0xF9);
     CheckRegisterWord(RegisterType::PC, 0xC592);
     CheckRegisterWord(RegisterType::SP, 0xB786);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC591, 0x6D);
 }
 
@@ -27929,6 +29133,7 @@ void test_6D_025A()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x9B);
     WriteRegisterByte(RegisterType::L, 0x59);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2B77, 0x6D);
 
@@ -27952,6 +29157,7 @@ void test_6D_025A()
     CheckRegisterByte(RegisterType::L, 0x59);
     CheckRegisterWord(RegisterType::PC, 0x2B78);
     CheckRegisterWord(RegisterType::SP, 0x489A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2B77, 0x6D);
 }
 
@@ -27972,6 +29178,7 @@ void test_6D_025B()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x47);
     WriteRegisterByte(RegisterType::L, 0x1E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xC987, 0x6D);
 
@@ -27995,6 +29202,7 @@ void test_6D_025B()
     CheckRegisterByte(RegisterType::L, 0x1E);
     CheckRegisterWord(RegisterType::PC, 0xC988);
     CheckRegisterWord(RegisterType::SP, 0xAB5F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC987, 0x6D);
 }
 
@@ -28015,6 +29223,7 @@ void test_6D_025C()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xA2);
     WriteRegisterByte(RegisterType::L, 0xB8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4178, 0x6D);
 
@@ -28038,6 +29247,7 @@ void test_6D_025C()
     CheckRegisterByte(RegisterType::L, 0xB8);
     CheckRegisterWord(RegisterType::PC, 0x4179);
     CheckRegisterWord(RegisterType::SP, 0x0254);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4178, 0x6D);
 }
 
@@ -28058,6 +29268,7 @@ void test_6D_025D()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xFF);
     WriteRegisterByte(RegisterType::L, 0xE5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8F85, 0x6D);
 
@@ -28081,6 +29292,7 @@ void test_6D_025D()
     CheckRegisterByte(RegisterType::L, 0xE5);
     CheckRegisterWord(RegisterType::PC, 0x8F86);
     CheckRegisterWord(RegisterType::SP, 0xE8C6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8F85, 0x6D);
 }
 
@@ -28101,6 +29313,7 @@ void test_6D_025E()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x8E);
     WriteRegisterByte(RegisterType::L, 0x49);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC46C, 0x6D);
 
@@ -28124,6 +29337,7 @@ void test_6D_025E()
     CheckRegisterByte(RegisterType::L, 0x49);
     CheckRegisterWord(RegisterType::PC, 0xC46D);
     CheckRegisterWord(RegisterType::SP, 0x82A1);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC46C, 0x6D);
 }
 
@@ -28144,6 +29358,7 @@ void test_6D_025F()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x57);
     WriteRegisterByte(RegisterType::L, 0xAD);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x51FD, 0x6D);
 
@@ -28167,6 +29382,7 @@ void test_6D_025F()
     CheckRegisterByte(RegisterType::L, 0xAD);
     CheckRegisterWord(RegisterType::PC, 0x51FE);
     CheckRegisterWord(RegisterType::SP, 0xE549);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x51FD, 0x6D);
 }
 
@@ -28187,6 +29403,7 @@ void test_6D_0260()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x36);
     WriteRegisterByte(RegisterType::L, 0x35);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2CCB, 0x6D);
 
@@ -28210,6 +29427,7 @@ void test_6D_0260()
     CheckRegisterByte(RegisterType::L, 0x35);
     CheckRegisterWord(RegisterType::PC, 0x2CCC);
     CheckRegisterWord(RegisterType::SP, 0x9519);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2CCB, 0x6D);
 }
 
@@ -28230,6 +29448,7 @@ void test_6D_0261()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x7E);
     WriteRegisterByte(RegisterType::L, 0x30);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xCB36, 0x6D);
 
@@ -28253,6 +29472,7 @@ void test_6D_0261()
     CheckRegisterByte(RegisterType::L, 0x30);
     CheckRegisterWord(RegisterType::PC, 0xCB37);
     CheckRegisterWord(RegisterType::SP, 0x5942);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCB36, 0x6D);
 }
 
@@ -28273,6 +29493,7 @@ void test_6D_0262()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x51);
     WriteRegisterByte(RegisterType::L, 0x96);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2B9C, 0x6D);
 
@@ -28296,6 +29517,7 @@ void test_6D_0262()
     CheckRegisterByte(RegisterType::L, 0x96);
     CheckRegisterWord(RegisterType::PC, 0x2B9D);
     CheckRegisterWord(RegisterType::SP, 0x0A0D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2B9C, 0x6D);
 }
 
@@ -28316,6 +29538,7 @@ void test_6D_0263()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xD0);
     WriteRegisterByte(RegisterType::L, 0xFF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x02EC, 0x6D);
 
@@ -28339,6 +29562,7 @@ void test_6D_0263()
     CheckRegisterByte(RegisterType::L, 0xFF);
     CheckRegisterWord(RegisterType::PC, 0x02ED);
     CheckRegisterWord(RegisterType::SP, 0x6C28);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x02EC, 0x6D);
 }
 
@@ -28359,6 +29583,7 @@ void test_6D_0264()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xDE);
     WriteRegisterByte(RegisterType::L, 0x4E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x98B1, 0x6D);
 
@@ -28382,6 +29607,7 @@ void test_6D_0264()
     CheckRegisterByte(RegisterType::L, 0x4E);
     CheckRegisterWord(RegisterType::PC, 0x98B2);
     CheckRegisterWord(RegisterType::SP, 0x8E35);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x98B1, 0x6D);
 }
 
@@ -28402,6 +29628,7 @@ void test_6D_0265()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xE7);
     WriteRegisterByte(RegisterType::L, 0x2F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xBC22, 0x6D);
 
@@ -28425,6 +29652,7 @@ void test_6D_0265()
     CheckRegisterByte(RegisterType::L, 0x2F);
     CheckRegisterWord(RegisterType::PC, 0xBC23);
     CheckRegisterWord(RegisterType::SP, 0x64D2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBC22, 0x6D);
 }
 
@@ -28445,6 +29673,7 @@ void test_6D_0266()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x64);
     WriteRegisterByte(RegisterType::L, 0xCB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6C4E, 0x6D);
 
@@ -28468,6 +29697,7 @@ void test_6D_0266()
     CheckRegisterByte(RegisterType::L, 0xCB);
     CheckRegisterWord(RegisterType::PC, 0x6C4F);
     CheckRegisterWord(RegisterType::SP, 0x84E2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6C4E, 0x6D);
 }
 
@@ -28488,6 +29718,7 @@ void test_6D_0267()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xBA);
     WriteRegisterByte(RegisterType::L, 0x32);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1B32, 0x6D);
 
@@ -28511,6 +29742,7 @@ void test_6D_0267()
     CheckRegisterByte(RegisterType::L, 0x32);
     CheckRegisterWord(RegisterType::PC, 0x1B33);
     CheckRegisterWord(RegisterType::SP, 0xC1D1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1B32, 0x6D);
 }
 
@@ -28531,6 +29763,7 @@ void test_6D_0268()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x97);
     WriteRegisterByte(RegisterType::L, 0x8E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x89E4, 0x6D);
 
@@ -28554,6 +29787,7 @@ void test_6D_0268()
     CheckRegisterByte(RegisterType::L, 0x8E);
     CheckRegisterWord(RegisterType::PC, 0x89E5);
     CheckRegisterWord(RegisterType::SP, 0x0DB4);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x89E4, 0x6D);
 }
 
@@ -28574,6 +29808,7 @@ void test_6D_0269()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x21);
     WriteRegisterByte(RegisterType::L, 0x2A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF1D0, 0x6D);
 
@@ -28597,6 +29832,7 @@ void test_6D_0269()
     CheckRegisterByte(RegisterType::L, 0x2A);
     CheckRegisterWord(RegisterType::PC, 0xF1D1);
     CheckRegisterWord(RegisterType::SP, 0xE060);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF1D0, 0x6D);
 }
 
@@ -28617,6 +29853,7 @@ void test_6D_026A()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xD1);
     WriteRegisterByte(RegisterType::L, 0xD2);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xAEB7, 0x6D);
 
@@ -28640,6 +29877,7 @@ void test_6D_026A()
     CheckRegisterByte(RegisterType::L, 0xD2);
     CheckRegisterWord(RegisterType::PC, 0xAEB8);
     CheckRegisterWord(RegisterType::SP, 0xC4B9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAEB7, 0x6D);
 }
 
@@ -28660,6 +29898,7 @@ void test_6D_026B()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xBB);
     WriteRegisterByte(RegisterType::L, 0xB5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3C3E, 0x6D);
 
@@ -28683,6 +29922,7 @@ void test_6D_026B()
     CheckRegisterByte(RegisterType::L, 0xB5);
     CheckRegisterWord(RegisterType::PC, 0x3C3F);
     CheckRegisterWord(RegisterType::SP, 0x64EC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3C3E, 0x6D);
 }
 
@@ -28703,6 +29943,7 @@ void test_6D_026C()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x8E);
     WriteRegisterByte(RegisterType::L, 0xDF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8263, 0x6D);
 
@@ -28726,6 +29967,7 @@ void test_6D_026C()
     CheckRegisterByte(RegisterType::L, 0xDF);
     CheckRegisterWord(RegisterType::PC, 0x8264);
     CheckRegisterWord(RegisterType::SP, 0x3985);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8263, 0x6D);
 }
 
@@ -28746,6 +29988,7 @@ void test_6D_026D()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x96);
     WriteRegisterByte(RegisterType::L, 0x75);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB542, 0x6D);
 
@@ -28769,6 +30012,7 @@ void test_6D_026D()
     CheckRegisterByte(RegisterType::L, 0x75);
     CheckRegisterWord(RegisterType::PC, 0xB543);
     CheckRegisterWord(RegisterType::SP, 0xF326);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB542, 0x6D);
 }
 
@@ -28789,6 +30033,7 @@ void test_6D_026E()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xA4);
     WriteRegisterByte(RegisterType::L, 0x40);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xBB8D, 0x6D);
 
@@ -28812,6 +30057,7 @@ void test_6D_026E()
     CheckRegisterByte(RegisterType::L, 0x40);
     CheckRegisterWord(RegisterType::PC, 0xBB8E);
     CheckRegisterWord(RegisterType::SP, 0x122D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBB8D, 0x6D);
 }
 
@@ -28832,6 +30078,7 @@ void test_6D_026F()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x30);
     WriteRegisterByte(RegisterType::L, 0x77);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD1CF, 0x6D);
 
@@ -28855,6 +30102,7 @@ void test_6D_026F()
     CheckRegisterByte(RegisterType::L, 0x77);
     CheckRegisterWord(RegisterType::PC, 0xD1D0);
     CheckRegisterWord(RegisterType::SP, 0x68FB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD1CF, 0x6D);
 }
 
@@ -28875,6 +30123,7 @@ void test_6D_0270()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x89);
     WriteRegisterByte(RegisterType::L, 0x45);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2A71, 0x6D);
 
@@ -28898,6 +30147,7 @@ void test_6D_0270()
     CheckRegisterByte(RegisterType::L, 0x45);
     CheckRegisterWord(RegisterType::PC, 0x2A72);
     CheckRegisterWord(RegisterType::SP, 0x5301);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2A71, 0x6D);
 }
 
@@ -28918,6 +30168,7 @@ void test_6D_0271()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xE7);
     WriteRegisterByte(RegisterType::L, 0xE1);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3D99, 0x6D);
 
@@ -28941,6 +30192,7 @@ void test_6D_0271()
     CheckRegisterByte(RegisterType::L, 0xE1);
     CheckRegisterWord(RegisterType::PC, 0x3D9A);
     CheckRegisterWord(RegisterType::SP, 0xE359);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3D99, 0x6D);
 }
 
@@ -28961,6 +30213,7 @@ void test_6D_0272()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x12);
     WriteRegisterByte(RegisterType::L, 0x3B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB535, 0x6D);
 
@@ -28984,6 +30237,7 @@ void test_6D_0272()
     CheckRegisterByte(RegisterType::L, 0x3B);
     CheckRegisterWord(RegisterType::PC, 0xB536);
     CheckRegisterWord(RegisterType::SP, 0x4DE4);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB535, 0x6D);
 }
 
@@ -29004,6 +30258,7 @@ void test_6D_0273()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x17);
     WriteRegisterByte(RegisterType::L, 0x3D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8F59, 0x6D);
 
@@ -29027,6 +30282,7 @@ void test_6D_0273()
     CheckRegisterByte(RegisterType::L, 0x3D);
     CheckRegisterWord(RegisterType::PC, 0x8F5A);
     CheckRegisterWord(RegisterType::SP, 0xEFB8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8F59, 0x6D);
 }
 
@@ -29047,6 +30303,7 @@ void test_6D_0274()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xF8);
     WriteRegisterByte(RegisterType::L, 0xC0);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6EBB, 0x6D);
 
@@ -29070,6 +30327,7 @@ void test_6D_0274()
     CheckRegisterByte(RegisterType::L, 0xC0);
     CheckRegisterWord(RegisterType::PC, 0x6EBC);
     CheckRegisterWord(RegisterType::SP, 0xB5AE);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6EBB, 0x6D);
 }
 
@@ -29090,6 +30348,7 @@ void test_6D_0275()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xB6);
     WriteRegisterByte(RegisterType::L, 0x22);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xCC2C, 0x6D);
 
@@ -29113,6 +30372,7 @@ void test_6D_0275()
     CheckRegisterByte(RegisterType::L, 0x22);
     CheckRegisterWord(RegisterType::PC, 0xCC2D);
     CheckRegisterWord(RegisterType::SP, 0x6C20);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCC2C, 0x6D);
 }
 
@@ -29133,6 +30393,7 @@ void test_6D_0276()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xD2);
     WriteRegisterByte(RegisterType::L, 0x91);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB793, 0x6D);
 
@@ -29156,6 +30417,7 @@ void test_6D_0276()
     CheckRegisterByte(RegisterType::L, 0x91);
     CheckRegisterWord(RegisterType::PC, 0xB794);
     CheckRegisterWord(RegisterType::SP, 0x85F6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB793, 0x6D);
 }
 
@@ -29176,6 +30438,7 @@ void test_6D_0277()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xA5);
     WriteRegisterByte(RegisterType::L, 0xC2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7E32, 0x6D);
 
@@ -29199,6 +30462,7 @@ void test_6D_0277()
     CheckRegisterByte(RegisterType::L, 0xC2);
     CheckRegisterWord(RegisterType::PC, 0x7E33);
     CheckRegisterWord(RegisterType::SP, 0x2015);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7E32, 0x6D);
 }
 
@@ -29219,6 +30483,7 @@ void test_6D_0278()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x3B);
     WriteRegisterByte(RegisterType::L, 0x2F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB0BD, 0x6D);
 
@@ -29242,6 +30507,7 @@ void test_6D_0278()
     CheckRegisterByte(RegisterType::L, 0x2F);
     CheckRegisterWord(RegisterType::PC, 0xB0BE);
     CheckRegisterWord(RegisterType::SP, 0x0735);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB0BD, 0x6D);
 }
 
@@ -29262,6 +30528,7 @@ void test_6D_0279()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x4C);
     WriteRegisterByte(RegisterType::L, 0xA2);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5C8F, 0x6D);
 
@@ -29285,6 +30552,7 @@ void test_6D_0279()
     CheckRegisterByte(RegisterType::L, 0xA2);
     CheckRegisterWord(RegisterType::PC, 0x5C90);
     CheckRegisterWord(RegisterType::SP, 0xD20C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5C8F, 0x6D);
 }
 
@@ -29305,6 +30573,7 @@ void test_6D_027A()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x77);
     WriteRegisterByte(RegisterType::L, 0x38);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD5B6, 0x6D);
 
@@ -29328,6 +30597,7 @@ void test_6D_027A()
     CheckRegisterByte(RegisterType::L, 0x38);
     CheckRegisterWord(RegisterType::PC, 0xD5B7);
     CheckRegisterWord(RegisterType::SP, 0x1D6B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD5B6, 0x6D);
 }
 
@@ -29348,6 +30618,7 @@ void test_6D_027B()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xD6);
     WriteRegisterByte(RegisterType::L, 0xE6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x265B, 0x6D);
 
@@ -29371,6 +30642,7 @@ void test_6D_027B()
     CheckRegisterByte(RegisterType::L, 0xE6);
     CheckRegisterWord(RegisterType::PC, 0x265C);
     CheckRegisterWord(RegisterType::SP, 0xB1A1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x265B, 0x6D);
 }
 
@@ -29391,6 +30663,7 @@ void test_6D_027C()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xD6);
     WriteRegisterByte(RegisterType::L, 0xC2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4273, 0x6D);
 
@@ -29414,6 +30687,7 @@ void test_6D_027C()
     CheckRegisterByte(RegisterType::L, 0xC2);
     CheckRegisterWord(RegisterType::PC, 0x4274);
     CheckRegisterWord(RegisterType::SP, 0x8AD0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4273, 0x6D);
 }
 
@@ -29434,6 +30708,7 @@ void test_6D_027D()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x3D);
     WriteRegisterByte(RegisterType::L, 0xE3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2EC4, 0x6D);
 
@@ -29457,6 +30732,7 @@ void test_6D_027D()
     CheckRegisterByte(RegisterType::L, 0xE3);
     CheckRegisterWord(RegisterType::PC, 0x2EC5);
     CheckRegisterWord(RegisterType::SP, 0xAD25);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2EC4, 0x6D);
 }
 
@@ -29477,6 +30753,7 @@ void test_6D_027E()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xB2);
     WriteRegisterByte(RegisterType::L, 0x70);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA55F, 0x6D);
 
@@ -29500,6 +30777,7 @@ void test_6D_027E()
     CheckRegisterByte(RegisterType::L, 0x70);
     CheckRegisterWord(RegisterType::PC, 0xA560);
     CheckRegisterWord(RegisterType::SP, 0x6322);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA55F, 0x6D);
 }
 
@@ -29520,6 +30798,7 @@ void test_6D_027F()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x44);
     WriteRegisterByte(RegisterType::L, 0x07);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x17BC, 0x6D);
 
@@ -29543,6 +30822,7 @@ void test_6D_027F()
     CheckRegisterByte(RegisterType::L, 0x07);
     CheckRegisterWord(RegisterType::PC, 0x17BD);
     CheckRegisterWord(RegisterType::SP, 0xEE9A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x17BC, 0x6D);
 }
 
@@ -29563,6 +30843,7 @@ void test_6D_0280()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xE2);
     WriteRegisterByte(RegisterType::L, 0xD8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5133, 0x6D);
 
@@ -29586,6 +30867,7 @@ void test_6D_0280()
     CheckRegisterByte(RegisterType::L, 0xD8);
     CheckRegisterWord(RegisterType::PC, 0x5134);
     CheckRegisterWord(RegisterType::SP, 0x8790);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5133, 0x6D);
 }
 
@@ -29606,6 +30888,7 @@ void test_6D_0281()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x79);
     WriteRegisterByte(RegisterType::L, 0xCD);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFF64, 0x6D);
 
@@ -29629,6 +30912,7 @@ void test_6D_0281()
     CheckRegisterByte(RegisterType::L, 0xCD);
     CheckRegisterWord(RegisterType::PC, 0xFF65);
     CheckRegisterWord(RegisterType::SP, 0xD469);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFF64, 0x6D);
 }
 
@@ -29649,6 +30933,7 @@ void test_6D_0282()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xFC);
     WriteRegisterByte(RegisterType::L, 0x08);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE2BF, 0x6D);
 
@@ -29672,6 +30957,7 @@ void test_6D_0282()
     CheckRegisterByte(RegisterType::L, 0x08);
     CheckRegisterWord(RegisterType::PC, 0xE2C0);
     CheckRegisterWord(RegisterType::SP, 0xBDE6);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE2BF, 0x6D);
 }
 
@@ -29692,6 +30978,7 @@ void test_6D_0283()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x7D);
     WriteRegisterByte(RegisterType::L, 0xE1);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4D34, 0x6D);
 
@@ -29715,6 +31002,7 @@ void test_6D_0283()
     CheckRegisterByte(RegisterType::L, 0xE1);
     CheckRegisterWord(RegisterType::PC, 0x4D35);
     CheckRegisterWord(RegisterType::SP, 0xF8A1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4D34, 0x6D);
 }
 
@@ -29735,6 +31023,7 @@ void test_6D_0284()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xBD);
     WriteRegisterByte(RegisterType::L, 0x02);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD425, 0x6D);
 
@@ -29758,6 +31047,7 @@ void test_6D_0284()
     CheckRegisterByte(RegisterType::L, 0x02);
     CheckRegisterWord(RegisterType::PC, 0xD426);
     CheckRegisterWord(RegisterType::SP, 0xE002);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD425, 0x6D);
 }
 
@@ -29778,6 +31068,7 @@ void test_6D_0285()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x53);
     WriteRegisterByte(RegisterType::L, 0x34);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3B7F, 0x6D);
 
@@ -29801,6 +31092,7 @@ void test_6D_0285()
     CheckRegisterByte(RegisterType::L, 0x34);
     CheckRegisterWord(RegisterType::PC, 0x3B80);
     CheckRegisterWord(RegisterType::SP, 0x8A45);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3B7F, 0x6D);
 }
 
@@ -29821,6 +31113,7 @@ void test_6D_0286()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x77);
     WriteRegisterByte(RegisterType::L, 0x7C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4009, 0x6D);
 
@@ -29844,6 +31137,7 @@ void test_6D_0286()
     CheckRegisterByte(RegisterType::L, 0x7C);
     CheckRegisterWord(RegisterType::PC, 0x400A);
     CheckRegisterWord(RegisterType::SP, 0x4B20);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4009, 0x6D);
 }
 
@@ -29864,6 +31158,7 @@ void test_6D_0287()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xD0);
     WriteRegisterByte(RegisterType::L, 0x52);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE98B, 0x6D);
 
@@ -29887,6 +31182,7 @@ void test_6D_0287()
     CheckRegisterByte(RegisterType::L, 0x52);
     CheckRegisterWord(RegisterType::PC, 0xE98C);
     CheckRegisterWord(RegisterType::SP, 0x09CB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE98B, 0x6D);
 }
 
@@ -29907,6 +31203,7 @@ void test_6D_0288()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x87);
     WriteRegisterByte(RegisterType::L, 0x90);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDC88, 0x6D);
 
@@ -29930,6 +31227,7 @@ void test_6D_0288()
     CheckRegisterByte(RegisterType::L, 0x90);
     CheckRegisterWord(RegisterType::PC, 0xDC89);
     CheckRegisterWord(RegisterType::SP, 0x3DA5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDC88, 0x6D);
 }
 
@@ -29950,6 +31248,7 @@ void test_6D_0289()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x00);
     WriteRegisterByte(RegisterType::L, 0xDC);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD8CB, 0x6D);
 
@@ -29973,6 +31272,7 @@ void test_6D_0289()
     CheckRegisterByte(RegisterType::L, 0xDC);
     CheckRegisterWord(RegisterType::PC, 0xD8CC);
     CheckRegisterWord(RegisterType::SP, 0x4DA9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD8CB, 0x6D);
 }
 
@@ -29993,6 +31293,7 @@ void test_6D_028A()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x34);
     WriteRegisterByte(RegisterType::L, 0x1F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6EED, 0x6D);
 
@@ -30016,6 +31317,7 @@ void test_6D_028A()
     CheckRegisterByte(RegisterType::L, 0x1F);
     CheckRegisterWord(RegisterType::PC, 0x6EEE);
     CheckRegisterWord(RegisterType::SP, 0x81A2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6EED, 0x6D);
 }
 
@@ -30036,6 +31338,7 @@ void test_6D_028B()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xAA);
     WriteRegisterByte(RegisterType::L, 0x44);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB5EC, 0x6D);
 
@@ -30059,6 +31362,7 @@ void test_6D_028B()
     CheckRegisterByte(RegisterType::L, 0x44);
     CheckRegisterWord(RegisterType::PC, 0xB5ED);
     CheckRegisterWord(RegisterType::SP, 0x322C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB5EC, 0x6D);
 }
 
@@ -30079,6 +31383,7 @@ void test_6D_028C()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x20);
     WriteRegisterByte(RegisterType::L, 0x8D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x91FF, 0x6D);
 
@@ -30102,6 +31407,7 @@ void test_6D_028C()
     CheckRegisterByte(RegisterType::L, 0x8D);
     CheckRegisterWord(RegisterType::PC, 0x9200);
     CheckRegisterWord(RegisterType::SP, 0x542D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x91FF, 0x6D);
 }
 
@@ -30122,6 +31428,7 @@ void test_6D_028D()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x6A);
     WriteRegisterByte(RegisterType::L, 0xE1);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8BF8, 0x6D);
 
@@ -30145,6 +31452,7 @@ void test_6D_028D()
     CheckRegisterByte(RegisterType::L, 0xE1);
     CheckRegisterWord(RegisterType::PC, 0x8BF9);
     CheckRegisterWord(RegisterType::SP, 0x6A4E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8BF8, 0x6D);
 }
 
@@ -30165,6 +31473,7 @@ void test_6D_028E()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x1A);
     WriteRegisterByte(RegisterType::L, 0x4A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF05A, 0x6D);
 
@@ -30188,6 +31497,7 @@ void test_6D_028E()
     CheckRegisterByte(RegisterType::L, 0x4A);
     CheckRegisterWord(RegisterType::PC, 0xF05B);
     CheckRegisterWord(RegisterType::SP, 0xECDA);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF05A, 0x6D);
 }
 
@@ -30208,6 +31518,7 @@ void test_6D_028F()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x41);
     WriteRegisterByte(RegisterType::L, 0x39);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xCE93, 0x6D);
 
@@ -30231,6 +31542,7 @@ void test_6D_028F()
     CheckRegisterByte(RegisterType::L, 0x39);
     CheckRegisterWord(RegisterType::PC, 0xCE94);
     CheckRegisterWord(RegisterType::SP, 0xC918);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCE93, 0x6D);
 }
 
@@ -30251,6 +31563,7 @@ void test_6D_0290()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x7D);
     WriteRegisterByte(RegisterType::L, 0xD3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3281, 0x6D);
 
@@ -30274,6 +31587,7 @@ void test_6D_0290()
     CheckRegisterByte(RegisterType::L, 0xD3);
     CheckRegisterWord(RegisterType::PC, 0x3282);
     CheckRegisterWord(RegisterType::SP, 0x84FE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3281, 0x6D);
 }
 
@@ -30294,6 +31608,7 @@ void test_6D_0291()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xB9);
     WriteRegisterByte(RegisterType::L, 0x6C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFB39, 0x6D);
 
@@ -30317,6 +31632,7 @@ void test_6D_0291()
     CheckRegisterByte(RegisterType::L, 0x6C);
     CheckRegisterWord(RegisterType::PC, 0xFB3A);
     CheckRegisterWord(RegisterType::SP, 0xB3B5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFB39, 0x6D);
 }
 
@@ -30337,6 +31653,7 @@ void test_6D_0292()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x8E);
     WriteRegisterByte(RegisterType::L, 0xF4);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8126, 0x6D);
 
@@ -30360,6 +31677,7 @@ void test_6D_0292()
     CheckRegisterByte(RegisterType::L, 0xF4);
     CheckRegisterWord(RegisterType::PC, 0x8127);
     CheckRegisterWord(RegisterType::SP, 0x6843);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8126, 0x6D);
 }
 
@@ -30380,6 +31698,7 @@ void test_6D_0293()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x18);
     WriteRegisterByte(RegisterType::L, 0x67);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB15E, 0x6D);
 
@@ -30403,6 +31722,7 @@ void test_6D_0293()
     CheckRegisterByte(RegisterType::L, 0x67);
     CheckRegisterWord(RegisterType::PC, 0xB15F);
     CheckRegisterWord(RegisterType::SP, 0x4125);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB15E, 0x6D);
 }
 
@@ -30423,6 +31743,7 @@ void test_6D_0294()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x79);
     WriteRegisterByte(RegisterType::L, 0x11);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x33E8, 0x6D);
 
@@ -30446,6 +31767,7 @@ void test_6D_0294()
     CheckRegisterByte(RegisterType::L, 0x11);
     CheckRegisterWord(RegisterType::PC, 0x33E9);
     CheckRegisterWord(RegisterType::SP, 0x0082);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x33E8, 0x6D);
 }
 
@@ -30466,6 +31788,7 @@ void test_6D_0295()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x46);
     WriteRegisterByte(RegisterType::L, 0x48);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB856, 0x6D);
 
@@ -30489,6 +31812,7 @@ void test_6D_0295()
     CheckRegisterByte(RegisterType::L, 0x48);
     CheckRegisterWord(RegisterType::PC, 0xB857);
     CheckRegisterWord(RegisterType::SP, 0x051A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB856, 0x6D);
 }
 
@@ -30509,6 +31833,7 @@ void test_6D_0296()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x7A);
     WriteRegisterByte(RegisterType::L, 0x62);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x934A, 0x6D);
 
@@ -30532,6 +31857,7 @@ void test_6D_0296()
     CheckRegisterByte(RegisterType::L, 0x62);
     CheckRegisterWord(RegisterType::PC, 0x934B);
     CheckRegisterWord(RegisterType::SP, 0x28C5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x934A, 0x6D);
 }
 
@@ -30552,6 +31878,7 @@ void test_6D_0297()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xBB);
     WriteRegisterByte(RegisterType::L, 0x68);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDD7A, 0x6D);
 
@@ -30575,6 +31902,7 @@ void test_6D_0297()
     CheckRegisterByte(RegisterType::L, 0x68);
     CheckRegisterWord(RegisterType::PC, 0xDD7B);
     CheckRegisterWord(RegisterType::SP, 0xBD9F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDD7A, 0x6D);
 }
 
@@ -30595,6 +31923,7 @@ void test_6D_0298()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x46);
     WriteRegisterByte(RegisterType::L, 0x3F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB3BC, 0x6D);
 
@@ -30618,6 +31947,7 @@ void test_6D_0298()
     CheckRegisterByte(RegisterType::L, 0x3F);
     CheckRegisterWord(RegisterType::PC, 0xB3BD);
     CheckRegisterWord(RegisterType::SP, 0x5CD2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB3BC, 0x6D);
 }
 
@@ -30638,6 +31968,7 @@ void test_6D_0299()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x2C);
     WriteRegisterByte(RegisterType::L, 0x81);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8768, 0x6D);
 
@@ -30661,6 +31992,7 @@ void test_6D_0299()
     CheckRegisterByte(RegisterType::L, 0x81);
     CheckRegisterWord(RegisterType::PC, 0x8769);
     CheckRegisterWord(RegisterType::SP, 0x67CE);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8768, 0x6D);
 }
 
@@ -30681,6 +32013,7 @@ void test_6D_029A()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x5C);
     WriteRegisterByte(RegisterType::L, 0x15);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x58AD, 0x6D);
 
@@ -30704,6 +32037,7 @@ void test_6D_029A()
     CheckRegisterByte(RegisterType::L, 0x15);
     CheckRegisterWord(RegisterType::PC, 0x58AE);
     CheckRegisterWord(RegisterType::SP, 0x7C39);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x58AD, 0x6D);
 }
 
@@ -30724,6 +32058,7 @@ void test_6D_029B()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x6C);
     WriteRegisterByte(RegisterType::L, 0x33);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9AE1, 0x6D);
 
@@ -30747,6 +32082,7 @@ void test_6D_029B()
     CheckRegisterByte(RegisterType::L, 0x33);
     CheckRegisterWord(RegisterType::PC, 0x9AE2);
     CheckRegisterWord(RegisterType::SP, 0x1F3C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9AE1, 0x6D);
 }
 
@@ -30767,6 +32103,7 @@ void test_6D_029C()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x13);
     WriteRegisterByte(RegisterType::L, 0xBD);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2AC4, 0x6D);
 
@@ -30790,6 +32127,7 @@ void test_6D_029C()
     CheckRegisterByte(RegisterType::L, 0xBD);
     CheckRegisterWord(RegisterType::PC, 0x2AC5);
     CheckRegisterWord(RegisterType::SP, 0xE842);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2AC4, 0x6D);
 }
 
@@ -30810,6 +32148,7 @@ void test_6D_029D()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xE2);
     WriteRegisterByte(RegisterType::L, 0x82);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xAEA1, 0x6D);
 
@@ -30833,6 +32172,7 @@ void test_6D_029D()
     CheckRegisterByte(RegisterType::L, 0x82);
     CheckRegisterWord(RegisterType::PC, 0xAEA2);
     CheckRegisterWord(RegisterType::SP, 0xCC21);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAEA1, 0x6D);
 }
 
@@ -30853,6 +32193,7 @@ void test_6D_029E()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x9B);
     WriteRegisterByte(RegisterType::L, 0x26);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x48B8, 0x6D);
 
@@ -30876,6 +32217,7 @@ void test_6D_029E()
     CheckRegisterByte(RegisterType::L, 0x26);
     CheckRegisterWord(RegisterType::PC, 0x48B9);
     CheckRegisterWord(RegisterType::SP, 0x968B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x48B8, 0x6D);
 }
 
@@ -30896,6 +32238,7 @@ void test_6D_029F()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x59);
     WriteRegisterByte(RegisterType::L, 0xF9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xBF0F, 0x6D);
 
@@ -30919,6 +32262,7 @@ void test_6D_029F()
     CheckRegisterByte(RegisterType::L, 0xF9);
     CheckRegisterWord(RegisterType::PC, 0xBF10);
     CheckRegisterWord(RegisterType::SP, 0xE5EA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBF0F, 0x6D);
 }
 
@@ -30939,6 +32283,7 @@ void test_6D_02A0()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x3A);
     WriteRegisterByte(RegisterType::L, 0xC8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3A88, 0x6D);
 
@@ -30962,6 +32307,7 @@ void test_6D_02A0()
     CheckRegisterByte(RegisterType::L, 0xC8);
     CheckRegisterWord(RegisterType::PC, 0x3A89);
     CheckRegisterWord(RegisterType::SP, 0x9385);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3A88, 0x6D);
 }
 
@@ -30982,6 +32328,7 @@ void test_6D_02A1()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x7B);
     WriteRegisterByte(RegisterType::L, 0x97);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x569A, 0x6D);
 
@@ -31005,6 +32352,7 @@ void test_6D_02A1()
     CheckRegisterByte(RegisterType::L, 0x97);
     CheckRegisterWord(RegisterType::PC, 0x569B);
     CheckRegisterWord(RegisterType::SP, 0x02C1);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x569A, 0x6D);
 }
 
@@ -31025,6 +32373,7 @@ void test_6D_02A2()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x03);
     WriteRegisterByte(RegisterType::L, 0xCD);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x92B1, 0x6D);
 
@@ -31048,6 +32397,7 @@ void test_6D_02A2()
     CheckRegisterByte(RegisterType::L, 0xCD);
     CheckRegisterWord(RegisterType::PC, 0x92B2);
     CheckRegisterWord(RegisterType::SP, 0x1011);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x92B1, 0x6D);
 }
 
@@ -31068,6 +32418,7 @@ void test_6D_02A3()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x80);
     WriteRegisterByte(RegisterType::L, 0x41);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA31C, 0x6D);
 
@@ -31091,6 +32442,7 @@ void test_6D_02A3()
     CheckRegisterByte(RegisterType::L, 0x41);
     CheckRegisterWord(RegisterType::PC, 0xA31D);
     CheckRegisterWord(RegisterType::SP, 0x55A5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA31C, 0x6D);
 }
 
@@ -31111,6 +32463,7 @@ void test_6D_02A4()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x71);
     WriteRegisterByte(RegisterType::L, 0xEC);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD076, 0x6D);
 
@@ -31134,6 +32487,7 @@ void test_6D_02A4()
     CheckRegisterByte(RegisterType::L, 0xEC);
     CheckRegisterWord(RegisterType::PC, 0xD077);
     CheckRegisterWord(RegisterType::SP, 0xFED8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD076, 0x6D);
 }
 
@@ -31154,6 +32508,7 @@ void test_6D_02A5()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xCE);
     WriteRegisterByte(RegisterType::L, 0xDF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xFDBE, 0x6D);
 
@@ -31177,6 +32532,7 @@ void test_6D_02A5()
     CheckRegisterByte(RegisterType::L, 0xDF);
     CheckRegisterWord(RegisterType::PC, 0xFDBF);
     CheckRegisterWord(RegisterType::SP, 0x6FA6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFDBE, 0x6D);
 }
 
@@ -31197,6 +32553,7 @@ void test_6D_02A6()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x89);
     WriteRegisterByte(RegisterType::L, 0x36);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5F21, 0x6D);
 
@@ -31220,6 +32577,7 @@ void test_6D_02A6()
     CheckRegisterByte(RegisterType::L, 0x36);
     CheckRegisterWord(RegisterType::PC, 0x5F22);
     CheckRegisterWord(RegisterType::SP, 0x3A10);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5F21, 0x6D);
 }
 
@@ -31240,6 +32598,7 @@ void test_6D_02A7()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xB9);
     WriteRegisterByte(RegisterType::L, 0x96);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6F1D, 0x6D);
 
@@ -31263,6 +32622,7 @@ void test_6D_02A7()
     CheckRegisterByte(RegisterType::L, 0x96);
     CheckRegisterWord(RegisterType::PC, 0x6F1E);
     CheckRegisterWord(RegisterType::SP, 0x3FEE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6F1D, 0x6D);
 }
 
@@ -31283,6 +32643,7 @@ void test_6D_02A8()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x57);
     WriteRegisterByte(RegisterType::L, 0x90);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4DE1, 0x6D);
 
@@ -31306,6 +32667,7 @@ void test_6D_02A8()
     CheckRegisterByte(RegisterType::L, 0x90);
     CheckRegisterWord(RegisterType::PC, 0x4DE2);
     CheckRegisterWord(RegisterType::SP, 0x533A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4DE1, 0x6D);
 }
 
@@ -31326,6 +32688,7 @@ void test_6D_02A9()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x71);
     WriteRegisterByte(RegisterType::L, 0x90);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x04C6, 0x6D);
 
@@ -31349,6 +32712,7 @@ void test_6D_02A9()
     CheckRegisterByte(RegisterType::L, 0x90);
     CheckRegisterWord(RegisterType::PC, 0x04C7);
     CheckRegisterWord(RegisterType::SP, 0x199C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x04C6, 0x6D);
 }
 
@@ -31369,6 +32733,7 @@ void test_6D_02AA()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xBE);
     WriteRegisterByte(RegisterType::L, 0xE7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7312, 0x6D);
 
@@ -31392,6 +32757,7 @@ void test_6D_02AA()
     CheckRegisterByte(RegisterType::L, 0xE7);
     CheckRegisterWord(RegisterType::PC, 0x7313);
     CheckRegisterWord(RegisterType::SP, 0x17B2);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7312, 0x6D);
 }
 
@@ -31412,6 +32778,7 @@ void test_6D_02AB()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x4B);
     WriteRegisterByte(RegisterType::L, 0x91);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4986, 0x6D);
 
@@ -31435,6 +32802,7 @@ void test_6D_02AB()
     CheckRegisterByte(RegisterType::L, 0x91);
     CheckRegisterWord(RegisterType::PC, 0x4987);
     CheckRegisterWord(RegisterType::SP, 0xBF25);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4986, 0x6D);
 }
 
@@ -31455,6 +32823,7 @@ void test_6D_02AC()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x63);
     WriteRegisterByte(RegisterType::L, 0x8D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB3D5, 0x6D);
 
@@ -31478,6 +32847,7 @@ void test_6D_02AC()
     CheckRegisterByte(RegisterType::L, 0x8D);
     CheckRegisterWord(RegisterType::PC, 0xB3D6);
     CheckRegisterWord(RegisterType::SP, 0x6016);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB3D5, 0x6D);
 }
 
@@ -31498,6 +32868,7 @@ void test_6D_02AD()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x2F);
     WriteRegisterByte(RegisterType::L, 0x01);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x614F, 0x6D);
 
@@ -31521,6 +32892,7 @@ void test_6D_02AD()
     CheckRegisterByte(RegisterType::L, 0x01);
     CheckRegisterWord(RegisterType::PC, 0x6150);
     CheckRegisterWord(RegisterType::SP, 0xB1EF);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x614F, 0x6D);
 }
 
@@ -31541,6 +32913,7 @@ void test_6D_02AE()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x84);
     WriteRegisterByte(RegisterType::L, 0xE5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x680E, 0x6D);
 
@@ -31564,6 +32937,7 @@ void test_6D_02AE()
     CheckRegisterByte(RegisterType::L, 0xE5);
     CheckRegisterWord(RegisterType::PC, 0x680F);
     CheckRegisterWord(RegisterType::SP, 0xF384);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x680E, 0x6D);
 }
 
@@ -31584,6 +32958,7 @@ void test_6D_02AF()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x4F);
     WriteRegisterByte(RegisterType::L, 0xFD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8DDB, 0x6D);
 
@@ -31607,6 +32982,7 @@ void test_6D_02AF()
     CheckRegisterByte(RegisterType::L, 0xFD);
     CheckRegisterWord(RegisterType::PC, 0x8DDC);
     CheckRegisterWord(RegisterType::SP, 0xF2A3);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8DDB, 0x6D);
 }
 
@@ -31627,6 +33003,7 @@ void test_6D_02B0()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x87);
     WriteRegisterByte(RegisterType::L, 0x1F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x89C0, 0x6D);
 
@@ -31650,6 +33027,7 @@ void test_6D_02B0()
     CheckRegisterByte(RegisterType::L, 0x1F);
     CheckRegisterWord(RegisterType::PC, 0x89C1);
     CheckRegisterWord(RegisterType::SP, 0x88C8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x89C0, 0x6D);
 }
 
@@ -31670,6 +33048,7 @@ void test_6D_02B1()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x4A);
     WriteRegisterByte(RegisterType::L, 0x0F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6392, 0x6D);
 
@@ -31693,6 +33072,7 @@ void test_6D_02B1()
     CheckRegisterByte(RegisterType::L, 0x0F);
     CheckRegisterWord(RegisterType::PC, 0x6393);
     CheckRegisterWord(RegisterType::SP, 0x817D);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6392, 0x6D);
 }
 
@@ -31713,6 +33093,7 @@ void test_6D_02B2()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xB1);
     WriteRegisterByte(RegisterType::L, 0xC5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xCFBE, 0x6D);
 
@@ -31736,6 +33117,7 @@ void test_6D_02B2()
     CheckRegisterByte(RegisterType::L, 0xC5);
     CheckRegisterWord(RegisterType::PC, 0xCFBF);
     CheckRegisterWord(RegisterType::SP, 0x5861);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCFBE, 0x6D);
 }
 
@@ -31756,6 +33138,7 @@ void test_6D_02B3()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xB8);
     WriteRegisterByte(RegisterType::L, 0x11);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7E2B, 0x6D);
 
@@ -31779,6 +33162,7 @@ void test_6D_02B3()
     CheckRegisterByte(RegisterType::L, 0x11);
     CheckRegisterWord(RegisterType::PC, 0x7E2C);
     CheckRegisterWord(RegisterType::SP, 0x3168);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7E2B, 0x6D);
 }
 
@@ -31799,6 +33183,7 @@ void test_6D_02B4()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x85);
     WriteRegisterByte(RegisterType::L, 0x26);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF1D1, 0x6D);
 
@@ -31822,6 +33207,7 @@ void test_6D_02B4()
     CheckRegisterByte(RegisterType::L, 0x26);
     CheckRegisterWord(RegisterType::PC, 0xF1D2);
     CheckRegisterWord(RegisterType::SP, 0x9A51);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF1D1, 0x6D);
 }
 
@@ -31842,6 +33228,7 @@ void test_6D_02B5()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xA2);
     WriteRegisterByte(RegisterType::L, 0x29);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x79BD, 0x6D);
 
@@ -31865,6 +33252,7 @@ void test_6D_02B5()
     CheckRegisterByte(RegisterType::L, 0x29);
     CheckRegisterWord(RegisterType::PC, 0x79BE);
     CheckRegisterWord(RegisterType::SP, 0x3422);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x79BD, 0x6D);
 }
 
@@ -31885,6 +33273,7 @@ void test_6D_02B6()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x8A);
     WriteRegisterByte(RegisterType::L, 0x98);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA25E, 0x6D);
 
@@ -31908,6 +33297,7 @@ void test_6D_02B6()
     CheckRegisterByte(RegisterType::L, 0x98);
     CheckRegisterWord(RegisterType::PC, 0xA25F);
     CheckRegisterWord(RegisterType::SP, 0xE04C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA25E, 0x6D);
 }
 
@@ -31928,6 +33318,7 @@ void test_6D_02B7()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x77);
     WriteRegisterByte(RegisterType::L, 0xEB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE23E, 0x6D);
 
@@ -31951,6 +33342,7 @@ void test_6D_02B7()
     CheckRegisterByte(RegisterType::L, 0xEB);
     CheckRegisterWord(RegisterType::PC, 0xE23F);
     CheckRegisterWord(RegisterType::SP, 0x1008);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE23E, 0x6D);
 }
 
@@ -31971,6 +33363,7 @@ void test_6D_02B8()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x82);
     WriteRegisterByte(RegisterType::L, 0xFE);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE256, 0x6D);
 
@@ -31994,6 +33387,7 @@ void test_6D_02B8()
     CheckRegisterByte(RegisterType::L, 0xFE);
     CheckRegisterWord(RegisterType::PC, 0xE257);
     CheckRegisterWord(RegisterType::SP, 0x673B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE256, 0x6D);
 }
 
@@ -32014,6 +33408,7 @@ void test_6D_02B9()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x41);
     WriteRegisterByte(RegisterType::L, 0x89);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1835, 0x6D);
 
@@ -32037,6 +33432,7 @@ void test_6D_02B9()
     CheckRegisterByte(RegisterType::L, 0x89);
     CheckRegisterWord(RegisterType::PC, 0x1836);
     CheckRegisterWord(RegisterType::SP, 0xEBB8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1835, 0x6D);
 }
 
@@ -32057,6 +33453,7 @@ void test_6D_02BA()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xC0);
     WriteRegisterByte(RegisterType::L, 0x29);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEE8E, 0x6D);
 
@@ -32080,6 +33477,7 @@ void test_6D_02BA()
     CheckRegisterByte(RegisterType::L, 0x29);
     CheckRegisterWord(RegisterType::PC, 0xEE8F);
     CheckRegisterWord(RegisterType::SP, 0x933B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEE8E, 0x6D);
 }
 
@@ -32100,6 +33498,7 @@ void test_6D_02BB()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xF9);
     WriteRegisterByte(RegisterType::L, 0xCD);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE60B, 0x6D);
 
@@ -32123,6 +33522,7 @@ void test_6D_02BB()
     CheckRegisterByte(RegisterType::L, 0xCD);
     CheckRegisterWord(RegisterType::PC, 0xE60C);
     CheckRegisterWord(RegisterType::SP, 0x0240);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE60B, 0x6D);
 }
 
@@ -32143,6 +33543,7 @@ void test_6D_02BC()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x82);
     WriteRegisterByte(RegisterType::L, 0xE1);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBD93, 0x6D);
 
@@ -32166,6 +33567,7 @@ void test_6D_02BC()
     CheckRegisterByte(RegisterType::L, 0xE1);
     CheckRegisterWord(RegisterType::PC, 0xBD94);
     CheckRegisterWord(RegisterType::SP, 0x8C8C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBD93, 0x6D);
 }
 
@@ -32186,6 +33588,7 @@ void test_6D_02BD()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x39);
     WriteRegisterByte(RegisterType::L, 0xC8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x61F2, 0x6D);
 
@@ -32209,6 +33612,7 @@ void test_6D_02BD()
     CheckRegisterByte(RegisterType::L, 0xC8);
     CheckRegisterWord(RegisterType::PC, 0x61F3);
     CheckRegisterWord(RegisterType::SP, 0x2840);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x61F2, 0x6D);
 }
 
@@ -32229,6 +33633,7 @@ void test_6D_02BE()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xAB);
     WriteRegisterByte(RegisterType::L, 0x98);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x221D, 0x6D);
 
@@ -32252,6 +33657,7 @@ void test_6D_02BE()
     CheckRegisterByte(RegisterType::L, 0x98);
     CheckRegisterWord(RegisterType::PC, 0x221E);
     CheckRegisterWord(RegisterType::SP, 0xAA9E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x221D, 0x6D);
 }
 
@@ -32272,6 +33678,7 @@ void test_6D_02BF()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x9C);
     WriteRegisterByte(RegisterType::L, 0x38);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6EF5, 0x6D);
 
@@ -32295,6 +33702,7 @@ void test_6D_02BF()
     CheckRegisterByte(RegisterType::L, 0x38);
     CheckRegisterWord(RegisterType::PC, 0x6EF6);
     CheckRegisterWord(RegisterType::SP, 0x21DC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6EF5, 0x6D);
 }
 
@@ -32315,6 +33723,7 @@ void test_6D_02C0()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x87);
     WriteRegisterByte(RegisterType::L, 0x93);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4669, 0x6D);
 
@@ -32338,6 +33747,7 @@ void test_6D_02C0()
     CheckRegisterByte(RegisterType::L, 0x93);
     CheckRegisterWord(RegisterType::PC, 0x466A);
     CheckRegisterWord(RegisterType::SP, 0x1C30);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4669, 0x6D);
 }
 
@@ -32358,6 +33768,7 @@ void test_6D_02C1()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xB1);
     WriteRegisterByte(RegisterType::L, 0x6A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA312, 0x6D);
 
@@ -32381,6 +33792,7 @@ void test_6D_02C1()
     CheckRegisterByte(RegisterType::L, 0x6A);
     CheckRegisterWord(RegisterType::PC, 0xA313);
     CheckRegisterWord(RegisterType::SP, 0x5C90);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA312, 0x6D);
 }
 
@@ -32401,6 +33813,7 @@ void test_6D_02C2()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xF6);
     WriteRegisterByte(RegisterType::L, 0x46);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2933, 0x6D);
 
@@ -32424,6 +33837,7 @@ void test_6D_02C2()
     CheckRegisterByte(RegisterType::L, 0x46);
     CheckRegisterWord(RegisterType::PC, 0x2934);
     CheckRegisterWord(RegisterType::SP, 0x8C1B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2933, 0x6D);
 }
 
@@ -32444,6 +33858,7 @@ void test_6D_02C3()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x2D);
     WriteRegisterByte(RegisterType::L, 0x4E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD454, 0x6D);
 
@@ -32467,6 +33882,7 @@ void test_6D_02C3()
     CheckRegisterByte(RegisterType::L, 0x4E);
     CheckRegisterWord(RegisterType::PC, 0xD455);
     CheckRegisterWord(RegisterType::SP, 0x4557);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD454, 0x6D);
 }
 
@@ -32487,6 +33903,7 @@ void test_6D_02C4()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xEA);
     WriteRegisterByte(RegisterType::L, 0xF1);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1AA7, 0x6D);
 
@@ -32510,6 +33927,7 @@ void test_6D_02C4()
     CheckRegisterByte(RegisterType::L, 0xF1);
     CheckRegisterWord(RegisterType::PC, 0x1AA8);
     CheckRegisterWord(RegisterType::SP, 0x13F7);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1AA7, 0x6D);
 }
 
@@ -32530,6 +33948,7 @@ void test_6D_02C5()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xA9);
     WriteRegisterByte(RegisterType::L, 0x57);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x809E, 0x6D);
 
@@ -32553,6 +33972,7 @@ void test_6D_02C5()
     CheckRegisterByte(RegisterType::L, 0x57);
     CheckRegisterWord(RegisterType::PC, 0x809F);
     CheckRegisterWord(RegisterType::SP, 0x5D87);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x809E, 0x6D);
 }
 
@@ -32573,6 +33993,7 @@ void test_6D_02C6()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x46);
     WriteRegisterByte(RegisterType::L, 0x4D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE778, 0x6D);
 
@@ -32596,6 +34017,7 @@ void test_6D_02C6()
     CheckRegisterByte(RegisterType::L, 0x4D);
     CheckRegisterWord(RegisterType::PC, 0xE779);
     CheckRegisterWord(RegisterType::SP, 0x23C8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE778, 0x6D);
 }
 
@@ -32616,6 +34038,7 @@ void test_6D_02C7()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x1E);
     WriteRegisterByte(RegisterType::L, 0x75);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xEA9B, 0x6D);
 
@@ -32639,6 +34062,7 @@ void test_6D_02C7()
     CheckRegisterByte(RegisterType::L, 0x75);
     CheckRegisterWord(RegisterType::PC, 0xEA9C);
     CheckRegisterWord(RegisterType::SP, 0x244D);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEA9B, 0x6D);
 }
 
@@ -32659,6 +34083,7 @@ void test_6D_02C8()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xB8);
     WriteRegisterByte(RegisterType::L, 0x8E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4725, 0x6D);
 
@@ -32682,6 +34107,7 @@ void test_6D_02C8()
     CheckRegisterByte(RegisterType::L, 0x8E);
     CheckRegisterWord(RegisterType::PC, 0x4726);
     CheckRegisterWord(RegisterType::SP, 0xE033);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4725, 0x6D);
 }
 
@@ -32702,6 +34128,7 @@ void test_6D_02C9()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x11);
     WriteRegisterByte(RegisterType::L, 0x30);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4FC6, 0x6D);
 
@@ -32725,6 +34152,7 @@ void test_6D_02C9()
     CheckRegisterByte(RegisterType::L, 0x30);
     CheckRegisterWord(RegisterType::PC, 0x4FC7);
     CheckRegisterWord(RegisterType::SP, 0xEF76);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4FC6, 0x6D);
 }
 
@@ -32745,6 +34173,7 @@ void test_6D_02CA()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x80);
     WriteRegisterByte(RegisterType::L, 0xCD);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x81B2, 0x6D);
 
@@ -32768,6 +34197,7 @@ void test_6D_02CA()
     CheckRegisterByte(RegisterType::L, 0xCD);
     CheckRegisterWord(RegisterType::PC, 0x81B3);
     CheckRegisterWord(RegisterType::SP, 0x709A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x81B2, 0x6D);
 }
 
@@ -32788,6 +34218,7 @@ void test_6D_02CB()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xBC);
     WriteRegisterByte(RegisterType::L, 0xF5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x907C, 0x6D);
 
@@ -32811,6 +34242,7 @@ void test_6D_02CB()
     CheckRegisterByte(RegisterType::L, 0xF5);
     CheckRegisterWord(RegisterType::PC, 0x907D);
     CheckRegisterWord(RegisterType::SP, 0x999A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x907C, 0x6D);
 }
 
@@ -32831,6 +34263,7 @@ void test_6D_02CC()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x2F);
     WriteRegisterByte(RegisterType::L, 0x19);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4ED7, 0x6D);
 
@@ -32854,6 +34287,7 @@ void test_6D_02CC()
     CheckRegisterByte(RegisterType::L, 0x19);
     CheckRegisterWord(RegisterType::PC, 0x4ED8);
     CheckRegisterWord(RegisterType::SP, 0xD631);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4ED7, 0x6D);
 }
 
@@ -32874,6 +34308,7 @@ void test_6D_02CD()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xF2);
     WriteRegisterByte(RegisterType::L, 0x5F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6269, 0x6D);
 
@@ -32897,6 +34332,7 @@ void test_6D_02CD()
     CheckRegisterByte(RegisterType::L, 0x5F);
     CheckRegisterWord(RegisterType::PC, 0x626A);
     CheckRegisterWord(RegisterType::SP, 0xCEED);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6269, 0x6D);
 }
 
@@ -32917,6 +34353,7 @@ void test_6D_02CE()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x2A);
     WriteRegisterByte(RegisterType::L, 0xC9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0769, 0x6D);
 
@@ -32940,6 +34377,7 @@ void test_6D_02CE()
     CheckRegisterByte(RegisterType::L, 0xC9);
     CheckRegisterWord(RegisterType::PC, 0x076A);
     CheckRegisterWord(RegisterType::SP, 0x8D5F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0769, 0x6D);
 }
 
@@ -32960,6 +34398,7 @@ void test_6D_02CF()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x2A);
     WriteRegisterByte(RegisterType::L, 0xCE);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9C11, 0x6D);
 
@@ -32983,6 +34422,7 @@ void test_6D_02CF()
     CheckRegisterByte(RegisterType::L, 0xCE);
     CheckRegisterWord(RegisterType::PC, 0x9C12);
     CheckRegisterWord(RegisterType::SP, 0x5F3D);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9C11, 0x6D);
 }
 
@@ -33003,6 +34443,7 @@ void test_6D_02D0()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xA8);
     WriteRegisterByte(RegisterType::L, 0xE5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2298, 0x6D);
 
@@ -33026,6 +34467,7 @@ void test_6D_02D0()
     CheckRegisterByte(RegisterType::L, 0xE5);
     CheckRegisterWord(RegisterType::PC, 0x2299);
     CheckRegisterWord(RegisterType::SP, 0x6EAC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2298, 0x6D);
 }
 
@@ -33046,6 +34488,7 @@ void test_6D_02D1()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x6F);
     WriteRegisterByte(RegisterType::L, 0x97);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4185, 0x6D);
 
@@ -33069,6 +34512,7 @@ void test_6D_02D1()
     CheckRegisterByte(RegisterType::L, 0x97);
     CheckRegisterWord(RegisterType::PC, 0x4186);
     CheckRegisterWord(RegisterType::SP, 0x127E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4185, 0x6D);
 }
 
@@ -33089,6 +34533,7 @@ void test_6D_02D2()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x77);
     WriteRegisterByte(RegisterType::L, 0x96);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x22B9, 0x6D);
 
@@ -33112,6 +34557,7 @@ void test_6D_02D2()
     CheckRegisterByte(RegisterType::L, 0x96);
     CheckRegisterWord(RegisterType::PC, 0x22BA);
     CheckRegisterWord(RegisterType::SP, 0xD01D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x22B9, 0x6D);
 }
 
@@ -33132,6 +34578,7 @@ void test_6D_02D3()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x3F);
     WriteRegisterByte(RegisterType::L, 0x15);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6369, 0x6D);
 
@@ -33155,6 +34602,7 @@ void test_6D_02D3()
     CheckRegisterByte(RegisterType::L, 0x15);
     CheckRegisterWord(RegisterType::PC, 0x636A);
     CheckRegisterWord(RegisterType::SP, 0x6C81);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6369, 0x6D);
 }
 
@@ -33175,6 +34623,7 @@ void test_6D_02D4()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x82);
     WriteRegisterByte(RegisterType::L, 0xC7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF1D2, 0x6D);
 
@@ -33198,6 +34647,7 @@ void test_6D_02D4()
     CheckRegisterByte(RegisterType::L, 0xC7);
     CheckRegisterWord(RegisterType::PC, 0xF1D3);
     CheckRegisterWord(RegisterType::SP, 0x18E9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF1D2, 0x6D);
 }
 
@@ -33218,6 +34668,7 @@ void test_6D_02D5()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xDF);
     WriteRegisterByte(RegisterType::L, 0x9F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD1C3, 0x6D);
 
@@ -33241,6 +34692,7 @@ void test_6D_02D5()
     CheckRegisterByte(RegisterType::L, 0x9F);
     CheckRegisterWord(RegisterType::PC, 0xD1C4);
     CheckRegisterWord(RegisterType::SP, 0x8C35);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD1C3, 0x6D);
 }
 
@@ -33261,6 +34713,7 @@ void test_6D_02D6()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xAF);
     WriteRegisterByte(RegisterType::L, 0x6E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x40B1, 0x6D);
 
@@ -33284,6 +34737,7 @@ void test_6D_02D6()
     CheckRegisterByte(RegisterType::L, 0x6E);
     CheckRegisterWord(RegisterType::PC, 0x40B2);
     CheckRegisterWord(RegisterType::SP, 0xFA70);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x40B1, 0x6D);
 }
 
@@ -33304,6 +34758,7 @@ void test_6D_02D7()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xDD);
     WriteRegisterByte(RegisterType::L, 0x70);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8D8F, 0x6D);
 
@@ -33327,6 +34782,7 @@ void test_6D_02D7()
     CheckRegisterByte(RegisterType::L, 0x70);
     CheckRegisterWord(RegisterType::PC, 0x8D90);
     CheckRegisterWord(RegisterType::SP, 0xD9A8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8D8F, 0x6D);
 }
 
@@ -33347,6 +34803,7 @@ void test_6D_02D8()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x2F);
     WriteRegisterByte(RegisterType::L, 0x7F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB342, 0x6D);
 
@@ -33370,6 +34827,7 @@ void test_6D_02D8()
     CheckRegisterByte(RegisterType::L, 0x7F);
     CheckRegisterWord(RegisterType::PC, 0xB343);
     CheckRegisterWord(RegisterType::SP, 0xE6C0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB342, 0x6D);
 }
 
@@ -33390,6 +34848,7 @@ void test_6D_02D9()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xC4);
     WriteRegisterByte(RegisterType::L, 0xD4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEA5C, 0x6D);
 
@@ -33413,6 +34872,7 @@ void test_6D_02D9()
     CheckRegisterByte(RegisterType::L, 0xD4);
     CheckRegisterWord(RegisterType::PC, 0xEA5D);
     CheckRegisterWord(RegisterType::SP, 0x75FA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEA5C, 0x6D);
 }
 
@@ -33433,6 +34893,7 @@ void test_6D_02DA()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x8F);
     WriteRegisterByte(RegisterType::L, 0x1B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF480, 0x6D);
 
@@ -33456,6 +34917,7 @@ void test_6D_02DA()
     CheckRegisterByte(RegisterType::L, 0x1B);
     CheckRegisterWord(RegisterType::PC, 0xF481);
     CheckRegisterWord(RegisterType::SP, 0x5D4C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF480, 0x6D);
 }
 
@@ -33476,6 +34938,7 @@ void test_6D_02DB()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x62);
     WriteRegisterByte(RegisterType::L, 0xF5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA679, 0x6D);
 
@@ -33499,6 +34962,7 @@ void test_6D_02DB()
     CheckRegisterByte(RegisterType::L, 0xF5);
     CheckRegisterWord(RegisterType::PC, 0xA67A);
     CheckRegisterWord(RegisterType::SP, 0x7308);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA679, 0x6D);
 }
 
@@ -33519,6 +34983,7 @@ void test_6D_02DC()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x15);
     WriteRegisterByte(RegisterType::L, 0xCF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4190, 0x6D);
 
@@ -33542,6 +35007,7 @@ void test_6D_02DC()
     CheckRegisterByte(RegisterType::L, 0xCF);
     CheckRegisterWord(RegisterType::PC, 0x4191);
     CheckRegisterWord(RegisterType::SP, 0x7F34);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4190, 0x6D);
 }
 
@@ -33562,6 +35028,7 @@ void test_6D_02DD()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x77);
     WriteRegisterByte(RegisterType::L, 0xA9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1628, 0x6D);
 
@@ -33585,6 +35052,7 @@ void test_6D_02DD()
     CheckRegisterByte(RegisterType::L, 0xA9);
     CheckRegisterWord(RegisterType::PC, 0x1629);
     CheckRegisterWord(RegisterType::SP, 0x8427);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1628, 0x6D);
 }
 
@@ -33605,6 +35073,7 @@ void test_6D_02DE()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x16);
     WriteRegisterByte(RegisterType::L, 0xA6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xFAD0, 0x6D);
 
@@ -33628,6 +35097,7 @@ void test_6D_02DE()
     CheckRegisterByte(RegisterType::L, 0xA6);
     CheckRegisterWord(RegisterType::PC, 0xFAD1);
     CheckRegisterWord(RegisterType::SP, 0xFD5C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFAD0, 0x6D);
 }
 
@@ -33648,6 +35118,7 @@ void test_6D_02DF()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xDF);
     WriteRegisterByte(RegisterType::L, 0x67);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xAED1, 0x6D);
 
@@ -33671,6 +35142,7 @@ void test_6D_02DF()
     CheckRegisterByte(RegisterType::L, 0x67);
     CheckRegisterWord(RegisterType::PC, 0xAED2);
     CheckRegisterWord(RegisterType::SP, 0xB731);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAED1, 0x6D);
 }
 
@@ -33691,6 +35163,7 @@ void test_6D_02E0()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xCE);
     WriteRegisterByte(RegisterType::L, 0x01);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB610, 0x6D);
 
@@ -33714,6 +35187,7 @@ void test_6D_02E0()
     CheckRegisterByte(RegisterType::L, 0x01);
     CheckRegisterWord(RegisterType::PC, 0xB611);
     CheckRegisterWord(RegisterType::SP, 0x3392);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB610, 0x6D);
 }
 
@@ -33734,6 +35208,7 @@ void test_6D_02E1()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x53);
     WriteRegisterByte(RegisterType::L, 0x0B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB6CC, 0x6D);
 
@@ -33757,6 +35232,7 @@ void test_6D_02E1()
     CheckRegisterByte(RegisterType::L, 0x0B);
     CheckRegisterWord(RegisterType::PC, 0xB6CD);
     CheckRegisterWord(RegisterType::SP, 0x8006);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB6CC, 0x6D);
 }
 
@@ -33777,6 +35253,7 @@ void test_6D_02E2()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x30);
     WriteRegisterByte(RegisterType::L, 0xAE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB0ED, 0x6D);
 
@@ -33800,6 +35277,7 @@ void test_6D_02E2()
     CheckRegisterByte(RegisterType::L, 0xAE);
     CheckRegisterWord(RegisterType::PC, 0xB0EE);
     CheckRegisterWord(RegisterType::SP, 0x09AF);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB0ED, 0x6D);
 }
 
@@ -33820,6 +35298,7 @@ void test_6D_02E3()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xA3);
     WriteRegisterByte(RegisterType::L, 0x4A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDBB0, 0x6D);
 
@@ -33843,6 +35322,7 @@ void test_6D_02E3()
     CheckRegisterByte(RegisterType::L, 0x4A);
     CheckRegisterWord(RegisterType::PC, 0xDBB1);
     CheckRegisterWord(RegisterType::SP, 0x38B7);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDBB0, 0x6D);
 }
 
@@ -33863,6 +35343,7 @@ void test_6D_02E4()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x0C);
     WriteRegisterByte(RegisterType::L, 0x0C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x94A3, 0x6D);
 
@@ -33886,6 +35367,7 @@ void test_6D_02E4()
     CheckRegisterByte(RegisterType::L, 0x0C);
     CheckRegisterWord(RegisterType::PC, 0x94A4);
     CheckRegisterWord(RegisterType::SP, 0x8004);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x94A3, 0x6D);
 }
 
@@ -33906,6 +35388,7 @@ void test_6D_02E5()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x92);
     WriteRegisterByte(RegisterType::L, 0x99);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5327, 0x6D);
 
@@ -33929,6 +35412,7 @@ void test_6D_02E5()
     CheckRegisterByte(RegisterType::L, 0x99);
     CheckRegisterWord(RegisterType::PC, 0x5328);
     CheckRegisterWord(RegisterType::SP, 0xB12D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5327, 0x6D);
 }
 
@@ -33949,6 +35433,7 @@ void test_6D_02E6()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x2D);
     WriteRegisterByte(RegisterType::L, 0xCA);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7E6D, 0x6D);
 
@@ -33972,6 +35457,7 @@ void test_6D_02E6()
     CheckRegisterByte(RegisterType::L, 0xCA);
     CheckRegisterWord(RegisterType::PC, 0x7E6E);
     CheckRegisterWord(RegisterType::SP, 0x5F07);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7E6D, 0x6D);
 }
 
@@ -33992,6 +35478,7 @@ void test_6D_02E7()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x8C);
     WriteRegisterByte(RegisterType::L, 0x5B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC533, 0x6D);
 
@@ -34015,6 +35502,7 @@ void test_6D_02E7()
     CheckRegisterByte(RegisterType::L, 0x5B);
     CheckRegisterWord(RegisterType::PC, 0xC534);
     CheckRegisterWord(RegisterType::SP, 0x26F2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC533, 0x6D);
 }
 
@@ -34035,6 +35523,7 @@ void test_6D_02E8()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x0A);
     WriteRegisterByte(RegisterType::L, 0xA4);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x236B, 0x6D);
 
@@ -34058,6 +35547,7 @@ void test_6D_02E8()
     CheckRegisterByte(RegisterType::L, 0xA4);
     CheckRegisterWord(RegisterType::PC, 0x236C);
     CheckRegisterWord(RegisterType::SP, 0xB927);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x236B, 0x6D);
 }
 
@@ -34078,6 +35568,7 @@ void test_6D_02E9()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x62);
     WriteRegisterByte(RegisterType::L, 0x29);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF5B2, 0x6D);
 
@@ -34101,6 +35592,7 @@ void test_6D_02E9()
     CheckRegisterByte(RegisterType::L, 0x29);
     CheckRegisterWord(RegisterType::PC, 0xF5B3);
     CheckRegisterWord(RegisterType::SP, 0x2C8A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF5B2, 0x6D);
 }
 
@@ -34121,6 +35613,7 @@ void test_6D_02EA()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x8E);
     WriteRegisterByte(RegisterType::L, 0xC6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xED11, 0x6D);
 
@@ -34144,6 +35637,7 @@ void test_6D_02EA()
     CheckRegisterByte(RegisterType::L, 0xC6);
     CheckRegisterWord(RegisterType::PC, 0xED12);
     CheckRegisterWord(RegisterType::SP, 0xEF21);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xED11, 0x6D);
 }
 
@@ -34164,6 +35658,7 @@ void test_6D_02EB()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x2D);
     WriteRegisterByte(RegisterType::L, 0xD1);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2D9C, 0x6D);
 
@@ -34187,6 +35682,7 @@ void test_6D_02EB()
     CheckRegisterByte(RegisterType::L, 0xD1);
     CheckRegisterWord(RegisterType::PC, 0x2D9D);
     CheckRegisterWord(RegisterType::SP, 0x459B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2D9C, 0x6D);
 }
 
@@ -34207,6 +35703,7 @@ void test_6D_02EC()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x88);
     WriteRegisterByte(RegisterType::L, 0x9A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x02C0, 0x6D);
 
@@ -34230,6 +35727,7 @@ void test_6D_02EC()
     CheckRegisterByte(RegisterType::L, 0x9A);
     CheckRegisterWord(RegisterType::PC, 0x02C1);
     CheckRegisterWord(RegisterType::SP, 0xDA13);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x02C0, 0x6D);
 }
 
@@ -34250,6 +35748,7 @@ void test_6D_02ED()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x96);
     WriteRegisterByte(RegisterType::L, 0xC5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x618D, 0x6D);
 
@@ -34273,6 +35772,7 @@ void test_6D_02ED()
     CheckRegisterByte(RegisterType::L, 0xC5);
     CheckRegisterWord(RegisterType::PC, 0x618E);
     CheckRegisterWord(RegisterType::SP, 0x47DC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x618D, 0x6D);
 }
 
@@ -34293,6 +35793,7 @@ void test_6D_02EE()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x2E);
     WriteRegisterByte(RegisterType::L, 0xD2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE528, 0x6D);
 
@@ -34316,6 +35817,7 @@ void test_6D_02EE()
     CheckRegisterByte(RegisterType::L, 0xD2);
     CheckRegisterWord(RegisterType::PC, 0xE529);
     CheckRegisterWord(RegisterType::SP, 0x3221);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE528, 0x6D);
 }
 
@@ -34336,6 +35838,7 @@ void test_6D_02EF()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xFA);
     WriteRegisterByte(RegisterType::L, 0xAE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x219E, 0x6D);
 
@@ -34359,6 +35862,7 @@ void test_6D_02EF()
     CheckRegisterByte(RegisterType::L, 0xAE);
     CheckRegisterWord(RegisterType::PC, 0x219F);
     CheckRegisterWord(RegisterType::SP, 0xEF5A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x219E, 0x6D);
 }
 
@@ -34379,6 +35883,7 @@ void test_6D_02F0()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x75);
     WriteRegisterByte(RegisterType::L, 0x8D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0A15, 0x6D);
 
@@ -34402,6 +35907,7 @@ void test_6D_02F0()
     CheckRegisterByte(RegisterType::L, 0x8D);
     CheckRegisterWord(RegisterType::PC, 0x0A16);
     CheckRegisterWord(RegisterType::SP, 0x522E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0A15, 0x6D);
 }
 
@@ -34422,6 +35928,7 @@ void test_6D_02F1()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x9C);
     WriteRegisterByte(RegisterType::L, 0xB8);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x21B8, 0x6D);
 
@@ -34445,6 +35952,7 @@ void test_6D_02F1()
     CheckRegisterByte(RegisterType::L, 0xB8);
     CheckRegisterWord(RegisterType::PC, 0x21B9);
     CheckRegisterWord(RegisterType::SP, 0x8F2A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x21B8, 0x6D);
 }
 
@@ -34465,6 +35973,7 @@ void test_6D_02F2()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x63);
     WriteRegisterByte(RegisterType::L, 0x56);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4B5E, 0x6D);
 
@@ -34488,6 +35997,7 @@ void test_6D_02F2()
     CheckRegisterByte(RegisterType::L, 0x56);
     CheckRegisterWord(RegisterType::PC, 0x4B5F);
     CheckRegisterWord(RegisterType::SP, 0x0DB8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4B5E, 0x6D);
 }
 
@@ -34508,6 +36018,7 @@ void test_6D_02F3()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x4E);
     WriteRegisterByte(RegisterType::L, 0x18);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7C17, 0x6D);
 
@@ -34531,6 +36042,7 @@ void test_6D_02F3()
     CheckRegisterByte(RegisterType::L, 0x18);
     CheckRegisterWord(RegisterType::PC, 0x7C18);
     CheckRegisterWord(RegisterType::SP, 0x8552);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7C17, 0x6D);
 }
 
@@ -34551,6 +36063,7 @@ void test_6D_02F4()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x4C);
     WriteRegisterByte(RegisterType::L, 0x3D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xAEE0, 0x6D);
 
@@ -34574,6 +36087,7 @@ void test_6D_02F4()
     CheckRegisterByte(RegisterType::L, 0x3D);
     CheckRegisterWord(RegisterType::PC, 0xAEE1);
     CheckRegisterWord(RegisterType::SP, 0x6E7A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAEE0, 0x6D);
 }
 
@@ -34594,6 +36108,7 @@ void test_6D_02F5()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xA3);
     WriteRegisterByte(RegisterType::L, 0xE2);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4035, 0x6D);
 
@@ -34617,6 +36132,7 @@ void test_6D_02F5()
     CheckRegisterByte(RegisterType::L, 0xE2);
     CheckRegisterWord(RegisterType::PC, 0x4036);
     CheckRegisterWord(RegisterType::SP, 0xDA3C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4035, 0x6D);
 }
 
@@ -34637,6 +36153,7 @@ void test_6D_02F6()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x46);
     WriteRegisterByte(RegisterType::L, 0xD5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xECF5, 0x6D);
 
@@ -34660,6 +36177,7 @@ void test_6D_02F6()
     CheckRegisterByte(RegisterType::L, 0xD5);
     CheckRegisterWord(RegisterType::PC, 0xECF6);
     CheckRegisterWord(RegisterType::SP, 0xBA08);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xECF5, 0x6D);
 }
 
@@ -34680,6 +36198,7 @@ void test_6D_02F7()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x21);
     WriteRegisterByte(RegisterType::L, 0xEB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD2F9, 0x6D);
 
@@ -34703,6 +36222,7 @@ void test_6D_02F7()
     CheckRegisterByte(RegisterType::L, 0xEB);
     CheckRegisterWord(RegisterType::PC, 0xD2FA);
     CheckRegisterWord(RegisterType::SP, 0x8A70);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD2F9, 0x6D);
 }
 
@@ -34723,6 +36243,7 @@ void test_6D_02F8()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xD2);
     WriteRegisterByte(RegisterType::L, 0x2E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2C3B, 0x6D);
 
@@ -34746,6 +36267,7 @@ void test_6D_02F8()
     CheckRegisterByte(RegisterType::L, 0x2E);
     CheckRegisterWord(RegisterType::PC, 0x2C3C);
     CheckRegisterWord(RegisterType::SP, 0xEE2C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2C3B, 0x6D);
 }
 
@@ -34766,6 +36288,7 @@ void test_6D_02F9()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x1E);
     WriteRegisterByte(RegisterType::L, 0x46);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x29F0, 0x6D);
 
@@ -34789,6 +36312,7 @@ void test_6D_02F9()
     CheckRegisterByte(RegisterType::L, 0x46);
     CheckRegisterWord(RegisterType::PC, 0x29F1);
     CheckRegisterWord(RegisterType::SP, 0x8574);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x29F0, 0x6D);
 }
 
@@ -34809,6 +36333,7 @@ void test_6D_02FA()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x90);
     WriteRegisterByte(RegisterType::L, 0x51);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xAF7A, 0x6D);
 
@@ -34832,6 +36357,7 @@ void test_6D_02FA()
     CheckRegisterByte(RegisterType::L, 0x51);
     CheckRegisterWord(RegisterType::PC, 0xAF7B);
     CheckRegisterWord(RegisterType::SP, 0xDB17);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAF7A, 0x6D);
 }
 
@@ -34852,6 +36378,7 @@ void test_6D_02FB()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xDE);
     WriteRegisterByte(RegisterType::L, 0x01);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x31B2, 0x6D);
 
@@ -34875,6 +36402,7 @@ void test_6D_02FB()
     CheckRegisterByte(RegisterType::L, 0x01);
     CheckRegisterWord(RegisterType::PC, 0x31B3);
     CheckRegisterWord(RegisterType::SP, 0xF0BF);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x31B2, 0x6D);
 }
 
@@ -34895,6 +36423,7 @@ void test_6D_02FC()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x3C);
     WriteRegisterByte(RegisterType::L, 0x24);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3CC8, 0x6D);
 
@@ -34918,6 +36447,7 @@ void test_6D_02FC()
     CheckRegisterByte(RegisterType::L, 0x24);
     CheckRegisterWord(RegisterType::PC, 0x3CC9);
     CheckRegisterWord(RegisterType::SP, 0x7230);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3CC8, 0x6D);
 }
 
@@ -34938,6 +36468,7 @@ void test_6D_02FD()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x07);
     WriteRegisterByte(RegisterType::L, 0xD9);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x74DC, 0x6D);
 
@@ -34961,6 +36492,7 @@ void test_6D_02FD()
     CheckRegisterByte(RegisterType::L, 0xD9);
     CheckRegisterWord(RegisterType::PC, 0x74DD);
     CheckRegisterWord(RegisterType::SP, 0xE31E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x74DC, 0x6D);
 }
 
@@ -34981,6 +36513,7 @@ void test_6D_02FE()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x0F);
     WriteRegisterByte(RegisterType::L, 0x16);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0A6B, 0x6D);
 
@@ -35004,6 +36537,7 @@ void test_6D_02FE()
     CheckRegisterByte(RegisterType::L, 0x16);
     CheckRegisterWord(RegisterType::PC, 0x0A6C);
     CheckRegisterWord(RegisterType::SP, 0xEB56);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0A6B, 0x6D);
 }
 
@@ -35024,6 +36558,7 @@ void test_6D_02FF()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x16);
     WriteRegisterByte(RegisterType::L, 0xD1);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE0C8, 0x6D);
 
@@ -35047,6 +36582,7 @@ void test_6D_02FF()
     CheckRegisterByte(RegisterType::L, 0xD1);
     CheckRegisterWord(RegisterType::PC, 0xE0C9);
     CheckRegisterWord(RegisterType::SP, 0xF55C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE0C8, 0x6D);
 }
 
@@ -35067,6 +36603,7 @@ void test_6D_0300()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x49);
     WriteRegisterByte(RegisterType::L, 0xCD);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x60B2, 0x6D);
 
@@ -35090,6 +36627,7 @@ void test_6D_0300()
     CheckRegisterByte(RegisterType::L, 0xCD);
     CheckRegisterWord(RegisterType::PC, 0x60B3);
     CheckRegisterWord(RegisterType::SP, 0x3993);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x60B2, 0x6D);
 }
 
@@ -35110,6 +36648,7 @@ void test_6D_0301()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xC7);
     WriteRegisterByte(RegisterType::L, 0x4C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA0D2, 0x6D);
 
@@ -35133,6 +36672,7 @@ void test_6D_0301()
     CheckRegisterByte(RegisterType::L, 0x4C);
     CheckRegisterWord(RegisterType::PC, 0xA0D3);
     CheckRegisterWord(RegisterType::SP, 0xEA3A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA0D2, 0x6D);
 }
 
@@ -35153,6 +36693,7 @@ void test_6D_0302()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x0A);
     WriteRegisterByte(RegisterType::L, 0xC6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xBB9B, 0x6D);
 
@@ -35176,6 +36717,7 @@ void test_6D_0302()
     CheckRegisterByte(RegisterType::L, 0xC6);
     CheckRegisterWord(RegisterType::PC, 0xBB9C);
     CheckRegisterWord(RegisterType::SP, 0xCDB5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBB9B, 0x6D);
 }
 
@@ -35196,6 +36738,7 @@ void test_6D_0303()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x05);
     WriteRegisterByte(RegisterType::L, 0xCA);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x046B, 0x6D);
 
@@ -35219,6 +36762,7 @@ void test_6D_0303()
     CheckRegisterByte(RegisterType::L, 0xCA);
     CheckRegisterWord(RegisterType::PC, 0x046C);
     CheckRegisterWord(RegisterType::SP, 0x77D5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x046B, 0x6D);
 }
 
@@ -35239,6 +36783,7 @@ void test_6D_0304()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x38);
     WriteRegisterByte(RegisterType::L, 0x1F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE978, 0x6D);
 
@@ -35262,6 +36807,7 @@ void test_6D_0304()
     CheckRegisterByte(RegisterType::L, 0x1F);
     CheckRegisterWord(RegisterType::PC, 0xE979);
     CheckRegisterWord(RegisterType::SP, 0x40DB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE978, 0x6D);
 }
 
@@ -35282,6 +36828,7 @@ void test_6D_0305()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x4B);
     WriteRegisterByte(RegisterType::L, 0x44);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2BF0, 0x6D);
 
@@ -35305,6 +36852,7 @@ void test_6D_0305()
     CheckRegisterByte(RegisterType::L, 0x44);
     CheckRegisterWord(RegisterType::PC, 0x2BF1);
     CheckRegisterWord(RegisterType::SP, 0xAE4F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2BF0, 0x6D);
 }
 
@@ -35325,6 +36873,7 @@ void test_6D_0306()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xFA);
     WriteRegisterByte(RegisterType::L, 0x34);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x56AD, 0x6D);
 
@@ -35348,6 +36897,7 @@ void test_6D_0306()
     CheckRegisterByte(RegisterType::L, 0x34);
     CheckRegisterWord(RegisterType::PC, 0x56AE);
     CheckRegisterWord(RegisterType::SP, 0x554C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x56AD, 0x6D);
 }
 
@@ -35368,6 +36918,7 @@ void test_6D_0307()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xD6);
     WriteRegisterByte(RegisterType::L, 0x67);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xCADE, 0x6D);
 
@@ -35391,6 +36942,7 @@ void test_6D_0307()
     CheckRegisterByte(RegisterType::L, 0x67);
     CheckRegisterWord(RegisterType::PC, 0xCADF);
     CheckRegisterWord(RegisterType::SP, 0xD691);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCADE, 0x6D);
 }
 
@@ -35411,6 +36963,7 @@ void test_6D_0308()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x7A);
     WriteRegisterByte(RegisterType::L, 0x1A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2269, 0x6D);
 
@@ -35434,6 +36987,7 @@ void test_6D_0308()
     CheckRegisterByte(RegisterType::L, 0x1A);
     CheckRegisterWord(RegisterType::PC, 0x226A);
     CheckRegisterWord(RegisterType::SP, 0xEB3A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2269, 0x6D);
 }
 
@@ -35454,6 +37008,7 @@ void test_6D_0309()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x09);
     WriteRegisterByte(RegisterType::L, 0xEB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x660E, 0x6D);
 
@@ -35477,6 +37032,7 @@ void test_6D_0309()
     CheckRegisterByte(RegisterType::L, 0xEB);
     CheckRegisterWord(RegisterType::PC, 0x660F);
     CheckRegisterWord(RegisterType::SP, 0xECA6);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x660E, 0x6D);
 }
 
@@ -35497,6 +37053,7 @@ void test_6D_030A()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x08);
     WriteRegisterByte(RegisterType::L, 0x0C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7EF5, 0x6D);
 
@@ -35520,6 +37077,7 @@ void test_6D_030A()
     CheckRegisterByte(RegisterType::L, 0x0C);
     CheckRegisterWord(RegisterType::PC, 0x7EF6);
     CheckRegisterWord(RegisterType::SP, 0x72C0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7EF5, 0x6D);
 }
 
@@ -35540,6 +37098,7 @@ void test_6D_030B()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xC8);
     WriteRegisterByte(RegisterType::L, 0xCD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA641, 0x6D);
 
@@ -35563,6 +37122,7 @@ void test_6D_030B()
     CheckRegisterByte(RegisterType::L, 0xCD);
     CheckRegisterWord(RegisterType::PC, 0xA642);
     CheckRegisterWord(RegisterType::SP, 0x6A0A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA641, 0x6D);
 }
 
@@ -35583,6 +37143,7 @@ void test_6D_030C()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xC2);
     WriteRegisterByte(RegisterType::L, 0xA5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0681, 0x6D);
 
@@ -35606,6 +37167,7 @@ void test_6D_030C()
     CheckRegisterByte(RegisterType::L, 0xA5);
     CheckRegisterWord(RegisterType::PC, 0x0682);
     CheckRegisterWord(RegisterType::SP, 0x1A59);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0681, 0x6D);
 }
 
@@ -35626,6 +37188,7 @@ void test_6D_030D()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x01);
     WriteRegisterByte(RegisterType::L, 0xE3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x62D9, 0x6D);
 
@@ -35649,6 +37212,7 @@ void test_6D_030D()
     CheckRegisterByte(RegisterType::L, 0xE3);
     CheckRegisterWord(RegisterType::PC, 0x62DA);
     CheckRegisterWord(RegisterType::SP, 0x300F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x62D9, 0x6D);
 }
 
@@ -35669,6 +37233,7 @@ void test_6D_030E()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x98);
     WriteRegisterByte(RegisterType::L, 0x6F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4FD1, 0x6D);
 
@@ -35692,6 +37257,7 @@ void test_6D_030E()
     CheckRegisterByte(RegisterType::L, 0x6F);
     CheckRegisterWord(RegisterType::PC, 0x4FD2);
     CheckRegisterWord(RegisterType::SP, 0x385C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4FD1, 0x6D);
 }
 
@@ -35712,6 +37278,7 @@ void test_6D_030F()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x02);
     WriteRegisterByte(RegisterType::L, 0xEA);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xBFB6, 0x6D);
 
@@ -35735,6 +37302,7 @@ void test_6D_030F()
     CheckRegisterByte(RegisterType::L, 0xEA);
     CheckRegisterWord(RegisterType::PC, 0xBFB7);
     CheckRegisterWord(RegisterType::SP, 0x8E1A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBFB6, 0x6D);
 }
 
@@ -35755,6 +37323,7 @@ void test_6D_0310()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xFB);
     WriteRegisterByte(RegisterType::L, 0x87);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5778, 0x6D);
 
@@ -35778,6 +37347,7 @@ void test_6D_0310()
     CheckRegisterByte(RegisterType::L, 0x87);
     CheckRegisterWord(RegisterType::PC, 0x5779);
     CheckRegisterWord(RegisterType::SP, 0xAFE2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5778, 0x6D);
 }
 
@@ -35798,6 +37368,7 @@ void test_6D_0311()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xCF);
     WriteRegisterByte(RegisterType::L, 0x4E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2B02, 0x6D);
 
@@ -35821,6 +37392,7 @@ void test_6D_0311()
     CheckRegisterByte(RegisterType::L, 0x4E);
     CheckRegisterWord(RegisterType::PC, 0x2B03);
     CheckRegisterWord(RegisterType::SP, 0xD91F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2B02, 0x6D);
 }
 
@@ -35841,6 +37413,7 @@ void test_6D_0312()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x34);
     WriteRegisterByte(RegisterType::L, 0x34);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x54B3, 0x6D);
 
@@ -35864,6 +37437,7 @@ void test_6D_0312()
     CheckRegisterByte(RegisterType::L, 0x34);
     CheckRegisterWord(RegisterType::PC, 0x54B4);
     CheckRegisterWord(RegisterType::SP, 0x8D1F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x54B3, 0x6D);
 }
 
@@ -35884,6 +37458,7 @@ void test_6D_0313()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x58);
     WriteRegisterByte(RegisterType::L, 0xD8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0869, 0x6D);
 
@@ -35907,6 +37482,7 @@ void test_6D_0313()
     CheckRegisterByte(RegisterType::L, 0xD8);
     CheckRegisterWord(RegisterType::PC, 0x086A);
     CheckRegisterWord(RegisterType::SP, 0xE97C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0869, 0x6D);
 }
 
@@ -35927,6 +37503,7 @@ void test_6D_0314()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xDF);
     WriteRegisterByte(RegisterType::L, 0x29);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBD9E, 0x6D);
 
@@ -35950,6 +37527,7 @@ void test_6D_0314()
     CheckRegisterByte(RegisterType::L, 0x29);
     CheckRegisterWord(RegisterType::PC, 0xBD9F);
     CheckRegisterWord(RegisterType::SP, 0xD6E9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBD9E, 0x6D);
 }
 
@@ -35970,6 +37548,7 @@ void test_6D_0315()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x5E);
     WriteRegisterByte(RegisterType::L, 0x1D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7C2E, 0x6D);
 
@@ -35993,6 +37572,7 @@ void test_6D_0315()
     CheckRegisterByte(RegisterType::L, 0x1D);
     CheckRegisterWord(RegisterType::PC, 0x7C2F);
     CheckRegisterWord(RegisterType::SP, 0x34BE);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7C2E, 0x6D);
 }
 
@@ -36013,6 +37593,7 @@ void test_6D_0316()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x66);
     WriteRegisterByte(RegisterType::L, 0x1C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9BCB, 0x6D);
 
@@ -36036,6 +37617,7 @@ void test_6D_0316()
     CheckRegisterByte(RegisterType::L, 0x1C);
     CheckRegisterWord(RegisterType::PC, 0x9BCC);
     CheckRegisterWord(RegisterType::SP, 0x0E91);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9BCB, 0x6D);
 }
 
@@ -36056,6 +37638,7 @@ void test_6D_0317()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xB9);
     WriteRegisterByte(RegisterType::L, 0x0D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5695, 0x6D);
 
@@ -36079,6 +37662,7 @@ void test_6D_0317()
     CheckRegisterByte(RegisterType::L, 0x0D);
     CheckRegisterWord(RegisterType::PC, 0x5696);
     CheckRegisterWord(RegisterType::SP, 0x8A0E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5695, 0x6D);
 }
 
@@ -36099,6 +37683,7 @@ void test_6D_0318()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xAA);
     WriteRegisterByte(RegisterType::L, 0xBF);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x47C6, 0x6D);
 
@@ -36122,6 +37707,7 @@ void test_6D_0318()
     CheckRegisterByte(RegisterType::L, 0xBF);
     CheckRegisterWord(RegisterType::PC, 0x47C7);
     CheckRegisterWord(RegisterType::SP, 0x3507);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x47C6, 0x6D);
 }
 
@@ -36142,6 +37728,7 @@ void test_6D_0319()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x62);
     WriteRegisterByte(RegisterType::L, 0x28);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x922B, 0x6D);
 
@@ -36165,6 +37752,7 @@ void test_6D_0319()
     CheckRegisterByte(RegisterType::L, 0x28);
     CheckRegisterWord(RegisterType::PC, 0x922C);
     CheckRegisterWord(RegisterType::SP, 0x64F3);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x922B, 0x6D);
 }
 
@@ -36185,6 +37773,7 @@ void test_6D_031A()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xE4);
     WriteRegisterByte(RegisterType::L, 0x8C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3EE1, 0x6D);
 
@@ -36208,6 +37797,7 @@ void test_6D_031A()
     CheckRegisterByte(RegisterType::L, 0x8C);
     CheckRegisterWord(RegisterType::PC, 0x3EE2);
     CheckRegisterWord(RegisterType::SP, 0x1AFA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3EE1, 0x6D);
 }
 
@@ -36228,6 +37818,7 @@ void test_6D_031B()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xAF);
     WriteRegisterByte(RegisterType::L, 0x1D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8556, 0x6D);
 
@@ -36251,6 +37842,7 @@ void test_6D_031B()
     CheckRegisterByte(RegisterType::L, 0x1D);
     CheckRegisterWord(RegisterType::PC, 0x8557);
     CheckRegisterWord(RegisterType::SP, 0xA7A6);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8556, 0x6D);
 }
 
@@ -36271,6 +37863,7 @@ void test_6D_031C()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x3C);
     WriteRegisterByte(RegisterType::L, 0xED);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6A76, 0x6D);
 
@@ -36294,6 +37887,7 @@ void test_6D_031C()
     CheckRegisterByte(RegisterType::L, 0xED);
     CheckRegisterWord(RegisterType::PC, 0x6A77);
     CheckRegisterWord(RegisterType::SP, 0xC3A4);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6A76, 0x6D);
 }
 
@@ -36314,6 +37908,7 @@ void test_6D_031D()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x40);
     WriteRegisterByte(RegisterType::L, 0x64);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3030, 0x6D);
 
@@ -36337,6 +37932,7 @@ void test_6D_031D()
     CheckRegisterByte(RegisterType::L, 0x64);
     CheckRegisterWord(RegisterType::PC, 0x3031);
     CheckRegisterWord(RegisterType::SP, 0x6939);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3030, 0x6D);
 }
 
@@ -36357,6 +37953,7 @@ void test_6D_031E()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x49);
     WriteRegisterByte(RegisterType::L, 0xF5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6E32, 0x6D);
 
@@ -36380,6 +37977,7 @@ void test_6D_031E()
     CheckRegisterByte(RegisterType::L, 0xF5);
     CheckRegisterWord(RegisterType::PC, 0x6E33);
     CheckRegisterWord(RegisterType::SP, 0x17E6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6E32, 0x6D);
 }
 
@@ -36400,6 +37998,7 @@ void test_6D_031F()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xFE);
     WriteRegisterByte(RegisterType::L, 0xB6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x348C, 0x6D);
 
@@ -36423,6 +38022,7 @@ void test_6D_031F()
     CheckRegisterByte(RegisterType::L, 0xB6);
     CheckRegisterWord(RegisterType::PC, 0x348D);
     CheckRegisterWord(RegisterType::SP, 0xA307);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x348C, 0x6D);
 }
 
@@ -36443,6 +38043,7 @@ void test_6D_0320()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x59);
     WriteRegisterByte(RegisterType::L, 0x8F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x76C8, 0x6D);
 
@@ -36466,6 +38067,7 @@ void test_6D_0320()
     CheckRegisterByte(RegisterType::L, 0x8F);
     CheckRegisterWord(RegisterType::PC, 0x76C9);
     CheckRegisterWord(RegisterType::SP, 0xB07C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x76C8, 0x6D);
 }
 
@@ -36486,6 +38088,7 @@ void test_6D_0321()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x8B);
     WriteRegisterByte(RegisterType::L, 0x97);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xEA17, 0x6D);
 
@@ -36509,6 +38112,7 @@ void test_6D_0321()
     CheckRegisterByte(RegisterType::L, 0x97);
     CheckRegisterWord(RegisterType::PC, 0xEA18);
     CheckRegisterWord(RegisterType::SP, 0x3D1B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEA17, 0x6D);
 }
 
@@ -36529,6 +38133,7 @@ void test_6D_0322()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x37);
     WriteRegisterByte(RegisterType::L, 0x29);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6CA5, 0x6D);
 
@@ -36552,6 +38157,7 @@ void test_6D_0322()
     CheckRegisterByte(RegisterType::L, 0x29);
     CheckRegisterWord(RegisterType::PC, 0x6CA6);
     CheckRegisterWord(RegisterType::SP, 0x0FDA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6CA5, 0x6D);
 }
 
@@ -36572,6 +38178,7 @@ void test_6D_0323()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xE1);
     WriteRegisterByte(RegisterType::L, 0x76);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1B73, 0x6D);
 
@@ -36595,6 +38202,7 @@ void test_6D_0323()
     CheckRegisterByte(RegisterType::L, 0x76);
     CheckRegisterWord(RegisterType::PC, 0x1B74);
     CheckRegisterWord(RegisterType::SP, 0xE495);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1B73, 0x6D);
 }
 
@@ -36615,6 +38223,7 @@ void test_6D_0324()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x7F);
     WriteRegisterByte(RegisterType::L, 0xF3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x9B7E, 0x6D);
 
@@ -36638,6 +38247,7 @@ void test_6D_0324()
     CheckRegisterByte(RegisterType::L, 0xF3);
     CheckRegisterWord(RegisterType::PC, 0x9B7F);
     CheckRegisterWord(RegisterType::SP, 0x88F9);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9B7E, 0x6D);
 }
 
@@ -36658,6 +38268,7 @@ void test_6D_0325()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x4E);
     WriteRegisterByte(RegisterType::L, 0x88);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xBFA5, 0x6D);
 
@@ -36681,6 +38292,7 @@ void test_6D_0325()
     CheckRegisterByte(RegisterType::L, 0x88);
     CheckRegisterWord(RegisterType::PC, 0xBFA6);
     CheckRegisterWord(RegisterType::SP, 0xD472);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBFA5, 0x6D);
 }
 
@@ -36701,6 +38313,7 @@ void test_6D_0326()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x0E);
     WriteRegisterByte(RegisterType::L, 0x00);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x89EC, 0x6D);
 
@@ -36724,6 +38337,7 @@ void test_6D_0326()
     CheckRegisterByte(RegisterType::L, 0x00);
     CheckRegisterWord(RegisterType::PC, 0x89ED);
     CheckRegisterWord(RegisterType::SP, 0xD230);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x89EC, 0x6D);
 }
 
@@ -36744,6 +38358,7 @@ void test_6D_0327()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x79);
     WriteRegisterByte(RegisterType::L, 0x48);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xFC53, 0x6D);
 
@@ -36767,6 +38382,7 @@ void test_6D_0327()
     CheckRegisterByte(RegisterType::L, 0x48);
     CheckRegisterWord(RegisterType::PC, 0xFC54);
     CheckRegisterWord(RegisterType::SP, 0xF443);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFC53, 0x6D);
 }
 
@@ -36787,6 +38403,7 @@ void test_6D_0328()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xC4);
     WriteRegisterByte(RegisterType::L, 0xE6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0972, 0x6D);
 
@@ -36810,6 +38427,7 @@ void test_6D_0328()
     CheckRegisterByte(RegisterType::L, 0xE6);
     CheckRegisterWord(RegisterType::PC, 0x0973);
     CheckRegisterWord(RegisterType::SP, 0x7332);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0972, 0x6D);
 }
 
@@ -36830,6 +38448,7 @@ void test_6D_0329()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xA7);
     WriteRegisterByte(RegisterType::L, 0x9B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB7E5, 0x6D);
 
@@ -36853,6 +38472,7 @@ void test_6D_0329()
     CheckRegisterByte(RegisterType::L, 0x9B);
     CheckRegisterWord(RegisterType::PC, 0xB7E6);
     CheckRegisterWord(RegisterType::SP, 0xF30C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB7E5, 0x6D);
 }
 
@@ -36873,6 +38493,7 @@ void test_6D_032A()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x6B);
     WriteRegisterByte(RegisterType::L, 0xCE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2068, 0x6D);
 
@@ -36896,6 +38517,7 @@ void test_6D_032A()
     CheckRegisterByte(RegisterType::L, 0xCE);
     CheckRegisterWord(RegisterType::PC, 0x2069);
     CheckRegisterWord(RegisterType::SP, 0x4119);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2068, 0x6D);
 }
 
@@ -36916,6 +38538,7 @@ void test_6D_032B()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x3F);
     WriteRegisterByte(RegisterType::L, 0x14);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA1F1, 0x6D);
 
@@ -36939,6 +38562,7 @@ void test_6D_032B()
     CheckRegisterByte(RegisterType::L, 0x14);
     CheckRegisterWord(RegisterType::PC, 0xA1F2);
     CheckRegisterWord(RegisterType::SP, 0x5D52);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA1F1, 0x6D);
 }
 
@@ -36959,6 +38583,7 @@ void test_6D_032C()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x44);
     WriteRegisterByte(RegisterType::L, 0xC6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0CC8, 0x6D);
 
@@ -36982,6 +38607,7 @@ void test_6D_032C()
     CheckRegisterByte(RegisterType::L, 0xC6);
     CheckRegisterWord(RegisterType::PC, 0x0CC9);
     CheckRegisterWord(RegisterType::SP, 0x1B06);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0CC8, 0x6D);
 }
 
@@ -37002,6 +38628,7 @@ void test_6D_032D()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xF4);
     WriteRegisterByte(RegisterType::L, 0x18);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4E5F, 0x6D);
 
@@ -37025,6 +38652,7 @@ void test_6D_032D()
     CheckRegisterByte(RegisterType::L, 0x18);
     CheckRegisterWord(RegisterType::PC, 0x4E60);
     CheckRegisterWord(RegisterType::SP, 0x275D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4E5F, 0x6D);
 }
 
@@ -37045,6 +38673,7 @@ void test_6D_032E()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x57);
     WriteRegisterByte(RegisterType::L, 0x55);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2399, 0x6D);
 
@@ -37068,6 +38697,7 @@ void test_6D_032E()
     CheckRegisterByte(RegisterType::L, 0x55);
     CheckRegisterWord(RegisterType::PC, 0x239A);
     CheckRegisterWord(RegisterType::SP, 0x8C30);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2399, 0x6D);
 }
 
@@ -37088,6 +38718,7 @@ void test_6D_032F()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xA4);
     WriteRegisterByte(RegisterType::L, 0x44);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3102, 0x6D);
 
@@ -37111,6 +38742,7 @@ void test_6D_032F()
     CheckRegisterByte(RegisterType::L, 0x44);
     CheckRegisterWord(RegisterType::PC, 0x3103);
     CheckRegisterWord(RegisterType::SP, 0x9573);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3102, 0x6D);
 }
 
@@ -37131,6 +38763,7 @@ void test_6D_0330()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x7A);
     WriteRegisterByte(RegisterType::L, 0x8D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3B25, 0x6D);
 
@@ -37154,6 +38787,7 @@ void test_6D_0330()
     CheckRegisterByte(RegisterType::L, 0x8D);
     CheckRegisterWord(RegisterType::PC, 0x3B26);
     CheckRegisterWord(RegisterType::SP, 0x37DB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3B25, 0x6D);
 }
 
@@ -37174,6 +38808,7 @@ void test_6D_0331()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x82);
     WriteRegisterByte(RegisterType::L, 0x95);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7F1F, 0x6D);
 
@@ -37197,6 +38832,7 @@ void test_6D_0331()
     CheckRegisterByte(RegisterType::L, 0x95);
     CheckRegisterWord(RegisterType::PC, 0x7F20);
     CheckRegisterWord(RegisterType::SP, 0xDBA7);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7F1F, 0x6D);
 }
 
@@ -37217,6 +38853,7 @@ void test_6D_0332()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x48);
     WriteRegisterByte(RegisterType::L, 0x73);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xEB74, 0x6D);
 
@@ -37240,6 +38877,7 @@ void test_6D_0332()
     CheckRegisterByte(RegisterType::L, 0x73);
     CheckRegisterWord(RegisterType::PC, 0xEB75);
     CheckRegisterWord(RegisterType::SP, 0x3E90);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEB74, 0x6D);
 }
 
@@ -37260,6 +38898,7 @@ void test_6D_0333()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x60);
     WriteRegisterByte(RegisterType::L, 0x43);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5D05, 0x6D);
 
@@ -37283,6 +38922,7 @@ void test_6D_0333()
     CheckRegisterByte(RegisterType::L, 0x43);
     CheckRegisterWord(RegisterType::PC, 0x5D06);
     CheckRegisterWord(RegisterType::SP, 0x7672);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5D05, 0x6D);
 }
 
@@ -37303,6 +38943,7 @@ void test_6D_0334()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x0B);
     WriteRegisterByte(RegisterType::L, 0xA4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x9F11, 0x6D);
 
@@ -37326,6 +38967,7 @@ void test_6D_0334()
     CheckRegisterByte(RegisterType::L, 0xA4);
     CheckRegisterWord(RegisterType::PC, 0x9F12);
     CheckRegisterWord(RegisterType::SP, 0x1381);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9F11, 0x6D);
 }
 
@@ -37346,6 +38988,7 @@ void test_6D_0335()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x08);
     WriteRegisterByte(RegisterType::L, 0x1E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7D0E, 0x6D);
 
@@ -37369,6 +39012,7 @@ void test_6D_0335()
     CheckRegisterByte(RegisterType::L, 0x1E);
     CheckRegisterWord(RegisterType::PC, 0x7D0F);
     CheckRegisterWord(RegisterType::SP, 0xC9D6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7D0E, 0x6D);
 }
 
@@ -37389,6 +39033,7 @@ void test_6D_0336()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x44);
     WriteRegisterByte(RegisterType::L, 0x8B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC857, 0x6D);
 
@@ -37412,6 +39057,7 @@ void test_6D_0336()
     CheckRegisterByte(RegisterType::L, 0x8B);
     CheckRegisterWord(RegisterType::PC, 0xC858);
     CheckRegisterWord(RegisterType::SP, 0x3FA0);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC857, 0x6D);
 }
 
@@ -37432,6 +39078,7 @@ void test_6D_0337()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x3D);
     WriteRegisterByte(RegisterType::L, 0x32);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6702, 0x6D);
 
@@ -37455,6 +39102,7 @@ void test_6D_0337()
     CheckRegisterByte(RegisterType::L, 0x32);
     CheckRegisterWord(RegisterType::PC, 0x6703);
     CheckRegisterWord(RegisterType::SP, 0xBBC7);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6702, 0x6D);
 }
 
@@ -37475,6 +39123,7 @@ void test_6D_0338()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x78);
     WriteRegisterByte(RegisterType::L, 0xBF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xCD9B, 0x6D);
 
@@ -37498,6 +39147,7 @@ void test_6D_0338()
     CheckRegisterByte(RegisterType::L, 0xBF);
     CheckRegisterWord(RegisterType::PC, 0xCD9C);
     CheckRegisterWord(RegisterType::SP, 0x754F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCD9B, 0x6D);
 }
 
@@ -37518,6 +39168,7 @@ void test_6D_0339()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xCD);
     WriteRegisterByte(RegisterType::L, 0x57);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE295, 0x6D);
 
@@ -37541,6 +39192,7 @@ void test_6D_0339()
     CheckRegisterByte(RegisterType::L, 0x57);
     CheckRegisterWord(RegisterType::PC, 0xE296);
     CheckRegisterWord(RegisterType::SP, 0x6C7C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE295, 0x6D);
 }
 
@@ -37561,6 +39213,7 @@ void test_6D_033A()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x89);
     WriteRegisterByte(RegisterType::L, 0x50);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5955, 0x6D);
 
@@ -37584,6 +39237,7 @@ void test_6D_033A()
     CheckRegisterByte(RegisterType::L, 0x50);
     CheckRegisterWord(RegisterType::PC, 0x5956);
     CheckRegisterWord(RegisterType::SP, 0xC742);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5955, 0x6D);
 }
 
@@ -37604,6 +39258,7 @@ void test_6D_033B()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x51);
     WriteRegisterByte(RegisterType::L, 0x80);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x240E, 0x6D);
 
@@ -37627,6 +39282,7 @@ void test_6D_033B()
     CheckRegisterByte(RegisterType::L, 0x80);
     CheckRegisterWord(RegisterType::PC, 0x240F);
     CheckRegisterWord(RegisterType::SP, 0xFD76);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x240E, 0x6D);
 }
 
@@ -37647,6 +39303,7 @@ void test_6D_033C()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x75);
     WriteRegisterByte(RegisterType::L, 0x56);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2CFE, 0x6D);
 
@@ -37670,6 +39327,7 @@ void test_6D_033C()
     CheckRegisterByte(RegisterType::L, 0x56);
     CheckRegisterWord(RegisterType::PC, 0x2CFF);
     CheckRegisterWord(RegisterType::SP, 0x1764);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2CFE, 0x6D);
 }
 
@@ -37690,6 +39348,7 @@ void test_6D_033D()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xEE);
     WriteRegisterByte(RegisterType::L, 0xAD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3A00, 0x6D);
 
@@ -37713,6 +39372,7 @@ void test_6D_033D()
     CheckRegisterByte(RegisterType::L, 0xAD);
     CheckRegisterWord(RegisterType::PC, 0x3A01);
     CheckRegisterWord(RegisterType::SP, 0x9B9E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3A00, 0x6D);
 }
 
@@ -37733,6 +39393,7 @@ void test_6D_033E()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x1C);
     WriteRegisterByte(RegisterType::L, 0xA6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD297, 0x6D);
 
@@ -37756,6 +39417,7 @@ void test_6D_033E()
     CheckRegisterByte(RegisterType::L, 0xA6);
     CheckRegisterWord(RegisterType::PC, 0xD298);
     CheckRegisterWord(RegisterType::SP, 0x54CF);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD297, 0x6D);
 }
 
@@ -37776,6 +39438,7 @@ void test_6D_033F()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x01);
     WriteRegisterByte(RegisterType::L, 0x65);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xCB32, 0x6D);
 
@@ -37799,6 +39462,7 @@ void test_6D_033F()
     CheckRegisterByte(RegisterType::L, 0x65);
     CheckRegisterWord(RegisterType::PC, 0xCB33);
     CheckRegisterWord(RegisterType::SP, 0x8B2D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCB32, 0x6D);
 }
 
@@ -37819,6 +39483,7 @@ void test_6D_0340()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x4A);
     WriteRegisterByte(RegisterType::L, 0x66);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x471D, 0x6D);
 
@@ -37842,6 +39507,7 @@ void test_6D_0340()
     CheckRegisterByte(RegisterType::L, 0x66);
     CheckRegisterWord(RegisterType::PC, 0x471E);
     CheckRegisterWord(RegisterType::SP, 0xD044);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x471D, 0x6D);
 }
 
@@ -37862,6 +39528,7 @@ void test_6D_0341()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x5D);
     WriteRegisterByte(RegisterType::L, 0xA3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x899D, 0x6D);
 
@@ -37885,6 +39552,7 @@ void test_6D_0341()
     CheckRegisterByte(RegisterType::L, 0xA3);
     CheckRegisterWord(RegisterType::PC, 0x899E);
     CheckRegisterWord(RegisterType::SP, 0x5BB7);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x899D, 0x6D);
 }
 
@@ -37905,6 +39573,7 @@ void test_6D_0342()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xDE);
     WriteRegisterByte(RegisterType::L, 0xC7);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x19CD, 0x6D);
 
@@ -37928,6 +39597,7 @@ void test_6D_0342()
     CheckRegisterByte(RegisterType::L, 0xC7);
     CheckRegisterWord(RegisterType::PC, 0x19CE);
     CheckRegisterWord(RegisterType::SP, 0x018F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x19CD, 0x6D);
 }
 
@@ -37948,6 +39618,7 @@ void test_6D_0343()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xDB);
     WriteRegisterByte(RegisterType::L, 0x20);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x2BD0, 0x6D);
 
@@ -37971,6 +39642,7 @@ void test_6D_0343()
     CheckRegisterByte(RegisterType::L, 0x20);
     CheckRegisterWord(RegisterType::PC, 0x2BD1);
     CheckRegisterWord(RegisterType::SP, 0x73CE);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2BD0, 0x6D);
 }
 
@@ -37991,6 +39663,7 @@ void test_6D_0344()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x6E);
     WriteRegisterByte(RegisterType::L, 0x8B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBD04, 0x6D);
 
@@ -38014,6 +39687,7 @@ void test_6D_0344()
     CheckRegisterByte(RegisterType::L, 0x8B);
     CheckRegisterWord(RegisterType::PC, 0xBD05);
     CheckRegisterWord(RegisterType::SP, 0xD276);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBD04, 0x6D);
 }
 
@@ -38034,6 +39708,7 @@ void test_6D_0345()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xD2);
     WriteRegisterByte(RegisterType::L, 0xB2);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEA65, 0x6D);
 
@@ -38057,6 +39732,7 @@ void test_6D_0345()
     CheckRegisterByte(RegisterType::L, 0xB2);
     CheckRegisterWord(RegisterType::PC, 0xEA66);
     CheckRegisterWord(RegisterType::SP, 0xFE0A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEA65, 0x6D);
 }
 
@@ -38077,6 +39753,7 @@ void test_6D_0346()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xBB);
     WriteRegisterByte(RegisterType::L, 0xE2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA5D7, 0x6D);
 
@@ -38100,6 +39777,7 @@ void test_6D_0346()
     CheckRegisterByte(RegisterType::L, 0xE2);
     CheckRegisterWord(RegisterType::PC, 0xA5D8);
     CheckRegisterWord(RegisterType::SP, 0x1515);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA5D7, 0x6D);
 }
 
@@ -38120,6 +39798,7 @@ void test_6D_0347()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x36);
     WriteRegisterByte(RegisterType::L, 0x53);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC723, 0x6D);
 
@@ -38143,6 +39822,7 @@ void test_6D_0347()
     CheckRegisterByte(RegisterType::L, 0x53);
     CheckRegisterWord(RegisterType::PC, 0xC724);
     CheckRegisterWord(RegisterType::SP, 0xA488);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC723, 0x6D);
 }
 
@@ -38163,6 +39843,7 @@ void test_6D_0348()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xAA);
     WriteRegisterByte(RegisterType::L, 0x0F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE9ED, 0x6D);
 
@@ -38186,6 +39867,7 @@ void test_6D_0348()
     CheckRegisterByte(RegisterType::L, 0x0F);
     CheckRegisterWord(RegisterType::PC, 0xE9EE);
     CheckRegisterWord(RegisterType::SP, 0x816F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE9ED, 0x6D);
 }
 
@@ -38206,6 +39888,7 @@ void test_6D_0349()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x6A);
     WriteRegisterByte(RegisterType::L, 0xAB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6C67, 0x6D);
 
@@ -38229,6 +39912,7 @@ void test_6D_0349()
     CheckRegisterByte(RegisterType::L, 0xAB);
     CheckRegisterWord(RegisterType::PC, 0x6C68);
     CheckRegisterWord(RegisterType::SP, 0x5A74);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6C67, 0x6D);
 }
 
@@ -38249,6 +39933,7 @@ void test_6D_034A()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x77);
     WriteRegisterByte(RegisterType::L, 0x89);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8602, 0x6D);
 
@@ -38272,6 +39957,7 @@ void test_6D_034A()
     CheckRegisterByte(RegisterType::L, 0x89);
     CheckRegisterWord(RegisterType::PC, 0x8603);
     CheckRegisterWord(RegisterType::SP, 0x7767);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8602, 0x6D);
 }
 
@@ -38292,6 +39978,7 @@ void test_6D_034B()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x6E);
     WriteRegisterByte(RegisterType::L, 0xA7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE6FD, 0x6D);
 
@@ -38315,6 +40002,7 @@ void test_6D_034B()
     CheckRegisterByte(RegisterType::L, 0xA7);
     CheckRegisterWord(RegisterType::PC, 0xE6FE);
     CheckRegisterWord(RegisterType::SP, 0xFC61);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE6FD, 0x6D);
 }
 
@@ -38335,6 +40023,7 @@ void test_6D_034C()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x85);
     WriteRegisterByte(RegisterType::L, 0xEE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x699C, 0x6D);
 
@@ -38358,6 +40047,7 @@ void test_6D_034C()
     CheckRegisterByte(RegisterType::L, 0xEE);
     CheckRegisterWord(RegisterType::PC, 0x699D);
     CheckRegisterWord(RegisterType::SP, 0x48B2);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x699C, 0x6D);
 }
 
@@ -38378,6 +40068,7 @@ void test_6D_034D()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x3F);
     WriteRegisterByte(RegisterType::L, 0x05);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x9DE1, 0x6D);
 
@@ -38401,6 +40092,7 @@ void test_6D_034D()
     CheckRegisterByte(RegisterType::L, 0x05);
     CheckRegisterWord(RegisterType::PC, 0x9DE2);
     CheckRegisterWord(RegisterType::SP, 0x9379);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9DE1, 0x6D);
 }
 
@@ -38421,6 +40113,7 @@ void test_6D_034E()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x90);
     WriteRegisterByte(RegisterType::L, 0x2E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3EF2, 0x6D);
 
@@ -38444,6 +40137,7 @@ void test_6D_034E()
     CheckRegisterByte(RegisterType::L, 0x2E);
     CheckRegisterWord(RegisterType::PC, 0x3EF3);
     CheckRegisterWord(RegisterType::SP, 0x1B51);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3EF2, 0x6D);
 }
 
@@ -38464,6 +40158,7 @@ void test_6D_034F()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x64);
     WriteRegisterByte(RegisterType::L, 0xF5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0A3E, 0x6D);
 
@@ -38487,6 +40182,7 @@ void test_6D_034F()
     CheckRegisterByte(RegisterType::L, 0xF5);
     CheckRegisterWord(RegisterType::PC, 0x0A3F);
     CheckRegisterWord(RegisterType::SP, 0x892E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0A3E, 0x6D);
 }
 
@@ -38507,6 +40203,7 @@ void test_6D_0350()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x25);
     WriteRegisterByte(RegisterType::L, 0xBC);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDA3F, 0x6D);
 
@@ -38530,6 +40227,7 @@ void test_6D_0350()
     CheckRegisterByte(RegisterType::L, 0xBC);
     CheckRegisterWord(RegisterType::PC, 0xDA40);
     CheckRegisterWord(RegisterType::SP, 0xFE86);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDA3F, 0x6D);
 }
 
@@ -38550,6 +40248,7 @@ void test_6D_0351()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xC1);
     WriteRegisterByte(RegisterType::L, 0x1F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x473D, 0x6D);
 
@@ -38573,6 +40272,7 @@ void test_6D_0351()
     CheckRegisterByte(RegisterType::L, 0x1F);
     CheckRegisterWord(RegisterType::PC, 0x473E);
     CheckRegisterWord(RegisterType::SP, 0x815E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x473D, 0x6D);
 }
 
@@ -38593,6 +40293,7 @@ void test_6D_0352()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x81);
     WriteRegisterByte(RegisterType::L, 0x77);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x8DF9, 0x6D);
 
@@ -38616,6 +40317,7 @@ void test_6D_0352()
     CheckRegisterByte(RegisterType::L, 0x77);
     CheckRegisterWord(RegisterType::PC, 0x8DFA);
     CheckRegisterWord(RegisterType::SP, 0x4164);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8DF9, 0x6D);
 }
 
@@ -38636,6 +40338,7 @@ void test_6D_0353()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xFB);
     WriteRegisterByte(RegisterType::L, 0xAB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD6E1, 0x6D);
 
@@ -38659,6 +40362,7 @@ void test_6D_0353()
     CheckRegisterByte(RegisterType::L, 0xAB);
     CheckRegisterWord(RegisterType::PC, 0xD6E2);
     CheckRegisterWord(RegisterType::SP, 0x9ACB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD6E1, 0x6D);
 }
 
@@ -38679,6 +40383,7 @@ void test_6D_0354()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xA3);
     WriteRegisterByte(RegisterType::L, 0x83);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEF74, 0x6D);
 
@@ -38702,6 +40407,7 @@ void test_6D_0354()
     CheckRegisterByte(RegisterType::L, 0x83);
     CheckRegisterWord(RegisterType::PC, 0xEF75);
     CheckRegisterWord(RegisterType::SP, 0x1DD0);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEF74, 0x6D);
 }
 
@@ -38722,6 +40428,7 @@ void test_6D_0355()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xD7);
     WriteRegisterByte(RegisterType::L, 0x53);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3D4E, 0x6D);
 
@@ -38745,6 +40452,7 @@ void test_6D_0355()
     CheckRegisterByte(RegisterType::L, 0x53);
     CheckRegisterWord(RegisterType::PC, 0x3D4F);
     CheckRegisterWord(RegisterType::SP, 0x48FA);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3D4E, 0x6D);
 }
 
@@ -38765,6 +40473,7 @@ void test_6D_0356()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xD6);
     WriteRegisterByte(RegisterType::L, 0x69);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x33A5, 0x6D);
 
@@ -38788,6 +40497,7 @@ void test_6D_0356()
     CheckRegisterByte(RegisterType::L, 0x69);
     CheckRegisterWord(RegisterType::PC, 0x33A6);
     CheckRegisterWord(RegisterType::SP, 0xE56F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x33A5, 0x6D);
 }
 
@@ -38808,6 +40518,7 @@ void test_6D_0357()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xE4);
     WriteRegisterByte(RegisterType::L, 0x24);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xDCA8, 0x6D);
 
@@ -38831,6 +40542,7 @@ void test_6D_0357()
     CheckRegisterByte(RegisterType::L, 0x24);
     CheckRegisterWord(RegisterType::PC, 0xDCA9);
     CheckRegisterWord(RegisterType::SP, 0x0014);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDCA8, 0x6D);
 }
 
@@ -38851,6 +40563,7 @@ void test_6D_0358()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xA2);
     WriteRegisterByte(RegisterType::L, 0x30);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4C00, 0x6D);
 
@@ -38874,6 +40587,7 @@ void test_6D_0358()
     CheckRegisterByte(RegisterType::L, 0x30);
     CheckRegisterWord(RegisterType::PC, 0x4C01);
     CheckRegisterWord(RegisterType::SP, 0x98DD);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4C00, 0x6D);
 }
 
@@ -38894,6 +40608,7 @@ void test_6D_0359()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xBB);
     WriteRegisterByte(RegisterType::L, 0x27);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7DF1, 0x6D);
 
@@ -38917,6 +40632,7 @@ void test_6D_0359()
     CheckRegisterByte(RegisterType::L, 0x27);
     CheckRegisterWord(RegisterType::PC, 0x7DF2);
     CheckRegisterWord(RegisterType::SP, 0xB478);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7DF1, 0x6D);
 }
 
@@ -38937,6 +40653,7 @@ void test_6D_035A()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xE1);
     WriteRegisterByte(RegisterType::L, 0x01);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4829, 0x6D);
 
@@ -38960,6 +40677,7 @@ void test_6D_035A()
     CheckRegisterByte(RegisterType::L, 0x01);
     CheckRegisterWord(RegisterType::PC, 0x482A);
     CheckRegisterWord(RegisterType::SP, 0x2BA8);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4829, 0x6D);
 }
 
@@ -38980,6 +40698,7 @@ void test_6D_035B()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x9C);
     WriteRegisterByte(RegisterType::L, 0xD1);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x14F2, 0x6D);
 
@@ -39003,6 +40722,7 @@ void test_6D_035B()
     CheckRegisterByte(RegisterType::L, 0xD1);
     CheckRegisterWord(RegisterType::PC, 0x14F3);
     CheckRegisterWord(RegisterType::SP, 0x500C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x14F2, 0x6D);
 }
 
@@ -39023,6 +40743,7 @@ void test_6D_035C()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x32);
     WriteRegisterByte(RegisterType::L, 0xED);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x152A, 0x6D);
 
@@ -39046,6 +40767,7 @@ void test_6D_035C()
     CheckRegisterByte(RegisterType::L, 0xED);
     CheckRegisterWord(RegisterType::PC, 0x152B);
     CheckRegisterWord(RegisterType::SP, 0x92B4);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x152A, 0x6D);
 }
 
@@ -39066,6 +40788,7 @@ void test_6D_035D()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xDF);
     WriteRegisterByte(RegisterType::L, 0xCC);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA6CD, 0x6D);
 
@@ -39089,6 +40812,7 @@ void test_6D_035D()
     CheckRegisterByte(RegisterType::L, 0xCC);
     CheckRegisterWord(RegisterType::PC, 0xA6CE);
     CheckRegisterWord(RegisterType::SP, 0x0955);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA6CD, 0x6D);
 }
 
@@ -39109,6 +40833,7 @@ void test_6D_035E()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x81);
     WriteRegisterByte(RegisterType::L, 0xA5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x63EA, 0x6D);
 
@@ -39132,6 +40857,7 @@ void test_6D_035E()
     CheckRegisterByte(RegisterType::L, 0xA5);
     CheckRegisterWord(RegisterType::PC, 0x63EB);
     CheckRegisterWord(RegisterType::SP, 0x77E1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x63EA, 0x6D);
 }
 
@@ -39152,6 +40878,7 @@ void test_6D_035F()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x51);
     WriteRegisterByte(RegisterType::L, 0x91);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x0B2B, 0x6D);
 
@@ -39175,6 +40902,7 @@ void test_6D_035F()
     CheckRegisterByte(RegisterType::L, 0x91);
     CheckRegisterWord(RegisterType::PC, 0x0B2C);
     CheckRegisterWord(RegisterType::SP, 0xBE7D);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0B2B, 0x6D);
 }
 
@@ -39195,6 +40923,7 @@ void test_6D_0360()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x30);
     WriteRegisterByte(RegisterType::L, 0x0E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3E10, 0x6D);
 
@@ -39218,6 +40947,7 @@ void test_6D_0360()
     CheckRegisterByte(RegisterType::L, 0x0E);
     CheckRegisterWord(RegisterType::PC, 0x3E11);
     CheckRegisterWord(RegisterType::SP, 0x5168);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3E10, 0x6D);
 }
 
@@ -39238,6 +40968,7 @@ void test_6D_0361()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x69);
     WriteRegisterByte(RegisterType::L, 0x95);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xDCA2, 0x6D);
 
@@ -39261,6 +40992,7 @@ void test_6D_0361()
     CheckRegisterByte(RegisterType::L, 0x95);
     CheckRegisterWord(RegisterType::PC, 0xDCA3);
     CheckRegisterWord(RegisterType::SP, 0x710B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDCA2, 0x6D);
 }
 
@@ -39281,6 +41013,7 @@ void test_6D_0362()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x62);
     WriteRegisterByte(RegisterType::L, 0xE7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x52F6, 0x6D);
 
@@ -39304,6 +41037,7 @@ void test_6D_0362()
     CheckRegisterByte(RegisterType::L, 0xE7);
     CheckRegisterWord(RegisterType::PC, 0x52F7);
     CheckRegisterWord(RegisterType::SP, 0xB5CE);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x52F6, 0x6D);
 }
 
@@ -39324,6 +41058,7 @@ void test_6D_0363()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xB1);
     WriteRegisterByte(RegisterType::L, 0xAD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDE99, 0x6D);
 
@@ -39347,6 +41082,7 @@ void test_6D_0363()
     CheckRegisterByte(RegisterType::L, 0xAD);
     CheckRegisterWord(RegisterType::PC, 0xDE9A);
     CheckRegisterWord(RegisterType::SP, 0x7588);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDE99, 0x6D);
 }
 
@@ -39367,6 +41103,7 @@ void test_6D_0364()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x9E);
     WriteRegisterByte(RegisterType::L, 0x71);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x269C, 0x6D);
 
@@ -39390,6 +41127,7 @@ void test_6D_0364()
     CheckRegisterByte(RegisterType::L, 0x71);
     CheckRegisterWord(RegisterType::PC, 0x269D);
     CheckRegisterWord(RegisterType::SP, 0xE06D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x269C, 0x6D);
 }
 
@@ -39410,6 +41148,7 @@ void test_6D_0365()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x1B);
     WriteRegisterByte(RegisterType::L, 0x22);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA2A1, 0x6D);
 
@@ -39433,6 +41172,7 @@ void test_6D_0365()
     CheckRegisterByte(RegisterType::L, 0x22);
     CheckRegisterWord(RegisterType::PC, 0xA2A2);
     CheckRegisterWord(RegisterType::SP, 0x2660);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA2A1, 0x6D);
 }
 
@@ -39453,6 +41193,7 @@ void test_6D_0366()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x16);
     WriteRegisterByte(RegisterType::L, 0x3A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xFE11, 0x6D);
 
@@ -39476,6 +41217,7 @@ void test_6D_0366()
     CheckRegisterByte(RegisterType::L, 0x3A);
     CheckRegisterWord(RegisterType::PC, 0xFE12);
     CheckRegisterWord(RegisterType::SP, 0xBD6B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFE11, 0x6D);
 }
 
@@ -39496,6 +41238,7 @@ void test_6D_0367()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xDD);
     WriteRegisterByte(RegisterType::L, 0x83);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB1C9, 0x6D);
 
@@ -39519,6 +41262,7 @@ void test_6D_0367()
     CheckRegisterByte(RegisterType::L, 0x83);
     CheckRegisterWord(RegisterType::PC, 0xB1CA);
     CheckRegisterWord(RegisterType::SP, 0x776B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB1C9, 0x6D);
 }
 
@@ -39539,6 +41283,7 @@ void test_6D_0368()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x79);
     WriteRegisterByte(RegisterType::L, 0x7F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x6606, 0x6D);
 
@@ -39562,6 +41307,7 @@ void test_6D_0368()
     CheckRegisterByte(RegisterType::L, 0x7F);
     CheckRegisterWord(RegisterType::PC, 0x6607);
     CheckRegisterWord(RegisterType::SP, 0x01D0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6606, 0x6D);
 }
 
@@ -39582,6 +41328,7 @@ void test_6D_0369()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x12);
     WriteRegisterByte(RegisterType::L, 0x04);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5EC5, 0x6D);
 
@@ -39605,6 +41352,7 @@ void test_6D_0369()
     CheckRegisterByte(RegisterType::L, 0x04);
     CheckRegisterWord(RegisterType::PC, 0x5EC6);
     CheckRegisterWord(RegisterType::SP, 0xA20B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5EC5, 0x6D);
 }
 
@@ -39625,6 +41373,7 @@ void test_6D_036A()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xA1);
     WriteRegisterByte(RegisterType::L, 0xD5);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4BC7, 0x6D);
 
@@ -39648,6 +41397,7 @@ void test_6D_036A()
     CheckRegisterByte(RegisterType::L, 0xD5);
     CheckRegisterWord(RegisterType::PC, 0x4BC8);
     CheckRegisterWord(RegisterType::SP, 0x69CD);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4BC7, 0x6D);
 }
 
@@ -39668,6 +41418,7 @@ void test_6D_036B()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xB8);
     WriteRegisterByte(RegisterType::L, 0x69);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6696, 0x6D);
 
@@ -39691,6 +41442,7 @@ void test_6D_036B()
     CheckRegisterByte(RegisterType::L, 0x69);
     CheckRegisterWord(RegisterType::PC, 0x6697);
     CheckRegisterWord(RegisterType::SP, 0xA430);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6696, 0x6D);
 }
 
@@ -39711,6 +41463,7 @@ void test_6D_036C()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x4C);
     WriteRegisterByte(RegisterType::L, 0x29);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4BE3, 0x6D);
 
@@ -39734,6 +41487,7 @@ void test_6D_036C()
     CheckRegisterByte(RegisterType::L, 0x29);
     CheckRegisterWord(RegisterType::PC, 0x4BE4);
     CheckRegisterWord(RegisterType::SP, 0xF7CE);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4BE3, 0x6D);
 }
 
@@ -39754,6 +41508,7 @@ void test_6D_036D()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x01);
     WriteRegisterByte(RegisterType::L, 0x61);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x22FE, 0x6D);
 
@@ -39777,6 +41532,7 @@ void test_6D_036D()
     CheckRegisterByte(RegisterType::L, 0x61);
     CheckRegisterWord(RegisterType::PC, 0x22FF);
     CheckRegisterWord(RegisterType::SP, 0xB603);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x22FE, 0x6D);
 }
 
@@ -39797,6 +41553,7 @@ void test_6D_036E()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x5C);
     WriteRegisterByte(RegisterType::L, 0x86);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8788, 0x6D);
 
@@ -39820,6 +41577,7 @@ void test_6D_036E()
     CheckRegisterByte(RegisterType::L, 0x86);
     CheckRegisterWord(RegisterType::PC, 0x8789);
     CheckRegisterWord(RegisterType::SP, 0x4558);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8788, 0x6D);
 }
 
@@ -39840,6 +41598,7 @@ void test_6D_036F()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x9A);
     WriteRegisterByte(RegisterType::L, 0x78);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6BA8, 0x6D);
 
@@ -39863,6 +41622,7 @@ void test_6D_036F()
     CheckRegisterByte(RegisterType::L, 0x78);
     CheckRegisterWord(RegisterType::PC, 0x6BA9);
     CheckRegisterWord(RegisterType::SP, 0x2A8B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6BA8, 0x6D);
 }
 
@@ -39883,6 +41643,7 @@ void test_6D_0370()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xF4);
     WriteRegisterByte(RegisterType::L, 0xBC);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE3DC, 0x6D);
 
@@ -39906,6 +41667,7 @@ void test_6D_0370()
     CheckRegisterByte(RegisterType::L, 0xBC);
     CheckRegisterWord(RegisterType::PC, 0xE3DD);
     CheckRegisterWord(RegisterType::SP, 0x34D0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE3DC, 0x6D);
 }
 
@@ -39926,6 +41688,7 @@ void test_6D_0371()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0xD1);
     WriteRegisterByte(RegisterType::L, 0xE6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6DEB, 0x6D);
 
@@ -39949,6 +41712,7 @@ void test_6D_0371()
     CheckRegisterByte(RegisterType::L, 0xE6);
     CheckRegisterWord(RegisterType::PC, 0x6DEC);
     CheckRegisterWord(RegisterType::SP, 0x29D2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6DEB, 0x6D);
 }
 
@@ -39969,6 +41733,7 @@ void test_6D_0372()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x9E);
     WriteRegisterByte(RegisterType::L, 0x1A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF87E, 0x6D);
 
@@ -39992,6 +41757,7 @@ void test_6D_0372()
     CheckRegisterByte(RegisterType::L, 0x1A);
     CheckRegisterWord(RegisterType::PC, 0xF87F);
     CheckRegisterWord(RegisterType::SP, 0xBB79);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF87E, 0x6D);
 }
 
@@ -40012,6 +41778,7 @@ void test_6D_0373()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x51);
     WriteRegisterByte(RegisterType::L, 0x9B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF030, 0x6D);
 
@@ -40035,6 +41802,7 @@ void test_6D_0373()
     CheckRegisterByte(RegisterType::L, 0x9B);
     CheckRegisterWord(RegisterType::PC, 0xF031);
     CheckRegisterWord(RegisterType::SP, 0xF0B9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF030, 0x6D);
 }
 
@@ -40055,6 +41823,7 @@ void test_6D_0374()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xC6);
     WriteRegisterByte(RegisterType::L, 0x5B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x738E, 0x6D);
 
@@ -40078,6 +41847,7 @@ void test_6D_0374()
     CheckRegisterByte(RegisterType::L, 0x5B);
     CheckRegisterWord(RegisterType::PC, 0x738F);
     CheckRegisterWord(RegisterType::SP, 0x64CB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x738E, 0x6D);
 }
 
@@ -40098,6 +41868,7 @@ void test_6D_0375()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xC9);
     WriteRegisterByte(RegisterType::L, 0xA4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x869F, 0x6D);
 
@@ -40121,6 +41892,7 @@ void test_6D_0375()
     CheckRegisterByte(RegisterType::L, 0xA4);
     CheckRegisterWord(RegisterType::PC, 0x86A0);
     CheckRegisterWord(RegisterType::SP, 0x28F2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x869F, 0x6D);
 }
 
@@ -40141,6 +41913,7 @@ void test_6D_0376()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x22);
     WriteRegisterByte(RegisterType::L, 0xA6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4861, 0x6D);
 
@@ -40164,6 +41937,7 @@ void test_6D_0376()
     CheckRegisterByte(RegisterType::L, 0xA6);
     CheckRegisterWord(RegisterType::PC, 0x4862);
     CheckRegisterWord(RegisterType::SP, 0xF21A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4861, 0x6D);
 }
 
@@ -40184,6 +41958,7 @@ void test_6D_0377()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x48);
     WriteRegisterByte(RegisterType::L, 0x38);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8F2B, 0x6D);
 
@@ -40207,6 +41982,7 @@ void test_6D_0377()
     CheckRegisterByte(RegisterType::L, 0x38);
     CheckRegisterWord(RegisterType::PC, 0x8F2C);
     CheckRegisterWord(RegisterType::SP, 0x964F);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8F2B, 0x6D);
 }
 
@@ -40227,6 +42003,7 @@ void test_6D_0378()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x46);
     WriteRegisterByte(RegisterType::L, 0x53);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB88B, 0x6D);
 
@@ -40250,6 +42027,7 @@ void test_6D_0378()
     CheckRegisterByte(RegisterType::L, 0x53);
     CheckRegisterWord(RegisterType::PC, 0xB88C);
     CheckRegisterWord(RegisterType::SP, 0x986C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB88B, 0x6D);
 }
 
@@ -40270,6 +42048,7 @@ void test_6D_0379()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x42);
     WriteRegisterByte(RegisterType::L, 0xBB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6AB6, 0x6D);
 
@@ -40293,6 +42072,7 @@ void test_6D_0379()
     CheckRegisterByte(RegisterType::L, 0xBB);
     CheckRegisterWord(RegisterType::PC, 0x6AB7);
     CheckRegisterWord(RegisterType::SP, 0x79B4);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6AB6, 0x6D);
 }
 
@@ -40313,6 +42093,7 @@ void test_6D_037A()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xD0);
     WriteRegisterByte(RegisterType::L, 0x1D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2FC6, 0x6D);
 
@@ -40336,6 +42117,7 @@ void test_6D_037A()
     CheckRegisterByte(RegisterType::L, 0x1D);
     CheckRegisterWord(RegisterType::PC, 0x2FC7);
     CheckRegisterWord(RegisterType::SP, 0x7268);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2FC6, 0x6D);
 }
 
@@ -40356,6 +42138,7 @@ void test_6D_037B()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x69);
     WriteRegisterByte(RegisterType::L, 0xA4);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF6F8, 0x6D);
 
@@ -40379,6 +42162,7 @@ void test_6D_037B()
     CheckRegisterByte(RegisterType::L, 0xA4);
     CheckRegisterWord(RegisterType::PC, 0xF6F9);
     CheckRegisterWord(RegisterType::SP, 0x2358);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF6F8, 0x6D);
 }
 
@@ -40399,6 +42183,7 @@ void test_6D_037C()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xEA);
     WriteRegisterByte(RegisterType::L, 0xA4);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x139F, 0x6D);
 
@@ -40422,6 +42207,7 @@ void test_6D_037C()
     CheckRegisterByte(RegisterType::L, 0xA4);
     CheckRegisterWord(RegisterType::PC, 0x13A0);
     CheckRegisterWord(RegisterType::SP, 0x7BC7);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x139F, 0x6D);
 }
 
@@ -40442,6 +42228,7 @@ void test_6D_037D()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xB6);
     WriteRegisterByte(RegisterType::L, 0xE3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xC7F9, 0x6D);
 
@@ -40465,6 +42252,7 @@ void test_6D_037D()
     CheckRegisterByte(RegisterType::L, 0xE3);
     CheckRegisterWord(RegisterType::PC, 0xC7FA);
     CheckRegisterWord(RegisterType::SP, 0x21B2);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC7F9, 0x6D);
 }
 
@@ -40485,6 +42273,7 @@ void test_6D_037E()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x5D);
     WriteRegisterByte(RegisterType::L, 0x10);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2E6A, 0x6D);
 
@@ -40508,6 +42297,7 @@ void test_6D_037E()
     CheckRegisterByte(RegisterType::L, 0x10);
     CheckRegisterWord(RegisterType::PC, 0x2E6B);
     CheckRegisterWord(RegisterType::SP, 0x2454);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2E6A, 0x6D);
 }
 
@@ -40528,6 +42318,7 @@ void test_6D_037F()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0xAD);
     WriteRegisterByte(RegisterType::L, 0x61);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD5AC, 0x6D);
 
@@ -40551,6 +42342,7 @@ void test_6D_037F()
     CheckRegisterByte(RegisterType::L, 0x61);
     CheckRegisterWord(RegisterType::PC, 0xD5AD);
     CheckRegisterWord(RegisterType::SP, 0xB4C4);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD5AC, 0x6D);
 }
 
@@ -40571,6 +42363,7 @@ void test_6D_0380()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x6A);
     WriteRegisterByte(RegisterType::L, 0x25);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA095, 0x6D);
 
@@ -40594,6 +42387,7 @@ void test_6D_0380()
     CheckRegisterByte(RegisterType::L, 0x25);
     CheckRegisterWord(RegisterType::PC, 0xA096);
     CheckRegisterWord(RegisterType::SP, 0xC92E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA095, 0x6D);
 }
 
@@ -40614,6 +42408,7 @@ void test_6D_0381()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x1C);
     WriteRegisterByte(RegisterType::L, 0x6A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x220F, 0x6D);
 
@@ -40637,6 +42432,7 @@ void test_6D_0381()
     CheckRegisterByte(RegisterType::L, 0x6A);
     CheckRegisterWord(RegisterType::PC, 0x2210);
     CheckRegisterWord(RegisterType::SP, 0xB119);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x220F, 0x6D);
 }
 
@@ -40657,6 +42453,7 @@ void test_6D_0382()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xBD);
     WriteRegisterByte(RegisterType::L, 0x4A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3501, 0x6D);
 
@@ -40680,6 +42477,7 @@ void test_6D_0382()
     CheckRegisterByte(RegisterType::L, 0x4A);
     CheckRegisterWord(RegisterType::PC, 0x3502);
     CheckRegisterWord(RegisterType::SP, 0x4419);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3501, 0x6D);
 }
 
@@ -40700,6 +42498,7 @@ void test_6D_0383()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x11);
     WriteRegisterByte(RegisterType::L, 0xCA);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xFC2A, 0x6D);
 
@@ -40723,6 +42522,7 @@ void test_6D_0383()
     CheckRegisterByte(RegisterType::L, 0xCA);
     CheckRegisterWord(RegisterType::PC, 0xFC2B);
     CheckRegisterWord(RegisterType::SP, 0x3C4E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFC2A, 0x6D);
 }
 
@@ -40743,6 +42543,7 @@ void test_6D_0384()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x32);
     WriteRegisterByte(RegisterType::L, 0xCB);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF243, 0x6D);
 
@@ -40766,6 +42567,7 @@ void test_6D_0384()
     CheckRegisterByte(RegisterType::L, 0xCB);
     CheckRegisterWord(RegisterType::PC, 0xF244);
     CheckRegisterWord(RegisterType::SP, 0xA97A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF243, 0x6D);
 }
 
@@ -40786,6 +42588,7 @@ void test_6D_0385()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x66);
     WriteRegisterByte(RegisterType::L, 0x4E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF302, 0x6D);
 
@@ -40809,6 +42612,7 @@ void test_6D_0385()
     CheckRegisterByte(RegisterType::L, 0x4E);
     CheckRegisterWord(RegisterType::PC, 0xF303);
     CheckRegisterWord(RegisterType::SP, 0x6AEF);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF302, 0x6D);
 }
 
@@ -40829,6 +42633,7 @@ void test_6D_0386()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x97);
     WriteRegisterByte(RegisterType::L, 0x94);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD52B, 0x6D);
 
@@ -40852,6 +42657,7 @@ void test_6D_0386()
     CheckRegisterByte(RegisterType::L, 0x94);
     CheckRegisterWord(RegisterType::PC, 0xD52C);
     CheckRegisterWord(RegisterType::SP, 0x3362);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD52B, 0x6D);
 }
 
@@ -40872,6 +42678,7 @@ void test_6D_0387()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x08);
     WriteRegisterByte(RegisterType::L, 0x30);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7009, 0x6D);
 
@@ -40895,6 +42702,7 @@ void test_6D_0387()
     CheckRegisterByte(RegisterType::L, 0x30);
     CheckRegisterWord(RegisterType::PC, 0x700A);
     CheckRegisterWord(RegisterType::SP, 0x49B6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7009, 0x6D);
 }
 
@@ -40915,6 +42723,7 @@ void test_6D_0388()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x87);
     WriteRegisterByte(RegisterType::L, 0x0C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xED7F, 0x6D);
 
@@ -40938,6 +42747,7 @@ void test_6D_0388()
     CheckRegisterByte(RegisterType::L, 0x0C);
     CheckRegisterWord(RegisterType::PC, 0xED80);
     CheckRegisterWord(RegisterType::SP, 0xC8F3);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xED7F, 0x6D);
 }
 
@@ -40958,6 +42768,7 @@ void test_6D_0389()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x4B);
     WriteRegisterByte(RegisterType::L, 0xD4);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1A47, 0x6D);
 
@@ -40981,6 +42792,7 @@ void test_6D_0389()
     CheckRegisterByte(RegisterType::L, 0xD4);
     CheckRegisterWord(RegisterType::PC, 0x1A48);
     CheckRegisterWord(RegisterType::SP, 0x37E0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1A47, 0x6D);
 }
 
@@ -41001,6 +42813,7 @@ void test_6D_038A()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xA7);
     WriteRegisterByte(RegisterType::L, 0x1A);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF94D, 0x6D);
 
@@ -41024,6 +42837,7 @@ void test_6D_038A()
     CheckRegisterByte(RegisterType::L, 0x1A);
     CheckRegisterWord(RegisterType::PC, 0xF94E);
     CheckRegisterWord(RegisterType::SP, 0x24B8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF94D, 0x6D);
 }
 
@@ -41044,6 +42858,7 @@ void test_6D_038B()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0xE1);
     WriteRegisterByte(RegisterType::L, 0x86);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x562A, 0x6D);
 
@@ -41067,6 +42882,7 @@ void test_6D_038B()
     CheckRegisterByte(RegisterType::L, 0x86);
     CheckRegisterWord(RegisterType::PC, 0x562B);
     CheckRegisterWord(RegisterType::SP, 0x4CA8);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x562A, 0x6D);
 }
 
@@ -41087,6 +42903,7 @@ void test_6D_038C()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xAE);
     WriteRegisterByte(RegisterType::L, 0x0C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB637, 0x6D);
 
@@ -41110,6 +42927,7 @@ void test_6D_038C()
     CheckRegisterByte(RegisterType::L, 0x0C);
     CheckRegisterWord(RegisterType::PC, 0xB638);
     CheckRegisterWord(RegisterType::SP, 0x56B9);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB637, 0x6D);
 }
 
@@ -41130,6 +42948,7 @@ void test_6D_038D()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x5A);
     WriteRegisterByte(RegisterType::L, 0xFC);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x443E, 0x6D);
 
@@ -41153,6 +42972,7 @@ void test_6D_038D()
     CheckRegisterByte(RegisterType::L, 0xFC);
     CheckRegisterWord(RegisterType::PC, 0x443F);
     CheckRegisterWord(RegisterType::SP, 0xCBAB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x443E, 0x6D);
 }
 
@@ -41173,6 +42993,7 @@ void test_6D_038E()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xF6);
     WriteRegisterByte(RegisterType::L, 0xAE);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF10C, 0x6D);
 
@@ -41196,6 +43017,7 @@ void test_6D_038E()
     CheckRegisterByte(RegisterType::L, 0xAE);
     CheckRegisterWord(RegisterType::PC, 0xF10D);
     CheckRegisterWord(RegisterType::SP, 0xDB8F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF10C, 0x6D);
 }
 
@@ -41216,6 +43038,7 @@ void test_6D_038F()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x33);
     WriteRegisterByte(RegisterType::L, 0x5B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDA2A, 0x6D);
 
@@ -41239,6 +43062,7 @@ void test_6D_038F()
     CheckRegisterByte(RegisterType::L, 0x5B);
     CheckRegisterWord(RegisterType::PC, 0xDA2B);
     CheckRegisterWord(RegisterType::SP, 0x270A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDA2A, 0x6D);
 }
 
@@ -41259,6 +43083,7 @@ void test_6D_0390()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xBB);
     WriteRegisterByte(RegisterType::L, 0x8C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x2350, 0x6D);
 
@@ -41282,6 +43107,7 @@ void test_6D_0390()
     CheckRegisterByte(RegisterType::L, 0x8C);
     CheckRegisterWord(RegisterType::PC, 0x2351);
     CheckRegisterWord(RegisterType::SP, 0xB0AB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2350, 0x6D);
 }
 
@@ -41302,6 +43128,7 @@ void test_6D_0391()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x64);
     WriteRegisterByte(RegisterType::L, 0xD6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB615, 0x6D);
 
@@ -41325,6 +43152,7 @@ void test_6D_0391()
     CheckRegisterByte(RegisterType::L, 0xD6);
     CheckRegisterWord(RegisterType::PC, 0xB616);
     CheckRegisterWord(RegisterType::SP, 0xD0C4);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB615, 0x6D);
 }
 
@@ -41345,6 +43173,7 @@ void test_6D_0392()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x74);
     WriteRegisterByte(RegisterType::L, 0xB9);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD568, 0x6D);
 
@@ -41368,6 +43197,7 @@ void test_6D_0392()
     CheckRegisterByte(RegisterType::L, 0xB9);
     CheckRegisterWord(RegisterType::PC, 0xD569);
     CheckRegisterWord(RegisterType::SP, 0x4323);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD568, 0x6D);
 }
 
@@ -41388,6 +43218,7 @@ void test_6D_0393()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xB1);
     WriteRegisterByte(RegisterType::L, 0x7E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5CE0, 0x6D);
 
@@ -41411,6 +43242,7 @@ void test_6D_0393()
     CheckRegisterByte(RegisterType::L, 0x7E);
     CheckRegisterWord(RegisterType::PC, 0x5CE1);
     CheckRegisterWord(RegisterType::SP, 0x7441);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5CE0, 0x6D);
 }
 
@@ -41431,6 +43263,7 @@ void test_6D_0394()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x7D);
     WriteRegisterByte(RegisterType::L, 0xF5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE767, 0x6D);
 
@@ -41454,6 +43287,7 @@ void test_6D_0394()
     CheckRegisterByte(RegisterType::L, 0xF5);
     CheckRegisterWord(RegisterType::PC, 0xE768);
     CheckRegisterWord(RegisterType::SP, 0x5140);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE767, 0x6D);
 }
 
@@ -41474,6 +43308,7 @@ void test_6D_0395()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x1A);
     WriteRegisterByte(RegisterType::L, 0x3C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xCEC4, 0x6D);
 
@@ -41497,6 +43332,7 @@ void test_6D_0395()
     CheckRegisterByte(RegisterType::L, 0x3C);
     CheckRegisterWord(RegisterType::PC, 0xCEC5);
     CheckRegisterWord(RegisterType::SP, 0xE3B3);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCEC4, 0x6D);
 }
 
@@ -41517,6 +43353,7 @@ void test_6D_0396()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xF1);
     WriteRegisterByte(RegisterType::L, 0xEA);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x150C, 0x6D);
 
@@ -41540,6 +43377,7 @@ void test_6D_0396()
     CheckRegisterByte(RegisterType::L, 0xEA);
     CheckRegisterWord(RegisterType::PC, 0x150D);
     CheckRegisterWord(RegisterType::SP, 0x37D3);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x150C, 0x6D);
 }
 
@@ -41560,6 +43398,7 @@ void test_6D_0397()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x7A);
     WriteRegisterByte(RegisterType::L, 0x13);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x3097, 0x6D);
 
@@ -41583,6 +43422,7 @@ void test_6D_0397()
     CheckRegisterByte(RegisterType::L, 0x13);
     CheckRegisterWord(RegisterType::PC, 0x3098);
     CheckRegisterWord(RegisterType::SP, 0x88F2);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3097, 0x6D);
 }
 
@@ -41603,6 +43443,7 @@ void test_6D_0398()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x6D);
     WriteRegisterByte(RegisterType::L, 0x25);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDC90, 0x6D);
 
@@ -41626,6 +43467,7 @@ void test_6D_0398()
     CheckRegisterByte(RegisterType::L, 0x25);
     CheckRegisterWord(RegisterType::PC, 0xDC91);
     CheckRegisterWord(RegisterType::SP, 0xF712);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDC90, 0x6D);
 }
 
@@ -41646,6 +43488,7 @@ void test_6D_0399()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xC5);
     WriteRegisterByte(RegisterType::L, 0x31);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE70E, 0x6D);
 
@@ -41669,6 +43512,7 @@ void test_6D_0399()
     CheckRegisterByte(RegisterType::L, 0x31);
     CheckRegisterWord(RegisterType::PC, 0xE70F);
     CheckRegisterWord(RegisterType::SP, 0x1354);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE70E, 0x6D);
 }
 
@@ -41689,6 +43533,7 @@ void test_6D_039A()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xC9);
     WriteRegisterByte(RegisterType::L, 0xFB);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x9D77, 0x6D);
 
@@ -41712,6 +43557,7 @@ void test_6D_039A()
     CheckRegisterByte(RegisterType::L, 0xFB);
     CheckRegisterWord(RegisterType::PC, 0x9D78);
     CheckRegisterWord(RegisterType::SP, 0x1D7C);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9D77, 0x6D);
 }
 
@@ -41732,6 +43578,7 @@ void test_6D_039B()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x1D);
     WriteRegisterByte(RegisterType::L, 0xD6);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xEFE7, 0x6D);
 
@@ -41755,6 +43602,7 @@ void test_6D_039B()
     CheckRegisterByte(RegisterType::L, 0xD6);
     CheckRegisterWord(RegisterType::PC, 0xEFE8);
     CheckRegisterWord(RegisterType::SP, 0x33FF);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEFE7, 0x6D);
 }
 
@@ -41775,6 +43623,7 @@ void test_6D_039C()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0xD6);
     WriteRegisterByte(RegisterType::L, 0xB6);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x286F, 0x6D);
 
@@ -41798,6 +43647,7 @@ void test_6D_039C()
     CheckRegisterByte(RegisterType::L, 0xB6);
     CheckRegisterWord(RegisterType::PC, 0x2870);
     CheckRegisterWord(RegisterType::SP, 0xD4E6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x286F, 0x6D);
 }
 
@@ -41818,6 +43668,7 @@ void test_6D_039D()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0xBB);
     WriteRegisterByte(RegisterType::L, 0x75);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6331, 0x6D);
 
@@ -41841,6 +43692,7 @@ void test_6D_039D()
     CheckRegisterByte(RegisterType::L, 0x75);
     CheckRegisterWord(RegisterType::PC, 0x6332);
     CheckRegisterWord(RegisterType::SP, 0x1A1D);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6331, 0x6D);
 }
 
@@ -41861,6 +43713,7 @@ void test_6D_039E()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xEC);
     WriteRegisterByte(RegisterType::L, 0x64);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4D99, 0x6D);
 
@@ -41884,6 +43737,7 @@ void test_6D_039E()
     CheckRegisterByte(RegisterType::L, 0x64);
     CheckRegisterWord(RegisterType::PC, 0x4D9A);
     CheckRegisterWord(RegisterType::SP, 0xEBBD);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4D99, 0x6D);
 }
 
@@ -41904,6 +43758,7 @@ void test_6D_039F()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x81);
     WriteRegisterByte(RegisterType::L, 0x32);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1164, 0x6D);
 
@@ -41927,6 +43782,7 @@ void test_6D_039F()
     CheckRegisterByte(RegisterType::L, 0x32);
     CheckRegisterWord(RegisterType::PC, 0x1165);
     CheckRegisterWord(RegisterType::SP, 0x3F8F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1164, 0x6D);
 }
 
@@ -41947,6 +43803,7 @@ void test_6D_03A0()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xCE);
     WriteRegisterByte(RegisterType::L, 0x9D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x75F4, 0x6D);
 
@@ -41970,6 +43827,7 @@ void test_6D_03A0()
     CheckRegisterByte(RegisterType::L, 0x9D);
     CheckRegisterWord(RegisterType::PC, 0x75F5);
     CheckRegisterWord(RegisterType::SP, 0xEB77);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x75F4, 0x6D);
 }
 
@@ -41990,6 +43848,7 @@ void test_6D_03A1()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x85);
     WriteRegisterByte(RegisterType::L, 0x46);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1990, 0x6D);
 
@@ -42013,6 +43872,7 @@ void test_6D_03A1()
     CheckRegisterByte(RegisterType::L, 0x46);
     CheckRegisterWord(RegisterType::PC, 0x1991);
     CheckRegisterWord(RegisterType::SP, 0x9F12);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1990, 0x6D);
 }
 
@@ -42033,6 +43893,7 @@ void test_6D_03A2()
     WriteRegisterFlag(0x80);
     WriteRegisterByte(RegisterType::H, 0x0F);
     WriteRegisterByte(RegisterType::L, 0x4E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1A26, 0x6D);
 
@@ -42056,6 +43917,7 @@ void test_6D_03A2()
     CheckRegisterByte(RegisterType::L, 0x4E);
     CheckRegisterWord(RegisterType::PC, 0x1A27);
     CheckRegisterWord(RegisterType::SP, 0xF750);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1A26, 0x6D);
 }
 
@@ -42076,6 +43938,7 @@ void test_6D_03A3()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x91);
     WriteRegisterByte(RegisterType::L, 0xA3);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6930, 0x6D);
 
@@ -42099,6 +43962,7 @@ void test_6D_03A3()
     CheckRegisterByte(RegisterType::L, 0xA3);
     CheckRegisterWord(RegisterType::PC, 0x6931);
     CheckRegisterWord(RegisterType::SP, 0xC06E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6930, 0x6D);
 }
 
@@ -42119,6 +43983,7 @@ void test_6D_03A4()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xDC);
     WriteRegisterByte(RegisterType::L, 0x0D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0580, 0x6D);
 
@@ -42142,6 +44007,7 @@ void test_6D_03A4()
     CheckRegisterByte(RegisterType::L, 0x0D);
     CheckRegisterWord(RegisterType::PC, 0x0581);
     CheckRegisterWord(RegisterType::SP, 0x7DD6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0580, 0x6D);
 }
 
@@ -42162,6 +44028,7 @@ void test_6D_03A5()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xF5);
     WriteRegisterByte(RegisterType::L, 0xF3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xD0DF, 0x6D);
 
@@ -42185,6 +44052,7 @@ void test_6D_03A5()
     CheckRegisterByte(RegisterType::L, 0xF3);
     CheckRegisterWord(RegisterType::PC, 0xD0E0);
     CheckRegisterWord(RegisterType::SP, 0x9EE5);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD0DF, 0x6D);
 }
 
@@ -42205,6 +44073,7 @@ void test_6D_03A6()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x93);
     WriteRegisterByte(RegisterType::L, 0x95);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB4AE, 0x6D);
 
@@ -42228,6 +44097,7 @@ void test_6D_03A6()
     CheckRegisterByte(RegisterType::L, 0x95);
     CheckRegisterWord(RegisterType::PC, 0xB4AF);
     CheckRegisterWord(RegisterType::SP, 0x9A39);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB4AE, 0x6D);
 }
 
@@ -42248,6 +44118,7 @@ void test_6D_03A7()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x1F);
     WriteRegisterByte(RegisterType::L, 0xCF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x78AD, 0x6D);
 
@@ -42271,6 +44142,7 @@ void test_6D_03A7()
     CheckRegisterByte(RegisterType::L, 0xCF);
     CheckRegisterWord(RegisterType::PC, 0x78AE);
     CheckRegisterWord(RegisterType::SP, 0xD22A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x78AD, 0x6D);
 }
 
@@ -42291,6 +44163,7 @@ void test_6D_03A8()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xD3);
     WriteRegisterByte(RegisterType::L, 0xAC);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6E20, 0x6D);
 
@@ -42314,6 +44187,7 @@ void test_6D_03A8()
     CheckRegisterByte(RegisterType::L, 0xAC);
     CheckRegisterWord(RegisterType::PC, 0x6E21);
     CheckRegisterWord(RegisterType::SP, 0xA9FC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6E20, 0x6D);
 }
 
@@ -42334,6 +44208,7 @@ void test_6D_03A9()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xB7);
     WriteRegisterByte(RegisterType::L, 0x68);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x4C91, 0x6D);
 
@@ -42357,6 +44232,7 @@ void test_6D_03A9()
     CheckRegisterByte(RegisterType::L, 0x68);
     CheckRegisterWord(RegisterType::PC, 0x4C92);
     CheckRegisterWord(RegisterType::SP, 0xC598);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4C91, 0x6D);
 }
 
@@ -42377,6 +44253,7 @@ void test_6D_03AA()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x0D);
     WriteRegisterByte(RegisterType::L, 0x80);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB8EE, 0x6D);
 
@@ -42400,6 +44277,7 @@ void test_6D_03AA()
     CheckRegisterByte(RegisterType::L, 0x80);
     CheckRegisterWord(RegisterType::PC, 0xB8EF);
     CheckRegisterWord(RegisterType::SP, 0xCD0C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB8EE, 0x6D);
 }
 
@@ -42420,6 +44298,7 @@ void test_6D_03AB()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xAA);
     WriteRegisterByte(RegisterType::L, 0x98);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE85F, 0x6D);
 
@@ -42443,6 +44322,7 @@ void test_6D_03AB()
     CheckRegisterByte(RegisterType::L, 0x98);
     CheckRegisterWord(RegisterType::PC, 0xE860);
     CheckRegisterWord(RegisterType::SP, 0x9223);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE85F, 0x6D);
 }
 
@@ -42463,6 +44343,7 @@ void test_6D_03AC()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x72);
     WriteRegisterByte(RegisterType::L, 0xBD);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xAEDC, 0x6D);
 
@@ -42486,6 +44367,7 @@ void test_6D_03AC()
     CheckRegisterByte(RegisterType::L, 0xBD);
     CheckRegisterWord(RegisterType::PC, 0xAEDD);
     CheckRegisterWord(RegisterType::SP, 0x9C0C);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAEDC, 0x6D);
 }
 
@@ -42506,6 +44388,7 @@ void test_6D_03AD()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x6C);
     WriteRegisterByte(RegisterType::L, 0xDC);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0F3F, 0x6D);
 
@@ -42529,6 +44412,7 @@ void test_6D_03AD()
     CheckRegisterByte(RegisterType::L, 0xDC);
     CheckRegisterWord(RegisterType::PC, 0x0F40);
     CheckRegisterWord(RegisterType::SP, 0x7719);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0F3F, 0x6D);
 }
 
@@ -42549,6 +44433,7 @@ void test_6D_03AE()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0x8D);
     WriteRegisterByte(RegisterType::L, 0x2B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7EC5, 0x6D);
 
@@ -42572,6 +44457,7 @@ void test_6D_03AE()
     CheckRegisterByte(RegisterType::L, 0x2B);
     CheckRegisterWord(RegisterType::PC, 0x7EC6);
     CheckRegisterWord(RegisterType::SP, 0xEC2E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7EC5, 0x6D);
 }
 
@@ -42592,6 +44478,7 @@ void test_6D_03AF()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x45);
     WriteRegisterByte(RegisterType::L, 0x4C);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBDCF, 0x6D);
 
@@ -42615,6 +44502,7 @@ void test_6D_03AF()
     CheckRegisterByte(RegisterType::L, 0x4C);
     CheckRegisterWord(RegisterType::PC, 0xBDD0);
     CheckRegisterWord(RegisterType::SP, 0x03BC);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBDCF, 0x6D);
 }
 
@@ -42635,6 +44523,7 @@ void test_6D_03B0()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0xF3);
     WriteRegisterByte(RegisterType::L, 0x43);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x973E, 0x6D);
 
@@ -42658,6 +44547,7 @@ void test_6D_03B0()
     CheckRegisterByte(RegisterType::L, 0x43);
     CheckRegisterWord(RegisterType::PC, 0x973F);
     CheckRegisterWord(RegisterType::SP, 0xBE81);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x973E, 0x6D);
 }
 
@@ -42678,6 +44568,7 @@ void test_6D_03B1()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0x67);
     WriteRegisterByte(RegisterType::L, 0x72);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD5BE, 0x6D);
 
@@ -42701,6 +44592,7 @@ void test_6D_03B1()
     CheckRegisterByte(RegisterType::L, 0x72);
     CheckRegisterWord(RegisterType::PC, 0xD5BF);
     CheckRegisterWord(RegisterType::SP, 0xB380);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD5BE, 0x6D);
 }
 
@@ -42721,6 +44613,7 @@ void test_6D_03B2()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x60);
     WriteRegisterByte(RegisterType::L, 0x70);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x98C7, 0x6D);
 
@@ -42744,6 +44637,7 @@ void test_6D_03B2()
     CheckRegisterByte(RegisterType::L, 0x70);
     CheckRegisterWord(RegisterType::PC, 0x98C8);
     CheckRegisterWord(RegisterType::SP, 0x380B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x98C7, 0x6D);
 }
 
@@ -42764,6 +44658,7 @@ void test_6D_03B3()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xE7);
     WriteRegisterByte(RegisterType::L, 0x5F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB446, 0x6D);
 
@@ -42787,6 +44682,7 @@ void test_6D_03B3()
     CheckRegisterByte(RegisterType::L, 0x5F);
     CheckRegisterWord(RegisterType::PC, 0xB447);
     CheckRegisterWord(RegisterType::SP, 0x1F9E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB446, 0x6D);
 }
 
@@ -42807,6 +44703,7 @@ void test_6D_03B4()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x69);
     WriteRegisterByte(RegisterType::L, 0xB0);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7F80, 0x6D);
 
@@ -42830,6 +44727,7 @@ void test_6D_03B4()
     CheckRegisterByte(RegisterType::L, 0xB0);
     CheckRegisterWord(RegisterType::PC, 0x7F81);
     CheckRegisterWord(RegisterType::SP, 0x3F65);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7F80, 0x6D);
 }
 
@@ -42850,6 +44748,7 @@ void test_6D_03B5()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0xCE);
     WriteRegisterByte(RegisterType::L, 0xB1);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3382, 0x6D);
 
@@ -42873,6 +44772,7 @@ void test_6D_03B5()
     CheckRegisterByte(RegisterType::L, 0xB1);
     CheckRegisterWord(RegisterType::PC, 0x3383);
     CheckRegisterWord(RegisterType::SP, 0x28BC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3382, 0x6D);
 }
 
@@ -42893,6 +44793,7 @@ void test_6D_03B6()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x28);
     WriteRegisterByte(RegisterType::L, 0x6D);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xCFAF, 0x6D);
 
@@ -42916,6 +44817,7 @@ void test_6D_03B6()
     CheckRegisterByte(RegisterType::L, 0x6D);
     CheckRegisterWord(RegisterType::PC, 0xCFB0);
     CheckRegisterWord(RegisterType::SP, 0x191D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCFAF, 0x6D);
 }
 
@@ -42936,6 +44838,7 @@ void test_6D_03B7()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x52);
     WriteRegisterByte(RegisterType::L, 0x7F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x9029, 0x6D);
 
@@ -42959,6 +44862,7 @@ void test_6D_03B7()
     CheckRegisterByte(RegisterType::L, 0x7F);
     CheckRegisterWord(RegisterType::PC, 0x902A);
     CheckRegisterWord(RegisterType::SP, 0xD3DA);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9029, 0x6D);
 }
 
@@ -42979,6 +44883,7 @@ void test_6D_03B8()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x83);
     WriteRegisterByte(RegisterType::L, 0x19);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6428, 0x6D);
 
@@ -43002,6 +44907,7 @@ void test_6D_03B8()
     CheckRegisterByte(RegisterType::L, 0x19);
     CheckRegisterWord(RegisterType::PC, 0x6429);
     CheckRegisterWord(RegisterType::SP, 0xA5EE);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6428, 0x6D);
 }
 
@@ -43022,6 +44928,7 @@ void test_6D_03B9()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x4F);
     WriteRegisterByte(RegisterType::L, 0x9B);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xFB2A, 0x6D);
 
@@ -43045,6 +44952,7 @@ void test_6D_03B9()
     CheckRegisterByte(RegisterType::L, 0x9B);
     CheckRegisterWord(RegisterType::PC, 0xFB2B);
     CheckRegisterWord(RegisterType::SP, 0xABBB);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFB2A, 0x6D);
 }
 
@@ -43065,6 +44973,7 @@ void test_6D_03BA()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xE2);
     WriteRegisterByte(RegisterType::L, 0x7F);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xBBF7, 0x6D);
 
@@ -43088,6 +44997,7 @@ void test_6D_03BA()
     CheckRegisterByte(RegisterType::L, 0x7F);
     CheckRegisterWord(RegisterType::PC, 0xBBF8);
     CheckRegisterWord(RegisterType::SP, 0x6AF0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBBF7, 0x6D);
 }
 
@@ -43108,6 +45018,7 @@ void test_6D_03BB()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x5F);
     WriteRegisterByte(RegisterType::L, 0x0D);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x4224, 0x6D);
 
@@ -43131,6 +45042,7 @@ void test_6D_03BB()
     CheckRegisterByte(RegisterType::L, 0x0D);
     CheckRegisterWord(RegisterType::PC, 0x4225);
     CheckRegisterWord(RegisterType::SP, 0x86AC);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4224, 0x6D);
 }
 
@@ -43151,6 +45063,7 @@ void test_6D_03BC()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xF6);
     WriteRegisterByte(RegisterType::L, 0x46);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xEA43, 0x6D);
 
@@ -43174,6 +45087,7 @@ void test_6D_03BC()
     CheckRegisterByte(RegisterType::L, 0x46);
     CheckRegisterWord(RegisterType::PC, 0xEA44);
     CheckRegisterWord(RegisterType::SP, 0xBC28);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEA43, 0x6D);
 }
 
@@ -43194,6 +45108,7 @@ void test_6D_03BD()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xAA);
     WriteRegisterByte(RegisterType::L, 0x63);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7E32, 0x6D);
 
@@ -43217,6 +45132,7 @@ void test_6D_03BD()
     CheckRegisterByte(RegisterType::L, 0x63);
     CheckRegisterWord(RegisterType::PC, 0x7E33);
     CheckRegisterWord(RegisterType::SP, 0xAD37);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7E32, 0x6D);
 }
 
@@ -43237,6 +45153,7 @@ void test_6D_03BE()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x2A);
     WriteRegisterByte(RegisterType::L, 0x65);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE31A, 0x6D);
 
@@ -43260,6 +45177,7 @@ void test_6D_03BE()
     CheckRegisterByte(RegisterType::L, 0x65);
     CheckRegisterWord(RegisterType::PC, 0xE31B);
     CheckRegisterWord(RegisterType::SP, 0x2B30);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE31A, 0x6D);
 }
 
@@ -43280,6 +45198,7 @@ void test_6D_03BF()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xBA);
     WriteRegisterByte(RegisterType::L, 0x26);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB333, 0x6D);
 
@@ -43303,6 +45222,7 @@ void test_6D_03BF()
     CheckRegisterByte(RegisterType::L, 0x26);
     CheckRegisterWord(RegisterType::PC, 0xB334);
     CheckRegisterWord(RegisterType::SP, 0x1AA7);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB333, 0x6D);
 }
 
@@ -43323,6 +45243,7 @@ void test_6D_03C0()
     WriteRegisterFlag(0x90);
     WriteRegisterByte(RegisterType::H, 0x2F);
     WriteRegisterByte(RegisterType::L, 0xA0);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xA087, 0x6D);
 
@@ -43346,6 +45267,7 @@ void test_6D_03C0()
     CheckRegisterByte(RegisterType::L, 0xA0);
     CheckRegisterWord(RegisterType::PC, 0xA088);
     CheckRegisterWord(RegisterType::SP, 0x8224);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA087, 0x6D);
 }
 
@@ -43366,6 +45288,7 @@ void test_6D_03C1()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xBC);
     WriteRegisterByte(RegisterType::L, 0x57);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x71EB, 0x6D);
 
@@ -43389,6 +45312,7 @@ void test_6D_03C1()
     CheckRegisterByte(RegisterType::L, 0x57);
     CheckRegisterWord(RegisterType::PC, 0x71EC);
     CheckRegisterWord(RegisterType::SP, 0x05C3);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x71EB, 0x6D);
 }
 
@@ -43409,6 +45333,7 @@ void test_6D_03C2()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x27);
     WriteRegisterByte(RegisterType::L, 0x40);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF81E, 0x6D);
 
@@ -43432,6 +45357,7 @@ void test_6D_03C2()
     CheckRegisterByte(RegisterType::L, 0x40);
     CheckRegisterWord(RegisterType::PC, 0xF81F);
     CheckRegisterWord(RegisterType::SP, 0xCDBD);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF81E, 0x6D);
 }
 
@@ -43452,6 +45378,7 @@ void test_6D_03C3()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x0A);
     WriteRegisterByte(RegisterType::L, 0xBC);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xE30E, 0x6D);
 
@@ -43475,6 +45402,7 @@ void test_6D_03C3()
     CheckRegisterByte(RegisterType::L, 0xBC);
     CheckRegisterWord(RegisterType::PC, 0xE30F);
     CheckRegisterWord(RegisterType::SP, 0x83D6);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE30E, 0x6D);
 }
 
@@ -43495,6 +45423,7 @@ void test_6D_03C4()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x48);
     WriteRegisterByte(RegisterType::L, 0x3A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x1731, 0x6D);
 
@@ -43518,6 +45447,7 @@ void test_6D_03C4()
     CheckRegisterByte(RegisterType::L, 0x3A);
     CheckRegisterWord(RegisterType::PC, 0x1732);
     CheckRegisterWord(RegisterType::SP, 0xC7FE);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1731, 0x6D);
 }
 
@@ -43538,6 +45468,7 @@ void test_6D_03C5()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xA1);
     WriteRegisterByte(RegisterType::L, 0xA7);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x3B3C, 0x6D);
 
@@ -43561,6 +45492,7 @@ void test_6D_03C5()
     CheckRegisterByte(RegisterType::L, 0xA7);
     CheckRegisterWord(RegisterType::PC, 0x3B3D);
     CheckRegisterWord(RegisterType::SP, 0xA7F1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3B3C, 0x6D);
 }
 
@@ -43581,6 +45513,7 @@ void test_6D_03C6()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x77);
     WriteRegisterByte(RegisterType::L, 0x35);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x304C, 0x6D);
 
@@ -43604,6 +45537,7 @@ void test_6D_03C6()
     CheckRegisterByte(RegisterType::L, 0x35);
     CheckRegisterWord(RegisterType::PC, 0x304D);
     CheckRegisterWord(RegisterType::SP, 0x282E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x304C, 0x6D);
 }
 
@@ -43624,6 +45558,7 @@ void test_6D_03C7()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xAB);
     WriteRegisterByte(RegisterType::L, 0x22);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x84FF, 0x6D);
 
@@ -43647,6 +45582,7 @@ void test_6D_03C7()
     CheckRegisterByte(RegisterType::L, 0x22);
     CheckRegisterWord(RegisterType::PC, 0x8500);
     CheckRegisterWord(RegisterType::SP, 0x2127);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x84FF, 0x6D);
 }
 
@@ -43667,6 +45603,7 @@ void test_6D_03C8()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x97);
     WriteRegisterByte(RegisterType::L, 0xB8);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xDA88, 0x6D);
 
@@ -43690,6 +45627,7 @@ void test_6D_03C8()
     CheckRegisterByte(RegisterType::L, 0xB8);
     CheckRegisterWord(RegisterType::PC, 0xDA89);
     CheckRegisterWord(RegisterType::SP, 0xCAD1);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDA88, 0x6D);
 }
 
@@ -43710,6 +45648,7 @@ void test_6D_03C9()
     WriteRegisterFlag(0x10);
     WriteRegisterByte(RegisterType::H, 0x23);
     WriteRegisterByte(RegisterType::L, 0x65);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x7657, 0x6D);
 
@@ -43733,6 +45672,7 @@ void test_6D_03C9()
     CheckRegisterByte(RegisterType::L, 0x65);
     CheckRegisterWord(RegisterType::PC, 0x7658);
     CheckRegisterWord(RegisterType::SP, 0x3121);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7657, 0x6D);
 }
 
@@ -43753,6 +45693,7 @@ void test_6D_03CA()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0x8A);
     WriteRegisterByte(RegisterType::L, 0xD2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB973, 0x6D);
 
@@ -43776,6 +45717,7 @@ void test_6D_03CA()
     CheckRegisterByte(RegisterType::L, 0xD2);
     CheckRegisterWord(RegisterType::PC, 0xB974);
     CheckRegisterWord(RegisterType::SP, 0xA77D);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB973, 0x6D);
 }
 
@@ -43796,6 +45738,7 @@ void test_6D_03CB()
     WriteRegisterFlag(0x40);
     WriteRegisterByte(RegisterType::H, 0xCE);
     WriteRegisterByte(RegisterType::L, 0x61);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x567E, 0x6D);
 
@@ -43819,6 +45762,7 @@ void test_6D_03CB()
     CheckRegisterByte(RegisterType::L, 0x61);
     CheckRegisterWord(RegisterType::PC, 0x567F);
     CheckRegisterWord(RegisterType::SP, 0x4373);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x567E, 0x6D);
 }
 
@@ -43839,6 +45783,7 @@ void test_6D_03CC()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0xC9);
     WriteRegisterByte(RegisterType::L, 0x83);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7135, 0x6D);
 
@@ -43862,6 +45807,7 @@ void test_6D_03CC()
     CheckRegisterByte(RegisterType::L, 0x83);
     CheckRegisterWord(RegisterType::PC, 0x7136);
     CheckRegisterWord(RegisterType::SP, 0xAA86);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7135, 0x6D);
 }
 
@@ -43882,6 +45828,7 @@ void test_6D_03CD()
     WriteRegisterFlag(0xB0);
     WriteRegisterByte(RegisterType::H, 0x0A);
     WriteRegisterByte(RegisterType::L, 0x9E);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD358, 0x6D);
 
@@ -43905,6 +45852,7 @@ void test_6D_03CD()
     CheckRegisterByte(RegisterType::L, 0x9E);
     CheckRegisterWord(RegisterType::PC, 0xD359);
     CheckRegisterWord(RegisterType::SP, 0xDF7E);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD358, 0x6D);
 }
 
@@ -43925,6 +45873,7 @@ void test_6D_03CE()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x39);
     WriteRegisterByte(RegisterType::L, 0xB9);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6DD5, 0x6D);
 
@@ -43948,6 +45897,7 @@ void test_6D_03CE()
     CheckRegisterByte(RegisterType::L, 0xB9);
     CheckRegisterWord(RegisterType::PC, 0x6DD6);
     CheckRegisterWord(RegisterType::SP, 0x7056);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6DD5, 0x6D);
 }
 
@@ -43968,6 +45918,7 @@ void test_6D_03CF()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x80);
     WriteRegisterByte(RegisterType::L, 0x8F);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xB8A9, 0x6D);
 
@@ -43991,6 +45942,7 @@ void test_6D_03CF()
     CheckRegisterByte(RegisterType::L, 0x8F);
     CheckRegisterWord(RegisterType::PC, 0xB8AA);
     CheckRegisterWord(RegisterType::SP, 0x3B0A);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB8A9, 0x6D);
 }
 
@@ -44011,6 +45963,7 @@ void test_6D_03D0()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0xCB);
     WriteRegisterByte(RegisterType::L, 0xE7);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x47AA, 0x6D);
 
@@ -44034,6 +45987,7 @@ void test_6D_03D0()
     CheckRegisterByte(RegisterType::L, 0xE7);
     CheckRegisterWord(RegisterType::PC, 0x47AB);
     CheckRegisterWord(RegisterType::SP, 0x74C4);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x47AA, 0x6D);
 }
 
@@ -44054,6 +46008,7 @@ void test_6D_03D1()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x94);
     WriteRegisterByte(RegisterType::L, 0x9A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xD9D2, 0x6D);
 
@@ -44077,6 +46032,7 @@ void test_6D_03D1()
     CheckRegisterByte(RegisterType::L, 0x9A);
     CheckRegisterWord(RegisterType::PC, 0xD9D3);
     CheckRegisterWord(RegisterType::SP, 0xDAB5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD9D2, 0x6D);
 }
 
@@ -44097,6 +46053,7 @@ void test_6D_03D2()
     WriteRegisterFlag(0x30);
     WriteRegisterByte(RegisterType::H, 0xC0);
     WriteRegisterByte(RegisterType::L, 0x59);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1E72, 0x6D);
 
@@ -44120,6 +46077,7 @@ void test_6D_03D2()
     CheckRegisterByte(RegisterType::L, 0x59);
     CheckRegisterWord(RegisterType::PC, 0x1E73);
     CheckRegisterWord(RegisterType::SP, 0xE35F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1E72, 0x6D);
 }
 
@@ -44140,6 +46098,7 @@ void test_6D_03D3()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x8F);
     WriteRegisterByte(RegisterType::L, 0x43);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0A85, 0x6D);
 
@@ -44163,6 +46122,7 @@ void test_6D_03D3()
     CheckRegisterByte(RegisterType::L, 0x43);
     CheckRegisterWord(RegisterType::PC, 0x0A86);
     CheckRegisterWord(RegisterType::SP, 0xA15B);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0A85, 0x6D);
 }
 
@@ -44183,6 +46143,7 @@ void test_6D_03D4()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x06);
     WriteRegisterByte(RegisterType::L, 0x67);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xF2E7, 0x6D);
 
@@ -44206,6 +46167,7 @@ void test_6D_03D4()
     CheckRegisterByte(RegisterType::L, 0x67);
     CheckRegisterWord(RegisterType::PC, 0xF2E8);
     CheckRegisterWord(RegisterType::SP, 0x3249);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF2E7, 0x6D);
 }
 
@@ -44226,6 +46188,7 @@ void test_6D_03D5()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x43);
     WriteRegisterByte(RegisterType::L, 0xB2);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x36E5, 0x6D);
 
@@ -44249,6 +46212,7 @@ void test_6D_03D5()
     CheckRegisterByte(RegisterType::L, 0xB2);
     CheckRegisterWord(RegisterType::PC, 0x36E6);
     CheckRegisterWord(RegisterType::SP, 0x3BD5);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x36E5, 0x6D);
 }
 
@@ -44269,6 +46233,7 @@ void test_6D_03D6()
     WriteRegisterFlag(0xE0);
     WriteRegisterByte(RegisterType::H, 0xC2);
     WriteRegisterByte(RegisterType::L, 0xC1);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xF3BF, 0x6D);
 
@@ -44292,6 +46257,7 @@ void test_6D_03D6()
     CheckRegisterByte(RegisterType::L, 0xC1);
     CheckRegisterWord(RegisterType::PC, 0xF3C0);
     CheckRegisterWord(RegisterType::SP, 0xBCE6);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF3BF, 0x6D);
 }
 
@@ -44312,6 +46278,7 @@ void test_6D_03D7()
     WriteRegisterFlag(0xD0);
     WriteRegisterByte(RegisterType::H, 0x22);
     WriteRegisterByte(RegisterType::L, 0x8E);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC7DD, 0x6D);
 
@@ -44335,6 +46302,7 @@ void test_6D_03D7()
     CheckRegisterByte(RegisterType::L, 0x8E);
     CheckRegisterWord(RegisterType::PC, 0xC7DE);
     CheckRegisterWord(RegisterType::SP, 0xB701);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC7DD, 0x6D);
 }
 
@@ -44355,6 +46323,7 @@ void test_6D_03D8()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0xE3);
     WriteRegisterByte(RegisterType::L, 0x26);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xE498, 0x6D);
 
@@ -44378,6 +46347,7 @@ void test_6D_03D8()
     CheckRegisterByte(RegisterType::L, 0x26);
     CheckRegisterWord(RegisterType::PC, 0xE499);
     CheckRegisterWord(RegisterType::SP, 0x1C0E);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE498, 0x6D);
 }
 
@@ -44398,6 +46368,7 @@ void test_6D_03D9()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xF4);
     WriteRegisterByte(RegisterType::L, 0xEF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x6CB8, 0x6D);
 
@@ -44421,6 +46392,7 @@ void test_6D_03D9()
     CheckRegisterByte(RegisterType::L, 0xEF);
     CheckRegisterWord(RegisterType::PC, 0x6CB9);
     CheckRegisterWord(RegisterType::SP, 0x8679);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6CB8, 0x6D);
 }
 
@@ -44441,6 +46413,7 @@ void test_6D_03DA()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0xF1);
     WriteRegisterByte(RegisterType::L, 0xAE);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xC63E, 0x6D);
 
@@ -44464,6 +46437,7 @@ void test_6D_03DA()
     CheckRegisterByte(RegisterType::L, 0xAE);
     CheckRegisterWord(RegisterType::PC, 0xC63F);
     CheckRegisterWord(RegisterType::SP, 0x0966);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC63E, 0x6D);
 }
 
@@ -44484,6 +46458,7 @@ void test_6D_03DB()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0xF6);
     WriteRegisterByte(RegisterType::L, 0x41);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xCA34, 0x6D);
 
@@ -44507,6 +46482,7 @@ void test_6D_03DB()
     CheckRegisterByte(RegisterType::L, 0x41);
     CheckRegisterWord(RegisterType::PC, 0xCA35);
     CheckRegisterWord(RegisterType::SP, 0x99A4);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCA34, 0x6D);
 }
 
@@ -44527,6 +46503,7 @@ void test_6D_03DC()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x7C);
     WriteRegisterByte(RegisterType::L, 0x52);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x34EB, 0x6D);
 
@@ -44550,6 +46527,7 @@ void test_6D_03DC()
     CheckRegisterByte(RegisterType::L, 0x52);
     CheckRegisterWord(RegisterType::PC, 0x34EC);
     CheckRegisterWord(RegisterType::SP, 0xEF8A);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x34EB, 0x6D);
 }
 
@@ -44570,6 +46548,7 @@ void test_6D_03DD()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x9C);
     WriteRegisterByte(RegisterType::L, 0x7B);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x8876, 0x6D);
 
@@ -44593,6 +46572,7 @@ void test_6D_03DD()
     CheckRegisterByte(RegisterType::L, 0x7B);
     CheckRegisterWord(RegisterType::PC, 0x8877);
     CheckRegisterWord(RegisterType::SP, 0xBB0B);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8876, 0x6D);
 }
 
@@ -44613,6 +46593,7 @@ void test_6D_03DE()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x17);
     WriteRegisterByte(RegisterType::L, 0xC3);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x1816, 0x6D);
 
@@ -44636,6 +46617,7 @@ void test_6D_03DE()
     CheckRegisterByte(RegisterType::L, 0xC3);
     CheckRegisterWord(RegisterType::PC, 0x1817);
     CheckRegisterWord(RegisterType::SP, 0x4538);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1816, 0x6D);
 }
 
@@ -44656,6 +46638,7 @@ void test_6D_03DF()
     WriteRegisterFlag(0x70);
     WriteRegisterByte(RegisterType::H, 0x47);
     WriteRegisterByte(RegisterType::L, 0x7C);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x0AC8, 0x6D);
 
@@ -44679,6 +46662,7 @@ void test_6D_03DF()
     CheckRegisterByte(RegisterType::L, 0x7C);
     CheckRegisterWord(RegisterType::PC, 0x0AC9);
     CheckRegisterWord(RegisterType::SP, 0xC315);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0AC8, 0x6D);
 }
 
@@ -44699,6 +46683,7 @@ void test_6D_03E0()
     WriteRegisterFlag(0xF0);
     WriteRegisterByte(RegisterType::H, 0x5D);
     WriteRegisterByte(RegisterType::L, 0xCC);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9622, 0x6D);
 
@@ -44722,6 +46707,7 @@ void test_6D_03E0()
     CheckRegisterByte(RegisterType::L, 0xCC);
     CheckRegisterWord(RegisterType::PC, 0x9623);
     CheckRegisterWord(RegisterType::SP, 0x9178);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9622, 0x6D);
 }
 
@@ -44742,6 +46728,7 @@ void test_6D_03E1()
     WriteRegisterFlag(0xA0);
     WriteRegisterByte(RegisterType::H, 0x07);
     WriteRegisterByte(RegisterType::L, 0x88);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x5C6C, 0x6D);
 
@@ -44765,6 +46752,7 @@ void test_6D_03E1()
     CheckRegisterByte(RegisterType::L, 0x88);
     CheckRegisterWord(RegisterType::PC, 0x5C6D);
     CheckRegisterWord(RegisterType::SP, 0xEFBB);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5C6C, 0x6D);
 }
 
@@ -44785,6 +46773,7 @@ void test_6D_03E2()
     WriteRegisterFlag(0x60);
     WriteRegisterByte(RegisterType::H, 0x58);
     WriteRegisterByte(RegisterType::L, 0x13);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x5DF7, 0x6D);
 
@@ -44808,6 +46797,7 @@ void test_6D_03E2()
     CheckRegisterByte(RegisterType::L, 0x13);
     CheckRegisterWord(RegisterType::PC, 0x5DF8);
     CheckRegisterWord(RegisterType::SP, 0x86E0);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5DF7, 0x6D);
 }
 
@@ -44828,6 +46818,7 @@ void test_6D_03E3()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0xDF);
     WriteRegisterByte(RegisterType::L, 0xD8);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xBF33, 0x6D);
 
@@ -44851,6 +46842,7 @@ void test_6D_03E3()
     CheckRegisterByte(RegisterType::L, 0xD8);
     CheckRegisterWord(RegisterType::PC, 0xBF34);
     CheckRegisterWord(RegisterType::SP, 0x7395);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBF33, 0x6D);
 }
 
@@ -44871,6 +46863,7 @@ void test_6D_03E4()
     WriteRegisterFlag(0x50);
     WriteRegisterByte(RegisterType::H, 0x96);
     WriteRegisterByte(RegisterType::L, 0xF5);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0xB67E, 0x6D);
 
@@ -44894,6 +46887,7 @@ void test_6D_03E4()
     CheckRegisterByte(RegisterType::L, 0xF5);
     CheckRegisterWord(RegisterType::PC, 0xB67F);
     CheckRegisterWord(RegisterType::SP, 0x5C3F);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB67E, 0x6D);
 }
 
@@ -44914,6 +46908,7 @@ void test_6D_03E5()
     WriteRegisterFlag(0x20);
     WriteRegisterByte(RegisterType::H, 0x01);
     WriteRegisterByte(RegisterType::L, 0xFF);
+    mmap.EnableIME();
     WriteRegisterByte(RegisterType::IE, 0x00);
     WriteMemory(0x9883, 0x6D);
 
@@ -44937,6 +46932,7 @@ void test_6D_03E5()
     CheckRegisterByte(RegisterType::L, 0xFF);
     CheckRegisterWord(RegisterType::PC, 0x9884);
     CheckRegisterWord(RegisterType::SP, 0x5420);
+    TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9883, 0x6D);
 }
 
@@ -44957,6 +46953,7 @@ void test_6D_03E6()
     WriteRegisterFlag(0x00);
     WriteRegisterByte(RegisterType::H, 0x11);
     WriteRegisterByte(RegisterType::L, 0x0A);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0x7C0D, 0x6D);
 
@@ -44980,6 +46977,7 @@ void test_6D_03E6()
     CheckRegisterByte(RegisterType::L, 0x0A);
     CheckRegisterWord(RegisterType::PC, 0x7C0E);
     CheckRegisterWord(RegisterType::SP, 0x9929);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7C0D, 0x6D);
 }
 
@@ -45000,6 +46998,7 @@ void test_6D_03E7()
     WriteRegisterFlag(0xC0);
     WriteRegisterByte(RegisterType::H, 0x2A);
     WriteRegisterByte(RegisterType::L, 0x05);
+    mmap.DisableIME();
     WriteRegisterByte(RegisterType::IE, 0x01);
     WriteMemory(0xA83D, 0x6D);
 
@@ -45023,5 +47022,6 @@ void test_6D_03E7()
     CheckRegisterByte(RegisterType::L, 0x05);
     CheckRegisterWord(RegisterType::PC, 0xA83E);
     CheckRegisterWord(RegisterType::SP, 0xFF67);
+    TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA83D, 0x6D);
 }
