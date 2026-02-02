@@ -56,10 +56,11 @@ test_ADDITIONAL := $(foreach MODULE,$(MODULES),$(wildcard $(SRC_DIR)/$(MODULE)/*
 pc := %
 
 # Rules
-.PHONY: default clean run_all_tests generate_tests_sm83 run_all_tests_basic run_all_tests_sm83
+.PHONY: default clean run_all_tests generate_tests_sm83 run_all_tests_basic run_all_tests_sm83 build_all_tests
 .SECONDARY:
 
 default: $(TESTS_BASIC)
+build_all_tests: $(TESTS_BASIC) $(TESTS_SM83)
 clean:
 	rm -r $(BUILD_DIR) || exit 0
 
