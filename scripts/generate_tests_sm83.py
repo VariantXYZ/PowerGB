@@ -48,7 +48,7 @@ for info in SUPPORTED_OPCODES:
         output_fn.write(f"""
 #define WriteRegisterWord(register, value) do {{ auto result = mmap.WriteWord(register, value); TEST_ASSERT(result.IsSuccess()); }} while(0)
 #define WriteRegisterByte(register, value) do {{ auto result = mmap.WriteByte(register, value); TEST_ASSERT(result.IsSuccess()); }} while(0)
-#define WriteRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Byte>(mmap.WriteFlag(static_cast<const Byte&>(value))) == 0x00); }} while(0)
+#define WriteRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Byte>(mmap.WriteFlagByte(static_cast<const Byte&>(value))) == 0x00); }} while(0)
 #define WriteMemory(address, value) do {{ auto result = mmap.WriteByte(address, value); TEST_ASSERT(result.IsSuccess()); }} while(0)
 
 #define CheckRegisterWord(register, value) do {{ auto result = mmap.ReadWord(register); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Word&>(result) == value); }} while(0)

@@ -510,7 +510,7 @@ const Byte MemoryMap::ReadFlagByte() const noexcept
     return _registers.F() << 4;
 }
 
-Byte MemoryMap::WriteFlag(const Byte& value) noexcept
+Byte MemoryMap::WriteFlagByte(const Byte& value) noexcept
 {
     Byte oldValue  = ReadFlagByte();
     _registers.F() = value >> 4;

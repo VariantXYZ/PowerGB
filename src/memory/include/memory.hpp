@@ -257,7 +257,7 @@ public:
     Register16AccessResultSet WriteWord(const cpu::RegisterType&, const Word&) noexcept;
 
     const Byte ReadFlagByte() const noexcept;
-    Byte       WriteFlag(const Byte&) noexcept;
+    Byte       WriteFlagByte(const Byte&) noexcept;
 
     const Nibble& ReadFlag() const noexcept;
     Nibble        WriteFlag(const Nibble&) noexcept;
