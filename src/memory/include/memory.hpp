@@ -126,9 +126,9 @@ public:
 
     constexpr static MemoryAddress FromRealAddress(std::size_t absoluteAddress)
     {
-        if (absoluteAddress > 0x4000)
+        if (absoluteAddress > 0x3FFF)
         {
-            return {static_cast<uint_fast16_t>(absoluteAddress / 0x4000), 0x4000 + static_cast<uint_fast16_t>(absoluteAddress % 0x4000)};
+            return {static_cast<uint_fast16_t>(absoluteAddress / 0x4000), static_cast<uint_fast16_t>(0x4000 + (absoluteAddress % 0x4000))};
         }
         else
         {
@@ -255,6 +255,9 @@ public:
     // Write word into a 16-bit register, the stored result is the previous value and only valid if it is marked successful.
     // Returns ResultAccessRegisterInvalidWidth if this register is not accessible at that width.
     Register16AccessResultSet WriteWord(const cpu::RegisterType&, const Word&) noexcept;
+
+    const Byte ReadFlagByte() const noexcept;
+    Byte       WriteFlag(const Byte&) noexcept;
 
     const Nibble& ReadFlag() const noexcept;
     Nibble        WriteFlag(const Nibble&) noexcept;

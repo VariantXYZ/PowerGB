@@ -30,18 +30,28 @@ struct DecoderHelper;
 template <typename... Decoders>
 struct DecoderHelper<registry::List<Decoders...>>
 {
+    // For opcode decoding, we only care about going from an 8-bit integer to a specific Decoder class, so just create a 256 element array
+    // Doing this also lets us flag errors for unsupported opcodes
+    static constexpr std::size_t Size = 0xFF + 1;
+
     static constexpr auto CreateCallbackMap() noexcept
     {
-        // For opcode decoding, we only care about going from an 8-bit integer to a specific Decoder class, so just create a 256 element array
-        // Doing this also lets us flag errors for unsupported opcodes
-        constexpr std::size_t Size = 0xFF + 1;
-
         // Initialize all elements to nullptr by default
         std::array<std::size_t (*)(memory::MemoryMap&) noexcept, Size> callbacks{nullptr};
 
         ((callbacks[Decoders::Opcode] = &Decoders::Execute), ...);
 
         return callbacks;
+    }
+
+    static constexpr auto CreateTicksMap() noexcept
+    {
+        // Initialize all elements to 0 by default
+        std::array<std::size_t, Size> ticks{0};
+
+        ((ticks[Decoders::Opcode] = Decoders::Ticks), ...);
+
+        return ticks;
     }
 };
 
@@ -53,10 +63,10 @@ template <typename RegistryType>
     requires(std::is_same_v<RegistryType, InstructionRegistryTagNoPrefix> || std::is_same_v<RegistryType, InstructionRegistryTagPrefixCB>)
 struct InstructionRegistry
 {
-private:
     static constexpr auto Callbacks = detail::DecoderHelper<decltype(registry::Registry<RegistryType>())>::CreateCallbackMap();
+    static constexpr auto Ticks     = detail::DecoderHelper<decltype(registry::Registry<RegistryType>())>::CreateTicksMap();
+    static constexpr auto Size      = decltype(registry::Registry<RegistryType>())::Size;
 
-public:
     static constexpr std::size_t Execute(std::uint_fast8_t opCode, memory::MemoryMap& mmap) noexcept
     {
         return Callbacks[opCode](mmap);
@@ -64,9 +74,6 @@ public:
 };
 
 } // namespace detail
-
-using InstructionRegistryNoPrefix = detail::InstructionRegistry<detail::InstructionRegistryTagNoPrefix>;
-using InstructionRegistryPrefixCB = detail::InstructionRegistry<detail::InstructionRegistryTagPrefixCB>;
 
 // 0 parameter instructions
 template <util::StringLiteral Name, std::uint_fast8_t OpCode, InstructionType InstructionHandler, bool Prefixed = false>
@@ -76,13 +83,14 @@ public:
     InstructionDecoder()              = delete;
     constexpr static auto Instruction = Name.value;
     constexpr static auto Opcode      = OpCode;
+    constexpr static auto Ticks       = InstructionHandler::Ticks;
 
-    constexpr static std::size_t Execute(memory::MemoryMap& mmap)
+    constexpr static std::size_t Execute(memory::MemoryMap& mmap) noexcept
     {
         return InstructionHandler::ExecuteAll(mmap);
     }
 
-    using RegistryType = std::conditional_t<Prefixed, InstructionRegistryPrefixCB, InstructionRegistryNoPrefix>;
+    using RegistryType = std::conditional_t<Prefixed, detail::InstructionRegistryTagPrefixCB, detail::InstructionRegistryTagNoPrefix>;
 
 private:
     inline static constexpr bool _registered = registry::Append<InstructionDecoder, RegistryType>();
@@ -98,5 +106,8 @@ struct Instantiate
     using Type = T;
     static_assert(sizeof(Type));
 };
+
+using InstructionRegistryNoPrefix = detail::InstructionRegistry<detail::InstructionRegistryTagNoPrefix>;
+using InstructionRegistryPrefixCB = detail::InstructionRegistry<detail::InstructionRegistryTagPrefixCB>;
 
 } // namespace pgb::cpu::instruction

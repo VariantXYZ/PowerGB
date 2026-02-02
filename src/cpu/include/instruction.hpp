@@ -59,8 +59,8 @@ template <std::size_t Ticks_, Operation... Operations>
 class Instruction
 {
 private:
-    using OperationVisitor                          = bool (*)(memory::MemoryMap&);
-    static constexpr OperationVisitor _operations[] = {[](memory::MemoryMap& memory)
+    using OperationVisitor                          = bool (*)(memory::MemoryMap&) noexcept;
+    static constexpr OperationVisitor _operations[] = {[](memory::MemoryMap& memory) noexcept
                                                        { return Operations(memory).IsSuccess(); }...};
 
 public:

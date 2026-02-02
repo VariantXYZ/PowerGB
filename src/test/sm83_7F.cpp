@@ -15,13 +15,16 @@ static auto mmap      = MemoryMap(registers, MaxRomBankCount, MaxVramBankCount, 
 
 #define WriteRegisterWord(register, value) do { auto result = mmap.WriteWord(register, value); TEST_ASSERT(result.IsSuccess()); } while(0)
 #define WriteRegisterByte(register, value) do { auto result = mmap.WriteByte(register, value); TEST_ASSERT(result.IsSuccess()); } while(0)
-#define WriteRegisterFlag(value) do { TEST_ASSERT(static_cast<const Nibble>(mmap.WriteFlag(value)) == 0x00); } while(0)
-#define WriteMemory(address, value) do { auto result = mmap.WriteByte(MemoryMap::FromRealAddress(static_cast<std::size_t>(address)), value); TEST_ASSERT(result.IsSuccess()); } while(0)
+#define WriteRegisterFlag(value) do { TEST_ASSERT(static_cast<const Byte>(mmap.WriteFlag(static_cast<const Byte&>(value))) == 0x00); } while(0)
+#define WriteMemory(address, value) do { auto result = mmap.WriteByte(address, value); TEST_ASSERT(result.IsSuccess()); } while(0)
 
 #define CheckRegisterWord(register, value) do { auto result = mmap.ReadWord(register); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Word&>(result) == value); } while(0)
 #define CheckRegisterByte(register, value) do { auto result = mmap.ReadByte(register); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); } while(0)
-#define CheckRegisterFlag(value) do { TEST_ASSERT(static_cast<const Nibble>(mmap.ReadFlag()) == value); } while(0)
-#define CheckMemory(address, value) do { auto result = mmap.ReadByte(MemoryMap::FromRealAddress(static_cast<std::size_t>(address))); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); } while(0)
+#define CheckRegisterFlag(value) do { TEST_ASSERT(static_cast<const Byte>(mmap.ReadFlagByte()) == value); } while(0)
+#define CheckMemory(address, value) do { auto result = mmap.ReadByte(address); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); } while(0)
+
+static_assert(instruction::InstructionRegistryNoPrefix::Callbacks[0x7F] != nullptr);
+static_assert(instruction::InstructionRegistryNoPrefix::Ticks[0x7F] != 0);
         void test_7F_0000(void);
 void test_7F_0001(void);
 void test_7F_0002(void);
@@ -2052,7 +2055,7 @@ void test_7F_0000()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2065,8 +2068,8 @@ void test_7F_0000()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x28);
     CheckRegisterByte(RegisterType::L, 0x16);
-    CheckRegisterWord(RegisterType::PC, 0x7058);
-    CheckRegisterWord(RegisterType::SP, 0xE8A1);
+    WriteRegisterWord(RegisterType::PC, 0x7057);
+    WriteRegisterWord(RegisterType::SP, 0xE8A1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7057, 0x7F);
 }
@@ -2097,7 +2100,7 @@ void test_7F_0001()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2110,8 +2113,8 @@ void test_7F_0001()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x81);
     CheckRegisterByte(RegisterType::L, 0x93);
-    CheckRegisterWord(RegisterType::PC, 0x16BC);
-    CheckRegisterWord(RegisterType::SP, 0x41F5);
+    WriteRegisterWord(RegisterType::PC, 0x16BB);
+    WriteRegisterWord(RegisterType::SP, 0x41F5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x16BB, 0x7F);
 }
@@ -2142,7 +2145,7 @@ void test_7F_0002()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2155,8 +2158,8 @@ void test_7F_0002()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0x90);
-    CheckRegisterWord(RegisterType::PC, 0xEF7D);
-    CheckRegisterWord(RegisterType::SP, 0x8B02);
+    WriteRegisterWord(RegisterType::PC, 0xEF7C);
+    WriteRegisterWord(RegisterType::SP, 0x8B02);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEF7C, 0x7F);
 }
@@ -2187,7 +2190,7 @@ void test_7F_0003()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2200,8 +2203,8 @@ void test_7F_0003()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0x1D);
-    CheckRegisterWord(RegisterType::PC, 0x19E0);
-    CheckRegisterWord(RegisterType::SP, 0x6CB5);
+    WriteRegisterWord(RegisterType::PC, 0x19DF);
+    WriteRegisterWord(RegisterType::SP, 0x6CB5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x19DF, 0x7F);
 }
@@ -2232,7 +2235,7 @@ void test_7F_0004()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2245,8 +2248,8 @@ void test_7F_0004()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x06);
     CheckRegisterByte(RegisterType::L, 0x90);
-    CheckRegisterWord(RegisterType::PC, 0xF0AB);
-    CheckRegisterWord(RegisterType::SP, 0x9AF2);
+    WriteRegisterWord(RegisterType::PC, 0xF0AA);
+    WriteRegisterWord(RegisterType::SP, 0x9AF2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF0AA, 0x7F);
 }
@@ -2277,7 +2280,7 @@ void test_7F_0005()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2290,8 +2293,8 @@ void test_7F_0005()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xE3);
     CheckRegisterByte(RegisterType::L, 0xA9);
-    CheckRegisterWord(RegisterType::PC, 0xE339);
-    CheckRegisterWord(RegisterType::SP, 0x2FF0);
+    WriteRegisterWord(RegisterType::PC, 0xE338);
+    WriteRegisterWord(RegisterType::SP, 0x2FF0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE338, 0x7F);
 }
@@ -2322,7 +2325,7 @@ void test_7F_0006()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2335,8 +2338,8 @@ void test_7F_0006()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x68);
     CheckRegisterByte(RegisterType::L, 0x90);
-    CheckRegisterWord(RegisterType::PC, 0xFF6B);
-    CheckRegisterWord(RegisterType::SP, 0xF9D9);
+    WriteRegisterWord(RegisterType::PC, 0xFF6A);
+    WriteRegisterWord(RegisterType::SP, 0xF9D9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFF6A, 0x7F);
 }
@@ -2367,7 +2370,7 @@ void test_7F_0007()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2380,8 +2383,8 @@ void test_7F_0007()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0x86);
-    CheckRegisterWord(RegisterType::PC, 0x0A78);
-    CheckRegisterWord(RegisterType::SP, 0x4901);
+    WriteRegisterWord(RegisterType::PC, 0x0A77);
+    WriteRegisterWord(RegisterType::SP, 0x4901);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0A77, 0x7F);
 }
@@ -2412,7 +2415,7 @@ void test_7F_0008()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2425,8 +2428,8 @@ void test_7F_0008()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x37);
     CheckRegisterByte(RegisterType::L, 0xF1);
-    CheckRegisterWord(RegisterType::PC, 0x27C2);
-    CheckRegisterWord(RegisterType::SP, 0xA63E);
+    WriteRegisterWord(RegisterType::PC, 0x27C1);
+    WriteRegisterWord(RegisterType::SP, 0xA63E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x27C1, 0x7F);
 }
@@ -2457,7 +2460,7 @@ void test_7F_0009()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2470,8 +2473,8 @@ void test_7F_0009()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xE8);
     CheckRegisterByte(RegisterType::L, 0x80);
-    CheckRegisterWord(RegisterType::PC, 0x33BE);
-    CheckRegisterWord(RegisterType::SP, 0x4F23);
+    WriteRegisterWord(RegisterType::PC, 0x33BD);
+    WriteRegisterWord(RegisterType::SP, 0x4F23);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x33BD, 0x7F);
 }
@@ -2502,7 +2505,7 @@ void test_7F_000A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2515,8 +2518,8 @@ void test_7F_000A()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x59);
     CheckRegisterByte(RegisterType::L, 0xE8);
-    CheckRegisterWord(RegisterType::PC, 0xA916);
-    CheckRegisterWord(RegisterType::SP, 0x6F3D);
+    WriteRegisterWord(RegisterType::PC, 0xA915);
+    WriteRegisterWord(RegisterType::SP, 0x6F3D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA915, 0x7F);
 }
@@ -2547,7 +2550,7 @@ void test_7F_000B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2560,8 +2563,8 @@ void test_7F_000B()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x54);
     CheckRegisterByte(RegisterType::L, 0xC8);
-    CheckRegisterWord(RegisterType::PC, 0xADAC);
-    CheckRegisterWord(RegisterType::SP, 0x85C8);
+    WriteRegisterWord(RegisterType::PC, 0xADAB);
+    WriteRegisterWord(RegisterType::SP, 0x85C8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xADAB, 0x7F);
 }
@@ -2592,7 +2595,7 @@ void test_7F_000C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2605,8 +2608,8 @@ void test_7F_000C()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x30);
     CheckRegisterByte(RegisterType::L, 0xCC);
-    CheckRegisterWord(RegisterType::PC, 0xF366);
-    CheckRegisterWord(RegisterType::SP, 0xC66A);
+    WriteRegisterWord(RegisterType::PC, 0xF365);
+    WriteRegisterWord(RegisterType::SP, 0xC66A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF365, 0x7F);
 }
@@ -2637,7 +2640,7 @@ void test_7F_000D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2650,8 +2653,8 @@ void test_7F_000D()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0x56);
-    CheckRegisterWord(RegisterType::PC, 0xE99E);
-    CheckRegisterWord(RegisterType::SP, 0x8D0C);
+    WriteRegisterWord(RegisterType::PC, 0xE99D);
+    WriteRegisterWord(RegisterType::SP, 0x8D0C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE99D, 0x7F);
 }
@@ -2682,7 +2685,7 @@ void test_7F_000E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2695,8 +2698,8 @@ void test_7F_000E()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x81);
     CheckRegisterByte(RegisterType::L, 0xED);
-    CheckRegisterWord(RegisterType::PC, 0x717B);
-    CheckRegisterWord(RegisterType::SP, 0xFA5C);
+    WriteRegisterWord(RegisterType::PC, 0x717A);
+    WriteRegisterWord(RegisterType::SP, 0xFA5C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x717A, 0x7F);
 }
@@ -2727,7 +2730,7 @@ void test_7F_000F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2740,8 +2743,8 @@ void test_7F_000F()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xF1);
     CheckRegisterByte(RegisterType::L, 0xAC);
-    CheckRegisterWord(RegisterType::PC, 0xC7FE);
-    CheckRegisterWord(RegisterType::SP, 0x3610);
+    WriteRegisterWord(RegisterType::PC, 0xC7FD);
+    WriteRegisterWord(RegisterType::SP, 0x3610);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC7FD, 0x7F);
 }
@@ -2772,7 +2775,7 @@ void test_7F_0010()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2785,8 +2788,8 @@ void test_7F_0010()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x70);
     CheckRegisterByte(RegisterType::L, 0x64);
-    CheckRegisterWord(RegisterType::PC, 0xADED);
-    CheckRegisterWord(RegisterType::SP, 0xCD26);
+    WriteRegisterWord(RegisterType::PC, 0xADEC);
+    WriteRegisterWord(RegisterType::SP, 0xCD26);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xADEC, 0x7F);
 }
@@ -2817,7 +2820,7 @@ void test_7F_0011()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2830,8 +2833,8 @@ void test_7F_0011()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x7F);
     CheckRegisterByte(RegisterType::L, 0xF8);
-    CheckRegisterWord(RegisterType::PC, 0xC487);
-    CheckRegisterWord(RegisterType::SP, 0xDF18);
+    WriteRegisterWord(RegisterType::PC, 0xC486);
+    WriteRegisterWord(RegisterType::SP, 0xDF18);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC486, 0x7F);
 }
@@ -2862,7 +2865,7 @@ void test_7F_0012()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2875,8 +2878,8 @@ void test_7F_0012()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xEE);
     CheckRegisterByte(RegisterType::L, 0xD2);
-    CheckRegisterWord(RegisterType::PC, 0xD763);
-    CheckRegisterWord(RegisterType::SP, 0x9CDF);
+    WriteRegisterWord(RegisterType::PC, 0xD762);
+    WriteRegisterWord(RegisterType::SP, 0x9CDF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD762, 0x7F);
 }
@@ -2907,7 +2910,7 @@ void test_7F_0013()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2920,8 +2923,8 @@ void test_7F_0013()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x77);
     CheckRegisterByte(RegisterType::L, 0x01);
-    CheckRegisterWord(RegisterType::PC, 0xD99D);
-    CheckRegisterWord(RegisterType::SP, 0x9545);
+    WriteRegisterWord(RegisterType::PC, 0xD99C);
+    WriteRegisterWord(RegisterType::SP, 0x9545);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD99C, 0x7F);
 }
@@ -2952,7 +2955,7 @@ void test_7F_0014()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -2965,8 +2968,8 @@ void test_7F_0014()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x70);
     CheckRegisterByte(RegisterType::L, 0x64);
-    CheckRegisterWord(RegisterType::PC, 0xF3A2);
-    CheckRegisterWord(RegisterType::SP, 0x05E9);
+    WriteRegisterWord(RegisterType::PC, 0xF3A1);
+    WriteRegisterWord(RegisterType::SP, 0x05E9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF3A1, 0x7F);
 }
@@ -2997,7 +3000,7 @@ void test_7F_0015()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3010,8 +3013,8 @@ void test_7F_0015()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x7E);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    CheckRegisterWord(RegisterType::PC, 0x4218);
-    CheckRegisterWord(RegisterType::SP, 0x15BA);
+    WriteRegisterWord(RegisterType::PC, 0x4217);
+    WriteRegisterWord(RegisterType::SP, 0x15BA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4217, 0x7F);
 }
@@ -3042,7 +3045,7 @@ void test_7F_0016()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3055,8 +3058,8 @@ void test_7F_0016()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x9F);
     CheckRegisterByte(RegisterType::L, 0x22);
-    CheckRegisterWord(RegisterType::PC, 0x9354);
-    CheckRegisterWord(RegisterType::SP, 0xD30E);
+    WriteRegisterWord(RegisterType::PC, 0x9353);
+    WriteRegisterWord(RegisterType::SP, 0xD30E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9353, 0x7F);
 }
@@ -3087,7 +3090,7 @@ void test_7F_0017()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3100,8 +3103,8 @@ void test_7F_0017()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x2F);
     CheckRegisterByte(RegisterType::L, 0x95);
-    CheckRegisterWord(RegisterType::PC, 0x658C);
-    CheckRegisterWord(RegisterType::SP, 0x6C3A);
+    WriteRegisterWord(RegisterType::PC, 0x658B);
+    WriteRegisterWord(RegisterType::SP, 0x6C3A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x658B, 0x7F);
 }
@@ -3132,7 +3135,7 @@ void test_7F_0018()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3145,8 +3148,8 @@ void test_7F_0018()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xBE);
     CheckRegisterByte(RegisterType::L, 0x22);
-    CheckRegisterWord(RegisterType::PC, 0x99A6);
-    CheckRegisterWord(RegisterType::SP, 0x3C8C);
+    WriteRegisterWord(RegisterType::PC, 0x99A5);
+    WriteRegisterWord(RegisterType::SP, 0x3C8C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x99A5, 0x7F);
 }
@@ -3177,7 +3180,7 @@ void test_7F_0019()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3190,8 +3193,8 @@ void test_7F_0019()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x34);
     CheckRegisterByte(RegisterType::L, 0xAD);
-    CheckRegisterWord(RegisterType::PC, 0xE0C3);
-    CheckRegisterWord(RegisterType::SP, 0x25DD);
+    WriteRegisterWord(RegisterType::PC, 0xE0C2);
+    WriteRegisterWord(RegisterType::SP, 0x25DD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE0C2, 0x7F);
 }
@@ -3222,7 +3225,7 @@ void test_7F_001A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3235,8 +3238,8 @@ void test_7F_001A()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x26);
     CheckRegisterByte(RegisterType::L, 0x67);
-    CheckRegisterWord(RegisterType::PC, 0x5844);
-    CheckRegisterWord(RegisterType::SP, 0x1C86);
+    WriteRegisterWord(RegisterType::PC, 0x5843);
+    WriteRegisterWord(RegisterType::SP, 0x1C86);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5843, 0x7F);
 }
@@ -3267,7 +3270,7 @@ void test_7F_001B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3280,8 +3283,8 @@ void test_7F_001B()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xE6);
     CheckRegisterByte(RegisterType::L, 0x65);
-    CheckRegisterWord(RegisterType::PC, 0xBD9C);
-    CheckRegisterWord(RegisterType::SP, 0xF782);
+    WriteRegisterWord(RegisterType::PC, 0xBD9B);
+    WriteRegisterWord(RegisterType::SP, 0xF782);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBD9B, 0x7F);
 }
@@ -3312,7 +3315,7 @@ void test_7F_001C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3325,8 +3328,8 @@ void test_7F_001C()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0x03);
-    CheckRegisterWord(RegisterType::PC, 0xDB0A);
-    CheckRegisterWord(RegisterType::SP, 0x6959);
+    WriteRegisterWord(RegisterType::PC, 0xDB09);
+    WriteRegisterWord(RegisterType::SP, 0x6959);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDB09, 0x7F);
 }
@@ -3357,7 +3360,7 @@ void test_7F_001D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3370,8 +3373,8 @@ void test_7F_001D()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xD5);
     CheckRegisterByte(RegisterType::L, 0x9A);
-    CheckRegisterWord(RegisterType::PC, 0xC426);
-    CheckRegisterWord(RegisterType::SP, 0x9090);
+    WriteRegisterWord(RegisterType::PC, 0xC425);
+    WriteRegisterWord(RegisterType::SP, 0x9090);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC425, 0x7F);
 }
@@ -3402,7 +3405,7 @@ void test_7F_001E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3415,8 +3418,8 @@ void test_7F_001E()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xAC);
     CheckRegisterByte(RegisterType::L, 0xF3);
-    CheckRegisterWord(RegisterType::PC, 0xDD43);
-    CheckRegisterWord(RegisterType::SP, 0x1E85);
+    WriteRegisterWord(RegisterType::PC, 0xDD42);
+    WriteRegisterWord(RegisterType::SP, 0x1E85);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDD42, 0x7F);
 }
@@ -3447,7 +3450,7 @@ void test_7F_001F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3460,8 +3463,8 @@ void test_7F_001F()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x32);
     CheckRegisterByte(RegisterType::L, 0xB8);
-    CheckRegisterWord(RegisterType::PC, 0x528A);
-    CheckRegisterWord(RegisterType::SP, 0x41D8);
+    WriteRegisterWord(RegisterType::PC, 0x5289);
+    WriteRegisterWord(RegisterType::SP, 0x41D8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5289, 0x7F);
 }
@@ -3492,7 +3495,7 @@ void test_7F_0020()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3505,8 +3508,8 @@ void test_7F_0020()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x79);
     CheckRegisterByte(RegisterType::L, 0xFD);
-    CheckRegisterWord(RegisterType::PC, 0x22B2);
-    CheckRegisterWord(RegisterType::SP, 0x042F);
+    WriteRegisterWord(RegisterType::PC, 0x22B1);
+    WriteRegisterWord(RegisterType::SP, 0x042F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x22B1, 0x7F);
 }
@@ -3537,7 +3540,7 @@ void test_7F_0021()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3550,8 +3553,8 @@ void test_7F_0021()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xAC);
     CheckRegisterByte(RegisterType::L, 0x76);
-    CheckRegisterWord(RegisterType::PC, 0x37A7);
-    CheckRegisterWord(RegisterType::SP, 0xCC35);
+    WriteRegisterWord(RegisterType::PC, 0x37A6);
+    WriteRegisterWord(RegisterType::SP, 0xCC35);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x37A6, 0x7F);
 }
@@ -3582,7 +3585,7 @@ void test_7F_0022()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3595,8 +3598,8 @@ void test_7F_0022()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x9F);
     CheckRegisterByte(RegisterType::L, 0xC3);
-    CheckRegisterWord(RegisterType::PC, 0x3CAD);
-    CheckRegisterWord(RegisterType::SP, 0x2A6E);
+    WriteRegisterWord(RegisterType::PC, 0x3CAC);
+    WriteRegisterWord(RegisterType::SP, 0x2A6E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3CAC, 0x7F);
 }
@@ -3627,7 +3630,7 @@ void test_7F_0023()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3640,8 +3643,8 @@ void test_7F_0023()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0x59);
-    CheckRegisterWord(RegisterType::PC, 0x71EC);
-    CheckRegisterWord(RegisterType::SP, 0x5904);
+    WriteRegisterWord(RegisterType::PC, 0x71EB);
+    WriteRegisterWord(RegisterType::SP, 0x5904);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x71EB, 0x7F);
 }
@@ -3672,7 +3675,7 @@ void test_7F_0024()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3685,8 +3688,8 @@ void test_7F_0024()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xC1);
     CheckRegisterByte(RegisterType::L, 0x06);
-    CheckRegisterWord(RegisterType::PC, 0x147F);
-    CheckRegisterWord(RegisterType::SP, 0xB7B9);
+    WriteRegisterWord(RegisterType::PC, 0x147E);
+    WriteRegisterWord(RegisterType::SP, 0xB7B9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x147E, 0x7F);
 }
@@ -3717,7 +3720,7 @@ void test_7F_0025()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3730,8 +3733,8 @@ void test_7F_0025()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x32);
     CheckRegisterByte(RegisterType::L, 0x8E);
-    CheckRegisterWord(RegisterType::PC, 0xF814);
-    CheckRegisterWord(RegisterType::SP, 0xA529);
+    WriteRegisterWord(RegisterType::PC, 0xF813);
+    WriteRegisterWord(RegisterType::SP, 0xA529);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF813, 0x7F);
 }
@@ -3762,7 +3765,7 @@ void test_7F_0026()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3775,8 +3778,8 @@ void test_7F_0026()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xC3);
     CheckRegisterByte(RegisterType::L, 0xE6);
-    CheckRegisterWord(RegisterType::PC, 0x0AF6);
-    CheckRegisterWord(RegisterType::SP, 0x3E26);
+    WriteRegisterWord(RegisterType::PC, 0x0AF5);
+    WriteRegisterWord(RegisterType::SP, 0x3E26);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0AF5, 0x7F);
 }
@@ -3807,7 +3810,7 @@ void test_7F_0027()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3820,8 +3823,8 @@ void test_7F_0027()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xEE);
     CheckRegisterByte(RegisterType::L, 0x37);
-    CheckRegisterWord(RegisterType::PC, 0x1886);
-    CheckRegisterWord(RegisterType::SP, 0x8D6B);
+    WriteRegisterWord(RegisterType::PC, 0x1885);
+    WriteRegisterWord(RegisterType::SP, 0x8D6B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1885, 0x7F);
 }
@@ -3852,7 +3855,7 @@ void test_7F_0028()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3865,8 +3868,8 @@ void test_7F_0028()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x94);
     CheckRegisterByte(RegisterType::L, 0x44);
-    CheckRegisterWord(RegisterType::PC, 0x321F);
-    CheckRegisterWord(RegisterType::SP, 0x7663);
+    WriteRegisterWord(RegisterType::PC, 0x321E);
+    WriteRegisterWord(RegisterType::SP, 0x7663);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x321E, 0x7F);
 }
@@ -3897,7 +3900,7 @@ void test_7F_0029()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3910,8 +3913,8 @@ void test_7F_0029()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xB9);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    CheckRegisterWord(RegisterType::PC, 0x6923);
-    CheckRegisterWord(RegisterType::SP, 0x17E6);
+    WriteRegisterWord(RegisterType::PC, 0x6922);
+    WriteRegisterWord(RegisterType::SP, 0x17E6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6922, 0x7F);
 }
@@ -3942,7 +3945,7 @@ void test_7F_002A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -3955,8 +3958,8 @@ void test_7F_002A()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xA6);
     CheckRegisterByte(RegisterType::L, 0x96);
-    CheckRegisterWord(RegisterType::PC, 0x4446);
-    CheckRegisterWord(RegisterType::SP, 0xCEED);
+    WriteRegisterWord(RegisterType::PC, 0x4445);
+    WriteRegisterWord(RegisterType::SP, 0xCEED);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4445, 0x7F);
 }
@@ -3987,7 +3990,7 @@ void test_7F_002B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4000,8 +4003,8 @@ void test_7F_002B()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0xB5);
-    CheckRegisterWord(RegisterType::PC, 0xDB81);
-    CheckRegisterWord(RegisterType::SP, 0x21B1);
+    WriteRegisterWord(RegisterType::PC, 0xDB80);
+    WriteRegisterWord(RegisterType::SP, 0x21B1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDB80, 0x7F);
 }
@@ -4032,7 +4035,7 @@ void test_7F_002C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4045,8 +4048,8 @@ void test_7F_002C()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    CheckRegisterWord(RegisterType::PC, 0x45D0);
-    CheckRegisterWord(RegisterType::SP, 0x968E);
+    WriteRegisterWord(RegisterType::PC, 0x45CF);
+    WriteRegisterWord(RegisterType::SP, 0x968E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x45CF, 0x7F);
 }
@@ -4077,7 +4080,7 @@ void test_7F_002D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4090,8 +4093,8 @@ void test_7F_002D()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x97);
     CheckRegisterByte(RegisterType::L, 0x53);
-    CheckRegisterWord(RegisterType::PC, 0x7516);
-    CheckRegisterWord(RegisterType::SP, 0x43EA);
+    WriteRegisterWord(RegisterType::PC, 0x7515);
+    WriteRegisterWord(RegisterType::SP, 0x43EA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7515, 0x7F);
 }
@@ -4122,7 +4125,7 @@ void test_7F_002E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4135,8 +4138,8 @@ void test_7F_002E()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x38);
     CheckRegisterByte(RegisterType::L, 0x60);
-    CheckRegisterWord(RegisterType::PC, 0xE7DC);
-    CheckRegisterWord(RegisterType::SP, 0xF741);
+    WriteRegisterWord(RegisterType::PC, 0xE7DB);
+    WriteRegisterWord(RegisterType::SP, 0xF741);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE7DB, 0x7F);
 }
@@ -4167,7 +4170,7 @@ void test_7F_002F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4180,8 +4183,8 @@ void test_7F_002F()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xE8);
     CheckRegisterByte(RegisterType::L, 0x04);
-    CheckRegisterWord(RegisterType::PC, 0xF183);
-    CheckRegisterWord(RegisterType::SP, 0x3E73);
+    WriteRegisterWord(RegisterType::PC, 0xF182);
+    WriteRegisterWord(RegisterType::SP, 0x3E73);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF182, 0x7F);
 }
@@ -4212,7 +4215,7 @@ void test_7F_0030()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4225,8 +4228,8 @@ void test_7F_0030()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x89);
     CheckRegisterByte(RegisterType::L, 0x43);
-    CheckRegisterWord(RegisterType::PC, 0x80F4);
-    CheckRegisterWord(RegisterType::SP, 0x6C7C);
+    WriteRegisterWord(RegisterType::PC, 0x80F3);
+    WriteRegisterWord(RegisterType::SP, 0x6C7C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x80F3, 0x7F);
 }
@@ -4257,7 +4260,7 @@ void test_7F_0031()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4270,8 +4273,8 @@ void test_7F_0031()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0x2B);
-    CheckRegisterWord(RegisterType::PC, 0xF5DC);
-    CheckRegisterWord(RegisterType::SP, 0xE289);
+    WriteRegisterWord(RegisterType::PC, 0xF5DB);
+    WriteRegisterWord(RegisterType::SP, 0xE289);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF5DB, 0x7F);
 }
@@ -4302,7 +4305,7 @@ void test_7F_0032()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4315,8 +4318,8 @@ void test_7F_0032()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0x5F);
-    CheckRegisterWord(RegisterType::PC, 0x6B6C);
-    CheckRegisterWord(RegisterType::SP, 0x86DC);
+    WriteRegisterWord(RegisterType::PC, 0x6B6B);
+    WriteRegisterWord(RegisterType::SP, 0x86DC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6B6B, 0x7F);
 }
@@ -4347,7 +4350,7 @@ void test_7F_0033()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4360,8 +4363,8 @@ void test_7F_0033()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xAE);
     CheckRegisterByte(RegisterType::L, 0x11);
-    CheckRegisterWord(RegisterType::PC, 0xB20A);
-    CheckRegisterWord(RegisterType::SP, 0xACC3);
+    WriteRegisterWord(RegisterType::PC, 0xB209);
+    WriteRegisterWord(RegisterType::SP, 0xACC3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB209, 0x7F);
 }
@@ -4392,7 +4395,7 @@ void test_7F_0034()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4405,8 +4408,8 @@ void test_7F_0034()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0xDA);
-    CheckRegisterWord(RegisterType::PC, 0x10F1);
-    CheckRegisterWord(RegisterType::SP, 0x3070);
+    WriteRegisterWord(RegisterType::PC, 0x10F0);
+    WriteRegisterWord(RegisterType::SP, 0x3070);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x10F0, 0x7F);
 }
@@ -4437,7 +4440,7 @@ void test_7F_0035()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4450,8 +4453,8 @@ void test_7F_0035()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x9B);
     CheckRegisterByte(RegisterType::L, 0xB0);
-    CheckRegisterWord(RegisterType::PC, 0x6C9B);
-    CheckRegisterWord(RegisterType::SP, 0x7C65);
+    WriteRegisterWord(RegisterType::PC, 0x6C9A);
+    WriteRegisterWord(RegisterType::SP, 0x7C65);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6C9A, 0x7F);
 }
@@ -4482,7 +4485,7 @@ void test_7F_0036()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4495,8 +4498,8 @@ void test_7F_0036()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x7B);
     CheckRegisterByte(RegisterType::L, 0x3A);
-    CheckRegisterWord(RegisterType::PC, 0x3824);
-    CheckRegisterWord(RegisterType::SP, 0xD316);
+    WriteRegisterWord(RegisterType::PC, 0x3823);
+    WriteRegisterWord(RegisterType::SP, 0xD316);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3823, 0x7F);
 }
@@ -4527,7 +4530,7 @@ void test_7F_0037()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4540,8 +4543,8 @@ void test_7F_0037()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x3A);
     CheckRegisterByte(RegisterType::L, 0x57);
-    CheckRegisterWord(RegisterType::PC, 0xBBF2);
-    CheckRegisterWord(RegisterType::SP, 0x9003);
+    WriteRegisterWord(RegisterType::PC, 0xBBF1);
+    WriteRegisterWord(RegisterType::SP, 0x9003);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBBF1, 0x7F);
 }
@@ -4572,7 +4575,7 @@ void test_7F_0038()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4585,8 +4588,8 @@ void test_7F_0038()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xB7);
     CheckRegisterByte(RegisterType::L, 0x00);
-    CheckRegisterWord(RegisterType::PC, 0xC446);
-    CheckRegisterWord(RegisterType::SP, 0x0353);
+    WriteRegisterWord(RegisterType::PC, 0xC445);
+    WriteRegisterWord(RegisterType::SP, 0x0353);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC445, 0x7F);
 }
@@ -4617,7 +4620,7 @@ void test_7F_0039()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4630,8 +4633,8 @@ void test_7F_0039()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x92);
     CheckRegisterByte(RegisterType::L, 0xB5);
-    CheckRegisterWord(RegisterType::PC, 0x4EC5);
-    CheckRegisterWord(RegisterType::SP, 0x1E58);
+    WriteRegisterWord(RegisterType::PC, 0x4EC4);
+    WriteRegisterWord(RegisterType::SP, 0x1E58);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4EC4, 0x7F);
 }
@@ -4662,7 +4665,7 @@ void test_7F_003A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4675,8 +4678,8 @@ void test_7F_003A()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xCF);
     CheckRegisterByte(RegisterType::L, 0xFD);
-    CheckRegisterWord(RegisterType::PC, 0x2423);
-    CheckRegisterWord(RegisterType::SP, 0x3701);
+    WriteRegisterWord(RegisterType::PC, 0x2422);
+    WriteRegisterWord(RegisterType::SP, 0x3701);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2422, 0x7F);
 }
@@ -4707,7 +4710,7 @@ void test_7F_003B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4720,8 +4723,8 @@ void test_7F_003B()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xE8);
     CheckRegisterByte(RegisterType::L, 0x29);
-    CheckRegisterWord(RegisterType::PC, 0x0E38);
-    CheckRegisterWord(RegisterType::SP, 0x73C7);
+    WriteRegisterWord(RegisterType::PC, 0x0E37);
+    WriteRegisterWord(RegisterType::SP, 0x73C7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0E37, 0x7F);
 }
@@ -4752,7 +4755,7 @@ void test_7F_003C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4765,8 +4768,8 @@ void test_7F_003C()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xEE);
     CheckRegisterByte(RegisterType::L, 0x07);
-    CheckRegisterWord(RegisterType::PC, 0x46FD);
-    CheckRegisterWord(RegisterType::SP, 0x58F4);
+    WriteRegisterWord(RegisterType::PC, 0x46FC);
+    WriteRegisterWord(RegisterType::SP, 0x58F4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x46FC, 0x7F);
 }
@@ -4797,7 +4800,7 @@ void test_7F_003D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4810,8 +4813,8 @@ void test_7F_003D()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x18);
     CheckRegisterByte(RegisterType::L, 0x07);
-    CheckRegisterWord(RegisterType::PC, 0x8132);
-    CheckRegisterWord(RegisterType::SP, 0x0D86);
+    WriteRegisterWord(RegisterType::PC, 0x8131);
+    WriteRegisterWord(RegisterType::SP, 0x0D86);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8131, 0x7F);
 }
@@ -4842,7 +4845,7 @@ void test_7F_003E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4855,8 +4858,8 @@ void test_7F_003E()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x3F);
     CheckRegisterByte(RegisterType::L, 0xAB);
-    CheckRegisterWord(RegisterType::PC, 0x6B3E);
-    CheckRegisterWord(RegisterType::SP, 0xD155);
+    WriteRegisterWord(RegisterType::PC, 0x6B3D);
+    WriteRegisterWord(RegisterType::SP, 0xD155);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6B3D, 0x7F);
 }
@@ -4887,7 +4890,7 @@ void test_7F_003F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4900,8 +4903,8 @@ void test_7F_003F()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x59);
     CheckRegisterByte(RegisterType::L, 0xCF);
-    CheckRegisterWord(RegisterType::PC, 0x7956);
-    CheckRegisterWord(RegisterType::SP, 0x2F24);
+    WriteRegisterWord(RegisterType::PC, 0x7955);
+    WriteRegisterWord(RegisterType::SP, 0x2F24);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7955, 0x7F);
 }
@@ -4932,7 +4935,7 @@ void test_7F_0040()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4945,8 +4948,8 @@ void test_7F_0040()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x20);
     CheckRegisterByte(RegisterType::L, 0x9A);
-    CheckRegisterWord(RegisterType::PC, 0x0269);
-    CheckRegisterWord(RegisterType::SP, 0xEA7D);
+    WriteRegisterWord(RegisterType::PC, 0x0268);
+    WriteRegisterWord(RegisterType::SP, 0xEA7D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0268, 0x7F);
 }
@@ -4977,7 +4980,7 @@ void test_7F_0041()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -4990,8 +4993,8 @@ void test_7F_0041()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x39);
     CheckRegisterByte(RegisterType::L, 0x13);
-    CheckRegisterWord(RegisterType::PC, 0x38F8);
-    CheckRegisterWord(RegisterType::SP, 0xAE27);
+    WriteRegisterWord(RegisterType::PC, 0x38F7);
+    WriteRegisterWord(RegisterType::SP, 0xAE27);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x38F7, 0x7F);
 }
@@ -5022,7 +5025,7 @@ void test_7F_0042()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5035,8 +5038,8 @@ void test_7F_0042()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0x50);
-    CheckRegisterWord(RegisterType::PC, 0xDE93);
-    CheckRegisterWord(RegisterType::SP, 0x9FDB);
+    WriteRegisterWord(RegisterType::PC, 0xDE92);
+    WriteRegisterWord(RegisterType::SP, 0x9FDB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDE92, 0x7F);
 }
@@ -5067,7 +5070,7 @@ void test_7F_0043()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5080,8 +5083,8 @@ void test_7F_0043()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x80);
     CheckRegisterByte(RegisterType::L, 0xDC);
-    CheckRegisterWord(RegisterType::PC, 0x31D8);
-    CheckRegisterWord(RegisterType::SP, 0x31DF);
+    WriteRegisterWord(RegisterType::PC, 0x31D7);
+    WriteRegisterWord(RegisterType::SP, 0x31DF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x31D7, 0x7F);
 }
@@ -5112,7 +5115,7 @@ void test_7F_0044()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5125,8 +5128,8 @@ void test_7F_0044()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xFE);
     CheckRegisterByte(RegisterType::L, 0x8A);
-    CheckRegisterWord(RegisterType::PC, 0xD554);
-    CheckRegisterWord(RegisterType::SP, 0x1FC0);
+    WriteRegisterWord(RegisterType::PC, 0xD553);
+    WriteRegisterWord(RegisterType::SP, 0x1FC0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD553, 0x7F);
 }
@@ -5157,7 +5160,7 @@ void test_7F_0045()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5170,8 +5173,8 @@ void test_7F_0045()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x06);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    CheckRegisterWord(RegisterType::PC, 0x01B5);
-    CheckRegisterWord(RegisterType::SP, 0xADD6);
+    WriteRegisterWord(RegisterType::PC, 0x01B4);
+    WriteRegisterWord(RegisterType::SP, 0xADD6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x01B4, 0x7F);
 }
@@ -5202,7 +5205,7 @@ void test_7F_0046()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5215,8 +5218,8 @@ void test_7F_0046()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x29);
     CheckRegisterByte(RegisterType::L, 0x66);
-    CheckRegisterWord(RegisterType::PC, 0xD058);
-    CheckRegisterWord(RegisterType::SP, 0x0D27);
+    WriteRegisterWord(RegisterType::PC, 0xD057);
+    WriteRegisterWord(RegisterType::SP, 0x0D27);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD057, 0x7F);
 }
@@ -5247,7 +5250,7 @@ void test_7F_0047()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5260,8 +5263,8 @@ void test_7F_0047()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0x46);
-    CheckRegisterWord(RegisterType::PC, 0x0768);
-    CheckRegisterWord(RegisterType::SP, 0xDEB6);
+    WriteRegisterWord(RegisterType::PC, 0x0767);
+    WriteRegisterWord(RegisterType::SP, 0xDEB6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0767, 0x7F);
 }
@@ -5292,7 +5295,7 @@ void test_7F_0048()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5305,8 +5308,8 @@ void test_7F_0048()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x55);
     CheckRegisterByte(RegisterType::L, 0xDB);
-    CheckRegisterWord(RegisterType::PC, 0x60E6);
-    CheckRegisterWord(RegisterType::SP, 0xBE4E);
+    WriteRegisterWord(RegisterType::PC, 0x60E5);
+    WriteRegisterWord(RegisterType::SP, 0xBE4E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x60E5, 0x7F);
 }
@@ -5337,7 +5340,7 @@ void test_7F_0049()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5350,8 +5353,8 @@ void test_7F_0049()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x0B);
     CheckRegisterByte(RegisterType::L, 0xFD);
-    CheckRegisterWord(RegisterType::PC, 0x1DDD);
-    CheckRegisterWord(RegisterType::SP, 0x74A8);
+    WriteRegisterWord(RegisterType::PC, 0x1DDC);
+    WriteRegisterWord(RegisterType::SP, 0x74A8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1DDC, 0x7F);
 }
@@ -5382,7 +5385,7 @@ void test_7F_004A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5395,8 +5398,8 @@ void test_7F_004A()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xAF);
     CheckRegisterByte(RegisterType::L, 0xB6);
-    CheckRegisterWord(RegisterType::PC, 0xCC9E);
-    CheckRegisterWord(RegisterType::SP, 0xF08C);
+    WriteRegisterWord(RegisterType::PC, 0xCC9D);
+    WriteRegisterWord(RegisterType::SP, 0xF08C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCC9D, 0x7F);
 }
@@ -5427,7 +5430,7 @@ void test_7F_004B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5440,8 +5443,8 @@ void test_7F_004B()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0x06);
-    CheckRegisterWord(RegisterType::PC, 0xB2C6);
-    CheckRegisterWord(RegisterType::SP, 0x60E5);
+    WriteRegisterWord(RegisterType::PC, 0xB2C5);
+    WriteRegisterWord(RegisterType::SP, 0x60E5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB2C5, 0x7F);
 }
@@ -5472,7 +5475,7 @@ void test_7F_004C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5485,8 +5488,8 @@ void test_7F_004C()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x01);
     CheckRegisterByte(RegisterType::L, 0x2B);
-    CheckRegisterWord(RegisterType::PC, 0x16DC);
-    CheckRegisterWord(RegisterType::SP, 0x459A);
+    WriteRegisterWord(RegisterType::PC, 0x16DB);
+    WriteRegisterWord(RegisterType::SP, 0x459A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x16DB, 0x7F);
 }
@@ -5517,7 +5520,7 @@ void test_7F_004D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5530,8 +5533,8 @@ void test_7F_004D()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xDE);
     CheckRegisterByte(RegisterType::L, 0xF5);
-    CheckRegisterWord(RegisterType::PC, 0xE4B8);
-    CheckRegisterWord(RegisterType::SP, 0xD439);
+    WriteRegisterWord(RegisterType::PC, 0xE4B7);
+    WriteRegisterWord(RegisterType::SP, 0xD439);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE4B7, 0x7F);
 }
@@ -5562,7 +5565,7 @@ void test_7F_004E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5575,8 +5578,8 @@ void test_7F_004E()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xB6);
     CheckRegisterByte(RegisterType::L, 0x1D);
-    CheckRegisterWord(RegisterType::PC, 0x106E);
-    CheckRegisterWord(RegisterType::SP, 0xE65F);
+    WriteRegisterWord(RegisterType::PC, 0x106D);
+    WriteRegisterWord(RegisterType::SP, 0xE65F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x106D, 0x7F);
 }
@@ -5607,7 +5610,7 @@ void test_7F_004F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5620,8 +5623,8 @@ void test_7F_004F()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xBD);
     CheckRegisterByte(RegisterType::L, 0x14);
-    CheckRegisterWord(RegisterType::PC, 0xB6CA);
-    CheckRegisterWord(RegisterType::SP, 0x0C9F);
+    WriteRegisterWord(RegisterType::PC, 0xB6C9);
+    WriteRegisterWord(RegisterType::SP, 0x0C9F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB6C9, 0x7F);
 }
@@ -5652,7 +5655,7 @@ void test_7F_0050()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5665,8 +5668,8 @@ void test_7F_0050()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x3E);
     CheckRegisterByte(RegisterType::L, 0xC3);
-    CheckRegisterWord(RegisterType::PC, 0x90E6);
-    CheckRegisterWord(RegisterType::SP, 0xBC80);
+    WriteRegisterWord(RegisterType::PC, 0x90E5);
+    WriteRegisterWord(RegisterType::SP, 0xBC80);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x90E5, 0x7F);
 }
@@ -5697,7 +5700,7 @@ void test_7F_0051()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5710,8 +5713,8 @@ void test_7F_0051()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x88);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    CheckRegisterWord(RegisterType::PC, 0x9DF3);
-    CheckRegisterWord(RegisterType::SP, 0xE7A0);
+    WriteRegisterWord(RegisterType::PC, 0x9DF2);
+    WriteRegisterWord(RegisterType::SP, 0xE7A0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9DF2, 0x7F);
 }
@@ -5742,7 +5745,7 @@ void test_7F_0052()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5755,8 +5758,8 @@ void test_7F_0052()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xE7);
     CheckRegisterByte(RegisterType::L, 0x46);
-    CheckRegisterWord(RegisterType::PC, 0xB9BA);
-    CheckRegisterWord(RegisterType::SP, 0x4733);
+    WriteRegisterWord(RegisterType::PC, 0xB9B9);
+    WriteRegisterWord(RegisterType::SP, 0x4733);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB9B9, 0x7F);
 }
@@ -5787,7 +5790,7 @@ void test_7F_0053()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5800,8 +5803,8 @@ void test_7F_0053()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x77);
     CheckRegisterByte(RegisterType::L, 0x67);
-    CheckRegisterWord(RegisterType::PC, 0xF4ED);
-    CheckRegisterWord(RegisterType::SP, 0x0156);
+    WriteRegisterWord(RegisterType::PC, 0xF4EC);
+    WriteRegisterWord(RegisterType::SP, 0x0156);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF4EC, 0x7F);
 }
@@ -5832,7 +5835,7 @@ void test_7F_0054()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5845,8 +5848,8 @@ void test_7F_0054()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x2A);
     CheckRegisterByte(RegisterType::L, 0x54);
-    CheckRegisterWord(RegisterType::PC, 0x72AF);
-    CheckRegisterWord(RegisterType::SP, 0x4B28);
+    WriteRegisterWord(RegisterType::PC, 0x72AE);
+    WriteRegisterWord(RegisterType::SP, 0x4B28);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x72AE, 0x7F);
 }
@@ -5877,7 +5880,7 @@ void test_7F_0055()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5890,8 +5893,8 @@ void test_7F_0055()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x36);
     CheckRegisterByte(RegisterType::L, 0xA2);
-    CheckRegisterWord(RegisterType::PC, 0xEAF9);
-    CheckRegisterWord(RegisterType::SP, 0xBF37);
+    WriteRegisterWord(RegisterType::PC, 0xEAF8);
+    WriteRegisterWord(RegisterType::SP, 0xBF37);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEAF8, 0x7F);
 }
@@ -5922,7 +5925,7 @@ void test_7F_0056()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5935,8 +5938,8 @@ void test_7F_0056()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xEC);
     CheckRegisterByte(RegisterType::L, 0x38);
-    CheckRegisterWord(RegisterType::PC, 0x588C);
-    CheckRegisterWord(RegisterType::SP, 0x57CD);
+    WriteRegisterWord(RegisterType::PC, 0x588B);
+    WriteRegisterWord(RegisterType::SP, 0x57CD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x588B, 0x7F);
 }
@@ -5967,7 +5970,7 @@ void test_7F_0057()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -5980,8 +5983,8 @@ void test_7F_0057()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0x2D);
-    CheckRegisterWord(RegisterType::PC, 0x1BDC);
-    CheckRegisterWord(RegisterType::SP, 0x1E55);
+    WriteRegisterWord(RegisterType::PC, 0x1BDB);
+    WriteRegisterWord(RegisterType::SP, 0x1E55);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1BDB, 0x7F);
 }
@@ -6012,7 +6015,7 @@ void test_7F_0058()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6025,8 +6028,8 @@ void test_7F_0058()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xE1);
     CheckRegisterByte(RegisterType::L, 0xC2);
-    CheckRegisterWord(RegisterType::PC, 0x9BEB);
-    CheckRegisterWord(RegisterType::SP, 0xD7A1);
+    WriteRegisterWord(RegisterType::PC, 0x9BEA);
+    WriteRegisterWord(RegisterType::SP, 0xD7A1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9BEA, 0x7F);
 }
@@ -6057,7 +6060,7 @@ void test_7F_0059()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6070,8 +6073,8 @@ void test_7F_0059()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x3E);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    CheckRegisterWord(RegisterType::PC, 0x576C);
-    CheckRegisterWord(RegisterType::SP, 0xE99A);
+    WriteRegisterWord(RegisterType::PC, 0x576B);
+    WriteRegisterWord(RegisterType::SP, 0xE99A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x576B, 0x7F);
 }
@@ -6102,7 +6105,7 @@ void test_7F_005A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6115,8 +6118,8 @@ void test_7F_005A()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xAE);
     CheckRegisterByte(RegisterType::L, 0xDA);
-    CheckRegisterWord(RegisterType::PC, 0xA3B0);
-    CheckRegisterWord(RegisterType::SP, 0x3560);
+    WriteRegisterWord(RegisterType::PC, 0xA3AF);
+    WriteRegisterWord(RegisterType::SP, 0x3560);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA3AF, 0x7F);
 }
@@ -6147,7 +6150,7 @@ void test_7F_005B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6160,8 +6163,8 @@ void test_7F_005B()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x6E);
     CheckRegisterByte(RegisterType::L, 0x9C);
-    CheckRegisterWord(RegisterType::PC, 0x5203);
-    CheckRegisterWord(RegisterType::SP, 0xB37D);
+    WriteRegisterWord(RegisterType::PC, 0x5202);
+    WriteRegisterWord(RegisterType::SP, 0xB37D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5202, 0x7F);
 }
@@ -6192,7 +6195,7 @@ void test_7F_005C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6205,8 +6208,8 @@ void test_7F_005C()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0x62);
-    CheckRegisterWord(RegisterType::PC, 0x8395);
-    CheckRegisterWord(RegisterType::SP, 0xFCBB);
+    WriteRegisterWord(RegisterType::PC, 0x8394);
+    WriteRegisterWord(RegisterType::SP, 0xFCBB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8394, 0x7F);
 }
@@ -6237,7 +6240,7 @@ void test_7F_005D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6250,8 +6253,8 @@ void test_7F_005D()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x53);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    CheckRegisterWord(RegisterType::PC, 0xA93C);
-    CheckRegisterWord(RegisterType::SP, 0xF604);
+    WriteRegisterWord(RegisterType::PC, 0xA93B);
+    WriteRegisterWord(RegisterType::SP, 0xF604);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA93B, 0x7F);
 }
@@ -6282,7 +6285,7 @@ void test_7F_005E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6295,8 +6298,8 @@ void test_7F_005E()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x97);
     CheckRegisterByte(RegisterType::L, 0x46);
-    CheckRegisterWord(RegisterType::PC, 0x78BC);
-    CheckRegisterWord(RegisterType::SP, 0xD1C5);
+    WriteRegisterWord(RegisterType::PC, 0x78BB);
+    WriteRegisterWord(RegisterType::SP, 0xD1C5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x78BB, 0x7F);
 }
@@ -6327,7 +6330,7 @@ void test_7F_005F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6340,8 +6343,8 @@ void test_7F_005F()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0x44);
-    CheckRegisterWord(RegisterType::PC, 0x98FA);
-    CheckRegisterWord(RegisterType::SP, 0xAA79);
+    WriteRegisterWord(RegisterType::PC, 0x98F9);
+    WriteRegisterWord(RegisterType::SP, 0xAA79);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x98F9, 0x7F);
 }
@@ -6372,7 +6375,7 @@ void test_7F_0060()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6385,8 +6388,8 @@ void test_7F_0060()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x79);
     CheckRegisterByte(RegisterType::L, 0x4C);
-    CheckRegisterWord(RegisterType::PC, 0x565D);
-    CheckRegisterWord(RegisterType::SP, 0x525D);
+    WriteRegisterWord(RegisterType::PC, 0x565C);
+    WriteRegisterWord(RegisterType::SP, 0x525D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x565C, 0x7F);
 }
@@ -6417,7 +6420,7 @@ void test_7F_0061()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6430,8 +6433,8 @@ void test_7F_0061()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0x32);
-    CheckRegisterWord(RegisterType::PC, 0x428D);
-    CheckRegisterWord(RegisterType::SP, 0x2B14);
+    WriteRegisterWord(RegisterType::PC, 0x428C);
+    WriteRegisterWord(RegisterType::SP, 0x2B14);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x428C, 0x7F);
 }
@@ -6462,7 +6465,7 @@ void test_7F_0062()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6475,8 +6478,8 @@ void test_7F_0062()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0x00);
-    CheckRegisterWord(RegisterType::PC, 0xA95D);
-    CheckRegisterWord(RegisterType::SP, 0x341D);
+    WriteRegisterWord(RegisterType::PC, 0xA95C);
+    WriteRegisterWord(RegisterType::SP, 0x341D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA95C, 0x7F);
 }
@@ -6507,7 +6510,7 @@ void test_7F_0063()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6520,8 +6523,8 @@ void test_7F_0063()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x1F);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    CheckRegisterWord(RegisterType::PC, 0xCAE0);
-    CheckRegisterWord(RegisterType::SP, 0x5D38);
+    WriteRegisterWord(RegisterType::PC, 0xCADF);
+    WriteRegisterWord(RegisterType::SP, 0x5D38);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCADF, 0x7F);
 }
@@ -6552,7 +6555,7 @@ void test_7F_0064()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6565,8 +6568,8 @@ void test_7F_0064()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x8D);
     CheckRegisterByte(RegisterType::L, 0xA3);
-    CheckRegisterWord(RegisterType::PC, 0xA1C7);
-    CheckRegisterWord(RegisterType::SP, 0x8165);
+    WriteRegisterWord(RegisterType::PC, 0xA1C6);
+    WriteRegisterWord(RegisterType::SP, 0x8165);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA1C6, 0x7F);
 }
@@ -6597,7 +6600,7 @@ void test_7F_0065()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6610,8 +6613,8 @@ void test_7F_0065()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x39);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    CheckRegisterWord(RegisterType::PC, 0x5EB0);
-    CheckRegisterWord(RegisterType::SP, 0xA665);
+    WriteRegisterWord(RegisterType::PC, 0x5EAF);
+    WriteRegisterWord(RegisterType::SP, 0xA665);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5EAF, 0x7F);
 }
@@ -6642,7 +6645,7 @@ void test_7F_0066()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6655,8 +6658,8 @@ void test_7F_0066()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x77);
     CheckRegisterByte(RegisterType::L, 0x00);
-    CheckRegisterWord(RegisterType::PC, 0x7166);
-    CheckRegisterWord(RegisterType::SP, 0xAE04);
+    WriteRegisterWord(RegisterType::PC, 0x7165);
+    WriteRegisterWord(RegisterType::SP, 0xAE04);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7165, 0x7F);
 }
@@ -6687,7 +6690,7 @@ void test_7F_0067()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6700,8 +6703,8 @@ void test_7F_0067()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x3F);
     CheckRegisterByte(RegisterType::L, 0xAE);
-    CheckRegisterWord(RegisterType::PC, 0x83FE);
-    CheckRegisterWord(RegisterType::SP, 0xFAF6);
+    WriteRegisterWord(RegisterType::PC, 0x83FD);
+    WriteRegisterWord(RegisterType::SP, 0xFAF6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x83FD, 0x7F);
 }
@@ -6732,7 +6735,7 @@ void test_7F_0068()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6745,8 +6748,8 @@ void test_7F_0068()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0x46);
-    CheckRegisterWord(RegisterType::PC, 0x3B59);
-    CheckRegisterWord(RegisterType::SP, 0x1650);
+    WriteRegisterWord(RegisterType::PC, 0x3B58);
+    WriteRegisterWord(RegisterType::SP, 0x1650);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3B58, 0x7F);
 }
@@ -6777,7 +6780,7 @@ void test_7F_0069()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6790,8 +6793,8 @@ void test_7F_0069()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x75);
     CheckRegisterByte(RegisterType::L, 0x21);
-    CheckRegisterWord(RegisterType::PC, 0xDD9C);
-    CheckRegisterWord(RegisterType::SP, 0x2B59);
+    WriteRegisterWord(RegisterType::PC, 0xDD9B);
+    WriteRegisterWord(RegisterType::SP, 0x2B59);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDD9B, 0x7F);
 }
@@ -6822,7 +6825,7 @@ void test_7F_006A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6835,8 +6838,8 @@ void test_7F_006A()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xF8);
     CheckRegisterByte(RegisterType::L, 0xD9);
-    CheckRegisterWord(RegisterType::PC, 0x769A);
-    CheckRegisterWord(RegisterType::SP, 0x21BC);
+    WriteRegisterWord(RegisterType::PC, 0x7699);
+    WriteRegisterWord(RegisterType::SP, 0x21BC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7699, 0x7F);
 }
@@ -6867,7 +6870,7 @@ void test_7F_006B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6880,8 +6883,8 @@ void test_7F_006B()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xD7);
     CheckRegisterByte(RegisterType::L, 0xB2);
-    CheckRegisterWord(RegisterType::PC, 0x832B);
-    CheckRegisterWord(RegisterType::SP, 0x428F);
+    WriteRegisterWord(RegisterType::PC, 0x832A);
+    WriteRegisterWord(RegisterType::SP, 0x428F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x832A, 0x7F);
 }
@@ -6912,7 +6915,7 @@ void test_7F_006C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6925,8 +6928,8 @@ void test_7F_006C()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x83);
     CheckRegisterByte(RegisterType::L, 0x96);
-    CheckRegisterWord(RegisterType::PC, 0xBD51);
-    CheckRegisterWord(RegisterType::SP, 0xA627);
+    WriteRegisterWord(RegisterType::PC, 0xBD50);
+    WriteRegisterWord(RegisterType::SP, 0xA627);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBD50, 0x7F);
 }
@@ -6957,7 +6960,7 @@ void test_7F_006D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -6970,8 +6973,8 @@ void test_7F_006D()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x4E);
     CheckRegisterByte(RegisterType::L, 0x42);
-    CheckRegisterWord(RegisterType::PC, 0x3991);
-    CheckRegisterWord(RegisterType::SP, 0xDC17);
+    WriteRegisterWord(RegisterType::PC, 0x3990);
+    WriteRegisterWord(RegisterType::SP, 0xDC17);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3990, 0x7F);
 }
@@ -7002,7 +7005,7 @@ void test_7F_006E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7015,8 +7018,8 @@ void test_7F_006E()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x58);
     CheckRegisterByte(RegisterType::L, 0xE7);
-    CheckRegisterWord(RegisterType::PC, 0xE2D0);
-    CheckRegisterWord(RegisterType::SP, 0xCE58);
+    WriteRegisterWord(RegisterType::PC, 0xE2CF);
+    WriteRegisterWord(RegisterType::SP, 0xCE58);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE2CF, 0x7F);
 }
@@ -7047,7 +7050,7 @@ void test_7F_006F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7060,8 +7063,8 @@ void test_7F_006F()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x67);
     CheckRegisterByte(RegisterType::L, 0xD8);
-    CheckRegisterWord(RegisterType::PC, 0x1756);
-    CheckRegisterWord(RegisterType::SP, 0xC418);
+    WriteRegisterWord(RegisterType::PC, 0x1755);
+    WriteRegisterWord(RegisterType::SP, 0xC418);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1755, 0x7F);
 }
@@ -7092,7 +7095,7 @@ void test_7F_0070()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7105,8 +7108,8 @@ void test_7F_0070()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xE9);
     CheckRegisterByte(RegisterType::L, 0x08);
-    CheckRegisterWord(RegisterType::PC, 0x7979);
-    CheckRegisterWord(RegisterType::SP, 0x4BAA);
+    WriteRegisterWord(RegisterType::PC, 0x7978);
+    WriteRegisterWord(RegisterType::SP, 0x4BAA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7978, 0x7F);
 }
@@ -7137,7 +7140,7 @@ void test_7F_0071()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7150,8 +7153,8 @@ void test_7F_0071()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0x55);
-    CheckRegisterWord(RegisterType::PC, 0x41DA);
-    CheckRegisterWord(RegisterType::SP, 0xC8EE);
+    WriteRegisterWord(RegisterType::PC, 0x41D9);
+    WriteRegisterWord(RegisterType::SP, 0xC8EE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x41D9, 0x7F);
 }
@@ -7182,7 +7185,7 @@ void test_7F_0072()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7195,8 +7198,8 @@ void test_7F_0072()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xE1);
     CheckRegisterByte(RegisterType::L, 0x79);
-    CheckRegisterWord(RegisterType::PC, 0xE037);
-    CheckRegisterWord(RegisterType::SP, 0x2570);
+    WriteRegisterWord(RegisterType::PC, 0xE036);
+    WriteRegisterWord(RegisterType::SP, 0x2570);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE036, 0x7F);
 }
@@ -7227,7 +7230,7 @@ void test_7F_0073()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7240,8 +7243,8 @@ void test_7F_0073()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x6E);
     CheckRegisterByte(RegisterType::L, 0xD2);
-    CheckRegisterWord(RegisterType::PC, 0xCED0);
-    CheckRegisterWord(RegisterType::SP, 0xB7DB);
+    WriteRegisterWord(RegisterType::PC, 0xCECF);
+    WriteRegisterWord(RegisterType::SP, 0xB7DB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCECF, 0x7F);
 }
@@ -7272,7 +7275,7 @@ void test_7F_0074()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7285,8 +7288,8 @@ void test_7F_0074()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xDE);
     CheckRegisterByte(RegisterType::L, 0xE6);
-    CheckRegisterWord(RegisterType::PC, 0xEF0F);
-    CheckRegisterWord(RegisterType::SP, 0xD842);
+    WriteRegisterWord(RegisterType::PC, 0xEF0E);
+    WriteRegisterWord(RegisterType::SP, 0xD842);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEF0E, 0x7F);
 }
@@ -7317,7 +7320,7 @@ void test_7F_0075()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7330,8 +7333,8 @@ void test_7F_0075()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xA6);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    CheckRegisterWord(RegisterType::PC, 0xFAAD);
-    CheckRegisterWord(RegisterType::SP, 0x0281);
+    WriteRegisterWord(RegisterType::PC, 0xFAAC);
+    WriteRegisterWord(RegisterType::SP, 0x0281);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFAAC, 0x7F);
 }
@@ -7362,7 +7365,7 @@ void test_7F_0076()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7375,8 +7378,8 @@ void test_7F_0076()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xC6);
     CheckRegisterByte(RegisterType::L, 0x25);
-    CheckRegisterWord(RegisterType::PC, 0x4D3A);
-    CheckRegisterWord(RegisterType::SP, 0xC6B7);
+    WriteRegisterWord(RegisterType::PC, 0x4D39);
+    WriteRegisterWord(RegisterType::SP, 0xC6B7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4D39, 0x7F);
 }
@@ -7407,7 +7410,7 @@ void test_7F_0077()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7420,8 +7423,8 @@ void test_7F_0077()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x82);
     CheckRegisterByte(RegisterType::L, 0x48);
-    CheckRegisterWord(RegisterType::PC, 0xDFD2);
-    CheckRegisterWord(RegisterType::SP, 0x1B5A);
+    WriteRegisterWord(RegisterType::PC, 0xDFD1);
+    WriteRegisterWord(RegisterType::SP, 0x1B5A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDFD1, 0x7F);
 }
@@ -7452,7 +7455,7 @@ void test_7F_0078()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7465,8 +7468,8 @@ void test_7F_0078()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xFF);
     CheckRegisterByte(RegisterType::L, 0xCB);
-    CheckRegisterWord(RegisterType::PC, 0x8C1D);
-    CheckRegisterWord(RegisterType::SP, 0xE9B2);
+    WriteRegisterWord(RegisterType::PC, 0x8C1C);
+    WriteRegisterWord(RegisterType::SP, 0xE9B2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8C1C, 0x7F);
 }
@@ -7497,7 +7500,7 @@ void test_7F_0079()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7510,8 +7513,8 @@ void test_7F_0079()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x0D);
     CheckRegisterByte(RegisterType::L, 0xAE);
-    CheckRegisterWord(RegisterType::PC, 0x0B47);
-    CheckRegisterWord(RegisterType::SP, 0xB06A);
+    WriteRegisterWord(RegisterType::PC, 0x0B46);
+    WriteRegisterWord(RegisterType::SP, 0xB06A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0B46, 0x7F);
 }
@@ -7542,7 +7545,7 @@ void test_7F_007A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7555,8 +7558,8 @@ void test_7F_007A()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0x88);
-    CheckRegisterWord(RegisterType::PC, 0xF5BA);
-    CheckRegisterWord(RegisterType::SP, 0xF4FB);
+    WriteRegisterWord(RegisterType::PC, 0xF5B9);
+    WriteRegisterWord(RegisterType::SP, 0xF4FB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF5B9, 0x7F);
 }
@@ -7587,7 +7590,7 @@ void test_7F_007B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7600,8 +7603,8 @@ void test_7F_007B()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x51);
     CheckRegisterByte(RegisterType::L, 0x6D);
-    CheckRegisterWord(RegisterType::PC, 0xF48E);
-    CheckRegisterWord(RegisterType::SP, 0xE1AA);
+    WriteRegisterWord(RegisterType::PC, 0xF48D);
+    WriteRegisterWord(RegisterType::SP, 0xE1AA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF48D, 0x7F);
 }
@@ -7632,7 +7635,7 @@ void test_7F_007C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7645,8 +7648,8 @@ void test_7F_007C()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0x30);
-    CheckRegisterWord(RegisterType::PC, 0x696B);
-    CheckRegisterWord(RegisterType::SP, 0x4F18);
+    WriteRegisterWord(RegisterType::PC, 0x696A);
+    WriteRegisterWord(RegisterType::SP, 0x4F18);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x696A, 0x7F);
 }
@@ -7677,7 +7680,7 @@ void test_7F_007D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7690,8 +7693,8 @@ void test_7F_007D()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x13);
     CheckRegisterByte(RegisterType::L, 0x21);
-    CheckRegisterWord(RegisterType::PC, 0xFED1);
-    CheckRegisterWord(RegisterType::SP, 0x5156);
+    WriteRegisterWord(RegisterType::PC, 0xFED0);
+    WriteRegisterWord(RegisterType::SP, 0x5156);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFED0, 0x7F);
 }
@@ -7722,7 +7725,7 @@ void test_7F_007E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7735,8 +7738,8 @@ void test_7F_007E()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x58);
     CheckRegisterByte(RegisterType::L, 0x80);
-    CheckRegisterWord(RegisterType::PC, 0xC399);
-    CheckRegisterWord(RegisterType::SP, 0x8999);
+    WriteRegisterWord(RegisterType::PC, 0xC398);
+    WriteRegisterWord(RegisterType::SP, 0x8999);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC398, 0x7F);
 }
@@ -7767,7 +7770,7 @@ void test_7F_007F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7780,8 +7783,8 @@ void test_7F_007F()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x7D);
     CheckRegisterByte(RegisterType::L, 0x4D);
-    CheckRegisterWord(RegisterType::PC, 0x32DA);
-    CheckRegisterWord(RegisterType::SP, 0x1CBF);
+    WriteRegisterWord(RegisterType::PC, 0x32D9);
+    WriteRegisterWord(RegisterType::SP, 0x1CBF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x32D9, 0x7F);
 }
@@ -7812,7 +7815,7 @@ void test_7F_0080()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7825,8 +7828,8 @@ void test_7F_0080()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xB1);
     CheckRegisterByte(RegisterType::L, 0xFC);
-    CheckRegisterWord(RegisterType::PC, 0xEB77);
-    CheckRegisterWord(RegisterType::SP, 0x74EE);
+    WriteRegisterWord(RegisterType::PC, 0xEB76);
+    WriteRegisterWord(RegisterType::SP, 0x74EE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEB76, 0x7F);
 }
@@ -7857,7 +7860,7 @@ void test_7F_0081()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7870,8 +7873,8 @@ void test_7F_0081()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    CheckRegisterWord(RegisterType::PC, 0xD2D5);
-    CheckRegisterWord(RegisterType::SP, 0x9362);
+    WriteRegisterWord(RegisterType::PC, 0xD2D4);
+    WriteRegisterWord(RegisterType::SP, 0x9362);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD2D4, 0x7F);
 }
@@ -7902,7 +7905,7 @@ void test_7F_0082()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7915,8 +7918,8 @@ void test_7F_0082()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x71);
     CheckRegisterByte(RegisterType::L, 0xF6);
-    CheckRegisterWord(RegisterType::PC, 0xCB61);
-    CheckRegisterWord(RegisterType::SP, 0x8305);
+    WriteRegisterWord(RegisterType::PC, 0xCB60);
+    WriteRegisterWord(RegisterType::SP, 0x8305);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCB60, 0x7F);
 }
@@ -7947,7 +7950,7 @@ void test_7F_0083()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -7960,8 +7963,8 @@ void test_7F_0083()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x98);
     CheckRegisterByte(RegisterType::L, 0x64);
-    CheckRegisterWord(RegisterType::PC, 0x72EC);
-    CheckRegisterWord(RegisterType::SP, 0xFF6E);
+    WriteRegisterWord(RegisterType::PC, 0x72EB);
+    WriteRegisterWord(RegisterType::SP, 0xFF6E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x72EB, 0x7F);
 }
@@ -7992,7 +7995,7 @@ void test_7F_0084()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8005,8 +8008,8 @@ void test_7F_0084()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x3F);
     CheckRegisterByte(RegisterType::L, 0x00);
-    CheckRegisterWord(RegisterType::PC, 0x669B);
-    CheckRegisterWord(RegisterType::SP, 0xC00D);
+    WriteRegisterWord(RegisterType::PC, 0x669A);
+    WriteRegisterWord(RegisterType::SP, 0xC00D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x669A, 0x7F);
 }
@@ -8037,7 +8040,7 @@ void test_7F_0085()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8050,8 +8053,8 @@ void test_7F_0085()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x34);
     CheckRegisterByte(RegisterType::L, 0x85);
-    CheckRegisterWord(RegisterType::PC, 0xEC8E);
-    CheckRegisterWord(RegisterType::SP, 0x3CDE);
+    WriteRegisterWord(RegisterType::PC, 0xEC8D);
+    WriteRegisterWord(RegisterType::SP, 0x3CDE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEC8D, 0x7F);
 }
@@ -8082,7 +8085,7 @@ void test_7F_0086()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8095,8 +8098,8 @@ void test_7F_0086()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xB3);
     CheckRegisterByte(RegisterType::L, 0x4E);
-    CheckRegisterWord(RegisterType::PC, 0xB79F);
-    CheckRegisterWord(RegisterType::SP, 0x6AFE);
+    WriteRegisterWord(RegisterType::PC, 0xB79E);
+    WriteRegisterWord(RegisterType::SP, 0x6AFE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB79E, 0x7F);
 }
@@ -8127,7 +8130,7 @@ void test_7F_0087()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8140,8 +8143,8 @@ void test_7F_0087()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xD4);
     CheckRegisterByte(RegisterType::L, 0x16);
-    CheckRegisterWord(RegisterType::PC, 0x97A0);
-    CheckRegisterWord(RegisterType::SP, 0x99ED);
+    WriteRegisterWord(RegisterType::PC, 0x979F);
+    WriteRegisterWord(RegisterType::SP, 0x99ED);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x979F, 0x7F);
 }
@@ -8172,7 +8175,7 @@ void test_7F_0088()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8185,8 +8188,8 @@ void test_7F_0088()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x54);
     CheckRegisterByte(RegisterType::L, 0x05);
-    CheckRegisterWord(RegisterType::PC, 0x1493);
-    CheckRegisterWord(RegisterType::SP, 0x0615);
+    WriteRegisterWord(RegisterType::PC, 0x1492);
+    WriteRegisterWord(RegisterType::SP, 0x0615);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1492, 0x7F);
 }
@@ -8217,7 +8220,7 @@ void test_7F_0089()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8230,8 +8233,8 @@ void test_7F_0089()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x12);
     CheckRegisterByte(RegisterType::L, 0x11);
-    CheckRegisterWord(RegisterType::PC, 0x4257);
-    CheckRegisterWord(RegisterType::SP, 0x4ED2);
+    WriteRegisterWord(RegisterType::PC, 0x4256);
+    WriteRegisterWord(RegisterType::SP, 0x4ED2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4256, 0x7F);
 }
@@ -8262,7 +8265,7 @@ void test_7F_008A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8275,8 +8278,8 @@ void test_7F_008A()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xC6);
     CheckRegisterByte(RegisterType::L, 0x00);
-    CheckRegisterWord(RegisterType::PC, 0x2758);
-    CheckRegisterWord(RegisterType::SP, 0xCAAE);
+    WriteRegisterWord(RegisterType::PC, 0x2757);
+    WriteRegisterWord(RegisterType::SP, 0xCAAE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2757, 0x7F);
 }
@@ -8307,7 +8310,7 @@ void test_7F_008B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8320,8 +8323,8 @@ void test_7F_008B()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0xF3);
-    CheckRegisterWord(RegisterType::PC, 0x11B5);
-    CheckRegisterWord(RegisterType::SP, 0x9E25);
+    WriteRegisterWord(RegisterType::PC, 0x11B4);
+    WriteRegisterWord(RegisterType::SP, 0x9E25);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x11B4, 0x7F);
 }
@@ -8352,7 +8355,7 @@ void test_7F_008C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8365,8 +8368,8 @@ void test_7F_008C()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x93);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    CheckRegisterWord(RegisterType::PC, 0x9DF2);
-    CheckRegisterWord(RegisterType::SP, 0x218A);
+    WriteRegisterWord(RegisterType::PC, 0x9DF1);
+    WriteRegisterWord(RegisterType::SP, 0x218A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9DF1, 0x7F);
 }
@@ -8397,7 +8400,7 @@ void test_7F_008D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8410,8 +8413,8 @@ void test_7F_008D()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xE5);
     CheckRegisterByte(RegisterType::L, 0x86);
-    CheckRegisterWord(RegisterType::PC, 0x7657);
-    CheckRegisterWord(RegisterType::SP, 0x23C6);
+    WriteRegisterWord(RegisterType::PC, 0x7656);
+    WriteRegisterWord(RegisterType::SP, 0x23C6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7656, 0x7F);
 }
@@ -8442,7 +8445,7 @@ void test_7F_008E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8455,8 +8458,8 @@ void test_7F_008E()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0xCA);
-    CheckRegisterWord(RegisterType::PC, 0xBA6A);
-    CheckRegisterWord(RegisterType::SP, 0x0922);
+    WriteRegisterWord(RegisterType::PC, 0xBA69);
+    WriteRegisterWord(RegisterType::SP, 0x0922);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBA69, 0x7F);
 }
@@ -8487,7 +8490,7 @@ void test_7F_008F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8500,8 +8503,8 @@ void test_7F_008F()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0xF3);
-    CheckRegisterWord(RegisterType::PC, 0xF450);
-    CheckRegisterWord(RegisterType::SP, 0x5F8F);
+    WriteRegisterWord(RegisterType::PC, 0xF44F);
+    WriteRegisterWord(RegisterType::SP, 0x5F8F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF44F, 0x7F);
 }
@@ -8532,7 +8535,7 @@ void test_7F_0090()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8545,8 +8548,8 @@ void test_7F_0090()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x58);
     CheckRegisterByte(RegisterType::L, 0xD3);
-    CheckRegisterWord(RegisterType::PC, 0xF78F);
-    CheckRegisterWord(RegisterType::SP, 0x2F38);
+    WriteRegisterWord(RegisterType::PC, 0xF78E);
+    WriteRegisterWord(RegisterType::SP, 0x2F38);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF78E, 0x7F);
 }
@@ -8577,7 +8580,7 @@ void test_7F_0091()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8590,8 +8593,8 @@ void test_7F_0091()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xBB);
     CheckRegisterByte(RegisterType::L, 0xBA);
-    CheckRegisterWord(RegisterType::PC, 0xC04D);
-    CheckRegisterWord(RegisterType::SP, 0xC891);
+    WriteRegisterWord(RegisterType::PC, 0xC04C);
+    WriteRegisterWord(RegisterType::SP, 0xC891);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC04C, 0x7F);
 }
@@ -8622,7 +8625,7 @@ void test_7F_0092()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8635,8 +8638,8 @@ void test_7F_0092()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xFC);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    CheckRegisterWord(RegisterType::PC, 0x1B86);
-    CheckRegisterWord(RegisterType::SP, 0x0BD9);
+    WriteRegisterWord(RegisterType::PC, 0x1B85);
+    WriteRegisterWord(RegisterType::SP, 0x0BD9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1B85, 0x7F);
 }
@@ -8667,7 +8670,7 @@ void test_7F_0093()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8680,8 +8683,8 @@ void test_7F_0093()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xD2);
     CheckRegisterByte(RegisterType::L, 0xA3);
-    CheckRegisterWord(RegisterType::PC, 0x7692);
-    CheckRegisterWord(RegisterType::SP, 0x9A5F);
+    WriteRegisterWord(RegisterType::PC, 0x7691);
+    WriteRegisterWord(RegisterType::SP, 0x9A5F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7691, 0x7F);
 }
@@ -8712,7 +8715,7 @@ void test_7F_0094()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8725,8 +8728,8 @@ void test_7F_0094()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xFB);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    CheckRegisterWord(RegisterType::PC, 0x46EE);
-    CheckRegisterWord(RegisterType::SP, 0x55CF);
+    WriteRegisterWord(RegisterType::PC, 0x46ED);
+    WriteRegisterWord(RegisterType::SP, 0x55CF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x46ED, 0x7F);
 }
@@ -8757,7 +8760,7 @@ void test_7F_0095()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8770,8 +8773,8 @@ void test_7F_0095()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xE9);
     CheckRegisterByte(RegisterType::L, 0x5A);
-    CheckRegisterWord(RegisterType::PC, 0xEA3D);
-    CheckRegisterWord(RegisterType::SP, 0x47F2);
+    WriteRegisterWord(RegisterType::PC, 0xEA3C);
+    WriteRegisterWord(RegisterType::SP, 0x47F2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEA3C, 0x7F);
 }
@@ -8802,7 +8805,7 @@ void test_7F_0096()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8815,8 +8818,8 @@ void test_7F_0096()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x97);
     CheckRegisterByte(RegisterType::L, 0x3A);
-    CheckRegisterWord(RegisterType::PC, 0x712A);
-    CheckRegisterWord(RegisterType::SP, 0xEEFE);
+    WriteRegisterWord(RegisterType::PC, 0x7129);
+    WriteRegisterWord(RegisterType::SP, 0xEEFE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7129, 0x7F);
 }
@@ -8847,7 +8850,7 @@ void test_7F_0097()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8860,8 +8863,8 @@ void test_7F_0097()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x3C);
     CheckRegisterByte(RegisterType::L, 0x7D);
-    CheckRegisterWord(RegisterType::PC, 0xDE61);
-    CheckRegisterWord(RegisterType::SP, 0x7A21);
+    WriteRegisterWord(RegisterType::PC, 0xDE60);
+    WriteRegisterWord(RegisterType::SP, 0x7A21);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDE60, 0x7F);
 }
@@ -8892,7 +8895,7 @@ void test_7F_0098()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8905,8 +8908,8 @@ void test_7F_0098()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xB7);
     CheckRegisterByte(RegisterType::L, 0x85);
-    CheckRegisterWord(RegisterType::PC, 0x683D);
-    CheckRegisterWord(RegisterType::SP, 0x4BEC);
+    WriteRegisterWord(RegisterType::PC, 0x683C);
+    WriteRegisterWord(RegisterType::SP, 0x4BEC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x683C, 0x7F);
 }
@@ -8937,7 +8940,7 @@ void test_7F_0099()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8950,8 +8953,8 @@ void test_7F_0099()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x98);
     CheckRegisterByte(RegisterType::L, 0x70);
-    CheckRegisterWord(RegisterType::PC, 0x8BB5);
-    CheckRegisterWord(RegisterType::SP, 0xC100);
+    WriteRegisterWord(RegisterType::PC, 0x8BB4);
+    WriteRegisterWord(RegisterType::SP, 0xC100);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8BB4, 0x7F);
 }
@@ -8982,7 +8985,7 @@ void test_7F_009A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -8995,8 +8998,8 @@ void test_7F_009A()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0x6B);
-    CheckRegisterWord(RegisterType::PC, 0x321D);
-    CheckRegisterWord(RegisterType::SP, 0xFF9D);
+    WriteRegisterWord(RegisterType::PC, 0x321C);
+    WriteRegisterWord(RegisterType::SP, 0xFF9D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x321C, 0x7F);
 }
@@ -9027,7 +9030,7 @@ void test_7F_009B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9040,8 +9043,8 @@ void test_7F_009B()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xE4);
     CheckRegisterByte(RegisterType::L, 0x23);
-    CheckRegisterWord(RegisterType::PC, 0x8B97);
-    CheckRegisterWord(RegisterType::SP, 0x0B2E);
+    WriteRegisterWord(RegisterType::PC, 0x8B96);
+    WriteRegisterWord(RegisterType::SP, 0x0B2E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8B96, 0x7F);
 }
@@ -9072,7 +9075,7 @@ void test_7F_009C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9085,8 +9088,8 @@ void test_7F_009C()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xDD);
     CheckRegisterByte(RegisterType::L, 0xD0);
-    CheckRegisterWord(RegisterType::PC, 0xC495);
-    CheckRegisterWord(RegisterType::SP, 0x032A);
+    WriteRegisterWord(RegisterType::PC, 0xC494);
+    WriteRegisterWord(RegisterType::SP, 0x032A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC494, 0x7F);
 }
@@ -9117,7 +9120,7 @@ void test_7F_009D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9130,8 +9133,8 @@ void test_7F_009D()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0x50);
-    CheckRegisterWord(RegisterType::PC, 0xD352);
-    CheckRegisterWord(RegisterType::SP, 0x400C);
+    WriteRegisterWord(RegisterType::PC, 0xD351);
+    WriteRegisterWord(RegisterType::SP, 0x400C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD351, 0x7F);
 }
@@ -9162,7 +9165,7 @@ void test_7F_009E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9175,8 +9178,8 @@ void test_7F_009E()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x9B);
     CheckRegisterByte(RegisterType::L, 0xD0);
-    CheckRegisterWord(RegisterType::PC, 0x0DE1);
-    CheckRegisterWord(RegisterType::SP, 0x32B8);
+    WriteRegisterWord(RegisterType::PC, 0x0DE0);
+    WriteRegisterWord(RegisterType::SP, 0x32B8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0DE0, 0x7F);
 }
@@ -9207,7 +9210,7 @@ void test_7F_009F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9220,8 +9223,8 @@ void test_7F_009F()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0x63);
-    CheckRegisterWord(RegisterType::PC, 0x33F9);
-    CheckRegisterWord(RegisterType::SP, 0x668E);
+    WriteRegisterWord(RegisterType::PC, 0x33F8);
+    WriteRegisterWord(RegisterType::SP, 0x668E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x33F8, 0x7F);
 }
@@ -9252,7 +9255,7 @@ void test_7F_00A0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9265,8 +9268,8 @@ void test_7F_00A0()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x9F);
     CheckRegisterByte(RegisterType::L, 0x6D);
-    CheckRegisterWord(RegisterType::PC, 0xD62F);
-    CheckRegisterWord(RegisterType::SP, 0x2A91);
+    WriteRegisterWord(RegisterType::PC, 0xD62E);
+    WriteRegisterWord(RegisterType::SP, 0x2A91);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD62E, 0x7F);
 }
@@ -9297,7 +9300,7 @@ void test_7F_00A1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9310,8 +9313,8 @@ void test_7F_00A1()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x34);
     CheckRegisterByte(RegisterType::L, 0x28);
-    CheckRegisterWord(RegisterType::PC, 0xAB19);
-    CheckRegisterWord(RegisterType::SP, 0x3861);
+    WriteRegisterWord(RegisterType::PC, 0xAB18);
+    WriteRegisterWord(RegisterType::SP, 0x3861);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAB18, 0x7F);
 }
@@ -9342,7 +9345,7 @@ void test_7F_00A2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9355,8 +9358,8 @@ void test_7F_00A2()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xDA);
     CheckRegisterByte(RegisterType::L, 0xE4);
-    CheckRegisterWord(RegisterType::PC, 0x68BF);
-    CheckRegisterWord(RegisterType::SP, 0xE43D);
+    WriteRegisterWord(RegisterType::PC, 0x68BE);
+    WriteRegisterWord(RegisterType::SP, 0xE43D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x68BE, 0x7F);
 }
@@ -9387,7 +9390,7 @@ void test_7F_00A3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9400,8 +9403,8 @@ void test_7F_00A3()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x90);
     CheckRegisterByte(RegisterType::L, 0x46);
-    CheckRegisterWord(RegisterType::PC, 0x5C34);
-    CheckRegisterWord(RegisterType::SP, 0xFCFA);
+    WriteRegisterWord(RegisterType::PC, 0x5C33);
+    WriteRegisterWord(RegisterType::SP, 0xFCFA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5C33, 0x7F);
 }
@@ -9432,7 +9435,7 @@ void test_7F_00A4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9445,8 +9448,8 @@ void test_7F_00A4()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xC8);
     CheckRegisterByte(RegisterType::L, 0xBE);
-    CheckRegisterWord(RegisterType::PC, 0xB56F);
-    CheckRegisterWord(RegisterType::SP, 0xF292);
+    WriteRegisterWord(RegisterType::PC, 0xB56E);
+    WriteRegisterWord(RegisterType::SP, 0xF292);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB56E, 0x7F);
 }
@@ -9477,7 +9480,7 @@ void test_7F_00A5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9490,8 +9493,8 @@ void test_7F_00A5()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x90);
     CheckRegisterByte(RegisterType::L, 0x13);
-    CheckRegisterWord(RegisterType::PC, 0xDDC6);
-    CheckRegisterWord(RegisterType::SP, 0xEE70);
+    WriteRegisterWord(RegisterType::PC, 0xDDC5);
+    WriteRegisterWord(RegisterType::SP, 0xEE70);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDDC5, 0x7F);
 }
@@ -9522,7 +9525,7 @@ void test_7F_00A6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9535,8 +9538,8 @@ void test_7F_00A6()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xEA);
     CheckRegisterByte(RegisterType::L, 0xCD);
-    CheckRegisterWord(RegisterType::PC, 0x3FFE);
-    CheckRegisterWord(RegisterType::SP, 0x812A);
+    WriteRegisterWord(RegisterType::PC, 0x3FFD);
+    WriteRegisterWord(RegisterType::SP, 0x812A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3FFD, 0x7F);
 }
@@ -9567,7 +9570,7 @@ void test_7F_00A7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9580,8 +9583,8 @@ void test_7F_00A7()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xDA);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    CheckRegisterWord(RegisterType::PC, 0xDFBB);
-    CheckRegisterWord(RegisterType::SP, 0x62E3);
+    WriteRegisterWord(RegisterType::PC, 0xDFBA);
+    WriteRegisterWord(RegisterType::SP, 0x62E3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDFBA, 0x7F);
 }
@@ -9612,7 +9615,7 @@ void test_7F_00A8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9625,8 +9628,8 @@ void test_7F_00A8()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xB7);
     CheckRegisterByte(RegisterType::L, 0x5D);
-    CheckRegisterWord(RegisterType::PC, 0x9D6A);
-    CheckRegisterWord(RegisterType::SP, 0xA1FA);
+    WriteRegisterWord(RegisterType::PC, 0x9D69);
+    WriteRegisterWord(RegisterType::SP, 0xA1FA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9D69, 0x7F);
 }
@@ -9657,7 +9660,7 @@ void test_7F_00A9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9670,8 +9673,8 @@ void test_7F_00A9()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0x4C);
-    CheckRegisterWord(RegisterType::PC, 0xDA61);
-    CheckRegisterWord(RegisterType::SP, 0xA77C);
+    WriteRegisterWord(RegisterType::PC, 0xDA60);
+    WriteRegisterWord(RegisterType::SP, 0xA77C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDA60, 0x7F);
 }
@@ -9702,7 +9705,7 @@ void test_7F_00AA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9715,8 +9718,8 @@ void test_7F_00AA()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x80);
     CheckRegisterByte(RegisterType::L, 0x14);
-    CheckRegisterWord(RegisterType::PC, 0x7DC9);
-    CheckRegisterWord(RegisterType::SP, 0x481E);
+    WriteRegisterWord(RegisterType::PC, 0x7DC8);
+    WriteRegisterWord(RegisterType::SP, 0x481E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7DC8, 0x7F);
 }
@@ -9747,7 +9750,7 @@ void test_7F_00AB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9760,8 +9763,8 @@ void test_7F_00AB()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0x3D);
-    CheckRegisterWord(RegisterType::PC, 0x311B);
-    CheckRegisterWord(RegisterType::SP, 0x6775);
+    WriteRegisterWord(RegisterType::PC, 0x311A);
+    WriteRegisterWord(RegisterType::SP, 0x6775);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x311A, 0x7F);
 }
@@ -9792,7 +9795,7 @@ void test_7F_00AC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9805,8 +9808,8 @@ void test_7F_00AC()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x2C);
     CheckRegisterByte(RegisterType::L, 0xFB);
-    CheckRegisterWord(RegisterType::PC, 0xD1C0);
-    CheckRegisterWord(RegisterType::SP, 0xAC3F);
+    WriteRegisterWord(RegisterType::PC, 0xD1BF);
+    WriteRegisterWord(RegisterType::SP, 0xAC3F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD1BF, 0x7F);
 }
@@ -9837,7 +9840,7 @@ void test_7F_00AD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9850,8 +9853,8 @@ void test_7F_00AD()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0xF9);
-    CheckRegisterWord(RegisterType::PC, 0x38F5);
-    CheckRegisterWord(RegisterType::SP, 0x08CB);
+    WriteRegisterWord(RegisterType::PC, 0x38F4);
+    WriteRegisterWord(RegisterType::SP, 0x08CB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x38F4, 0x7F);
 }
@@ -9882,7 +9885,7 @@ void test_7F_00AE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9895,8 +9898,8 @@ void test_7F_00AE()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0x3E);
-    CheckRegisterWord(RegisterType::PC, 0x6D7E);
-    CheckRegisterWord(RegisterType::SP, 0x4A4C);
+    WriteRegisterWord(RegisterType::PC, 0x6D7D);
+    WriteRegisterWord(RegisterType::SP, 0x4A4C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6D7D, 0x7F);
 }
@@ -9927,7 +9930,7 @@ void test_7F_00AF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9940,8 +9943,8 @@ void test_7F_00AF()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0xFE);
-    CheckRegisterWord(RegisterType::PC, 0x94AC);
-    CheckRegisterWord(RegisterType::SP, 0x8B85);
+    WriteRegisterWord(RegisterType::PC, 0x94AB);
+    WriteRegisterWord(RegisterType::SP, 0x8B85);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x94AB, 0x7F);
 }
@@ -9972,7 +9975,7 @@ void test_7F_00B0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -9985,8 +9988,8 @@ void test_7F_00B0()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x75);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    CheckRegisterWord(RegisterType::PC, 0xDD41);
-    CheckRegisterWord(RegisterType::SP, 0x482F);
+    WriteRegisterWord(RegisterType::PC, 0xDD40);
+    WriteRegisterWord(RegisterType::SP, 0x482F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDD40, 0x7F);
 }
@@ -10017,7 +10020,7 @@ void test_7F_00B1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10030,8 +10033,8 @@ void test_7F_00B1()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xAE);
     CheckRegisterByte(RegisterType::L, 0x71);
-    CheckRegisterWord(RegisterType::PC, 0xB974);
-    CheckRegisterWord(RegisterType::SP, 0xA789);
+    WriteRegisterWord(RegisterType::PC, 0xB973);
+    WriteRegisterWord(RegisterType::SP, 0xA789);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB973, 0x7F);
 }
@@ -10062,7 +10065,7 @@ void test_7F_00B2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10075,8 +10078,8 @@ void test_7F_00B2()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x6B);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    CheckRegisterWord(RegisterType::PC, 0x1C9B);
-    CheckRegisterWord(RegisterType::SP, 0x2F20);
+    WriteRegisterWord(RegisterType::PC, 0x1C9A);
+    WriteRegisterWord(RegisterType::SP, 0x2F20);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1C9A, 0x7F);
 }
@@ -10107,7 +10110,7 @@ void test_7F_00B3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10120,8 +10123,8 @@ void test_7F_00B3()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xB4);
     CheckRegisterByte(RegisterType::L, 0xF7);
-    CheckRegisterWord(RegisterType::PC, 0x060C);
-    CheckRegisterWord(RegisterType::SP, 0x4153);
+    WriteRegisterWord(RegisterType::PC, 0x060B);
+    WriteRegisterWord(RegisterType::SP, 0x4153);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x060B, 0x7F);
 }
@@ -10152,7 +10155,7 @@ void test_7F_00B4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10165,8 +10168,8 @@ void test_7F_00B4()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x33);
     CheckRegisterByte(RegisterType::L, 0x7E);
-    CheckRegisterWord(RegisterType::PC, 0xFADD);
-    CheckRegisterWord(RegisterType::SP, 0x3651);
+    WriteRegisterWord(RegisterType::PC, 0xFADC);
+    WriteRegisterWord(RegisterType::SP, 0x3651);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFADC, 0x7F);
 }
@@ -10197,7 +10200,7 @@ void test_7F_00B5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10210,8 +10213,8 @@ void test_7F_00B5()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xE3);
     CheckRegisterByte(RegisterType::L, 0xA2);
-    CheckRegisterWord(RegisterType::PC, 0x8C57);
-    CheckRegisterWord(RegisterType::SP, 0x0F9C);
+    WriteRegisterWord(RegisterType::PC, 0x8C56);
+    WriteRegisterWord(RegisterType::SP, 0x0F9C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8C56, 0x7F);
 }
@@ -10242,7 +10245,7 @@ void test_7F_00B6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10255,8 +10258,8 @@ void test_7F_00B6()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x70);
     CheckRegisterByte(RegisterType::L, 0x94);
-    CheckRegisterWord(RegisterType::PC, 0xF9CB);
-    CheckRegisterWord(RegisterType::SP, 0x3F12);
+    WriteRegisterWord(RegisterType::PC, 0xF9CA);
+    WriteRegisterWord(RegisterType::SP, 0x3F12);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF9CA, 0x7F);
 }
@@ -10287,7 +10290,7 @@ void test_7F_00B7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10300,8 +10303,8 @@ void test_7F_00B7()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x3A);
     CheckRegisterByte(RegisterType::L, 0x7E);
-    CheckRegisterWord(RegisterType::PC, 0x89BE);
-    CheckRegisterWord(RegisterType::SP, 0xCC7B);
+    WriteRegisterWord(RegisterType::PC, 0x89BD);
+    WriteRegisterWord(RegisterType::SP, 0xCC7B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x89BD, 0x7F);
 }
@@ -10332,7 +10335,7 @@ void test_7F_00B8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10345,8 +10348,8 @@ void test_7F_00B8()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x29);
     CheckRegisterByte(RegisterType::L, 0xFB);
-    CheckRegisterWord(RegisterType::PC, 0x170A);
-    CheckRegisterWord(RegisterType::SP, 0xF2C6);
+    WriteRegisterWord(RegisterType::PC, 0x1709);
+    WriteRegisterWord(RegisterType::SP, 0xF2C6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1709, 0x7F);
 }
@@ -10377,7 +10380,7 @@ void test_7F_00B9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10390,8 +10393,8 @@ void test_7F_00B9()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x0A);
     CheckRegisterByte(RegisterType::L, 0x22);
-    CheckRegisterWord(RegisterType::PC, 0x14DC);
-    CheckRegisterWord(RegisterType::SP, 0xFECA);
+    WriteRegisterWord(RegisterType::PC, 0x14DB);
+    WriteRegisterWord(RegisterType::SP, 0xFECA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x14DB, 0x7F);
 }
@@ -10422,7 +10425,7 @@ void test_7F_00BA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10435,8 +10438,8 @@ void test_7F_00BA()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x08);
     CheckRegisterByte(RegisterType::L, 0x19);
-    CheckRegisterWord(RegisterType::PC, 0xD76E);
-    CheckRegisterWord(RegisterType::SP, 0x1054);
+    WriteRegisterWord(RegisterType::PC, 0xD76D);
+    WriteRegisterWord(RegisterType::SP, 0x1054);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD76D, 0x7F);
 }
@@ -10467,7 +10470,7 @@ void test_7F_00BB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10480,8 +10483,8 @@ void test_7F_00BB()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0x9A);
-    CheckRegisterWord(RegisterType::PC, 0xCD68);
-    CheckRegisterWord(RegisterType::SP, 0xF66C);
+    WriteRegisterWord(RegisterType::PC, 0xCD67);
+    WriteRegisterWord(RegisterType::SP, 0xF66C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCD67, 0x7F);
 }
@@ -10512,7 +10515,7 @@ void test_7F_00BC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10525,8 +10528,8 @@ void test_7F_00BC()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0xF9);
-    CheckRegisterWord(RegisterType::PC, 0xED3C);
-    CheckRegisterWord(RegisterType::SP, 0x262F);
+    WriteRegisterWord(RegisterType::PC, 0xED3B);
+    WriteRegisterWord(RegisterType::SP, 0x262F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xED3B, 0x7F);
 }
@@ -10557,7 +10560,7 @@ void test_7F_00BD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10570,8 +10573,8 @@ void test_7F_00BD()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x32);
     CheckRegisterByte(RegisterType::L, 0x04);
-    CheckRegisterWord(RegisterType::PC, 0x733D);
-    CheckRegisterWord(RegisterType::SP, 0x1A0C);
+    WriteRegisterWord(RegisterType::PC, 0x733C);
+    WriteRegisterWord(RegisterType::SP, 0x1A0C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x733C, 0x7F);
 }
@@ -10602,7 +10605,7 @@ void test_7F_00BE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10615,8 +10618,8 @@ void test_7F_00BE()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x8E);
     CheckRegisterByte(RegisterType::L, 0x65);
-    CheckRegisterWord(RegisterType::PC, 0x8375);
-    CheckRegisterWord(RegisterType::SP, 0xA0BE);
+    WriteRegisterWord(RegisterType::PC, 0x8374);
+    WriteRegisterWord(RegisterType::SP, 0xA0BE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8374, 0x7F);
 }
@@ -10647,7 +10650,7 @@ void test_7F_00BF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10660,8 +10663,8 @@ void test_7F_00BF()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x15);
     CheckRegisterByte(RegisterType::L, 0x15);
-    CheckRegisterWord(RegisterType::PC, 0x6F54);
-    CheckRegisterWord(RegisterType::SP, 0xE119);
+    WriteRegisterWord(RegisterType::PC, 0x6F53);
+    WriteRegisterWord(RegisterType::SP, 0xE119);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6F53, 0x7F);
 }
@@ -10692,7 +10695,7 @@ void test_7F_00C0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10705,8 +10708,8 @@ void test_7F_00C0()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xC5);
     CheckRegisterByte(RegisterType::L, 0x2F);
-    CheckRegisterWord(RegisterType::PC, 0x32B1);
-    CheckRegisterWord(RegisterType::SP, 0xC2B1);
+    WriteRegisterWord(RegisterType::PC, 0x32B0);
+    WriteRegisterWord(RegisterType::SP, 0xC2B1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x32B0, 0x7F);
 }
@@ -10737,7 +10740,7 @@ void test_7F_00C1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10750,8 +10753,8 @@ void test_7F_00C1()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x6A);
     CheckRegisterByte(RegisterType::L, 0x86);
-    CheckRegisterWord(RegisterType::PC, 0xB271);
-    CheckRegisterWord(RegisterType::SP, 0x069D);
+    WriteRegisterWord(RegisterType::PC, 0xB270);
+    WriteRegisterWord(RegisterType::SP, 0x069D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB270, 0x7F);
 }
@@ -10782,7 +10785,7 @@ void test_7F_00C2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10795,8 +10798,8 @@ void test_7F_00C2()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x02);
     CheckRegisterByte(RegisterType::L, 0x2D);
-    CheckRegisterWord(RegisterType::PC, 0xB191);
-    CheckRegisterWord(RegisterType::SP, 0xF597);
+    WriteRegisterWord(RegisterType::PC, 0xB190);
+    WriteRegisterWord(RegisterType::SP, 0xF597);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB190, 0x7F);
 }
@@ -10827,7 +10830,7 @@ void test_7F_00C3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10840,8 +10843,8 @@ void test_7F_00C3()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xD5);
     CheckRegisterByte(RegisterType::L, 0x1E);
-    CheckRegisterWord(RegisterType::PC, 0x5FC4);
-    CheckRegisterWord(RegisterType::SP, 0xEDC4);
+    WriteRegisterWord(RegisterType::PC, 0x5FC3);
+    WriteRegisterWord(RegisterType::SP, 0xEDC4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5FC3, 0x7F);
 }
@@ -10872,7 +10875,7 @@ void test_7F_00C4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10885,8 +10888,8 @@ void test_7F_00C4()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xF4);
     CheckRegisterByte(RegisterType::L, 0x7C);
-    CheckRegisterWord(RegisterType::PC, 0xD2F4);
-    CheckRegisterWord(RegisterType::SP, 0x6C82);
+    WriteRegisterWord(RegisterType::PC, 0xD2F3);
+    WriteRegisterWord(RegisterType::SP, 0x6C82);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD2F3, 0x7F);
 }
@@ -10917,7 +10920,7 @@ void test_7F_00C5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10930,8 +10933,8 @@ void test_7F_00C5()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x51);
     CheckRegisterByte(RegisterType::L, 0x30);
-    CheckRegisterWord(RegisterType::PC, 0x7E68);
-    CheckRegisterWord(RegisterType::SP, 0x64B7);
+    WriteRegisterWord(RegisterType::PC, 0x7E67);
+    WriteRegisterWord(RegisterType::SP, 0x64B7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7E67, 0x7F);
 }
@@ -10962,7 +10965,7 @@ void test_7F_00C6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -10975,8 +10978,8 @@ void test_7F_00C6()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0x01);
-    CheckRegisterWord(RegisterType::PC, 0x6903);
-    CheckRegisterWord(RegisterType::SP, 0x6D7D);
+    WriteRegisterWord(RegisterType::PC, 0x6902);
+    WriteRegisterWord(RegisterType::SP, 0x6D7D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6902, 0x7F);
 }
@@ -11007,7 +11010,7 @@ void test_7F_00C7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11020,8 +11023,8 @@ void test_7F_00C7()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xC2);
     CheckRegisterByte(RegisterType::L, 0x00);
-    CheckRegisterWord(RegisterType::PC, 0xC530);
-    CheckRegisterWord(RegisterType::SP, 0xEAC6);
+    WriteRegisterWord(RegisterType::PC, 0xC52F);
+    WriteRegisterWord(RegisterType::SP, 0xEAC6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC52F, 0x7F);
 }
@@ -11052,7 +11055,7 @@ void test_7F_00C8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11065,8 +11068,8 @@ void test_7F_00C8()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0xF6);
-    CheckRegisterWord(RegisterType::PC, 0x3F4E);
-    CheckRegisterWord(RegisterType::SP, 0x66E0);
+    WriteRegisterWord(RegisterType::PC, 0x3F4D);
+    WriteRegisterWord(RegisterType::SP, 0x66E0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3F4D, 0x7F);
 }
@@ -11097,7 +11100,7 @@ void test_7F_00C9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11110,8 +11113,8 @@ void test_7F_00C9()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0x43);
-    CheckRegisterWord(RegisterType::PC, 0xE96F);
-    CheckRegisterWord(RegisterType::SP, 0xA06A);
+    WriteRegisterWord(RegisterType::PC, 0xE96E);
+    WriteRegisterWord(RegisterType::SP, 0xA06A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE96E, 0x7F);
 }
@@ -11142,7 +11145,7 @@ void test_7F_00CA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11155,8 +11158,8 @@ void test_7F_00CA()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x7D);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    CheckRegisterWord(RegisterType::PC, 0x9417);
-    CheckRegisterWord(RegisterType::SP, 0xE961);
+    WriteRegisterWord(RegisterType::PC, 0x9416);
+    WriteRegisterWord(RegisterType::SP, 0xE961);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9416, 0x7F);
 }
@@ -11187,7 +11190,7 @@ void test_7F_00CB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11200,8 +11203,8 @@ void test_7F_00CB()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0xF6);
-    CheckRegisterWord(RegisterType::PC, 0x5764);
-    CheckRegisterWord(RegisterType::SP, 0x0E9B);
+    WriteRegisterWord(RegisterType::PC, 0x5763);
+    WriteRegisterWord(RegisterType::SP, 0x0E9B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5763, 0x7F);
 }
@@ -11232,7 +11235,7 @@ void test_7F_00CC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11245,8 +11248,8 @@ void test_7F_00CC()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xA1);
     CheckRegisterByte(RegisterType::L, 0xD6);
-    CheckRegisterWord(RegisterType::PC, 0x5679);
-    CheckRegisterWord(RegisterType::SP, 0x3F88);
+    WriteRegisterWord(RegisterType::PC, 0x5678);
+    WriteRegisterWord(RegisterType::SP, 0x3F88);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5678, 0x7F);
 }
@@ -11277,7 +11280,7 @@ void test_7F_00CD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11290,8 +11293,8 @@ void test_7F_00CD()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x88);
     CheckRegisterByte(RegisterType::L, 0xE1);
-    CheckRegisterWord(RegisterType::PC, 0xBB6D);
-    CheckRegisterWord(RegisterType::SP, 0xCE76);
+    WriteRegisterWord(RegisterType::PC, 0xBB6C);
+    WriteRegisterWord(RegisterType::SP, 0xCE76);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBB6C, 0x7F);
 }
@@ -11322,7 +11325,7 @@ void test_7F_00CE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11335,8 +11338,8 @@ void test_7F_00CE()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0xD2);
-    CheckRegisterWord(RegisterType::PC, 0xDD9F);
-    CheckRegisterWord(RegisterType::SP, 0x49F2);
+    WriteRegisterWord(RegisterType::PC, 0xDD9E);
+    WriteRegisterWord(RegisterType::SP, 0x49F2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDD9E, 0x7F);
 }
@@ -11367,7 +11370,7 @@ void test_7F_00CF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11380,8 +11383,8 @@ void test_7F_00CF()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xAC);
     CheckRegisterByte(RegisterType::L, 0xDF);
-    CheckRegisterWord(RegisterType::PC, 0x3027);
-    CheckRegisterWord(RegisterType::SP, 0x2116);
+    WriteRegisterWord(RegisterType::PC, 0x3026);
+    WriteRegisterWord(RegisterType::SP, 0x2116);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3026, 0x7F);
 }
@@ -11412,7 +11415,7 @@ void test_7F_00D0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11425,8 +11428,8 @@ void test_7F_00D0()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x25);
     CheckRegisterByte(RegisterType::L, 0xD3);
-    CheckRegisterWord(RegisterType::PC, 0xD6CC);
-    CheckRegisterWord(RegisterType::SP, 0xE226);
+    WriteRegisterWord(RegisterType::PC, 0xD6CB);
+    WriteRegisterWord(RegisterType::SP, 0xE226);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD6CB, 0x7F);
 }
@@ -11457,7 +11460,7 @@ void test_7F_00D1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11470,8 +11473,8 @@ void test_7F_00D1()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0x19);
-    CheckRegisterWord(RegisterType::PC, 0x68A4);
-    CheckRegisterWord(RegisterType::SP, 0xA892);
+    WriteRegisterWord(RegisterType::PC, 0x68A3);
+    WriteRegisterWord(RegisterType::SP, 0xA892);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x68A3, 0x7F);
 }
@@ -11502,7 +11505,7 @@ void test_7F_00D2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11515,8 +11518,8 @@ void test_7F_00D2()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x73);
     CheckRegisterByte(RegisterType::L, 0xB8);
-    CheckRegisterWord(RegisterType::PC, 0xE0DF);
-    CheckRegisterWord(RegisterType::SP, 0x1A39);
+    WriteRegisterWord(RegisterType::PC, 0xE0DE);
+    WriteRegisterWord(RegisterType::SP, 0x1A39);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE0DE, 0x7F);
 }
@@ -11547,7 +11550,7 @@ void test_7F_00D3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11560,8 +11563,8 @@ void test_7F_00D3()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x20);
     CheckRegisterByte(RegisterType::L, 0xAC);
-    CheckRegisterWord(RegisterType::PC, 0xA929);
-    CheckRegisterWord(RegisterType::SP, 0x80EE);
+    WriteRegisterWord(RegisterType::PC, 0xA928);
+    WriteRegisterWord(RegisterType::SP, 0x80EE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA928, 0x7F);
 }
@@ -11592,7 +11595,7 @@ void test_7F_00D4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11605,8 +11608,8 @@ void test_7F_00D4()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x0B);
     CheckRegisterByte(RegisterType::L, 0xB7);
-    CheckRegisterWord(RegisterType::PC, 0xC592);
-    CheckRegisterWord(RegisterType::SP, 0x899F);
+    WriteRegisterWord(RegisterType::PC, 0xC591);
+    WriteRegisterWord(RegisterType::SP, 0x899F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC591, 0x7F);
 }
@@ -11637,7 +11640,7 @@ void test_7F_00D5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11650,8 +11653,8 @@ void test_7F_00D5()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x35);
     CheckRegisterByte(RegisterType::L, 0x38);
-    CheckRegisterWord(RegisterType::PC, 0x60B8);
-    CheckRegisterWord(RegisterType::SP, 0xCB03);
+    WriteRegisterWord(RegisterType::PC, 0x60B7);
+    WriteRegisterWord(RegisterType::SP, 0xCB03);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x60B7, 0x7F);
 }
@@ -11682,7 +11685,7 @@ void test_7F_00D6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11695,8 +11698,8 @@ void test_7F_00D6()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xEA);
     CheckRegisterByte(RegisterType::L, 0x11);
-    CheckRegisterWord(RegisterType::PC, 0x8712);
-    CheckRegisterWord(RegisterType::SP, 0x34E3);
+    WriteRegisterWord(RegisterType::PC, 0x8711);
+    WriteRegisterWord(RegisterType::SP, 0x34E3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8711, 0x7F);
 }
@@ -11727,7 +11730,7 @@ void test_7F_00D7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11740,8 +11743,8 @@ void test_7F_00D7()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xEA);
     CheckRegisterByte(RegisterType::L, 0x21);
-    CheckRegisterWord(RegisterType::PC, 0xA176);
-    CheckRegisterWord(RegisterType::SP, 0xE424);
+    WriteRegisterWord(RegisterType::PC, 0xA175);
+    WriteRegisterWord(RegisterType::SP, 0xE424);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA175, 0x7F);
 }
@@ -11772,7 +11775,7 @@ void test_7F_00D8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11785,8 +11788,8 @@ void test_7F_00D8()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xB4);
     CheckRegisterByte(RegisterType::L, 0x20);
-    CheckRegisterWord(RegisterType::PC, 0x6684);
-    CheckRegisterWord(RegisterType::SP, 0x7185);
+    WriteRegisterWord(RegisterType::PC, 0x6683);
+    WriteRegisterWord(RegisterType::SP, 0x7185);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6683, 0x7F);
 }
@@ -11817,7 +11820,7 @@ void test_7F_00D9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11830,8 +11833,8 @@ void test_7F_00D9()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x5B);
     CheckRegisterByte(RegisterType::L, 0x1E);
-    CheckRegisterWord(RegisterType::PC, 0xEC5E);
-    CheckRegisterWord(RegisterType::SP, 0xE973);
+    WriteRegisterWord(RegisterType::PC, 0xEC5D);
+    WriteRegisterWord(RegisterType::SP, 0xE973);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEC5D, 0x7F);
 }
@@ -11862,7 +11865,7 @@ void test_7F_00DA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11875,8 +11878,8 @@ void test_7F_00DA()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0xBA);
-    CheckRegisterWord(RegisterType::PC, 0xAA9D);
-    CheckRegisterWord(RegisterType::SP, 0xA5F6);
+    WriteRegisterWord(RegisterType::PC, 0xAA9C);
+    WriteRegisterWord(RegisterType::SP, 0xA5F6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAA9C, 0x7F);
 }
@@ -11907,7 +11910,7 @@ void test_7F_00DB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11920,8 +11923,8 @@ void test_7F_00DB()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xA5);
     CheckRegisterByte(RegisterType::L, 0x20);
-    CheckRegisterWord(RegisterType::PC, 0x1A75);
-    CheckRegisterWord(RegisterType::SP, 0x5D7B);
+    WriteRegisterWord(RegisterType::PC, 0x1A74);
+    WriteRegisterWord(RegisterType::SP, 0x5D7B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1A74, 0x7F);
 }
@@ -11952,7 +11955,7 @@ void test_7F_00DC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -11965,8 +11968,8 @@ void test_7F_00DC()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x77);
     CheckRegisterByte(RegisterType::L, 0xEE);
-    CheckRegisterWord(RegisterType::PC, 0xDDC4);
-    CheckRegisterWord(RegisterType::SP, 0x5D8D);
+    WriteRegisterWord(RegisterType::PC, 0xDDC3);
+    WriteRegisterWord(RegisterType::SP, 0x5D8D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDDC3, 0x7F);
 }
@@ -11997,7 +12000,7 @@ void test_7F_00DD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12010,8 +12013,8 @@ void test_7F_00DD()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xF6);
     CheckRegisterByte(RegisterType::L, 0x59);
-    CheckRegisterWord(RegisterType::PC, 0x4268);
-    CheckRegisterWord(RegisterType::SP, 0xB558);
+    WriteRegisterWord(RegisterType::PC, 0x4267);
+    WriteRegisterWord(RegisterType::SP, 0xB558);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4267, 0x7F);
 }
@@ -12042,7 +12045,7 @@ void test_7F_00DE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12055,8 +12058,8 @@ void test_7F_00DE()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xCA);
     CheckRegisterByte(RegisterType::L, 0x96);
-    CheckRegisterWord(RegisterType::PC, 0x3412);
-    CheckRegisterWord(RegisterType::SP, 0xFE6E);
+    WriteRegisterWord(RegisterType::PC, 0x3411);
+    WriteRegisterWord(RegisterType::SP, 0xFE6E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3411, 0x7F);
 }
@@ -12087,7 +12090,7 @@ void test_7F_00DF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12100,8 +12103,8 @@ void test_7F_00DF()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x3A);
     CheckRegisterByte(RegisterType::L, 0x68);
-    CheckRegisterWord(RegisterType::PC, 0x18D6);
-    CheckRegisterWord(RegisterType::SP, 0x60EB);
+    WriteRegisterWord(RegisterType::PC, 0x18D5);
+    WriteRegisterWord(RegisterType::SP, 0x60EB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x18D5, 0x7F);
 }
@@ -12132,7 +12135,7 @@ void test_7F_00E0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12145,8 +12148,8 @@ void test_7F_00E0()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xE8);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    CheckRegisterWord(RegisterType::PC, 0x335F);
-    CheckRegisterWord(RegisterType::SP, 0xE114);
+    WriteRegisterWord(RegisterType::PC, 0x335E);
+    WriteRegisterWord(RegisterType::SP, 0xE114);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x335E, 0x7F);
 }
@@ -12177,7 +12180,7 @@ void test_7F_00E1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12190,8 +12193,8 @@ void test_7F_00E1()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x36);
     CheckRegisterByte(RegisterType::L, 0xC0);
-    CheckRegisterWord(RegisterType::PC, 0x4167);
-    CheckRegisterWord(RegisterType::SP, 0x3837);
+    WriteRegisterWord(RegisterType::PC, 0x4166);
+    WriteRegisterWord(RegisterType::SP, 0x3837);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4166, 0x7F);
 }
@@ -12222,7 +12225,7 @@ void test_7F_00E2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12235,8 +12238,8 @@ void test_7F_00E2()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x56);
     CheckRegisterByte(RegisterType::L, 0x25);
-    CheckRegisterWord(RegisterType::PC, 0xA7B7);
-    CheckRegisterWord(RegisterType::SP, 0x1780);
+    WriteRegisterWord(RegisterType::PC, 0xA7B6);
+    WriteRegisterWord(RegisterType::SP, 0x1780);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA7B6, 0x7F);
 }
@@ -12267,7 +12270,7 @@ void test_7F_00E3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12280,8 +12283,8 @@ void test_7F_00E3()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0xF0);
-    CheckRegisterWord(RegisterType::PC, 0x89FA);
-    CheckRegisterWord(RegisterType::SP, 0x9763);
+    WriteRegisterWord(RegisterType::PC, 0x89F9);
+    WriteRegisterWord(RegisterType::SP, 0x9763);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x89F9, 0x7F);
 }
@@ -12312,7 +12315,7 @@ void test_7F_00E4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12325,8 +12328,8 @@ void test_7F_00E4()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    CheckRegisterWord(RegisterType::PC, 0x2EBE);
-    CheckRegisterWord(RegisterType::SP, 0x26C8);
+    WriteRegisterWord(RegisterType::PC, 0x2EBD);
+    WriteRegisterWord(RegisterType::SP, 0x26C8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2EBD, 0x7F);
 }
@@ -12357,7 +12360,7 @@ void test_7F_00E5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12370,8 +12373,8 @@ void test_7F_00E5()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xA2);
     CheckRegisterByte(RegisterType::L, 0x66);
-    CheckRegisterWord(RegisterType::PC, 0x830E);
-    CheckRegisterWord(RegisterType::SP, 0x178C);
+    WriteRegisterWord(RegisterType::PC, 0x830D);
+    WriteRegisterWord(RegisterType::SP, 0x178C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x830D, 0x7F);
 }
@@ -12402,7 +12405,7 @@ void test_7F_00E6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12415,8 +12418,8 @@ void test_7F_00E6()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x53);
     CheckRegisterByte(RegisterType::L, 0xAF);
-    CheckRegisterWord(RegisterType::PC, 0xE4B6);
-    CheckRegisterWord(RegisterType::SP, 0x3A5F);
+    WriteRegisterWord(RegisterType::PC, 0xE4B5);
+    WriteRegisterWord(RegisterType::SP, 0x3A5F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE4B5, 0x7F);
 }
@@ -12447,7 +12450,7 @@ void test_7F_00E7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12460,8 +12463,8 @@ void test_7F_00E7()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xE4);
     CheckRegisterByte(RegisterType::L, 0xE9);
-    CheckRegisterWord(RegisterType::PC, 0x17F0);
-    CheckRegisterWord(RegisterType::SP, 0x3F82);
+    WriteRegisterWord(RegisterType::PC, 0x17EF);
+    WriteRegisterWord(RegisterType::SP, 0x3F82);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x17EF, 0x7F);
 }
@@ -12492,7 +12495,7 @@ void test_7F_00E8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12505,8 +12508,8 @@ void test_7F_00E8()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x54);
     CheckRegisterByte(RegisterType::L, 0x1F);
-    CheckRegisterWord(RegisterType::PC, 0x8E96);
-    CheckRegisterWord(RegisterType::SP, 0x35BA);
+    WriteRegisterWord(RegisterType::PC, 0x8E95);
+    WriteRegisterWord(RegisterType::SP, 0x35BA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8E95, 0x7F);
 }
@@ -12537,7 +12540,7 @@ void test_7F_00E9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12550,8 +12553,8 @@ void test_7F_00E9()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x12);
     CheckRegisterByte(RegisterType::L, 0x77);
-    CheckRegisterWord(RegisterType::PC, 0xC15B);
-    CheckRegisterWord(RegisterType::SP, 0xFD0E);
+    WriteRegisterWord(RegisterType::PC, 0xC15A);
+    WriteRegisterWord(RegisterType::SP, 0xFD0E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC15A, 0x7F);
 }
@@ -12582,7 +12585,7 @@ void test_7F_00EA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12595,8 +12598,8 @@ void test_7F_00EA()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x0E);
     CheckRegisterByte(RegisterType::L, 0xC3);
-    CheckRegisterWord(RegisterType::PC, 0xAB0A);
-    CheckRegisterWord(RegisterType::SP, 0xEFC7);
+    WriteRegisterWord(RegisterType::PC, 0xAB09);
+    WriteRegisterWord(RegisterType::SP, 0xEFC7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAB09, 0x7F);
 }
@@ -12627,7 +12630,7 @@ void test_7F_00EB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12640,8 +12643,8 @@ void test_7F_00EB()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    CheckRegisterWord(RegisterType::PC, 0x6236);
-    CheckRegisterWord(RegisterType::SP, 0x8FA9);
+    WriteRegisterWord(RegisterType::PC, 0x6235);
+    WriteRegisterWord(RegisterType::SP, 0x8FA9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6235, 0x7F);
 }
@@ -12672,7 +12675,7 @@ void test_7F_00EC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12685,8 +12688,8 @@ void test_7F_00EC()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x84);
     CheckRegisterByte(RegisterType::L, 0x7E);
-    CheckRegisterWord(RegisterType::PC, 0xBFB9);
-    CheckRegisterWord(RegisterType::SP, 0xE3A1);
+    WriteRegisterWord(RegisterType::PC, 0xBFB8);
+    WriteRegisterWord(RegisterType::SP, 0xE3A1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBFB8, 0x7F);
 }
@@ -12717,7 +12720,7 @@ void test_7F_00ED()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12730,8 +12733,8 @@ void test_7F_00ED()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xEB);
     CheckRegisterByte(RegisterType::L, 0x94);
-    CheckRegisterWord(RegisterType::PC, 0xEBE6);
-    CheckRegisterWord(RegisterType::SP, 0x753D);
+    WriteRegisterWord(RegisterType::PC, 0xEBE5);
+    WriteRegisterWord(RegisterType::SP, 0x753D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEBE5, 0x7F);
 }
@@ -12762,7 +12765,7 @@ void test_7F_00EE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12775,8 +12778,8 @@ void test_7F_00EE()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    CheckRegisterWord(RegisterType::PC, 0xF591);
-    CheckRegisterWord(RegisterType::SP, 0x1FAD);
+    WriteRegisterWord(RegisterType::PC, 0xF590);
+    WriteRegisterWord(RegisterType::SP, 0x1FAD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF590, 0x7F);
 }
@@ -12807,7 +12810,7 @@ void test_7F_00EF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12820,8 +12823,8 @@ void test_7F_00EF()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x74);
     CheckRegisterByte(RegisterType::L, 0xC5);
-    CheckRegisterWord(RegisterType::PC, 0x2E9A);
-    CheckRegisterWord(RegisterType::SP, 0x847D);
+    WriteRegisterWord(RegisterType::PC, 0x2E99);
+    WriteRegisterWord(RegisterType::SP, 0x847D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2E99, 0x7F);
 }
@@ -12852,7 +12855,7 @@ void test_7F_00F0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12865,8 +12868,8 @@ void test_7F_00F0()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xBB);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    CheckRegisterWord(RegisterType::PC, 0x20D1);
-    CheckRegisterWord(RegisterType::SP, 0x4059);
+    WriteRegisterWord(RegisterType::PC, 0x20D0);
+    WriteRegisterWord(RegisterType::SP, 0x4059);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x20D0, 0x7F);
 }
@@ -12897,7 +12900,7 @@ void test_7F_00F1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12910,8 +12913,8 @@ void test_7F_00F1()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0x38);
-    CheckRegisterWord(RegisterType::PC, 0xA488);
-    CheckRegisterWord(RegisterType::SP, 0x93AA);
+    WriteRegisterWord(RegisterType::PC, 0xA487);
+    WriteRegisterWord(RegisterType::SP, 0x93AA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA487, 0x7F);
 }
@@ -12942,7 +12945,7 @@ void test_7F_00F2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -12955,8 +12958,8 @@ void test_7F_00F2()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xE9);
     CheckRegisterByte(RegisterType::L, 0x41);
-    CheckRegisterWord(RegisterType::PC, 0xF692);
-    CheckRegisterWord(RegisterType::SP, 0xB7FB);
+    WriteRegisterWord(RegisterType::PC, 0xF691);
+    WriteRegisterWord(RegisterType::SP, 0xB7FB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF691, 0x7F);
 }
@@ -12987,7 +12990,7 @@ void test_7F_00F3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13000,8 +13003,8 @@ void test_7F_00F3()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x85);
     CheckRegisterByte(RegisterType::L, 0xB8);
-    CheckRegisterWord(RegisterType::PC, 0xD0B8);
-    CheckRegisterWord(RegisterType::SP, 0x0B82);
+    WriteRegisterWord(RegisterType::PC, 0xD0B7);
+    WriteRegisterWord(RegisterType::SP, 0x0B82);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD0B7, 0x7F);
 }
@@ -13032,7 +13035,7 @@ void test_7F_00F4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13045,8 +13048,8 @@ void test_7F_00F4()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xAA);
     CheckRegisterByte(RegisterType::L, 0x6B);
-    CheckRegisterWord(RegisterType::PC, 0x5326);
-    CheckRegisterWord(RegisterType::SP, 0xDAAD);
+    WriteRegisterWord(RegisterType::PC, 0x5325);
+    WriteRegisterWord(RegisterType::SP, 0xDAAD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5325, 0x7F);
 }
@@ -13077,7 +13080,7 @@ void test_7F_00F5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13090,8 +13093,8 @@ void test_7F_00F5()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xC2);
     CheckRegisterByte(RegisterType::L, 0xC7);
-    CheckRegisterWord(RegisterType::PC, 0x4C0D);
-    CheckRegisterWord(RegisterType::SP, 0xD376);
+    WriteRegisterWord(RegisterType::PC, 0x4C0C);
+    WriteRegisterWord(RegisterType::SP, 0xD376);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4C0C, 0x7F);
 }
@@ -13122,7 +13125,7 @@ void test_7F_00F6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13135,8 +13138,8 @@ void test_7F_00F6()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xE0);
     CheckRegisterByte(RegisterType::L, 0x1F);
-    CheckRegisterWord(RegisterType::PC, 0x9C3C);
-    CheckRegisterWord(RegisterType::SP, 0xDFC9);
+    WriteRegisterWord(RegisterType::PC, 0x9C3B);
+    WriteRegisterWord(RegisterType::SP, 0xDFC9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9C3B, 0x7F);
 }
@@ -13167,7 +13170,7 @@ void test_7F_00F7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13180,8 +13183,8 @@ void test_7F_00F7()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x7A);
     CheckRegisterByte(RegisterType::L, 0x59);
-    CheckRegisterWord(RegisterType::PC, 0xDC66);
-    CheckRegisterWord(RegisterType::SP, 0x7104);
+    WriteRegisterWord(RegisterType::PC, 0xDC65);
+    WriteRegisterWord(RegisterType::SP, 0x7104);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDC65, 0x7F);
 }
@@ -13212,7 +13215,7 @@ void test_7F_00F8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13225,8 +13228,8 @@ void test_7F_00F8()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x9F);
     CheckRegisterByte(RegisterType::L, 0xAF);
-    CheckRegisterWord(RegisterType::PC, 0x86A3);
-    CheckRegisterWord(RegisterType::SP, 0x0387);
+    WriteRegisterWord(RegisterType::PC, 0x86A2);
+    WriteRegisterWord(RegisterType::SP, 0x0387);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x86A2, 0x7F);
 }
@@ -13257,7 +13260,7 @@ void test_7F_00F9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13270,8 +13273,8 @@ void test_7F_00F9()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0x8C);
-    CheckRegisterWord(RegisterType::PC, 0xD82A);
-    CheckRegisterWord(RegisterType::SP, 0x5982);
+    WriteRegisterWord(RegisterType::PC, 0xD829);
+    WriteRegisterWord(RegisterType::SP, 0x5982);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD829, 0x7F);
 }
@@ -13302,7 +13305,7 @@ void test_7F_00FA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13315,8 +13318,8 @@ void test_7F_00FA()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xAC);
     CheckRegisterByte(RegisterType::L, 0x54);
-    CheckRegisterWord(RegisterType::PC, 0x3301);
-    CheckRegisterWord(RegisterType::SP, 0x6DA3);
+    WriteRegisterWord(RegisterType::PC, 0x3300);
+    WriteRegisterWord(RegisterType::SP, 0x6DA3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3300, 0x7F);
 }
@@ -13347,7 +13350,7 @@ void test_7F_00FB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13360,8 +13363,8 @@ void test_7F_00FB()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x63);
     CheckRegisterByte(RegisterType::L, 0x32);
-    CheckRegisterWord(RegisterType::PC, 0x196F);
-    CheckRegisterWord(RegisterType::SP, 0xAC89);
+    WriteRegisterWord(RegisterType::PC, 0x196E);
+    WriteRegisterWord(RegisterType::SP, 0xAC89);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x196E, 0x7F);
 }
@@ -13392,7 +13395,7 @@ void test_7F_00FC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13405,8 +13408,8 @@ void test_7F_00FC()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xA6);
     CheckRegisterByte(RegisterType::L, 0x41);
-    CheckRegisterWord(RegisterType::PC, 0x32F0);
-    CheckRegisterWord(RegisterType::SP, 0x4FB9);
+    WriteRegisterWord(RegisterType::PC, 0x32EF);
+    WriteRegisterWord(RegisterType::SP, 0x4FB9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x32EF, 0x7F);
 }
@@ -13437,7 +13440,7 @@ void test_7F_00FD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13450,8 +13453,8 @@ void test_7F_00FD()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xAC);
     CheckRegisterByte(RegisterType::L, 0x18);
-    CheckRegisterWord(RegisterType::PC, 0x0F0B);
-    CheckRegisterWord(RegisterType::SP, 0xD561);
+    WriteRegisterWord(RegisterType::PC, 0x0F0A);
+    WriteRegisterWord(RegisterType::SP, 0xD561);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0F0A, 0x7F);
 }
@@ -13482,7 +13485,7 @@ void test_7F_00FE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13495,8 +13498,8 @@ void test_7F_00FE()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x1C);
     CheckRegisterByte(RegisterType::L, 0x21);
-    CheckRegisterWord(RegisterType::PC, 0x19DD);
-    CheckRegisterWord(RegisterType::SP, 0x5A28);
+    WriteRegisterWord(RegisterType::PC, 0x19DC);
+    WriteRegisterWord(RegisterType::SP, 0x5A28);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x19DC, 0x7F);
 }
@@ -13527,7 +13530,7 @@ void test_7F_00FF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13540,8 +13543,8 @@ void test_7F_00FF()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0x04);
-    CheckRegisterWord(RegisterType::PC, 0xF695);
-    CheckRegisterWord(RegisterType::SP, 0xC697);
+    WriteRegisterWord(RegisterType::PC, 0xF694);
+    WriteRegisterWord(RegisterType::SP, 0xC697);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF694, 0x7F);
 }
@@ -13572,7 +13575,7 @@ void test_7F_0100()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13585,8 +13588,8 @@ void test_7F_0100()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xC0);
     CheckRegisterByte(RegisterType::L, 0xA5);
-    CheckRegisterWord(RegisterType::PC, 0xB19C);
-    CheckRegisterWord(RegisterType::SP, 0x8AF8);
+    WriteRegisterWord(RegisterType::PC, 0xB19B);
+    WriteRegisterWord(RegisterType::SP, 0x8AF8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB19B, 0x7F);
 }
@@ -13617,7 +13620,7 @@ void test_7F_0101()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13630,8 +13633,8 @@ void test_7F_0101()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x37);
     CheckRegisterByte(RegisterType::L, 0x03);
-    CheckRegisterWord(RegisterType::PC, 0xF9B6);
-    CheckRegisterWord(RegisterType::SP, 0x8FC7);
+    WriteRegisterWord(RegisterType::PC, 0xF9B5);
+    WriteRegisterWord(RegisterType::SP, 0x8FC7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF9B5, 0x7F);
 }
@@ -13662,7 +13665,7 @@ void test_7F_0102()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13675,8 +13678,8 @@ void test_7F_0102()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x8D);
     CheckRegisterByte(RegisterType::L, 0xD9);
-    CheckRegisterWord(RegisterType::PC, 0xAF6E);
-    CheckRegisterWord(RegisterType::SP, 0x026D);
+    WriteRegisterWord(RegisterType::PC, 0xAF6D);
+    WriteRegisterWord(RegisterType::SP, 0x026D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAF6D, 0x7F);
 }
@@ -13707,7 +13710,7 @@ void test_7F_0103()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13720,8 +13723,8 @@ void test_7F_0103()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x5E);
     CheckRegisterByte(RegisterType::L, 0xDC);
-    CheckRegisterWord(RegisterType::PC, 0xF9AB);
-    CheckRegisterWord(RegisterType::SP, 0x924E);
+    WriteRegisterWord(RegisterType::PC, 0xF9AA);
+    WriteRegisterWord(RegisterType::SP, 0x924E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF9AA, 0x7F);
 }
@@ -13752,7 +13755,7 @@ void test_7F_0104()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13765,8 +13768,8 @@ void test_7F_0104()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x77);
     CheckRegisterByte(RegisterType::L, 0x82);
-    CheckRegisterWord(RegisterType::PC, 0x3FEB);
-    CheckRegisterWord(RegisterType::SP, 0xFF7E);
+    WriteRegisterWord(RegisterType::PC, 0x3FEA);
+    WriteRegisterWord(RegisterType::SP, 0xFF7E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3FEA, 0x7F);
 }
@@ -13797,7 +13800,7 @@ void test_7F_0105()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13810,8 +13813,8 @@ void test_7F_0105()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x8E);
     CheckRegisterByte(RegisterType::L, 0xA7);
-    CheckRegisterWord(RegisterType::PC, 0xD4FF);
-    CheckRegisterWord(RegisterType::SP, 0x6C03);
+    WriteRegisterWord(RegisterType::PC, 0xD4FE);
+    WriteRegisterWord(RegisterType::SP, 0x6C03);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD4FE, 0x7F);
 }
@@ -13842,7 +13845,7 @@ void test_7F_0106()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13855,8 +13858,8 @@ void test_7F_0106()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0x07);
-    CheckRegisterWord(RegisterType::PC, 0x2E73);
-    CheckRegisterWord(RegisterType::SP, 0x9BBA);
+    WriteRegisterWord(RegisterType::PC, 0x2E72);
+    WriteRegisterWord(RegisterType::SP, 0x9BBA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2E72, 0x7F);
 }
@@ -13887,7 +13890,7 @@ void test_7F_0107()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13900,8 +13903,8 @@ void test_7F_0107()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x2C);
     CheckRegisterByte(RegisterType::L, 0xAD);
-    CheckRegisterWord(RegisterType::PC, 0x0431);
-    CheckRegisterWord(RegisterType::SP, 0x4A7C);
+    WriteRegisterWord(RegisterType::PC, 0x0430);
+    WriteRegisterWord(RegisterType::SP, 0x4A7C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0430, 0x7F);
 }
@@ -13932,7 +13935,7 @@ void test_7F_0108()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13945,8 +13948,8 @@ void test_7F_0108()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xE2);
     CheckRegisterByte(RegisterType::L, 0x47);
-    CheckRegisterWord(RegisterType::PC, 0xBC1C);
-    CheckRegisterWord(RegisterType::SP, 0xE333);
+    WriteRegisterWord(RegisterType::PC, 0xBC1B);
+    WriteRegisterWord(RegisterType::SP, 0xE333);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBC1B, 0x7F);
 }
@@ -13977,7 +13980,7 @@ void test_7F_0109()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -13990,8 +13993,8 @@ void test_7F_0109()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x3D);
     CheckRegisterByte(RegisterType::L, 0x48);
-    CheckRegisterWord(RegisterType::PC, 0x5A11);
-    CheckRegisterWord(RegisterType::SP, 0x510E);
+    WriteRegisterWord(RegisterType::PC, 0x5A10);
+    WriteRegisterWord(RegisterType::SP, 0x510E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5A10, 0x7F);
 }
@@ -14022,7 +14025,7 @@ void test_7F_010A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14035,8 +14038,8 @@ void test_7F_010A()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xCF);
     CheckRegisterByte(RegisterType::L, 0x6E);
-    CheckRegisterWord(RegisterType::PC, 0x4224);
-    CheckRegisterWord(RegisterType::SP, 0x84D4);
+    WriteRegisterWord(RegisterType::PC, 0x4223);
+    WriteRegisterWord(RegisterType::SP, 0x84D4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4223, 0x7F);
 }
@@ -14067,7 +14070,7 @@ void test_7F_010B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14080,8 +14083,8 @@ void test_7F_010B()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xE0);
     CheckRegisterByte(RegisterType::L, 0x95);
-    CheckRegisterWord(RegisterType::PC, 0xF446);
-    CheckRegisterWord(RegisterType::SP, 0xDB05);
+    WriteRegisterWord(RegisterType::PC, 0xF445);
+    WriteRegisterWord(RegisterType::SP, 0xDB05);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF445, 0x7F);
 }
@@ -14112,7 +14115,7 @@ void test_7F_010C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14125,8 +14128,8 @@ void test_7F_010C()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xFC);
     CheckRegisterByte(RegisterType::L, 0x92);
-    CheckRegisterWord(RegisterType::PC, 0xA02E);
-    CheckRegisterWord(RegisterType::SP, 0x2AF5);
+    WriteRegisterWord(RegisterType::PC, 0xA02D);
+    WriteRegisterWord(RegisterType::SP, 0x2AF5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA02D, 0x7F);
 }
@@ -14157,7 +14160,7 @@ void test_7F_010D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14170,8 +14173,8 @@ void test_7F_010D()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xBE);
     CheckRegisterByte(RegisterType::L, 0x41);
-    CheckRegisterWord(RegisterType::PC, 0xC897);
-    CheckRegisterWord(RegisterType::SP, 0x957E);
+    WriteRegisterWord(RegisterType::PC, 0xC896);
+    WriteRegisterWord(RegisterType::SP, 0x957E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC896, 0x7F);
 }
@@ -14202,7 +14205,7 @@ void test_7F_010E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14215,8 +14218,8 @@ void test_7F_010E()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x49);
     CheckRegisterByte(RegisterType::L, 0x38);
-    CheckRegisterWord(RegisterType::PC, 0x9D86);
-    CheckRegisterWord(RegisterType::SP, 0xF4FF);
+    WriteRegisterWord(RegisterType::PC, 0x9D85);
+    WriteRegisterWord(RegisterType::SP, 0xF4FF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9D85, 0x7F);
 }
@@ -14247,7 +14250,7 @@ void test_7F_010F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14260,8 +14263,8 @@ void test_7F_010F()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0x47);
-    CheckRegisterWord(RegisterType::PC, 0xC5EC);
-    CheckRegisterWord(RegisterType::SP, 0x51A8);
+    WriteRegisterWord(RegisterType::PC, 0xC5EB);
+    WriteRegisterWord(RegisterType::SP, 0x51A8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC5EB, 0x7F);
 }
@@ -14292,7 +14295,7 @@ void test_7F_0110()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14305,8 +14308,8 @@ void test_7F_0110()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xA3);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    CheckRegisterWord(RegisterType::PC, 0x64C7);
-    CheckRegisterWord(RegisterType::SP, 0xE162);
+    WriteRegisterWord(RegisterType::PC, 0x64C6);
+    WriteRegisterWord(RegisterType::SP, 0xE162);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x64C6, 0x7F);
 }
@@ -14337,7 +14340,7 @@ void test_7F_0111()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14350,8 +14353,8 @@ void test_7F_0111()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x73);
     CheckRegisterByte(RegisterType::L, 0x25);
-    CheckRegisterWord(RegisterType::PC, 0xAAD6);
-    CheckRegisterWord(RegisterType::SP, 0xC596);
+    WriteRegisterWord(RegisterType::PC, 0xAAD5);
+    WriteRegisterWord(RegisterType::SP, 0xC596);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAAD5, 0x7F);
 }
@@ -14382,7 +14385,7 @@ void test_7F_0112()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14395,8 +14398,8 @@ void test_7F_0112()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x88);
     CheckRegisterByte(RegisterType::L, 0xBF);
-    CheckRegisterWord(RegisterType::PC, 0x5120);
-    CheckRegisterWord(RegisterType::SP, 0x849A);
+    WriteRegisterWord(RegisterType::PC, 0x511F);
+    WriteRegisterWord(RegisterType::SP, 0x849A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x511F, 0x7F);
 }
@@ -14427,7 +14430,7 @@ void test_7F_0113()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14440,8 +14443,8 @@ void test_7F_0113()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x26);
     CheckRegisterByte(RegisterType::L, 0x7A);
-    CheckRegisterWord(RegisterType::PC, 0xA387);
-    CheckRegisterWord(RegisterType::SP, 0xEC6D);
+    WriteRegisterWord(RegisterType::PC, 0xA386);
+    WriteRegisterWord(RegisterType::SP, 0xEC6D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA386, 0x7F);
 }
@@ -14472,7 +14475,7 @@ void test_7F_0114()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14485,8 +14488,8 @@ void test_7F_0114()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0xDC);
-    CheckRegisterWord(RegisterType::PC, 0xF4F3);
-    CheckRegisterWord(RegisterType::SP, 0x82FF);
+    WriteRegisterWord(RegisterType::PC, 0xF4F2);
+    WriteRegisterWord(RegisterType::SP, 0x82FF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF4F2, 0x7F);
 }
@@ -14517,7 +14520,7 @@ void test_7F_0115()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14530,8 +14533,8 @@ void test_7F_0115()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x20);
     CheckRegisterByte(RegisterType::L, 0xC7);
-    CheckRegisterWord(RegisterType::PC, 0xEBDD);
-    CheckRegisterWord(RegisterType::SP, 0x5564);
+    WriteRegisterWord(RegisterType::PC, 0xEBDC);
+    WriteRegisterWord(RegisterType::SP, 0x5564);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEBDC, 0x7F);
 }
@@ -14562,7 +14565,7 @@ void test_7F_0116()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14575,8 +14578,8 @@ void test_7F_0116()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x46);
     CheckRegisterByte(RegisterType::L, 0x0E);
-    CheckRegisterWord(RegisterType::PC, 0x0C9F);
-    CheckRegisterWord(RegisterType::SP, 0xA48D);
+    WriteRegisterWord(RegisterType::PC, 0x0C9E);
+    WriteRegisterWord(RegisterType::SP, 0xA48D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0C9E, 0x7F);
 }
@@ -14607,7 +14610,7 @@ void test_7F_0117()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14620,8 +14623,8 @@ void test_7F_0117()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x27);
     CheckRegisterByte(RegisterType::L, 0xBD);
-    CheckRegisterWord(RegisterType::PC, 0x6798);
-    CheckRegisterWord(RegisterType::SP, 0xD308);
+    WriteRegisterWord(RegisterType::PC, 0x6797);
+    WriteRegisterWord(RegisterType::SP, 0xD308);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6797, 0x7F);
 }
@@ -14652,7 +14655,7 @@ void test_7F_0118()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14665,8 +14668,8 @@ void test_7F_0118()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x93);
     CheckRegisterByte(RegisterType::L, 0xBC);
-    CheckRegisterWord(RegisterType::PC, 0x34C0);
-    CheckRegisterWord(RegisterType::SP, 0xB57C);
+    WriteRegisterWord(RegisterType::PC, 0x34BF);
+    WriteRegisterWord(RegisterType::SP, 0xB57C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x34BF, 0x7F);
 }
@@ -14697,7 +14700,7 @@ void test_7F_0119()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14710,8 +14713,8 @@ void test_7F_0119()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0x50);
-    CheckRegisterWord(RegisterType::PC, 0x0C8C);
-    CheckRegisterWord(RegisterType::SP, 0xD718);
+    WriteRegisterWord(RegisterType::PC, 0x0C8B);
+    WriteRegisterWord(RegisterType::SP, 0xD718);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0C8B, 0x7F);
 }
@@ -14742,7 +14745,7 @@ void test_7F_011A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14755,8 +14758,8 @@ void test_7F_011A()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0x8C);
-    CheckRegisterWord(RegisterType::PC, 0x1A54);
-    CheckRegisterWord(RegisterType::SP, 0xDC8D);
+    WriteRegisterWord(RegisterType::PC, 0x1A53);
+    WriteRegisterWord(RegisterType::SP, 0xDC8D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1A53, 0x7F);
 }
@@ -14787,7 +14790,7 @@ void test_7F_011B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14800,8 +14803,8 @@ void test_7F_011B()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0x06);
-    CheckRegisterWord(RegisterType::PC, 0xBD9F);
-    CheckRegisterWord(RegisterType::SP, 0x3EF8);
+    WriteRegisterWord(RegisterType::PC, 0xBD9E);
+    WriteRegisterWord(RegisterType::SP, 0x3EF8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBD9E, 0x7F);
 }
@@ -14832,7 +14835,7 @@ void test_7F_011C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14845,8 +14848,8 @@ void test_7F_011C()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x99);
     CheckRegisterByte(RegisterType::L, 0x01);
-    CheckRegisterWord(RegisterType::PC, 0xF8FE);
-    CheckRegisterWord(RegisterType::SP, 0xDE3F);
+    WriteRegisterWord(RegisterType::PC, 0xF8FD);
+    WriteRegisterWord(RegisterType::SP, 0xDE3F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF8FD, 0x7F);
 }
@@ -14877,7 +14880,7 @@ void test_7F_011D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14890,8 +14893,8 @@ void test_7F_011D()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x46);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    CheckRegisterWord(RegisterType::PC, 0x8E66);
-    CheckRegisterWord(RegisterType::SP, 0x92CC);
+    WriteRegisterWord(RegisterType::PC, 0x8E65);
+    WriteRegisterWord(RegisterType::SP, 0x92CC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8E65, 0x7F);
 }
@@ -14922,7 +14925,7 @@ void test_7F_011E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14935,8 +14938,8 @@ void test_7F_011E()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x54);
     CheckRegisterByte(RegisterType::L, 0x6F);
-    CheckRegisterWord(RegisterType::PC, 0x44AC);
-    CheckRegisterWord(RegisterType::SP, 0xBB65);
+    WriteRegisterWord(RegisterType::PC, 0x44AB);
+    WriteRegisterWord(RegisterType::SP, 0xBB65);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x44AB, 0x7F);
 }
@@ -14967,7 +14970,7 @@ void test_7F_011F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -14980,8 +14983,8 @@ void test_7F_011F()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x8E);
     CheckRegisterByte(RegisterType::L, 0x82);
-    CheckRegisterWord(RegisterType::PC, 0xA68C);
-    CheckRegisterWord(RegisterType::SP, 0xB355);
+    WriteRegisterWord(RegisterType::PC, 0xA68B);
+    WriteRegisterWord(RegisterType::SP, 0xB355);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA68B, 0x7F);
 }
@@ -15012,7 +15015,7 @@ void test_7F_0120()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15025,8 +15028,8 @@ void test_7F_0120()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x1C);
     CheckRegisterByte(RegisterType::L, 0x7C);
-    CheckRegisterWord(RegisterType::PC, 0x3FBB);
-    CheckRegisterWord(RegisterType::SP, 0x9A5C);
+    WriteRegisterWord(RegisterType::PC, 0x3FBA);
+    WriteRegisterWord(RegisterType::SP, 0x9A5C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3FBA, 0x7F);
 }
@@ -15057,7 +15060,7 @@ void test_7F_0121()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15070,8 +15073,8 @@ void test_7F_0121()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x19);
     CheckRegisterByte(RegisterType::L, 0x07);
-    CheckRegisterWord(RegisterType::PC, 0x950D);
-    CheckRegisterWord(RegisterType::SP, 0xED15);
+    WriteRegisterWord(RegisterType::PC, 0x950C);
+    WriteRegisterWord(RegisterType::SP, 0xED15);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x950C, 0x7F);
 }
@@ -15102,7 +15105,7 @@ void test_7F_0122()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15115,8 +15118,8 @@ void test_7F_0122()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xED);
     CheckRegisterByte(RegisterType::L, 0x79);
-    CheckRegisterWord(RegisterType::PC, 0xD67F);
-    CheckRegisterWord(RegisterType::SP, 0x6CD1);
+    WriteRegisterWord(RegisterType::PC, 0xD67E);
+    WriteRegisterWord(RegisterType::SP, 0x6CD1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD67E, 0x7F);
 }
@@ -15147,7 +15150,7 @@ void test_7F_0123()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15160,8 +15163,8 @@ void test_7F_0123()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x37);
     CheckRegisterByte(RegisterType::L, 0xC9);
-    CheckRegisterWord(RegisterType::PC, 0x6390);
-    CheckRegisterWord(RegisterType::SP, 0xA564);
+    WriteRegisterWord(RegisterType::PC, 0x638F);
+    WriteRegisterWord(RegisterType::SP, 0xA564);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x638F, 0x7F);
 }
@@ -15192,7 +15195,7 @@ void test_7F_0124()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15205,8 +15208,8 @@ void test_7F_0124()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0x3F);
-    CheckRegisterWord(RegisterType::PC, 0x640E);
-    CheckRegisterWord(RegisterType::SP, 0xE503);
+    WriteRegisterWord(RegisterType::PC, 0x640D);
+    WriteRegisterWord(RegisterType::SP, 0xE503);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x640D, 0x7F);
 }
@@ -15237,7 +15240,7 @@ void test_7F_0125()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15250,8 +15253,8 @@ void test_7F_0125()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xF5);
     CheckRegisterByte(RegisterType::L, 0x14);
-    CheckRegisterWord(RegisterType::PC, 0x75E7);
-    CheckRegisterWord(RegisterType::SP, 0x4156);
+    WriteRegisterWord(RegisterType::PC, 0x75E6);
+    WriteRegisterWord(RegisterType::SP, 0x4156);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x75E6, 0x7F);
 }
@@ -15282,7 +15285,7 @@ void test_7F_0126()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15295,8 +15298,8 @@ void test_7F_0126()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x88);
     CheckRegisterByte(RegisterType::L, 0x76);
-    CheckRegisterWord(RegisterType::PC, 0xFDC7);
-    CheckRegisterWord(RegisterType::SP, 0xFEEF);
+    WriteRegisterWord(RegisterType::PC, 0xFDC6);
+    WriteRegisterWord(RegisterType::SP, 0xFEEF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFDC6, 0x7F);
 }
@@ -15327,7 +15330,7 @@ void test_7F_0127()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15340,8 +15343,8 @@ void test_7F_0127()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x6E);
     CheckRegisterByte(RegisterType::L, 0x03);
-    CheckRegisterWord(RegisterType::PC, 0xC9A6);
-    CheckRegisterWord(RegisterType::SP, 0xAF73);
+    WriteRegisterWord(RegisterType::PC, 0xC9A5);
+    WriteRegisterWord(RegisterType::SP, 0xAF73);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC9A5, 0x7F);
 }
@@ -15372,7 +15375,7 @@ void test_7F_0128()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15385,8 +15388,8 @@ void test_7F_0128()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xC4);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    CheckRegisterWord(RegisterType::PC, 0xD96D);
-    CheckRegisterWord(RegisterType::SP, 0x4A6D);
+    WriteRegisterWord(RegisterType::PC, 0xD96C);
+    WriteRegisterWord(RegisterType::SP, 0x4A6D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD96C, 0x7F);
 }
@@ -15417,7 +15420,7 @@ void test_7F_0129()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15430,8 +15433,8 @@ void test_7F_0129()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0x90);
-    CheckRegisterWord(RegisterType::PC, 0x6794);
-    CheckRegisterWord(RegisterType::SP, 0xAF65);
+    WriteRegisterWord(RegisterType::PC, 0x6793);
+    WriteRegisterWord(RegisterType::SP, 0xAF65);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6793, 0x7F);
 }
@@ -15462,7 +15465,7 @@ void test_7F_012A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15475,8 +15478,8 @@ void test_7F_012A()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xA8);
     CheckRegisterByte(RegisterType::L, 0x82);
-    CheckRegisterWord(RegisterType::PC, 0xAFF1);
-    CheckRegisterWord(RegisterType::SP, 0x45B6);
+    WriteRegisterWord(RegisterType::PC, 0xAFF0);
+    WriteRegisterWord(RegisterType::SP, 0x45B6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAFF0, 0x7F);
 }
@@ -15507,7 +15510,7 @@ void test_7F_012B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15520,8 +15523,8 @@ void test_7F_012B()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xBB);
     CheckRegisterByte(RegisterType::L, 0xBC);
-    CheckRegisterWord(RegisterType::PC, 0x9338);
-    CheckRegisterWord(RegisterType::SP, 0xB711);
+    WriteRegisterWord(RegisterType::PC, 0x9337);
+    WriteRegisterWord(RegisterType::SP, 0xB711);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9337, 0x7F);
 }
@@ -15552,7 +15555,7 @@ void test_7F_012C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15565,8 +15568,8 @@ void test_7F_012C()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xB4);
     CheckRegisterByte(RegisterType::L, 0x85);
-    CheckRegisterWord(RegisterType::PC, 0x590D);
-    CheckRegisterWord(RegisterType::SP, 0x1E85);
+    WriteRegisterWord(RegisterType::PC, 0x590C);
+    WriteRegisterWord(RegisterType::SP, 0x1E85);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x590C, 0x7F);
 }
@@ -15597,7 +15600,7 @@ void test_7F_012D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15610,8 +15613,8 @@ void test_7F_012D()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x9F);
     CheckRegisterByte(RegisterType::L, 0x31);
-    CheckRegisterWord(RegisterType::PC, 0x03F6);
-    CheckRegisterWord(RegisterType::SP, 0x51AC);
+    WriteRegisterWord(RegisterType::PC, 0x03F5);
+    WriteRegisterWord(RegisterType::SP, 0x51AC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x03F5, 0x7F);
 }
@@ -15642,7 +15645,7 @@ void test_7F_012E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15655,8 +15658,8 @@ void test_7F_012E()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0xF8);
-    CheckRegisterWord(RegisterType::PC, 0xF1A2);
-    CheckRegisterWord(RegisterType::SP, 0x5613);
+    WriteRegisterWord(RegisterType::PC, 0xF1A1);
+    WriteRegisterWord(RegisterType::SP, 0x5613);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF1A1, 0x7F);
 }
@@ -15687,7 +15690,7 @@ void test_7F_012F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15700,8 +15703,8 @@ void test_7F_012F()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x9C);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    CheckRegisterWord(RegisterType::PC, 0x467C);
-    CheckRegisterWord(RegisterType::SP, 0xDAB0);
+    WriteRegisterWord(RegisterType::PC, 0x467B);
+    WriteRegisterWord(RegisterType::SP, 0xDAB0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x467B, 0x7F);
 }
@@ -15732,7 +15735,7 @@ void test_7F_0130()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15745,8 +15748,8 @@ void test_7F_0130()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xC3);
     CheckRegisterByte(RegisterType::L, 0xDB);
-    CheckRegisterWord(RegisterType::PC, 0x4E01);
-    CheckRegisterWord(RegisterType::SP, 0x8C1B);
+    WriteRegisterWord(RegisterType::PC, 0x4E00);
+    WriteRegisterWord(RegisterType::SP, 0x8C1B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4E00, 0x7F);
 }
@@ -15777,7 +15780,7 @@ void test_7F_0131()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15790,8 +15793,8 @@ void test_7F_0131()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x5B);
     CheckRegisterByte(RegisterType::L, 0xCC);
-    CheckRegisterWord(RegisterType::PC, 0xB5D5);
-    CheckRegisterWord(RegisterType::SP, 0xAFFA);
+    WriteRegisterWord(RegisterType::PC, 0xB5D4);
+    WriteRegisterWord(RegisterType::SP, 0xAFFA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB5D4, 0x7F);
 }
@@ -15822,7 +15825,7 @@ void test_7F_0132()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15835,8 +15838,8 @@ void test_7F_0132()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xEC);
     CheckRegisterByte(RegisterType::L, 0x62);
-    CheckRegisterWord(RegisterType::PC, 0x6F91);
-    CheckRegisterWord(RegisterType::SP, 0x2764);
+    WriteRegisterWord(RegisterType::PC, 0x6F90);
+    WriteRegisterWord(RegisterType::SP, 0x2764);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6F90, 0x7F);
 }
@@ -15867,7 +15870,7 @@ void test_7F_0133()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15880,8 +15883,8 @@ void test_7F_0133()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xF5);
     CheckRegisterByte(RegisterType::L, 0x59);
-    CheckRegisterWord(RegisterType::PC, 0xCFD4);
-    CheckRegisterWord(RegisterType::SP, 0x4D13);
+    WriteRegisterWord(RegisterType::PC, 0xCFD3);
+    WriteRegisterWord(RegisterType::SP, 0x4D13);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCFD3, 0x7F);
 }
@@ -15912,7 +15915,7 @@ void test_7F_0134()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15925,8 +15928,8 @@ void test_7F_0134()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x64);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    CheckRegisterWord(RegisterType::PC, 0x1F44);
-    CheckRegisterWord(RegisterType::SP, 0xE2B5);
+    WriteRegisterWord(RegisterType::PC, 0x1F43);
+    WriteRegisterWord(RegisterType::SP, 0xE2B5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1F43, 0x7F);
 }
@@ -15957,7 +15960,7 @@ void test_7F_0135()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -15970,8 +15973,8 @@ void test_7F_0135()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x9A);
     CheckRegisterByte(RegisterType::L, 0xA7);
-    CheckRegisterWord(RegisterType::PC, 0x662B);
-    CheckRegisterWord(RegisterType::SP, 0x1F0B);
+    WriteRegisterWord(RegisterType::PC, 0x662A);
+    WriteRegisterWord(RegisterType::SP, 0x1F0B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x662A, 0x7F);
 }
@@ -16002,7 +16005,7 @@ void test_7F_0136()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16015,8 +16018,8 @@ void test_7F_0136()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xC0);
     CheckRegisterByte(RegisterType::L, 0xB1);
-    CheckRegisterWord(RegisterType::PC, 0x1C28);
-    CheckRegisterWord(RegisterType::SP, 0xA984);
+    WriteRegisterWord(RegisterType::PC, 0x1C27);
+    WriteRegisterWord(RegisterType::SP, 0xA984);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1C27, 0x7F);
 }
@@ -16047,7 +16050,7 @@ void test_7F_0137()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16060,8 +16063,8 @@ void test_7F_0137()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x2B);
     CheckRegisterByte(RegisterType::L, 0xF5);
-    CheckRegisterWord(RegisterType::PC, 0x179C);
-    CheckRegisterWord(RegisterType::SP, 0x3F60);
+    WriteRegisterWord(RegisterType::PC, 0x179B);
+    WriteRegisterWord(RegisterType::SP, 0x3F60);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x179B, 0x7F);
 }
@@ -16092,7 +16095,7 @@ void test_7F_0138()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16105,8 +16108,8 @@ void test_7F_0138()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x55);
     CheckRegisterByte(RegisterType::L, 0xD8);
-    CheckRegisterWord(RegisterType::PC, 0x95A4);
-    CheckRegisterWord(RegisterType::SP, 0xA327);
+    WriteRegisterWord(RegisterType::PC, 0x95A3);
+    WriteRegisterWord(RegisterType::SP, 0xA327);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x95A3, 0x7F);
 }
@@ -16137,7 +16140,7 @@ void test_7F_0139()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16150,8 +16153,8 @@ void test_7F_0139()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x90);
     CheckRegisterByte(RegisterType::L, 0x28);
-    CheckRegisterWord(RegisterType::PC, 0xB2AF);
-    CheckRegisterWord(RegisterType::SP, 0xBEC3);
+    WriteRegisterWord(RegisterType::PC, 0xB2AE);
+    WriteRegisterWord(RegisterType::SP, 0xBEC3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB2AE, 0x7F);
 }
@@ -16182,7 +16185,7 @@ void test_7F_013A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16195,8 +16198,8 @@ void test_7F_013A()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x8A);
     CheckRegisterByte(RegisterType::L, 0x43);
-    CheckRegisterWord(RegisterType::PC, 0xB994);
-    CheckRegisterWord(RegisterType::SP, 0x45DC);
+    WriteRegisterWord(RegisterType::PC, 0xB993);
+    WriteRegisterWord(RegisterType::SP, 0x45DC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB993, 0x7F);
 }
@@ -16227,7 +16230,7 @@ void test_7F_013B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16240,8 +16243,8 @@ void test_7F_013B()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x6F);
     CheckRegisterByte(RegisterType::L, 0xE9);
-    CheckRegisterWord(RegisterType::PC, 0x1C29);
-    CheckRegisterWord(RegisterType::SP, 0x3E0B);
+    WriteRegisterWord(RegisterType::PC, 0x1C28);
+    WriteRegisterWord(RegisterType::SP, 0x3E0B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1C28, 0x7F);
 }
@@ -16272,7 +16275,7 @@ void test_7F_013C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16285,8 +16288,8 @@ void test_7F_013C()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x0B);
     CheckRegisterByte(RegisterType::L, 0x5C);
-    CheckRegisterWord(RegisterType::PC, 0xC4CB);
-    CheckRegisterWord(RegisterType::SP, 0x3854);
+    WriteRegisterWord(RegisterType::PC, 0xC4CA);
+    WriteRegisterWord(RegisterType::SP, 0x3854);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC4CA, 0x7F);
 }
@@ -16317,7 +16320,7 @@ void test_7F_013D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16330,8 +16333,8 @@ void test_7F_013D()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x34);
     CheckRegisterByte(RegisterType::L, 0xE6);
-    CheckRegisterWord(RegisterType::PC, 0xB0DD);
-    CheckRegisterWord(RegisterType::SP, 0x73D0);
+    WriteRegisterWord(RegisterType::PC, 0xB0DC);
+    WriteRegisterWord(RegisterType::SP, 0x73D0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB0DC, 0x7F);
 }
@@ -16362,7 +16365,7 @@ void test_7F_013E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16375,8 +16378,8 @@ void test_7F_013E()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xA8);
     CheckRegisterByte(RegisterType::L, 0x56);
-    CheckRegisterWord(RegisterType::PC, 0x72B4);
-    CheckRegisterWord(RegisterType::SP, 0x9C10);
+    WriteRegisterWord(RegisterType::PC, 0x72B3);
+    WriteRegisterWord(RegisterType::SP, 0x9C10);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x72B3, 0x7F);
 }
@@ -16407,7 +16410,7 @@ void test_7F_013F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16420,8 +16423,8 @@ void test_7F_013F()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x67);
     CheckRegisterByte(RegisterType::L, 0x03);
-    CheckRegisterWord(RegisterType::PC, 0x0BE4);
-    CheckRegisterWord(RegisterType::SP, 0x0385);
+    WriteRegisterWord(RegisterType::PC, 0x0BE3);
+    WriteRegisterWord(RegisterType::SP, 0x0385);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0BE3, 0x7F);
 }
@@ -16452,7 +16455,7 @@ void test_7F_0140()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16465,8 +16468,8 @@ void test_7F_0140()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xE7);
     CheckRegisterByte(RegisterType::L, 0x3A);
-    CheckRegisterWord(RegisterType::PC, 0x2399);
-    CheckRegisterWord(RegisterType::SP, 0xCC79);
+    WriteRegisterWord(RegisterType::PC, 0x2398);
+    WriteRegisterWord(RegisterType::SP, 0xCC79);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2398, 0x7F);
 }
@@ -16497,7 +16500,7 @@ void test_7F_0141()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16510,8 +16513,8 @@ void test_7F_0141()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x0D);
     CheckRegisterByte(RegisterType::L, 0x12);
-    CheckRegisterWord(RegisterType::PC, 0xDC58);
-    CheckRegisterWord(RegisterType::SP, 0x33BD);
+    WriteRegisterWord(RegisterType::PC, 0xDC57);
+    WriteRegisterWord(RegisterType::SP, 0x33BD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDC57, 0x7F);
 }
@@ -16542,7 +16545,7 @@ void test_7F_0142()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16555,8 +16558,8 @@ void test_7F_0142()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0x09);
-    CheckRegisterWord(RegisterType::PC, 0x76F8);
-    CheckRegisterWord(RegisterType::SP, 0x4FE3);
+    WriteRegisterWord(RegisterType::PC, 0x76F7);
+    WriteRegisterWord(RegisterType::SP, 0x4FE3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x76F7, 0x7F);
 }
@@ -16587,7 +16590,7 @@ void test_7F_0143()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16600,8 +16603,8 @@ void test_7F_0143()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x35);
     CheckRegisterByte(RegisterType::L, 0xC2);
-    CheckRegisterWord(RegisterType::PC, 0xCEC6);
-    CheckRegisterWord(RegisterType::SP, 0xDF5B);
+    WriteRegisterWord(RegisterType::PC, 0xCEC5);
+    WriteRegisterWord(RegisterType::SP, 0xDF5B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCEC5, 0x7F);
 }
@@ -16632,7 +16635,7 @@ void test_7F_0144()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16645,8 +16648,8 @@ void test_7F_0144()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x79);
     CheckRegisterByte(RegisterType::L, 0x76);
-    CheckRegisterWord(RegisterType::PC, 0x251C);
-    CheckRegisterWord(RegisterType::SP, 0x493C);
+    WriteRegisterWord(RegisterType::PC, 0x251B);
+    WriteRegisterWord(RegisterType::SP, 0x493C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x251B, 0x7F);
 }
@@ -16677,7 +16680,7 @@ void test_7F_0145()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16690,8 +16693,8 @@ void test_7F_0145()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xB1);
     CheckRegisterByte(RegisterType::L, 0x1E);
-    CheckRegisterWord(RegisterType::PC, 0x9BD3);
-    CheckRegisterWord(RegisterType::SP, 0x1FC4);
+    WriteRegisterWord(RegisterType::PC, 0x9BD2);
+    WriteRegisterWord(RegisterType::SP, 0x1FC4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9BD2, 0x7F);
 }
@@ -16722,7 +16725,7 @@ void test_7F_0146()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16735,8 +16738,8 @@ void test_7F_0146()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x4E);
     CheckRegisterByte(RegisterType::L, 0xDB);
-    CheckRegisterWord(RegisterType::PC, 0xA0B9);
-    CheckRegisterWord(RegisterType::SP, 0x2019);
+    WriteRegisterWord(RegisterType::PC, 0xA0B8);
+    WriteRegisterWord(RegisterType::SP, 0x2019);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA0B8, 0x7F);
 }
@@ -16767,7 +16770,7 @@ void test_7F_0147()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16780,8 +16783,8 @@ void test_7F_0147()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x85);
     CheckRegisterByte(RegisterType::L, 0x1D);
-    CheckRegisterWord(RegisterType::PC, 0xFC7F);
-    CheckRegisterWord(RegisterType::SP, 0x350F);
+    WriteRegisterWord(RegisterType::PC, 0xFC7E);
+    WriteRegisterWord(RegisterType::SP, 0x350F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFC7E, 0x7F);
 }
@@ -16812,7 +16815,7 @@ void test_7F_0148()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16825,8 +16828,8 @@ void test_7F_0148()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0x43);
-    CheckRegisterWord(RegisterType::PC, 0xD68D);
-    CheckRegisterWord(RegisterType::SP, 0xD2F5);
+    WriteRegisterWord(RegisterType::PC, 0xD68C);
+    WriteRegisterWord(RegisterType::SP, 0xD2F5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD68C, 0x7F);
 }
@@ -16857,7 +16860,7 @@ void test_7F_0149()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16870,8 +16873,8 @@ void test_7F_0149()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xEB);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    CheckRegisterWord(RegisterType::PC, 0x2593);
-    CheckRegisterWord(RegisterType::SP, 0x7998);
+    WriteRegisterWord(RegisterType::PC, 0x2592);
+    WriteRegisterWord(RegisterType::SP, 0x7998);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2592, 0x7F);
 }
@@ -16902,7 +16905,7 @@ void test_7F_014A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16915,8 +16918,8 @@ void test_7F_014A()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x95);
     CheckRegisterByte(RegisterType::L, 0x54);
-    CheckRegisterWord(RegisterType::PC, 0xB2E2);
-    CheckRegisterWord(RegisterType::SP, 0x442C);
+    WriteRegisterWord(RegisterType::PC, 0xB2E1);
+    WriteRegisterWord(RegisterType::SP, 0x442C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB2E1, 0x7F);
 }
@@ -16947,7 +16950,7 @@ void test_7F_014B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -16960,8 +16963,8 @@ void test_7F_014B()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xEC);
     CheckRegisterByte(RegisterType::L, 0x61);
-    CheckRegisterWord(RegisterType::PC, 0xBDE0);
-    CheckRegisterWord(RegisterType::SP, 0x347C);
+    WriteRegisterWord(RegisterType::PC, 0xBDDF);
+    WriteRegisterWord(RegisterType::SP, 0x347C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBDDF, 0x7F);
 }
@@ -16992,7 +16995,7 @@ void test_7F_014C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17005,8 +17008,8 @@ void test_7F_014C()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xAE);
     CheckRegisterByte(RegisterType::L, 0x77);
-    CheckRegisterWord(RegisterType::PC, 0x66E9);
-    CheckRegisterWord(RegisterType::SP, 0x5B38);
+    WriteRegisterWord(RegisterType::PC, 0x66E8);
+    WriteRegisterWord(RegisterType::SP, 0x5B38);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x66E8, 0x7F);
 }
@@ -17037,7 +17040,7 @@ void test_7F_014D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17050,8 +17053,8 @@ void test_7F_014D()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x74);
     CheckRegisterByte(RegisterType::L, 0x9A);
-    CheckRegisterWord(RegisterType::PC, 0x43FC);
-    CheckRegisterWord(RegisterType::SP, 0x3AFD);
+    WriteRegisterWord(RegisterType::PC, 0x43FB);
+    WriteRegisterWord(RegisterType::SP, 0x3AFD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x43FB, 0x7F);
 }
@@ -17082,7 +17085,7 @@ void test_7F_014E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17095,8 +17098,8 @@ void test_7F_014E()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x1F);
     CheckRegisterByte(RegisterType::L, 0xCF);
-    CheckRegisterWord(RegisterType::PC, 0x77FA);
-    CheckRegisterWord(RegisterType::SP, 0x3D89);
+    WriteRegisterWord(RegisterType::PC, 0x77F9);
+    WriteRegisterWord(RegisterType::SP, 0x3D89);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x77F9, 0x7F);
 }
@@ -17127,7 +17130,7 @@ void test_7F_014F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17140,8 +17143,8 @@ void test_7F_014F()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x56);
     CheckRegisterByte(RegisterType::L, 0xD3);
-    CheckRegisterWord(RegisterType::PC, 0x5D76);
-    CheckRegisterWord(RegisterType::SP, 0x1150);
+    WriteRegisterWord(RegisterType::PC, 0x5D75);
+    WriteRegisterWord(RegisterType::SP, 0x1150);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5D75, 0x7F);
 }
@@ -17172,7 +17175,7 @@ void test_7F_0150()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17185,8 +17188,8 @@ void test_7F_0150()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x36);
     CheckRegisterByte(RegisterType::L, 0x01);
-    CheckRegisterWord(RegisterType::PC, 0x21E0);
-    CheckRegisterWord(RegisterType::SP, 0x275A);
+    WriteRegisterWord(RegisterType::PC, 0x21DF);
+    WriteRegisterWord(RegisterType::SP, 0x275A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x21DF, 0x7F);
 }
@@ -17217,7 +17220,7 @@ void test_7F_0151()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17230,8 +17233,8 @@ void test_7F_0151()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xAF);
     CheckRegisterByte(RegisterType::L, 0x00);
-    CheckRegisterWord(RegisterType::PC, 0xEC5F);
-    CheckRegisterWord(RegisterType::SP, 0xF62A);
+    WriteRegisterWord(RegisterType::PC, 0xEC5E);
+    WriteRegisterWord(RegisterType::SP, 0xF62A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEC5E, 0x7F);
 }
@@ -17262,7 +17265,7 @@ void test_7F_0152()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17275,8 +17278,8 @@ void test_7F_0152()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x30);
     CheckRegisterByte(RegisterType::L, 0x7B);
-    CheckRegisterWord(RegisterType::PC, 0xDDE4);
-    CheckRegisterWord(RegisterType::SP, 0xE124);
+    WriteRegisterWord(RegisterType::PC, 0xDDE3);
+    WriteRegisterWord(RegisterType::SP, 0xE124);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDDE3, 0x7F);
 }
@@ -17307,7 +17310,7 @@ void test_7F_0153()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17320,8 +17323,8 @@ void test_7F_0153()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xD5);
     CheckRegisterByte(RegisterType::L, 0xE3);
-    CheckRegisterWord(RegisterType::PC, 0xA3A1);
-    CheckRegisterWord(RegisterType::SP, 0xE861);
+    WriteRegisterWord(RegisterType::PC, 0xA3A0);
+    WriteRegisterWord(RegisterType::SP, 0xE861);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA3A0, 0x7F);
 }
@@ -17352,7 +17355,7 @@ void test_7F_0154()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17365,8 +17368,8 @@ void test_7F_0154()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x4B);
     CheckRegisterByte(RegisterType::L, 0xAA);
-    CheckRegisterWord(RegisterType::PC, 0xB256);
-    CheckRegisterWord(RegisterType::SP, 0xC45A);
+    WriteRegisterWord(RegisterType::PC, 0xB255);
+    WriteRegisterWord(RegisterType::SP, 0xC45A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB255, 0x7F);
 }
@@ -17397,7 +17400,7 @@ void test_7F_0155()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17410,8 +17413,8 @@ void test_7F_0155()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xF8);
     CheckRegisterByte(RegisterType::L, 0x2E);
-    CheckRegisterWord(RegisterType::PC, 0xB0CD);
-    CheckRegisterWord(RegisterType::SP, 0x2FDE);
+    WriteRegisterWord(RegisterType::PC, 0xB0CC);
+    WriteRegisterWord(RegisterType::SP, 0x2FDE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB0CC, 0x7F);
 }
@@ -17442,7 +17445,7 @@ void test_7F_0156()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17455,8 +17458,8 @@ void test_7F_0156()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x60);
     CheckRegisterByte(RegisterType::L, 0x40);
-    CheckRegisterWord(RegisterType::PC, 0xCAFC);
-    CheckRegisterWord(RegisterType::SP, 0x666C);
+    WriteRegisterWord(RegisterType::PC, 0xCAFB);
+    WriteRegisterWord(RegisterType::SP, 0x666C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCAFB, 0x7F);
 }
@@ -17487,7 +17490,7 @@ void test_7F_0157()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17500,8 +17503,8 @@ void test_7F_0157()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x61);
     CheckRegisterByte(RegisterType::L, 0xD4);
-    CheckRegisterWord(RegisterType::PC, 0xCAB1);
-    CheckRegisterWord(RegisterType::SP, 0xCA27);
+    WriteRegisterWord(RegisterType::PC, 0xCAB0);
+    WriteRegisterWord(RegisterType::SP, 0xCA27);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCAB0, 0x7F);
 }
@@ -17532,7 +17535,7 @@ void test_7F_0158()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17545,8 +17548,8 @@ void test_7F_0158()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0x11);
-    CheckRegisterWord(RegisterType::PC, 0x89A8);
-    CheckRegisterWord(RegisterType::SP, 0xEB13);
+    WriteRegisterWord(RegisterType::PC, 0x89A7);
+    WriteRegisterWord(RegisterType::SP, 0xEB13);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x89A7, 0x7F);
 }
@@ -17577,7 +17580,7 @@ void test_7F_0159()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17590,8 +17593,8 @@ void test_7F_0159()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x62);
     CheckRegisterByte(RegisterType::L, 0x1B);
-    CheckRegisterWord(RegisterType::PC, 0x1006);
-    CheckRegisterWord(RegisterType::SP, 0x43EB);
+    WriteRegisterWord(RegisterType::PC, 0x1005);
+    WriteRegisterWord(RegisterType::SP, 0x43EB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1005, 0x7F);
 }
@@ -17622,7 +17625,7 @@ void test_7F_015A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17635,8 +17638,8 @@ void test_7F_015A()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xCA);
     CheckRegisterByte(RegisterType::L, 0xC8);
-    CheckRegisterWord(RegisterType::PC, 0x3513);
-    CheckRegisterWord(RegisterType::SP, 0xB61F);
+    WriteRegisterWord(RegisterType::PC, 0x3512);
+    WriteRegisterWord(RegisterType::SP, 0xB61F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3512, 0x7F);
 }
@@ -17667,7 +17670,7 @@ void test_7F_015B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17680,8 +17683,8 @@ void test_7F_015B()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x87);
     CheckRegisterByte(RegisterType::L, 0xD0);
-    CheckRegisterWord(RegisterType::PC, 0x5B40);
-    CheckRegisterWord(RegisterType::SP, 0x5117);
+    WriteRegisterWord(RegisterType::PC, 0x5B3F);
+    WriteRegisterWord(RegisterType::SP, 0x5117);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5B3F, 0x7F);
 }
@@ -17712,7 +17715,7 @@ void test_7F_015C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17725,8 +17728,8 @@ void test_7F_015C()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0xE3);
-    CheckRegisterWord(RegisterType::PC, 0xB47E);
-    CheckRegisterWord(RegisterType::SP, 0xE0F0);
+    WriteRegisterWord(RegisterType::PC, 0xB47D);
+    WriteRegisterWord(RegisterType::SP, 0xE0F0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB47D, 0x7F);
 }
@@ -17757,7 +17760,7 @@ void test_7F_015D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17770,8 +17773,8 @@ void test_7F_015D()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xFB);
     CheckRegisterByte(RegisterType::L, 0x69);
-    CheckRegisterWord(RegisterType::PC, 0xC3AA);
-    CheckRegisterWord(RegisterType::SP, 0xFE3E);
+    WriteRegisterWord(RegisterType::PC, 0xC3A9);
+    WriteRegisterWord(RegisterType::SP, 0xFE3E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC3A9, 0x7F);
 }
@@ -17802,7 +17805,7 @@ void test_7F_015E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17815,8 +17818,8 @@ void test_7F_015E()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x58);
     CheckRegisterByte(RegisterType::L, 0xD2);
-    CheckRegisterWord(RegisterType::PC, 0xAC56);
-    CheckRegisterWord(RegisterType::SP, 0xA406);
+    WriteRegisterWord(RegisterType::PC, 0xAC55);
+    WriteRegisterWord(RegisterType::SP, 0xA406);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAC55, 0x7F);
 }
@@ -17847,7 +17850,7 @@ void test_7F_015F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17860,8 +17863,8 @@ void test_7F_015F()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0x9F);
-    CheckRegisterWord(RegisterType::PC, 0x7073);
-    CheckRegisterWord(RegisterType::SP, 0xEFEF);
+    WriteRegisterWord(RegisterType::PC, 0x7072);
+    WriteRegisterWord(RegisterType::SP, 0xEFEF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7072, 0x7F);
 }
@@ -17892,7 +17895,7 @@ void test_7F_0160()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17905,8 +17908,8 @@ void test_7F_0160()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0x5C);
-    CheckRegisterWord(RegisterType::PC, 0xBE9B);
-    CheckRegisterWord(RegisterType::SP, 0x16B7);
+    WriteRegisterWord(RegisterType::PC, 0xBE9A);
+    WriteRegisterWord(RegisterType::SP, 0x16B7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBE9A, 0x7F);
 }
@@ -17937,7 +17940,7 @@ void test_7F_0161()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17950,8 +17953,8 @@ void test_7F_0161()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x4D);
     CheckRegisterByte(RegisterType::L, 0x75);
-    CheckRegisterWord(RegisterType::PC, 0x5011);
-    CheckRegisterWord(RegisterType::SP, 0x3DF9);
+    WriteRegisterWord(RegisterType::PC, 0x5010);
+    WriteRegisterWord(RegisterType::SP, 0x3DF9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5010, 0x7F);
 }
@@ -17982,7 +17985,7 @@ void test_7F_0162()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -17995,8 +17998,8 @@ void test_7F_0162()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xE7);
     CheckRegisterByte(RegisterType::L, 0x9E);
-    CheckRegisterWord(RegisterType::PC, 0xDC1A);
-    CheckRegisterWord(RegisterType::SP, 0xF552);
+    WriteRegisterWord(RegisterType::PC, 0xDC19);
+    WriteRegisterWord(RegisterType::SP, 0xF552);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDC19, 0x7F);
 }
@@ -18027,7 +18030,7 @@ void test_7F_0163()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18040,8 +18043,8 @@ void test_7F_0163()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xF6);
     CheckRegisterByte(RegisterType::L, 0xAA);
-    CheckRegisterWord(RegisterType::PC, 0x6BA8);
-    CheckRegisterWord(RegisterType::SP, 0x9C34);
+    WriteRegisterWord(RegisterType::PC, 0x6BA7);
+    WriteRegisterWord(RegisterType::SP, 0x9C34);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6BA7, 0x7F);
 }
@@ -18072,7 +18075,7 @@ void test_7F_0164()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18085,8 +18088,8 @@ void test_7F_0164()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xE2);
     CheckRegisterByte(RegisterType::L, 0x54);
-    CheckRegisterWord(RegisterType::PC, 0x5267);
-    CheckRegisterWord(RegisterType::SP, 0xDA0C);
+    WriteRegisterWord(RegisterType::PC, 0x5266);
+    WriteRegisterWord(RegisterType::SP, 0xDA0C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5266, 0x7F);
 }
@@ -18117,7 +18120,7 @@ void test_7F_0165()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18130,8 +18133,8 @@ void test_7F_0165()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xAD);
     CheckRegisterByte(RegisterType::L, 0x17);
-    CheckRegisterWord(RegisterType::PC, 0x52EB);
-    CheckRegisterWord(RegisterType::SP, 0xEB99);
+    WriteRegisterWord(RegisterType::PC, 0x52EA);
+    WriteRegisterWord(RegisterType::SP, 0xEB99);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x52EA, 0x7F);
 }
@@ -18162,7 +18165,7 @@ void test_7F_0166()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18175,8 +18178,8 @@ void test_7F_0166()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x7E);
     CheckRegisterByte(RegisterType::L, 0x32);
-    CheckRegisterWord(RegisterType::PC, 0xCB95);
-    CheckRegisterWord(RegisterType::SP, 0xBEA8);
+    WriteRegisterWord(RegisterType::PC, 0xCB94);
+    WriteRegisterWord(RegisterType::SP, 0xBEA8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCB94, 0x7F);
 }
@@ -18207,7 +18210,7 @@ void test_7F_0167()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18220,8 +18223,8 @@ void test_7F_0167()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x15);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    CheckRegisterWord(RegisterType::PC, 0x1779);
-    CheckRegisterWord(RegisterType::SP, 0x5B2E);
+    WriteRegisterWord(RegisterType::PC, 0x1778);
+    WriteRegisterWord(RegisterType::SP, 0x5B2E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1778, 0x7F);
 }
@@ -18252,7 +18255,7 @@ void test_7F_0168()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18265,8 +18268,8 @@ void test_7F_0168()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xB5);
     CheckRegisterByte(RegisterType::L, 0x03);
-    CheckRegisterWord(RegisterType::PC, 0x6924);
-    CheckRegisterWord(RegisterType::SP, 0xD9D0);
+    WriteRegisterWord(RegisterType::PC, 0x6923);
+    WriteRegisterWord(RegisterType::SP, 0xD9D0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6923, 0x7F);
 }
@@ -18297,7 +18300,7 @@ void test_7F_0169()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18310,8 +18313,8 @@ void test_7F_0169()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    CheckRegisterWord(RegisterType::PC, 0xFDB5);
-    CheckRegisterWord(RegisterType::SP, 0x883B);
+    WriteRegisterWord(RegisterType::PC, 0xFDB4);
+    WriteRegisterWord(RegisterType::SP, 0x883B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFDB4, 0x7F);
 }
@@ -18342,7 +18345,7 @@ void test_7F_016A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18355,8 +18358,8 @@ void test_7F_016A()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xE2);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    CheckRegisterWord(RegisterType::PC, 0x18FF);
-    CheckRegisterWord(RegisterType::SP, 0x9485);
+    WriteRegisterWord(RegisterType::PC, 0x18FE);
+    WriteRegisterWord(RegisterType::SP, 0x9485);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x18FE, 0x7F);
 }
@@ -18387,7 +18390,7 @@ void test_7F_016B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18400,8 +18403,8 @@ void test_7F_016B()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x4F);
     CheckRegisterByte(RegisterType::L, 0x34);
-    CheckRegisterWord(RegisterType::PC, 0xCB11);
-    CheckRegisterWord(RegisterType::SP, 0x6EA1);
+    WriteRegisterWord(RegisterType::PC, 0xCB10);
+    WriteRegisterWord(RegisterType::SP, 0x6EA1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCB10, 0x7F);
 }
@@ -18432,7 +18435,7 @@ void test_7F_016C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18445,8 +18448,8 @@ void test_7F_016C()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x90);
     CheckRegisterByte(RegisterType::L, 0x40);
-    CheckRegisterWord(RegisterType::PC, 0xE48A);
-    CheckRegisterWord(RegisterType::SP, 0x9394);
+    WriteRegisterWord(RegisterType::PC, 0xE489);
+    WriteRegisterWord(RegisterType::SP, 0x9394);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE489, 0x7F);
 }
@@ -18477,7 +18480,7 @@ void test_7F_016D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18490,8 +18493,8 @@ void test_7F_016D()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x24);
     CheckRegisterByte(RegisterType::L, 0x48);
-    CheckRegisterWord(RegisterType::PC, 0xABE8);
-    CheckRegisterWord(RegisterType::SP, 0x2FE6);
+    WriteRegisterWord(RegisterType::PC, 0xABE7);
+    WriteRegisterWord(RegisterType::SP, 0x2FE6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xABE7, 0x7F);
 }
@@ -18522,7 +18525,7 @@ void test_7F_016E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18535,8 +18538,8 @@ void test_7F_016E()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xF2);
     CheckRegisterByte(RegisterType::L, 0x1C);
-    CheckRegisterWord(RegisterType::PC, 0x9780);
-    CheckRegisterWord(RegisterType::SP, 0x620E);
+    WriteRegisterWord(RegisterType::PC, 0x977F);
+    WriteRegisterWord(RegisterType::SP, 0x620E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x977F, 0x7F);
 }
@@ -18567,7 +18570,7 @@ void test_7F_016F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18580,8 +18583,8 @@ void test_7F_016F()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xDB);
     CheckRegisterByte(RegisterType::L, 0x14);
-    CheckRegisterWord(RegisterType::PC, 0xB382);
-    CheckRegisterWord(RegisterType::SP, 0x48DD);
+    WriteRegisterWord(RegisterType::PC, 0xB381);
+    WriteRegisterWord(RegisterType::SP, 0x48DD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB381, 0x7F);
 }
@@ -18612,7 +18615,7 @@ void test_7F_0170()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18625,8 +18628,8 @@ void test_7F_0170()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xA4);
     CheckRegisterByte(RegisterType::L, 0x28);
-    CheckRegisterWord(RegisterType::PC, 0xEEC0);
-    CheckRegisterWord(RegisterType::SP, 0x087A);
+    WriteRegisterWord(RegisterType::PC, 0xEEBF);
+    WriteRegisterWord(RegisterType::SP, 0x087A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEEBF, 0x7F);
 }
@@ -18657,7 +18660,7 @@ void test_7F_0171()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18670,8 +18673,8 @@ void test_7F_0171()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x2C);
     CheckRegisterByte(RegisterType::L, 0x32);
-    CheckRegisterWord(RegisterType::PC, 0x93FE);
-    CheckRegisterWord(RegisterType::SP, 0xEF72);
+    WriteRegisterWord(RegisterType::PC, 0x93FD);
+    WriteRegisterWord(RegisterType::SP, 0xEF72);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x93FD, 0x7F);
 }
@@ -18702,7 +18705,7 @@ void test_7F_0172()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18715,8 +18718,8 @@ void test_7F_0172()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x26);
     CheckRegisterByte(RegisterType::L, 0xF5);
-    CheckRegisterWord(RegisterType::PC, 0xA7D1);
-    CheckRegisterWord(RegisterType::SP, 0x6AD7);
+    WriteRegisterWord(RegisterType::PC, 0xA7D0);
+    WriteRegisterWord(RegisterType::SP, 0x6AD7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA7D0, 0x7F);
 }
@@ -18747,7 +18750,7 @@ void test_7F_0173()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18760,8 +18763,8 @@ void test_7F_0173()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xD0);
     CheckRegisterByte(RegisterType::L, 0x96);
-    CheckRegisterWord(RegisterType::PC, 0x38F2);
-    CheckRegisterWord(RegisterType::SP, 0x312F);
+    WriteRegisterWord(RegisterType::PC, 0x38F1);
+    WriteRegisterWord(RegisterType::SP, 0x312F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x38F1, 0x7F);
 }
@@ -18792,7 +18795,7 @@ void test_7F_0174()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18805,8 +18808,8 @@ void test_7F_0174()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xD7);
     CheckRegisterByte(RegisterType::L, 0x01);
-    CheckRegisterWord(RegisterType::PC, 0x808C);
-    CheckRegisterWord(RegisterType::SP, 0x8F41);
+    WriteRegisterWord(RegisterType::PC, 0x808B);
+    WriteRegisterWord(RegisterType::SP, 0x8F41);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x808B, 0x7F);
 }
@@ -18837,7 +18840,7 @@ void test_7F_0175()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18850,8 +18853,8 @@ void test_7F_0175()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xAE);
     CheckRegisterByte(RegisterType::L, 0x71);
-    CheckRegisterWord(RegisterType::PC, 0xD88D);
-    CheckRegisterWord(RegisterType::SP, 0x0FBF);
+    WriteRegisterWord(RegisterType::PC, 0xD88C);
+    WriteRegisterWord(RegisterType::SP, 0x0FBF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD88C, 0x7F);
 }
@@ -18882,7 +18885,7 @@ void test_7F_0176()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18895,8 +18898,8 @@ void test_7F_0176()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xF2);
     CheckRegisterByte(RegisterType::L, 0x34);
-    CheckRegisterWord(RegisterType::PC, 0x6A4F);
-    CheckRegisterWord(RegisterType::SP, 0x9AEC);
+    WriteRegisterWord(RegisterType::PC, 0x6A4E);
+    WriteRegisterWord(RegisterType::SP, 0x9AEC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6A4E, 0x7F);
 }
@@ -18927,7 +18930,7 @@ void test_7F_0177()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18940,8 +18943,8 @@ void test_7F_0177()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xEC);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    CheckRegisterWord(RegisterType::PC, 0x576E);
-    CheckRegisterWord(RegisterType::SP, 0x8874);
+    WriteRegisterWord(RegisterType::PC, 0x576D);
+    WriteRegisterWord(RegisterType::SP, 0x8874);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x576D, 0x7F);
 }
@@ -18972,7 +18975,7 @@ void test_7F_0178()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -18985,8 +18988,8 @@ void test_7F_0178()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xA6);
     CheckRegisterByte(RegisterType::L, 0xEF);
-    CheckRegisterWord(RegisterType::PC, 0x7F9D);
-    CheckRegisterWord(RegisterType::SP, 0x3DCD);
+    WriteRegisterWord(RegisterType::PC, 0x7F9C);
+    WriteRegisterWord(RegisterType::SP, 0x3DCD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7F9C, 0x7F);
 }
@@ -19017,7 +19020,7 @@ void test_7F_0179()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19030,8 +19033,8 @@ void test_7F_0179()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xE6);
     CheckRegisterByte(RegisterType::L, 0xEB);
-    CheckRegisterWord(RegisterType::PC, 0x3421);
-    CheckRegisterWord(RegisterType::SP, 0x316A);
+    WriteRegisterWord(RegisterType::PC, 0x3420);
+    WriteRegisterWord(RegisterType::SP, 0x316A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3420, 0x7F);
 }
@@ -19062,7 +19065,7 @@ void test_7F_017A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19075,8 +19078,8 @@ void test_7F_017A()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0xF8);
-    CheckRegisterWord(RegisterType::PC, 0x1A0E);
-    CheckRegisterWord(RegisterType::SP, 0x1DB9);
+    WriteRegisterWord(RegisterType::PC, 0x1A0D);
+    WriteRegisterWord(RegisterType::SP, 0x1DB9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1A0D, 0x7F);
 }
@@ -19107,7 +19110,7 @@ void test_7F_017B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19120,8 +19123,8 @@ void test_7F_017B()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xBF);
     CheckRegisterByte(RegisterType::L, 0xC6);
-    CheckRegisterWord(RegisterType::PC, 0x1806);
-    CheckRegisterWord(RegisterType::SP, 0x1CFD);
+    WriteRegisterWord(RegisterType::PC, 0x1805);
+    WriteRegisterWord(RegisterType::SP, 0x1CFD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1805, 0x7F);
 }
@@ -19152,7 +19155,7 @@ void test_7F_017C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19165,8 +19168,8 @@ void test_7F_017C()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0x33);
-    CheckRegisterWord(RegisterType::PC, 0x8051);
-    CheckRegisterWord(RegisterType::SP, 0x55BF);
+    WriteRegisterWord(RegisterType::PC, 0x8050);
+    WriteRegisterWord(RegisterType::SP, 0x55BF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8050, 0x7F);
 }
@@ -19197,7 +19200,7 @@ void test_7F_017D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19210,8 +19213,8 @@ void test_7F_017D()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0xE2);
-    CheckRegisterWord(RegisterType::PC, 0x9974);
-    CheckRegisterWord(RegisterType::SP, 0x304B);
+    WriteRegisterWord(RegisterType::PC, 0x9973);
+    WriteRegisterWord(RegisterType::SP, 0x304B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9973, 0x7F);
 }
@@ -19242,7 +19245,7 @@ void test_7F_017E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19255,8 +19258,8 @@ void test_7F_017E()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x25);
     CheckRegisterByte(RegisterType::L, 0x06);
-    CheckRegisterWord(RegisterType::PC, 0xC689);
-    CheckRegisterWord(RegisterType::SP, 0x5E65);
+    WriteRegisterWord(RegisterType::PC, 0xC688);
+    WriteRegisterWord(RegisterType::SP, 0x5E65);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC688, 0x7F);
 }
@@ -19287,7 +19290,7 @@ void test_7F_017F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19300,8 +19303,8 @@ void test_7F_017F()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0xFD);
-    CheckRegisterWord(RegisterType::PC, 0x8782);
-    CheckRegisterWord(RegisterType::SP, 0x6A3F);
+    WriteRegisterWord(RegisterType::PC, 0x8781);
+    WriteRegisterWord(RegisterType::SP, 0x6A3F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8781, 0x7F);
 }
@@ -19332,7 +19335,7 @@ void test_7F_0180()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19345,8 +19348,8 @@ void test_7F_0180()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0x2D);
-    CheckRegisterWord(RegisterType::PC, 0xD53B);
-    CheckRegisterWord(RegisterType::SP, 0xDE54);
+    WriteRegisterWord(RegisterType::PC, 0xD53A);
+    WriteRegisterWord(RegisterType::SP, 0xDE54);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD53A, 0x7F);
 }
@@ -19377,7 +19380,7 @@ void test_7F_0181()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19390,8 +19393,8 @@ void test_7F_0181()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x62);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    CheckRegisterWord(RegisterType::PC, 0xB89E);
-    CheckRegisterWord(RegisterType::SP, 0xA871);
+    WriteRegisterWord(RegisterType::PC, 0xB89D);
+    WriteRegisterWord(RegisterType::SP, 0xA871);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB89D, 0x7F);
 }
@@ -19422,7 +19425,7 @@ void test_7F_0182()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19435,8 +19438,8 @@ void test_7F_0182()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x79);
     CheckRegisterByte(RegisterType::L, 0x5F);
-    CheckRegisterWord(RegisterType::PC, 0xABEE);
-    CheckRegisterWord(RegisterType::SP, 0x7338);
+    WriteRegisterWord(RegisterType::PC, 0xABED);
+    WriteRegisterWord(RegisterType::SP, 0x7338);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xABED, 0x7F);
 }
@@ -19467,7 +19470,7 @@ void test_7F_0183()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19480,8 +19483,8 @@ void test_7F_0183()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x98);
     CheckRegisterByte(RegisterType::L, 0x1B);
-    CheckRegisterWord(RegisterType::PC, 0x5324);
-    CheckRegisterWord(RegisterType::SP, 0x48D7);
+    WriteRegisterWord(RegisterType::PC, 0x5323);
+    WriteRegisterWord(RegisterType::SP, 0x48D7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5323, 0x7F);
 }
@@ -19512,7 +19515,7 @@ void test_7F_0184()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19525,8 +19528,8 @@ void test_7F_0184()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x59);
     CheckRegisterByte(RegisterType::L, 0x4A);
-    CheckRegisterWord(RegisterType::PC, 0x320E);
-    CheckRegisterWord(RegisterType::SP, 0xC9D6);
+    WriteRegisterWord(RegisterType::PC, 0x320D);
+    WriteRegisterWord(RegisterType::SP, 0xC9D6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x320D, 0x7F);
 }
@@ -19557,7 +19560,7 @@ void test_7F_0185()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19570,8 +19573,8 @@ void test_7F_0185()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x5A);
     CheckRegisterByte(RegisterType::L, 0x7A);
-    CheckRegisterWord(RegisterType::PC, 0x4B4E);
-    CheckRegisterWord(RegisterType::SP, 0x7EB0);
+    WriteRegisterWord(RegisterType::PC, 0x4B4D);
+    WriteRegisterWord(RegisterType::SP, 0x7EB0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4B4D, 0x7F);
 }
@@ -19602,7 +19605,7 @@ void test_7F_0186()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19615,8 +19618,8 @@ void test_7F_0186()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x8F);
     CheckRegisterByte(RegisterType::L, 0xB3);
-    CheckRegisterWord(RegisterType::PC, 0x1B9F);
-    CheckRegisterWord(RegisterType::SP, 0xE5C2);
+    WriteRegisterWord(RegisterType::PC, 0x1B9E);
+    WriteRegisterWord(RegisterType::SP, 0xE5C2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1B9E, 0x7F);
 }
@@ -19647,7 +19650,7 @@ void test_7F_0187()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19660,8 +19663,8 @@ void test_7F_0187()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xD5);
     CheckRegisterByte(RegisterType::L, 0x1B);
-    CheckRegisterWord(RegisterType::PC, 0xAD65);
-    CheckRegisterWord(RegisterType::SP, 0xB8BE);
+    WriteRegisterWord(RegisterType::PC, 0xAD64);
+    WriteRegisterWord(RegisterType::SP, 0xB8BE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAD64, 0x7F);
 }
@@ -19692,7 +19695,7 @@ void test_7F_0188()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19705,8 +19708,8 @@ void test_7F_0188()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xF6);
     CheckRegisterByte(RegisterType::L, 0x42);
-    CheckRegisterWord(RegisterType::PC, 0x6690);
-    CheckRegisterWord(RegisterType::SP, 0x92DA);
+    WriteRegisterWord(RegisterType::PC, 0x668F);
+    WriteRegisterWord(RegisterType::SP, 0x92DA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x668F, 0x7F);
 }
@@ -19737,7 +19740,7 @@ void test_7F_0189()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19750,8 +19753,8 @@ void test_7F_0189()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0xCC);
-    CheckRegisterWord(RegisterType::PC, 0x8762);
-    CheckRegisterWord(RegisterType::SP, 0x1F5F);
+    WriteRegisterWord(RegisterType::PC, 0x8761);
+    WriteRegisterWord(RegisterType::SP, 0x1F5F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8761, 0x7F);
 }
@@ -19782,7 +19785,7 @@ void test_7F_018A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19795,8 +19798,8 @@ void test_7F_018A()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x14);
     CheckRegisterByte(RegisterType::L, 0x9D);
-    CheckRegisterWord(RegisterType::PC, 0xD676);
-    CheckRegisterWord(RegisterType::SP, 0xB137);
+    WriteRegisterWord(RegisterType::PC, 0xD675);
+    WriteRegisterWord(RegisterType::SP, 0xB137);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD675, 0x7F);
 }
@@ -19827,7 +19830,7 @@ void test_7F_018B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19840,8 +19843,8 @@ void test_7F_018B()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x37);
     CheckRegisterByte(RegisterType::L, 0x52);
-    CheckRegisterWord(RegisterType::PC, 0x02B5);
-    CheckRegisterWord(RegisterType::SP, 0x8544);
+    WriteRegisterWord(RegisterType::PC, 0x02B4);
+    WriteRegisterWord(RegisterType::SP, 0x8544);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x02B4, 0x7F);
 }
@@ -19872,7 +19875,7 @@ void test_7F_018C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19885,8 +19888,8 @@ void test_7F_018C()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xFC);
     CheckRegisterByte(RegisterType::L, 0x7F);
-    CheckRegisterWord(RegisterType::PC, 0x0161);
-    CheckRegisterWord(RegisterType::SP, 0x3137);
+    WriteRegisterWord(RegisterType::PC, 0x0160);
+    WriteRegisterWord(RegisterType::SP, 0x3137);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0160, 0x7F);
 }
@@ -19917,7 +19920,7 @@ void test_7F_018D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19930,8 +19933,8 @@ void test_7F_018D()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x86);
     CheckRegisterByte(RegisterType::L, 0x59);
-    CheckRegisterWord(RegisterType::PC, 0x561C);
-    CheckRegisterWord(RegisterType::SP, 0x91B2);
+    WriteRegisterWord(RegisterType::PC, 0x561B);
+    WriteRegisterWord(RegisterType::SP, 0x91B2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x561B, 0x7F);
 }
@@ -19962,7 +19965,7 @@ void test_7F_018E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -19975,8 +19978,8 @@ void test_7F_018E()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x4D);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    CheckRegisterWord(RegisterType::PC, 0x6FAE);
-    CheckRegisterWord(RegisterType::SP, 0xAAB7);
+    WriteRegisterWord(RegisterType::PC, 0x6FAD);
+    WriteRegisterWord(RegisterType::SP, 0xAAB7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6FAD, 0x7F);
 }
@@ -20007,7 +20010,7 @@ void test_7F_018F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20020,8 +20023,8 @@ void test_7F_018F()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x9A);
     CheckRegisterByte(RegisterType::L, 0xE9);
-    CheckRegisterWord(RegisterType::PC, 0x20C9);
-    CheckRegisterWord(RegisterType::SP, 0x2E50);
+    WriteRegisterWord(RegisterType::PC, 0x20C8);
+    WriteRegisterWord(RegisterType::SP, 0x2E50);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x20C8, 0x7F);
 }
@@ -20052,7 +20055,7 @@ void test_7F_0190()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20065,8 +20068,8 @@ void test_7F_0190()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x81);
     CheckRegisterByte(RegisterType::L, 0xA4);
-    CheckRegisterWord(RegisterType::PC, 0xC05F);
-    CheckRegisterWord(RegisterType::SP, 0x8A69);
+    WriteRegisterWord(RegisterType::PC, 0xC05E);
+    WriteRegisterWord(RegisterType::SP, 0x8A69);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC05E, 0x7F);
 }
@@ -20097,7 +20100,7 @@ void test_7F_0191()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20110,8 +20113,8 @@ void test_7F_0191()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xC8);
     CheckRegisterByte(RegisterType::L, 0x14);
-    CheckRegisterWord(RegisterType::PC, 0xE388);
-    CheckRegisterWord(RegisterType::SP, 0xA024);
+    WriteRegisterWord(RegisterType::PC, 0xE387);
+    WriteRegisterWord(RegisterType::SP, 0xA024);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE387, 0x7F);
 }
@@ -20142,7 +20145,7 @@ void test_7F_0192()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20155,8 +20158,8 @@ void test_7F_0192()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x68);
     CheckRegisterByte(RegisterType::L, 0x85);
-    CheckRegisterWord(RegisterType::PC, 0xC76C);
-    CheckRegisterWord(RegisterType::SP, 0x9EBE);
+    WriteRegisterWord(RegisterType::PC, 0xC76B);
+    WriteRegisterWord(RegisterType::SP, 0x9EBE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC76B, 0x7F);
 }
@@ -20187,7 +20190,7 @@ void test_7F_0193()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20200,8 +20203,8 @@ void test_7F_0193()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0xB5);
-    CheckRegisterWord(RegisterType::PC, 0xAC60);
-    CheckRegisterWord(RegisterType::SP, 0xEE92);
+    WriteRegisterWord(RegisterType::PC, 0xAC5F);
+    WriteRegisterWord(RegisterType::SP, 0xEE92);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAC5F, 0x7F);
 }
@@ -20232,7 +20235,7 @@ void test_7F_0194()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20245,8 +20248,8 @@ void test_7F_0194()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x2A);
     CheckRegisterByte(RegisterType::L, 0xBB);
-    CheckRegisterWord(RegisterType::PC, 0x4FDF);
-    CheckRegisterWord(RegisterType::SP, 0x08D5);
+    WriteRegisterWord(RegisterType::PC, 0x4FDE);
+    WriteRegisterWord(RegisterType::SP, 0x08D5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4FDE, 0x7F);
 }
@@ -20277,7 +20280,7 @@ void test_7F_0195()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20290,8 +20293,8 @@ void test_7F_0195()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0xBB);
-    CheckRegisterWord(RegisterType::PC, 0x4C70);
-    CheckRegisterWord(RegisterType::SP, 0xCFFE);
+    WriteRegisterWord(RegisterType::PC, 0x4C6F);
+    WriteRegisterWord(RegisterType::SP, 0xCFFE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4C6F, 0x7F);
 }
@@ -20322,7 +20325,7 @@ void test_7F_0196()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20335,8 +20338,8 @@ void test_7F_0196()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xCC);
     CheckRegisterByte(RegisterType::L, 0xC3);
-    CheckRegisterWord(RegisterType::PC, 0x81BD);
-    CheckRegisterWord(RegisterType::SP, 0x7FDB);
+    WriteRegisterWord(RegisterType::PC, 0x81BC);
+    WriteRegisterWord(RegisterType::SP, 0x7FDB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x81BC, 0x7F);
 }
@@ -20367,7 +20370,7 @@ void test_7F_0197()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20380,8 +20383,8 @@ void test_7F_0197()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x57);
     CheckRegisterByte(RegisterType::L, 0xB9);
-    CheckRegisterWord(RegisterType::PC, 0x51A5);
-    CheckRegisterWord(RegisterType::SP, 0x1B86);
+    WriteRegisterWord(RegisterType::PC, 0x51A4);
+    WriteRegisterWord(RegisterType::SP, 0x1B86);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x51A4, 0x7F);
 }
@@ -20412,7 +20415,7 @@ void test_7F_0198()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20425,8 +20428,8 @@ void test_7F_0198()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0x61);
-    CheckRegisterWord(RegisterType::PC, 0xD306);
-    CheckRegisterWord(RegisterType::SP, 0x7C46);
+    WriteRegisterWord(RegisterType::PC, 0xD305);
+    WriteRegisterWord(RegisterType::SP, 0x7C46);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD305, 0x7F);
 }
@@ -20457,7 +20460,7 @@ void test_7F_0199()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20470,8 +20473,8 @@ void test_7F_0199()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x54);
     CheckRegisterByte(RegisterType::L, 0xE9);
-    CheckRegisterWord(RegisterType::PC, 0xCB28);
-    CheckRegisterWord(RegisterType::SP, 0x8C7F);
+    WriteRegisterWord(RegisterType::PC, 0xCB27);
+    WriteRegisterWord(RegisterType::SP, 0x8C7F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCB27, 0x7F);
 }
@@ -20502,7 +20505,7 @@ void test_7F_019A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20515,8 +20518,8 @@ void test_7F_019A()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0x85);
-    CheckRegisterWord(RegisterType::PC, 0xC559);
-    CheckRegisterWord(RegisterType::SP, 0x909C);
+    WriteRegisterWord(RegisterType::PC, 0xC558);
+    WriteRegisterWord(RegisterType::SP, 0x909C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC558, 0x7F);
 }
@@ -20547,7 +20550,7 @@ void test_7F_019B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20560,8 +20563,8 @@ void test_7F_019B()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x22);
     CheckRegisterByte(RegisterType::L, 0x3F);
-    CheckRegisterWord(RegisterType::PC, 0x3639);
-    CheckRegisterWord(RegisterType::SP, 0x98F6);
+    WriteRegisterWord(RegisterType::PC, 0x3638);
+    WriteRegisterWord(RegisterType::SP, 0x98F6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3638, 0x7F);
 }
@@ -20592,7 +20595,7 @@ void test_7F_019C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20605,8 +20608,8 @@ void test_7F_019C()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xAD);
     CheckRegisterByte(RegisterType::L, 0xB4);
-    CheckRegisterWord(RegisterType::PC, 0x0D9F);
-    CheckRegisterWord(RegisterType::SP, 0xDFBE);
+    WriteRegisterWord(RegisterType::PC, 0x0D9E);
+    WriteRegisterWord(RegisterType::SP, 0xDFBE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0D9E, 0x7F);
 }
@@ -20637,7 +20640,7 @@ void test_7F_019D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20650,8 +20653,8 @@ void test_7F_019D()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x24);
     CheckRegisterByte(RegisterType::L, 0x9F);
-    CheckRegisterWord(RegisterType::PC, 0xB328);
-    CheckRegisterWord(RegisterType::SP, 0x617E);
+    WriteRegisterWord(RegisterType::PC, 0xB327);
+    WriteRegisterWord(RegisterType::SP, 0x617E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB327, 0x7F);
 }
@@ -20682,7 +20685,7 @@ void test_7F_019E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20695,8 +20698,8 @@ void test_7F_019E()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xB1);
     CheckRegisterByte(RegisterType::L, 0x6D);
-    CheckRegisterWord(RegisterType::PC, 0x28A2);
-    CheckRegisterWord(RegisterType::SP, 0x3857);
+    WriteRegisterWord(RegisterType::PC, 0x28A1);
+    WriteRegisterWord(RegisterType::SP, 0x3857);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x28A1, 0x7F);
 }
@@ -20727,7 +20730,7 @@ void test_7F_019F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20740,8 +20743,8 @@ void test_7F_019F()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x18);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    CheckRegisterWord(RegisterType::PC, 0xA9FE);
-    CheckRegisterWord(RegisterType::SP, 0x500F);
+    WriteRegisterWord(RegisterType::PC, 0xA9FD);
+    WriteRegisterWord(RegisterType::SP, 0x500F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA9FD, 0x7F);
 }
@@ -20772,7 +20775,7 @@ void test_7F_01A0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20785,8 +20788,8 @@ void test_7F_01A0()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x66);
     CheckRegisterByte(RegisterType::L, 0x96);
-    CheckRegisterWord(RegisterType::PC, 0xBF02);
-    CheckRegisterWord(RegisterType::SP, 0xCB44);
+    WriteRegisterWord(RegisterType::PC, 0xBF01);
+    WriteRegisterWord(RegisterType::SP, 0xCB44);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBF01, 0x7F);
 }
@@ -20817,7 +20820,7 @@ void test_7F_01A1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20830,8 +20833,8 @@ void test_7F_01A1()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xC1);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    CheckRegisterWord(RegisterType::PC, 0xB350);
-    CheckRegisterWord(RegisterType::SP, 0xB5D8);
+    WriteRegisterWord(RegisterType::PC, 0xB34F);
+    WriteRegisterWord(RegisterType::SP, 0xB5D8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB34F, 0x7F);
 }
@@ -20862,7 +20865,7 @@ void test_7F_01A2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20875,8 +20878,8 @@ void test_7F_01A2()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x81);
     CheckRegisterByte(RegisterType::L, 0x4A);
-    CheckRegisterWord(RegisterType::PC, 0x0165);
-    CheckRegisterWord(RegisterType::SP, 0xCEA1);
+    WriteRegisterWord(RegisterType::PC, 0x0164);
+    WriteRegisterWord(RegisterType::SP, 0xCEA1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0164, 0x7F);
 }
@@ -20907,7 +20910,7 @@ void test_7F_01A3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20920,8 +20923,8 @@ void test_7F_01A3()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xDA);
     CheckRegisterByte(RegisterType::L, 0xF7);
-    CheckRegisterWord(RegisterType::PC, 0xA354);
-    CheckRegisterWord(RegisterType::SP, 0x3219);
+    WriteRegisterWord(RegisterType::PC, 0xA353);
+    WriteRegisterWord(RegisterType::SP, 0x3219);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA353, 0x7F);
 }
@@ -20952,7 +20955,7 @@ void test_7F_01A4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -20965,8 +20968,8 @@ void test_7F_01A4()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x27);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    CheckRegisterWord(RegisterType::PC, 0xC01B);
-    CheckRegisterWord(RegisterType::SP, 0xBF33);
+    WriteRegisterWord(RegisterType::PC, 0xC01A);
+    WriteRegisterWord(RegisterType::SP, 0xBF33);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC01A, 0x7F);
 }
@@ -20997,7 +21000,7 @@ void test_7F_01A5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21010,8 +21013,8 @@ void test_7F_01A5()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0x6A);
-    CheckRegisterWord(RegisterType::PC, 0xED4B);
-    CheckRegisterWord(RegisterType::SP, 0x1C0A);
+    WriteRegisterWord(RegisterType::PC, 0xED4A);
+    WriteRegisterWord(RegisterType::SP, 0x1C0A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xED4A, 0x7F);
 }
@@ -21042,7 +21045,7 @@ void test_7F_01A6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21055,8 +21058,8 @@ void test_7F_01A6()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x7C);
     CheckRegisterByte(RegisterType::L, 0xFB);
-    CheckRegisterWord(RegisterType::PC, 0x327E);
-    CheckRegisterWord(RegisterType::SP, 0xECA0);
+    WriteRegisterWord(RegisterType::PC, 0x327D);
+    WriteRegisterWord(RegisterType::SP, 0xECA0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x327D, 0x7F);
 }
@@ -21087,7 +21090,7 @@ void test_7F_01A7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21100,8 +21103,8 @@ void test_7F_01A7()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x33);
     CheckRegisterByte(RegisterType::L, 0x73);
-    CheckRegisterWord(RegisterType::PC, 0xCA9E);
-    CheckRegisterWord(RegisterType::SP, 0x27A0);
+    WriteRegisterWord(RegisterType::PC, 0xCA9D);
+    WriteRegisterWord(RegisterType::SP, 0x27A0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCA9D, 0x7F);
 }
@@ -21132,7 +21135,7 @@ void test_7F_01A8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21145,8 +21148,8 @@ void test_7F_01A8()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xB4);
     CheckRegisterByte(RegisterType::L, 0x80);
-    CheckRegisterWord(RegisterType::PC, 0x5C60);
-    CheckRegisterWord(RegisterType::SP, 0x861B);
+    WriteRegisterWord(RegisterType::PC, 0x5C5F);
+    WriteRegisterWord(RegisterType::SP, 0x861B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5C5F, 0x7F);
 }
@@ -21177,7 +21180,7 @@ void test_7F_01A9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21190,8 +21193,8 @@ void test_7F_01A9()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0x7F);
-    CheckRegisterWord(RegisterType::PC, 0xF4F3);
-    CheckRegisterWord(RegisterType::SP, 0x08A0);
+    WriteRegisterWord(RegisterType::PC, 0xF4F2);
+    WriteRegisterWord(RegisterType::SP, 0x08A0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF4F2, 0x7F);
 }
@@ -21222,7 +21225,7 @@ void test_7F_01AA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21235,8 +21238,8 @@ void test_7F_01AA()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0xE1);
-    CheckRegisterWord(RegisterType::PC, 0xB977);
-    CheckRegisterWord(RegisterType::SP, 0xDF6A);
+    WriteRegisterWord(RegisterType::PC, 0xB976);
+    WriteRegisterWord(RegisterType::SP, 0xDF6A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB976, 0x7F);
 }
@@ -21267,7 +21270,7 @@ void test_7F_01AB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21280,8 +21283,8 @@ void test_7F_01AB()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xA4);
     CheckRegisterByte(RegisterType::L, 0x95);
-    CheckRegisterWord(RegisterType::PC, 0xA25E);
-    CheckRegisterWord(RegisterType::SP, 0x8437);
+    WriteRegisterWord(RegisterType::PC, 0xA25D);
+    WriteRegisterWord(RegisterType::SP, 0x8437);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA25D, 0x7F);
 }
@@ -21312,7 +21315,7 @@ void test_7F_01AC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21325,8 +21328,8 @@ void test_7F_01AC()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xEE);
     CheckRegisterByte(RegisterType::L, 0xCF);
-    CheckRegisterWord(RegisterType::PC, 0xF403);
-    CheckRegisterWord(RegisterType::SP, 0x0957);
+    WriteRegisterWord(RegisterType::PC, 0xF402);
+    WriteRegisterWord(RegisterType::SP, 0x0957);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF402, 0x7F);
 }
@@ -21357,7 +21360,7 @@ void test_7F_01AD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21370,8 +21373,8 @@ void test_7F_01AD()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0x6D);
-    CheckRegisterWord(RegisterType::PC, 0x5C37);
-    CheckRegisterWord(RegisterType::SP, 0xBE83);
+    WriteRegisterWord(RegisterType::PC, 0x5C36);
+    WriteRegisterWord(RegisterType::SP, 0xBE83);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5C36, 0x7F);
 }
@@ -21402,7 +21405,7 @@ void test_7F_01AE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21415,8 +21418,8 @@ void test_7F_01AE()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xCC);
     CheckRegisterByte(RegisterType::L, 0x0A);
-    CheckRegisterWord(RegisterType::PC, 0xE42A);
-    CheckRegisterWord(RegisterType::SP, 0x1780);
+    WriteRegisterWord(RegisterType::PC, 0xE429);
+    WriteRegisterWord(RegisterType::SP, 0x1780);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE429, 0x7F);
 }
@@ -21447,7 +21450,7 @@ void test_7F_01AF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21460,8 +21463,8 @@ void test_7F_01AF()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x88);
     CheckRegisterByte(RegisterType::L, 0x73);
-    CheckRegisterWord(RegisterType::PC, 0xEF71);
-    CheckRegisterWord(RegisterType::SP, 0xAEFB);
+    WriteRegisterWord(RegisterType::PC, 0xEF70);
+    WriteRegisterWord(RegisterType::SP, 0xAEFB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEF70, 0x7F);
 }
@@ -21492,7 +21495,7 @@ void test_7F_01B0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21505,8 +21508,8 @@ void test_7F_01B0()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x85);
     CheckRegisterByte(RegisterType::L, 0xBD);
-    CheckRegisterWord(RegisterType::PC, 0x0DC3);
-    CheckRegisterWord(RegisterType::SP, 0xDE69);
+    WriteRegisterWord(RegisterType::PC, 0x0DC2);
+    WriteRegisterWord(RegisterType::SP, 0xDE69);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0DC2, 0x7F);
 }
@@ -21537,7 +21540,7 @@ void test_7F_01B1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21550,8 +21553,8 @@ void test_7F_01B1()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x02);
     CheckRegisterByte(RegisterType::L, 0x90);
-    CheckRegisterWord(RegisterType::PC, 0x212B);
-    CheckRegisterWord(RegisterType::SP, 0x8D50);
+    WriteRegisterWord(RegisterType::PC, 0x212A);
+    WriteRegisterWord(RegisterType::SP, 0x8D50);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x212A, 0x7F);
 }
@@ -21582,7 +21585,7 @@ void test_7F_01B2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21595,8 +21598,8 @@ void test_7F_01B2()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x75);
     CheckRegisterByte(RegisterType::L, 0xC0);
-    CheckRegisterWord(RegisterType::PC, 0xA68C);
-    CheckRegisterWord(RegisterType::SP, 0x2F7C);
+    WriteRegisterWord(RegisterType::PC, 0xA68B);
+    WriteRegisterWord(RegisterType::SP, 0x2F7C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA68B, 0x7F);
 }
@@ -21627,7 +21630,7 @@ void test_7F_01B3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21640,8 +21643,8 @@ void test_7F_01B3()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xA5);
     CheckRegisterByte(RegisterType::L, 0x60);
-    CheckRegisterWord(RegisterType::PC, 0x07DF);
-    CheckRegisterWord(RegisterType::SP, 0x5656);
+    WriteRegisterWord(RegisterType::PC, 0x07DE);
+    WriteRegisterWord(RegisterType::SP, 0x5656);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x07DE, 0x7F);
 }
@@ -21672,7 +21675,7 @@ void test_7F_01B4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21685,8 +21688,8 @@ void test_7F_01B4()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xC8);
     CheckRegisterByte(RegisterType::L, 0x76);
-    CheckRegisterWord(RegisterType::PC, 0x61EE);
-    CheckRegisterWord(RegisterType::SP, 0xC73A);
+    WriteRegisterWord(RegisterType::PC, 0x61ED);
+    WriteRegisterWord(RegisterType::SP, 0xC73A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x61ED, 0x7F);
 }
@@ -21717,7 +21720,7 @@ void test_7F_01B5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21730,8 +21733,8 @@ void test_7F_01B5()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x0A);
     CheckRegisterByte(RegisterType::L, 0x96);
-    CheckRegisterWord(RegisterType::PC, 0x2D56);
-    CheckRegisterWord(RegisterType::SP, 0x2315);
+    WriteRegisterWord(RegisterType::PC, 0x2D55);
+    WriteRegisterWord(RegisterType::SP, 0x2315);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2D55, 0x7F);
 }
@@ -21762,7 +21765,7 @@ void test_7F_01B6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21775,8 +21778,8 @@ void test_7F_01B6()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xA4);
     CheckRegisterByte(RegisterType::L, 0xAF);
-    CheckRegisterWord(RegisterType::PC, 0x0DAB);
-    CheckRegisterWord(RegisterType::SP, 0x9C82);
+    WriteRegisterWord(RegisterType::PC, 0x0DAA);
+    WriteRegisterWord(RegisterType::SP, 0x9C82);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0DAA, 0x7F);
 }
@@ -21807,7 +21810,7 @@ void test_7F_01B7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21820,8 +21823,8 @@ void test_7F_01B7()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x2A);
     CheckRegisterByte(RegisterType::L, 0xAD);
-    CheckRegisterWord(RegisterType::PC, 0x387E);
-    CheckRegisterWord(RegisterType::SP, 0x5993);
+    WriteRegisterWord(RegisterType::PC, 0x387D);
+    WriteRegisterWord(RegisterType::SP, 0x5993);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x387D, 0x7F);
 }
@@ -21852,7 +21855,7 @@ void test_7F_01B8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21865,8 +21868,8 @@ void test_7F_01B8()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x16);
     CheckRegisterByte(RegisterType::L, 0x31);
-    CheckRegisterWord(RegisterType::PC, 0x4A6D);
-    CheckRegisterWord(RegisterType::SP, 0x10C0);
+    WriteRegisterWord(RegisterType::PC, 0x4A6C);
+    WriteRegisterWord(RegisterType::SP, 0x10C0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4A6C, 0x7F);
 }
@@ -21897,7 +21900,7 @@ void test_7F_01B9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21910,8 +21913,8 @@ void test_7F_01B9()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xA3);
     CheckRegisterByte(RegisterType::L, 0xFB);
-    CheckRegisterWord(RegisterType::PC, 0xBD05);
-    CheckRegisterWord(RegisterType::SP, 0x057F);
+    WriteRegisterWord(RegisterType::PC, 0xBD04);
+    WriteRegisterWord(RegisterType::SP, 0x057F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBD04, 0x7F);
 }
@@ -21942,7 +21945,7 @@ void test_7F_01BA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -21955,8 +21958,8 @@ void test_7F_01BA()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0x47);
-    CheckRegisterWord(RegisterType::PC, 0x812A);
-    CheckRegisterWord(RegisterType::SP, 0xE63A);
+    WriteRegisterWord(RegisterType::PC, 0x8129);
+    WriteRegisterWord(RegisterType::SP, 0xE63A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8129, 0x7F);
 }
@@ -21987,7 +21990,7 @@ void test_7F_01BB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22000,8 +22003,8 @@ void test_7F_01BB()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x8E);
     CheckRegisterByte(RegisterType::L, 0xAA);
-    CheckRegisterWord(RegisterType::PC, 0xD6E8);
-    CheckRegisterWord(RegisterType::SP, 0x463E);
+    WriteRegisterWord(RegisterType::PC, 0xD6E7);
+    WriteRegisterWord(RegisterType::SP, 0x463E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD6E7, 0x7F);
 }
@@ -22032,7 +22035,7 @@ void test_7F_01BC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22045,8 +22048,8 @@ void test_7F_01BC()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x20);
     CheckRegisterByte(RegisterType::L, 0xAF);
-    CheckRegisterWord(RegisterType::PC, 0x9B94);
-    CheckRegisterWord(RegisterType::SP, 0x7E9C);
+    WriteRegisterWord(RegisterType::PC, 0x9B93);
+    WriteRegisterWord(RegisterType::SP, 0x7E9C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9B93, 0x7F);
 }
@@ -22077,7 +22080,7 @@ void test_7F_01BD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22090,8 +22093,8 @@ void test_7F_01BD()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0x41);
-    CheckRegisterWord(RegisterType::PC, 0x73E3);
-    CheckRegisterWord(RegisterType::SP, 0x96AF);
+    WriteRegisterWord(RegisterType::PC, 0x73E2);
+    WriteRegisterWord(RegisterType::SP, 0x96AF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x73E2, 0x7F);
 }
@@ -22122,7 +22125,7 @@ void test_7F_01BE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22135,8 +22138,8 @@ void test_7F_01BE()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x97);
     CheckRegisterByte(RegisterType::L, 0x1E);
-    CheckRegisterWord(RegisterType::PC, 0x49FE);
-    CheckRegisterWord(RegisterType::SP, 0x78C5);
+    WriteRegisterWord(RegisterType::PC, 0x49FD);
+    WriteRegisterWord(RegisterType::SP, 0x78C5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x49FD, 0x7F);
 }
@@ -22167,7 +22170,7 @@ void test_7F_01BF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22180,8 +22183,8 @@ void test_7F_01BF()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x04);
     CheckRegisterByte(RegisterType::L, 0x72);
-    CheckRegisterWord(RegisterType::PC, 0x94BA);
-    CheckRegisterWord(RegisterType::SP, 0x6BC7);
+    WriteRegisterWord(RegisterType::PC, 0x94B9);
+    WriteRegisterWord(RegisterType::SP, 0x6BC7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x94B9, 0x7F);
 }
@@ -22212,7 +22215,7 @@ void test_7F_01C0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22225,8 +22228,8 @@ void test_7F_01C0()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0x5B);
-    CheckRegisterWord(RegisterType::PC, 0xAD05);
-    CheckRegisterWord(RegisterType::SP, 0x4645);
+    WriteRegisterWord(RegisterType::PC, 0xAD04);
+    WriteRegisterWord(RegisterType::SP, 0x4645);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAD04, 0x7F);
 }
@@ -22257,7 +22260,7 @@ void test_7F_01C1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22270,8 +22273,8 @@ void test_7F_01C1()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xD6);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    CheckRegisterWord(RegisterType::PC, 0x899E);
-    CheckRegisterWord(RegisterType::SP, 0x9EE0);
+    WriteRegisterWord(RegisterType::PC, 0x899D);
+    WriteRegisterWord(RegisterType::SP, 0x9EE0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x899D, 0x7F);
 }
@@ -22302,7 +22305,7 @@ void test_7F_01C2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22315,8 +22318,8 @@ void test_7F_01C2()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x2E);
     CheckRegisterByte(RegisterType::L, 0xEA);
-    CheckRegisterWord(RegisterType::PC, 0x4691);
-    CheckRegisterWord(RegisterType::SP, 0xF71E);
+    WriteRegisterWord(RegisterType::PC, 0x4690);
+    WriteRegisterWord(RegisterType::SP, 0xF71E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4690, 0x7F);
 }
@@ -22347,7 +22350,7 @@ void test_7F_01C3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22360,8 +22363,8 @@ void test_7F_01C3()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x0E);
     CheckRegisterByte(RegisterType::L, 0xAE);
-    CheckRegisterWord(RegisterType::PC, 0x0137);
-    CheckRegisterWord(RegisterType::SP, 0xE97E);
+    WriteRegisterWord(RegisterType::PC, 0x0136);
+    WriteRegisterWord(RegisterType::SP, 0xE97E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0136, 0x7F);
 }
@@ -22392,7 +22395,7 @@ void test_7F_01C4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22405,8 +22408,8 @@ void test_7F_01C4()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x94);
     CheckRegisterByte(RegisterType::L, 0x0A);
-    CheckRegisterWord(RegisterType::PC, 0xE0DC);
-    CheckRegisterWord(RegisterType::SP, 0x8C8B);
+    WriteRegisterWord(RegisterType::PC, 0xE0DB);
+    WriteRegisterWord(RegisterType::SP, 0x8C8B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE0DB, 0x7F);
 }
@@ -22437,7 +22440,7 @@ void test_7F_01C5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22450,8 +22453,8 @@ void test_7F_01C5()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xAB);
     CheckRegisterByte(RegisterType::L, 0x0E);
-    CheckRegisterWord(RegisterType::PC, 0x9732);
-    CheckRegisterWord(RegisterType::SP, 0x57DC);
+    WriteRegisterWord(RegisterType::PC, 0x9731);
+    WriteRegisterWord(RegisterType::SP, 0x57DC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9731, 0x7F);
 }
@@ -22482,7 +22485,7 @@ void test_7F_01C6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22495,8 +22498,8 @@ void test_7F_01C6()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x4D);
     CheckRegisterByte(RegisterType::L, 0x8A);
-    CheckRegisterWord(RegisterType::PC, 0x8213);
-    CheckRegisterWord(RegisterType::SP, 0xB6DD);
+    WriteRegisterWord(RegisterType::PC, 0x8212);
+    WriteRegisterWord(RegisterType::SP, 0xB6DD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8212, 0x7F);
 }
@@ -22527,7 +22530,7 @@ void test_7F_01C7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22540,8 +22543,8 @@ void test_7F_01C7()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0xB5);
-    CheckRegisterWord(RegisterType::PC, 0x81CA);
-    CheckRegisterWord(RegisterType::SP, 0xD45F);
+    WriteRegisterWord(RegisterType::PC, 0x81C9);
+    WriteRegisterWord(RegisterType::SP, 0xD45F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x81C9, 0x7F);
 }
@@ -22572,7 +22575,7 @@ void test_7F_01C8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22585,8 +22588,8 @@ void test_7F_01C8()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xF5);
     CheckRegisterByte(RegisterType::L, 0x74);
-    CheckRegisterWord(RegisterType::PC, 0xE38B);
-    CheckRegisterWord(RegisterType::SP, 0x2D73);
+    WriteRegisterWord(RegisterType::PC, 0xE38A);
+    WriteRegisterWord(RegisterType::SP, 0x2D73);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE38A, 0x7F);
 }
@@ -22617,7 +22620,7 @@ void test_7F_01C9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22630,8 +22633,8 @@ void test_7F_01C9()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x8A);
     CheckRegisterByte(RegisterType::L, 0x47);
-    CheckRegisterWord(RegisterType::PC, 0x23C8);
-    CheckRegisterWord(RegisterType::SP, 0x3F08);
+    WriteRegisterWord(RegisterType::PC, 0x23C7);
+    WriteRegisterWord(RegisterType::SP, 0x3F08);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x23C7, 0x7F);
 }
@@ -22662,7 +22665,7 @@ void test_7F_01CA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22675,8 +22678,8 @@ void test_7F_01CA()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xF5);
     CheckRegisterByte(RegisterType::L, 0x82);
-    CheckRegisterWord(RegisterType::PC, 0x307E);
-    CheckRegisterWord(RegisterType::SP, 0xA91E);
+    WriteRegisterWord(RegisterType::PC, 0x307D);
+    WriteRegisterWord(RegisterType::SP, 0xA91E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x307D, 0x7F);
 }
@@ -22707,7 +22710,7 @@ void test_7F_01CB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22720,8 +22723,8 @@ void test_7F_01CB()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x7E);
     CheckRegisterByte(RegisterType::L, 0x17);
-    CheckRegisterWord(RegisterType::PC, 0x84BC);
-    CheckRegisterWord(RegisterType::SP, 0x8A5B);
+    WriteRegisterWord(RegisterType::PC, 0x84BB);
+    WriteRegisterWord(RegisterType::SP, 0x8A5B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x84BB, 0x7F);
 }
@@ -22752,7 +22755,7 @@ void test_7F_01CC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22765,8 +22768,8 @@ void test_7F_01CC()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x2B);
     CheckRegisterByte(RegisterType::L, 0x20);
-    CheckRegisterWord(RegisterType::PC, 0x6D28);
-    CheckRegisterWord(RegisterType::SP, 0x4D60);
+    WriteRegisterWord(RegisterType::PC, 0x6D27);
+    WriteRegisterWord(RegisterType::SP, 0x4D60);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6D27, 0x7F);
 }
@@ -22797,7 +22800,7 @@ void test_7F_01CD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22810,8 +22813,8 @@ void test_7F_01CD()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0x08);
-    CheckRegisterWord(RegisterType::PC, 0x6854);
-    CheckRegisterWord(RegisterType::SP, 0xA495);
+    WriteRegisterWord(RegisterType::PC, 0x6853);
+    WriteRegisterWord(RegisterType::SP, 0xA495);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6853, 0x7F);
 }
@@ -22842,7 +22845,7 @@ void test_7F_01CE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22855,8 +22858,8 @@ void test_7F_01CE()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x63);
     CheckRegisterByte(RegisterType::L, 0x85);
-    CheckRegisterWord(RegisterType::PC, 0xB883);
-    CheckRegisterWord(RegisterType::SP, 0x7FC0);
+    WriteRegisterWord(RegisterType::PC, 0xB882);
+    WriteRegisterWord(RegisterType::SP, 0x7FC0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB882, 0x7F);
 }
@@ -22887,7 +22890,7 @@ void test_7F_01CF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22900,8 +22903,8 @@ void test_7F_01CF()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x25);
     CheckRegisterByte(RegisterType::L, 0x47);
-    CheckRegisterWord(RegisterType::PC, 0x723B);
-    CheckRegisterWord(RegisterType::SP, 0x1BEB);
+    WriteRegisterWord(RegisterType::PC, 0x723A);
+    WriteRegisterWord(RegisterType::SP, 0x1BEB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x723A, 0x7F);
 }
@@ -22932,7 +22935,7 @@ void test_7F_01D0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22945,8 +22948,8 @@ void test_7F_01D0()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x5E);
     CheckRegisterByte(RegisterType::L, 0x8D);
-    CheckRegisterWord(RegisterType::PC, 0x4891);
-    CheckRegisterWord(RegisterType::SP, 0xBCA1);
+    WriteRegisterWord(RegisterType::PC, 0x4890);
+    WriteRegisterWord(RegisterType::SP, 0xBCA1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4890, 0x7F);
 }
@@ -22977,7 +22980,7 @@ void test_7F_01D1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -22990,8 +22993,8 @@ void test_7F_01D1()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xD4);
     CheckRegisterByte(RegisterType::L, 0xED);
-    CheckRegisterWord(RegisterType::PC, 0xBF19);
-    CheckRegisterWord(RegisterType::SP, 0x76FD);
+    WriteRegisterWord(RegisterType::PC, 0xBF18);
+    WriteRegisterWord(RegisterType::SP, 0x76FD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBF18, 0x7F);
 }
@@ -23022,7 +23025,7 @@ void test_7F_01D2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23035,8 +23038,8 @@ void test_7F_01D2()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0xB9);
-    CheckRegisterWord(RegisterType::PC, 0x9673);
-    CheckRegisterWord(RegisterType::SP, 0x2569);
+    WriteRegisterWord(RegisterType::PC, 0x9672);
+    WriteRegisterWord(RegisterType::SP, 0x2569);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9672, 0x7F);
 }
@@ -23067,7 +23070,7 @@ void test_7F_01D3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23080,8 +23083,8 @@ void test_7F_01D3()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xEB);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    CheckRegisterWord(RegisterType::PC, 0x7693);
-    CheckRegisterWord(RegisterType::SP, 0x638F);
+    WriteRegisterWord(RegisterType::PC, 0x7692);
+    WriteRegisterWord(RegisterType::SP, 0x638F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7692, 0x7F);
 }
@@ -23112,7 +23115,7 @@ void test_7F_01D4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23125,8 +23128,8 @@ void test_7F_01D4()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xD2);
     CheckRegisterByte(RegisterType::L, 0x81);
-    CheckRegisterWord(RegisterType::PC, 0xCF81);
-    CheckRegisterWord(RegisterType::SP, 0x0F01);
+    WriteRegisterWord(RegisterType::PC, 0xCF80);
+    WriteRegisterWord(RegisterType::SP, 0x0F01);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCF80, 0x7F);
 }
@@ -23157,7 +23160,7 @@ void test_7F_01D5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23170,8 +23173,8 @@ void test_7F_01D5()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0xF8);
-    CheckRegisterWord(RegisterType::PC, 0x4975);
-    CheckRegisterWord(RegisterType::SP, 0x9AF1);
+    WriteRegisterWord(RegisterType::PC, 0x4974);
+    WriteRegisterWord(RegisterType::SP, 0x9AF1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4974, 0x7F);
 }
@@ -23202,7 +23205,7 @@ void test_7F_01D6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23215,8 +23218,8 @@ void test_7F_01D6()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x48);
     CheckRegisterByte(RegisterType::L, 0xF0);
-    CheckRegisterWord(RegisterType::PC, 0x82B0);
-    CheckRegisterWord(RegisterType::SP, 0x4005);
+    WriteRegisterWord(RegisterType::PC, 0x82AF);
+    WriteRegisterWord(RegisterType::SP, 0x4005);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x82AF, 0x7F);
 }
@@ -23247,7 +23250,7 @@ void test_7F_01D7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23260,8 +23263,8 @@ void test_7F_01D7()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xCA);
     CheckRegisterByte(RegisterType::L, 0x55);
-    CheckRegisterWord(RegisterType::PC, 0x454D);
-    CheckRegisterWord(RegisterType::SP, 0x210E);
+    WriteRegisterWord(RegisterType::PC, 0x454C);
+    WriteRegisterWord(RegisterType::SP, 0x210E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x454C, 0x7F);
 }
@@ -23292,7 +23295,7 @@ void test_7F_01D8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23305,8 +23308,8 @@ void test_7F_01D8()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xCB);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    CheckRegisterWord(RegisterType::PC, 0x85F5);
-    CheckRegisterWord(RegisterType::SP, 0x7FF7);
+    WriteRegisterWord(RegisterType::PC, 0x85F4);
+    WriteRegisterWord(RegisterType::SP, 0x7FF7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x85F4, 0x7F);
 }
@@ -23337,7 +23340,7 @@ void test_7F_01D9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23350,8 +23353,8 @@ void test_7F_01D9()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x26);
     CheckRegisterByte(RegisterType::L, 0xB7);
-    CheckRegisterWord(RegisterType::PC, 0x4F37);
-    CheckRegisterWord(RegisterType::SP, 0xE996);
+    WriteRegisterWord(RegisterType::PC, 0x4F36);
+    WriteRegisterWord(RegisterType::SP, 0xE996);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4F36, 0x7F);
 }
@@ -23382,7 +23385,7 @@ void test_7F_01DA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23395,8 +23398,8 @@ void test_7F_01DA()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xE8);
     CheckRegisterByte(RegisterType::L, 0x0F);
-    CheckRegisterWord(RegisterType::PC, 0x4566);
-    CheckRegisterWord(RegisterType::SP, 0x762D);
+    WriteRegisterWord(RegisterType::PC, 0x4565);
+    WriteRegisterWord(RegisterType::SP, 0x762D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4565, 0x7F);
 }
@@ -23427,7 +23430,7 @@ void test_7F_01DB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23440,8 +23443,8 @@ void test_7F_01DB()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x43);
     CheckRegisterByte(RegisterType::L, 0xCD);
-    CheckRegisterWord(RegisterType::PC, 0x0CFC);
-    CheckRegisterWord(RegisterType::SP, 0x2C66);
+    WriteRegisterWord(RegisterType::PC, 0x0CFB);
+    WriteRegisterWord(RegisterType::SP, 0x2C66);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0CFB, 0x7F);
 }
@@ -23472,7 +23475,7 @@ void test_7F_01DC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23485,8 +23488,8 @@ void test_7F_01DC()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x4D);
     CheckRegisterByte(RegisterType::L, 0xA4);
-    CheckRegisterWord(RegisterType::PC, 0x1C87);
-    CheckRegisterWord(RegisterType::SP, 0x11C6);
+    WriteRegisterWord(RegisterType::PC, 0x1C86);
+    WriteRegisterWord(RegisterType::SP, 0x11C6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1C86, 0x7F);
 }
@@ -23517,7 +23520,7 @@ void test_7F_01DD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23530,8 +23533,8 @@ void test_7F_01DD()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0x18);
-    CheckRegisterWord(RegisterType::PC, 0xB056);
-    CheckRegisterWord(RegisterType::SP, 0xD8A4);
+    WriteRegisterWord(RegisterType::PC, 0xB055);
+    WriteRegisterWord(RegisterType::SP, 0xD8A4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB055, 0x7F);
 }
@@ -23562,7 +23565,7 @@ void test_7F_01DE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23575,8 +23578,8 @@ void test_7F_01DE()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xC2);
     CheckRegisterByte(RegisterType::L, 0x45);
-    CheckRegisterWord(RegisterType::PC, 0x387E);
-    CheckRegisterWord(RegisterType::SP, 0xE237);
+    WriteRegisterWord(RegisterType::PC, 0x387D);
+    WriteRegisterWord(RegisterType::SP, 0xE237);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x387D, 0x7F);
 }
@@ -23607,7 +23610,7 @@ void test_7F_01DF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23620,8 +23623,8 @@ void test_7F_01DF()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0x76);
-    CheckRegisterWord(RegisterType::PC, 0xF171);
-    CheckRegisterWord(RegisterType::SP, 0x7BCF);
+    WriteRegisterWord(RegisterType::PC, 0xF170);
+    WriteRegisterWord(RegisterType::SP, 0x7BCF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF170, 0x7F);
 }
@@ -23652,7 +23655,7 @@ void test_7F_01E0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23665,8 +23668,8 @@ void test_7F_01E0()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xC8);
     CheckRegisterByte(RegisterType::L, 0x7D);
-    CheckRegisterWord(RegisterType::PC, 0x514E);
-    CheckRegisterWord(RegisterType::SP, 0x10A8);
+    WriteRegisterWord(RegisterType::PC, 0x514D);
+    WriteRegisterWord(RegisterType::SP, 0x10A8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x514D, 0x7F);
 }
@@ -23697,7 +23700,7 @@ void test_7F_01E1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23710,8 +23713,8 @@ void test_7F_01E1()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x45);
     CheckRegisterByte(RegisterType::L, 0xB3);
-    CheckRegisterWord(RegisterType::PC, 0x7650);
-    CheckRegisterWord(RegisterType::SP, 0xC185);
+    WriteRegisterWord(RegisterType::PC, 0x764F);
+    WriteRegisterWord(RegisterType::SP, 0xC185);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x764F, 0x7F);
 }
@@ -23742,7 +23745,7 @@ void test_7F_01E2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23755,8 +23758,8 @@ void test_7F_01E2()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x6E);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    CheckRegisterWord(RegisterType::PC, 0xE385);
-    CheckRegisterWord(RegisterType::SP, 0x5FE1);
+    WriteRegisterWord(RegisterType::PC, 0xE384);
+    WriteRegisterWord(RegisterType::SP, 0x5FE1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE384, 0x7F);
 }
@@ -23787,7 +23790,7 @@ void test_7F_01E3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23800,8 +23803,8 @@ void test_7F_01E3()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x48);
     CheckRegisterByte(RegisterType::L, 0xF0);
-    CheckRegisterWord(RegisterType::PC, 0x0CBC);
-    CheckRegisterWord(RegisterType::SP, 0xBC02);
+    WriteRegisterWord(RegisterType::PC, 0x0CBB);
+    WriteRegisterWord(RegisterType::SP, 0xBC02);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0CBB, 0x7F);
 }
@@ -23832,7 +23835,7 @@ void test_7F_01E4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23845,8 +23848,8 @@ void test_7F_01E4()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xE9);
     CheckRegisterByte(RegisterType::L, 0xE4);
-    CheckRegisterWord(RegisterType::PC, 0x4725);
-    CheckRegisterWord(RegisterType::SP, 0x19AA);
+    WriteRegisterWord(RegisterType::PC, 0x4724);
+    WriteRegisterWord(RegisterType::SP, 0x19AA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4724, 0x7F);
 }
@@ -23877,7 +23880,7 @@ void test_7F_01E5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23890,8 +23893,8 @@ void test_7F_01E5()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xC9);
     CheckRegisterByte(RegisterType::L, 0x12);
-    CheckRegisterWord(RegisterType::PC, 0x5F6A);
-    CheckRegisterWord(RegisterType::SP, 0xB375);
+    WriteRegisterWord(RegisterType::PC, 0x5F69);
+    WriteRegisterWord(RegisterType::SP, 0xB375);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5F69, 0x7F);
 }
@@ -23922,7 +23925,7 @@ void test_7F_01E6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23935,8 +23938,8 @@ void test_7F_01E6()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xEA);
     CheckRegisterByte(RegisterType::L, 0x06);
-    CheckRegisterWord(RegisterType::PC, 0xBB7A);
-    CheckRegisterWord(RegisterType::SP, 0x66F5);
+    WriteRegisterWord(RegisterType::PC, 0xBB79);
+    WriteRegisterWord(RegisterType::SP, 0x66F5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBB79, 0x7F);
 }
@@ -23967,7 +23970,7 @@ void test_7F_01E7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -23980,8 +23983,8 @@ void test_7F_01E7()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xDB);
     CheckRegisterByte(RegisterType::L, 0xE6);
-    CheckRegisterWord(RegisterType::PC, 0xBD80);
-    CheckRegisterWord(RegisterType::SP, 0x0326);
+    WriteRegisterWord(RegisterType::PC, 0xBD7F);
+    WriteRegisterWord(RegisterType::SP, 0x0326);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBD7F, 0x7F);
 }
@@ -24012,7 +24015,7 @@ void test_7F_01E8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24025,8 +24028,8 @@ void test_7F_01E8()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0x3A);
-    CheckRegisterWord(RegisterType::PC, 0xC76F);
-    CheckRegisterWord(RegisterType::SP, 0xB2AD);
+    WriteRegisterWord(RegisterType::PC, 0xC76E);
+    WriteRegisterWord(RegisterType::SP, 0xB2AD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC76E, 0x7F);
 }
@@ -24057,7 +24060,7 @@ void test_7F_01E9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24070,8 +24073,8 @@ void test_7F_01E9()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x3C);
     CheckRegisterByte(RegisterType::L, 0x2D);
-    CheckRegisterWord(RegisterType::PC, 0xAF89);
-    CheckRegisterWord(RegisterType::SP, 0x82D0);
+    WriteRegisterWord(RegisterType::PC, 0xAF88);
+    WriteRegisterWord(RegisterType::SP, 0x82D0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAF88, 0x7F);
 }
@@ -24102,7 +24105,7 @@ void test_7F_01EA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24115,8 +24118,8 @@ void test_7F_01EA()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0xCB);
-    CheckRegisterWord(RegisterType::PC, 0x95B3);
-    CheckRegisterWord(RegisterType::SP, 0x48D1);
+    WriteRegisterWord(RegisterType::PC, 0x95B2);
+    WriteRegisterWord(RegisterType::SP, 0x48D1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x95B2, 0x7F);
 }
@@ -24147,7 +24150,7 @@ void test_7F_01EB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24160,8 +24163,8 @@ void test_7F_01EB()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x71);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    CheckRegisterWord(RegisterType::PC, 0x9CC5);
-    CheckRegisterWord(RegisterType::SP, 0x0439);
+    WriteRegisterWord(RegisterType::PC, 0x9CC4);
+    WriteRegisterWord(RegisterType::SP, 0x0439);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9CC4, 0x7F);
 }
@@ -24192,7 +24195,7 @@ void test_7F_01EC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24205,8 +24208,8 @@ void test_7F_01EC()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x33);
     CheckRegisterByte(RegisterType::L, 0x68);
-    CheckRegisterWord(RegisterType::PC, 0x2689);
-    CheckRegisterWord(RegisterType::SP, 0xD094);
+    WriteRegisterWord(RegisterType::PC, 0x2688);
+    WriteRegisterWord(RegisterType::SP, 0xD094);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2688, 0x7F);
 }
@@ -24237,7 +24240,7 @@ void test_7F_01ED()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24250,8 +24253,8 @@ void test_7F_01ED()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x8A);
     CheckRegisterByte(RegisterType::L, 0x21);
-    CheckRegisterWord(RegisterType::PC, 0x8E56);
-    CheckRegisterWord(RegisterType::SP, 0xEB8F);
+    WriteRegisterWord(RegisterType::PC, 0x8E55);
+    WriteRegisterWord(RegisterType::SP, 0xEB8F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8E55, 0x7F);
 }
@@ -24282,7 +24285,7 @@ void test_7F_01EE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24295,8 +24298,8 @@ void test_7F_01EE()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x53);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    CheckRegisterWord(RegisterType::PC, 0x97A1);
-    CheckRegisterWord(RegisterType::SP, 0x82EB);
+    WriteRegisterWord(RegisterType::PC, 0x97A0);
+    WriteRegisterWord(RegisterType::SP, 0x82EB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x97A0, 0x7F);
 }
@@ -24327,7 +24330,7 @@ void test_7F_01EF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24340,8 +24343,8 @@ void test_7F_01EF()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x07);
     CheckRegisterByte(RegisterType::L, 0xA5);
-    CheckRegisterWord(RegisterType::PC, 0x9239);
-    CheckRegisterWord(RegisterType::SP, 0xB8FA);
+    WriteRegisterWord(RegisterType::PC, 0x9238);
+    WriteRegisterWord(RegisterType::SP, 0xB8FA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9238, 0x7F);
 }
@@ -24372,7 +24375,7 @@ void test_7F_01F0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24385,8 +24388,8 @@ void test_7F_01F0()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x00);
     CheckRegisterByte(RegisterType::L, 0x90);
-    CheckRegisterWord(RegisterType::PC, 0xB029);
-    CheckRegisterWord(RegisterType::SP, 0x5787);
+    WriteRegisterWord(RegisterType::PC, 0xB028);
+    WriteRegisterWord(RegisterType::SP, 0x5787);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB028, 0x7F);
 }
@@ -24417,7 +24420,7 @@ void test_7F_01F1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24430,8 +24433,8 @@ void test_7F_01F1()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x5A);
     CheckRegisterByte(RegisterType::L, 0x0E);
-    CheckRegisterWord(RegisterType::PC, 0x8127);
-    CheckRegisterWord(RegisterType::SP, 0x4975);
+    WriteRegisterWord(RegisterType::PC, 0x8126);
+    WriteRegisterWord(RegisterType::SP, 0x4975);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8126, 0x7F);
 }
@@ -24462,7 +24465,7 @@ void test_7F_01F2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24475,8 +24478,8 @@ void test_7F_01F2()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x9F);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    CheckRegisterWord(RegisterType::PC, 0xB59C);
-    CheckRegisterWord(RegisterType::SP, 0x797F);
+    WriteRegisterWord(RegisterType::PC, 0xB59B);
+    WriteRegisterWord(RegisterType::SP, 0x797F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB59B, 0x7F);
 }
@@ -24507,7 +24510,7 @@ void test_7F_01F3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24520,8 +24523,8 @@ void test_7F_01F3()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xA8);
     CheckRegisterByte(RegisterType::L, 0x28);
-    CheckRegisterWord(RegisterType::PC, 0x2B8F);
-    CheckRegisterWord(RegisterType::SP, 0xAB93);
+    WriteRegisterWord(RegisterType::PC, 0x2B8E);
+    WriteRegisterWord(RegisterType::SP, 0xAB93);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2B8E, 0x7F);
 }
@@ -24552,7 +24555,7 @@ void test_7F_01F4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24565,8 +24568,8 @@ void test_7F_01F4()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x06);
     CheckRegisterByte(RegisterType::L, 0x6A);
-    CheckRegisterWord(RegisterType::PC, 0x13A4);
-    CheckRegisterWord(RegisterType::SP, 0xB569);
+    WriteRegisterWord(RegisterType::PC, 0x13A3);
+    WriteRegisterWord(RegisterType::SP, 0xB569);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x13A3, 0x7F);
 }
@@ -24597,7 +24600,7 @@ void test_7F_01F5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24610,8 +24613,8 @@ void test_7F_01F5()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xE3);
     CheckRegisterByte(RegisterType::L, 0x28);
-    CheckRegisterWord(RegisterType::PC, 0x1049);
-    CheckRegisterWord(RegisterType::SP, 0xE9C0);
+    WriteRegisterWord(RegisterType::PC, 0x1048);
+    WriteRegisterWord(RegisterType::SP, 0xE9C0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1048, 0x7F);
 }
@@ -24642,7 +24645,7 @@ void test_7F_01F6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24655,8 +24658,8 @@ void test_7F_01F6()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x36);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    CheckRegisterWord(RegisterType::PC, 0x342E);
-    CheckRegisterWord(RegisterType::SP, 0xAA12);
+    WriteRegisterWord(RegisterType::PC, 0x342D);
+    WriteRegisterWord(RegisterType::SP, 0xAA12);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x342D, 0x7F);
 }
@@ -24687,7 +24690,7 @@ void test_7F_01F7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24700,8 +24703,8 @@ void test_7F_01F7()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x3B);
     CheckRegisterByte(RegisterType::L, 0x1B);
-    CheckRegisterWord(RegisterType::PC, 0x3E49);
-    CheckRegisterWord(RegisterType::SP, 0xA660);
+    WriteRegisterWord(RegisterType::PC, 0x3E48);
+    WriteRegisterWord(RegisterType::SP, 0xA660);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3E48, 0x7F);
 }
@@ -24732,7 +24735,7 @@ void test_7F_01F8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24745,8 +24748,8 @@ void test_7F_01F8()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0x8D);
-    CheckRegisterWord(RegisterType::PC, 0xCC64);
-    CheckRegisterWord(RegisterType::SP, 0x00D2);
+    WriteRegisterWord(RegisterType::PC, 0xCC63);
+    WriteRegisterWord(RegisterType::SP, 0x00D2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCC63, 0x7F);
 }
@@ -24777,7 +24780,7 @@ void test_7F_01F9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24790,8 +24793,8 @@ void test_7F_01F9()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x8C);
     CheckRegisterByte(RegisterType::L, 0xE8);
-    CheckRegisterWord(RegisterType::PC, 0x72E1);
-    CheckRegisterWord(RegisterType::SP, 0xCAC6);
+    WriteRegisterWord(RegisterType::PC, 0x72E0);
+    WriteRegisterWord(RegisterType::SP, 0xCAC6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x72E0, 0x7F);
 }
@@ -24822,7 +24825,7 @@ void test_7F_01FA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24835,8 +24838,8 @@ void test_7F_01FA()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0xFE);
-    CheckRegisterWord(RegisterType::PC, 0xFBAF);
-    CheckRegisterWord(RegisterType::SP, 0xAF97);
+    WriteRegisterWord(RegisterType::PC, 0xFBAE);
+    WriteRegisterWord(RegisterType::SP, 0xAF97);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFBAE, 0x7F);
 }
@@ -24867,7 +24870,7 @@ void test_7F_01FB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24880,8 +24883,8 @@ void test_7F_01FB()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0x75);
-    CheckRegisterWord(RegisterType::PC, 0x86C6);
-    CheckRegisterWord(RegisterType::SP, 0x0A2A);
+    WriteRegisterWord(RegisterType::PC, 0x86C5);
+    WriteRegisterWord(RegisterType::SP, 0x0A2A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x86C5, 0x7F);
 }
@@ -24912,7 +24915,7 @@ void test_7F_01FC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24925,8 +24928,8 @@ void test_7F_01FC()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x08);
     CheckRegisterByte(RegisterType::L, 0x57);
-    CheckRegisterWord(RegisterType::PC, 0x163A);
-    CheckRegisterWord(RegisterType::SP, 0x4E11);
+    WriteRegisterWord(RegisterType::PC, 0x1639);
+    WriteRegisterWord(RegisterType::SP, 0x4E11);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1639, 0x7F);
 }
@@ -24957,7 +24960,7 @@ void test_7F_01FD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -24970,8 +24973,8 @@ void test_7F_01FD()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x14);
     CheckRegisterByte(RegisterType::L, 0x0C);
-    CheckRegisterWord(RegisterType::PC, 0xA13B);
-    CheckRegisterWord(RegisterType::SP, 0x95E8);
+    WriteRegisterWord(RegisterType::PC, 0xA13A);
+    WriteRegisterWord(RegisterType::SP, 0x95E8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA13A, 0x7F);
 }
@@ -25002,7 +25005,7 @@ void test_7F_01FE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25015,8 +25018,8 @@ void test_7F_01FE()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x9E);
     CheckRegisterByte(RegisterType::L, 0x08);
-    CheckRegisterWord(RegisterType::PC, 0x425C);
-    CheckRegisterWord(RegisterType::SP, 0xB3C8);
+    WriteRegisterWord(RegisterType::PC, 0x425B);
+    WriteRegisterWord(RegisterType::SP, 0xB3C8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x425B, 0x7F);
 }
@@ -25047,7 +25050,7 @@ void test_7F_01FF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25060,8 +25063,8 @@ void test_7F_01FF()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x2B);
     CheckRegisterByte(RegisterType::L, 0xF4);
-    CheckRegisterWord(RegisterType::PC, 0xA1ED);
-    CheckRegisterWord(RegisterType::SP, 0xF5E0);
+    WriteRegisterWord(RegisterType::PC, 0xA1EC);
+    WriteRegisterWord(RegisterType::SP, 0xF5E0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA1EC, 0x7F);
 }
@@ -25092,7 +25095,7 @@ void test_7F_0200()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25105,8 +25108,8 @@ void test_7F_0200()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xCF);
     CheckRegisterByte(RegisterType::L, 0xBE);
-    CheckRegisterWord(RegisterType::PC, 0x8BA5);
-    CheckRegisterWord(RegisterType::SP, 0xC87F);
+    WriteRegisterWord(RegisterType::PC, 0x8BA4);
+    WriteRegisterWord(RegisterType::SP, 0xC87F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8BA4, 0x7F);
 }
@@ -25137,7 +25140,7 @@ void test_7F_0201()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25150,8 +25153,8 @@ void test_7F_0201()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x26);
     CheckRegisterByte(RegisterType::L, 0xD0);
-    CheckRegisterWord(RegisterType::PC, 0xC56C);
-    CheckRegisterWord(RegisterType::SP, 0x2E84);
+    WriteRegisterWord(RegisterType::PC, 0xC56B);
+    WriteRegisterWord(RegisterType::SP, 0x2E84);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC56B, 0x7F);
 }
@@ -25182,7 +25185,7 @@ void test_7F_0202()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25195,8 +25198,8 @@ void test_7F_0202()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xED);
     CheckRegisterByte(RegisterType::L, 0x3A);
-    CheckRegisterWord(RegisterType::PC, 0x8B5E);
-    CheckRegisterWord(RegisterType::SP, 0x577D);
+    WriteRegisterWord(RegisterType::PC, 0x8B5D);
+    WriteRegisterWord(RegisterType::SP, 0x577D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8B5D, 0x7F);
 }
@@ -25227,7 +25230,7 @@ void test_7F_0203()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25240,8 +25243,8 @@ void test_7F_0203()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x51);
     CheckRegisterByte(RegisterType::L, 0x2E);
-    CheckRegisterWord(RegisterType::PC, 0x7113);
-    CheckRegisterWord(RegisterType::SP, 0xE2EB);
+    WriteRegisterWord(RegisterType::PC, 0x7112);
+    WriteRegisterWord(RegisterType::SP, 0xE2EB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7112, 0x7F);
 }
@@ -25272,7 +25275,7 @@ void test_7F_0204()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25285,8 +25288,8 @@ void test_7F_0204()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x70);
     CheckRegisterByte(RegisterType::L, 0x66);
-    CheckRegisterWord(RegisterType::PC, 0xB94D);
-    CheckRegisterWord(RegisterType::SP, 0xDD3D);
+    WriteRegisterWord(RegisterType::PC, 0xB94C);
+    WriteRegisterWord(RegisterType::SP, 0xDD3D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB94C, 0x7F);
 }
@@ -25317,7 +25320,7 @@ void test_7F_0205()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25330,8 +25333,8 @@ void test_7F_0205()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x2A);
     CheckRegisterByte(RegisterType::L, 0xF1);
-    CheckRegisterWord(RegisterType::PC, 0x7292);
-    CheckRegisterWord(RegisterType::SP, 0x3D6E);
+    WriteRegisterWord(RegisterType::PC, 0x7291);
+    WriteRegisterWord(RegisterType::SP, 0x3D6E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7291, 0x7F);
 }
@@ -25362,7 +25365,7 @@ void test_7F_0206()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25375,8 +25378,8 @@ void test_7F_0206()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x88);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    CheckRegisterWord(RegisterType::PC, 0xB39A);
-    CheckRegisterWord(RegisterType::SP, 0xABA3);
+    WriteRegisterWord(RegisterType::PC, 0xB399);
+    WriteRegisterWord(RegisterType::SP, 0xABA3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB399, 0x7F);
 }
@@ -25407,7 +25410,7 @@ void test_7F_0207()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25420,8 +25423,8 @@ void test_7F_0207()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x5A);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    CheckRegisterWord(RegisterType::PC, 0x9EE6);
-    CheckRegisterWord(RegisterType::SP, 0x8D95);
+    WriteRegisterWord(RegisterType::PC, 0x9EE5);
+    WriteRegisterWord(RegisterType::SP, 0x8D95);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9EE5, 0x7F);
 }
@@ -25452,7 +25455,7 @@ void test_7F_0208()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25465,8 +25468,8 @@ void test_7F_0208()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xC3);
     CheckRegisterByte(RegisterType::L, 0x03);
-    CheckRegisterWord(RegisterType::PC, 0x681E);
-    CheckRegisterWord(RegisterType::SP, 0x76A0);
+    WriteRegisterWord(RegisterType::PC, 0x681D);
+    WriteRegisterWord(RegisterType::SP, 0x76A0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x681D, 0x7F);
 }
@@ -25497,7 +25500,7 @@ void test_7F_0209()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25510,8 +25513,8 @@ void test_7F_0209()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0xA7);
-    CheckRegisterWord(RegisterType::PC, 0x45A2);
-    CheckRegisterWord(RegisterType::SP, 0x2378);
+    WriteRegisterWord(RegisterType::PC, 0x45A1);
+    WriteRegisterWord(RegisterType::SP, 0x2378);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x45A1, 0x7F);
 }
@@ -25542,7 +25545,7 @@ void test_7F_020A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25555,8 +25558,8 @@ void test_7F_020A()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x35);
     CheckRegisterByte(RegisterType::L, 0xBD);
-    CheckRegisterWord(RegisterType::PC, 0xD8C1);
-    CheckRegisterWord(RegisterType::SP, 0xF4E6);
+    WriteRegisterWord(RegisterType::PC, 0xD8C0);
+    WriteRegisterWord(RegisterType::SP, 0xF4E6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD8C0, 0x7F);
 }
@@ -25587,7 +25590,7 @@ void test_7F_020B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25600,8 +25603,8 @@ void test_7F_020B()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x9F);
     CheckRegisterByte(RegisterType::L, 0x44);
-    CheckRegisterWord(RegisterType::PC, 0xD670);
-    CheckRegisterWord(RegisterType::SP, 0x4F17);
+    WriteRegisterWord(RegisterType::PC, 0xD66F);
+    WriteRegisterWord(RegisterType::SP, 0x4F17);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD66F, 0x7F);
 }
@@ -25632,7 +25635,7 @@ void test_7F_020C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25645,8 +25648,8 @@ void test_7F_020C()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xFD);
     CheckRegisterByte(RegisterType::L, 0x02);
-    CheckRegisterWord(RegisterType::PC, 0xB209);
-    CheckRegisterWord(RegisterType::SP, 0x360A);
+    WriteRegisterWord(RegisterType::PC, 0xB208);
+    WriteRegisterWord(RegisterType::SP, 0x360A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB208, 0x7F);
 }
@@ -25677,7 +25680,7 @@ void test_7F_020D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25690,8 +25693,8 @@ void test_7F_020D()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xF2);
     CheckRegisterByte(RegisterType::L, 0x41);
-    CheckRegisterWord(RegisterType::PC, 0xA05E);
-    CheckRegisterWord(RegisterType::SP, 0x0A75);
+    WriteRegisterWord(RegisterType::PC, 0xA05D);
+    WriteRegisterWord(RegisterType::SP, 0x0A75);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA05D, 0x7F);
 }
@@ -25722,7 +25725,7 @@ void test_7F_020E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25735,8 +25738,8 @@ void test_7F_020E()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x37);
     CheckRegisterByte(RegisterType::L, 0x69);
-    CheckRegisterWord(RegisterType::PC, 0x22AD);
-    CheckRegisterWord(RegisterType::SP, 0xF024);
+    WriteRegisterWord(RegisterType::PC, 0x22AC);
+    WriteRegisterWord(RegisterType::SP, 0xF024);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x22AC, 0x7F);
 }
@@ -25767,7 +25770,7 @@ void test_7F_020F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25780,8 +25783,8 @@ void test_7F_020F()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xE5);
     CheckRegisterByte(RegisterType::L, 0x93);
-    CheckRegisterWord(RegisterType::PC, 0xDD3E);
-    CheckRegisterWord(RegisterType::SP, 0xD3FE);
+    WriteRegisterWord(RegisterType::PC, 0xDD3D);
+    WriteRegisterWord(RegisterType::SP, 0xD3FE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDD3D, 0x7F);
 }
@@ -25812,7 +25815,7 @@ void test_7F_0210()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25825,8 +25828,8 @@ void test_7F_0210()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xCB);
     CheckRegisterByte(RegisterType::L, 0x30);
-    CheckRegisterWord(RegisterType::PC, 0xE3ED);
-    CheckRegisterWord(RegisterType::SP, 0x7246);
+    WriteRegisterWord(RegisterType::PC, 0xE3EC);
+    WriteRegisterWord(RegisterType::SP, 0x7246);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE3EC, 0x7F);
 }
@@ -25857,7 +25860,7 @@ void test_7F_0211()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25870,8 +25873,8 @@ void test_7F_0211()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xC8);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    CheckRegisterWord(RegisterType::PC, 0xC2AC);
-    CheckRegisterWord(RegisterType::SP, 0x9507);
+    WriteRegisterWord(RegisterType::PC, 0xC2AB);
+    WriteRegisterWord(RegisterType::SP, 0x9507);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC2AB, 0x7F);
 }
@@ -25902,7 +25905,7 @@ void test_7F_0212()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25915,8 +25918,8 @@ void test_7F_0212()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x94);
     CheckRegisterByte(RegisterType::L, 0x50);
-    CheckRegisterWord(RegisterType::PC, 0x7FEA);
-    CheckRegisterWord(RegisterType::SP, 0x06AB);
+    WriteRegisterWord(RegisterType::PC, 0x7FE9);
+    WriteRegisterWord(RegisterType::SP, 0x06AB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7FE9, 0x7F);
 }
@@ -25947,7 +25950,7 @@ void test_7F_0213()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -25960,8 +25963,8 @@ void test_7F_0213()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0x1E);
-    CheckRegisterWord(RegisterType::PC, 0xD022);
-    CheckRegisterWord(RegisterType::SP, 0x0A96);
+    WriteRegisterWord(RegisterType::PC, 0xD021);
+    WriteRegisterWord(RegisterType::SP, 0x0A96);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD021, 0x7F);
 }
@@ -25992,7 +25995,7 @@ void test_7F_0214()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26005,8 +26008,8 @@ void test_7F_0214()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xC5);
     CheckRegisterByte(RegisterType::L, 0xB4);
-    CheckRegisterWord(RegisterType::PC, 0xCE74);
-    CheckRegisterWord(RegisterType::SP, 0x9401);
+    WriteRegisterWord(RegisterType::PC, 0xCE73);
+    WriteRegisterWord(RegisterType::SP, 0x9401);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCE73, 0x7F);
 }
@@ -26037,7 +26040,7 @@ void test_7F_0215()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26050,8 +26053,8 @@ void test_7F_0215()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xDE);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    CheckRegisterWord(RegisterType::PC, 0xED77);
-    CheckRegisterWord(RegisterType::SP, 0x777D);
+    WriteRegisterWord(RegisterType::PC, 0xED76);
+    WriteRegisterWord(RegisterType::SP, 0x777D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xED76, 0x7F);
 }
@@ -26082,7 +26085,7 @@ void test_7F_0216()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26095,8 +26098,8 @@ void test_7F_0216()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x85);
     CheckRegisterByte(RegisterType::L, 0x52);
-    CheckRegisterWord(RegisterType::PC, 0x4948);
-    CheckRegisterWord(RegisterType::SP, 0x249F);
+    WriteRegisterWord(RegisterType::PC, 0x4947);
+    WriteRegisterWord(RegisterType::SP, 0x249F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4947, 0x7F);
 }
@@ -26127,7 +26130,7 @@ void test_7F_0217()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26140,8 +26143,8 @@ void test_7F_0217()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xFD);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    CheckRegisterWord(RegisterType::PC, 0xADB6);
-    CheckRegisterWord(RegisterType::SP, 0x4AAB);
+    WriteRegisterWord(RegisterType::PC, 0xADB5);
+    WriteRegisterWord(RegisterType::SP, 0x4AAB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xADB5, 0x7F);
 }
@@ -26172,7 +26175,7 @@ void test_7F_0218()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26185,8 +26188,8 @@ void test_7F_0218()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x80);
     CheckRegisterByte(RegisterType::L, 0x21);
-    CheckRegisterWord(RegisterType::PC, 0xC2F8);
-    CheckRegisterWord(RegisterType::SP, 0x06E2);
+    WriteRegisterWord(RegisterType::PC, 0xC2F7);
+    WriteRegisterWord(RegisterType::SP, 0x06E2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC2F7, 0x7F);
 }
@@ -26217,7 +26220,7 @@ void test_7F_0219()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26230,8 +26233,8 @@ void test_7F_0219()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x32);
     CheckRegisterByte(RegisterType::L, 0xCB);
-    CheckRegisterWord(RegisterType::PC, 0x89C2);
-    CheckRegisterWord(RegisterType::SP, 0x19AD);
+    WriteRegisterWord(RegisterType::PC, 0x89C1);
+    WriteRegisterWord(RegisterType::SP, 0x19AD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x89C1, 0x7F);
 }
@@ -26262,7 +26265,7 @@ void test_7F_021A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26275,8 +26278,8 @@ void test_7F_021A()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0x3E);
-    CheckRegisterWord(RegisterType::PC, 0x12A4);
-    CheckRegisterWord(RegisterType::SP, 0xE164);
+    WriteRegisterWord(RegisterType::PC, 0x12A3);
+    WriteRegisterWord(RegisterType::SP, 0xE164);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x12A3, 0x7F);
 }
@@ -26307,7 +26310,7 @@ void test_7F_021B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26320,8 +26323,8 @@ void test_7F_021B()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xF5);
     CheckRegisterByte(RegisterType::L, 0x52);
-    CheckRegisterWord(RegisterType::PC, 0x4DC1);
-    CheckRegisterWord(RegisterType::SP, 0x1C29);
+    WriteRegisterWord(RegisterType::PC, 0x4DC0);
+    WriteRegisterWord(RegisterType::SP, 0x1C29);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4DC0, 0x7F);
 }
@@ -26352,7 +26355,7 @@ void test_7F_021C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26365,8 +26368,8 @@ void test_7F_021C()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xE9);
     CheckRegisterByte(RegisterType::L, 0xE1);
-    CheckRegisterWord(RegisterType::PC, 0x4D70);
-    CheckRegisterWord(RegisterType::SP, 0x586B);
+    WriteRegisterWord(RegisterType::PC, 0x4D6F);
+    WriteRegisterWord(RegisterType::SP, 0x586B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4D6F, 0x7F);
 }
@@ -26397,7 +26400,7 @@ void test_7F_021D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26410,8 +26413,8 @@ void test_7F_021D()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x46);
     CheckRegisterByte(RegisterType::L, 0xE4);
-    CheckRegisterWord(RegisterType::PC, 0xE6EB);
-    CheckRegisterWord(RegisterType::SP, 0xE4C0);
+    WriteRegisterWord(RegisterType::PC, 0xE6EA);
+    WriteRegisterWord(RegisterType::SP, 0xE4C0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE6EA, 0x7F);
 }
@@ -26442,7 +26445,7 @@ void test_7F_021E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26455,8 +26458,8 @@ void test_7F_021E()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x07);
     CheckRegisterByte(RegisterType::L, 0x3F);
-    CheckRegisterWord(RegisterType::PC, 0x642F);
-    CheckRegisterWord(RegisterType::SP, 0xF01B);
+    WriteRegisterWord(RegisterType::PC, 0x642E);
+    WriteRegisterWord(RegisterType::SP, 0xF01B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x642E, 0x7F);
 }
@@ -26487,7 +26490,7 @@ void test_7F_021F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26500,8 +26503,8 @@ void test_7F_021F()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x55);
     CheckRegisterByte(RegisterType::L, 0xEB);
-    CheckRegisterWord(RegisterType::PC, 0xE975);
-    CheckRegisterWord(RegisterType::SP, 0x2E21);
+    WriteRegisterWord(RegisterType::PC, 0xE974);
+    WriteRegisterWord(RegisterType::SP, 0x2E21);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE974, 0x7F);
 }
@@ -26532,7 +26535,7 @@ void test_7F_0220()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26545,8 +26548,8 @@ void test_7F_0220()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x82);
     CheckRegisterByte(RegisterType::L, 0x97);
-    CheckRegisterWord(RegisterType::PC, 0x1A88);
-    CheckRegisterWord(RegisterType::SP, 0xB94F);
+    WriteRegisterWord(RegisterType::PC, 0x1A87);
+    WriteRegisterWord(RegisterType::SP, 0xB94F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1A87, 0x7F);
 }
@@ -26577,7 +26580,7 @@ void test_7F_0221()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26590,8 +26593,8 @@ void test_7F_0221()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x3C);
     CheckRegisterByte(RegisterType::L, 0xE9);
-    CheckRegisterWord(RegisterType::PC, 0x8A5D);
-    CheckRegisterWord(RegisterType::SP, 0xBC64);
+    WriteRegisterWord(RegisterType::PC, 0x8A5C);
+    WriteRegisterWord(RegisterType::SP, 0xBC64);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8A5C, 0x7F);
 }
@@ -26622,7 +26625,7 @@ void test_7F_0222()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26635,8 +26638,8 @@ void test_7F_0222()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x79);
     CheckRegisterByte(RegisterType::L, 0x50);
-    CheckRegisterWord(RegisterType::PC, 0x0626);
-    CheckRegisterWord(RegisterType::SP, 0xB3FA);
+    WriteRegisterWord(RegisterType::PC, 0x0625);
+    WriteRegisterWord(RegisterType::SP, 0xB3FA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0625, 0x7F);
 }
@@ -26667,7 +26670,7 @@ void test_7F_0223()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26680,8 +26683,8 @@ void test_7F_0223()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xAE);
     CheckRegisterByte(RegisterType::L, 0xBC);
-    CheckRegisterWord(RegisterType::PC, 0xA267);
-    CheckRegisterWord(RegisterType::SP, 0x0790);
+    WriteRegisterWord(RegisterType::PC, 0xA266);
+    WriteRegisterWord(RegisterType::SP, 0x0790);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA266, 0x7F);
 }
@@ -26712,7 +26715,7 @@ void test_7F_0224()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26725,8 +26728,8 @@ void test_7F_0224()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x3D);
     CheckRegisterByte(RegisterType::L, 0xD0);
-    CheckRegisterWord(RegisterType::PC, 0xB3D8);
-    CheckRegisterWord(RegisterType::SP, 0x57F1);
+    WriteRegisterWord(RegisterType::PC, 0xB3D7);
+    WriteRegisterWord(RegisterType::SP, 0x57F1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB3D7, 0x7F);
 }
@@ -26757,7 +26760,7 @@ void test_7F_0225()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26770,8 +26773,8 @@ void test_7F_0225()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xA9);
     CheckRegisterByte(RegisterType::L, 0xCC);
-    CheckRegisterWord(RegisterType::PC, 0x7BF7);
-    CheckRegisterWord(RegisterType::SP, 0xDC13);
+    WriteRegisterWord(RegisterType::PC, 0x7BF6);
+    WriteRegisterWord(RegisterType::SP, 0xDC13);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7BF6, 0x7F);
 }
@@ -26802,7 +26805,7 @@ void test_7F_0226()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26815,8 +26818,8 @@ void test_7F_0226()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0xF8);
-    CheckRegisterWord(RegisterType::PC, 0x2D16);
-    CheckRegisterWord(RegisterType::SP, 0x322B);
+    WriteRegisterWord(RegisterType::PC, 0x2D15);
+    WriteRegisterWord(RegisterType::SP, 0x322B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2D15, 0x7F);
 }
@@ -26847,7 +26850,7 @@ void test_7F_0227()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26860,8 +26863,8 @@ void test_7F_0227()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x00);
     CheckRegisterByte(RegisterType::L, 0x21);
-    CheckRegisterWord(RegisterType::PC, 0x86F5);
-    CheckRegisterWord(RegisterType::SP, 0x8240);
+    WriteRegisterWord(RegisterType::PC, 0x86F4);
+    WriteRegisterWord(RegisterType::SP, 0x8240);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x86F4, 0x7F);
 }
@@ -26892,7 +26895,7 @@ void test_7F_0228()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26905,8 +26908,8 @@ void test_7F_0228()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xD5);
     CheckRegisterByte(RegisterType::L, 0xC5);
-    CheckRegisterWord(RegisterType::PC, 0xAC3F);
-    CheckRegisterWord(RegisterType::SP, 0x7F83);
+    WriteRegisterWord(RegisterType::PC, 0xAC3E);
+    WriteRegisterWord(RegisterType::SP, 0x7F83);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAC3E, 0x7F);
 }
@@ -26937,7 +26940,7 @@ void test_7F_0229()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26950,8 +26953,8 @@ void test_7F_0229()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x9E);
     CheckRegisterByte(RegisterType::L, 0xEB);
-    CheckRegisterWord(RegisterType::PC, 0xFDA2);
-    CheckRegisterWord(RegisterType::SP, 0xE373);
+    WriteRegisterWord(RegisterType::PC, 0xFDA1);
+    WriteRegisterWord(RegisterType::SP, 0xE373);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFDA1, 0x7F);
 }
@@ -26982,7 +26985,7 @@ void test_7F_022A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -26995,8 +26998,8 @@ void test_7F_022A()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xA6);
     CheckRegisterByte(RegisterType::L, 0x8B);
-    CheckRegisterWord(RegisterType::PC, 0x5F99);
-    CheckRegisterWord(RegisterType::SP, 0x972D);
+    WriteRegisterWord(RegisterType::PC, 0x5F98);
+    WriteRegisterWord(RegisterType::SP, 0x972D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5F98, 0x7F);
 }
@@ -27027,7 +27030,7 @@ void test_7F_022B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27040,8 +27043,8 @@ void test_7F_022B()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x30);
     CheckRegisterByte(RegisterType::L, 0xD3);
-    CheckRegisterWord(RegisterType::PC, 0x1EAD);
-    CheckRegisterWord(RegisterType::SP, 0x70CA);
+    WriteRegisterWord(RegisterType::PC, 0x1EAC);
+    WriteRegisterWord(RegisterType::SP, 0x70CA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1EAC, 0x7F);
 }
@@ -27072,7 +27075,7 @@ void test_7F_022C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27085,8 +27088,8 @@ void test_7F_022C()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x84);
     CheckRegisterByte(RegisterType::L, 0x1D);
-    CheckRegisterWord(RegisterType::PC, 0x951C);
-    CheckRegisterWord(RegisterType::SP, 0xCA67);
+    WriteRegisterWord(RegisterType::PC, 0x951B);
+    WriteRegisterWord(RegisterType::SP, 0xCA67);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x951B, 0x7F);
 }
@@ -27117,7 +27120,7 @@ void test_7F_022D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27130,8 +27133,8 @@ void test_7F_022D()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xFB);
     CheckRegisterByte(RegisterType::L, 0xBB);
-    CheckRegisterWord(RegisterType::PC, 0xCAEF);
-    CheckRegisterWord(RegisterType::SP, 0xEAF1);
+    WriteRegisterWord(RegisterType::PC, 0xCAEE);
+    WriteRegisterWord(RegisterType::SP, 0xEAF1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCAEE, 0x7F);
 }
@@ -27162,7 +27165,7 @@ void test_7F_022E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27175,8 +27178,8 @@ void test_7F_022E()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xFC);
     CheckRegisterByte(RegisterType::L, 0x08);
-    CheckRegisterWord(RegisterType::PC, 0x4F68);
-    CheckRegisterWord(RegisterType::SP, 0x8A37);
+    WriteRegisterWord(RegisterType::PC, 0x4F67);
+    WriteRegisterWord(RegisterType::SP, 0x8A37);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4F67, 0x7F);
 }
@@ -27207,7 +27210,7 @@ void test_7F_022F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27220,8 +27223,8 @@ void test_7F_022F()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0xDD);
-    CheckRegisterWord(RegisterType::PC, 0x6DF6);
-    CheckRegisterWord(RegisterType::SP, 0xCD4B);
+    WriteRegisterWord(RegisterType::PC, 0x6DF5);
+    WriteRegisterWord(RegisterType::SP, 0xCD4B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6DF5, 0x7F);
 }
@@ -27252,7 +27255,7 @@ void test_7F_0230()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27265,8 +27268,8 @@ void test_7F_0230()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x7C);
     CheckRegisterByte(RegisterType::L, 0x6F);
-    CheckRegisterWord(RegisterType::PC, 0xF4E9);
-    CheckRegisterWord(RegisterType::SP, 0x08A8);
+    WriteRegisterWord(RegisterType::PC, 0xF4E8);
+    WriteRegisterWord(RegisterType::SP, 0x08A8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF4E8, 0x7F);
 }
@@ -27297,7 +27300,7 @@ void test_7F_0231()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27310,8 +27313,8 @@ void test_7F_0231()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x56);
     CheckRegisterByte(RegisterType::L, 0x91);
-    CheckRegisterWord(RegisterType::PC, 0x5850);
-    CheckRegisterWord(RegisterType::SP, 0x5225);
+    WriteRegisterWord(RegisterType::PC, 0x584F);
+    WriteRegisterWord(RegisterType::SP, 0x5225);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x584F, 0x7F);
 }
@@ -27342,7 +27345,7 @@ void test_7F_0232()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27355,8 +27358,8 @@ void test_7F_0232()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x39);
     CheckRegisterByte(RegisterType::L, 0x75);
-    CheckRegisterWord(RegisterType::PC, 0xC8FC);
-    CheckRegisterWord(RegisterType::SP, 0xC165);
+    WriteRegisterWord(RegisterType::PC, 0xC8FB);
+    WriteRegisterWord(RegisterType::SP, 0xC165);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC8FB, 0x7F);
 }
@@ -27387,7 +27390,7 @@ void test_7F_0233()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27400,8 +27403,8 @@ void test_7F_0233()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x02);
     CheckRegisterByte(RegisterType::L, 0x68);
-    CheckRegisterWord(RegisterType::PC, 0x4C48);
-    CheckRegisterWord(RegisterType::SP, 0x6348);
+    WriteRegisterWord(RegisterType::PC, 0x4C47);
+    WriteRegisterWord(RegisterType::SP, 0x6348);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4C47, 0x7F);
 }
@@ -27432,7 +27435,7 @@ void test_7F_0234()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27445,8 +27448,8 @@ void test_7F_0234()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x3D);
     CheckRegisterByte(RegisterType::L, 0x29);
-    CheckRegisterWord(RegisterType::PC, 0xABB4);
-    CheckRegisterWord(RegisterType::SP, 0xFDFC);
+    WriteRegisterWord(RegisterType::PC, 0xABB3);
+    WriteRegisterWord(RegisterType::SP, 0xFDFC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xABB3, 0x7F);
 }
@@ -27477,7 +27480,7 @@ void test_7F_0235()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27490,8 +27493,8 @@ void test_7F_0235()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0xEE);
-    CheckRegisterWord(RegisterType::PC, 0x137D);
-    CheckRegisterWord(RegisterType::SP, 0x79B1);
+    WriteRegisterWord(RegisterType::PC, 0x137C);
+    WriteRegisterWord(RegisterType::SP, 0x79B1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x137C, 0x7F);
 }
@@ -27522,7 +27525,7 @@ void test_7F_0236()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27535,8 +27538,8 @@ void test_7F_0236()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xD1);
     CheckRegisterByte(RegisterType::L, 0x09);
-    CheckRegisterWord(RegisterType::PC, 0xE3B1);
-    CheckRegisterWord(RegisterType::SP, 0x1399);
+    WriteRegisterWord(RegisterType::PC, 0xE3B0);
+    WriteRegisterWord(RegisterType::SP, 0x1399);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE3B0, 0x7F);
 }
@@ -27567,7 +27570,7 @@ void test_7F_0237()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27580,8 +27583,8 @@ void test_7F_0237()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x41);
     CheckRegisterByte(RegisterType::L, 0xDA);
-    CheckRegisterWord(RegisterType::PC, 0x54BA);
-    CheckRegisterWord(RegisterType::SP, 0xD084);
+    WriteRegisterWord(RegisterType::PC, 0x54B9);
+    WriteRegisterWord(RegisterType::SP, 0xD084);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x54B9, 0x7F);
 }
@@ -27612,7 +27615,7 @@ void test_7F_0238()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27625,8 +27628,8 @@ void test_7F_0238()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x33);
     CheckRegisterByte(RegisterType::L, 0x32);
-    CheckRegisterWord(RegisterType::PC, 0x8F08);
-    CheckRegisterWord(RegisterType::SP, 0x4685);
+    WriteRegisterWord(RegisterType::PC, 0x8F07);
+    WriteRegisterWord(RegisterType::SP, 0x4685);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8F07, 0x7F);
 }
@@ -27657,7 +27660,7 @@ void test_7F_0239()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27670,8 +27673,8 @@ void test_7F_0239()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0xC0);
-    CheckRegisterWord(RegisterType::PC, 0xE625);
-    CheckRegisterWord(RegisterType::SP, 0x2BA6);
+    WriteRegisterWord(RegisterType::PC, 0xE624);
+    WriteRegisterWord(RegisterType::SP, 0x2BA6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE624, 0x7F);
 }
@@ -27702,7 +27705,7 @@ void test_7F_023A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27715,8 +27718,8 @@ void test_7F_023A()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x94);
     CheckRegisterByte(RegisterType::L, 0x43);
-    CheckRegisterWord(RegisterType::PC, 0x3CA5);
-    CheckRegisterWord(RegisterType::SP, 0x1908);
+    WriteRegisterWord(RegisterType::PC, 0x3CA4);
+    WriteRegisterWord(RegisterType::SP, 0x1908);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3CA4, 0x7F);
 }
@@ -27747,7 +27750,7 @@ void test_7F_023B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27760,8 +27763,8 @@ void test_7F_023B()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x1D);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    CheckRegisterWord(RegisterType::PC, 0x4482);
-    CheckRegisterWord(RegisterType::SP, 0x60D7);
+    WriteRegisterWord(RegisterType::PC, 0x4481);
+    WriteRegisterWord(RegisterType::SP, 0x60D7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4481, 0x7F);
 }
@@ -27792,7 +27795,7 @@ void test_7F_023C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27805,8 +27808,8 @@ void test_7F_023C()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xE4);
     CheckRegisterByte(RegisterType::L, 0xBF);
-    CheckRegisterWord(RegisterType::PC, 0x7A55);
-    CheckRegisterWord(RegisterType::SP, 0x306D);
+    WriteRegisterWord(RegisterType::PC, 0x7A54);
+    WriteRegisterWord(RegisterType::SP, 0x306D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7A54, 0x7F);
 }
@@ -27837,7 +27840,7 @@ void test_7F_023D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27850,8 +27853,8 @@ void test_7F_023D()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xF9);
     CheckRegisterByte(RegisterType::L, 0xEF);
-    CheckRegisterWord(RegisterType::PC, 0x22FC);
-    CheckRegisterWord(RegisterType::SP, 0x9595);
+    WriteRegisterWord(RegisterType::PC, 0x22FB);
+    WriteRegisterWord(RegisterType::SP, 0x9595);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x22FB, 0x7F);
 }
@@ -27882,7 +27885,7 @@ void test_7F_023E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27895,8 +27898,8 @@ void test_7F_023E()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x28);
     CheckRegisterByte(RegisterType::L, 0x74);
-    CheckRegisterWord(RegisterType::PC, 0x5BCA);
-    CheckRegisterWord(RegisterType::SP, 0x094D);
+    WriteRegisterWord(RegisterType::PC, 0x5BC9);
+    WriteRegisterWord(RegisterType::SP, 0x094D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5BC9, 0x7F);
 }
@@ -27927,7 +27930,7 @@ void test_7F_023F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27940,8 +27943,8 @@ void test_7F_023F()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x97);
     CheckRegisterByte(RegisterType::L, 0x13);
-    CheckRegisterWord(RegisterType::PC, 0x3484);
-    CheckRegisterWord(RegisterType::SP, 0x8611);
+    WriteRegisterWord(RegisterType::PC, 0x3483);
+    WriteRegisterWord(RegisterType::SP, 0x8611);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3483, 0x7F);
 }
@@ -27972,7 +27975,7 @@ void test_7F_0240()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -27985,8 +27988,8 @@ void test_7F_0240()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xDB);
     CheckRegisterByte(RegisterType::L, 0x04);
-    CheckRegisterWord(RegisterType::PC, 0x0553);
-    CheckRegisterWord(RegisterType::SP, 0xAAB2);
+    WriteRegisterWord(RegisterType::PC, 0x0552);
+    WriteRegisterWord(RegisterType::SP, 0xAAB2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0552, 0x7F);
 }
@@ -28017,7 +28020,7 @@ void test_7F_0241()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28030,8 +28033,8 @@ void test_7F_0241()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xC1);
     CheckRegisterByte(RegisterType::L, 0xC7);
-    CheckRegisterWord(RegisterType::PC, 0xAEA1);
-    CheckRegisterWord(RegisterType::SP, 0x1AF7);
+    WriteRegisterWord(RegisterType::PC, 0xAEA0);
+    WriteRegisterWord(RegisterType::SP, 0x1AF7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAEA0, 0x7F);
 }
@@ -28062,7 +28065,7 @@ void test_7F_0242()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28075,8 +28078,8 @@ void test_7F_0242()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0xF5);
-    CheckRegisterWord(RegisterType::PC, 0x0186);
-    CheckRegisterWord(RegisterType::SP, 0x79DB);
+    WriteRegisterWord(RegisterType::PC, 0x0185);
+    WriteRegisterWord(RegisterType::SP, 0x79DB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0185, 0x7F);
 }
@@ -28107,7 +28110,7 @@ void test_7F_0243()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28120,8 +28123,8 @@ void test_7F_0243()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x9B);
     CheckRegisterByte(RegisterType::L, 0x6B);
-    CheckRegisterWord(RegisterType::PC, 0x21C6);
-    CheckRegisterWord(RegisterType::SP, 0xA94B);
+    WriteRegisterWord(RegisterType::PC, 0x21C5);
+    WriteRegisterWord(RegisterType::SP, 0xA94B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x21C5, 0x7F);
 }
@@ -28152,7 +28155,7 @@ void test_7F_0244()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28165,8 +28168,8 @@ void test_7F_0244()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x1D);
     CheckRegisterByte(RegisterType::L, 0x0E);
-    CheckRegisterWord(RegisterType::PC, 0x8FE3);
-    CheckRegisterWord(RegisterType::SP, 0x3BE7);
+    WriteRegisterWord(RegisterType::PC, 0x8FE2);
+    WriteRegisterWord(RegisterType::SP, 0x3BE7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8FE2, 0x7F);
 }
@@ -28197,7 +28200,7 @@ void test_7F_0245()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28210,8 +28213,8 @@ void test_7F_0245()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xD2);
     CheckRegisterByte(RegisterType::L, 0x9E);
-    CheckRegisterWord(RegisterType::PC, 0x1627);
-    CheckRegisterWord(RegisterType::SP, 0xDBFC);
+    WriteRegisterWord(RegisterType::PC, 0x1626);
+    WriteRegisterWord(RegisterType::SP, 0xDBFC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1626, 0x7F);
 }
@@ -28242,7 +28245,7 @@ void test_7F_0246()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28255,8 +28258,8 @@ void test_7F_0246()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xD0);
     CheckRegisterByte(RegisterType::L, 0x17);
-    CheckRegisterWord(RegisterType::PC, 0xF63A);
-    CheckRegisterWord(RegisterType::SP, 0x02C4);
+    WriteRegisterWord(RegisterType::PC, 0xF639);
+    WriteRegisterWord(RegisterType::SP, 0x02C4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF639, 0x7F);
 }
@@ -28287,7 +28290,7 @@ void test_7F_0247()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28300,8 +28303,8 @@ void test_7F_0247()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x29);
     CheckRegisterByte(RegisterType::L, 0xC0);
-    CheckRegisterWord(RegisterType::PC, 0x7457);
-    CheckRegisterWord(RegisterType::SP, 0x7BC4);
+    WriteRegisterWord(RegisterType::PC, 0x7456);
+    WriteRegisterWord(RegisterType::SP, 0x7BC4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7456, 0x7F);
 }
@@ -28332,7 +28335,7 @@ void test_7F_0248()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28345,8 +28348,8 @@ void test_7F_0248()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x91);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    CheckRegisterWord(RegisterType::PC, 0xB725);
-    CheckRegisterWord(RegisterType::SP, 0xF2E2);
+    WriteRegisterWord(RegisterType::PC, 0xB724);
+    WriteRegisterWord(RegisterType::SP, 0xF2E2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB724, 0x7F);
 }
@@ -28377,7 +28380,7 @@ void test_7F_0249()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28390,8 +28393,8 @@ void test_7F_0249()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xE6);
     CheckRegisterByte(RegisterType::L, 0xB9);
-    CheckRegisterWord(RegisterType::PC, 0x965D);
-    CheckRegisterWord(RegisterType::SP, 0x2B07);
+    WriteRegisterWord(RegisterType::PC, 0x965C);
+    WriteRegisterWord(RegisterType::SP, 0x2B07);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x965C, 0x7F);
 }
@@ -28422,7 +28425,7 @@ void test_7F_024A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28435,8 +28438,8 @@ void test_7F_024A()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xB5);
     CheckRegisterByte(RegisterType::L, 0x75);
-    CheckRegisterWord(RegisterType::PC, 0xFB2A);
-    CheckRegisterWord(RegisterType::SP, 0x873E);
+    WriteRegisterWord(RegisterType::PC, 0xFB29);
+    WriteRegisterWord(RegisterType::SP, 0x873E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFB29, 0x7F);
 }
@@ -28467,7 +28470,7 @@ void test_7F_024B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28480,8 +28483,8 @@ void test_7F_024B()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0x03);
-    CheckRegisterWord(RegisterType::PC, 0x3392);
-    CheckRegisterWord(RegisterType::SP, 0x932B);
+    WriteRegisterWord(RegisterType::PC, 0x3391);
+    WriteRegisterWord(RegisterType::SP, 0x932B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3391, 0x7F);
 }
@@ -28512,7 +28515,7 @@ void test_7F_024C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28525,8 +28528,8 @@ void test_7F_024C()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0xAA);
-    CheckRegisterWord(RegisterType::PC, 0x3D40);
-    CheckRegisterWord(RegisterType::SP, 0x5C63);
+    WriteRegisterWord(RegisterType::PC, 0x3D3F);
+    WriteRegisterWord(RegisterType::SP, 0x5C63);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3D3F, 0x7F);
 }
@@ -28557,7 +28560,7 @@ void test_7F_024D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28570,8 +28573,8 @@ void test_7F_024D()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xDD);
     CheckRegisterByte(RegisterType::L, 0x0B);
-    CheckRegisterWord(RegisterType::PC, 0x6E44);
-    CheckRegisterWord(RegisterType::SP, 0x8F4A);
+    WriteRegisterWord(RegisterType::PC, 0x6E43);
+    WriteRegisterWord(RegisterType::SP, 0x8F4A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6E43, 0x7F);
 }
@@ -28602,7 +28605,7 @@ void test_7F_024E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28615,8 +28618,8 @@ void test_7F_024E()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0xAE);
-    CheckRegisterWord(RegisterType::PC, 0x91C3);
-    CheckRegisterWord(RegisterType::SP, 0x6E7D);
+    WriteRegisterWord(RegisterType::PC, 0x91C2);
+    WriteRegisterWord(RegisterType::SP, 0x6E7D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x91C2, 0x7F);
 }
@@ -28647,7 +28650,7 @@ void test_7F_024F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28660,8 +28663,8 @@ void test_7F_024F()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xD0);
     CheckRegisterByte(RegisterType::L, 0x8E);
-    CheckRegisterWord(RegisterType::PC, 0x7E97);
-    CheckRegisterWord(RegisterType::SP, 0xBB61);
+    WriteRegisterWord(RegisterType::PC, 0x7E96);
+    WriteRegisterWord(RegisterType::SP, 0xBB61);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7E96, 0x7F);
 }
@@ -28692,7 +28695,7 @@ void test_7F_0250()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28705,8 +28708,8 @@ void test_7F_0250()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x19);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    CheckRegisterWord(RegisterType::PC, 0x0FF7);
-    CheckRegisterWord(RegisterType::SP, 0x3FEB);
+    WriteRegisterWord(RegisterType::PC, 0x0FF6);
+    WriteRegisterWord(RegisterType::SP, 0x3FEB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0FF6, 0x7F);
 }
@@ -28737,7 +28740,7 @@ void test_7F_0251()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28750,8 +28753,8 @@ void test_7F_0251()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xF8);
     CheckRegisterByte(RegisterType::L, 0xC0);
-    CheckRegisterWord(RegisterType::PC, 0xE286);
-    CheckRegisterWord(RegisterType::SP, 0x139D);
+    WriteRegisterWord(RegisterType::PC, 0xE285);
+    WriteRegisterWord(RegisterType::SP, 0x139D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE285, 0x7F);
 }
@@ -28782,7 +28785,7 @@ void test_7F_0252()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28795,8 +28798,8 @@ void test_7F_0252()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xD6);
     CheckRegisterByte(RegisterType::L, 0x91);
-    CheckRegisterWord(RegisterType::PC, 0x98C5);
-    CheckRegisterWord(RegisterType::SP, 0xA6AE);
+    WriteRegisterWord(RegisterType::PC, 0x98C4);
+    WriteRegisterWord(RegisterType::SP, 0xA6AE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x98C4, 0x7F);
 }
@@ -28827,7 +28830,7 @@ void test_7F_0253()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28840,8 +28843,8 @@ void test_7F_0253()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x25);
     CheckRegisterByte(RegisterType::L, 0x27);
-    CheckRegisterWord(RegisterType::PC, 0xCE94);
-    CheckRegisterWord(RegisterType::SP, 0x6470);
+    WriteRegisterWord(RegisterType::PC, 0xCE93);
+    WriteRegisterWord(RegisterType::SP, 0x6470);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCE93, 0x7F);
 }
@@ -28872,7 +28875,7 @@ void test_7F_0254()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28885,8 +28888,8 @@ void test_7F_0254()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x1C);
     CheckRegisterByte(RegisterType::L, 0x54);
-    CheckRegisterWord(RegisterType::PC, 0x63FE);
-    CheckRegisterWord(RegisterType::SP, 0x961C);
+    WriteRegisterWord(RegisterType::PC, 0x63FD);
+    WriteRegisterWord(RegisterType::SP, 0x961C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x63FD, 0x7F);
 }
@@ -28917,7 +28920,7 @@ void test_7F_0255()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28930,8 +28933,8 @@ void test_7F_0255()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x64);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    CheckRegisterWord(RegisterType::PC, 0xD7BA);
-    CheckRegisterWord(RegisterType::SP, 0x2337);
+    WriteRegisterWord(RegisterType::PC, 0xD7B9);
+    WriteRegisterWord(RegisterType::SP, 0x2337);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD7B9, 0x7F);
 }
@@ -28962,7 +28965,7 @@ void test_7F_0256()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -28975,8 +28978,8 @@ void test_7F_0256()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x3A);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    CheckRegisterWord(RegisterType::PC, 0xE27C);
-    CheckRegisterWord(RegisterType::SP, 0x0C56);
+    WriteRegisterWord(RegisterType::PC, 0xE27B);
+    WriteRegisterWord(RegisterType::SP, 0x0C56);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE27B, 0x7F);
 }
@@ -29007,7 +29010,7 @@ void test_7F_0257()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29020,8 +29023,8 @@ void test_7F_0257()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0x8E);
-    CheckRegisterWord(RegisterType::PC, 0xCC48);
-    CheckRegisterWord(RegisterType::SP, 0xF65B);
+    WriteRegisterWord(RegisterType::PC, 0xCC47);
+    WriteRegisterWord(RegisterType::SP, 0xF65B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCC47, 0x7F);
 }
@@ -29052,7 +29055,7 @@ void test_7F_0258()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29065,8 +29068,8 @@ void test_7F_0258()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x1D);
     CheckRegisterByte(RegisterType::L, 0xF1);
-    CheckRegisterWord(RegisterType::PC, 0x8AD3);
-    CheckRegisterWord(RegisterType::SP, 0x8C59);
+    WriteRegisterWord(RegisterType::PC, 0x8AD2);
+    WriteRegisterWord(RegisterType::SP, 0x8C59);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8AD2, 0x7F);
 }
@@ -29097,7 +29100,7 @@ void test_7F_0259()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29110,8 +29113,8 @@ void test_7F_0259()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x44);
     CheckRegisterByte(RegisterType::L, 0x6F);
-    CheckRegisterWord(RegisterType::PC, 0x7DB4);
-    CheckRegisterWord(RegisterType::SP, 0xAA02);
+    WriteRegisterWord(RegisterType::PC, 0x7DB3);
+    WriteRegisterWord(RegisterType::SP, 0xAA02);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7DB3, 0x7F);
 }
@@ -29142,7 +29145,7 @@ void test_7F_025A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29155,8 +29158,8 @@ void test_7F_025A()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x86);
     CheckRegisterByte(RegisterType::L, 0xE6);
-    CheckRegisterWord(RegisterType::PC, 0x009C);
-    CheckRegisterWord(RegisterType::SP, 0x8E9B);
+    WriteRegisterWord(RegisterType::PC, 0x009B);
+    WriteRegisterWord(RegisterType::SP, 0x8E9B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x009B, 0x7F);
 }
@@ -29187,7 +29190,7 @@ void test_7F_025B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29200,8 +29203,8 @@ void test_7F_025B()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0xBC);
-    CheckRegisterWord(RegisterType::PC, 0x14AF);
-    CheckRegisterWord(RegisterType::SP, 0x38E4);
+    WriteRegisterWord(RegisterType::PC, 0x14AE);
+    WriteRegisterWord(RegisterType::SP, 0x38E4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x14AE, 0x7F);
 }
@@ -29232,7 +29235,7 @@ void test_7F_025C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29245,8 +29248,8 @@ void test_7F_025C()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xD6);
     CheckRegisterByte(RegisterType::L, 0x0B);
-    CheckRegisterWord(RegisterType::PC, 0x3FB1);
-    CheckRegisterWord(RegisterType::SP, 0xE157);
+    WriteRegisterWord(RegisterType::PC, 0x3FB0);
+    WriteRegisterWord(RegisterType::SP, 0xE157);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3FB0, 0x7F);
 }
@@ -29277,7 +29280,7 @@ void test_7F_025D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29290,8 +29293,8 @@ void test_7F_025D()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x87);
     CheckRegisterByte(RegisterType::L, 0x89);
-    CheckRegisterWord(RegisterType::PC, 0x032A);
-    CheckRegisterWord(RegisterType::SP, 0x2B65);
+    WriteRegisterWord(RegisterType::PC, 0x0329);
+    WriteRegisterWord(RegisterType::SP, 0x2B65);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0329, 0x7F);
 }
@@ -29322,7 +29325,7 @@ void test_7F_025E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29335,8 +29338,8 @@ void test_7F_025E()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x77);
     CheckRegisterByte(RegisterType::L, 0xA9);
-    CheckRegisterWord(RegisterType::PC, 0xF486);
-    CheckRegisterWord(RegisterType::SP, 0x77DF);
+    WriteRegisterWord(RegisterType::PC, 0xF485);
+    WriteRegisterWord(RegisterType::SP, 0x77DF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF485, 0x7F);
 }
@@ -29367,7 +29370,7 @@ void test_7F_025F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29380,8 +29383,8 @@ void test_7F_025F()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x61);
     CheckRegisterByte(RegisterType::L, 0xC0);
-    CheckRegisterWord(RegisterType::PC, 0xF58A);
-    CheckRegisterWord(RegisterType::SP, 0x66FF);
+    WriteRegisterWord(RegisterType::PC, 0xF589);
+    WriteRegisterWord(RegisterType::SP, 0x66FF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF589, 0x7F);
 }
@@ -29412,7 +29415,7 @@ void test_7F_0260()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29425,8 +29428,8 @@ void test_7F_0260()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xA6);
     CheckRegisterByte(RegisterType::L, 0xB1);
-    CheckRegisterWord(RegisterType::PC, 0x9FEF);
-    CheckRegisterWord(RegisterType::SP, 0x16E0);
+    WriteRegisterWord(RegisterType::PC, 0x9FEE);
+    WriteRegisterWord(RegisterType::SP, 0x16E0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9FEE, 0x7F);
 }
@@ -29457,7 +29460,7 @@ void test_7F_0261()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29470,8 +29473,8 @@ void test_7F_0261()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xA3);
     CheckRegisterByte(RegisterType::L, 0x2B);
-    CheckRegisterWord(RegisterType::PC, 0x022A);
-    CheckRegisterWord(RegisterType::SP, 0xFE5A);
+    WriteRegisterWord(RegisterType::PC, 0x0229);
+    WriteRegisterWord(RegisterType::SP, 0xFE5A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0229, 0x7F);
 }
@@ -29502,7 +29505,7 @@ void test_7F_0262()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29515,8 +29518,8 @@ void test_7F_0262()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xBA);
     CheckRegisterByte(RegisterType::L, 0x36);
-    CheckRegisterWord(RegisterType::PC, 0x5B0D);
-    CheckRegisterWord(RegisterType::SP, 0x33EC);
+    WriteRegisterWord(RegisterType::PC, 0x5B0C);
+    WriteRegisterWord(RegisterType::SP, 0x33EC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5B0C, 0x7F);
 }
@@ -29547,7 +29550,7 @@ void test_7F_0263()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29560,8 +29563,8 @@ void test_7F_0263()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x8E);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    CheckRegisterWord(RegisterType::PC, 0x7691);
-    CheckRegisterWord(RegisterType::SP, 0x2014);
+    WriteRegisterWord(RegisterType::PC, 0x7690);
+    WriteRegisterWord(RegisterType::SP, 0x2014);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7690, 0x7F);
 }
@@ -29592,7 +29595,7 @@ void test_7F_0264()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29605,8 +29608,8 @@ void test_7F_0264()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x29);
     CheckRegisterByte(RegisterType::L, 0xC8);
-    CheckRegisterWord(RegisterType::PC, 0xD502);
-    CheckRegisterWord(RegisterType::SP, 0x0E81);
+    WriteRegisterWord(RegisterType::PC, 0xD501);
+    WriteRegisterWord(RegisterType::SP, 0x0E81);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD501, 0x7F);
 }
@@ -29637,7 +29640,7 @@ void test_7F_0265()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29650,8 +29653,8 @@ void test_7F_0265()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0x96);
-    CheckRegisterWord(RegisterType::PC, 0xCAB0);
-    CheckRegisterWord(RegisterType::SP, 0x7093);
+    WriteRegisterWord(RegisterType::PC, 0xCAAF);
+    WriteRegisterWord(RegisterType::SP, 0x7093);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCAAF, 0x7F);
 }
@@ -29682,7 +29685,7 @@ void test_7F_0266()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29695,8 +29698,8 @@ void test_7F_0266()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x75);
     CheckRegisterByte(RegisterType::L, 0x72);
-    CheckRegisterWord(RegisterType::PC, 0x9643);
-    CheckRegisterWord(RegisterType::SP, 0x48D3);
+    WriteRegisterWord(RegisterType::PC, 0x9642);
+    WriteRegisterWord(RegisterType::SP, 0x48D3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9642, 0x7F);
 }
@@ -29727,7 +29730,7 @@ void test_7F_0267()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29740,8 +29743,8 @@ void test_7F_0267()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xA4);
     CheckRegisterByte(RegisterType::L, 0x6B);
-    CheckRegisterWord(RegisterType::PC, 0x7FE1);
-    CheckRegisterWord(RegisterType::SP, 0xDC8D);
+    WriteRegisterWord(RegisterType::PC, 0x7FE0);
+    WriteRegisterWord(RegisterType::SP, 0xDC8D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7FE0, 0x7F);
 }
@@ -29772,7 +29775,7 @@ void test_7F_0268()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29785,8 +29788,8 @@ void test_7F_0268()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x00);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    CheckRegisterWord(RegisterType::PC, 0x60F9);
-    CheckRegisterWord(RegisterType::SP, 0x18AA);
+    WriteRegisterWord(RegisterType::PC, 0x60F8);
+    WriteRegisterWord(RegisterType::SP, 0x18AA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x60F8, 0x7F);
 }
@@ -29817,7 +29820,7 @@ void test_7F_0269()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29830,8 +29833,8 @@ void test_7F_0269()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xDE);
     CheckRegisterByte(RegisterType::L, 0x7D);
-    CheckRegisterWord(RegisterType::PC, 0x961F);
-    CheckRegisterWord(RegisterType::SP, 0xA633);
+    WriteRegisterWord(RegisterType::PC, 0x961E);
+    WriteRegisterWord(RegisterType::SP, 0xA633);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x961E, 0x7F);
 }
@@ -29862,7 +29865,7 @@ void test_7F_026A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29875,8 +29878,8 @@ void test_7F_026A()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x5A);
     CheckRegisterByte(RegisterType::L, 0x72);
-    CheckRegisterWord(RegisterType::PC, 0xB5AA);
-    CheckRegisterWord(RegisterType::SP, 0x2136);
+    WriteRegisterWord(RegisterType::PC, 0xB5A9);
+    WriteRegisterWord(RegisterType::SP, 0x2136);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB5A9, 0x7F);
 }
@@ -29907,7 +29910,7 @@ void test_7F_026B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29920,8 +29923,8 @@ void test_7F_026B()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xFC);
     CheckRegisterByte(RegisterType::L, 0x20);
-    CheckRegisterWord(RegisterType::PC, 0x3BEA);
-    CheckRegisterWord(RegisterType::SP, 0xE14D);
+    WriteRegisterWord(RegisterType::PC, 0x3BE9);
+    WriteRegisterWord(RegisterType::SP, 0xE14D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3BE9, 0x7F);
 }
@@ -29952,7 +29955,7 @@ void test_7F_026C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -29965,8 +29968,8 @@ void test_7F_026C()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x58);
     CheckRegisterByte(RegisterType::L, 0x79);
-    CheckRegisterWord(RegisterType::PC, 0x9B6A);
-    CheckRegisterWord(RegisterType::SP, 0xC8C6);
+    WriteRegisterWord(RegisterType::PC, 0x9B69);
+    WriteRegisterWord(RegisterType::SP, 0xC8C6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9B69, 0x7F);
 }
@@ -29997,7 +30000,7 @@ void test_7F_026D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30010,8 +30013,8 @@ void test_7F_026D()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x4D);
     CheckRegisterByte(RegisterType::L, 0x76);
-    CheckRegisterWord(RegisterType::PC, 0x399C);
-    CheckRegisterWord(RegisterType::SP, 0xAB2E);
+    WriteRegisterWord(RegisterType::PC, 0x399B);
+    WriteRegisterWord(RegisterType::SP, 0xAB2E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x399B, 0x7F);
 }
@@ -30042,7 +30045,7 @@ void test_7F_026E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30055,8 +30058,8 @@ void test_7F_026E()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xF1);
     CheckRegisterByte(RegisterType::L, 0x11);
-    CheckRegisterWord(RegisterType::PC, 0x917C);
-    CheckRegisterWord(RegisterType::SP, 0x1E5B);
+    WriteRegisterWord(RegisterType::PC, 0x917B);
+    WriteRegisterWord(RegisterType::SP, 0x1E5B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x917B, 0x7F);
 }
@@ -30087,7 +30090,7 @@ void test_7F_026F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30100,8 +30103,8 @@ void test_7F_026F()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xE1);
     CheckRegisterByte(RegisterType::L, 0xDD);
-    CheckRegisterWord(RegisterType::PC, 0x4980);
-    CheckRegisterWord(RegisterType::SP, 0xDF20);
+    WriteRegisterWord(RegisterType::PC, 0x497F);
+    WriteRegisterWord(RegisterType::SP, 0xDF20);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x497F, 0x7F);
 }
@@ -30132,7 +30135,7 @@ void test_7F_0270()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30145,8 +30148,8 @@ void test_7F_0270()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xCB);
     CheckRegisterByte(RegisterType::L, 0x5D);
-    CheckRegisterWord(RegisterType::PC, 0xDD23);
-    CheckRegisterWord(RegisterType::SP, 0xF480);
+    WriteRegisterWord(RegisterType::PC, 0xDD22);
+    WriteRegisterWord(RegisterType::SP, 0xF480);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDD22, 0x7F);
 }
@@ -30177,7 +30180,7 @@ void test_7F_0271()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30190,8 +30193,8 @@ void test_7F_0271()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xF0);
     CheckRegisterByte(RegisterType::L, 0xB5);
-    CheckRegisterWord(RegisterType::PC, 0x7A82);
-    CheckRegisterWord(RegisterType::SP, 0xB9F9);
+    WriteRegisterWord(RegisterType::PC, 0x7A81);
+    WriteRegisterWord(RegisterType::SP, 0xB9F9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7A81, 0x7F);
 }
@@ -30222,7 +30225,7 @@ void test_7F_0272()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30235,8 +30238,8 @@ void test_7F_0272()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xE5);
     CheckRegisterByte(RegisterType::L, 0xAB);
-    CheckRegisterWord(RegisterType::PC, 0x8FB9);
-    CheckRegisterWord(RegisterType::SP, 0x197F);
+    WriteRegisterWord(RegisterType::PC, 0x8FB8);
+    WriteRegisterWord(RegisterType::SP, 0x197F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8FB8, 0x7F);
 }
@@ -30267,7 +30270,7 @@ void test_7F_0273()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30280,8 +30283,8 @@ void test_7F_0273()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xDB);
     CheckRegisterByte(RegisterType::L, 0x2A);
-    CheckRegisterWord(RegisterType::PC, 0x92BC);
-    CheckRegisterWord(RegisterType::SP, 0xCA24);
+    WriteRegisterWord(RegisterType::PC, 0x92BB);
+    WriteRegisterWord(RegisterType::SP, 0xCA24);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x92BB, 0x7F);
 }
@@ -30312,7 +30315,7 @@ void test_7F_0274()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30325,8 +30328,8 @@ void test_7F_0274()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x88);
     CheckRegisterByte(RegisterType::L, 0xE7);
-    CheckRegisterWord(RegisterType::PC, 0x2EA5);
-    CheckRegisterWord(RegisterType::SP, 0xE3A3);
+    WriteRegisterWord(RegisterType::PC, 0x2EA4);
+    WriteRegisterWord(RegisterType::SP, 0xE3A3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2EA4, 0x7F);
 }
@@ -30357,7 +30360,7 @@ void test_7F_0275()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30370,8 +30373,8 @@ void test_7F_0275()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x98);
     CheckRegisterByte(RegisterType::L, 0x47);
-    CheckRegisterWord(RegisterType::PC, 0x5D02);
-    CheckRegisterWord(RegisterType::SP, 0x8603);
+    WriteRegisterWord(RegisterType::PC, 0x5D01);
+    WriteRegisterWord(RegisterType::SP, 0x8603);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5D01, 0x7F);
 }
@@ -30402,7 +30405,7 @@ void test_7F_0276()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30415,8 +30418,8 @@ void test_7F_0276()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x30);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    CheckRegisterWord(RegisterType::PC, 0xDFE9);
-    CheckRegisterWord(RegisterType::SP, 0xA4FD);
+    WriteRegisterWord(RegisterType::PC, 0xDFE8);
+    WriteRegisterWord(RegisterType::SP, 0xA4FD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDFE8, 0x7F);
 }
@@ -30447,7 +30450,7 @@ void test_7F_0277()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30460,8 +30463,8 @@ void test_7F_0277()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x45);
     CheckRegisterByte(RegisterType::L, 0x76);
-    CheckRegisterWord(RegisterType::PC, 0x4AB3);
-    CheckRegisterWord(RegisterType::SP, 0xAC91);
+    WriteRegisterWord(RegisterType::PC, 0x4AB2);
+    WriteRegisterWord(RegisterType::SP, 0xAC91);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4AB2, 0x7F);
 }
@@ -30492,7 +30495,7 @@ void test_7F_0278()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30505,8 +30508,8 @@ void test_7F_0278()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x48);
     CheckRegisterByte(RegisterType::L, 0xC8);
-    CheckRegisterWord(RegisterType::PC, 0x3C29);
-    CheckRegisterWord(RegisterType::SP, 0x0509);
+    WriteRegisterWord(RegisterType::PC, 0x3C28);
+    WriteRegisterWord(RegisterType::SP, 0x0509);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3C28, 0x7F);
 }
@@ -30537,7 +30540,7 @@ void test_7F_0279()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30550,8 +30553,8 @@ void test_7F_0279()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x61);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    CheckRegisterWord(RegisterType::PC, 0xF64F);
-    CheckRegisterWord(RegisterType::SP, 0xD64A);
+    WriteRegisterWord(RegisterType::PC, 0xF64E);
+    WriteRegisterWord(RegisterType::SP, 0xD64A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF64E, 0x7F);
 }
@@ -30582,7 +30585,7 @@ void test_7F_027A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30595,8 +30598,8 @@ void test_7F_027A()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0x4B);
-    CheckRegisterWord(RegisterType::PC, 0x7359);
-    CheckRegisterWord(RegisterType::SP, 0x385C);
+    WriteRegisterWord(RegisterType::PC, 0x7358);
+    WriteRegisterWord(RegisterType::SP, 0x385C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7358, 0x7F);
 }
@@ -30627,7 +30630,7 @@ void test_7F_027B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30640,8 +30643,8 @@ void test_7F_027B()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xE5);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    CheckRegisterWord(RegisterType::PC, 0xB383);
-    CheckRegisterWord(RegisterType::SP, 0xC5A7);
+    WriteRegisterWord(RegisterType::PC, 0xB382);
+    WriteRegisterWord(RegisterType::SP, 0xC5A7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB382, 0x7F);
 }
@@ -30672,7 +30675,7 @@ void test_7F_027C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30685,8 +30688,8 @@ void test_7F_027C()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0x8F);
-    CheckRegisterWord(RegisterType::PC, 0xB3DC);
-    CheckRegisterWord(RegisterType::SP, 0xA871);
+    WriteRegisterWord(RegisterType::PC, 0xB3DB);
+    WriteRegisterWord(RegisterType::SP, 0xA871);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB3DB, 0x7F);
 }
@@ -30717,7 +30720,7 @@ void test_7F_027D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30730,8 +30733,8 @@ void test_7F_027D()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    CheckRegisterWord(RegisterType::PC, 0xAECE);
-    CheckRegisterWord(RegisterType::SP, 0x54B5);
+    WriteRegisterWord(RegisterType::PC, 0xAECD);
+    WriteRegisterWord(RegisterType::SP, 0x54B5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAECD, 0x7F);
 }
@@ -30762,7 +30765,7 @@ void test_7F_027E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30775,8 +30778,8 @@ void test_7F_027E()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x98);
     CheckRegisterByte(RegisterType::L, 0xF9);
-    CheckRegisterWord(RegisterType::PC, 0x236A);
-    CheckRegisterWord(RegisterType::SP, 0x36BC);
+    WriteRegisterWord(RegisterType::PC, 0x2369);
+    WriteRegisterWord(RegisterType::SP, 0x36BC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2369, 0x7F);
 }
@@ -30807,7 +30810,7 @@ void test_7F_027F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30820,8 +30823,8 @@ void test_7F_027F()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x5E);
     CheckRegisterByte(RegisterType::L, 0x2C);
-    CheckRegisterWord(RegisterType::PC, 0xB93D);
-    CheckRegisterWord(RegisterType::SP, 0x325D);
+    WriteRegisterWord(RegisterType::PC, 0xB93C);
+    WriteRegisterWord(RegisterType::SP, 0x325D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB93C, 0x7F);
 }
@@ -30852,7 +30855,7 @@ void test_7F_0280()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30865,8 +30868,8 @@ void test_7F_0280()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x64);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    CheckRegisterWord(RegisterType::PC, 0x614A);
-    CheckRegisterWord(RegisterType::SP, 0xEF6A);
+    WriteRegisterWord(RegisterType::PC, 0x6149);
+    WriteRegisterWord(RegisterType::SP, 0xEF6A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6149, 0x7F);
 }
@@ -30897,7 +30900,7 @@ void test_7F_0281()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30910,8 +30913,8 @@ void test_7F_0281()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x12);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    CheckRegisterWord(RegisterType::PC, 0x5D1F);
-    CheckRegisterWord(RegisterType::SP, 0x0F09);
+    WriteRegisterWord(RegisterType::PC, 0x5D1E);
+    WriteRegisterWord(RegisterType::SP, 0x0F09);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5D1E, 0x7F);
 }
@@ -30942,7 +30945,7 @@ void test_7F_0282()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -30955,8 +30958,8 @@ void test_7F_0282()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xF6);
     CheckRegisterByte(RegisterType::L, 0xFC);
-    CheckRegisterWord(RegisterType::PC, 0x9538);
-    CheckRegisterWord(RegisterType::SP, 0x28EA);
+    WriteRegisterWord(RegisterType::PC, 0x9537);
+    WriteRegisterWord(RegisterType::SP, 0x28EA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9537, 0x7F);
 }
@@ -30987,7 +30990,7 @@ void test_7F_0283()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31000,8 +31003,8 @@ void test_7F_0283()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x57);
     CheckRegisterByte(RegisterType::L, 0xCD);
-    CheckRegisterWord(RegisterType::PC, 0x24FD);
-    CheckRegisterWord(RegisterType::SP, 0xF63F);
+    WriteRegisterWord(RegisterType::PC, 0x24FC);
+    WriteRegisterWord(RegisterType::SP, 0xF63F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x24FC, 0x7F);
 }
@@ -31032,7 +31035,7 @@ void test_7F_0284()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31045,8 +31048,8 @@ void test_7F_0284()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xE9);
     CheckRegisterByte(RegisterType::L, 0x6F);
-    CheckRegisterWord(RegisterType::PC, 0x560E);
-    CheckRegisterWord(RegisterType::SP, 0x7081);
+    WriteRegisterWord(RegisterType::PC, 0x560D);
+    WriteRegisterWord(RegisterType::SP, 0x7081);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x560D, 0x7F);
 }
@@ -31077,7 +31080,7 @@ void test_7F_0285()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31090,8 +31093,8 @@ void test_7F_0285()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0xC9);
-    CheckRegisterWord(RegisterType::PC, 0xF8A8);
-    CheckRegisterWord(RegisterType::SP, 0x79EF);
+    WriteRegisterWord(RegisterType::PC, 0xF8A7);
+    WriteRegisterWord(RegisterType::SP, 0x79EF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF8A7, 0x7F);
 }
@@ -31122,7 +31125,7 @@ void test_7F_0286()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31135,8 +31138,8 @@ void test_7F_0286()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x16);
     CheckRegisterByte(RegisterType::L, 0xD4);
-    CheckRegisterWord(RegisterType::PC, 0x3F51);
-    CheckRegisterWord(RegisterType::SP, 0x3B13);
+    WriteRegisterWord(RegisterType::PC, 0x3F50);
+    WriteRegisterWord(RegisterType::SP, 0x3B13);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3F50, 0x7F);
 }
@@ -31167,7 +31170,7 @@ void test_7F_0287()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31180,8 +31183,8 @@ void test_7F_0287()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x9C);
     CheckRegisterByte(RegisterType::L, 0x2F);
-    CheckRegisterWord(RegisterType::PC, 0x5D79);
-    CheckRegisterWord(RegisterType::SP, 0x7E6F);
+    WriteRegisterWord(RegisterType::PC, 0x5D78);
+    WriteRegisterWord(RegisterType::SP, 0x7E6F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5D78, 0x7F);
 }
@@ -31212,7 +31215,7 @@ void test_7F_0288()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31225,8 +31228,8 @@ void test_7F_0288()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xD9);
     CheckRegisterByte(RegisterType::L, 0x4E);
-    CheckRegisterWord(RegisterType::PC, 0xC71E);
-    CheckRegisterWord(RegisterType::SP, 0x1A05);
+    WriteRegisterWord(RegisterType::PC, 0xC71D);
+    WriteRegisterWord(RegisterType::SP, 0x1A05);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC71D, 0x7F);
 }
@@ -31257,7 +31260,7 @@ void test_7F_0289()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31270,8 +31273,8 @@ void test_7F_0289()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x76);
     CheckRegisterByte(RegisterType::L, 0x84);
-    CheckRegisterWord(RegisterType::PC, 0x9FC6);
-    CheckRegisterWord(RegisterType::SP, 0xFA9C);
+    WriteRegisterWord(RegisterType::PC, 0x9FC5);
+    WriteRegisterWord(RegisterType::SP, 0xFA9C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9FC5, 0x7F);
 }
@@ -31302,7 +31305,7 @@ void test_7F_028A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31315,8 +31318,8 @@ void test_7F_028A()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x53);
     CheckRegisterByte(RegisterType::L, 0xCC);
-    CheckRegisterWord(RegisterType::PC, 0xA37A);
-    CheckRegisterWord(RegisterType::SP, 0xD2D1);
+    WriteRegisterWord(RegisterType::PC, 0xA379);
+    WriteRegisterWord(RegisterType::SP, 0xD2D1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA379, 0x7F);
 }
@@ -31347,7 +31350,7 @@ void test_7F_028B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31360,8 +31363,8 @@ void test_7F_028B()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x80);
     CheckRegisterByte(RegisterType::L, 0x8B);
-    CheckRegisterWord(RegisterType::PC, 0xC625);
-    CheckRegisterWord(RegisterType::SP, 0xF76D);
+    WriteRegisterWord(RegisterType::PC, 0xC624);
+    WriteRegisterWord(RegisterType::SP, 0xF76D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC624, 0x7F);
 }
@@ -31392,7 +31395,7 @@ void test_7F_028C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31405,8 +31408,8 @@ void test_7F_028C()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xF8);
     CheckRegisterByte(RegisterType::L, 0x21);
-    CheckRegisterWord(RegisterType::PC, 0xE7E2);
-    CheckRegisterWord(RegisterType::SP, 0x0E00);
+    WriteRegisterWord(RegisterType::PC, 0xE7E1);
+    WriteRegisterWord(RegisterType::SP, 0x0E00);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE7E1, 0x7F);
 }
@@ -31437,7 +31440,7 @@ void test_7F_028D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31450,8 +31453,8 @@ void test_7F_028D()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x07);
     CheckRegisterByte(RegisterType::L, 0xAB);
-    CheckRegisterWord(RegisterType::PC, 0xBF9F);
-    CheckRegisterWord(RegisterType::SP, 0xD4E6);
+    WriteRegisterWord(RegisterType::PC, 0xBF9E);
+    WriteRegisterWord(RegisterType::SP, 0xD4E6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBF9E, 0x7F);
 }
@@ -31482,7 +31485,7 @@ void test_7F_028E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31495,8 +31498,8 @@ void test_7F_028E()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xFD);
     CheckRegisterByte(RegisterType::L, 0x05);
-    CheckRegisterWord(RegisterType::PC, 0x5996);
-    CheckRegisterWord(RegisterType::SP, 0x9D4D);
+    WriteRegisterWord(RegisterType::PC, 0x5995);
+    WriteRegisterWord(RegisterType::SP, 0x9D4D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5995, 0x7F);
 }
@@ -31527,7 +31530,7 @@ void test_7F_028F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31540,8 +31543,8 @@ void test_7F_028F()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xCA);
     CheckRegisterByte(RegisterType::L, 0x49);
-    CheckRegisterWord(RegisterType::PC, 0xEDB0);
-    CheckRegisterWord(RegisterType::SP, 0x1186);
+    WriteRegisterWord(RegisterType::PC, 0xEDAF);
+    WriteRegisterWord(RegisterType::SP, 0x1186);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEDAF, 0x7F);
 }
@@ -31572,7 +31575,7 @@ void test_7F_0290()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31585,8 +31588,8 @@ void test_7F_0290()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xE6);
     CheckRegisterByte(RegisterType::L, 0x4C);
-    CheckRegisterWord(RegisterType::PC, 0xEB62);
-    CheckRegisterWord(RegisterType::SP, 0xA40E);
+    WriteRegisterWord(RegisterType::PC, 0xEB61);
+    WriteRegisterWord(RegisterType::SP, 0xA40E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEB61, 0x7F);
 }
@@ -31617,7 +31620,7 @@ void test_7F_0291()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31630,8 +31633,8 @@ void test_7F_0291()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0xF3);
-    CheckRegisterWord(RegisterType::PC, 0x54F2);
-    CheckRegisterWord(RegisterType::SP, 0xCD1D);
+    WriteRegisterWord(RegisterType::PC, 0x54F1);
+    WriteRegisterWord(RegisterType::SP, 0xCD1D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x54F1, 0x7F);
 }
@@ -31662,7 +31665,7 @@ void test_7F_0292()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31675,8 +31678,8 @@ void test_7F_0292()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x7D);
     CheckRegisterByte(RegisterType::L, 0x6A);
-    CheckRegisterWord(RegisterType::PC, 0x9207);
-    CheckRegisterWord(RegisterType::SP, 0xA7F4);
+    WriteRegisterWord(RegisterType::PC, 0x9206);
+    WriteRegisterWord(RegisterType::SP, 0xA7F4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9206, 0x7F);
 }
@@ -31707,7 +31710,7 @@ void test_7F_0293()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31720,8 +31723,8 @@ void test_7F_0293()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x5B);
     CheckRegisterByte(RegisterType::L, 0xBA);
-    CheckRegisterWord(RegisterType::PC, 0x4156);
-    CheckRegisterWord(RegisterType::SP, 0x45EB);
+    WriteRegisterWord(RegisterType::PC, 0x4155);
+    WriteRegisterWord(RegisterType::SP, 0x45EB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4155, 0x7F);
 }
@@ -31752,7 +31755,7 @@ void test_7F_0294()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31765,8 +31768,8 @@ void test_7F_0294()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x02);
     CheckRegisterByte(RegisterType::L, 0x36);
-    CheckRegisterWord(RegisterType::PC, 0x07CF);
-    CheckRegisterWord(RegisterType::SP, 0xFB14);
+    WriteRegisterWord(RegisterType::PC, 0x07CE);
+    WriteRegisterWord(RegisterType::SP, 0xFB14);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x07CE, 0x7F);
 }
@@ -31797,7 +31800,7 @@ void test_7F_0295()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31810,8 +31813,8 @@ void test_7F_0295()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xA8);
     CheckRegisterByte(RegisterType::L, 0x6E);
-    CheckRegisterWord(RegisterType::PC, 0x5042);
-    CheckRegisterWord(RegisterType::SP, 0x257D);
+    WriteRegisterWord(RegisterType::PC, 0x5041);
+    WriteRegisterWord(RegisterType::SP, 0x257D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5041, 0x7F);
 }
@@ -31842,7 +31845,7 @@ void test_7F_0296()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31855,8 +31858,8 @@ void test_7F_0296()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x1A);
     CheckRegisterByte(RegisterType::L, 0x53);
-    CheckRegisterWord(RegisterType::PC, 0x4D81);
-    CheckRegisterWord(RegisterType::SP, 0xF95B);
+    WriteRegisterWord(RegisterType::PC, 0x4D80);
+    WriteRegisterWord(RegisterType::SP, 0xF95B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4D80, 0x7F);
 }
@@ -31887,7 +31890,7 @@ void test_7F_0297()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31900,8 +31903,8 @@ void test_7F_0297()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x99);
     CheckRegisterByte(RegisterType::L, 0x1D);
-    CheckRegisterWord(RegisterType::PC, 0xE1FC);
-    CheckRegisterWord(RegisterType::SP, 0x6299);
+    WriteRegisterWord(RegisterType::PC, 0xE1FB);
+    WriteRegisterWord(RegisterType::SP, 0x6299);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE1FB, 0x7F);
 }
@@ -31932,7 +31935,7 @@ void test_7F_0298()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31945,8 +31948,8 @@ void test_7F_0298()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x3B);
     CheckRegisterByte(RegisterType::L, 0x40);
-    CheckRegisterWord(RegisterType::PC, 0x59DD);
-    CheckRegisterWord(RegisterType::SP, 0x2E23);
+    WriteRegisterWord(RegisterType::PC, 0x59DC);
+    WriteRegisterWord(RegisterType::SP, 0x2E23);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x59DC, 0x7F);
 }
@@ -31977,7 +31980,7 @@ void test_7F_0299()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -31990,8 +31993,8 @@ void test_7F_0299()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xE7);
     CheckRegisterByte(RegisterType::L, 0xBE);
-    CheckRegisterWord(RegisterType::PC, 0x4C9E);
-    CheckRegisterWord(RegisterType::SP, 0x9E40);
+    WriteRegisterWord(RegisterType::PC, 0x4C9D);
+    WriteRegisterWord(RegisterType::SP, 0x9E40);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4C9D, 0x7F);
 }
@@ -32022,7 +32025,7 @@ void test_7F_029A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32035,8 +32038,8 @@ void test_7F_029A()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0xA2);
-    CheckRegisterWord(RegisterType::PC, 0x73A4);
-    CheckRegisterWord(RegisterType::SP, 0xAD68);
+    WriteRegisterWord(RegisterType::PC, 0x73A3);
+    WriteRegisterWord(RegisterType::SP, 0xAD68);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x73A3, 0x7F);
 }
@@ -32067,7 +32070,7 @@ void test_7F_029B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32080,8 +32083,8 @@ void test_7F_029B()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x3F);
     CheckRegisterByte(RegisterType::L, 0x91);
-    CheckRegisterWord(RegisterType::PC, 0x608C);
-    CheckRegisterWord(RegisterType::SP, 0xD691);
+    WriteRegisterWord(RegisterType::PC, 0x608B);
+    WriteRegisterWord(RegisterType::SP, 0xD691);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x608B, 0x7F);
 }
@@ -32112,7 +32115,7 @@ void test_7F_029C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32125,8 +32128,8 @@ void test_7F_029C()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0x76);
-    CheckRegisterWord(RegisterType::PC, 0x12F4);
-    CheckRegisterWord(RegisterType::SP, 0xCD54);
+    WriteRegisterWord(RegisterType::PC, 0x12F3);
+    WriteRegisterWord(RegisterType::SP, 0xCD54);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x12F3, 0x7F);
 }
@@ -32157,7 +32160,7 @@ void test_7F_029D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32170,8 +32173,8 @@ void test_7F_029D()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0x3A);
-    CheckRegisterWord(RegisterType::PC, 0x8FC2);
-    CheckRegisterWord(RegisterType::SP, 0x8A53);
+    WriteRegisterWord(RegisterType::PC, 0x8FC1);
+    WriteRegisterWord(RegisterType::SP, 0x8A53);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8FC1, 0x7F);
 }
@@ -32202,7 +32205,7 @@ void test_7F_029E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32215,8 +32218,8 @@ void test_7F_029E()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xAF);
     CheckRegisterByte(RegisterType::L, 0x66);
-    CheckRegisterWord(RegisterType::PC, 0x425D);
-    CheckRegisterWord(RegisterType::SP, 0x7D22);
+    WriteRegisterWord(RegisterType::PC, 0x425C);
+    WriteRegisterWord(RegisterType::SP, 0x7D22);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x425C, 0x7F);
 }
@@ -32247,7 +32250,7 @@ void test_7F_029F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32260,8 +32263,8 @@ void test_7F_029F()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x32);
     CheckRegisterByte(RegisterType::L, 0xFF);
-    CheckRegisterWord(RegisterType::PC, 0x29EC);
-    CheckRegisterWord(RegisterType::SP, 0x5F54);
+    WriteRegisterWord(RegisterType::PC, 0x29EB);
+    WriteRegisterWord(RegisterType::SP, 0x5F54);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x29EB, 0x7F);
 }
@@ -32292,7 +32295,7 @@ void test_7F_02A0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32305,8 +32308,8 @@ void test_7F_02A0()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xC3);
     CheckRegisterByte(RegisterType::L, 0xF1);
-    CheckRegisterWord(RegisterType::PC, 0xBD0A);
-    CheckRegisterWord(RegisterType::SP, 0xF3A7);
+    WriteRegisterWord(RegisterType::PC, 0xBD09);
+    WriteRegisterWord(RegisterType::SP, 0xF3A7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBD09, 0x7F);
 }
@@ -32337,7 +32340,7 @@ void test_7F_02A1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32350,8 +32353,8 @@ void test_7F_02A1()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x42);
     CheckRegisterByte(RegisterType::L, 0x02);
-    CheckRegisterWord(RegisterType::PC, 0xE5E6);
-    CheckRegisterWord(RegisterType::SP, 0xF621);
+    WriteRegisterWord(RegisterType::PC, 0xE5E5);
+    WriteRegisterWord(RegisterType::SP, 0xF621);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE5E5, 0x7F);
 }
@@ -32382,7 +32385,7 @@ void test_7F_02A2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32395,8 +32398,8 @@ void test_7F_02A2()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x5F);
     CheckRegisterByte(RegisterType::L, 0xFC);
-    CheckRegisterWord(RegisterType::PC, 0x9C3E);
-    CheckRegisterWord(RegisterType::SP, 0xD2B9);
+    WriteRegisterWord(RegisterType::PC, 0x9C3D);
+    WriteRegisterWord(RegisterType::SP, 0xD2B9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9C3D, 0x7F);
 }
@@ -32427,7 +32430,7 @@ void test_7F_02A3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32440,8 +32443,8 @@ void test_7F_02A3()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xFE);
     CheckRegisterByte(RegisterType::L, 0x22);
-    CheckRegisterWord(RegisterType::PC, 0x798C);
-    CheckRegisterWord(RegisterType::SP, 0xB9FC);
+    WriteRegisterWord(RegisterType::PC, 0x798B);
+    WriteRegisterWord(RegisterType::SP, 0xB9FC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x798B, 0x7F);
 }
@@ -32472,7 +32475,7 @@ void test_7F_02A4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32485,8 +32488,8 @@ void test_7F_02A4()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x51);
     CheckRegisterByte(RegisterType::L, 0x98);
-    CheckRegisterWord(RegisterType::PC, 0x17B3);
-    CheckRegisterWord(RegisterType::SP, 0x8F00);
+    WriteRegisterWord(RegisterType::PC, 0x17B2);
+    WriteRegisterWord(RegisterType::SP, 0x8F00);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x17B2, 0x7F);
 }
@@ -32517,7 +32520,7 @@ void test_7F_02A5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32530,8 +32533,8 @@ void test_7F_02A5()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xB9);
     CheckRegisterByte(RegisterType::L, 0x02);
-    CheckRegisterWord(RegisterType::PC, 0x0BDF);
-    CheckRegisterWord(RegisterType::SP, 0x8C1C);
+    WriteRegisterWord(RegisterType::PC, 0x0BDE);
+    WriteRegisterWord(RegisterType::SP, 0x8C1C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0BDE, 0x7F);
 }
@@ -32562,7 +32565,7 @@ void test_7F_02A6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32575,8 +32578,8 @@ void test_7F_02A6()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xA9);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    CheckRegisterWord(RegisterType::PC, 0xE7A9);
-    CheckRegisterWord(RegisterType::SP, 0x7833);
+    WriteRegisterWord(RegisterType::PC, 0xE7A8);
+    WriteRegisterWord(RegisterType::SP, 0x7833);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE7A8, 0x7F);
 }
@@ -32607,7 +32610,7 @@ void test_7F_02A7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32620,8 +32623,8 @@ void test_7F_02A7()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xC6);
     CheckRegisterByte(RegisterType::L, 0x34);
-    CheckRegisterWord(RegisterType::PC, 0x552E);
-    CheckRegisterWord(RegisterType::SP, 0x47AD);
+    WriteRegisterWord(RegisterType::PC, 0x552D);
+    WriteRegisterWord(RegisterType::SP, 0x47AD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x552D, 0x7F);
 }
@@ -32652,7 +32655,7 @@ void test_7F_02A8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32665,8 +32668,8 @@ void test_7F_02A8()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x35);
     CheckRegisterByte(RegisterType::L, 0x00);
-    CheckRegisterWord(RegisterType::PC, 0x38D4);
-    CheckRegisterWord(RegisterType::SP, 0x8784);
+    WriteRegisterWord(RegisterType::PC, 0x38D3);
+    WriteRegisterWord(RegisterType::SP, 0x8784);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x38D3, 0x7F);
 }
@@ -32697,7 +32700,7 @@ void test_7F_02A9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32710,8 +32713,8 @@ void test_7F_02A9()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x0A);
     CheckRegisterByte(RegisterType::L, 0x0A);
-    CheckRegisterWord(RegisterType::PC, 0xE799);
-    CheckRegisterWord(RegisterType::SP, 0x9D28);
+    WriteRegisterWord(RegisterType::PC, 0xE798);
+    WriteRegisterWord(RegisterType::SP, 0x9D28);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE798, 0x7F);
 }
@@ -32742,7 +32745,7 @@ void test_7F_02AA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32755,8 +32758,8 @@ void test_7F_02AA()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x23);
     CheckRegisterByte(RegisterType::L, 0xDD);
-    CheckRegisterWord(RegisterType::PC, 0xF3D4);
-    CheckRegisterWord(RegisterType::SP, 0x4827);
+    WriteRegisterWord(RegisterType::PC, 0xF3D3);
+    WriteRegisterWord(RegisterType::SP, 0x4827);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF3D3, 0x7F);
 }
@@ -32787,7 +32790,7 @@ void test_7F_02AB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32800,8 +32803,8 @@ void test_7F_02AB()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x1F);
     CheckRegisterByte(RegisterType::L, 0x25);
-    CheckRegisterWord(RegisterType::PC, 0x1967);
-    CheckRegisterWord(RegisterType::SP, 0xE020);
+    WriteRegisterWord(RegisterType::PC, 0x1966);
+    WriteRegisterWord(RegisterType::SP, 0xE020);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1966, 0x7F);
 }
@@ -32832,7 +32835,7 @@ void test_7F_02AC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32845,8 +32848,8 @@ void test_7F_02AC()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0xD7);
-    CheckRegisterWord(RegisterType::PC, 0x9579);
-    CheckRegisterWord(RegisterType::SP, 0xD0E5);
+    WriteRegisterWord(RegisterType::PC, 0x9578);
+    WriteRegisterWord(RegisterType::SP, 0xD0E5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9578, 0x7F);
 }
@@ -32877,7 +32880,7 @@ void test_7F_02AD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32890,8 +32893,8 @@ void test_7F_02AD()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x51);
     CheckRegisterByte(RegisterType::L, 0xA8);
-    CheckRegisterWord(RegisterType::PC, 0xF342);
-    CheckRegisterWord(RegisterType::SP, 0x45DB);
+    WriteRegisterWord(RegisterType::PC, 0xF341);
+    WriteRegisterWord(RegisterType::SP, 0x45DB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF341, 0x7F);
 }
@@ -32922,7 +32925,7 @@ void test_7F_02AE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32935,8 +32938,8 @@ void test_7F_02AE()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xDD);
     CheckRegisterByte(RegisterType::L, 0xD4);
-    CheckRegisterWord(RegisterType::PC, 0x2619);
-    CheckRegisterWord(RegisterType::SP, 0x18D4);
+    WriteRegisterWord(RegisterType::PC, 0x2618);
+    WriteRegisterWord(RegisterType::SP, 0x18D4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2618, 0x7F);
 }
@@ -32967,7 +32970,7 @@ void test_7F_02AF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -32980,8 +32983,8 @@ void test_7F_02AF()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x49);
     CheckRegisterByte(RegisterType::L, 0xFE);
-    CheckRegisterWord(RegisterType::PC, 0xF82A);
-    CheckRegisterWord(RegisterType::SP, 0x4E5F);
+    WriteRegisterWord(RegisterType::PC, 0xF829);
+    WriteRegisterWord(RegisterType::SP, 0x4E5F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF829, 0x7F);
 }
@@ -33012,7 +33015,7 @@ void test_7F_02B0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33025,8 +33028,8 @@ void test_7F_02B0()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x81);
     CheckRegisterByte(RegisterType::L, 0x51);
-    CheckRegisterWord(RegisterType::PC, 0xE4F9);
-    CheckRegisterWord(RegisterType::SP, 0xD4DD);
+    WriteRegisterWord(RegisterType::PC, 0xE4F8);
+    WriteRegisterWord(RegisterType::SP, 0xD4DD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE4F8, 0x7F);
 }
@@ -33057,7 +33060,7 @@ void test_7F_02B1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33070,8 +33073,8 @@ void test_7F_02B1()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x62);
     CheckRegisterByte(RegisterType::L, 0x97);
-    CheckRegisterWord(RegisterType::PC, 0x1871);
-    CheckRegisterWord(RegisterType::SP, 0x1996);
+    WriteRegisterWord(RegisterType::PC, 0x1870);
+    WriteRegisterWord(RegisterType::SP, 0x1996);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1870, 0x7F);
 }
@@ -33102,7 +33105,7 @@ void test_7F_02B2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33115,8 +33118,8 @@ void test_7F_02B2()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x7B);
     CheckRegisterByte(RegisterType::L, 0x13);
-    CheckRegisterWord(RegisterType::PC, 0x7EDD);
-    CheckRegisterWord(RegisterType::SP, 0xEB64);
+    WriteRegisterWord(RegisterType::PC, 0x7EDC);
+    WriteRegisterWord(RegisterType::SP, 0xEB64);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7EDC, 0x7F);
 }
@@ -33147,7 +33150,7 @@ void test_7F_02B3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33160,8 +33163,8 @@ void test_7F_02B3()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xDB);
     CheckRegisterByte(RegisterType::L, 0xE8);
-    CheckRegisterWord(RegisterType::PC, 0x1E4A);
-    CheckRegisterWord(RegisterType::SP, 0x8E67);
+    WriteRegisterWord(RegisterType::PC, 0x1E49);
+    WriteRegisterWord(RegisterType::SP, 0x8E67);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1E49, 0x7F);
 }
@@ -33192,7 +33195,7 @@ void test_7F_02B4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33205,8 +33208,8 @@ void test_7F_02B4()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x99);
     CheckRegisterByte(RegisterType::L, 0xCF);
-    CheckRegisterWord(RegisterType::PC, 0x6851);
-    CheckRegisterWord(RegisterType::SP, 0x8461);
+    WriteRegisterWord(RegisterType::PC, 0x6850);
+    WriteRegisterWord(RegisterType::SP, 0x8461);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6850, 0x7F);
 }
@@ -33237,7 +33240,7 @@ void test_7F_02B5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33250,8 +33253,8 @@ void test_7F_02B5()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xAF);
     CheckRegisterByte(RegisterType::L, 0xA5);
-    CheckRegisterWord(RegisterType::PC, 0x9FAF);
-    CheckRegisterWord(RegisterType::SP, 0x3050);
+    WriteRegisterWord(RegisterType::PC, 0x9FAE);
+    WriteRegisterWord(RegisterType::SP, 0x3050);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9FAE, 0x7F);
 }
@@ -33282,7 +33285,7 @@ void test_7F_02B6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33295,8 +33298,8 @@ void test_7F_02B6()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x73);
     CheckRegisterByte(RegisterType::L, 0xC2);
-    CheckRegisterWord(RegisterType::PC, 0x8384);
-    CheckRegisterWord(RegisterType::SP, 0xDB9B);
+    WriteRegisterWord(RegisterType::PC, 0x8383);
+    WriteRegisterWord(RegisterType::SP, 0xDB9B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8383, 0x7F);
 }
@@ -33327,7 +33330,7 @@ void test_7F_02B7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33340,8 +33343,8 @@ void test_7F_02B7()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    CheckRegisterWord(RegisterType::PC, 0x3CF0);
-    CheckRegisterWord(RegisterType::SP, 0x98CC);
+    WriteRegisterWord(RegisterType::PC, 0x3CEF);
+    WriteRegisterWord(RegisterType::SP, 0x98CC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3CEF, 0x7F);
 }
@@ -33372,7 +33375,7 @@ void test_7F_02B8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33385,8 +33388,8 @@ void test_7F_02B8()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x75);
     CheckRegisterByte(RegisterType::L, 0xAB);
-    CheckRegisterWord(RegisterType::PC, 0x095F);
-    CheckRegisterWord(RegisterType::SP, 0x2CAB);
+    WriteRegisterWord(RegisterType::PC, 0x095E);
+    WriteRegisterWord(RegisterType::SP, 0x2CAB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x095E, 0x7F);
 }
@@ -33417,7 +33420,7 @@ void test_7F_02B9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33430,8 +33433,8 @@ void test_7F_02B9()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xA6);
     CheckRegisterByte(RegisterType::L, 0x8F);
-    CheckRegisterWord(RegisterType::PC, 0x3B0E);
-    CheckRegisterWord(RegisterType::SP, 0x645F);
+    WriteRegisterWord(RegisterType::PC, 0x3B0D);
+    WriteRegisterWord(RegisterType::SP, 0x645F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3B0D, 0x7F);
 }
@@ -33462,7 +33465,7 @@ void test_7F_02BA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33475,8 +33478,8 @@ void test_7F_02BA()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x17);
     CheckRegisterByte(RegisterType::L, 0x30);
-    CheckRegisterWord(RegisterType::PC, 0xCB42);
-    CheckRegisterWord(RegisterType::SP, 0xF0CC);
+    WriteRegisterWord(RegisterType::PC, 0xCB41);
+    WriteRegisterWord(RegisterType::SP, 0xF0CC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCB41, 0x7F);
 }
@@ -33507,7 +33510,7 @@ void test_7F_02BB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33520,8 +33523,8 @@ void test_7F_02BB()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x76);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    CheckRegisterWord(RegisterType::PC, 0x87A3);
-    CheckRegisterWord(RegisterType::SP, 0x6184);
+    WriteRegisterWord(RegisterType::PC, 0x87A2);
+    WriteRegisterWord(RegisterType::SP, 0x6184);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x87A2, 0x7F);
 }
@@ -33552,7 +33555,7 @@ void test_7F_02BC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33565,8 +33568,8 @@ void test_7F_02BC()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xC6);
     CheckRegisterByte(RegisterType::L, 0x07);
-    CheckRegisterWord(RegisterType::PC, 0xE8CA);
-    CheckRegisterWord(RegisterType::SP, 0xA5A6);
+    WriteRegisterWord(RegisterType::PC, 0xE8C9);
+    WriteRegisterWord(RegisterType::SP, 0xA5A6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE8C9, 0x7F);
 }
@@ -33597,7 +33600,7 @@ void test_7F_02BD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33610,8 +33613,8 @@ void test_7F_02BD()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x5C);
     CheckRegisterByte(RegisterType::L, 0xA7);
-    CheckRegisterWord(RegisterType::PC, 0x89BE);
-    CheckRegisterWord(RegisterType::SP, 0xFA1F);
+    WriteRegisterWord(RegisterType::PC, 0x89BD);
+    WriteRegisterWord(RegisterType::SP, 0xFA1F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x89BD, 0x7F);
 }
@@ -33642,7 +33645,7 @@ void test_7F_02BE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33655,8 +33658,8 @@ void test_7F_02BE()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x0A);
     CheckRegisterByte(RegisterType::L, 0x5A);
-    CheckRegisterWord(RegisterType::PC, 0xFFEB);
-    CheckRegisterWord(RegisterType::SP, 0xB20D);
+    WriteRegisterWord(RegisterType::PC, 0xFFEA);
+    WriteRegisterWord(RegisterType::SP, 0xB20D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFFEA, 0x7F);
 }
@@ -33687,7 +33690,7 @@ void test_7F_02BF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33700,8 +33703,8 @@ void test_7F_02BF()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x42);
     CheckRegisterByte(RegisterType::L, 0x18);
-    CheckRegisterWord(RegisterType::PC, 0x998B);
-    CheckRegisterWord(RegisterType::SP, 0x9B3E);
+    WriteRegisterWord(RegisterType::PC, 0x998A);
+    WriteRegisterWord(RegisterType::SP, 0x9B3E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x998A, 0x7F);
 }
@@ -33732,7 +33735,7 @@ void test_7F_02C0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33745,8 +33748,8 @@ void test_7F_02C0()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xB7);
     CheckRegisterByte(RegisterType::L, 0x89);
-    CheckRegisterWord(RegisterType::PC, 0x789D);
-    CheckRegisterWord(RegisterType::SP, 0x17F3);
+    WriteRegisterWord(RegisterType::PC, 0x789C);
+    WriteRegisterWord(RegisterType::SP, 0x17F3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x789C, 0x7F);
 }
@@ -33777,7 +33780,7 @@ void test_7F_02C1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33790,8 +33793,8 @@ void test_7F_02C1()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xFD);
     CheckRegisterByte(RegisterType::L, 0x82);
-    CheckRegisterWord(RegisterType::PC, 0x7E01);
-    CheckRegisterWord(RegisterType::SP, 0x40B0);
+    WriteRegisterWord(RegisterType::PC, 0x7E00);
+    WriteRegisterWord(RegisterType::SP, 0x40B0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7E00, 0x7F);
 }
@@ -33822,7 +33825,7 @@ void test_7F_02C2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33835,8 +33838,8 @@ void test_7F_02C2()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x15);
     CheckRegisterByte(RegisterType::L, 0x5D);
-    CheckRegisterWord(RegisterType::PC, 0x61FD);
-    CheckRegisterWord(RegisterType::SP, 0xFA31);
+    WriteRegisterWord(RegisterType::PC, 0x61FC);
+    WriteRegisterWord(RegisterType::SP, 0xFA31);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x61FC, 0x7F);
 }
@@ -33867,7 +33870,7 @@ void test_7F_02C3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33880,8 +33883,8 @@ void test_7F_02C3()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xC4);
     CheckRegisterByte(RegisterType::L, 0x1D);
-    CheckRegisterWord(RegisterType::PC, 0x6497);
-    CheckRegisterWord(RegisterType::SP, 0x2634);
+    WriteRegisterWord(RegisterType::PC, 0x6496);
+    WriteRegisterWord(RegisterType::SP, 0x2634);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6496, 0x7F);
 }
@@ -33912,7 +33915,7 @@ void test_7F_02C4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33925,8 +33928,8 @@ void test_7F_02C4()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xC9);
     CheckRegisterByte(RegisterType::L, 0x82);
-    CheckRegisterWord(RegisterType::PC, 0xD704);
-    CheckRegisterWord(RegisterType::SP, 0xD35B);
+    WriteRegisterWord(RegisterType::PC, 0xD703);
+    WriteRegisterWord(RegisterType::SP, 0xD35B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD703, 0x7F);
 }
@@ -33957,7 +33960,7 @@ void test_7F_02C5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -33970,8 +33973,8 @@ void test_7F_02C5()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xBB);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    CheckRegisterWord(RegisterType::PC, 0xF293);
-    CheckRegisterWord(RegisterType::SP, 0x66AA);
+    WriteRegisterWord(RegisterType::PC, 0xF292);
+    WriteRegisterWord(RegisterType::SP, 0x66AA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF292, 0x7F);
 }
@@ -34002,7 +34005,7 @@ void test_7F_02C6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34015,8 +34018,8 @@ void test_7F_02C6()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x34);
     CheckRegisterByte(RegisterType::L, 0xCF);
-    CheckRegisterWord(RegisterType::PC, 0xDC07);
-    CheckRegisterWord(RegisterType::SP, 0x1DDF);
+    WriteRegisterWord(RegisterType::PC, 0xDC06);
+    WriteRegisterWord(RegisterType::SP, 0x1DDF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDC06, 0x7F);
 }
@@ -34047,7 +34050,7 @@ void test_7F_02C7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34060,8 +34063,8 @@ void test_7F_02C7()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x06);
     CheckRegisterByte(RegisterType::L, 0xDC);
-    CheckRegisterWord(RegisterType::PC, 0x359C);
-    CheckRegisterWord(RegisterType::SP, 0xBFC9);
+    WriteRegisterWord(RegisterType::PC, 0x359B);
+    WriteRegisterWord(RegisterType::SP, 0xBFC9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x359B, 0x7F);
 }
@@ -34092,7 +34095,7 @@ void test_7F_02C8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34105,8 +34108,8 @@ void test_7F_02C8()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x86);
     CheckRegisterByte(RegisterType::L, 0x2C);
-    CheckRegisterWord(RegisterType::PC, 0xC6E4);
-    CheckRegisterWord(RegisterType::SP, 0x36CD);
+    WriteRegisterWord(RegisterType::PC, 0xC6E3);
+    WriteRegisterWord(RegisterType::SP, 0x36CD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC6E3, 0x7F);
 }
@@ -34137,7 +34140,7 @@ void test_7F_02C9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34150,8 +34153,8 @@ void test_7F_02C9()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0x67);
-    CheckRegisterWord(RegisterType::PC, 0xE4F2);
-    CheckRegisterWord(RegisterType::SP, 0x7053);
+    WriteRegisterWord(RegisterType::PC, 0xE4F1);
+    WriteRegisterWord(RegisterType::SP, 0x7053);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE4F1, 0x7F);
 }
@@ -34182,7 +34185,7 @@ void test_7F_02CA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34195,8 +34198,8 @@ void test_7F_02CA()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xBF);
     CheckRegisterByte(RegisterType::L, 0x13);
-    CheckRegisterWord(RegisterType::PC, 0x8DBC);
-    CheckRegisterWord(RegisterType::SP, 0xDBC2);
+    WriteRegisterWord(RegisterType::PC, 0x8DBB);
+    WriteRegisterWord(RegisterType::SP, 0xDBC2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8DBB, 0x7F);
 }
@@ -34227,7 +34230,7 @@ void test_7F_02CB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34240,8 +34243,8 @@ void test_7F_02CB()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x19);
     CheckRegisterByte(RegisterType::L, 0x28);
-    CheckRegisterWord(RegisterType::PC, 0x55E9);
-    CheckRegisterWord(RegisterType::SP, 0x3CF0);
+    WriteRegisterWord(RegisterType::PC, 0x55E8);
+    WriteRegisterWord(RegisterType::SP, 0x3CF0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x55E8, 0x7F);
 }
@@ -34272,7 +34275,7 @@ void test_7F_02CC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34285,8 +34288,8 @@ void test_7F_02CC()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x4D);
     CheckRegisterByte(RegisterType::L, 0xCF);
-    CheckRegisterWord(RegisterType::PC, 0x84F4);
-    CheckRegisterWord(RegisterType::SP, 0x36C0);
+    WriteRegisterWord(RegisterType::PC, 0x84F3);
+    WriteRegisterWord(RegisterType::SP, 0x36C0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x84F3, 0x7F);
 }
@@ -34317,7 +34320,7 @@ void test_7F_02CD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34330,8 +34333,8 @@ void test_7F_02CD()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xF4);
     CheckRegisterByte(RegisterType::L, 0xD9);
-    CheckRegisterWord(RegisterType::PC, 0xCABC);
-    CheckRegisterWord(RegisterType::SP, 0xDB24);
+    WriteRegisterWord(RegisterType::PC, 0xCABB);
+    WriteRegisterWord(RegisterType::SP, 0xDB24);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCABB, 0x7F);
 }
@@ -34362,7 +34365,7 @@ void test_7F_02CE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34375,8 +34378,8 @@ void test_7F_02CE()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x9A);
     CheckRegisterByte(RegisterType::L, 0xEF);
-    CheckRegisterWord(RegisterType::PC, 0xE7E5);
-    CheckRegisterWord(RegisterType::SP, 0x6EC5);
+    WriteRegisterWord(RegisterType::PC, 0xE7E4);
+    WriteRegisterWord(RegisterType::SP, 0x6EC5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE7E4, 0x7F);
 }
@@ -34407,7 +34410,7 @@ void test_7F_02CF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34420,8 +34423,8 @@ void test_7F_02CF()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x34);
     CheckRegisterByte(RegisterType::L, 0xF7);
-    CheckRegisterWord(RegisterType::PC, 0xC885);
-    CheckRegisterWord(RegisterType::SP, 0x6FAE);
+    WriteRegisterWord(RegisterType::PC, 0xC884);
+    WriteRegisterWord(RegisterType::SP, 0x6FAE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC884, 0x7F);
 }
@@ -34452,7 +34455,7 @@ void test_7F_02D0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34465,8 +34468,8 @@ void test_7F_02D0()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x32);
     CheckRegisterByte(RegisterType::L, 0xB8);
-    CheckRegisterWord(RegisterType::PC, 0xCD9E);
-    CheckRegisterWord(RegisterType::SP, 0x0A20);
+    WriteRegisterWord(RegisterType::PC, 0xCD9D);
+    WriteRegisterWord(RegisterType::SP, 0x0A20);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCD9D, 0x7F);
 }
@@ -34497,7 +34500,7 @@ void test_7F_02D1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34510,8 +34513,8 @@ void test_7F_02D1()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x79);
     CheckRegisterByte(RegisterType::L, 0xD1);
-    CheckRegisterWord(RegisterType::PC, 0x36E1);
-    CheckRegisterWord(RegisterType::SP, 0xE19A);
+    WriteRegisterWord(RegisterType::PC, 0x36E0);
+    WriteRegisterWord(RegisterType::SP, 0xE19A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x36E0, 0x7F);
 }
@@ -34542,7 +34545,7 @@ void test_7F_02D2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34555,8 +34558,8 @@ void test_7F_02D2()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x9C);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    CheckRegisterWord(RegisterType::PC, 0x71C4);
-    CheckRegisterWord(RegisterType::SP, 0x06D7);
+    WriteRegisterWord(RegisterType::PC, 0x71C3);
+    WriteRegisterWord(RegisterType::SP, 0x06D7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x71C3, 0x7F);
 }
@@ -34587,7 +34590,7 @@ void test_7F_02D3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34600,8 +34603,8 @@ void test_7F_02D3()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x62);
     CheckRegisterByte(RegisterType::L, 0x9A);
-    CheckRegisterWord(RegisterType::PC, 0x9DBB);
-    CheckRegisterWord(RegisterType::SP, 0x402E);
+    WriteRegisterWord(RegisterType::PC, 0x9DBA);
+    WriteRegisterWord(RegisterType::SP, 0x402E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9DBA, 0x7F);
 }
@@ -34632,7 +34635,7 @@ void test_7F_02D4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34645,8 +34648,8 @@ void test_7F_02D4()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xF2);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    CheckRegisterWord(RegisterType::PC, 0x7801);
-    CheckRegisterWord(RegisterType::SP, 0x1782);
+    WriteRegisterWord(RegisterType::PC, 0x7800);
+    WriteRegisterWord(RegisterType::SP, 0x1782);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7800, 0x7F);
 }
@@ -34677,7 +34680,7 @@ void test_7F_02D5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34690,8 +34693,8 @@ void test_7F_02D5()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0xFC);
-    CheckRegisterWord(RegisterType::PC, 0x64B4);
-    CheckRegisterWord(RegisterType::SP, 0x3D23);
+    WriteRegisterWord(RegisterType::PC, 0x64B3);
+    WriteRegisterWord(RegisterType::SP, 0x3D23);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x64B3, 0x7F);
 }
@@ -34722,7 +34725,7 @@ void test_7F_02D6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34735,8 +34738,8 @@ void test_7F_02D6()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0xC2);
-    CheckRegisterWord(RegisterType::PC, 0x1EB3);
-    CheckRegisterWord(RegisterType::SP, 0x4087);
+    WriteRegisterWord(RegisterType::PC, 0x1EB2);
+    WriteRegisterWord(RegisterType::SP, 0x4087);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1EB2, 0x7F);
 }
@@ -34767,7 +34770,7 @@ void test_7F_02D7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34780,8 +34783,8 @@ void test_7F_02D7()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xD4);
     CheckRegisterByte(RegisterType::L, 0xBC);
-    CheckRegisterWord(RegisterType::PC, 0x49F1);
-    CheckRegisterWord(RegisterType::SP, 0x87D6);
+    WriteRegisterWord(RegisterType::PC, 0x49F0);
+    WriteRegisterWord(RegisterType::SP, 0x87D6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x49F0, 0x7F);
 }
@@ -34812,7 +34815,7 @@ void test_7F_02D8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34825,8 +34828,8 @@ void test_7F_02D8()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x8A);
     CheckRegisterByte(RegisterType::L, 0xDE);
-    CheckRegisterWord(RegisterType::PC, 0xEC62);
-    CheckRegisterWord(RegisterType::SP, 0x45AC);
+    WriteRegisterWord(RegisterType::PC, 0xEC61);
+    WriteRegisterWord(RegisterType::SP, 0x45AC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEC61, 0x7F);
 }
@@ -34857,7 +34860,7 @@ void test_7F_02D9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34870,8 +34873,8 @@ void test_7F_02D9()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x5E);
     CheckRegisterByte(RegisterType::L, 0x0F);
-    CheckRegisterWord(RegisterType::PC, 0x5358);
-    CheckRegisterWord(RegisterType::SP, 0x571D);
+    WriteRegisterWord(RegisterType::PC, 0x5357);
+    WriteRegisterWord(RegisterType::SP, 0x571D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5357, 0x7F);
 }
@@ -34902,7 +34905,7 @@ void test_7F_02DA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34915,8 +34918,8 @@ void test_7F_02DA()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xA4);
     CheckRegisterByte(RegisterType::L, 0xAF);
-    CheckRegisterWord(RegisterType::PC, 0xF320);
-    CheckRegisterWord(RegisterType::SP, 0x90B8);
+    WriteRegisterWord(RegisterType::PC, 0xF31F);
+    WriteRegisterWord(RegisterType::SP, 0x90B8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF31F, 0x7F);
 }
@@ -34947,7 +34950,7 @@ void test_7F_02DB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -34960,8 +34963,8 @@ void test_7F_02DB()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xDA);
     CheckRegisterByte(RegisterType::L, 0xF0);
-    CheckRegisterWord(RegisterType::PC, 0x178E);
-    CheckRegisterWord(RegisterType::SP, 0xDA9E);
+    WriteRegisterWord(RegisterType::PC, 0x178D);
+    WriteRegisterWord(RegisterType::SP, 0xDA9E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x178D, 0x7F);
 }
@@ -34992,7 +34995,7 @@ void test_7F_02DC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35005,8 +35008,8 @@ void test_7F_02DC()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0xAC);
-    CheckRegisterWord(RegisterType::PC, 0x6829);
-    CheckRegisterWord(RegisterType::SP, 0x0B3A);
+    WriteRegisterWord(RegisterType::PC, 0x6828);
+    WriteRegisterWord(RegisterType::SP, 0x0B3A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6828, 0x7F);
 }
@@ -35037,7 +35040,7 @@ void test_7F_02DD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35050,8 +35053,8 @@ void test_7F_02DD()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xFF);
     CheckRegisterByte(RegisterType::L, 0x66);
-    CheckRegisterWord(RegisterType::PC, 0xFE26);
-    CheckRegisterWord(RegisterType::SP, 0xA936);
+    WriteRegisterWord(RegisterType::PC, 0xFE25);
+    WriteRegisterWord(RegisterType::SP, 0xA936);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFE25, 0x7F);
 }
@@ -35082,7 +35085,7 @@ void test_7F_02DE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35095,8 +35098,8 @@ void test_7F_02DE()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    CheckRegisterWord(RegisterType::PC, 0xC592);
-    CheckRegisterWord(RegisterType::SP, 0x4BDF);
+    WriteRegisterWord(RegisterType::PC, 0xC591);
+    WriteRegisterWord(RegisterType::SP, 0x4BDF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC591, 0x7F);
 }
@@ -35127,7 +35130,7 @@ void test_7F_02DF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35140,8 +35143,8 @@ void test_7F_02DF()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x22);
     CheckRegisterByte(RegisterType::L, 0xEE);
-    CheckRegisterWord(RegisterType::PC, 0xD6EC);
-    CheckRegisterWord(RegisterType::SP, 0x84A7);
+    WriteRegisterWord(RegisterType::PC, 0xD6EB);
+    WriteRegisterWord(RegisterType::SP, 0x84A7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD6EB, 0x7F);
 }
@@ -35172,7 +35175,7 @@ void test_7F_02E0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35185,8 +35188,8 @@ void test_7F_02E0()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0x02);
-    CheckRegisterWord(RegisterType::PC, 0x19B0);
-    CheckRegisterWord(RegisterType::SP, 0x6AED);
+    WriteRegisterWord(RegisterType::PC, 0x19AF);
+    WriteRegisterWord(RegisterType::SP, 0x6AED);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x19AF, 0x7F);
 }
@@ -35217,7 +35220,7 @@ void test_7F_02E1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35230,8 +35233,8 @@ void test_7F_02E1()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xA5);
     CheckRegisterByte(RegisterType::L, 0xE8);
-    CheckRegisterWord(RegisterType::PC, 0x2700);
-    CheckRegisterWord(RegisterType::SP, 0x3E99);
+    WriteRegisterWord(RegisterType::PC, 0x26FF);
+    WriteRegisterWord(RegisterType::SP, 0x3E99);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x26FF, 0x7F);
 }
@@ -35262,7 +35265,7 @@ void test_7F_02E2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35275,8 +35278,8 @@ void test_7F_02E2()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x81);
     CheckRegisterByte(RegisterType::L, 0xA4);
-    CheckRegisterWord(RegisterType::PC, 0x1845);
-    CheckRegisterWord(RegisterType::SP, 0x93E5);
+    WriteRegisterWord(RegisterType::PC, 0x1844);
+    WriteRegisterWord(RegisterType::SP, 0x93E5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1844, 0x7F);
 }
@@ -35307,7 +35310,7 @@ void test_7F_02E3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35320,8 +35323,8 @@ void test_7F_02E3()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x01);
     CheckRegisterByte(RegisterType::L, 0x3F);
-    CheckRegisterWord(RegisterType::PC, 0xBB25);
-    CheckRegisterWord(RegisterType::SP, 0xE1FE);
+    WriteRegisterWord(RegisterType::PC, 0xBB24);
+    WriteRegisterWord(RegisterType::SP, 0xE1FE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBB24, 0x7F);
 }
@@ -35352,7 +35355,7 @@ void test_7F_02E4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35365,8 +35368,8 @@ void test_7F_02E4()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xFF);
     CheckRegisterByte(RegisterType::L, 0x1E);
-    CheckRegisterWord(RegisterType::PC, 0xBB90);
-    CheckRegisterWord(RegisterType::SP, 0x5E38);
+    WriteRegisterWord(RegisterType::PC, 0xBB8F);
+    WriteRegisterWord(RegisterType::SP, 0x5E38);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBB8F, 0x7F);
 }
@@ -35397,7 +35400,7 @@ void test_7F_02E5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35410,8 +35413,8 @@ void test_7F_02E5()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x37);
     CheckRegisterByte(RegisterType::L, 0x91);
-    CheckRegisterWord(RegisterType::PC, 0x9E76);
-    CheckRegisterWord(RegisterType::SP, 0x9371);
+    WriteRegisterWord(RegisterType::PC, 0x9E75);
+    WriteRegisterWord(RegisterType::SP, 0x9371);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9E75, 0x7F);
 }
@@ -35442,7 +35445,7 @@ void test_7F_02E6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35455,8 +35458,8 @@ void test_7F_02E6()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x14);
     CheckRegisterByte(RegisterType::L, 0x95);
-    CheckRegisterWord(RegisterType::PC, 0x97DF);
-    CheckRegisterWord(RegisterType::SP, 0xBB46);
+    WriteRegisterWord(RegisterType::PC, 0x97DE);
+    WriteRegisterWord(RegisterType::SP, 0xBB46);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x97DE, 0x7F);
 }
@@ -35487,7 +35490,7 @@ void test_7F_02E7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35500,8 +35503,8 @@ void test_7F_02E7()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xFF);
     CheckRegisterByte(RegisterType::L, 0xB5);
-    CheckRegisterWord(RegisterType::PC, 0x964E);
-    CheckRegisterWord(RegisterType::SP, 0x7B6D);
+    WriteRegisterWord(RegisterType::PC, 0x964D);
+    WriteRegisterWord(RegisterType::SP, 0x7B6D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x964D, 0x7F);
 }
@@ -35532,7 +35535,7 @@ void test_7F_02E8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35545,8 +35548,8 @@ void test_7F_02E8()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x50);
     CheckRegisterByte(RegisterType::L, 0x06);
-    CheckRegisterWord(RegisterType::PC, 0x20F2);
-    CheckRegisterWord(RegisterType::SP, 0x27E2);
+    WriteRegisterWord(RegisterType::PC, 0x20F1);
+    WriteRegisterWord(RegisterType::SP, 0x27E2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x20F1, 0x7F);
 }
@@ -35577,7 +35580,7 @@ void test_7F_02E9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35590,8 +35593,8 @@ void test_7F_02E9()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x94);
     CheckRegisterByte(RegisterType::L, 0xF7);
-    CheckRegisterWord(RegisterType::PC, 0xD116);
-    CheckRegisterWord(RegisterType::SP, 0xEFD7);
+    WriteRegisterWord(RegisterType::PC, 0xD115);
+    WriteRegisterWord(RegisterType::SP, 0xEFD7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD115, 0x7F);
 }
@@ -35622,7 +35625,7 @@ void test_7F_02EA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35635,8 +35638,8 @@ void test_7F_02EA()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0x38);
-    CheckRegisterWord(RegisterType::PC, 0xBD67);
-    CheckRegisterWord(RegisterType::SP, 0x49EA);
+    WriteRegisterWord(RegisterType::PC, 0xBD66);
+    WriteRegisterWord(RegisterType::SP, 0x49EA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBD66, 0x7F);
 }
@@ -35667,7 +35670,7 @@ void test_7F_02EB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35680,8 +35683,8 @@ void test_7F_02EB()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x44);
     CheckRegisterByte(RegisterType::L, 0x8F);
-    CheckRegisterWord(RegisterType::PC, 0xF586);
-    CheckRegisterWord(RegisterType::SP, 0xD293);
+    WriteRegisterWord(RegisterType::PC, 0xF585);
+    WriteRegisterWord(RegisterType::SP, 0xD293);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF585, 0x7F);
 }
@@ -35712,7 +35715,7 @@ void test_7F_02EC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35725,8 +35728,8 @@ void test_7F_02EC()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x96);
     CheckRegisterByte(RegisterType::L, 0x77);
-    CheckRegisterWord(RegisterType::PC, 0x09FB);
-    CheckRegisterWord(RegisterType::SP, 0x66B9);
+    WriteRegisterWord(RegisterType::PC, 0x09FA);
+    WriteRegisterWord(RegisterType::SP, 0x66B9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x09FA, 0x7F);
 }
@@ -35757,7 +35760,7 @@ void test_7F_02ED()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35770,8 +35773,8 @@ void test_7F_02ED()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0x51);
-    CheckRegisterWord(RegisterType::PC, 0x87A6);
-    CheckRegisterWord(RegisterType::SP, 0x7FA2);
+    WriteRegisterWord(RegisterType::PC, 0x87A5);
+    WriteRegisterWord(RegisterType::SP, 0x7FA2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x87A5, 0x7F);
 }
@@ -35802,7 +35805,7 @@ void test_7F_02EE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35815,8 +35818,8 @@ void test_7F_02EE()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x26);
     CheckRegisterByte(RegisterType::L, 0x0E);
-    CheckRegisterWord(RegisterType::PC, 0x4A68);
-    CheckRegisterWord(RegisterType::SP, 0xF062);
+    WriteRegisterWord(RegisterType::PC, 0x4A67);
+    WriteRegisterWord(RegisterType::SP, 0xF062);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4A67, 0x7F);
 }
@@ -35847,7 +35850,7 @@ void test_7F_02EF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35860,8 +35863,8 @@ void test_7F_02EF()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xA0);
     CheckRegisterByte(RegisterType::L, 0x39);
-    CheckRegisterWord(RegisterType::PC, 0x93E7);
-    CheckRegisterWord(RegisterType::SP, 0xE84A);
+    WriteRegisterWord(RegisterType::PC, 0x93E6);
+    WriteRegisterWord(RegisterType::SP, 0xE84A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x93E6, 0x7F);
 }
@@ -35892,7 +35895,7 @@ void test_7F_02F0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35905,8 +35908,8 @@ void test_7F_02F0()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    CheckRegisterWord(RegisterType::PC, 0x08A3);
-    CheckRegisterWord(RegisterType::SP, 0x07B1);
+    WriteRegisterWord(RegisterType::PC, 0x08A2);
+    WriteRegisterWord(RegisterType::SP, 0x07B1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x08A2, 0x7F);
 }
@@ -35937,7 +35940,7 @@ void test_7F_02F1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35950,8 +35953,8 @@ void test_7F_02F1()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x43);
     CheckRegisterByte(RegisterType::L, 0x8C);
-    CheckRegisterWord(RegisterType::PC, 0x7745);
-    CheckRegisterWord(RegisterType::SP, 0x159C);
+    WriteRegisterWord(RegisterType::PC, 0x7744);
+    WriteRegisterWord(RegisterType::SP, 0x159C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7744, 0x7F);
 }
@@ -35982,7 +35985,7 @@ void test_7F_02F2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -35995,8 +35998,8 @@ void test_7F_02F2()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x86);
     CheckRegisterByte(RegisterType::L, 0x19);
-    CheckRegisterWord(RegisterType::PC, 0xA6AB);
-    CheckRegisterWord(RegisterType::SP, 0x6637);
+    WriteRegisterWord(RegisterType::PC, 0xA6AA);
+    WriteRegisterWord(RegisterType::SP, 0x6637);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA6AA, 0x7F);
 }
@@ -36027,7 +36030,7 @@ void test_7F_02F3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36040,8 +36043,8 @@ void test_7F_02F3()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0xAB);
-    CheckRegisterWord(RegisterType::PC, 0xF857);
-    CheckRegisterWord(RegisterType::SP, 0x5D11);
+    WriteRegisterWord(RegisterType::PC, 0xF856);
+    WriteRegisterWord(RegisterType::SP, 0x5D11);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF856, 0x7F);
 }
@@ -36072,7 +36075,7 @@ void test_7F_02F4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36085,8 +36088,8 @@ void test_7F_02F4()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x63);
     CheckRegisterByte(RegisterType::L, 0x8C);
-    CheckRegisterWord(RegisterType::PC, 0xBD6F);
-    CheckRegisterWord(RegisterType::SP, 0x7184);
+    WriteRegisterWord(RegisterType::PC, 0xBD6E);
+    WriteRegisterWord(RegisterType::SP, 0x7184);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBD6E, 0x7F);
 }
@@ -36117,7 +36120,7 @@ void test_7F_02F5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36130,8 +36133,8 @@ void test_7F_02F5()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x6F);
     CheckRegisterByte(RegisterType::L, 0xC5);
-    CheckRegisterWord(RegisterType::PC, 0x06CE);
-    CheckRegisterWord(RegisterType::SP, 0x248D);
+    WriteRegisterWord(RegisterType::PC, 0x06CD);
+    WriteRegisterWord(RegisterType::SP, 0x248D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x06CD, 0x7F);
 }
@@ -36162,7 +36165,7 @@ void test_7F_02F6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36175,8 +36178,8 @@ void test_7F_02F6()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xFB);
     CheckRegisterByte(RegisterType::L, 0x56);
-    CheckRegisterWord(RegisterType::PC, 0xA7C2);
-    CheckRegisterWord(RegisterType::SP, 0xF438);
+    WriteRegisterWord(RegisterType::PC, 0xA7C1);
+    WriteRegisterWord(RegisterType::SP, 0xF438);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA7C1, 0x7F);
 }
@@ -36207,7 +36210,7 @@ void test_7F_02F7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36220,8 +36223,8 @@ void test_7F_02F7()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x70);
     CheckRegisterByte(RegisterType::L, 0x97);
-    CheckRegisterWord(RegisterType::PC, 0x9611);
-    CheckRegisterWord(RegisterType::SP, 0x9390);
+    WriteRegisterWord(RegisterType::PC, 0x9610);
+    WriteRegisterWord(RegisterType::SP, 0x9390);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9610, 0x7F);
 }
@@ -36252,7 +36255,7 @@ void test_7F_02F8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36265,8 +36268,8 @@ void test_7F_02F8()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x1D);
     CheckRegisterByte(RegisterType::L, 0x80);
-    CheckRegisterWord(RegisterType::PC, 0xF28C);
-    CheckRegisterWord(RegisterType::SP, 0xA2FC);
+    WriteRegisterWord(RegisterType::PC, 0xF28B);
+    WriteRegisterWord(RegisterType::SP, 0xA2FC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF28B, 0x7F);
 }
@@ -36297,7 +36300,7 @@ void test_7F_02F9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36310,8 +36313,8 @@ void test_7F_02F9()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x9A);
     CheckRegisterByte(RegisterType::L, 0xA9);
-    CheckRegisterWord(RegisterType::PC, 0x6E45);
-    CheckRegisterWord(RegisterType::SP, 0x885F);
+    WriteRegisterWord(RegisterType::PC, 0x6E44);
+    WriteRegisterWord(RegisterType::SP, 0x885F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6E44, 0x7F);
 }
@@ -36342,7 +36345,7 @@ void test_7F_02FA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36355,8 +36358,8 @@ void test_7F_02FA()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0x38);
-    CheckRegisterWord(RegisterType::PC, 0xD1C9);
-    CheckRegisterWord(RegisterType::SP, 0x53FA);
+    WriteRegisterWord(RegisterType::PC, 0xD1C8);
+    WriteRegisterWord(RegisterType::SP, 0x53FA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD1C8, 0x7F);
 }
@@ -36387,7 +36390,7 @@ void test_7F_02FB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36400,8 +36403,8 @@ void test_7F_02FB()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xE2);
     CheckRegisterByte(RegisterType::L, 0x8F);
-    CheckRegisterWord(RegisterType::PC, 0x00FE);
-    CheckRegisterWord(RegisterType::SP, 0x7033);
+    WriteRegisterWord(RegisterType::PC, 0x00FD);
+    WriteRegisterWord(RegisterType::SP, 0x7033);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x00FD, 0x7F);
 }
@@ -36432,7 +36435,7 @@ void test_7F_02FC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36445,8 +36448,8 @@ void test_7F_02FC()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xA1);
     CheckRegisterByte(RegisterType::L, 0xF4);
-    CheckRegisterWord(RegisterType::PC, 0x6A3F);
-    CheckRegisterWord(RegisterType::SP, 0xDC04);
+    WriteRegisterWord(RegisterType::PC, 0x6A3E);
+    WriteRegisterWord(RegisterType::SP, 0xDC04);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6A3E, 0x7F);
 }
@@ -36477,7 +36480,7 @@ void test_7F_02FD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36490,8 +36493,8 @@ void test_7F_02FD()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x82);
     CheckRegisterByte(RegisterType::L, 0x5A);
-    CheckRegisterWord(RegisterType::PC, 0x02A2);
-    CheckRegisterWord(RegisterType::SP, 0x63B8);
+    WriteRegisterWord(RegisterType::PC, 0x02A1);
+    WriteRegisterWord(RegisterType::SP, 0x63B8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x02A1, 0x7F);
 }
@@ -36522,7 +36525,7 @@ void test_7F_02FE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36535,8 +36538,8 @@ void test_7F_02FE()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xD5);
     CheckRegisterByte(RegisterType::L, 0xFC);
-    CheckRegisterWord(RegisterType::PC, 0x24BE);
-    CheckRegisterWord(RegisterType::SP, 0xADA8);
+    WriteRegisterWord(RegisterType::PC, 0x24BD);
+    WriteRegisterWord(RegisterType::SP, 0xADA8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x24BD, 0x7F);
 }
@@ -36567,7 +36570,7 @@ void test_7F_02FF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36580,8 +36583,8 @@ void test_7F_02FF()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xEB);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    CheckRegisterWord(RegisterType::PC, 0x6549);
-    CheckRegisterWord(RegisterType::SP, 0x4D7E);
+    WriteRegisterWord(RegisterType::PC, 0x6548);
+    WriteRegisterWord(RegisterType::SP, 0x4D7E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6548, 0x7F);
 }
@@ -36612,7 +36615,7 @@ void test_7F_0300()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36625,8 +36628,8 @@ void test_7F_0300()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x47);
     CheckRegisterByte(RegisterType::L, 0xD9);
-    CheckRegisterWord(RegisterType::PC, 0xAD22);
-    CheckRegisterWord(RegisterType::SP, 0xBAFE);
+    WriteRegisterWord(RegisterType::PC, 0xAD21);
+    WriteRegisterWord(RegisterType::SP, 0xBAFE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAD21, 0x7F);
 }
@@ -36657,7 +36660,7 @@ void test_7F_0301()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36670,8 +36673,8 @@ void test_7F_0301()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x2C);
     CheckRegisterByte(RegisterType::L, 0x4C);
-    CheckRegisterWord(RegisterType::PC, 0x7EA5);
-    CheckRegisterWord(RegisterType::SP, 0xA193);
+    WriteRegisterWord(RegisterType::PC, 0x7EA4);
+    WriteRegisterWord(RegisterType::SP, 0xA193);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7EA4, 0x7F);
 }
@@ -36702,7 +36705,7 @@ void test_7F_0302()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36715,8 +36718,8 @@ void test_7F_0302()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0xCD);
-    CheckRegisterWord(RegisterType::PC, 0x0C41);
-    CheckRegisterWord(RegisterType::SP, 0x7C9E);
+    WriteRegisterWord(RegisterType::PC, 0x0C40);
+    WriteRegisterWord(RegisterType::SP, 0x7C9E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0C40, 0x7F);
 }
@@ -36747,7 +36750,7 @@ void test_7F_0303()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36760,8 +36763,8 @@ void test_7F_0303()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x4E);
     CheckRegisterByte(RegisterType::L, 0x83);
-    CheckRegisterWord(RegisterType::PC, 0xA2B5);
-    CheckRegisterWord(RegisterType::SP, 0xE978);
+    WriteRegisterWord(RegisterType::PC, 0xA2B4);
+    WriteRegisterWord(RegisterType::SP, 0xE978);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA2B4, 0x7F);
 }
@@ -36792,7 +36795,7 @@ void test_7F_0304()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36805,8 +36808,8 @@ void test_7F_0304()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0xBD);
-    CheckRegisterWord(RegisterType::PC, 0x229F);
-    CheckRegisterWord(RegisterType::SP, 0x8B0A);
+    WriteRegisterWord(RegisterType::PC, 0x229E);
+    WriteRegisterWord(RegisterType::SP, 0x8B0A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x229E, 0x7F);
 }
@@ -36837,7 +36840,7 @@ void test_7F_0305()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36850,8 +36853,8 @@ void test_7F_0305()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x84);
     CheckRegisterByte(RegisterType::L, 0xAA);
-    CheckRegisterWord(RegisterType::PC, 0xBBC2);
-    CheckRegisterWord(RegisterType::SP, 0xA6EA);
+    WriteRegisterWord(RegisterType::PC, 0xBBC1);
+    WriteRegisterWord(RegisterType::SP, 0xA6EA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBBC1, 0x7F);
 }
@@ -36882,7 +36885,7 @@ void test_7F_0306()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36895,8 +36898,8 @@ void test_7F_0306()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xF6);
     CheckRegisterByte(RegisterType::L, 0xAF);
-    CheckRegisterWord(RegisterType::PC, 0xA4C5);
-    CheckRegisterWord(RegisterType::SP, 0xD95F);
+    WriteRegisterWord(RegisterType::PC, 0xA4C4);
+    WriteRegisterWord(RegisterType::SP, 0xD95F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA4C4, 0x7F);
 }
@@ -36927,7 +36930,7 @@ void test_7F_0307()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36940,8 +36943,8 @@ void test_7F_0307()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0x0B);
-    CheckRegisterWord(RegisterType::PC, 0x2F4F);
-    CheckRegisterWord(RegisterType::SP, 0x1968);
+    WriteRegisterWord(RegisterType::PC, 0x2F4E);
+    WriteRegisterWord(RegisterType::SP, 0x1968);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2F4E, 0x7F);
 }
@@ -36972,7 +36975,7 @@ void test_7F_0308()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -36985,8 +36988,8 @@ void test_7F_0308()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x70);
     CheckRegisterByte(RegisterType::L, 0x60);
-    CheckRegisterWord(RegisterType::PC, 0xBAAC);
-    CheckRegisterWord(RegisterType::SP, 0x55DA);
+    WriteRegisterWord(RegisterType::PC, 0xBAAB);
+    WriteRegisterWord(RegisterType::SP, 0x55DA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBAAB, 0x7F);
 }
@@ -37017,7 +37020,7 @@ void test_7F_0309()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37030,8 +37033,8 @@ void test_7F_0309()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0x19);
-    CheckRegisterWord(RegisterType::PC, 0x5F1F);
-    CheckRegisterWord(RegisterType::SP, 0x0897);
+    WriteRegisterWord(RegisterType::PC, 0x5F1E);
+    WriteRegisterWord(RegisterType::SP, 0x0897);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5F1E, 0x7F);
 }
@@ -37062,7 +37065,7 @@ void test_7F_030A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37075,8 +37078,8 @@ void test_7F_030A()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0x05);
-    CheckRegisterWord(RegisterType::PC, 0xCE4B);
-    CheckRegisterWord(RegisterType::SP, 0xD2D6);
+    WriteRegisterWord(RegisterType::PC, 0xCE4A);
+    WriteRegisterWord(RegisterType::SP, 0xD2D6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCE4A, 0x7F);
 }
@@ -37107,7 +37110,7 @@ void test_7F_030B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37120,8 +37123,8 @@ void test_7F_030B()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xC3);
     CheckRegisterByte(RegisterType::L, 0x9E);
-    CheckRegisterWord(RegisterType::PC, 0xB495);
-    CheckRegisterWord(RegisterType::SP, 0x861C);
+    WriteRegisterWord(RegisterType::PC, 0xB494);
+    WriteRegisterWord(RegisterType::SP, 0x861C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB494, 0x7F);
 }
@@ -37152,7 +37155,7 @@ void test_7F_030C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37165,8 +37168,8 @@ void test_7F_030C()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x48);
     CheckRegisterByte(RegisterType::L, 0x2E);
-    CheckRegisterWord(RegisterType::PC, 0x5562);
-    CheckRegisterWord(RegisterType::SP, 0xD050);
+    WriteRegisterWord(RegisterType::PC, 0x5561);
+    WriteRegisterWord(RegisterType::SP, 0xD050);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5561, 0x7F);
 }
@@ -37197,7 +37200,7 @@ void test_7F_030D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37210,8 +37213,8 @@ void test_7F_030D()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x15);
     CheckRegisterByte(RegisterType::L, 0x1D);
-    CheckRegisterWord(RegisterType::PC, 0xB37F);
-    CheckRegisterWord(RegisterType::SP, 0x6B4C);
+    WriteRegisterWord(RegisterType::PC, 0xB37E);
+    WriteRegisterWord(RegisterType::SP, 0x6B4C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB37E, 0x7F);
 }
@@ -37242,7 +37245,7 @@ void test_7F_030E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37255,8 +37258,8 @@ void test_7F_030E()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x0E);
     CheckRegisterByte(RegisterType::L, 0xEA);
-    CheckRegisterWord(RegisterType::PC, 0x7908);
-    CheckRegisterWord(RegisterType::SP, 0x1741);
+    WriteRegisterWord(RegisterType::PC, 0x7907);
+    WriteRegisterWord(RegisterType::SP, 0x1741);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7907, 0x7F);
 }
@@ -37287,7 +37290,7 @@ void test_7F_030F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37300,8 +37303,8 @@ void test_7F_030F()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x3C);
     CheckRegisterByte(RegisterType::L, 0xFC);
-    CheckRegisterWord(RegisterType::PC, 0x6427);
-    CheckRegisterWord(RegisterType::SP, 0x513B);
+    WriteRegisterWord(RegisterType::PC, 0x6426);
+    WriteRegisterWord(RegisterType::SP, 0x513B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6426, 0x7F);
 }
@@ -37332,7 +37335,7 @@ void test_7F_0310()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37345,8 +37348,8 @@ void test_7F_0310()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x0D);
     CheckRegisterByte(RegisterType::L, 0xD9);
-    CheckRegisterWord(RegisterType::PC, 0x1F4E);
-    CheckRegisterWord(RegisterType::SP, 0x5CF4);
+    WriteRegisterWord(RegisterType::PC, 0x1F4D);
+    WriteRegisterWord(RegisterType::SP, 0x5CF4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1F4D, 0x7F);
 }
@@ -37377,7 +37380,7 @@ void test_7F_0311()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37390,8 +37393,8 @@ void test_7F_0311()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xB6);
     CheckRegisterByte(RegisterType::L, 0x13);
-    CheckRegisterWord(RegisterType::PC, 0x85BC);
-    CheckRegisterWord(RegisterType::SP, 0xAC8B);
+    WriteRegisterWord(RegisterType::PC, 0x85BB);
+    WriteRegisterWord(RegisterType::SP, 0xAC8B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x85BB, 0x7F);
 }
@@ -37422,7 +37425,7 @@ void test_7F_0312()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37435,8 +37438,8 @@ void test_7F_0312()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x91);
     CheckRegisterByte(RegisterType::L, 0x95);
-    CheckRegisterWord(RegisterType::PC, 0x68CA);
-    CheckRegisterWord(RegisterType::SP, 0x7385);
+    WriteRegisterWord(RegisterType::PC, 0x68C9);
+    WriteRegisterWord(RegisterType::SP, 0x7385);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x68C9, 0x7F);
 }
@@ -37467,7 +37470,7 @@ void test_7F_0313()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37480,8 +37483,8 @@ void test_7F_0313()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xA2);
     CheckRegisterByte(RegisterType::L, 0xB5);
-    CheckRegisterWord(RegisterType::PC, 0x5879);
-    CheckRegisterWord(RegisterType::SP, 0x8C4D);
+    WriteRegisterWord(RegisterType::PC, 0x5878);
+    WriteRegisterWord(RegisterType::SP, 0x8C4D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5878, 0x7F);
 }
@@ -37512,7 +37515,7 @@ void test_7F_0314()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37525,8 +37528,8 @@ void test_7F_0314()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x1F);
     CheckRegisterByte(RegisterType::L, 0x79);
-    CheckRegisterWord(RegisterType::PC, 0xF95E);
-    CheckRegisterWord(RegisterType::SP, 0xC622);
+    WriteRegisterWord(RegisterType::PC, 0xF95D);
+    WriteRegisterWord(RegisterType::SP, 0xC622);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF95D, 0x7F);
 }
@@ -37557,7 +37560,7 @@ void test_7F_0315()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37570,8 +37573,8 @@ void test_7F_0315()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x4E);
     CheckRegisterByte(RegisterType::L, 0x24);
-    CheckRegisterWord(RegisterType::PC, 0x676E);
-    CheckRegisterWord(RegisterType::SP, 0xAB71);
+    WriteRegisterWord(RegisterType::PC, 0x676D);
+    WriteRegisterWord(RegisterType::SP, 0xAB71);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x676D, 0x7F);
 }
@@ -37602,7 +37605,7 @@ void test_7F_0316()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37615,8 +37618,8 @@ void test_7F_0316()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x87);
     CheckRegisterByte(RegisterType::L, 0x61);
-    CheckRegisterWord(RegisterType::PC, 0xC925);
-    CheckRegisterWord(RegisterType::SP, 0x5FF7);
+    WriteRegisterWord(RegisterType::PC, 0xC924);
+    WriteRegisterWord(RegisterType::SP, 0x5FF7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC924, 0x7F);
 }
@@ -37647,7 +37650,7 @@ void test_7F_0317()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37660,8 +37663,8 @@ void test_7F_0317()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xA1);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    CheckRegisterWord(RegisterType::PC, 0xA89C);
-    CheckRegisterWord(RegisterType::SP, 0xF5A7);
+    WriteRegisterWord(RegisterType::PC, 0xA89B);
+    WriteRegisterWord(RegisterType::SP, 0xF5A7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA89B, 0x7F);
 }
@@ -37692,7 +37695,7 @@ void test_7F_0318()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37705,8 +37708,8 @@ void test_7F_0318()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x45);
     CheckRegisterByte(RegisterType::L, 0x0C);
-    CheckRegisterWord(RegisterType::PC, 0x367B);
-    CheckRegisterWord(RegisterType::SP, 0x4D34);
+    WriteRegisterWord(RegisterType::PC, 0x367A);
+    WriteRegisterWord(RegisterType::SP, 0x4D34);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x367A, 0x7F);
 }
@@ -37737,7 +37740,7 @@ void test_7F_0319()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37750,8 +37753,8 @@ void test_7F_0319()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x54);
     CheckRegisterByte(RegisterType::L, 0x31);
-    CheckRegisterWord(RegisterType::PC, 0xADB4);
-    CheckRegisterWord(RegisterType::SP, 0x121C);
+    WriteRegisterWord(RegisterType::PC, 0xADB3);
+    WriteRegisterWord(RegisterType::SP, 0x121C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xADB3, 0x7F);
 }
@@ -37782,7 +37785,7 @@ void test_7F_031A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37795,8 +37798,8 @@ void test_7F_031A()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xC1);
     CheckRegisterByte(RegisterType::L, 0x68);
-    CheckRegisterWord(RegisterType::PC, 0x7747);
-    CheckRegisterWord(RegisterType::SP, 0x5FC3);
+    WriteRegisterWord(RegisterType::PC, 0x7746);
+    WriteRegisterWord(RegisterType::SP, 0x5FC3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7746, 0x7F);
 }
@@ -37827,7 +37830,7 @@ void test_7F_031B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37840,8 +37843,8 @@ void test_7F_031B()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xE4);
     CheckRegisterByte(RegisterType::L, 0xCB);
-    CheckRegisterWord(RegisterType::PC, 0x59D3);
-    CheckRegisterWord(RegisterType::SP, 0xFA6F);
+    WriteRegisterWord(RegisterType::PC, 0x59D2);
+    WriteRegisterWord(RegisterType::SP, 0xFA6F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x59D2, 0x7F);
 }
@@ -37872,7 +37875,7 @@ void test_7F_031C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37885,8 +37888,8 @@ void test_7F_031C()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0x96);
-    CheckRegisterWord(RegisterType::PC, 0x447E);
-    CheckRegisterWord(RegisterType::SP, 0xD481);
+    WriteRegisterWord(RegisterType::PC, 0x447D);
+    WriteRegisterWord(RegisterType::SP, 0xD481);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x447D, 0x7F);
 }
@@ -37917,7 +37920,7 @@ void test_7F_031D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37930,8 +37933,8 @@ void test_7F_031D()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0xEA);
-    CheckRegisterWord(RegisterType::PC, 0x7668);
-    CheckRegisterWord(RegisterType::SP, 0x1E66);
+    WriteRegisterWord(RegisterType::PC, 0x7667);
+    WriteRegisterWord(RegisterType::SP, 0x1E66);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7667, 0x7F);
 }
@@ -37962,7 +37965,7 @@ void test_7F_031E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -37975,8 +37978,8 @@ void test_7F_031E()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0x3D);
-    CheckRegisterWord(RegisterType::PC, 0xD860);
-    CheckRegisterWord(RegisterType::SP, 0x929B);
+    WriteRegisterWord(RegisterType::PC, 0xD85F);
+    WriteRegisterWord(RegisterType::SP, 0x929B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD85F, 0x7F);
 }
@@ -38007,7 +38010,7 @@ void test_7F_031F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38020,8 +38023,8 @@ void test_7F_031F()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x20);
     CheckRegisterByte(RegisterType::L, 0x20);
-    CheckRegisterWord(RegisterType::PC, 0x92E7);
-    CheckRegisterWord(RegisterType::SP, 0x8157);
+    WriteRegisterWord(RegisterType::PC, 0x92E6);
+    WriteRegisterWord(RegisterType::SP, 0x8157);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x92E6, 0x7F);
 }
@@ -38052,7 +38055,7 @@ void test_7F_0320()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38065,8 +38068,8 @@ void test_7F_0320()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0xBE);
-    CheckRegisterWord(RegisterType::PC, 0x5C4E);
-    CheckRegisterWord(RegisterType::SP, 0x541B);
+    WriteRegisterWord(RegisterType::PC, 0x5C4D);
+    WriteRegisterWord(RegisterType::SP, 0x541B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5C4D, 0x7F);
 }
@@ -38097,7 +38100,7 @@ void test_7F_0321()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38110,8 +38113,8 @@ void test_7F_0321()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xC7);
     CheckRegisterByte(RegisterType::L, 0x44);
-    CheckRegisterWord(RegisterType::PC, 0xD848);
-    CheckRegisterWord(RegisterType::SP, 0x9E9D);
+    WriteRegisterWord(RegisterType::PC, 0xD847);
+    WriteRegisterWord(RegisterType::SP, 0x9E9D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD847, 0x7F);
 }
@@ -38142,7 +38145,7 @@ void test_7F_0322()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38155,8 +38158,8 @@ void test_7F_0322()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xCA);
     CheckRegisterByte(RegisterType::L, 0x47);
-    CheckRegisterWord(RegisterType::PC, 0x77E7);
-    CheckRegisterWord(RegisterType::SP, 0xDCE6);
+    WriteRegisterWord(RegisterType::PC, 0x77E6);
+    WriteRegisterWord(RegisterType::SP, 0xDCE6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x77E6, 0x7F);
 }
@@ -38187,7 +38190,7 @@ void test_7F_0323()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38200,8 +38203,8 @@ void test_7F_0323()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xBF);
     CheckRegisterByte(RegisterType::L, 0x36);
-    CheckRegisterWord(RegisterType::PC, 0x6801);
-    CheckRegisterWord(RegisterType::SP, 0x3FF6);
+    WriteRegisterWord(RegisterType::PC, 0x6800);
+    WriteRegisterWord(RegisterType::SP, 0x3FF6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6800, 0x7F);
 }
@@ -38232,7 +38235,7 @@ void test_7F_0324()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38245,8 +38248,8 @@ void test_7F_0324()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xB4);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    CheckRegisterWord(RegisterType::PC, 0xFD84);
-    CheckRegisterWord(RegisterType::SP, 0xBD60);
+    WriteRegisterWord(RegisterType::PC, 0xFD83);
+    WriteRegisterWord(RegisterType::SP, 0xBD60);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFD83, 0x7F);
 }
@@ -38277,7 +38280,7 @@ void test_7F_0325()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38290,8 +38293,8 @@ void test_7F_0325()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xFE);
     CheckRegisterByte(RegisterType::L, 0xC0);
-    CheckRegisterWord(RegisterType::PC, 0x8C64);
-    CheckRegisterWord(RegisterType::SP, 0xD793);
+    WriteRegisterWord(RegisterType::PC, 0x8C63);
+    WriteRegisterWord(RegisterType::SP, 0xD793);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8C63, 0x7F);
 }
@@ -38322,7 +38325,7 @@ void test_7F_0326()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38335,8 +38338,8 @@ void test_7F_0326()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x52);
     CheckRegisterByte(RegisterType::L, 0x80);
-    CheckRegisterWord(RegisterType::PC, 0xA6F8);
-    CheckRegisterWord(RegisterType::SP, 0xE2AF);
+    WriteRegisterWord(RegisterType::PC, 0xA6F7);
+    WriteRegisterWord(RegisterType::SP, 0xE2AF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA6F7, 0x7F);
 }
@@ -38367,7 +38370,7 @@ void test_7F_0327()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38380,8 +38383,8 @@ void test_7F_0327()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xD0);
     CheckRegisterByte(RegisterType::L, 0xB6);
-    CheckRegisterWord(RegisterType::PC, 0x919C);
-    CheckRegisterWord(RegisterType::SP, 0xA64C);
+    WriteRegisterWord(RegisterType::PC, 0x919B);
+    WriteRegisterWord(RegisterType::SP, 0xA64C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x919B, 0x7F);
 }
@@ -38412,7 +38415,7 @@ void test_7F_0328()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38425,8 +38428,8 @@ void test_7F_0328()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xAA);
     CheckRegisterByte(RegisterType::L, 0x07);
-    CheckRegisterWord(RegisterType::PC, 0x2591);
-    CheckRegisterWord(RegisterType::SP, 0x2EB8);
+    WriteRegisterWord(RegisterType::PC, 0x2590);
+    WriteRegisterWord(RegisterType::SP, 0x2EB8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2590, 0x7F);
 }
@@ -38457,7 +38460,7 @@ void test_7F_0329()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38470,8 +38473,8 @@ void test_7F_0329()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xF2);
     CheckRegisterByte(RegisterType::L, 0x8B);
-    CheckRegisterWord(RegisterType::PC, 0xD9B8);
-    CheckRegisterWord(RegisterType::SP, 0x09DC);
+    WriteRegisterWord(RegisterType::PC, 0xD9B7);
+    WriteRegisterWord(RegisterType::SP, 0x09DC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD9B7, 0x7F);
 }
@@ -38502,7 +38505,7 @@ void test_7F_032A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38515,8 +38518,8 @@ void test_7F_032A()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x27);
     CheckRegisterByte(RegisterType::L, 0x1C);
-    CheckRegisterWord(RegisterType::PC, 0x2D07);
-    CheckRegisterWord(RegisterType::SP, 0x5C54);
+    WriteRegisterWord(RegisterType::PC, 0x2D06);
+    WriteRegisterWord(RegisterType::SP, 0x5C54);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2D06, 0x7F);
 }
@@ -38547,7 +38550,7 @@ void test_7F_032B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38560,8 +38563,8 @@ void test_7F_032B()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x5A);
     CheckRegisterByte(RegisterType::L, 0x89);
-    CheckRegisterWord(RegisterType::PC, 0x79AC);
-    CheckRegisterWord(RegisterType::SP, 0xEB6E);
+    WriteRegisterWord(RegisterType::PC, 0x79AB);
+    WriteRegisterWord(RegisterType::SP, 0xEB6E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x79AB, 0x7F);
 }
@@ -38592,7 +38595,7 @@ void test_7F_032C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38605,8 +38608,8 @@ void test_7F_032C()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x4F);
     CheckRegisterByte(RegisterType::L, 0xB8);
-    CheckRegisterWord(RegisterType::PC, 0x6E56);
-    CheckRegisterWord(RegisterType::SP, 0xBF8B);
+    WriteRegisterWord(RegisterType::PC, 0x6E55);
+    WriteRegisterWord(RegisterType::SP, 0xBF8B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6E55, 0x7F);
 }
@@ -38637,7 +38640,7 @@ void test_7F_032D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38650,8 +38653,8 @@ void test_7F_032D()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x59);
     CheckRegisterByte(RegisterType::L, 0x15);
-    CheckRegisterWord(RegisterType::PC, 0x85D2);
-    CheckRegisterWord(RegisterType::SP, 0xFF54);
+    WriteRegisterWord(RegisterType::PC, 0x85D1);
+    WriteRegisterWord(RegisterType::SP, 0xFF54);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x85D1, 0x7F);
 }
@@ -38682,7 +38685,7 @@ void test_7F_032E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38695,8 +38698,8 @@ void test_7F_032E()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xD7);
     CheckRegisterByte(RegisterType::L, 0x59);
-    CheckRegisterWord(RegisterType::PC, 0x1507);
-    CheckRegisterWord(RegisterType::SP, 0x55E1);
+    WriteRegisterWord(RegisterType::PC, 0x1506);
+    WriteRegisterWord(RegisterType::SP, 0x55E1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1506, 0x7F);
 }
@@ -38727,7 +38730,7 @@ void test_7F_032F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38740,8 +38743,8 @@ void test_7F_032F()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0xCB);
-    CheckRegisterWord(RegisterType::PC, 0xCBDE);
-    CheckRegisterWord(RegisterType::SP, 0xD289);
+    WriteRegisterWord(RegisterType::PC, 0xCBDD);
+    WriteRegisterWord(RegisterType::SP, 0xD289);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCBDD, 0x7F);
 }
@@ -38772,7 +38775,7 @@ void test_7F_0330()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38785,8 +38788,8 @@ void test_7F_0330()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xFD);
     CheckRegisterByte(RegisterType::L, 0x5E);
-    CheckRegisterWord(RegisterType::PC, 0xB1E6);
-    CheckRegisterWord(RegisterType::SP, 0x19E6);
+    WriteRegisterWord(RegisterType::PC, 0xB1E5);
+    WriteRegisterWord(RegisterType::SP, 0x19E6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB1E5, 0x7F);
 }
@@ -38817,7 +38820,7 @@ void test_7F_0331()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38830,8 +38833,8 @@ void test_7F_0331()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0xEE);
-    CheckRegisterWord(RegisterType::PC, 0x0B48);
-    CheckRegisterWord(RegisterType::SP, 0x9F77);
+    WriteRegisterWord(RegisterType::PC, 0x0B47);
+    WriteRegisterWord(RegisterType::SP, 0x9F77);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0B47, 0x7F);
 }
@@ -38862,7 +38865,7 @@ void test_7F_0332()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38875,8 +38878,8 @@ void test_7F_0332()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x47);
     CheckRegisterByte(RegisterType::L, 0x5F);
-    CheckRegisterWord(RegisterType::PC, 0xF230);
-    CheckRegisterWord(RegisterType::SP, 0x0824);
+    WriteRegisterWord(RegisterType::PC, 0xF22F);
+    WriteRegisterWord(RegisterType::SP, 0x0824);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF22F, 0x7F);
 }
@@ -38907,7 +38910,7 @@ void test_7F_0333()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38920,8 +38923,8 @@ void test_7F_0333()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x12);
     CheckRegisterByte(RegisterType::L, 0x43);
-    CheckRegisterWord(RegisterType::PC, 0xB5DD);
-    CheckRegisterWord(RegisterType::SP, 0x5D54);
+    WriteRegisterWord(RegisterType::PC, 0xB5DC);
+    WriteRegisterWord(RegisterType::SP, 0x5D54);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB5DC, 0x7F);
 }
@@ -38952,7 +38955,7 @@ void test_7F_0334()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -38965,8 +38968,8 @@ void test_7F_0334()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x91);
     CheckRegisterByte(RegisterType::L, 0x17);
-    CheckRegisterWord(RegisterType::PC, 0x37E1);
-    CheckRegisterWord(RegisterType::SP, 0x3583);
+    WriteRegisterWord(RegisterType::PC, 0x37E0);
+    WriteRegisterWord(RegisterType::SP, 0x3583);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x37E0, 0x7F);
 }
@@ -38997,7 +39000,7 @@ void test_7F_0335()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39010,8 +39013,8 @@ void test_7F_0335()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x3E);
     CheckRegisterByte(RegisterType::L, 0x98);
-    CheckRegisterWord(RegisterType::PC, 0xD387);
-    CheckRegisterWord(RegisterType::SP, 0x8B8F);
+    WriteRegisterWord(RegisterType::PC, 0xD386);
+    WriteRegisterWord(RegisterType::SP, 0x8B8F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD386, 0x7F);
 }
@@ -39042,7 +39045,7 @@ void test_7F_0336()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39055,8 +39058,8 @@ void test_7F_0336()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xEC);
     CheckRegisterByte(RegisterType::L, 0x63);
-    CheckRegisterWord(RegisterType::PC, 0xE723);
-    CheckRegisterWord(RegisterType::SP, 0x47B6);
+    WriteRegisterWord(RegisterType::PC, 0xE722);
+    WriteRegisterWord(RegisterType::SP, 0x47B6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE722, 0x7F);
 }
@@ -39087,7 +39090,7 @@ void test_7F_0337()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39100,8 +39103,8 @@ void test_7F_0337()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0xA2);
-    CheckRegisterWord(RegisterType::PC, 0x8A7D);
-    CheckRegisterWord(RegisterType::SP, 0xEF2C);
+    WriteRegisterWord(RegisterType::PC, 0x8A7C);
+    WriteRegisterWord(RegisterType::SP, 0xEF2C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8A7C, 0x7F);
 }
@@ -39132,7 +39135,7 @@ void test_7F_0338()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39145,8 +39148,8 @@ void test_7F_0338()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xF1);
     CheckRegisterByte(RegisterType::L, 0xF3);
-    CheckRegisterWord(RegisterType::PC, 0xC78D);
-    CheckRegisterWord(RegisterType::SP, 0x3933);
+    WriteRegisterWord(RegisterType::PC, 0xC78C);
+    WriteRegisterWord(RegisterType::SP, 0x3933);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC78C, 0x7F);
 }
@@ -39177,7 +39180,7 @@ void test_7F_0339()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39190,8 +39193,8 @@ void test_7F_0339()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0x96);
-    CheckRegisterWord(RegisterType::PC, 0xDF44);
-    CheckRegisterWord(RegisterType::SP, 0xE6DD);
+    WriteRegisterWord(RegisterType::PC, 0xDF43);
+    WriteRegisterWord(RegisterType::SP, 0xE6DD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDF43, 0x7F);
 }
@@ -39222,7 +39225,7 @@ void test_7F_033A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39235,8 +39238,8 @@ void test_7F_033A()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x0B);
     CheckRegisterByte(RegisterType::L, 0x99);
-    CheckRegisterWord(RegisterType::PC, 0xED4C);
-    CheckRegisterWord(RegisterType::SP, 0x12B1);
+    WriteRegisterWord(RegisterType::PC, 0xED4B);
+    WriteRegisterWord(RegisterType::SP, 0x12B1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xED4B, 0x7F);
 }
@@ -39267,7 +39270,7 @@ void test_7F_033B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39280,8 +39283,8 @@ void test_7F_033B()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x18);
     CheckRegisterByte(RegisterType::L, 0x2E);
-    CheckRegisterWord(RegisterType::PC, 0x0EAE);
-    CheckRegisterWord(RegisterType::SP, 0x9457);
+    WriteRegisterWord(RegisterType::PC, 0x0EAD);
+    WriteRegisterWord(RegisterType::SP, 0x9457);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0EAD, 0x7F);
 }
@@ -39312,7 +39315,7 @@ void test_7F_033C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39325,8 +39328,8 @@ void test_7F_033C()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x56);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    CheckRegisterWord(RegisterType::PC, 0xF5CC);
-    CheckRegisterWord(RegisterType::SP, 0x0772);
+    WriteRegisterWord(RegisterType::PC, 0xF5CB);
+    WriteRegisterWord(RegisterType::SP, 0x0772);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF5CB, 0x7F);
 }
@@ -39357,7 +39360,7 @@ void test_7F_033D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39370,8 +39373,8 @@ void test_7F_033D()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x72);
     CheckRegisterByte(RegisterType::L, 0x38);
-    CheckRegisterWord(RegisterType::PC, 0xECEA);
-    CheckRegisterWord(RegisterType::SP, 0xEAAE);
+    WriteRegisterWord(RegisterType::PC, 0xECE9);
+    WriteRegisterWord(RegisterType::SP, 0xEAAE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xECE9, 0x7F);
 }
@@ -39402,7 +39405,7 @@ void test_7F_033E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39415,8 +39418,8 @@ void test_7F_033E()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0x84);
-    CheckRegisterWord(RegisterType::PC, 0xCD1E);
-    CheckRegisterWord(RegisterType::SP, 0xB398);
+    WriteRegisterWord(RegisterType::PC, 0xCD1D);
+    WriteRegisterWord(RegisterType::SP, 0xB398);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCD1D, 0x7F);
 }
@@ -39447,7 +39450,7 @@ void test_7F_033F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39460,8 +39463,8 @@ void test_7F_033F()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x44);
     CheckRegisterByte(RegisterType::L, 0x4D);
-    CheckRegisterWord(RegisterType::PC, 0x5717);
-    CheckRegisterWord(RegisterType::SP, 0x497B);
+    WriteRegisterWord(RegisterType::PC, 0x5716);
+    WriteRegisterWord(RegisterType::SP, 0x497B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5716, 0x7F);
 }
@@ -39492,7 +39495,7 @@ void test_7F_0340()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39505,8 +39508,8 @@ void test_7F_0340()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xEE);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    CheckRegisterWord(RegisterType::PC, 0xD497);
-    CheckRegisterWord(RegisterType::SP, 0x8609);
+    WriteRegisterWord(RegisterType::PC, 0xD496);
+    WriteRegisterWord(RegisterType::SP, 0x8609);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD496, 0x7F);
 }
@@ -39537,7 +39540,7 @@ void test_7F_0341()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39550,8 +39553,8 @@ void test_7F_0341()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x1F);
     CheckRegisterByte(RegisterType::L, 0xF3);
-    CheckRegisterWord(RegisterType::PC, 0x0AFA);
-    CheckRegisterWord(RegisterType::SP, 0x4429);
+    WriteRegisterWord(RegisterType::PC, 0x0AF9);
+    WriteRegisterWord(RegisterType::SP, 0x4429);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0AF9, 0x7F);
 }
@@ -39582,7 +39585,7 @@ void test_7F_0342()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39595,8 +39598,8 @@ void test_7F_0342()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    CheckRegisterWord(RegisterType::PC, 0x56FD);
-    CheckRegisterWord(RegisterType::SP, 0x52CD);
+    WriteRegisterWord(RegisterType::PC, 0x56FC);
+    WriteRegisterWord(RegisterType::SP, 0x52CD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x56FC, 0x7F);
 }
@@ -39627,7 +39630,7 @@ void test_7F_0343()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39640,8 +39643,8 @@ void test_7F_0343()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xFB);
     CheckRegisterByte(RegisterType::L, 0xD0);
-    CheckRegisterWord(RegisterType::PC, 0x1FFD);
-    CheckRegisterWord(RegisterType::SP, 0x3BE0);
+    WriteRegisterWord(RegisterType::PC, 0x1FFC);
+    WriteRegisterWord(RegisterType::SP, 0x3BE0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1FFC, 0x7F);
 }
@@ -39672,7 +39675,7 @@ void test_7F_0344()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39685,8 +39688,8 @@ void test_7F_0344()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0xAF);
-    CheckRegisterWord(RegisterType::PC, 0xE6F2);
-    CheckRegisterWord(RegisterType::SP, 0x4D7E);
+    WriteRegisterWord(RegisterType::PC, 0xE6F1);
+    WriteRegisterWord(RegisterType::SP, 0x4D7E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE6F1, 0x7F);
 }
@@ -39717,7 +39720,7 @@ void test_7F_0345()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39730,8 +39733,8 @@ void test_7F_0345()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x17);
     CheckRegisterByte(RegisterType::L, 0x7A);
-    CheckRegisterWord(RegisterType::PC, 0x8E3F);
-    CheckRegisterWord(RegisterType::SP, 0x8758);
+    WriteRegisterWord(RegisterType::PC, 0x8E3E);
+    WriteRegisterWord(RegisterType::SP, 0x8758);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8E3E, 0x7F);
 }
@@ -39762,7 +39765,7 @@ void test_7F_0346()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39775,8 +39778,8 @@ void test_7F_0346()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xFE);
     CheckRegisterByte(RegisterType::L, 0x92);
-    CheckRegisterWord(RegisterType::PC, 0xFF5C);
-    CheckRegisterWord(RegisterType::SP, 0xC308);
+    WriteRegisterWord(RegisterType::PC, 0xFF5B);
+    WriteRegisterWord(RegisterType::SP, 0xC308);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFF5B, 0x7F);
 }
@@ -39807,7 +39810,7 @@ void test_7F_0347()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39820,8 +39823,8 @@ void test_7F_0347()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0xD3);
-    CheckRegisterWord(RegisterType::PC, 0xA91A);
-    CheckRegisterWord(RegisterType::SP, 0x8294);
+    WriteRegisterWord(RegisterType::PC, 0xA919);
+    WriteRegisterWord(RegisterType::SP, 0x8294);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA919, 0x7F);
 }
@@ -39852,7 +39855,7 @@ void test_7F_0348()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39865,8 +39868,8 @@ void test_7F_0348()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x83);
     CheckRegisterByte(RegisterType::L, 0xFE);
-    CheckRegisterWord(RegisterType::PC, 0xE896);
-    CheckRegisterWord(RegisterType::SP, 0x45D3);
+    WriteRegisterWord(RegisterType::PC, 0xE895);
+    WriteRegisterWord(RegisterType::SP, 0x45D3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE895, 0x7F);
 }
@@ -39897,7 +39900,7 @@ void test_7F_0349()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39910,8 +39913,8 @@ void test_7F_0349()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x20);
     CheckRegisterByte(RegisterType::L, 0x93);
-    CheckRegisterWord(RegisterType::PC, 0x6D18);
-    CheckRegisterWord(RegisterType::SP, 0xFB44);
+    WriteRegisterWord(RegisterType::PC, 0x6D17);
+    WriteRegisterWord(RegisterType::SP, 0xFB44);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6D17, 0x7F);
 }
@@ -39942,7 +39945,7 @@ void test_7F_034A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -39955,8 +39958,8 @@ void test_7F_034A()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x8E);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    CheckRegisterWord(RegisterType::PC, 0xF573);
-    CheckRegisterWord(RegisterType::SP, 0x60C8);
+    WriteRegisterWord(RegisterType::PC, 0xF572);
+    WriteRegisterWord(RegisterType::SP, 0x60C8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF572, 0x7F);
 }
@@ -39987,7 +39990,7 @@ void test_7F_034B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40000,8 +40003,8 @@ void test_7F_034B()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x02);
     CheckRegisterByte(RegisterType::L, 0x68);
-    CheckRegisterWord(RegisterType::PC, 0x1482);
-    CheckRegisterWord(RegisterType::SP, 0x3949);
+    WriteRegisterWord(RegisterType::PC, 0x1481);
+    WriteRegisterWord(RegisterType::SP, 0x3949);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1481, 0x7F);
 }
@@ -40032,7 +40035,7 @@ void test_7F_034C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40045,8 +40048,8 @@ void test_7F_034C()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0x76);
-    CheckRegisterWord(RegisterType::PC, 0x9F44);
-    CheckRegisterWord(RegisterType::SP, 0xE6B2);
+    WriteRegisterWord(RegisterType::PC, 0x9F43);
+    WriteRegisterWord(RegisterType::SP, 0xE6B2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9F43, 0x7F);
 }
@@ -40077,7 +40080,7 @@ void test_7F_034D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40090,8 +40093,8 @@ void test_7F_034D()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xD6);
     CheckRegisterByte(RegisterType::L, 0x25);
-    CheckRegisterWord(RegisterType::PC, 0x551F);
-    CheckRegisterWord(RegisterType::SP, 0x194B);
+    WriteRegisterWord(RegisterType::PC, 0x551E);
+    WriteRegisterWord(RegisterType::SP, 0x194B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x551E, 0x7F);
 }
@@ -40122,7 +40125,7 @@ void test_7F_034E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40135,8 +40138,8 @@ void test_7F_034E()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x6A);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    CheckRegisterWord(RegisterType::PC, 0x73E6);
-    CheckRegisterWord(RegisterType::SP, 0x6FAA);
+    WriteRegisterWord(RegisterType::PC, 0x73E5);
+    WriteRegisterWord(RegisterType::SP, 0x6FAA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x73E5, 0x7F);
 }
@@ -40167,7 +40170,7 @@ void test_7F_034F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40180,8 +40183,8 @@ void test_7F_034F()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0xD1);
-    CheckRegisterWord(RegisterType::PC, 0xCA7C);
-    CheckRegisterWord(RegisterType::SP, 0x435D);
+    WriteRegisterWord(RegisterType::PC, 0xCA7B);
+    WriteRegisterWord(RegisterType::SP, 0x435D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCA7B, 0x7F);
 }
@@ -40212,7 +40215,7 @@ void test_7F_0350()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40225,8 +40228,8 @@ void test_7F_0350()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x12);
     CheckRegisterByte(RegisterType::L, 0x2C);
-    CheckRegisterWord(RegisterType::PC, 0x302B);
-    CheckRegisterWord(RegisterType::SP, 0x8DB4);
+    WriteRegisterWord(RegisterType::PC, 0x302A);
+    WriteRegisterWord(RegisterType::SP, 0x8DB4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x302A, 0x7F);
 }
@@ -40257,7 +40260,7 @@ void test_7F_0351()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40270,8 +40273,8 @@ void test_7F_0351()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x89);
     CheckRegisterByte(RegisterType::L, 0x63);
-    CheckRegisterWord(RegisterType::PC, 0xE64E);
-    CheckRegisterWord(RegisterType::SP, 0x1C7B);
+    WriteRegisterWord(RegisterType::PC, 0xE64D);
+    WriteRegisterWord(RegisterType::SP, 0x1C7B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE64D, 0x7F);
 }
@@ -40302,7 +40305,7 @@ void test_7F_0352()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40315,8 +40318,8 @@ void test_7F_0352()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0x2C);
-    CheckRegisterWord(RegisterType::PC, 0x9A28);
-    CheckRegisterWord(RegisterType::SP, 0x118E);
+    WriteRegisterWord(RegisterType::PC, 0x9A27);
+    WriteRegisterWord(RegisterType::SP, 0x118E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9A27, 0x7F);
 }
@@ -40347,7 +40350,7 @@ void test_7F_0353()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40360,8 +40363,8 @@ void test_7F_0353()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x04);
     CheckRegisterByte(RegisterType::L, 0x63);
-    CheckRegisterWord(RegisterType::PC, 0xBA3D);
-    CheckRegisterWord(RegisterType::SP, 0xC8B8);
+    WriteRegisterWord(RegisterType::PC, 0xBA3C);
+    WriteRegisterWord(RegisterType::SP, 0xC8B8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBA3C, 0x7F);
 }
@@ -40392,7 +40395,7 @@ void test_7F_0354()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40405,8 +40408,8 @@ void test_7F_0354()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xB2);
     CheckRegisterByte(RegisterType::L, 0xBA);
-    CheckRegisterWord(RegisterType::PC, 0x3C9A);
-    CheckRegisterWord(RegisterType::SP, 0xCAA9);
+    WriteRegisterWord(RegisterType::PC, 0x3C99);
+    WriteRegisterWord(RegisterType::SP, 0xCAA9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3C99, 0x7F);
 }
@@ -40437,7 +40440,7 @@ void test_7F_0355()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40450,8 +40453,8 @@ void test_7F_0355()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x95);
     CheckRegisterByte(RegisterType::L, 0x03);
-    CheckRegisterWord(RegisterType::PC, 0x971C);
-    CheckRegisterWord(RegisterType::SP, 0x1FC4);
+    WriteRegisterWord(RegisterType::PC, 0x971B);
+    WriteRegisterWord(RegisterType::SP, 0x1FC4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x971B, 0x7F);
 }
@@ -40482,7 +40485,7 @@ void test_7F_0356()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40495,8 +40498,8 @@ void test_7F_0356()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xD6);
     CheckRegisterByte(RegisterType::L, 0x13);
-    CheckRegisterWord(RegisterType::PC, 0xA329);
-    CheckRegisterWord(RegisterType::SP, 0xC639);
+    WriteRegisterWord(RegisterType::PC, 0xA328);
+    WriteRegisterWord(RegisterType::SP, 0xC639);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA328, 0x7F);
 }
@@ -40527,7 +40530,7 @@ void test_7F_0357()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40540,8 +40543,8 @@ void test_7F_0357()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xE5);
     CheckRegisterByte(RegisterType::L, 0x12);
-    CheckRegisterWord(RegisterType::PC, 0x075E);
-    CheckRegisterWord(RegisterType::SP, 0xFAA4);
+    WriteRegisterWord(RegisterType::PC, 0x075D);
+    WriteRegisterWord(RegisterType::SP, 0xFAA4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x075D, 0x7F);
 }
@@ -40572,7 +40575,7 @@ void test_7F_0358()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40585,8 +40588,8 @@ void test_7F_0358()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x42);
     CheckRegisterByte(RegisterType::L, 0xEF);
-    CheckRegisterWord(RegisterType::PC, 0xABC2);
-    CheckRegisterWord(RegisterType::SP, 0x3B49);
+    WriteRegisterWord(RegisterType::PC, 0xABC1);
+    WriteRegisterWord(RegisterType::SP, 0x3B49);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xABC1, 0x7F);
 }
@@ -40617,7 +40620,7 @@ void test_7F_0359()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40630,8 +40633,8 @@ void test_7F_0359()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0x21);
-    CheckRegisterWord(RegisterType::PC, 0xDB7A);
-    CheckRegisterWord(RegisterType::SP, 0x1576);
+    WriteRegisterWord(RegisterType::PC, 0xDB79);
+    WriteRegisterWord(RegisterType::SP, 0x1576);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDB79, 0x7F);
 }
@@ -40662,7 +40665,7 @@ void test_7F_035A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40675,8 +40678,8 @@ void test_7F_035A()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x2F);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    CheckRegisterWord(RegisterType::PC, 0x9F66);
-    CheckRegisterWord(RegisterType::SP, 0xC588);
+    WriteRegisterWord(RegisterType::PC, 0x9F65);
+    WriteRegisterWord(RegisterType::SP, 0xC588);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9F65, 0x7F);
 }
@@ -40707,7 +40710,7 @@ void test_7F_035B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40720,8 +40723,8 @@ void test_7F_035B()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x9E);
     CheckRegisterByte(RegisterType::L, 0x29);
-    CheckRegisterWord(RegisterType::PC, 0x7A96);
-    CheckRegisterWord(RegisterType::SP, 0xF026);
+    WriteRegisterWord(RegisterType::PC, 0x7A95);
+    WriteRegisterWord(RegisterType::SP, 0xF026);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7A95, 0x7F);
 }
@@ -40752,7 +40755,7 @@ void test_7F_035C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40765,8 +40768,8 @@ void test_7F_035C()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xD0);
     CheckRegisterByte(RegisterType::L, 0x4C);
-    CheckRegisterWord(RegisterType::PC, 0xDF69);
-    CheckRegisterWord(RegisterType::SP, 0xC3DA);
+    WriteRegisterWord(RegisterType::PC, 0xDF68);
+    WriteRegisterWord(RegisterType::SP, 0xC3DA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDF68, 0x7F);
 }
@@ -40797,7 +40800,7 @@ void test_7F_035D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40810,8 +40813,8 @@ void test_7F_035D()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x5C);
     CheckRegisterByte(RegisterType::L, 0xC3);
-    CheckRegisterWord(RegisterType::PC, 0xB52B);
-    CheckRegisterWord(RegisterType::SP, 0x2795);
+    WriteRegisterWord(RegisterType::PC, 0xB52A);
+    WriteRegisterWord(RegisterType::SP, 0x2795);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB52A, 0x7F);
 }
@@ -40842,7 +40845,7 @@ void test_7F_035E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40855,8 +40858,8 @@ void test_7F_035E()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xEB);
     CheckRegisterByte(RegisterType::L, 0x65);
-    CheckRegisterWord(RegisterType::PC, 0xD7AC);
-    CheckRegisterWord(RegisterType::SP, 0x83BA);
+    WriteRegisterWord(RegisterType::PC, 0xD7AB);
+    WriteRegisterWord(RegisterType::SP, 0x83BA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD7AB, 0x7F);
 }
@@ -40887,7 +40890,7 @@ void test_7F_035F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40900,8 +40903,8 @@ void test_7F_035F()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x49);
     CheckRegisterByte(RegisterType::L, 0x7E);
-    CheckRegisterWord(RegisterType::PC, 0xA7BB);
-    CheckRegisterWord(RegisterType::SP, 0x40EB);
+    WriteRegisterWord(RegisterType::PC, 0xA7BA);
+    WriteRegisterWord(RegisterType::SP, 0x40EB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA7BA, 0x7F);
 }
@@ -40932,7 +40935,7 @@ void test_7F_0360()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40945,8 +40948,8 @@ void test_7F_0360()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0x59);
-    CheckRegisterWord(RegisterType::PC, 0x0955);
-    CheckRegisterWord(RegisterType::SP, 0xD7E7);
+    WriteRegisterWord(RegisterType::PC, 0x0954);
+    WriteRegisterWord(RegisterType::SP, 0xD7E7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0954, 0x7F);
 }
@@ -40977,7 +40980,7 @@ void test_7F_0361()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -40990,8 +40993,8 @@ void test_7F_0361()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x26);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    CheckRegisterWord(RegisterType::PC, 0x11C9);
-    CheckRegisterWord(RegisterType::SP, 0x716C);
+    WriteRegisterWord(RegisterType::PC, 0x11C8);
+    WriteRegisterWord(RegisterType::SP, 0x716C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x11C8, 0x7F);
 }
@@ -41022,7 +41025,7 @@ void test_7F_0362()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41035,8 +41038,8 @@ void test_7F_0362()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x32);
     CheckRegisterByte(RegisterType::L, 0x5E);
-    CheckRegisterWord(RegisterType::PC, 0xC6A4);
-    CheckRegisterWord(RegisterType::SP, 0x1C52);
+    WriteRegisterWord(RegisterType::PC, 0xC6A3);
+    WriteRegisterWord(RegisterType::SP, 0x1C52);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC6A3, 0x7F);
 }
@@ -41067,7 +41070,7 @@ void test_7F_0363()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41080,8 +41083,8 @@ void test_7F_0363()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x04);
     CheckRegisterByte(RegisterType::L, 0x35);
-    CheckRegisterWord(RegisterType::PC, 0x5A13);
-    CheckRegisterWord(RegisterType::SP, 0x49FD);
+    WriteRegisterWord(RegisterType::PC, 0x5A12);
+    WriteRegisterWord(RegisterType::SP, 0x49FD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5A12, 0x7F);
 }
@@ -41112,7 +41115,7 @@ void test_7F_0364()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41125,8 +41128,8 @@ void test_7F_0364()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x0B);
     CheckRegisterByte(RegisterType::L, 0xB4);
-    CheckRegisterWord(RegisterType::PC, 0xA34C);
-    CheckRegisterWord(RegisterType::SP, 0x677D);
+    WriteRegisterWord(RegisterType::PC, 0xA34B);
+    WriteRegisterWord(RegisterType::SP, 0x677D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA34B, 0x7F);
 }
@@ -41157,7 +41160,7 @@ void test_7F_0365()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41170,8 +41173,8 @@ void test_7F_0365()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0xC8);
-    CheckRegisterWord(RegisterType::PC, 0x7E99);
-    CheckRegisterWord(RegisterType::SP, 0xD253);
+    WriteRegisterWord(RegisterType::PC, 0x7E98);
+    WriteRegisterWord(RegisterType::SP, 0xD253);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7E98, 0x7F);
 }
@@ -41202,7 +41205,7 @@ void test_7F_0366()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41215,8 +41218,8 @@ void test_7F_0366()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x9B);
     CheckRegisterByte(RegisterType::L, 0x6B);
-    CheckRegisterWord(RegisterType::PC, 0x93BF);
-    CheckRegisterWord(RegisterType::SP, 0x229A);
+    WriteRegisterWord(RegisterType::PC, 0x93BE);
+    WriteRegisterWord(RegisterType::SP, 0x229A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x93BE, 0x7F);
 }
@@ -41247,7 +41250,7 @@ void test_7F_0367()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41260,8 +41263,8 @@ void test_7F_0367()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x74);
     CheckRegisterByte(RegisterType::L, 0x69);
-    CheckRegisterWord(RegisterType::PC, 0x717C);
-    CheckRegisterWord(RegisterType::SP, 0xCE4D);
+    WriteRegisterWord(RegisterType::PC, 0x717B);
+    WriteRegisterWord(RegisterType::SP, 0xCE4D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x717B, 0x7F);
 }
@@ -41292,7 +41295,7 @@ void test_7F_0368()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41305,8 +41308,8 @@ void test_7F_0368()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xA9);
     CheckRegisterByte(RegisterType::L, 0x4B);
-    CheckRegisterWord(RegisterType::PC, 0x5D94);
-    CheckRegisterWord(RegisterType::SP, 0x0962);
+    WriteRegisterWord(RegisterType::PC, 0x5D93);
+    WriteRegisterWord(RegisterType::SP, 0x0962);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5D93, 0x7F);
 }
@@ -41337,7 +41340,7 @@ void test_7F_0369()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41350,8 +41353,8 @@ void test_7F_0369()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x83);
     CheckRegisterByte(RegisterType::L, 0xBE);
-    CheckRegisterWord(RegisterType::PC, 0x8CC8);
-    CheckRegisterWord(RegisterType::SP, 0x3510);
+    WriteRegisterWord(RegisterType::PC, 0x8CC7);
+    WriteRegisterWord(RegisterType::SP, 0x3510);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8CC7, 0x7F);
 }
@@ -41382,7 +41385,7 @@ void test_7F_036A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41395,8 +41398,8 @@ void test_7F_036A()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0x22);
-    CheckRegisterWord(RegisterType::PC, 0x663C);
-    CheckRegisterWord(RegisterType::SP, 0x4541);
+    WriteRegisterWord(RegisterType::PC, 0x663B);
+    WriteRegisterWord(RegisterType::SP, 0x4541);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x663B, 0x7F);
 }
@@ -41427,7 +41430,7 @@ void test_7F_036B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41440,8 +41443,8 @@ void test_7F_036B()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xE4);
     CheckRegisterByte(RegisterType::L, 0x08);
-    CheckRegisterWord(RegisterType::PC, 0xB1F3);
-    CheckRegisterWord(RegisterType::SP, 0x9EF6);
+    WriteRegisterWord(RegisterType::PC, 0xB1F2);
+    WriteRegisterWord(RegisterType::SP, 0x9EF6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB1F2, 0x7F);
 }
@@ -41472,7 +41475,7 @@ void test_7F_036C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41485,8 +41488,8 @@ void test_7F_036C()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xEA);
     CheckRegisterByte(RegisterType::L, 0xAC);
-    CheckRegisterWord(RegisterType::PC, 0x7BBE);
-    CheckRegisterWord(RegisterType::SP, 0xC05B);
+    WriteRegisterWord(RegisterType::PC, 0x7BBD);
+    WriteRegisterWord(RegisterType::SP, 0xC05B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7BBD, 0x7F);
 }
@@ -41517,7 +41520,7 @@ void test_7F_036D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41530,8 +41533,8 @@ void test_7F_036D()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xE3);
     CheckRegisterByte(RegisterType::L, 0x1E);
-    CheckRegisterWord(RegisterType::PC, 0xF759);
-    CheckRegisterWord(RegisterType::SP, 0xBED0);
+    WriteRegisterWord(RegisterType::PC, 0xF758);
+    WriteRegisterWord(RegisterType::SP, 0xBED0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF758, 0x7F);
 }
@@ -41562,7 +41565,7 @@ void test_7F_036E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41575,8 +41578,8 @@ void test_7F_036E()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x7E);
     CheckRegisterByte(RegisterType::L, 0x79);
-    CheckRegisterWord(RegisterType::PC, 0xCB2E);
-    CheckRegisterWord(RegisterType::SP, 0x8FB2);
+    WriteRegisterWord(RegisterType::PC, 0xCB2D);
+    WriteRegisterWord(RegisterType::SP, 0x8FB2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCB2D, 0x7F);
 }
@@ -41607,7 +41610,7 @@ void test_7F_036F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41620,8 +41623,8 @@ void test_7F_036F()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x35);
     CheckRegisterByte(RegisterType::L, 0x02);
-    CheckRegisterWord(RegisterType::PC, 0xCD73);
-    CheckRegisterWord(RegisterType::SP, 0x314D);
+    WriteRegisterWord(RegisterType::PC, 0xCD72);
+    WriteRegisterWord(RegisterType::SP, 0x314D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCD72, 0x7F);
 }
@@ -41652,7 +41655,7 @@ void test_7F_0370()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41665,8 +41668,8 @@ void test_7F_0370()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x75);
     CheckRegisterByte(RegisterType::L, 0xB9);
-    CheckRegisterWord(RegisterType::PC, 0xB093);
-    CheckRegisterWord(RegisterType::SP, 0xF73F);
+    WriteRegisterWord(RegisterType::PC, 0xB092);
+    WriteRegisterWord(RegisterType::SP, 0xF73F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB092, 0x7F);
 }
@@ -41697,7 +41700,7 @@ void test_7F_0371()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41710,8 +41713,8 @@ void test_7F_0371()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0x55);
-    CheckRegisterWord(RegisterType::PC, 0xA9F0);
-    CheckRegisterWord(RegisterType::SP, 0x0AC2);
+    WriteRegisterWord(RegisterType::PC, 0xA9EF);
+    WriteRegisterWord(RegisterType::SP, 0x0AC2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA9EF, 0x7F);
 }
@@ -41742,7 +41745,7 @@ void test_7F_0372()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41755,8 +41758,8 @@ void test_7F_0372()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x7E);
     CheckRegisterByte(RegisterType::L, 0x5F);
-    CheckRegisterWord(RegisterType::PC, 0x2977);
-    CheckRegisterWord(RegisterType::SP, 0x3E66);
+    WriteRegisterWord(RegisterType::PC, 0x2976);
+    WriteRegisterWord(RegisterType::SP, 0x3E66);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2976, 0x7F);
 }
@@ -41787,7 +41790,7 @@ void test_7F_0373()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41800,8 +41803,8 @@ void test_7F_0373()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x8D);
     CheckRegisterByte(RegisterType::L, 0x0C);
-    CheckRegisterWord(RegisterType::PC, 0xF512);
-    CheckRegisterWord(RegisterType::SP, 0xEAE0);
+    WriteRegisterWord(RegisterType::PC, 0xF511);
+    WriteRegisterWord(RegisterType::SP, 0xEAE0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF511, 0x7F);
 }
@@ -41832,7 +41835,7 @@ void test_7F_0374()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41845,8 +41848,8 @@ void test_7F_0374()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x07);
     CheckRegisterByte(RegisterType::L, 0x98);
-    CheckRegisterWord(RegisterType::PC, 0xC470);
-    CheckRegisterWord(RegisterType::SP, 0xCBC2);
+    WriteRegisterWord(RegisterType::PC, 0xC46F);
+    WriteRegisterWord(RegisterType::SP, 0xCBC2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC46F, 0x7F);
 }
@@ -41877,7 +41880,7 @@ void test_7F_0375()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41890,8 +41893,8 @@ void test_7F_0375()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x04);
     CheckRegisterByte(RegisterType::L, 0x20);
-    CheckRegisterWord(RegisterType::PC, 0x43A7);
-    CheckRegisterWord(RegisterType::SP, 0xCF6C);
+    WriteRegisterWord(RegisterType::PC, 0x43A6);
+    WriteRegisterWord(RegisterType::SP, 0xCF6C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x43A6, 0x7F);
 }
@@ -41922,7 +41925,7 @@ void test_7F_0376()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41935,8 +41938,8 @@ void test_7F_0376()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xE9);
     CheckRegisterByte(RegisterType::L, 0x95);
-    CheckRegisterWord(RegisterType::PC, 0xA1B5);
-    CheckRegisterWord(RegisterType::SP, 0xCC7D);
+    WriteRegisterWord(RegisterType::PC, 0xA1B4);
+    WriteRegisterWord(RegisterType::SP, 0xCC7D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA1B4, 0x7F);
 }
@@ -41967,7 +41970,7 @@ void test_7F_0377()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -41980,8 +41983,8 @@ void test_7F_0377()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x07);
     CheckRegisterByte(RegisterType::L, 0x92);
-    CheckRegisterWord(RegisterType::PC, 0x45EC);
-    CheckRegisterWord(RegisterType::SP, 0x6F9B);
+    WriteRegisterWord(RegisterType::PC, 0x45EB);
+    WriteRegisterWord(RegisterType::SP, 0x6F9B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x45EB, 0x7F);
 }
@@ -42012,7 +42015,7 @@ void test_7F_0378()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42025,8 +42028,8 @@ void test_7F_0378()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x77);
     CheckRegisterByte(RegisterType::L, 0xA8);
-    CheckRegisterWord(RegisterType::PC, 0xB29E);
-    CheckRegisterWord(RegisterType::SP, 0x218A);
+    WriteRegisterWord(RegisterType::PC, 0xB29D);
+    WriteRegisterWord(RegisterType::SP, 0x218A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB29D, 0x7F);
 }
@@ -42057,7 +42060,7 @@ void test_7F_0379()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42070,8 +42073,8 @@ void test_7F_0379()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0x9A);
-    CheckRegisterWord(RegisterType::PC, 0x8AA2);
-    CheckRegisterWord(RegisterType::SP, 0xC875);
+    WriteRegisterWord(RegisterType::PC, 0x8AA1);
+    WriteRegisterWord(RegisterType::SP, 0xC875);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8AA1, 0x7F);
 }
@@ -42102,7 +42105,7 @@ void test_7F_037A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42115,8 +42118,8 @@ void test_7F_037A()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x80);
     CheckRegisterByte(RegisterType::L, 0xB0);
-    CheckRegisterWord(RegisterType::PC, 0x9F0D);
-    CheckRegisterWord(RegisterType::SP, 0xD53F);
+    WriteRegisterWord(RegisterType::PC, 0x9F0C);
+    WriteRegisterWord(RegisterType::SP, 0xD53F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9F0C, 0x7F);
 }
@@ -42147,7 +42150,7 @@ void test_7F_037B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42160,8 +42163,8 @@ void test_7F_037B()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xA8);
     CheckRegisterByte(RegisterType::L, 0x57);
-    CheckRegisterWord(RegisterType::PC, 0x8724);
-    CheckRegisterWord(RegisterType::SP, 0x697B);
+    WriteRegisterWord(RegisterType::PC, 0x8723);
+    WriteRegisterWord(RegisterType::SP, 0x697B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8723, 0x7F);
 }
@@ -42192,7 +42195,7 @@ void test_7F_037C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42205,8 +42208,8 @@ void test_7F_037C()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x91);
     CheckRegisterByte(RegisterType::L, 0xB9);
-    CheckRegisterWord(RegisterType::PC, 0x9B88);
-    CheckRegisterWord(RegisterType::SP, 0x9AAA);
+    WriteRegisterWord(RegisterType::PC, 0x9B87);
+    WriteRegisterWord(RegisterType::SP, 0x9AAA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9B87, 0x7F);
 }
@@ -42237,7 +42240,7 @@ void test_7F_037D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42250,8 +42253,8 @@ void test_7F_037D()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0x53);
-    CheckRegisterWord(RegisterType::PC, 0xD7F1);
-    CheckRegisterWord(RegisterType::SP, 0x02D8);
+    WriteRegisterWord(RegisterType::PC, 0xD7F0);
+    WriteRegisterWord(RegisterType::SP, 0x02D8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD7F0, 0x7F);
 }
@@ -42282,7 +42285,7 @@ void test_7F_037E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42295,8 +42298,8 @@ void test_7F_037E()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xA1);
     CheckRegisterByte(RegisterType::L, 0x82);
-    CheckRegisterWord(RegisterType::PC, 0xE91B);
-    CheckRegisterWord(RegisterType::SP, 0x0647);
+    WriteRegisterWord(RegisterType::PC, 0xE91A);
+    WriteRegisterWord(RegisterType::SP, 0x0647);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE91A, 0x7F);
 }
@@ -42327,7 +42330,7 @@ void test_7F_037F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42340,8 +42343,8 @@ void test_7F_037F()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x32);
     CheckRegisterByte(RegisterType::L, 0xC5);
-    CheckRegisterWord(RegisterType::PC, 0xE54A);
-    CheckRegisterWord(RegisterType::SP, 0x1E90);
+    WriteRegisterWord(RegisterType::PC, 0xE549);
+    WriteRegisterWord(RegisterType::SP, 0x1E90);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE549, 0x7F);
 }
@@ -42372,7 +42375,7 @@ void test_7F_0380()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42385,8 +42388,8 @@ void test_7F_0380()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x3E);
     CheckRegisterByte(RegisterType::L, 0x4A);
-    CheckRegisterWord(RegisterType::PC, 0x2707);
-    CheckRegisterWord(RegisterType::SP, 0x4503);
+    WriteRegisterWord(RegisterType::PC, 0x2706);
+    WriteRegisterWord(RegisterType::SP, 0x4503);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2706, 0x7F);
 }
@@ -42417,7 +42420,7 @@ void test_7F_0381()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42430,8 +42433,8 @@ void test_7F_0381()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xB2);
     CheckRegisterByte(RegisterType::L, 0x4E);
-    CheckRegisterWord(RegisterType::PC, 0x3A14);
-    CheckRegisterWord(RegisterType::SP, 0xE1B0);
+    WriteRegisterWord(RegisterType::PC, 0x3A13);
+    WriteRegisterWord(RegisterType::SP, 0xE1B0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3A13, 0x7F);
 }
@@ -42462,7 +42465,7 @@ void test_7F_0382()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42475,8 +42478,8 @@ void test_7F_0382()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x7A);
     CheckRegisterByte(RegisterType::L, 0x94);
-    CheckRegisterWord(RegisterType::PC, 0x6552);
-    CheckRegisterWord(RegisterType::SP, 0x2844);
+    WriteRegisterWord(RegisterType::PC, 0x6551);
+    WriteRegisterWord(RegisterType::SP, 0x2844);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6551, 0x7F);
 }
@@ -42507,7 +42510,7 @@ void test_7F_0383()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42520,8 +42523,8 @@ void test_7F_0383()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x49);
     CheckRegisterByte(RegisterType::L, 0x7E);
-    CheckRegisterWord(RegisterType::PC, 0x99AE);
-    CheckRegisterWord(RegisterType::SP, 0x119B);
+    WriteRegisterWord(RegisterType::PC, 0x99AD);
+    WriteRegisterWord(RegisterType::SP, 0x119B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x99AD, 0x7F);
 }
@@ -42552,7 +42555,7 @@ void test_7F_0384()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42565,8 +42568,8 @@ void test_7F_0384()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xD6);
     CheckRegisterByte(RegisterType::L, 0x29);
-    CheckRegisterWord(RegisterType::PC, 0x2846);
-    CheckRegisterWord(RegisterType::SP, 0x8AE8);
+    WriteRegisterWord(RegisterType::PC, 0x2845);
+    WriteRegisterWord(RegisterType::SP, 0x8AE8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2845, 0x7F);
 }
@@ -42597,7 +42600,7 @@ void test_7F_0385()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42610,8 +42613,8 @@ void test_7F_0385()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x80);
     CheckRegisterByte(RegisterType::L, 0x8D);
-    CheckRegisterWord(RegisterType::PC, 0x1D24);
-    CheckRegisterWord(RegisterType::SP, 0x671B);
+    WriteRegisterWord(RegisterType::PC, 0x1D23);
+    WriteRegisterWord(RegisterType::SP, 0x671B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1D23, 0x7F);
 }
@@ -42642,7 +42645,7 @@ void test_7F_0386()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42655,8 +42658,8 @@ void test_7F_0386()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x51);
     CheckRegisterByte(RegisterType::L, 0x95);
-    CheckRegisterWord(RegisterType::PC, 0x14E3);
-    CheckRegisterWord(RegisterType::SP, 0x67F3);
+    WriteRegisterWord(RegisterType::PC, 0x14E2);
+    WriteRegisterWord(RegisterType::SP, 0x67F3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x14E2, 0x7F);
 }
@@ -42687,7 +42690,7 @@ void test_7F_0387()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42700,8 +42703,8 @@ void test_7F_0387()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x87);
     CheckRegisterByte(RegisterType::L, 0x27);
-    CheckRegisterWord(RegisterType::PC, 0xC179);
-    CheckRegisterWord(RegisterType::SP, 0xB020);
+    WriteRegisterWord(RegisterType::PC, 0xC178);
+    WriteRegisterWord(RegisterType::SP, 0xB020);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC178, 0x7F);
 }
@@ -42732,7 +42735,7 @@ void test_7F_0388()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42745,8 +42748,8 @@ void test_7F_0388()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xE9);
     CheckRegisterByte(RegisterType::L, 0x76);
-    CheckRegisterWord(RegisterType::PC, 0xA0B3);
-    CheckRegisterWord(RegisterType::SP, 0xA017);
+    WriteRegisterWord(RegisterType::PC, 0xA0B2);
+    WriteRegisterWord(RegisterType::SP, 0xA017);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA0B2, 0x7F);
 }
@@ -42777,7 +42780,7 @@ void test_7F_0389()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42790,8 +42793,8 @@ void test_7F_0389()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x49);
     CheckRegisterByte(RegisterType::L, 0xC7);
-    CheckRegisterWord(RegisterType::PC, 0xE0B7);
-    CheckRegisterWord(RegisterType::SP, 0x3EB4);
+    WriteRegisterWord(RegisterType::PC, 0xE0B6);
+    WriteRegisterWord(RegisterType::SP, 0x3EB4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE0B6, 0x7F);
 }
@@ -42822,7 +42825,7 @@ void test_7F_038A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42835,8 +42838,8 @@ void test_7F_038A()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xA4);
     CheckRegisterByte(RegisterType::L, 0x2A);
-    CheckRegisterWord(RegisterType::PC, 0xD742);
-    CheckRegisterWord(RegisterType::SP, 0xDFAD);
+    WriteRegisterWord(RegisterType::PC, 0xD741);
+    WriteRegisterWord(RegisterType::SP, 0xDFAD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD741, 0x7F);
 }
@@ -42867,7 +42870,7 @@ void test_7F_038B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42880,8 +42883,8 @@ void test_7F_038B()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x3B);
     CheckRegisterByte(RegisterType::L, 0x7B);
-    CheckRegisterWord(RegisterType::PC, 0x3795);
-    CheckRegisterWord(RegisterType::SP, 0xAD41);
+    WriteRegisterWord(RegisterType::PC, 0x3794);
+    WriteRegisterWord(RegisterType::SP, 0xAD41);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3794, 0x7F);
 }
@@ -42912,7 +42915,7 @@ void test_7F_038C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42925,8 +42928,8 @@ void test_7F_038C()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0xF4);
-    CheckRegisterWord(RegisterType::PC, 0x3B4C);
-    CheckRegisterWord(RegisterType::SP, 0xB9EE);
+    WriteRegisterWord(RegisterType::PC, 0x3B4B);
+    WriteRegisterWord(RegisterType::SP, 0xB9EE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3B4B, 0x7F);
 }
@@ -42957,7 +42960,7 @@ void test_7F_038D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -42970,8 +42973,8 @@ void test_7F_038D()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xFB);
     CheckRegisterByte(RegisterType::L, 0x13);
-    CheckRegisterWord(RegisterType::PC, 0xCFC0);
-    CheckRegisterWord(RegisterType::SP, 0x173F);
+    WriteRegisterWord(RegisterType::PC, 0xCFBF);
+    WriteRegisterWord(RegisterType::SP, 0x173F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCFBF, 0x7F);
 }
@@ -43002,7 +43005,7 @@ void test_7F_038E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43015,8 +43018,8 @@ void test_7F_038E()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x7B);
     CheckRegisterByte(RegisterType::L, 0x11);
-    CheckRegisterWord(RegisterType::PC, 0x2645);
-    CheckRegisterWord(RegisterType::SP, 0x1C65);
+    WriteRegisterWord(RegisterType::PC, 0x2644);
+    WriteRegisterWord(RegisterType::SP, 0x1C65);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2644, 0x7F);
 }
@@ -43047,7 +43050,7 @@ void test_7F_038F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43060,8 +43063,8 @@ void test_7F_038F()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x74);
     CheckRegisterByte(RegisterType::L, 0xCB);
-    CheckRegisterWord(RegisterType::PC, 0xAC12);
-    CheckRegisterWord(RegisterType::SP, 0xA91A);
+    WriteRegisterWord(RegisterType::PC, 0xAC11);
+    WriteRegisterWord(RegisterType::SP, 0xA91A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAC11, 0x7F);
 }
@@ -43092,7 +43095,7 @@ void test_7F_0390()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43105,8 +43108,8 @@ void test_7F_0390()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    CheckRegisterWord(RegisterType::PC, 0x3BE5);
-    CheckRegisterWord(RegisterType::SP, 0xAA07);
+    WriteRegisterWord(RegisterType::PC, 0x3BE4);
+    WriteRegisterWord(RegisterType::SP, 0xAA07);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3BE4, 0x7F);
 }
@@ -43137,7 +43140,7 @@ void test_7F_0391()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43150,8 +43153,8 @@ void test_7F_0391()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x97);
     CheckRegisterByte(RegisterType::L, 0xE1);
-    CheckRegisterWord(RegisterType::PC, 0x55DB);
-    CheckRegisterWord(RegisterType::SP, 0xAC74);
+    WriteRegisterWord(RegisterType::PC, 0x55DA);
+    WriteRegisterWord(RegisterType::SP, 0xAC74);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x55DA, 0x7F);
 }
@@ -43182,7 +43185,7 @@ void test_7F_0392()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43195,8 +43198,8 @@ void test_7F_0392()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x64);
     CheckRegisterByte(RegisterType::L, 0x67);
-    CheckRegisterWord(RegisterType::PC, 0x985B);
-    CheckRegisterWord(RegisterType::SP, 0xFB45);
+    WriteRegisterWord(RegisterType::PC, 0x985A);
+    WriteRegisterWord(RegisterType::SP, 0xFB45);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x985A, 0x7F);
 }
@@ -43227,7 +43230,7 @@ void test_7F_0393()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43240,8 +43243,8 @@ void test_7F_0393()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x75);
     CheckRegisterByte(RegisterType::L, 0x52);
-    CheckRegisterWord(RegisterType::PC, 0x340C);
-    CheckRegisterWord(RegisterType::SP, 0xAA13);
+    WriteRegisterWord(RegisterType::PC, 0x340B);
+    WriteRegisterWord(RegisterType::SP, 0xAA13);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x340B, 0x7F);
 }
@@ -43272,7 +43275,7 @@ void test_7F_0394()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43285,8 +43288,8 @@ void test_7F_0394()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x47);
     CheckRegisterByte(RegisterType::L, 0x8F);
-    CheckRegisterWord(RegisterType::PC, 0x9F9A);
-    CheckRegisterWord(RegisterType::SP, 0x6FFF);
+    WriteRegisterWord(RegisterType::PC, 0x9F99);
+    WriteRegisterWord(RegisterType::SP, 0x6FFF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9F99, 0x7F);
 }
@@ -43317,7 +43320,7 @@ void test_7F_0395()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43330,8 +43333,8 @@ void test_7F_0395()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x61);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    CheckRegisterWord(RegisterType::PC, 0x3C46);
-    CheckRegisterWord(RegisterType::SP, 0x06B0);
+    WriteRegisterWord(RegisterType::PC, 0x3C45);
+    WriteRegisterWord(RegisterType::SP, 0x06B0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3C45, 0x7F);
 }
@@ -43362,7 +43365,7 @@ void test_7F_0396()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43375,8 +43378,8 @@ void test_7F_0396()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x53);
     CheckRegisterByte(RegisterType::L, 0x01);
-    CheckRegisterWord(RegisterType::PC, 0xCC17);
-    CheckRegisterWord(RegisterType::SP, 0x1411);
+    WriteRegisterWord(RegisterType::PC, 0xCC16);
+    WriteRegisterWord(RegisterType::SP, 0x1411);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCC16, 0x7F);
 }
@@ -43407,7 +43410,7 @@ void test_7F_0397()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43420,8 +43423,8 @@ void test_7F_0397()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x32);
     CheckRegisterByte(RegisterType::L, 0xB0);
-    CheckRegisterWord(RegisterType::PC, 0xAEA5);
-    CheckRegisterWord(RegisterType::SP, 0x4A77);
+    WriteRegisterWord(RegisterType::PC, 0xAEA4);
+    WriteRegisterWord(RegisterType::SP, 0x4A77);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAEA4, 0x7F);
 }
@@ -43452,7 +43455,7 @@ void test_7F_0398()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43465,8 +43468,8 @@ void test_7F_0398()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xC9);
     CheckRegisterByte(RegisterType::L, 0xC5);
-    CheckRegisterWord(RegisterType::PC, 0xD037);
-    CheckRegisterWord(RegisterType::SP, 0x26F9);
+    WriteRegisterWord(RegisterType::PC, 0xD036);
+    WriteRegisterWord(RegisterType::SP, 0x26F9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD036, 0x7F);
 }
@@ -43497,7 +43500,7 @@ void test_7F_0399()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43510,8 +43513,8 @@ void test_7F_0399()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x3B);
     CheckRegisterByte(RegisterType::L, 0x34);
-    CheckRegisterWord(RegisterType::PC, 0x37A2);
-    CheckRegisterWord(RegisterType::SP, 0x0448);
+    WriteRegisterWord(RegisterType::PC, 0x37A1);
+    WriteRegisterWord(RegisterType::SP, 0x0448);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x37A1, 0x7F);
 }
@@ -43542,7 +43545,7 @@ void test_7F_039A()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43555,8 +43558,8 @@ void test_7F_039A()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x71);
     CheckRegisterByte(RegisterType::L, 0x8A);
-    CheckRegisterWord(RegisterType::PC, 0x77D0);
-    CheckRegisterWord(RegisterType::SP, 0x370A);
+    WriteRegisterWord(RegisterType::PC, 0x77CF);
+    WriteRegisterWord(RegisterType::SP, 0x370A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x77CF, 0x7F);
 }
@@ -43587,7 +43590,7 @@ void test_7F_039B()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43600,8 +43603,8 @@ void test_7F_039B()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0x2D);
-    CheckRegisterWord(RegisterType::PC, 0x3436);
-    CheckRegisterWord(RegisterType::SP, 0x703A);
+    WriteRegisterWord(RegisterType::PC, 0x3435);
+    WriteRegisterWord(RegisterType::SP, 0x703A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3435, 0x7F);
 }
@@ -43632,7 +43635,7 @@ void test_7F_039C()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43645,8 +43648,8 @@ void test_7F_039C()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x7B);
     CheckRegisterByte(RegisterType::L, 0x56);
-    CheckRegisterWord(RegisterType::PC, 0x8193);
-    CheckRegisterWord(RegisterType::SP, 0x9926);
+    WriteRegisterWord(RegisterType::PC, 0x8192);
+    WriteRegisterWord(RegisterType::SP, 0x9926);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8192, 0x7F);
 }
@@ -43677,7 +43680,7 @@ void test_7F_039D()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43690,8 +43693,8 @@ void test_7F_039D()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x17);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    CheckRegisterWord(RegisterType::PC, 0x10B5);
-    CheckRegisterWord(RegisterType::SP, 0x18E5);
+    WriteRegisterWord(RegisterType::PC, 0x10B4);
+    WriteRegisterWord(RegisterType::SP, 0x18E5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x10B4, 0x7F);
 }
@@ -43722,7 +43725,7 @@ void test_7F_039E()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43735,8 +43738,8 @@ void test_7F_039E()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xA2);
     CheckRegisterByte(RegisterType::L, 0x54);
-    CheckRegisterWord(RegisterType::PC, 0x8B22);
-    CheckRegisterWord(RegisterType::SP, 0xBD0F);
+    WriteRegisterWord(RegisterType::PC, 0x8B21);
+    WriteRegisterWord(RegisterType::SP, 0xBD0F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8B21, 0x7F);
 }
@@ -43767,7 +43770,7 @@ void test_7F_039F()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43780,8 +43783,8 @@ void test_7F_039F()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0xB1);
-    CheckRegisterWord(RegisterType::PC, 0x9D28);
-    CheckRegisterWord(RegisterType::SP, 0xF129);
+    WriteRegisterWord(RegisterType::PC, 0x9D27);
+    WriteRegisterWord(RegisterType::SP, 0xF129);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9D27, 0x7F);
 }
@@ -43812,7 +43815,7 @@ void test_7F_03A0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43825,8 +43828,8 @@ void test_7F_03A0()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x7C);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    CheckRegisterWord(RegisterType::PC, 0x9DA6);
-    CheckRegisterWord(RegisterType::SP, 0x7780);
+    WriteRegisterWord(RegisterType::PC, 0x9DA5);
+    WriteRegisterWord(RegisterType::SP, 0x7780);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9DA5, 0x7F);
 }
@@ -43857,7 +43860,7 @@ void test_7F_03A1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43870,8 +43873,8 @@ void test_7F_03A1()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x3D);
     CheckRegisterByte(RegisterType::L, 0x53);
-    CheckRegisterWord(RegisterType::PC, 0xDB86);
-    CheckRegisterWord(RegisterType::SP, 0x39AE);
+    WriteRegisterWord(RegisterType::PC, 0xDB85);
+    WriteRegisterWord(RegisterType::SP, 0x39AE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDB85, 0x7F);
 }
@@ -43902,7 +43905,7 @@ void test_7F_03A2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43915,8 +43918,8 @@ void test_7F_03A2()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xC2);
     CheckRegisterByte(RegisterType::L, 0x49);
-    CheckRegisterWord(RegisterType::PC, 0x2D0E);
-    CheckRegisterWord(RegisterType::SP, 0x06BB);
+    WriteRegisterWord(RegisterType::PC, 0x2D0D);
+    WriteRegisterWord(RegisterType::SP, 0x06BB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2D0D, 0x7F);
 }
@@ -43947,7 +43950,7 @@ void test_7F_03A3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -43960,8 +43963,8 @@ void test_7F_03A3()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xA7);
     CheckRegisterByte(RegisterType::L, 0x53);
-    CheckRegisterWord(RegisterType::PC, 0xC738);
-    CheckRegisterWord(RegisterType::SP, 0x32F8);
+    WriteRegisterWord(RegisterType::PC, 0xC737);
+    WriteRegisterWord(RegisterType::SP, 0x32F8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC737, 0x7F);
 }
@@ -43992,7 +43995,7 @@ void test_7F_03A4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44005,8 +44008,8 @@ void test_7F_03A4()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x4F);
     CheckRegisterByte(RegisterType::L, 0xD1);
-    CheckRegisterWord(RegisterType::PC, 0x73B6);
-    CheckRegisterWord(RegisterType::SP, 0x49B4);
+    WriteRegisterWord(RegisterType::PC, 0x73B5);
+    WriteRegisterWord(RegisterType::SP, 0x49B4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x73B5, 0x7F);
 }
@@ -44037,7 +44040,7 @@ void test_7F_03A5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44050,8 +44053,8 @@ void test_7F_03A5()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x7E);
     CheckRegisterByte(RegisterType::L, 0x79);
-    CheckRegisterWord(RegisterType::PC, 0xB2BE);
-    CheckRegisterWord(RegisterType::SP, 0xD3CE);
+    WriteRegisterWord(RegisterType::PC, 0xB2BD);
+    WriteRegisterWord(RegisterType::SP, 0xD3CE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB2BD, 0x7F);
 }
@@ -44082,7 +44085,7 @@ void test_7F_03A6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44095,8 +44098,8 @@ void test_7F_03A6()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x77);
     CheckRegisterByte(RegisterType::L, 0xB0);
-    CheckRegisterWord(RegisterType::PC, 0x8BFD);
-    CheckRegisterWord(RegisterType::SP, 0xC9C2);
+    WriteRegisterWord(RegisterType::PC, 0x8BFC);
+    WriteRegisterWord(RegisterType::SP, 0xC9C2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8BFC, 0x7F);
 }
@@ -44127,7 +44130,7 @@ void test_7F_03A7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44140,8 +44143,8 @@ void test_7F_03A7()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xB8);
     CheckRegisterByte(RegisterType::L, 0x30);
-    CheckRegisterWord(RegisterType::PC, 0xCB75);
-    CheckRegisterWord(RegisterType::SP, 0xF4F6);
+    WriteRegisterWord(RegisterType::PC, 0xCB74);
+    WriteRegisterWord(RegisterType::SP, 0xF4F6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCB74, 0x7F);
 }
@@ -44172,7 +44175,7 @@ void test_7F_03A8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44185,8 +44188,8 @@ void test_7F_03A8()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x37);
     CheckRegisterByte(RegisterType::L, 0x00);
-    CheckRegisterWord(RegisterType::PC, 0xAA12);
-    CheckRegisterWord(RegisterType::SP, 0xD0AB);
+    WriteRegisterWord(RegisterType::PC, 0xAA11);
+    WriteRegisterWord(RegisterType::SP, 0xD0AB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAA11, 0x7F);
 }
@@ -44217,7 +44220,7 @@ void test_7F_03A9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44230,8 +44233,8 @@ void test_7F_03A9()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x3A);
     CheckRegisterByte(RegisterType::L, 0x21);
-    CheckRegisterWord(RegisterType::PC, 0x1A12);
-    CheckRegisterWord(RegisterType::SP, 0x3A79);
+    WriteRegisterWord(RegisterType::PC, 0x1A11);
+    WriteRegisterWord(RegisterType::SP, 0x3A79);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1A11, 0x7F);
 }
@@ -44262,7 +44265,7 @@ void test_7F_03AA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44275,8 +44278,8 @@ void test_7F_03AA()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0xF6);
-    CheckRegisterWord(RegisterType::PC, 0x0C07);
-    CheckRegisterWord(RegisterType::SP, 0xD840);
+    WriteRegisterWord(RegisterType::PC, 0x0C06);
+    WriteRegisterWord(RegisterType::SP, 0xD840);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0C06, 0x7F);
 }
@@ -44307,7 +44310,7 @@ void test_7F_03AB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44320,8 +44323,8 @@ void test_7F_03AB()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x95);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    CheckRegisterWord(RegisterType::PC, 0x11D7);
-    CheckRegisterWord(RegisterType::SP, 0x5918);
+    WriteRegisterWord(RegisterType::PC, 0x11D6);
+    WriteRegisterWord(RegisterType::SP, 0x5918);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x11D6, 0x7F);
 }
@@ -44352,7 +44355,7 @@ void test_7F_03AC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44365,8 +44368,8 @@ void test_7F_03AC()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0x82);
-    CheckRegisterWord(RegisterType::PC, 0xF20F);
-    CheckRegisterWord(RegisterType::SP, 0xC1E2);
+    WriteRegisterWord(RegisterType::PC, 0xF20E);
+    WriteRegisterWord(RegisterType::SP, 0xC1E2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF20E, 0x7F);
 }
@@ -44397,7 +44400,7 @@ void test_7F_03AD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44410,8 +44413,8 @@ void test_7F_03AD()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x20);
     CheckRegisterByte(RegisterType::L, 0xA4);
-    CheckRegisterWord(RegisterType::PC, 0x51C2);
-    CheckRegisterWord(RegisterType::SP, 0x3E9E);
+    WriteRegisterWord(RegisterType::PC, 0x51C1);
+    WriteRegisterWord(RegisterType::SP, 0x3E9E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x51C1, 0x7F);
 }
@@ -44442,7 +44445,7 @@ void test_7F_03AE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44455,8 +44458,8 @@ void test_7F_03AE()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xBD);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    CheckRegisterWord(RegisterType::PC, 0xFB42);
-    CheckRegisterWord(RegisterType::SP, 0x0B1F);
+    WriteRegisterWord(RegisterType::PC, 0xFB41);
+    WriteRegisterWord(RegisterType::SP, 0x0B1F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFB41, 0x7F);
 }
@@ -44487,7 +44490,7 @@ void test_7F_03AF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44500,8 +44503,8 @@ void test_7F_03AF()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0x28);
-    CheckRegisterWord(RegisterType::PC, 0xEE7B);
-    CheckRegisterWord(RegisterType::SP, 0xAE77);
+    WriteRegisterWord(RegisterType::PC, 0xEE7A);
+    WriteRegisterWord(RegisterType::SP, 0xAE77);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEE7A, 0x7F);
 }
@@ -44532,7 +44535,7 @@ void test_7F_03B0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44545,8 +44548,8 @@ void test_7F_03B0()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x1C);
     CheckRegisterByte(RegisterType::L, 0x1C);
-    CheckRegisterWord(RegisterType::PC, 0xF346);
-    CheckRegisterWord(RegisterType::SP, 0xA8E8);
+    WriteRegisterWord(RegisterType::PC, 0xF345);
+    WriteRegisterWord(RegisterType::SP, 0xA8E8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF345, 0x7F);
 }
@@ -44577,7 +44580,7 @@ void test_7F_03B1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44590,8 +44593,8 @@ void test_7F_03B1()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x03);
     CheckRegisterByte(RegisterType::L, 0xED);
-    CheckRegisterWord(RegisterType::PC, 0x68A7);
-    CheckRegisterWord(RegisterType::SP, 0xDE7C);
+    WriteRegisterWord(RegisterType::PC, 0x68A6);
+    WriteRegisterWord(RegisterType::SP, 0xDE7C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x68A6, 0x7F);
 }
@@ -44622,7 +44625,7 @@ void test_7F_03B2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44635,8 +44638,8 @@ void test_7F_03B2()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0x11);
-    CheckRegisterWord(RegisterType::PC, 0x21F4);
-    CheckRegisterWord(RegisterType::SP, 0xC6BC);
+    WriteRegisterWord(RegisterType::PC, 0x21F3);
+    WriteRegisterWord(RegisterType::SP, 0xC6BC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x21F3, 0x7F);
 }
@@ -44667,7 +44670,7 @@ void test_7F_03B3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44680,8 +44683,8 @@ void test_7F_03B3()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x0D);
     CheckRegisterByte(RegisterType::L, 0x59);
-    CheckRegisterWord(RegisterType::PC, 0x630B);
-    CheckRegisterWord(RegisterType::SP, 0x06CA);
+    WriteRegisterWord(RegisterType::PC, 0x630A);
+    WriteRegisterWord(RegisterType::SP, 0x06CA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x630A, 0x7F);
 }
@@ -44712,7 +44715,7 @@ void test_7F_03B4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44725,8 +44728,8 @@ void test_7F_03B4()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x4F);
     CheckRegisterByte(RegisterType::L, 0x9A);
-    CheckRegisterWord(RegisterType::PC, 0xF269);
-    CheckRegisterWord(RegisterType::SP, 0x19CE);
+    WriteRegisterWord(RegisterType::PC, 0xF268);
+    WriteRegisterWord(RegisterType::SP, 0x19CE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF268, 0x7F);
 }
@@ -44757,7 +44760,7 @@ void test_7F_03B5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44770,8 +44773,8 @@ void test_7F_03B5()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xB2);
     CheckRegisterByte(RegisterType::L, 0x97);
-    CheckRegisterWord(RegisterType::PC, 0x23C6);
-    CheckRegisterWord(RegisterType::SP, 0x0148);
+    WriteRegisterWord(RegisterType::PC, 0x23C5);
+    WriteRegisterWord(RegisterType::SP, 0x0148);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x23C5, 0x7F);
 }
@@ -44802,7 +44805,7 @@ void test_7F_03B6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44815,8 +44818,8 @@ void test_7F_03B6()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x79);
     CheckRegisterByte(RegisterType::L, 0x88);
-    CheckRegisterWord(RegisterType::PC, 0x618D);
-    CheckRegisterWord(RegisterType::SP, 0x1690);
+    WriteRegisterWord(RegisterType::PC, 0x618C);
+    WriteRegisterWord(RegisterType::SP, 0x1690);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x618C, 0x7F);
 }
@@ -44847,7 +44850,7 @@ void test_7F_03B7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44860,8 +44863,8 @@ void test_7F_03B7()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xE0);
     CheckRegisterByte(RegisterType::L, 0x1B);
-    CheckRegisterWord(RegisterType::PC, 0xD93E);
-    CheckRegisterWord(RegisterType::SP, 0x6CBC);
+    WriteRegisterWord(RegisterType::PC, 0xD93D);
+    WriteRegisterWord(RegisterType::SP, 0x6CBC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD93D, 0x7F);
 }
@@ -44892,7 +44895,7 @@ void test_7F_03B8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44905,8 +44908,8 @@ void test_7F_03B8()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x87);
     CheckRegisterByte(RegisterType::L, 0x84);
-    CheckRegisterWord(RegisterType::PC, 0xF16F);
-    CheckRegisterWord(RegisterType::SP, 0x16D3);
+    WriteRegisterWord(RegisterType::PC, 0xF16E);
+    WriteRegisterWord(RegisterType::SP, 0x16D3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF16E, 0x7F);
 }
@@ -44937,7 +44940,7 @@ void test_7F_03B9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44950,8 +44953,8 @@ void test_7F_03B9()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x88);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    CheckRegisterWord(RegisterType::PC, 0xE11D);
-    CheckRegisterWord(RegisterType::SP, 0xDF46);
+    WriteRegisterWord(RegisterType::PC, 0xE11C);
+    WriteRegisterWord(RegisterType::SP, 0xDF46);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE11C, 0x7F);
 }
@@ -44982,7 +44985,7 @@ void test_7F_03BA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -44995,8 +44998,8 @@ void test_7F_03BA()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x8C);
     CheckRegisterByte(RegisterType::L, 0x69);
-    CheckRegisterWord(RegisterType::PC, 0xE54C);
-    CheckRegisterWord(RegisterType::SP, 0x666C);
+    WriteRegisterWord(RegisterType::PC, 0xE54B);
+    WriteRegisterWord(RegisterType::SP, 0x666C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE54B, 0x7F);
 }
@@ -45027,7 +45030,7 @@ void test_7F_03BB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45040,8 +45043,8 @@ void test_7F_03BB()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x83);
     CheckRegisterByte(RegisterType::L, 0xC9);
-    CheckRegisterWord(RegisterType::PC, 0xE549);
-    CheckRegisterWord(RegisterType::SP, 0xD77B);
+    WriteRegisterWord(RegisterType::PC, 0xE548);
+    WriteRegisterWord(RegisterType::SP, 0xD77B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE548, 0x7F);
 }
@@ -45072,7 +45075,7 @@ void test_7F_03BC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45085,8 +45088,8 @@ void test_7F_03BC()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xEE);
     CheckRegisterByte(RegisterType::L, 0xE6);
-    CheckRegisterWord(RegisterType::PC, 0x6D6A);
-    CheckRegisterWord(RegisterType::SP, 0x1A3F);
+    WriteRegisterWord(RegisterType::PC, 0x6D69);
+    WriteRegisterWord(RegisterType::SP, 0x1A3F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6D69, 0x7F);
 }
@@ -45117,7 +45120,7 @@ void test_7F_03BD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45130,8 +45133,8 @@ void test_7F_03BD()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x42);
     CheckRegisterByte(RegisterType::L, 0x86);
-    CheckRegisterWord(RegisterType::PC, 0xFDB7);
-    CheckRegisterWord(RegisterType::SP, 0xD419);
+    WriteRegisterWord(RegisterType::PC, 0xFDB6);
+    WriteRegisterWord(RegisterType::SP, 0xD419);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFDB6, 0x7F);
 }
@@ -45162,7 +45165,7 @@ void test_7F_03BE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45175,8 +45178,8 @@ void test_7F_03BE()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xDD);
     CheckRegisterByte(RegisterType::L, 0x10);
-    CheckRegisterWord(RegisterType::PC, 0x815B);
-    CheckRegisterWord(RegisterType::SP, 0xEC0D);
+    WriteRegisterWord(RegisterType::PC, 0x815A);
+    WriteRegisterWord(RegisterType::SP, 0xEC0D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x815A, 0x7F);
 }
@@ -45207,7 +45210,7 @@ void test_7F_03BF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45220,8 +45223,8 @@ void test_7F_03BF()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xAB);
     CheckRegisterByte(RegisterType::L, 0x96);
-    CheckRegisterWord(RegisterType::PC, 0x6DE0);
-    CheckRegisterWord(RegisterType::SP, 0x4C96);
+    WriteRegisterWord(RegisterType::PC, 0x6DDF);
+    WriteRegisterWord(RegisterType::SP, 0x4C96);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6DDF, 0x7F);
 }
@@ -45252,7 +45255,7 @@ void test_7F_03C0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45265,8 +45268,8 @@ void test_7F_03C0()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xD1);
     CheckRegisterByte(RegisterType::L, 0xB6);
-    CheckRegisterWord(RegisterType::PC, 0x4BAB);
-    CheckRegisterWord(RegisterType::SP, 0x1547);
+    WriteRegisterWord(RegisterType::PC, 0x4BAA);
+    WriteRegisterWord(RegisterType::SP, 0x1547);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4BAA, 0x7F);
 }
@@ -45297,7 +45300,7 @@ void test_7F_03C1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45310,8 +45313,8 @@ void test_7F_03C1()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0x11);
-    CheckRegisterWord(RegisterType::PC, 0x43F7);
-    CheckRegisterWord(RegisterType::SP, 0x491E);
+    WriteRegisterWord(RegisterType::PC, 0x43F6);
+    WriteRegisterWord(RegisterType::SP, 0x491E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x43F6, 0x7F);
 }
@@ -45342,7 +45345,7 @@ void test_7F_03C2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45355,8 +45358,8 @@ void test_7F_03C2()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x60);
     CheckRegisterByte(RegisterType::L, 0x38);
-    CheckRegisterWord(RegisterType::PC, 0xE52A);
-    CheckRegisterWord(RegisterType::SP, 0x99C6);
+    WriteRegisterWord(RegisterType::PC, 0xE529);
+    WriteRegisterWord(RegisterType::SP, 0x99C6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE529, 0x7F);
 }
@@ -45387,7 +45390,7 @@ void test_7F_03C3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45400,8 +45403,8 @@ void test_7F_03C3()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xC9);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    CheckRegisterWord(RegisterType::PC, 0x757B);
-    CheckRegisterWord(RegisterType::SP, 0xB8F7);
+    WriteRegisterWord(RegisterType::PC, 0x757A);
+    WriteRegisterWord(RegisterType::SP, 0xB8F7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x757A, 0x7F);
 }
@@ -45432,7 +45435,7 @@ void test_7F_03C4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45445,8 +45448,8 @@ void test_7F_03C4()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0x14);
-    CheckRegisterWord(RegisterType::PC, 0x4B76);
-    CheckRegisterWord(RegisterType::SP, 0x99B5);
+    WriteRegisterWord(RegisterType::PC, 0x4B75);
+    WriteRegisterWord(RegisterType::SP, 0x99B5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4B75, 0x7F);
 }
@@ -45477,7 +45480,7 @@ void test_7F_03C5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45490,8 +45493,8 @@ void test_7F_03C5()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xD7);
     CheckRegisterByte(RegisterType::L, 0x57);
-    CheckRegisterWord(RegisterType::PC, 0x9608);
-    CheckRegisterWord(RegisterType::SP, 0x09DB);
+    WriteRegisterWord(RegisterType::PC, 0x9607);
+    WriteRegisterWord(RegisterType::SP, 0x09DB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9607, 0x7F);
 }
@@ -45522,7 +45525,7 @@ void test_7F_03C6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45535,8 +45538,8 @@ void test_7F_03C6()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x9C);
     CheckRegisterByte(RegisterType::L, 0x1A);
-    CheckRegisterWord(RegisterType::PC, 0x6E51);
-    CheckRegisterWord(RegisterType::SP, 0x6FBD);
+    WriteRegisterWord(RegisterType::PC, 0x6E50);
+    WriteRegisterWord(RegisterType::SP, 0x6FBD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6E50, 0x7F);
 }
@@ -45567,7 +45570,7 @@ void test_7F_03C7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45580,8 +45583,8 @@ void test_7F_03C7()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0xCD);
-    CheckRegisterWord(RegisterType::PC, 0xA94C);
-    CheckRegisterWord(RegisterType::SP, 0x3169);
+    WriteRegisterWord(RegisterType::PC, 0xA94B);
+    WriteRegisterWord(RegisterType::SP, 0x3169);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA94B, 0x7F);
 }
@@ -45612,7 +45615,7 @@ void test_7F_03C8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45625,8 +45628,8 @@ void test_7F_03C8()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0x01);
-    CheckRegisterWord(RegisterType::PC, 0x506D);
-    CheckRegisterWord(RegisterType::SP, 0x7F6D);
+    WriteRegisterWord(RegisterType::PC, 0x506C);
+    WriteRegisterWord(RegisterType::SP, 0x7F6D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x506C, 0x7F);
 }
@@ -45657,7 +45660,7 @@ void test_7F_03C9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45670,8 +45673,8 @@ void test_7F_03C9()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x5D);
     CheckRegisterByte(RegisterType::L, 0xAE);
-    CheckRegisterWord(RegisterType::PC, 0x5A10);
-    CheckRegisterWord(RegisterType::SP, 0x9F3C);
+    WriteRegisterWord(RegisterType::PC, 0x5A0F);
+    WriteRegisterWord(RegisterType::SP, 0x9F3C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5A0F, 0x7F);
 }
@@ -45702,7 +45705,7 @@ void test_7F_03CA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45715,8 +45718,8 @@ void test_7F_03CA()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0x91);
-    CheckRegisterWord(RegisterType::PC, 0x4F48);
-    CheckRegisterWord(RegisterType::SP, 0x348E);
+    WriteRegisterWord(RegisterType::PC, 0x4F47);
+    WriteRegisterWord(RegisterType::SP, 0x348E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4F47, 0x7F);
 }
@@ -45747,7 +45750,7 @@ void test_7F_03CB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45760,8 +45763,8 @@ void test_7F_03CB()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x16);
     CheckRegisterByte(RegisterType::L, 0x96);
-    CheckRegisterWord(RegisterType::PC, 0xCF19);
-    CheckRegisterWord(RegisterType::SP, 0x49B9);
+    WriteRegisterWord(RegisterType::PC, 0xCF18);
+    WriteRegisterWord(RegisterType::SP, 0x49B9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCF18, 0x7F);
 }
@@ -45792,7 +45795,7 @@ void test_7F_03CC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45805,8 +45808,8 @@ void test_7F_03CC()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x6B);
     CheckRegisterByte(RegisterType::L, 0x9A);
-    CheckRegisterWord(RegisterType::PC, 0x9043);
-    CheckRegisterWord(RegisterType::SP, 0x89CA);
+    WriteRegisterWord(RegisterType::PC, 0x9042);
+    WriteRegisterWord(RegisterType::SP, 0x89CA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9042, 0x7F);
 }
@@ -45837,7 +45840,7 @@ void test_7F_03CD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45850,8 +45853,8 @@ void test_7F_03CD()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xFE);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    CheckRegisterWord(RegisterType::PC, 0x41A3);
-    CheckRegisterWord(RegisterType::SP, 0xA8A0);
+    WriteRegisterWord(RegisterType::PC, 0x41A2);
+    WriteRegisterWord(RegisterType::SP, 0xA8A0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x41A2, 0x7F);
 }
@@ -45882,7 +45885,7 @@ void test_7F_03CE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45895,8 +45898,8 @@ void test_7F_03CE()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x91);
     CheckRegisterByte(RegisterType::L, 0xA4);
-    CheckRegisterWord(RegisterType::PC, 0x726C);
-    CheckRegisterWord(RegisterType::SP, 0xDAF9);
+    WriteRegisterWord(RegisterType::PC, 0x726B);
+    WriteRegisterWord(RegisterType::SP, 0xDAF9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x726B, 0x7F);
 }
@@ -45927,7 +45930,7 @@ void test_7F_03CF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45940,8 +45943,8 @@ void test_7F_03CF()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xC2);
     CheckRegisterByte(RegisterType::L, 0x61);
-    CheckRegisterWord(RegisterType::PC, 0x6776);
-    CheckRegisterWord(RegisterType::SP, 0x58CD);
+    WriteRegisterWord(RegisterType::PC, 0x6775);
+    WriteRegisterWord(RegisterType::SP, 0x58CD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6775, 0x7F);
 }
@@ -45972,7 +45975,7 @@ void test_7F_03D0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -45985,8 +45988,8 @@ void test_7F_03D0()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x71);
     CheckRegisterByte(RegisterType::L, 0x64);
-    CheckRegisterWord(RegisterType::PC, 0x5210);
-    CheckRegisterWord(RegisterType::SP, 0x2EDD);
+    WriteRegisterWord(RegisterType::PC, 0x520F);
+    WriteRegisterWord(RegisterType::SP, 0x2EDD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x520F, 0x7F);
 }
@@ -46017,7 +46020,7 @@ void test_7F_03D1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46030,8 +46033,8 @@ void test_7F_03D1()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    CheckRegisterWord(RegisterType::PC, 0xC73F);
-    CheckRegisterWord(RegisterType::SP, 0x330E);
+    WriteRegisterWord(RegisterType::PC, 0xC73E);
+    WriteRegisterWord(RegisterType::SP, 0x330E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC73E, 0x7F);
 }
@@ -46062,7 +46065,7 @@ void test_7F_03D2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46075,8 +46078,8 @@ void test_7F_03D2()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x5E);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    CheckRegisterWord(RegisterType::PC, 0x20B2);
-    CheckRegisterWord(RegisterType::SP, 0x61E4);
+    WriteRegisterWord(RegisterType::PC, 0x20B1);
+    WriteRegisterWord(RegisterType::SP, 0x61E4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x20B1, 0x7F);
 }
@@ -46107,7 +46110,7 @@ void test_7F_03D3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46120,8 +46123,8 @@ void test_7F_03D3()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0xCB);
-    CheckRegisterWord(RegisterType::PC, 0xFB00);
-    CheckRegisterWord(RegisterType::SP, 0x36C8);
+    WriteRegisterWord(RegisterType::PC, 0xFAFF);
+    WriteRegisterWord(RegisterType::SP, 0x36C8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFAFF, 0x7F);
 }
@@ -46152,7 +46155,7 @@ void test_7F_03D4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46165,8 +46168,8 @@ void test_7F_03D4()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x42);
     CheckRegisterByte(RegisterType::L, 0x3B);
-    CheckRegisterWord(RegisterType::PC, 0xF5FC);
-    CheckRegisterWord(RegisterType::SP, 0x1C3D);
+    WriteRegisterWord(RegisterType::PC, 0xF5FB);
+    WriteRegisterWord(RegisterType::SP, 0x1C3D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF5FB, 0x7F);
 }
@@ -46197,7 +46200,7 @@ void test_7F_03D5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46210,8 +46213,8 @@ void test_7F_03D5()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x01);
     CheckRegisterByte(RegisterType::L, 0xBF);
-    CheckRegisterWord(RegisterType::PC, 0xFA9E);
-    CheckRegisterWord(RegisterType::SP, 0x890A);
+    WriteRegisterWord(RegisterType::PC, 0xFA9D);
+    WriteRegisterWord(RegisterType::SP, 0x890A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFA9D, 0x7F);
 }
@@ -46242,7 +46245,7 @@ void test_7F_03D6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46255,8 +46258,8 @@ void test_7F_03D6()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xC5);
     CheckRegisterByte(RegisterType::L, 0xC8);
-    CheckRegisterWord(RegisterType::PC, 0x30F6);
-    CheckRegisterWord(RegisterType::SP, 0x551E);
+    WriteRegisterWord(RegisterType::PC, 0x30F5);
+    WriteRegisterWord(RegisterType::SP, 0x551E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x30F5, 0x7F);
 }
@@ -46287,7 +46290,7 @@ void test_7F_03D7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46300,8 +46303,8 @@ void test_7F_03D7()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x74);
     CheckRegisterByte(RegisterType::L, 0x94);
-    CheckRegisterWord(RegisterType::PC, 0x1E8F);
-    CheckRegisterWord(RegisterType::SP, 0xB178);
+    WriteRegisterWord(RegisterType::PC, 0x1E8E);
+    WriteRegisterWord(RegisterType::SP, 0xB178);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1E8E, 0x7F);
 }
@@ -46332,7 +46335,7 @@ void test_7F_03D8()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46345,8 +46348,8 @@ void test_7F_03D8()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x72);
     CheckRegisterByte(RegisterType::L, 0xBE);
-    CheckRegisterWord(RegisterType::PC, 0xF938);
-    CheckRegisterWord(RegisterType::SP, 0xDB6B);
+    WriteRegisterWord(RegisterType::PC, 0xF937);
+    WriteRegisterWord(RegisterType::SP, 0xDB6B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF937, 0x7F);
 }
@@ -46377,7 +46380,7 @@ void test_7F_03D9()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46390,8 +46393,8 @@ void test_7F_03D9()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0x0A);
-    CheckRegisterWord(RegisterType::PC, 0x9D9F);
-    CheckRegisterWord(RegisterType::SP, 0x6783);
+    WriteRegisterWord(RegisterType::PC, 0x9D9E);
+    WriteRegisterWord(RegisterType::SP, 0x6783);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9D9E, 0x7F);
 }
@@ -46422,7 +46425,7 @@ void test_7F_03DA()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46435,8 +46438,8 @@ void test_7F_03DA()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x61);
     CheckRegisterByte(RegisterType::L, 0xEE);
-    CheckRegisterWord(RegisterType::PC, 0xDB4E);
-    CheckRegisterWord(RegisterType::SP, 0x895E);
+    WriteRegisterWord(RegisterType::PC, 0xDB4D);
+    WriteRegisterWord(RegisterType::SP, 0x895E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDB4D, 0x7F);
 }
@@ -46467,7 +46470,7 @@ void test_7F_03DB()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46480,8 +46483,8 @@ void test_7F_03DB()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x77);
     CheckRegisterByte(RegisterType::L, 0xB1);
-    CheckRegisterWord(RegisterType::PC, 0x1670);
-    CheckRegisterWord(RegisterType::SP, 0x06BF);
+    WriteRegisterWord(RegisterType::PC, 0x166F);
+    WriteRegisterWord(RegisterType::SP, 0x06BF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x166F, 0x7F);
 }
@@ -46512,7 +46515,7 @@ void test_7F_03DC()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46525,8 +46528,8 @@ void test_7F_03DC()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xB2);
     CheckRegisterByte(RegisterType::L, 0xE8);
-    CheckRegisterWord(RegisterType::PC, 0x52FE);
-    CheckRegisterWord(RegisterType::SP, 0x52FF);
+    WriteRegisterWord(RegisterType::PC, 0x52FD);
+    WriteRegisterWord(RegisterType::SP, 0x52FF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x52FD, 0x7F);
 }
@@ -46557,7 +46560,7 @@ void test_7F_03DD()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46570,8 +46573,8 @@ void test_7F_03DD()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xE5);
     CheckRegisterByte(RegisterType::L, 0xA7);
-    CheckRegisterWord(RegisterType::PC, 0x03A5);
-    CheckRegisterWord(RegisterType::SP, 0x67F7);
+    WriteRegisterWord(RegisterType::PC, 0x03A4);
+    WriteRegisterWord(RegisterType::SP, 0x67F7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x03A4, 0x7F);
 }
@@ -46602,7 +46605,7 @@ void test_7F_03DE()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46615,8 +46618,8 @@ void test_7F_03DE()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xBF);
     CheckRegisterByte(RegisterType::L, 0xB1);
-    CheckRegisterWord(RegisterType::PC, 0x49A1);
-    CheckRegisterWord(RegisterType::SP, 0x7A63);
+    WriteRegisterWord(RegisterType::PC, 0x49A0);
+    WriteRegisterWord(RegisterType::SP, 0x7A63);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x49A0, 0x7F);
 }
@@ -46647,7 +46650,7 @@ void test_7F_03DF()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46660,8 +46663,8 @@ void test_7F_03DF()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xDE);
     CheckRegisterByte(RegisterType::L, 0xA6);
-    CheckRegisterWord(RegisterType::PC, 0x0320);
-    CheckRegisterWord(RegisterType::SP, 0x6961);
+    WriteRegisterWord(RegisterType::PC, 0x031F);
+    WriteRegisterWord(RegisterType::SP, 0x6961);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x031F, 0x7F);
 }
@@ -46692,7 +46695,7 @@ void test_7F_03E0()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46705,8 +46708,8 @@ void test_7F_03E0()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xB5);
     CheckRegisterByte(RegisterType::L, 0x42);
-    CheckRegisterWord(RegisterType::PC, 0xF795);
-    CheckRegisterWord(RegisterType::SP, 0xEBF3);
+    WriteRegisterWord(RegisterType::PC, 0xF794);
+    WriteRegisterWord(RegisterType::SP, 0xEBF3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF794, 0x7F);
 }
@@ -46737,7 +46740,7 @@ void test_7F_03E1()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46750,8 +46753,8 @@ void test_7F_03E1()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xAE);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    CheckRegisterWord(RegisterType::PC, 0x7D5B);
-    CheckRegisterWord(RegisterType::SP, 0x9D02);
+    WriteRegisterWord(RegisterType::PC, 0x7D5A);
+    WriteRegisterWord(RegisterType::SP, 0x9D02);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7D5A, 0x7F);
 }
@@ -46782,7 +46785,7 @@ void test_7F_03E2()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46795,8 +46798,8 @@ void test_7F_03E2()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x8A);
     CheckRegisterByte(RegisterType::L, 0xBA);
-    CheckRegisterWord(RegisterType::PC, 0x1559);
-    CheckRegisterWord(RegisterType::SP, 0xAEC2);
+    WriteRegisterWord(RegisterType::PC, 0x1558);
+    WriteRegisterWord(RegisterType::SP, 0xAEC2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1558, 0x7F);
 }
@@ -46827,7 +46830,7 @@ void test_7F_03E3()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46840,8 +46843,8 @@ void test_7F_03E3()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x6A);
     CheckRegisterByte(RegisterType::L, 0x87);
-    CheckRegisterWord(RegisterType::PC, 0xCC9B);
-    CheckRegisterWord(RegisterType::SP, 0xF214);
+    WriteRegisterWord(RegisterType::PC, 0xCC9A);
+    WriteRegisterWord(RegisterType::SP, 0xF214);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCC9A, 0x7F);
 }
@@ -46872,7 +46875,7 @@ void test_7F_03E4()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46885,8 +46888,8 @@ void test_7F_03E4()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x4B);
     CheckRegisterByte(RegisterType::L, 0x10);
-    CheckRegisterWord(RegisterType::PC, 0x09AB);
-    CheckRegisterWord(RegisterType::SP, 0x172F);
+    WriteRegisterWord(RegisterType::PC, 0x09AA);
+    WriteRegisterWord(RegisterType::SP, 0x172F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x09AA, 0x7F);
 }
@@ -46917,7 +46920,7 @@ void test_7F_03E5()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46930,8 +46933,8 @@ void test_7F_03E5()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x93);
     CheckRegisterByte(RegisterType::L, 0x94);
-    CheckRegisterWord(RegisterType::PC, 0xD9D0);
-    CheckRegisterWord(RegisterType::SP, 0x1824);
+    WriteRegisterWord(RegisterType::PC, 0xD9CF);
+    WriteRegisterWord(RegisterType::SP, 0x1824);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD9CF, 0x7F);
 }
@@ -46962,7 +46965,7 @@ void test_7F_03E6()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -46975,8 +46978,8 @@ void test_7F_03E6()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x70);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    CheckRegisterWord(RegisterType::PC, 0x3E80);
-    CheckRegisterWord(RegisterType::SP, 0x35DC);
+    WriteRegisterWord(RegisterType::PC, 0x3E7F);
+    WriteRegisterWord(RegisterType::SP, 0x35DC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3E7F, 0x7F);
 }
@@ -47007,7 +47010,7 @@ void test_7F_03E7()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }
 
     // Final state
@@ -47020,8 +47023,8 @@ void test_7F_03E7()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x02);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    CheckRegisterWord(RegisterType::PC, 0x8298);
-    CheckRegisterWord(RegisterType::SP, 0xD7CD);
+    WriteRegisterWord(RegisterType::PC, 0x8297);
+    WriteRegisterWord(RegisterType::SP, 0xD7CD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8297, 0x7F);
 }

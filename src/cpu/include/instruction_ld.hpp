@@ -79,7 +79,7 @@ constexpr ResultInstructionLoadRegisterVoid Load(MemoryMap& mmap) noexcept
         return result;
     }
 
-    return mmap.WriteByte(Destination, static_cast<const Byte&>(result));
+    return mmap.WriteByte(Destination, static_cast<const Byte>(result));
 }
 
 // 8 -> [Reg16]
@@ -117,6 +117,7 @@ using LdMem = Instruction<
     Load<Destination, Source>,
     LoadIR>;
 
+// Identity loads
 // TODO: Confirm identity loads are actually just NoOps
 using Ld_A_A_Decoder  = Instantiate<InstructionDecoder<"ld a, a", 0x7F, NOP>>::Type;
 using Ld_D_D_Decoder  = Instantiate<InstructionDecoder<"ld d, d", 0x52, NOP>>::Type;
@@ -127,9 +128,18 @@ using Ld_C_C_Decoder  = Instantiate<InstructionDecoder<"ld c, c", 0x49, NOP>>::T
 using Ld_L_L_Decoder  = Instantiate<InstructionDecoder<"ld l, l", 0x6D, NOP>>::Type;
 
 // 0 parameter / length 1 instructions
-using Ld_A_BC_Decoder = Instantiate<InstructionDecoder<"ld a, [bc]", 0x12, LdMem<RegisterType::A, RegisterType::BC>>>::Type;
+//// [Reg16] -> A
 using Ld_BC_A_Decoder = Instantiate<InstructionDecoder<"ld [bc], a", 0x02, LdMem<RegisterType::BC, RegisterType::A>>>::Type;
+using Ld_DE_A_Decoder = Instantiate<InstructionDecoder<"ld [de], a", 0x12, LdMem<RegisterType::DE, RegisterType::A>>>::Type;
+
+//// A -> [Reg16]
+using Ld_A_BC_Decoder = Instantiate<InstructionDecoder<"ld a, [bc]", 0x0A, LdMem<RegisterType::A, RegisterType::BC>>>::Type;
+using Ld_A_DE_Decoder = Instantiate<InstructionDecoder<"ld a, [de]", 0x1A, LdMem<RegisterType::A, RegisterType::DE>>>::Type;
+
+//// Reg8 -> A
 using Ld_A_B_Decoder  = Instantiate<InstructionDecoder<"ld a, b", 0x78, LdReg<RegisterType::A, RegisterType::B>>>::Type;
+
+//// A -> Reg8
 using Ld_B_A_Decoder  = Instantiate<InstructionDecoder<"ld b, a", 0x47, LdReg<RegisterType::B, RegisterType::A>>>::Type;
 
 } // namespace pgb::cpu::instruction

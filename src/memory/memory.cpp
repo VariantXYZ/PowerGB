@@ -1,4 +1,3 @@
-#include "cpu/include/registers.hpp"
 #include <cstdint>
 #include <memory/include/memory.hpp>
 
@@ -504,6 +503,18 @@ MemoryMap::Register16AccessResultSet MemoryMap::WriteWord(const cpu::RegisterTyp
     default:
         return Register16AccessResultSet(ResultAccessRegisterInvalidWidth(false), 0);
     }
+}
+
+const Byte MemoryMap::ReadFlagByte() const noexcept
+{
+    return _registers.F() << 4;
+}
+
+Byte MemoryMap::WriteFlag(const Byte& value) noexcept
+{
+    Byte oldValue  = ReadFlagByte();
+    _registers.F() = value >> 4;
+    return oldValue;
 }
 
 const Nibble& MemoryMap::ReadFlag() const noexcept

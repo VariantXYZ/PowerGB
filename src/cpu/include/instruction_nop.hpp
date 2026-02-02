@@ -6,6 +6,6 @@
 namespace pgb::cpu::instruction
 {
 using NOP         = Instruction<4, LoadIR>;
-using Nop_Decoder = Instantiate<InstructionDecoder<"nop", 0x00, NOP>>;
+using Nop_Decoder = Instantiate<InstructionDecoder<"nop", 0x00, NOP>>::Type;
 
 } // namespace pgb::cpu::instruction

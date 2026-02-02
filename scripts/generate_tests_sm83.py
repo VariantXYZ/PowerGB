@@ -10,7 +10,9 @@ assert os.path.exists(f"{repository_path}/v1/00.json"), "sm83 directory is not c
 SUPPORTED_OPCODES = ([
     (0x00,"nop"), # NOP
     (0x02,"ld"), # LD [BC], A
-    (0x12,"ld"), # LD A, [BC]
+    (0x0A,"ld"), # LD A, [BC]
+    (0x12,"ld"), # LD [DE], A
+    (0x1A,"ld"), # LD A, [DE]
     (0x40,"ld"), # LD B, B
     (0x47,"ld"), # LD B, A
     (0x49,"ld"), # LD C, C
@@ -46,18 +48,20 @@ for info in SUPPORTED_OPCODES:
         output_fn.write(f"""
 #define WriteRegisterWord(register, value) do {{ auto result = mmap.WriteWord(register, value); TEST_ASSERT(result.IsSuccess()); }} while(0)
 #define WriteRegisterByte(register, value) do {{ auto result = mmap.WriteByte(register, value); TEST_ASSERT(result.IsSuccess()); }} while(0)
-#define WriteRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Nibble>(mmap.WriteFlag(value)) == 0x00); }} while(0)
-#define WriteMemory(address, value) do {{ auto result = mmap.WriteByte(MemoryMap::FromRealAddress(static_cast<std::size_t>(address)), value); TEST_ASSERT(result.IsSuccess()); }} while(0)
+#define WriteRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Byte>(mmap.WriteFlag(static_cast<const Byte&>(value))) == 0x00); }} while(0)
+#define WriteMemory(address, value) do {{ auto result = mmap.WriteByte(address, value); TEST_ASSERT(result.IsSuccess()); }} while(0)
 
 #define CheckRegisterWord(register, value) do {{ auto result = mmap.ReadWord(register); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Word&>(result) == value); }} while(0)
 #define CheckRegisterByte(register, value) do {{ auto result = mmap.ReadByte(register); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); }} while(0)
-#define CheckRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Nibble>(mmap.ReadFlag()) == value); }} while(0)
-#define CheckMemory(address, value) do {{ auto result = mmap.ReadByte(MemoryMap::FromRealAddress(static_cast<std::size_t>(address))); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); }} while(0)
+#define CheckRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Byte>(mmap.ReadFlagByte()) == value); }} while(0)
+#define CheckMemory(address, value) do {{ auto result = mmap.ReadByte(address); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); }} while(0)
+
+static_assert(instruction::InstructionRegistryNoPrefix::Callbacks[0x{opcode:02X}] != nullptr);
+static_assert(instruction::InstructionRegistryNoPrefix::Ticks[0x{opcode:02X}] != 0);
         """)
 
         test_names = []
         test_content = []
-
         for test in input_json:
             test_name = test['name'].replace(' ', '_')
             test_names.append(test_name)
@@ -69,9 +73,13 @@ void test_{test_name}()
 
     // Initial state
 """)
+            # These tests assume '64K of flat ram (Address range from 0x0000 to 0xFFFF)
+            # No point bank swapping, just assume raw data
             for val in test['initial']:
                 if val in ("pc", "sp"):
-                    test_content.append(f"    WriteRegisterWord(RegisterType::{val.upper()}, 0x{test['initial'][val]:04X});")
+                    address = test['initial'][val]
+                    assert address <= 0xFFFF
+                    test_content.append(f"    WriteRegisterWord(RegisterType::{val.upper()}, 0x{address:04X});")
                 elif val in ("a", "b", "c", "d", "e", "h", "l", "ie"):
                     test_content.append(f"    WriteRegisterByte(RegisterType::{val.upper()}, 0x{test['initial'][val]:02X});")
                 elif val == 'f':
@@ -93,7 +101,7 @@ void test_{test_name}()
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
-         TEST_ASSERT(ticks % 4 == 0);
+         TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
     }}
 
     // Final state
@@ -101,7 +109,9 @@ void test_{test_name}()
 
             for val in test['final']:
                 if val in ("pc", "sp"):
-                    test_content.append(f"    CheckRegisterWord(RegisterType::{val.upper()}, 0x{test['final'][val]:04X});")
+                    address = test['initial'][val]
+                    assert address <= 0xFFFF
+                    test_content.append(f"    WriteRegisterWord(RegisterType::{val.upper()}, 0x{address:04X});")
                 elif val in ("a", "b", "c", "d", "e", "h", "l", "ie"):
                     test_content.append(f"    CheckRegisterByte(RegisterType::{val.upper()}, 0x{test['final'][val]:02X});")
                 elif val == 'f':
