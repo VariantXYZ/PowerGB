@@ -58,16 +58,22 @@ for info in SUPPORTED_OPCODES:
 
 static_assert(instruction::InstructionRegistryNoPrefix::Callbacks[0x{opcode:02X}] != nullptr);
 static_assert(instruction::InstructionRegistryNoPrefix::Ticks[0x{opcode:02X}] != 0);
-        """)
+\n""")
 
         test_names = []
         test_content = []
         for test in input_json:
+            skip_test = False
             test_name = test['name'].replace(' ', '_')
             test_names.append(test_name)
             test_content.append(f"""
 void test_{test_name}()
 {{
+    if (skip_test_{test_name})
+    {{
+        TEST_SKIP("Skipping");
+        return;
+    }}
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -79,6 +85,9 @@ void test_{test_name}()
                 if val in ("pc", "sp"):
                     address = test['initial'][val]
                     assert address <= 0xFFFF
+                    if address >= 0xFEA0 and address <= 0xFEFF:
+                        # Don't bother with tests that right to illegal locations'
+                        skip_test = True
                     test_content.append(f"    WriteRegisterWord(RegisterType::{val.upper()}, 0x{address:04X});")
                 elif val in ("a", "b", "c", "d", "e", "h", "l", "ie"):
                     test_content.append(f"    WriteRegisterByte(RegisterType::{val.upper()}, 0x{test['initial'][val]:02X});")
@@ -93,6 +102,11 @@ void test_{test_name}()
                         test_content.append(f"    mmap.EnableIME();")
                 elif val == "ram":
                     for ram in test['initial'][val]:
+                        address = ram[0]
+                        assert address <= 0xFFFF
+                        if address >= 0xFEA0 and address <= 0xFEFF:
+                            # Don't bother with tests that right to illegal locations'
+                            skip_test = True
                         test_content.append(f"    WriteMemory(0x{ram[0]:04X}, 0x{ram[1]:02X});")
 
             test_content.append(f"""
@@ -109,8 +123,11 @@ void test_{test_name}()
 
             for val in test['final']:
                 if val in ("pc", "sp"):
-                    address = test['initial'][val]
+                    address = test['final'][val]
                     assert address <= 0xFFFF
+                    if address >= 0xFEA0 and address <= 0xFEFF:
+                        # Don't bother with tests that right to illegal locations'
+                        skip_test = True
                     test_content.append(f"    WriteRegisterWord(RegisterType::{val.upper()}, 0x{address:04X});")
                 elif val in ("a", "b", "c", "d", "e", "h", "l", "ie"):
                     test_content.append(f"    CheckRegisterByte(RegisterType::{val.upper()}, 0x{test['final'][val]:02X});")
@@ -125,9 +142,15 @@ void test_{test_name}()
                         test_content.append(f"    TEST_ASSERT(mmap.IMEEnabled());")
                 elif val == "ram":
                     for ram in test['final'][val]:
+                        address = ram[0]
+                        assert address <= 0xFFFF
+                        if address >= 0xFEA0 and address <= 0xFEFF:
+                            # Don't bother with tests that right to illegal locations'
+                            skip_test = True
                         test_content.append(f"    CheckMemory(0x{ram[0]:04X}, 0x{ram[1]:02X});")
 
             test_content.append(f"}}")
+            output_fn.write(f"const bool skip_test_{test_name} = {'true' if skip_test else 'false'};\n")
 
         for name in test_names:
             output_fn.write(f"void test_{name}(void);\n")

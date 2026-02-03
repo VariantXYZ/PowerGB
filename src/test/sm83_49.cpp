@@ -25,7 +25,1008 @@ static auto mmap      = MemoryMap(registers, MaxRomBankCount, MaxVramBankCount, 
 
 static_assert(instruction::InstructionRegistryNoPrefix::Callbacks[0x49] != nullptr);
 static_assert(instruction::InstructionRegistryNoPrefix::Ticks[0x49] != 0);
-        void test_49_0000(void);
+
+const bool skip_test_49_0000 = false;
+const bool skip_test_49_0001 = false;
+const bool skip_test_49_0002 = false;
+const bool skip_test_49_0003 = false;
+const bool skip_test_49_0004 = false;
+const bool skip_test_49_0005 = false;
+const bool skip_test_49_0006 = false;
+const bool skip_test_49_0007 = false;
+const bool skip_test_49_0008 = false;
+const bool skip_test_49_0009 = false;
+const bool skip_test_49_000A = false;
+const bool skip_test_49_000B = false;
+const bool skip_test_49_000C = false;
+const bool skip_test_49_000D = false;
+const bool skip_test_49_000E = false;
+const bool skip_test_49_000F = false;
+const bool skip_test_49_0010 = false;
+const bool skip_test_49_0011 = false;
+const bool skip_test_49_0012 = false;
+const bool skip_test_49_0013 = false;
+const bool skip_test_49_0014 = false;
+const bool skip_test_49_0015 = false;
+const bool skip_test_49_0016 = false;
+const bool skip_test_49_0017 = false;
+const bool skip_test_49_0018 = false;
+const bool skip_test_49_0019 = false;
+const bool skip_test_49_001A = false;
+const bool skip_test_49_001B = false;
+const bool skip_test_49_001C = false;
+const bool skip_test_49_001D = true;
+const bool skip_test_49_001E = false;
+const bool skip_test_49_001F = false;
+const bool skip_test_49_0020 = false;
+const bool skip_test_49_0021 = false;
+const bool skip_test_49_0022 = false;
+const bool skip_test_49_0023 = false;
+const bool skip_test_49_0024 = false;
+const bool skip_test_49_0025 = false;
+const bool skip_test_49_0026 = false;
+const bool skip_test_49_0027 = false;
+const bool skip_test_49_0028 = false;
+const bool skip_test_49_0029 = false;
+const bool skip_test_49_002A = false;
+const bool skip_test_49_002B = false;
+const bool skip_test_49_002C = false;
+const bool skip_test_49_002D = false;
+const bool skip_test_49_002E = false;
+const bool skip_test_49_002F = false;
+const bool skip_test_49_0030 = false;
+const bool skip_test_49_0031 = false;
+const bool skip_test_49_0032 = false;
+const bool skip_test_49_0033 = false;
+const bool skip_test_49_0034 = false;
+const bool skip_test_49_0035 = false;
+const bool skip_test_49_0036 = false;
+const bool skip_test_49_0037 = false;
+const bool skip_test_49_0038 = false;
+const bool skip_test_49_0039 = false;
+const bool skip_test_49_003A = false;
+const bool skip_test_49_003B = false;
+const bool skip_test_49_003C = false;
+const bool skip_test_49_003D = false;
+const bool skip_test_49_003E = false;
+const bool skip_test_49_003F = false;
+const bool skip_test_49_0040 = false;
+const bool skip_test_49_0041 = false;
+const bool skip_test_49_0042 = false;
+const bool skip_test_49_0043 = false;
+const bool skip_test_49_0044 = false;
+const bool skip_test_49_0045 = false;
+const bool skip_test_49_0046 = false;
+const bool skip_test_49_0047 = false;
+const bool skip_test_49_0048 = false;
+const bool skip_test_49_0049 = false;
+const bool skip_test_49_004A = false;
+const bool skip_test_49_004B = false;
+const bool skip_test_49_004C = false;
+const bool skip_test_49_004D = false;
+const bool skip_test_49_004E = false;
+const bool skip_test_49_004F = false;
+const bool skip_test_49_0050 = false;
+const bool skip_test_49_0051 = false;
+const bool skip_test_49_0052 = false;
+const bool skip_test_49_0053 = false;
+const bool skip_test_49_0054 = false;
+const bool skip_test_49_0055 = false;
+const bool skip_test_49_0056 = false;
+const bool skip_test_49_0057 = false;
+const bool skip_test_49_0058 = false;
+const bool skip_test_49_0059 = false;
+const bool skip_test_49_005A = false;
+const bool skip_test_49_005B = false;
+const bool skip_test_49_005C = false;
+const bool skip_test_49_005D = false;
+const bool skip_test_49_005E = false;
+const bool skip_test_49_005F = false;
+const bool skip_test_49_0060 = false;
+const bool skip_test_49_0061 = false;
+const bool skip_test_49_0062 = false;
+const bool skip_test_49_0063 = false;
+const bool skip_test_49_0064 = false;
+const bool skip_test_49_0065 = false;
+const bool skip_test_49_0066 = false;
+const bool skip_test_49_0067 = false;
+const bool skip_test_49_0068 = false;
+const bool skip_test_49_0069 = false;
+const bool skip_test_49_006A = false;
+const bool skip_test_49_006B = false;
+const bool skip_test_49_006C = false;
+const bool skip_test_49_006D = false;
+const bool skip_test_49_006E = false;
+const bool skip_test_49_006F = false;
+const bool skip_test_49_0070 = false;
+const bool skip_test_49_0071 = false;
+const bool skip_test_49_0072 = false;
+const bool skip_test_49_0073 = false;
+const bool skip_test_49_0074 = false;
+const bool skip_test_49_0075 = false;
+const bool skip_test_49_0076 = false;
+const bool skip_test_49_0077 = false;
+const bool skip_test_49_0078 = false;
+const bool skip_test_49_0079 = false;
+const bool skip_test_49_007A = false;
+const bool skip_test_49_007B = false;
+const bool skip_test_49_007C = false;
+const bool skip_test_49_007D = false;
+const bool skip_test_49_007E = false;
+const bool skip_test_49_007F = false;
+const bool skip_test_49_0080 = false;
+const bool skip_test_49_0081 = false;
+const bool skip_test_49_0082 = false;
+const bool skip_test_49_0083 = false;
+const bool skip_test_49_0084 = false;
+const bool skip_test_49_0085 = false;
+const bool skip_test_49_0086 = false;
+const bool skip_test_49_0087 = false;
+const bool skip_test_49_0088 = false;
+const bool skip_test_49_0089 = false;
+const bool skip_test_49_008A = false;
+const bool skip_test_49_008B = false;
+const bool skip_test_49_008C = false;
+const bool skip_test_49_008D = false;
+const bool skip_test_49_008E = false;
+const bool skip_test_49_008F = false;
+const bool skip_test_49_0090 = false;
+const bool skip_test_49_0091 = false;
+const bool skip_test_49_0092 = false;
+const bool skip_test_49_0093 = false;
+const bool skip_test_49_0094 = false;
+const bool skip_test_49_0095 = false;
+const bool skip_test_49_0096 = false;
+const bool skip_test_49_0097 = false;
+const bool skip_test_49_0098 = false;
+const bool skip_test_49_0099 = false;
+const bool skip_test_49_009A = false;
+const bool skip_test_49_009B = false;
+const bool skip_test_49_009C = false;
+const bool skip_test_49_009D = false;
+const bool skip_test_49_009E = false;
+const bool skip_test_49_009F = false;
+const bool skip_test_49_00A0 = false;
+const bool skip_test_49_00A1 = false;
+const bool skip_test_49_00A2 = false;
+const bool skip_test_49_00A3 = false;
+const bool skip_test_49_00A4 = false;
+const bool skip_test_49_00A5 = false;
+const bool skip_test_49_00A6 = false;
+const bool skip_test_49_00A7 = false;
+const bool skip_test_49_00A8 = false;
+const bool skip_test_49_00A9 = false;
+const bool skip_test_49_00AA = false;
+const bool skip_test_49_00AB = false;
+const bool skip_test_49_00AC = false;
+const bool skip_test_49_00AD = false;
+const bool skip_test_49_00AE = false;
+const bool skip_test_49_00AF = false;
+const bool skip_test_49_00B0 = false;
+const bool skip_test_49_00B1 = false;
+const bool skip_test_49_00B2 = false;
+const bool skip_test_49_00B3 = false;
+const bool skip_test_49_00B4 = false;
+const bool skip_test_49_00B5 = false;
+const bool skip_test_49_00B6 = false;
+const bool skip_test_49_00B7 = false;
+const bool skip_test_49_00B8 = false;
+const bool skip_test_49_00B9 = false;
+const bool skip_test_49_00BA = false;
+const bool skip_test_49_00BB = false;
+const bool skip_test_49_00BC = false;
+const bool skip_test_49_00BD = false;
+const bool skip_test_49_00BE = false;
+const bool skip_test_49_00BF = false;
+const bool skip_test_49_00C0 = false;
+const bool skip_test_49_00C1 = false;
+const bool skip_test_49_00C2 = false;
+const bool skip_test_49_00C3 = false;
+const bool skip_test_49_00C4 = false;
+const bool skip_test_49_00C5 = false;
+const bool skip_test_49_00C6 = false;
+const bool skip_test_49_00C7 = false;
+const bool skip_test_49_00C8 = false;
+const bool skip_test_49_00C9 = false;
+const bool skip_test_49_00CA = false;
+const bool skip_test_49_00CB = false;
+const bool skip_test_49_00CC = false;
+const bool skip_test_49_00CD = false;
+const bool skip_test_49_00CE = false;
+const bool skip_test_49_00CF = false;
+const bool skip_test_49_00D0 = false;
+const bool skip_test_49_00D1 = false;
+const bool skip_test_49_00D2 = false;
+const bool skip_test_49_00D3 = false;
+const bool skip_test_49_00D4 = false;
+const bool skip_test_49_00D5 = false;
+const bool skip_test_49_00D6 = false;
+const bool skip_test_49_00D7 = false;
+const bool skip_test_49_00D8 = false;
+const bool skip_test_49_00D9 = false;
+const bool skip_test_49_00DA = false;
+const bool skip_test_49_00DB = false;
+const bool skip_test_49_00DC = false;
+const bool skip_test_49_00DD = false;
+const bool skip_test_49_00DE = false;
+const bool skip_test_49_00DF = false;
+const bool skip_test_49_00E0 = false;
+const bool skip_test_49_00E1 = false;
+const bool skip_test_49_00E2 = false;
+const bool skip_test_49_00E3 = false;
+const bool skip_test_49_00E4 = false;
+const bool skip_test_49_00E5 = false;
+const bool skip_test_49_00E6 = false;
+const bool skip_test_49_00E7 = true;
+const bool skip_test_49_00E8 = false;
+const bool skip_test_49_00E9 = false;
+const bool skip_test_49_00EA = false;
+const bool skip_test_49_00EB = false;
+const bool skip_test_49_00EC = false;
+const bool skip_test_49_00ED = false;
+const bool skip_test_49_00EE = false;
+const bool skip_test_49_00EF = false;
+const bool skip_test_49_00F0 = false;
+const bool skip_test_49_00F1 = false;
+const bool skip_test_49_00F2 = false;
+const bool skip_test_49_00F3 = false;
+const bool skip_test_49_00F4 = false;
+const bool skip_test_49_00F5 = false;
+const bool skip_test_49_00F6 = false;
+const bool skip_test_49_00F7 = false;
+const bool skip_test_49_00F8 = false;
+const bool skip_test_49_00F9 = false;
+const bool skip_test_49_00FA = false;
+const bool skip_test_49_00FB = false;
+const bool skip_test_49_00FC = false;
+const bool skip_test_49_00FD = false;
+const bool skip_test_49_00FE = false;
+const bool skip_test_49_00FF = false;
+const bool skip_test_49_0100 = false;
+const bool skip_test_49_0101 = false;
+const bool skip_test_49_0102 = false;
+const bool skip_test_49_0103 = false;
+const bool skip_test_49_0104 = false;
+const bool skip_test_49_0105 = false;
+const bool skip_test_49_0106 = false;
+const bool skip_test_49_0107 = false;
+const bool skip_test_49_0108 = false;
+const bool skip_test_49_0109 = false;
+const bool skip_test_49_010A = false;
+const bool skip_test_49_010B = false;
+const bool skip_test_49_010C = false;
+const bool skip_test_49_010D = false;
+const bool skip_test_49_010E = false;
+const bool skip_test_49_010F = false;
+const bool skip_test_49_0110 = false;
+const bool skip_test_49_0111 = false;
+const bool skip_test_49_0112 = false;
+const bool skip_test_49_0113 = false;
+const bool skip_test_49_0114 = false;
+const bool skip_test_49_0115 = false;
+const bool skip_test_49_0116 = false;
+const bool skip_test_49_0117 = false;
+const bool skip_test_49_0118 = false;
+const bool skip_test_49_0119 = false;
+const bool skip_test_49_011A = false;
+const bool skip_test_49_011B = false;
+const bool skip_test_49_011C = false;
+const bool skip_test_49_011D = false;
+const bool skip_test_49_011E = false;
+const bool skip_test_49_011F = false;
+const bool skip_test_49_0120 = false;
+const bool skip_test_49_0121 = false;
+const bool skip_test_49_0122 = false;
+const bool skip_test_49_0123 = false;
+const bool skip_test_49_0124 = false;
+const bool skip_test_49_0125 = false;
+const bool skip_test_49_0126 = false;
+const bool skip_test_49_0127 = false;
+const bool skip_test_49_0128 = false;
+const bool skip_test_49_0129 = false;
+const bool skip_test_49_012A = false;
+const bool skip_test_49_012B = false;
+const bool skip_test_49_012C = false;
+const bool skip_test_49_012D = false;
+const bool skip_test_49_012E = false;
+const bool skip_test_49_012F = false;
+const bool skip_test_49_0130 = false;
+const bool skip_test_49_0131 = false;
+const bool skip_test_49_0132 = false;
+const bool skip_test_49_0133 = false;
+const bool skip_test_49_0134 = false;
+const bool skip_test_49_0135 = false;
+const bool skip_test_49_0136 = false;
+const bool skip_test_49_0137 = false;
+const bool skip_test_49_0138 = false;
+const bool skip_test_49_0139 = false;
+const bool skip_test_49_013A = false;
+const bool skip_test_49_013B = false;
+const bool skip_test_49_013C = false;
+const bool skip_test_49_013D = false;
+const bool skip_test_49_013E = false;
+const bool skip_test_49_013F = false;
+const bool skip_test_49_0140 = false;
+const bool skip_test_49_0141 = false;
+const bool skip_test_49_0142 = false;
+const bool skip_test_49_0143 = false;
+const bool skip_test_49_0144 = false;
+const bool skip_test_49_0145 = false;
+const bool skip_test_49_0146 = false;
+const bool skip_test_49_0147 = false;
+const bool skip_test_49_0148 = false;
+const bool skip_test_49_0149 = false;
+const bool skip_test_49_014A = false;
+const bool skip_test_49_014B = false;
+const bool skip_test_49_014C = false;
+const bool skip_test_49_014D = false;
+const bool skip_test_49_014E = false;
+const bool skip_test_49_014F = false;
+const bool skip_test_49_0150 = false;
+const bool skip_test_49_0151 = false;
+const bool skip_test_49_0152 = false;
+const bool skip_test_49_0153 = false;
+const bool skip_test_49_0154 = false;
+const bool skip_test_49_0155 = false;
+const bool skip_test_49_0156 = false;
+const bool skip_test_49_0157 = false;
+const bool skip_test_49_0158 = false;
+const bool skip_test_49_0159 = false;
+const bool skip_test_49_015A = false;
+const bool skip_test_49_015B = false;
+const bool skip_test_49_015C = false;
+const bool skip_test_49_015D = false;
+const bool skip_test_49_015E = false;
+const bool skip_test_49_015F = false;
+const bool skip_test_49_0160 = false;
+const bool skip_test_49_0161 = false;
+const bool skip_test_49_0162 = false;
+const bool skip_test_49_0163 = false;
+const bool skip_test_49_0164 = false;
+const bool skip_test_49_0165 = false;
+const bool skip_test_49_0166 = false;
+const bool skip_test_49_0167 = false;
+const bool skip_test_49_0168 = false;
+const bool skip_test_49_0169 = false;
+const bool skip_test_49_016A = false;
+const bool skip_test_49_016B = false;
+const bool skip_test_49_016C = false;
+const bool skip_test_49_016D = false;
+const bool skip_test_49_016E = false;
+const bool skip_test_49_016F = false;
+const bool skip_test_49_0170 = false;
+const bool skip_test_49_0171 = false;
+const bool skip_test_49_0172 = false;
+const bool skip_test_49_0173 = false;
+const bool skip_test_49_0174 = false;
+const bool skip_test_49_0175 = false;
+const bool skip_test_49_0176 = false;
+const bool skip_test_49_0177 = false;
+const bool skip_test_49_0178 = false;
+const bool skip_test_49_0179 = false;
+const bool skip_test_49_017A = true;
+const bool skip_test_49_017B = false;
+const bool skip_test_49_017C = false;
+const bool skip_test_49_017D = false;
+const bool skip_test_49_017E = false;
+const bool skip_test_49_017F = false;
+const bool skip_test_49_0180 = false;
+const bool skip_test_49_0181 = false;
+const bool skip_test_49_0182 = false;
+const bool skip_test_49_0183 = false;
+const bool skip_test_49_0184 = false;
+const bool skip_test_49_0185 = false;
+const bool skip_test_49_0186 = false;
+const bool skip_test_49_0187 = false;
+const bool skip_test_49_0188 = false;
+const bool skip_test_49_0189 = false;
+const bool skip_test_49_018A = false;
+const bool skip_test_49_018B = false;
+const bool skip_test_49_018C = false;
+const bool skip_test_49_018D = false;
+const bool skip_test_49_018E = false;
+const bool skip_test_49_018F = false;
+const bool skip_test_49_0190 = false;
+const bool skip_test_49_0191 = false;
+const bool skip_test_49_0192 = false;
+const bool skip_test_49_0193 = false;
+const bool skip_test_49_0194 = false;
+const bool skip_test_49_0195 = false;
+const bool skip_test_49_0196 = false;
+const bool skip_test_49_0197 = false;
+const bool skip_test_49_0198 = false;
+const bool skip_test_49_0199 = false;
+const bool skip_test_49_019A = false;
+const bool skip_test_49_019B = false;
+const bool skip_test_49_019C = false;
+const bool skip_test_49_019D = false;
+const bool skip_test_49_019E = false;
+const bool skip_test_49_019F = false;
+const bool skip_test_49_01A0 = false;
+const bool skip_test_49_01A1 = false;
+const bool skip_test_49_01A2 = false;
+const bool skip_test_49_01A3 = false;
+const bool skip_test_49_01A4 = false;
+const bool skip_test_49_01A5 = false;
+const bool skip_test_49_01A6 = false;
+const bool skip_test_49_01A7 = false;
+const bool skip_test_49_01A8 = false;
+const bool skip_test_49_01A9 = false;
+const bool skip_test_49_01AA = false;
+const bool skip_test_49_01AB = false;
+const bool skip_test_49_01AC = false;
+const bool skip_test_49_01AD = false;
+const bool skip_test_49_01AE = false;
+const bool skip_test_49_01AF = false;
+const bool skip_test_49_01B0 = false;
+const bool skip_test_49_01B1 = false;
+const bool skip_test_49_01B2 = false;
+const bool skip_test_49_01B3 = false;
+const bool skip_test_49_01B4 = false;
+const bool skip_test_49_01B5 = false;
+const bool skip_test_49_01B6 = false;
+const bool skip_test_49_01B7 = false;
+const bool skip_test_49_01B8 = false;
+const bool skip_test_49_01B9 = false;
+const bool skip_test_49_01BA = false;
+const bool skip_test_49_01BB = false;
+const bool skip_test_49_01BC = false;
+const bool skip_test_49_01BD = false;
+const bool skip_test_49_01BE = false;
+const bool skip_test_49_01BF = false;
+const bool skip_test_49_01C0 = false;
+const bool skip_test_49_01C1 = false;
+const bool skip_test_49_01C2 = false;
+const bool skip_test_49_01C3 = false;
+const bool skip_test_49_01C4 = false;
+const bool skip_test_49_01C5 = false;
+const bool skip_test_49_01C6 = false;
+const bool skip_test_49_01C7 = false;
+const bool skip_test_49_01C8 = false;
+const bool skip_test_49_01C9 = false;
+const bool skip_test_49_01CA = false;
+const bool skip_test_49_01CB = false;
+const bool skip_test_49_01CC = false;
+const bool skip_test_49_01CD = false;
+const bool skip_test_49_01CE = false;
+const bool skip_test_49_01CF = false;
+const bool skip_test_49_01D0 = false;
+const bool skip_test_49_01D1 = false;
+const bool skip_test_49_01D2 = false;
+const bool skip_test_49_01D3 = false;
+const bool skip_test_49_01D4 = false;
+const bool skip_test_49_01D5 = false;
+const bool skip_test_49_01D6 = false;
+const bool skip_test_49_01D7 = false;
+const bool skip_test_49_01D8 = false;
+const bool skip_test_49_01D9 = false;
+const bool skip_test_49_01DA = false;
+const bool skip_test_49_01DB = false;
+const bool skip_test_49_01DC = false;
+const bool skip_test_49_01DD = false;
+const bool skip_test_49_01DE = false;
+const bool skip_test_49_01DF = false;
+const bool skip_test_49_01E0 = false;
+const bool skip_test_49_01E1 = false;
+const bool skip_test_49_01E2 = false;
+const bool skip_test_49_01E3 = false;
+const bool skip_test_49_01E4 = false;
+const bool skip_test_49_01E5 = false;
+const bool skip_test_49_01E6 = false;
+const bool skip_test_49_01E7 = false;
+const bool skip_test_49_01E8 = false;
+const bool skip_test_49_01E9 = false;
+const bool skip_test_49_01EA = false;
+const bool skip_test_49_01EB = false;
+const bool skip_test_49_01EC = false;
+const bool skip_test_49_01ED = false;
+const bool skip_test_49_01EE = false;
+const bool skip_test_49_01EF = false;
+const bool skip_test_49_01F0 = false;
+const bool skip_test_49_01F1 = false;
+const bool skip_test_49_01F2 = false;
+const bool skip_test_49_01F3 = false;
+const bool skip_test_49_01F4 = false;
+const bool skip_test_49_01F5 = false;
+const bool skip_test_49_01F6 = false;
+const bool skip_test_49_01F7 = false;
+const bool skip_test_49_01F8 = false;
+const bool skip_test_49_01F9 = false;
+const bool skip_test_49_01FA = false;
+const bool skip_test_49_01FB = false;
+const bool skip_test_49_01FC = false;
+const bool skip_test_49_01FD = false;
+const bool skip_test_49_01FE = false;
+const bool skip_test_49_01FF = false;
+const bool skip_test_49_0200 = false;
+const bool skip_test_49_0201 = false;
+const bool skip_test_49_0202 = false;
+const bool skip_test_49_0203 = false;
+const bool skip_test_49_0204 = false;
+const bool skip_test_49_0205 = false;
+const bool skip_test_49_0206 = false;
+const bool skip_test_49_0207 = false;
+const bool skip_test_49_0208 = false;
+const bool skip_test_49_0209 = false;
+const bool skip_test_49_020A = false;
+const bool skip_test_49_020B = false;
+const bool skip_test_49_020C = false;
+const bool skip_test_49_020D = false;
+const bool skip_test_49_020E = false;
+const bool skip_test_49_020F = false;
+const bool skip_test_49_0210 = false;
+const bool skip_test_49_0211 = false;
+const bool skip_test_49_0212 = false;
+const bool skip_test_49_0213 = false;
+const bool skip_test_49_0214 = false;
+const bool skip_test_49_0215 = false;
+const bool skip_test_49_0216 = false;
+const bool skip_test_49_0217 = false;
+const bool skip_test_49_0218 = false;
+const bool skip_test_49_0219 = false;
+const bool skip_test_49_021A = false;
+const bool skip_test_49_021B = false;
+const bool skip_test_49_021C = false;
+const bool skip_test_49_021D = false;
+const bool skip_test_49_021E = false;
+const bool skip_test_49_021F = false;
+const bool skip_test_49_0220 = false;
+const bool skip_test_49_0221 = false;
+const bool skip_test_49_0222 = false;
+const bool skip_test_49_0223 = false;
+const bool skip_test_49_0224 = false;
+const bool skip_test_49_0225 = false;
+const bool skip_test_49_0226 = false;
+const bool skip_test_49_0227 = false;
+const bool skip_test_49_0228 = false;
+const bool skip_test_49_0229 = false;
+const bool skip_test_49_022A = false;
+const bool skip_test_49_022B = false;
+const bool skip_test_49_022C = false;
+const bool skip_test_49_022D = false;
+const bool skip_test_49_022E = false;
+const bool skip_test_49_022F = false;
+const bool skip_test_49_0230 = false;
+const bool skip_test_49_0231 = false;
+const bool skip_test_49_0232 = false;
+const bool skip_test_49_0233 = false;
+const bool skip_test_49_0234 = false;
+const bool skip_test_49_0235 = false;
+const bool skip_test_49_0236 = false;
+const bool skip_test_49_0237 = false;
+const bool skip_test_49_0238 = false;
+const bool skip_test_49_0239 = false;
+const bool skip_test_49_023A = false;
+const bool skip_test_49_023B = false;
+const bool skip_test_49_023C = false;
+const bool skip_test_49_023D = false;
+const bool skip_test_49_023E = false;
+const bool skip_test_49_023F = false;
+const bool skip_test_49_0240 = false;
+const bool skip_test_49_0241 = false;
+const bool skip_test_49_0242 = false;
+const bool skip_test_49_0243 = false;
+const bool skip_test_49_0244 = false;
+const bool skip_test_49_0245 = false;
+const bool skip_test_49_0246 = false;
+const bool skip_test_49_0247 = false;
+const bool skip_test_49_0248 = false;
+const bool skip_test_49_0249 = false;
+const bool skip_test_49_024A = false;
+const bool skip_test_49_024B = false;
+const bool skip_test_49_024C = false;
+const bool skip_test_49_024D = false;
+const bool skip_test_49_024E = false;
+const bool skip_test_49_024F = false;
+const bool skip_test_49_0250 = false;
+const bool skip_test_49_0251 = false;
+const bool skip_test_49_0252 = false;
+const bool skip_test_49_0253 = false;
+const bool skip_test_49_0254 = false;
+const bool skip_test_49_0255 = false;
+const bool skip_test_49_0256 = false;
+const bool skip_test_49_0257 = false;
+const bool skip_test_49_0258 = false;
+const bool skip_test_49_0259 = false;
+const bool skip_test_49_025A = false;
+const bool skip_test_49_025B = false;
+const bool skip_test_49_025C = false;
+const bool skip_test_49_025D = false;
+const bool skip_test_49_025E = false;
+const bool skip_test_49_025F = false;
+const bool skip_test_49_0260 = false;
+const bool skip_test_49_0261 = false;
+const bool skip_test_49_0262 = false;
+const bool skip_test_49_0263 = false;
+const bool skip_test_49_0264 = false;
+const bool skip_test_49_0265 = false;
+const bool skip_test_49_0266 = false;
+const bool skip_test_49_0267 = false;
+const bool skip_test_49_0268 = false;
+const bool skip_test_49_0269 = false;
+const bool skip_test_49_026A = false;
+const bool skip_test_49_026B = false;
+const bool skip_test_49_026C = false;
+const bool skip_test_49_026D = false;
+const bool skip_test_49_026E = false;
+const bool skip_test_49_026F = false;
+const bool skip_test_49_0270 = false;
+const bool skip_test_49_0271 = false;
+const bool skip_test_49_0272 = false;
+const bool skip_test_49_0273 = false;
+const bool skip_test_49_0274 = false;
+const bool skip_test_49_0275 = false;
+const bool skip_test_49_0276 = false;
+const bool skip_test_49_0277 = false;
+const bool skip_test_49_0278 = false;
+const bool skip_test_49_0279 = false;
+const bool skip_test_49_027A = false;
+const bool skip_test_49_027B = false;
+const bool skip_test_49_027C = false;
+const bool skip_test_49_027D = false;
+const bool skip_test_49_027E = false;
+const bool skip_test_49_027F = false;
+const bool skip_test_49_0280 = false;
+const bool skip_test_49_0281 = false;
+const bool skip_test_49_0282 = false;
+const bool skip_test_49_0283 = false;
+const bool skip_test_49_0284 = false;
+const bool skip_test_49_0285 = false;
+const bool skip_test_49_0286 = false;
+const bool skip_test_49_0287 = false;
+const bool skip_test_49_0288 = false;
+const bool skip_test_49_0289 = false;
+const bool skip_test_49_028A = false;
+const bool skip_test_49_028B = false;
+const bool skip_test_49_028C = false;
+const bool skip_test_49_028D = false;
+const bool skip_test_49_028E = false;
+const bool skip_test_49_028F = false;
+const bool skip_test_49_0290 = false;
+const bool skip_test_49_0291 = false;
+const bool skip_test_49_0292 = false;
+const bool skip_test_49_0293 = false;
+const bool skip_test_49_0294 = false;
+const bool skip_test_49_0295 = false;
+const bool skip_test_49_0296 = false;
+const bool skip_test_49_0297 = false;
+const bool skip_test_49_0298 = false;
+const bool skip_test_49_0299 = false;
+const bool skip_test_49_029A = false;
+const bool skip_test_49_029B = false;
+const bool skip_test_49_029C = false;
+const bool skip_test_49_029D = false;
+const bool skip_test_49_029E = false;
+const bool skip_test_49_029F = false;
+const bool skip_test_49_02A0 = false;
+const bool skip_test_49_02A1 = false;
+const bool skip_test_49_02A2 = false;
+const bool skip_test_49_02A3 = false;
+const bool skip_test_49_02A4 = false;
+const bool skip_test_49_02A5 = false;
+const bool skip_test_49_02A6 = false;
+const bool skip_test_49_02A7 = false;
+const bool skip_test_49_02A8 = false;
+const bool skip_test_49_02A9 = false;
+const bool skip_test_49_02AA = false;
+const bool skip_test_49_02AB = false;
+const bool skip_test_49_02AC = false;
+const bool skip_test_49_02AD = false;
+const bool skip_test_49_02AE = false;
+const bool skip_test_49_02AF = false;
+const bool skip_test_49_02B0 = false;
+const bool skip_test_49_02B1 = false;
+const bool skip_test_49_02B2 = false;
+const bool skip_test_49_02B3 = false;
+const bool skip_test_49_02B4 = false;
+const bool skip_test_49_02B5 = false;
+const bool skip_test_49_02B6 = false;
+const bool skip_test_49_02B7 = false;
+const bool skip_test_49_02B8 = false;
+const bool skip_test_49_02B9 = false;
+const bool skip_test_49_02BA = false;
+const bool skip_test_49_02BB = false;
+const bool skip_test_49_02BC = false;
+const bool skip_test_49_02BD = false;
+const bool skip_test_49_02BE = false;
+const bool skip_test_49_02BF = false;
+const bool skip_test_49_02C0 = false;
+const bool skip_test_49_02C1 = false;
+const bool skip_test_49_02C2 = false;
+const bool skip_test_49_02C3 = false;
+const bool skip_test_49_02C4 = false;
+const bool skip_test_49_02C5 = false;
+const bool skip_test_49_02C6 = false;
+const bool skip_test_49_02C7 = false;
+const bool skip_test_49_02C8 = false;
+const bool skip_test_49_02C9 = false;
+const bool skip_test_49_02CA = false;
+const bool skip_test_49_02CB = false;
+const bool skip_test_49_02CC = false;
+const bool skip_test_49_02CD = false;
+const bool skip_test_49_02CE = false;
+const bool skip_test_49_02CF = false;
+const bool skip_test_49_02D0 = false;
+const bool skip_test_49_02D1 = false;
+const bool skip_test_49_02D2 = false;
+const bool skip_test_49_02D3 = false;
+const bool skip_test_49_02D4 = false;
+const bool skip_test_49_02D5 = false;
+const bool skip_test_49_02D6 = false;
+const bool skip_test_49_02D7 = false;
+const bool skip_test_49_02D8 = false;
+const bool skip_test_49_02D9 = false;
+const bool skip_test_49_02DA = false;
+const bool skip_test_49_02DB = false;
+const bool skip_test_49_02DC = false;
+const bool skip_test_49_02DD = false;
+const bool skip_test_49_02DE = false;
+const bool skip_test_49_02DF = false;
+const bool skip_test_49_02E0 = false;
+const bool skip_test_49_02E1 = false;
+const bool skip_test_49_02E2 = false;
+const bool skip_test_49_02E3 = false;
+const bool skip_test_49_02E4 = false;
+const bool skip_test_49_02E5 = false;
+const bool skip_test_49_02E6 = false;
+const bool skip_test_49_02E7 = false;
+const bool skip_test_49_02E8 = false;
+const bool skip_test_49_02E9 = false;
+const bool skip_test_49_02EA = false;
+const bool skip_test_49_02EB = false;
+const bool skip_test_49_02EC = false;
+const bool skip_test_49_02ED = false;
+const bool skip_test_49_02EE = false;
+const bool skip_test_49_02EF = false;
+const bool skip_test_49_02F0 = false;
+const bool skip_test_49_02F1 = false;
+const bool skip_test_49_02F2 = false;
+const bool skip_test_49_02F3 = false;
+const bool skip_test_49_02F4 = false;
+const bool skip_test_49_02F5 = false;
+const bool skip_test_49_02F6 = false;
+const bool skip_test_49_02F7 = false;
+const bool skip_test_49_02F8 = false;
+const bool skip_test_49_02F9 = false;
+const bool skip_test_49_02FA = false;
+const bool skip_test_49_02FB = false;
+const bool skip_test_49_02FC = false;
+const bool skip_test_49_02FD = true;
+const bool skip_test_49_02FE = false;
+const bool skip_test_49_02FF = false;
+const bool skip_test_49_0300 = false;
+const bool skip_test_49_0301 = false;
+const bool skip_test_49_0302 = false;
+const bool skip_test_49_0303 = false;
+const bool skip_test_49_0304 = false;
+const bool skip_test_49_0305 = false;
+const bool skip_test_49_0306 = false;
+const bool skip_test_49_0307 = false;
+const bool skip_test_49_0308 = false;
+const bool skip_test_49_0309 = false;
+const bool skip_test_49_030A = false;
+const bool skip_test_49_030B = false;
+const bool skip_test_49_030C = false;
+const bool skip_test_49_030D = false;
+const bool skip_test_49_030E = false;
+const bool skip_test_49_030F = false;
+const bool skip_test_49_0310 = false;
+const bool skip_test_49_0311 = false;
+const bool skip_test_49_0312 = false;
+const bool skip_test_49_0313 = false;
+const bool skip_test_49_0314 = false;
+const bool skip_test_49_0315 = false;
+const bool skip_test_49_0316 = false;
+const bool skip_test_49_0317 = false;
+const bool skip_test_49_0318 = false;
+const bool skip_test_49_0319 = false;
+const bool skip_test_49_031A = false;
+const bool skip_test_49_031B = false;
+const bool skip_test_49_031C = false;
+const bool skip_test_49_031D = false;
+const bool skip_test_49_031E = false;
+const bool skip_test_49_031F = false;
+const bool skip_test_49_0320 = false;
+const bool skip_test_49_0321 = false;
+const bool skip_test_49_0322 = false;
+const bool skip_test_49_0323 = false;
+const bool skip_test_49_0324 = false;
+const bool skip_test_49_0325 = false;
+const bool skip_test_49_0326 = false;
+const bool skip_test_49_0327 = false;
+const bool skip_test_49_0328 = false;
+const bool skip_test_49_0329 = false;
+const bool skip_test_49_032A = false;
+const bool skip_test_49_032B = false;
+const bool skip_test_49_032C = false;
+const bool skip_test_49_032D = false;
+const bool skip_test_49_032E = false;
+const bool skip_test_49_032F = false;
+const bool skip_test_49_0330 = false;
+const bool skip_test_49_0331 = false;
+const bool skip_test_49_0332 = false;
+const bool skip_test_49_0333 = false;
+const bool skip_test_49_0334 = false;
+const bool skip_test_49_0335 = false;
+const bool skip_test_49_0336 = false;
+const bool skip_test_49_0337 = false;
+const bool skip_test_49_0338 = false;
+const bool skip_test_49_0339 = false;
+const bool skip_test_49_033A = false;
+const bool skip_test_49_033B = false;
+const bool skip_test_49_033C = false;
+const bool skip_test_49_033D = false;
+const bool skip_test_49_033E = false;
+const bool skip_test_49_033F = false;
+const bool skip_test_49_0340 = false;
+const bool skip_test_49_0341 = false;
+const bool skip_test_49_0342 = false;
+const bool skip_test_49_0343 = false;
+const bool skip_test_49_0344 = false;
+const bool skip_test_49_0345 = false;
+const bool skip_test_49_0346 = false;
+const bool skip_test_49_0347 = false;
+const bool skip_test_49_0348 = false;
+const bool skip_test_49_0349 = false;
+const bool skip_test_49_034A = false;
+const bool skip_test_49_034B = false;
+const bool skip_test_49_034C = false;
+const bool skip_test_49_034D = false;
+const bool skip_test_49_034E = false;
+const bool skip_test_49_034F = false;
+const bool skip_test_49_0350 = false;
+const bool skip_test_49_0351 = false;
+const bool skip_test_49_0352 = false;
+const bool skip_test_49_0353 = false;
+const bool skip_test_49_0354 = false;
+const bool skip_test_49_0355 = false;
+const bool skip_test_49_0356 = false;
+const bool skip_test_49_0357 = false;
+const bool skip_test_49_0358 = false;
+const bool skip_test_49_0359 = false;
+const bool skip_test_49_035A = false;
+const bool skip_test_49_035B = false;
+const bool skip_test_49_035C = false;
+const bool skip_test_49_035D = false;
+const bool skip_test_49_035E = false;
+const bool skip_test_49_035F = false;
+const bool skip_test_49_0360 = false;
+const bool skip_test_49_0361 = false;
+const bool skip_test_49_0362 = false;
+const bool skip_test_49_0363 = false;
+const bool skip_test_49_0364 = false;
+const bool skip_test_49_0365 = false;
+const bool skip_test_49_0366 = false;
+const bool skip_test_49_0367 = false;
+const bool skip_test_49_0368 = false;
+const bool skip_test_49_0369 = false;
+const bool skip_test_49_036A = false;
+const bool skip_test_49_036B = false;
+const bool skip_test_49_036C = false;
+const bool skip_test_49_036D = false;
+const bool skip_test_49_036E = false;
+const bool skip_test_49_036F = false;
+const bool skip_test_49_0370 = false;
+const bool skip_test_49_0371 = false;
+const bool skip_test_49_0372 = false;
+const bool skip_test_49_0373 = false;
+const bool skip_test_49_0374 = false;
+const bool skip_test_49_0375 = false;
+const bool skip_test_49_0376 = false;
+const bool skip_test_49_0377 = false;
+const bool skip_test_49_0378 = false;
+const bool skip_test_49_0379 = false;
+const bool skip_test_49_037A = false;
+const bool skip_test_49_037B = false;
+const bool skip_test_49_037C = false;
+const bool skip_test_49_037D = false;
+const bool skip_test_49_037E = false;
+const bool skip_test_49_037F = false;
+const bool skip_test_49_0380 = false;
+const bool skip_test_49_0381 = false;
+const bool skip_test_49_0382 = false;
+const bool skip_test_49_0383 = false;
+const bool skip_test_49_0384 = false;
+const bool skip_test_49_0385 = false;
+const bool skip_test_49_0386 = false;
+const bool skip_test_49_0387 = false;
+const bool skip_test_49_0388 = false;
+const bool skip_test_49_0389 = false;
+const bool skip_test_49_038A = false;
+const bool skip_test_49_038B = false;
+const bool skip_test_49_038C = false;
+const bool skip_test_49_038D = false;
+const bool skip_test_49_038E = false;
+const bool skip_test_49_038F = false;
+const bool skip_test_49_0390 = false;
+const bool skip_test_49_0391 = false;
+const bool skip_test_49_0392 = false;
+const bool skip_test_49_0393 = false;
+const bool skip_test_49_0394 = false;
+const bool skip_test_49_0395 = false;
+const bool skip_test_49_0396 = false;
+const bool skip_test_49_0397 = false;
+const bool skip_test_49_0398 = false;
+const bool skip_test_49_0399 = false;
+const bool skip_test_49_039A = false;
+const bool skip_test_49_039B = false;
+const bool skip_test_49_039C = false;
+const bool skip_test_49_039D = false;
+const bool skip_test_49_039E = false;
+const bool skip_test_49_039F = false;
+const bool skip_test_49_03A0 = false;
+const bool skip_test_49_03A1 = false;
+const bool skip_test_49_03A2 = false;
+const bool skip_test_49_03A3 = false;
+const bool skip_test_49_03A4 = false;
+const bool skip_test_49_03A5 = false;
+const bool skip_test_49_03A6 = false;
+const bool skip_test_49_03A7 = false;
+const bool skip_test_49_03A8 = false;
+const bool skip_test_49_03A9 = false;
+const bool skip_test_49_03AA = false;
+const bool skip_test_49_03AB = false;
+const bool skip_test_49_03AC = false;
+const bool skip_test_49_03AD = false;
+const bool skip_test_49_03AE = false;
+const bool skip_test_49_03AF = false;
+const bool skip_test_49_03B0 = false;
+const bool skip_test_49_03B1 = false;
+const bool skip_test_49_03B2 = false;
+const bool skip_test_49_03B3 = false;
+const bool skip_test_49_03B4 = false;
+const bool skip_test_49_03B5 = false;
+const bool skip_test_49_03B6 = false;
+const bool skip_test_49_03B7 = false;
+const bool skip_test_49_03B8 = false;
+const bool skip_test_49_03B9 = false;
+const bool skip_test_49_03BA = false;
+const bool skip_test_49_03BB = false;
+const bool skip_test_49_03BC = false;
+const bool skip_test_49_03BD = false;
+const bool skip_test_49_03BE = false;
+const bool skip_test_49_03BF = false;
+const bool skip_test_49_03C0 = false;
+const bool skip_test_49_03C1 = false;
+const bool skip_test_49_03C2 = false;
+const bool skip_test_49_03C3 = false;
+const bool skip_test_49_03C4 = false;
+const bool skip_test_49_03C5 = false;
+const bool skip_test_49_03C6 = false;
+const bool skip_test_49_03C7 = false;
+const bool skip_test_49_03C8 = false;
+const bool skip_test_49_03C9 = false;
+const bool skip_test_49_03CA = false;
+const bool skip_test_49_03CB = false;
+const bool skip_test_49_03CC = false;
+const bool skip_test_49_03CD = false;
+const bool skip_test_49_03CE = false;
+const bool skip_test_49_03CF = false;
+const bool skip_test_49_03D0 = false;
+const bool skip_test_49_03D1 = false;
+const bool skip_test_49_03D2 = false;
+const bool skip_test_49_03D3 = false;
+const bool skip_test_49_03D4 = false;
+const bool skip_test_49_03D5 = false;
+const bool skip_test_49_03D6 = false;
+const bool skip_test_49_03D7 = false;
+const bool skip_test_49_03D8 = false;
+const bool skip_test_49_03D9 = false;
+const bool skip_test_49_03DA = false;
+const bool skip_test_49_03DB = false;
+const bool skip_test_49_03DC = false;
+const bool skip_test_49_03DD = false;
+const bool skip_test_49_03DE = false;
+const bool skip_test_49_03DF = false;
+const bool skip_test_49_03E0 = false;
+const bool skip_test_49_03E1 = false;
+const bool skip_test_49_03E2 = false;
+const bool skip_test_49_03E3 = false;
+const bool skip_test_49_03E4 = false;
+const bool skip_test_49_03E5 = false;
+const bool skip_test_49_03E6 = false;
+const bool skip_test_49_03E7 = false;
+void test_49_0000(void);
 void test_49_0001(void);
 void test_49_0002(void);
 void test_49_0003(void);
@@ -2031,6 +3032,11 @@ TEST_LIST = {
 
 void test_49_0000()
 {
+    if (skip_test_49_0000)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2068,7 +3074,7 @@ void test_49_0000()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x48);
     CheckRegisterByte(RegisterType::L, 0x63);
-    WriteRegisterWord(RegisterType::PC, 0x576F);
+    WriteRegisterWord(RegisterType::PC, 0x5770);
     WriteRegisterWord(RegisterType::SP, 0x357A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x576F, 0x49);
@@ -2076,6 +3082,11 @@ void test_49_0000()
 
 void test_49_0001()
 {
+    if (skip_test_49_0001)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2113,7 +3124,7 @@ void test_49_0001()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0x77);
-    WriteRegisterWord(RegisterType::PC, 0x42A4);
+    WriteRegisterWord(RegisterType::PC, 0x42A5);
     WriteRegisterWord(RegisterType::SP, 0xC0AF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x42A4, 0x49);
@@ -2121,6 +3132,11 @@ void test_49_0001()
 
 void test_49_0002()
 {
+    if (skip_test_49_0002)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2158,7 +3174,7 @@ void test_49_0002()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0x61);
-    WriteRegisterWord(RegisterType::PC, 0x4D9B);
+    WriteRegisterWord(RegisterType::PC, 0x4D9C);
     WriteRegisterWord(RegisterType::SP, 0xFDE7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4D9B, 0x49);
@@ -2166,6 +3182,11 @@ void test_49_0002()
 
 void test_49_0003()
 {
+    if (skip_test_49_0003)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2203,7 +3224,7 @@ void test_49_0003()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x66);
     CheckRegisterByte(RegisterType::L, 0x22);
-    WriteRegisterWord(RegisterType::PC, 0xEE1C);
+    WriteRegisterWord(RegisterType::PC, 0xEE1D);
     WriteRegisterWord(RegisterType::SP, 0xF796);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEE1C, 0x49);
@@ -2211,6 +3232,11 @@ void test_49_0003()
 
 void test_49_0004()
 {
+    if (skip_test_49_0004)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2248,7 +3274,7 @@ void test_49_0004()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xDA);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    WriteRegisterWord(RegisterType::PC, 0x7927);
+    WriteRegisterWord(RegisterType::PC, 0x7928);
     WriteRegisterWord(RegisterType::SP, 0x1141);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7927, 0x49);
@@ -2256,6 +3282,11 @@ void test_49_0004()
 
 void test_49_0005()
 {
+    if (skip_test_49_0005)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2293,7 +3324,7 @@ void test_49_0005()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0xC7);
-    WriteRegisterWord(RegisterType::PC, 0xB0BB);
+    WriteRegisterWord(RegisterType::PC, 0xB0BC);
     WriteRegisterWord(RegisterType::SP, 0xAD30);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB0BB, 0x49);
@@ -2301,6 +3332,11 @@ void test_49_0005()
 
 void test_49_0006()
 {
+    if (skip_test_49_0006)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2338,7 +3374,7 @@ void test_49_0006()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x3F);
     CheckRegisterByte(RegisterType::L, 0x1A);
-    WriteRegisterWord(RegisterType::PC, 0x57AB);
+    WriteRegisterWord(RegisterType::PC, 0x57AC);
     WriteRegisterWord(RegisterType::SP, 0x3A07);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x57AB, 0x49);
@@ -2346,6 +3382,11 @@ void test_49_0006()
 
 void test_49_0007()
 {
+    if (skip_test_49_0007)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2383,7 +3424,7 @@ void test_49_0007()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xAB);
     CheckRegisterByte(RegisterType::L, 0x26);
-    WriteRegisterWord(RegisterType::PC, 0xCF78);
+    WriteRegisterWord(RegisterType::PC, 0xCF79);
     WriteRegisterWord(RegisterType::SP, 0x2A7C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCF78, 0x49);
@@ -2391,6 +3432,11 @@ void test_49_0007()
 
 void test_49_0008()
 {
+    if (skip_test_49_0008)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2428,7 +3474,7 @@ void test_49_0008()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x8E);
     CheckRegisterByte(RegisterType::L, 0x52);
-    WriteRegisterWord(RegisterType::PC, 0x9032);
+    WriteRegisterWord(RegisterType::PC, 0x9033);
     WriteRegisterWord(RegisterType::SP, 0x8818);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9032, 0x49);
@@ -2436,6 +3482,11 @@ void test_49_0008()
 
 void test_49_0009()
 {
+    if (skip_test_49_0009)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2473,7 +3524,7 @@ void test_49_0009()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x8C);
     CheckRegisterByte(RegisterType::L, 0x43);
-    WriteRegisterWord(RegisterType::PC, 0x6AD7);
+    WriteRegisterWord(RegisterType::PC, 0x6AD8);
     WriteRegisterWord(RegisterType::SP, 0x7FDD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6AD7, 0x49);
@@ -2481,6 +3532,11 @@ void test_49_0009()
 
 void test_49_000A()
 {
+    if (skip_test_49_000A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2518,7 +3574,7 @@ void test_49_000A()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0xAA);
-    WriteRegisterWord(RegisterType::PC, 0x1E0C);
+    WriteRegisterWord(RegisterType::PC, 0x1E0D);
     WriteRegisterWord(RegisterType::SP, 0x58BA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1E0C, 0x49);
@@ -2526,6 +3582,11 @@ void test_49_000A()
 
 void test_49_000B()
 {
+    if (skip_test_49_000B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2563,7 +3624,7 @@ void test_49_000B()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0x0C);
-    WriteRegisterWord(RegisterType::PC, 0x28EF);
+    WriteRegisterWord(RegisterType::PC, 0x28F0);
     WriteRegisterWord(RegisterType::SP, 0xCE4C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x28EF, 0x49);
@@ -2571,6 +3632,11 @@ void test_49_000B()
 
 void test_49_000C()
 {
+    if (skip_test_49_000C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2608,7 +3674,7 @@ void test_49_000C()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0x8B);
-    WriteRegisterWord(RegisterType::PC, 0x7D4F);
+    WriteRegisterWord(RegisterType::PC, 0x7D50);
     WriteRegisterWord(RegisterType::SP, 0xD619);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7D4F, 0x49);
@@ -2616,6 +3682,11 @@ void test_49_000C()
 
 void test_49_000D()
 {
+    if (skip_test_49_000D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2653,7 +3724,7 @@ void test_49_000D()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xC6);
     CheckRegisterByte(RegisterType::L, 0xC1);
-    WriteRegisterWord(RegisterType::PC, 0xEF4D);
+    WriteRegisterWord(RegisterType::PC, 0xEF4E);
     WriteRegisterWord(RegisterType::SP, 0xC425);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEF4D, 0x49);
@@ -2661,6 +3732,11 @@ void test_49_000D()
 
 void test_49_000E()
 {
+    if (skip_test_49_000E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2698,7 +3774,7 @@ void test_49_000E()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xE2);
     CheckRegisterByte(RegisterType::L, 0xA7);
-    WriteRegisterWord(RegisterType::PC, 0x5E13);
+    WriteRegisterWord(RegisterType::PC, 0x5E14);
     WriteRegisterWord(RegisterType::SP, 0xAAA8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5E13, 0x49);
@@ -2706,6 +3782,11 @@ void test_49_000E()
 
 void test_49_000F()
 {
+    if (skip_test_49_000F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2743,7 +3824,7 @@ void test_49_000F()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x7D);
     CheckRegisterByte(RegisterType::L, 0xE8);
-    WriteRegisterWord(RegisterType::PC, 0x1DB3);
+    WriteRegisterWord(RegisterType::PC, 0x1DB4);
     WriteRegisterWord(RegisterType::SP, 0xB09E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1DB3, 0x49);
@@ -2751,6 +3832,11 @@ void test_49_000F()
 
 void test_49_0010()
 {
+    if (skip_test_49_0010)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2788,7 +3874,7 @@ void test_49_0010()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xB1);
     CheckRegisterByte(RegisterType::L, 0xCD);
-    WriteRegisterWord(RegisterType::PC, 0x75BC);
+    WriteRegisterWord(RegisterType::PC, 0x75BD);
     WriteRegisterWord(RegisterType::SP, 0xEF97);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x75BC, 0x49);
@@ -2796,6 +3882,11 @@ void test_49_0010()
 
 void test_49_0011()
 {
+    if (skip_test_49_0011)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2833,7 +3924,7 @@ void test_49_0011()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x35);
     CheckRegisterByte(RegisterType::L, 0x3B);
-    WriteRegisterWord(RegisterType::PC, 0xBF90);
+    WriteRegisterWord(RegisterType::PC, 0xBF91);
     WriteRegisterWord(RegisterType::SP, 0xEA24);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBF90, 0x49);
@@ -2841,6 +3932,11 @@ void test_49_0011()
 
 void test_49_0012()
 {
+    if (skip_test_49_0012)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2878,7 +3974,7 @@ void test_49_0012()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xC7);
     CheckRegisterByte(RegisterType::L, 0x70);
-    WriteRegisterWord(RegisterType::PC, 0x51C3);
+    WriteRegisterWord(RegisterType::PC, 0x51C4);
     WriteRegisterWord(RegisterType::SP, 0x2078);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x51C3, 0x49);
@@ -2886,6 +3982,11 @@ void test_49_0012()
 
 void test_49_0013()
 {
+    if (skip_test_49_0013)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2923,7 +4024,7 @@ void test_49_0013()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0x11);
-    WriteRegisterWord(RegisterType::PC, 0x894C);
+    WriteRegisterWord(RegisterType::PC, 0x894D);
     WriteRegisterWord(RegisterType::SP, 0x7546);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x894C, 0x49);
@@ -2931,6 +4032,11 @@ void test_49_0013()
 
 void test_49_0014()
 {
+    if (skip_test_49_0014)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -2968,7 +4074,7 @@ void test_49_0014()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xF6);
     CheckRegisterByte(RegisterType::L, 0x69);
-    WriteRegisterWord(RegisterType::PC, 0xB4CF);
+    WriteRegisterWord(RegisterType::PC, 0xB4D0);
     WriteRegisterWord(RegisterType::SP, 0xA121);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB4CF, 0x49);
@@ -2976,6 +4082,11 @@ void test_49_0014()
 
 void test_49_0015()
 {
+    if (skip_test_49_0015)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3013,7 +4124,7 @@ void test_49_0015()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xAD);
     CheckRegisterByte(RegisterType::L, 0xA2);
-    WriteRegisterWord(RegisterType::PC, 0xCA39);
+    WriteRegisterWord(RegisterType::PC, 0xCA3A);
     WriteRegisterWord(RegisterType::SP, 0x1080);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCA39, 0x49);
@@ -3021,6 +4132,11 @@ void test_49_0015()
 
 void test_49_0016()
 {
+    if (skip_test_49_0016)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3058,7 +4174,7 @@ void test_49_0016()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    WriteRegisterWord(RegisterType::PC, 0x3713);
+    WriteRegisterWord(RegisterType::PC, 0x3714);
     WriteRegisterWord(RegisterType::SP, 0x838A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3713, 0x49);
@@ -3066,6 +4182,11 @@ void test_49_0016()
 
 void test_49_0017()
 {
+    if (skip_test_49_0017)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3103,7 +4224,7 @@ void test_49_0017()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x86);
     CheckRegisterByte(RegisterType::L, 0x7F);
-    WriteRegisterWord(RegisterType::PC, 0x5A98);
+    WriteRegisterWord(RegisterType::PC, 0x5A99);
     WriteRegisterWord(RegisterType::SP, 0x5C6D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5A98, 0x49);
@@ -3111,6 +4232,11 @@ void test_49_0017()
 
 void test_49_0018()
 {
+    if (skip_test_49_0018)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3148,7 +4274,7 @@ void test_49_0018()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x8C);
     CheckRegisterByte(RegisterType::L, 0x28);
-    WriteRegisterWord(RegisterType::PC, 0xE1CF);
+    WriteRegisterWord(RegisterType::PC, 0xE1D0);
     WriteRegisterWord(RegisterType::SP, 0x15E8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE1CF, 0x49);
@@ -3156,6 +4282,11 @@ void test_49_0018()
 
 void test_49_0019()
 {
+    if (skip_test_49_0019)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3193,7 +4324,7 @@ void test_49_0019()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xD0);
     CheckRegisterByte(RegisterType::L, 0x76);
-    WriteRegisterWord(RegisterType::PC, 0x10E3);
+    WriteRegisterWord(RegisterType::PC, 0x10E4);
     WriteRegisterWord(RegisterType::SP, 0xE411);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x10E3, 0x49);
@@ -3201,6 +4332,11 @@ void test_49_0019()
 
 void test_49_001A()
 {
+    if (skip_test_49_001A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3238,7 +4374,7 @@ void test_49_001A()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xC7);
     CheckRegisterByte(RegisterType::L, 0x39);
-    WriteRegisterWord(RegisterType::PC, 0x362B);
+    WriteRegisterWord(RegisterType::PC, 0x362C);
     WriteRegisterWord(RegisterType::SP, 0x8296);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x362B, 0x49);
@@ -3246,6 +4382,11 @@ void test_49_001A()
 
 void test_49_001B()
 {
+    if (skip_test_49_001B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3283,7 +4424,7 @@ void test_49_001B()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xA0);
     CheckRegisterByte(RegisterType::L, 0x5A);
-    WriteRegisterWord(RegisterType::PC, 0xD4F8);
+    WriteRegisterWord(RegisterType::PC, 0xD4F9);
     WriteRegisterWord(RegisterType::SP, 0x1DE7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD4F8, 0x49);
@@ -3291,6 +4432,11 @@ void test_49_001B()
 
 void test_49_001C()
 {
+    if (skip_test_49_001C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3328,7 +4474,7 @@ void test_49_001C()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0xDD);
-    WriteRegisterWord(RegisterType::PC, 0xBB8A);
+    WriteRegisterWord(RegisterType::PC, 0xBB8B);
     WriteRegisterWord(RegisterType::SP, 0xCB64);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBB8A, 0x49);
@@ -3336,6 +4482,11 @@ void test_49_001C()
 
 void test_49_001D()
 {
+    if (skip_test_49_001D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3373,7 +4524,7 @@ void test_49_001D()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x87);
     CheckRegisterByte(RegisterType::L, 0xBD);
-    WriteRegisterWord(RegisterType::PC, 0xFED5);
+    WriteRegisterWord(RegisterType::PC, 0xFED6);
     WriteRegisterWord(RegisterType::SP, 0x45E4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFED5, 0x49);
@@ -3381,6 +4532,11 @@ void test_49_001D()
 
 void test_49_001E()
 {
+    if (skip_test_49_001E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3418,7 +4574,7 @@ void test_49_001E()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x79);
     CheckRegisterByte(RegisterType::L, 0x5D);
-    WriteRegisterWord(RegisterType::PC, 0xF0B1);
+    WriteRegisterWord(RegisterType::PC, 0xF0B2);
     WriteRegisterWord(RegisterType::SP, 0x94F0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF0B1, 0x49);
@@ -3426,6 +4582,11 @@ void test_49_001E()
 
 void test_49_001F()
 {
+    if (skip_test_49_001F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3463,7 +4624,7 @@ void test_49_001F()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x99);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    WriteRegisterWord(RegisterType::PC, 0xFF15);
+    WriteRegisterWord(RegisterType::PC, 0xFF16);
     WriteRegisterWord(RegisterType::SP, 0x68F8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFF15, 0x49);
@@ -3471,6 +4632,11 @@ void test_49_001F()
 
 void test_49_0020()
 {
+    if (skip_test_49_0020)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3508,7 +4674,7 @@ void test_49_0020()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x72);
     CheckRegisterByte(RegisterType::L, 0x96);
-    WriteRegisterWord(RegisterType::PC, 0x195F);
+    WriteRegisterWord(RegisterType::PC, 0x1960);
     WriteRegisterWord(RegisterType::SP, 0x4B03);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x195F, 0x49);
@@ -3516,6 +4682,11 @@ void test_49_0020()
 
 void test_49_0021()
 {
+    if (skip_test_49_0021)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3553,7 +4724,7 @@ void test_49_0021()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xB4);
     CheckRegisterByte(RegisterType::L, 0x86);
-    WriteRegisterWord(RegisterType::PC, 0x8FE9);
+    WriteRegisterWord(RegisterType::PC, 0x8FEA);
     WriteRegisterWord(RegisterType::SP, 0x0A7C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8FE9, 0x49);
@@ -3561,6 +4732,11 @@ void test_49_0021()
 
 void test_49_0022()
 {
+    if (skip_test_49_0022)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3598,7 +4774,7 @@ void test_49_0022()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xED);
     CheckRegisterByte(RegisterType::L, 0xE4);
-    WriteRegisterWord(RegisterType::PC, 0x0DF6);
+    WriteRegisterWord(RegisterType::PC, 0x0DF7);
     WriteRegisterWord(RegisterType::SP, 0x2BB9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0DF6, 0x49);
@@ -3606,6 +4782,11 @@ void test_49_0022()
 
 void test_49_0023()
 {
+    if (skip_test_49_0023)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3643,7 +4824,7 @@ void test_49_0023()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xD0);
     CheckRegisterByte(RegisterType::L, 0x06);
-    WriteRegisterWord(RegisterType::PC, 0x56BE);
+    WriteRegisterWord(RegisterType::PC, 0x56BF);
     WriteRegisterWord(RegisterType::SP, 0x4F71);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x56BE, 0x49);
@@ -3651,6 +4832,11 @@ void test_49_0023()
 
 void test_49_0024()
 {
+    if (skip_test_49_0024)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3688,7 +4874,7 @@ void test_49_0024()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0x60);
-    WriteRegisterWord(RegisterType::PC, 0x125D);
+    WriteRegisterWord(RegisterType::PC, 0x125E);
     WriteRegisterWord(RegisterType::SP, 0xA46B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x125D, 0x49);
@@ -3696,6 +4882,11 @@ void test_49_0024()
 
 void test_49_0025()
 {
+    if (skip_test_49_0025)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3733,7 +4924,7 @@ void test_49_0025()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0x23);
-    WriteRegisterWord(RegisterType::PC, 0x317C);
+    WriteRegisterWord(RegisterType::PC, 0x317D);
     WriteRegisterWord(RegisterType::SP, 0x4378);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x317C, 0x49);
@@ -3741,6 +4932,11 @@ void test_49_0025()
 
 void test_49_0026()
 {
+    if (skip_test_49_0026)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3778,7 +4974,7 @@ void test_49_0026()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xF2);
     CheckRegisterByte(RegisterType::L, 0x24);
-    WriteRegisterWord(RegisterType::PC, 0x922E);
+    WriteRegisterWord(RegisterType::PC, 0x922F);
     WriteRegisterWord(RegisterType::SP, 0x6BBA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x922E, 0x49);
@@ -3786,6 +4982,11 @@ void test_49_0026()
 
 void test_49_0027()
 {
+    if (skip_test_49_0027)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3823,7 +5024,7 @@ void test_49_0027()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xAF);
     CheckRegisterByte(RegisterType::L, 0xB4);
-    WriteRegisterWord(RegisterType::PC, 0xFC87);
+    WriteRegisterWord(RegisterType::PC, 0xFC88);
     WriteRegisterWord(RegisterType::SP, 0xBB74);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFC87, 0x49);
@@ -3831,6 +5032,11 @@ void test_49_0027()
 
 void test_49_0028()
 {
+    if (skip_test_49_0028)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3868,7 +5074,7 @@ void test_49_0028()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0x6B);
-    WriteRegisterWord(RegisterType::PC, 0x2714);
+    WriteRegisterWord(RegisterType::PC, 0x2715);
     WriteRegisterWord(RegisterType::SP, 0x58D1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2714, 0x49);
@@ -3876,6 +5082,11 @@ void test_49_0028()
 
 void test_49_0029()
 {
+    if (skip_test_49_0029)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3913,7 +5124,7 @@ void test_49_0029()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xE2);
     CheckRegisterByte(RegisterType::L, 0xE7);
-    WriteRegisterWord(RegisterType::PC, 0x0799);
+    WriteRegisterWord(RegisterType::PC, 0x079A);
     WriteRegisterWord(RegisterType::SP, 0x14E2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0799, 0x49);
@@ -3921,6 +5132,11 @@ void test_49_0029()
 
 void test_49_002A()
 {
+    if (skip_test_49_002A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -3958,7 +5174,7 @@ void test_49_002A()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x7F);
     CheckRegisterByte(RegisterType::L, 0x91);
-    WriteRegisterWord(RegisterType::PC, 0x71B1);
+    WriteRegisterWord(RegisterType::PC, 0x71B2);
     WriteRegisterWord(RegisterType::SP, 0x8B97);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x71B1, 0x49);
@@ -3966,6 +5182,11 @@ void test_49_002A()
 
 void test_49_002B()
 {
+    if (skip_test_49_002B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4003,7 +5224,7 @@ void test_49_002B()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xFD);
     CheckRegisterByte(RegisterType::L, 0xEF);
-    WriteRegisterWord(RegisterType::PC, 0x7A39);
+    WriteRegisterWord(RegisterType::PC, 0x7A3A);
     WriteRegisterWord(RegisterType::SP, 0x7E0B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7A39, 0x49);
@@ -4011,6 +5232,11 @@ void test_49_002B()
 
 void test_49_002C()
 {
+    if (skip_test_49_002C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4048,7 +5274,7 @@ void test_49_002C()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xF6);
     CheckRegisterByte(RegisterType::L, 0xE2);
-    WriteRegisterWord(RegisterType::PC, 0xBB6B);
+    WriteRegisterWord(RegisterType::PC, 0xBB6C);
     WriteRegisterWord(RegisterType::SP, 0x92E7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBB6B, 0x49);
@@ -4056,6 +5282,11 @@ void test_49_002C()
 
 void test_49_002D()
 {
+    if (skip_test_49_002D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4093,7 +5324,7 @@ void test_49_002D()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x54);
     CheckRegisterByte(RegisterType::L, 0xCC);
-    WriteRegisterWord(RegisterType::PC, 0xB1CE);
+    WriteRegisterWord(RegisterType::PC, 0xB1CF);
     WriteRegisterWord(RegisterType::SP, 0x44CF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB1CE, 0x49);
@@ -4101,6 +5332,11 @@ void test_49_002D()
 
 void test_49_002E()
 {
+    if (skip_test_49_002E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4138,7 +5374,7 @@ void test_49_002E()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xA5);
     CheckRegisterByte(RegisterType::L, 0x35);
-    WriteRegisterWord(RegisterType::PC, 0x104E);
+    WriteRegisterWord(RegisterType::PC, 0x104F);
     WriteRegisterWord(RegisterType::SP, 0xF928);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x104E, 0x49);
@@ -4146,6 +5382,11 @@ void test_49_002E()
 
 void test_49_002F()
 {
+    if (skip_test_49_002F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4183,7 +5424,7 @@ void test_49_002F()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x30);
     CheckRegisterByte(RegisterType::L, 0x33);
-    WriteRegisterWord(RegisterType::PC, 0x950E);
+    WriteRegisterWord(RegisterType::PC, 0x950F);
     WriteRegisterWord(RegisterType::SP, 0xE902);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x950E, 0x49);
@@ -4191,6 +5432,11 @@ void test_49_002F()
 
 void test_49_0030()
 {
+    if (skip_test_49_0030)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4228,7 +5474,7 @@ void test_49_0030()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x24);
     CheckRegisterByte(RegisterType::L, 0xC9);
-    WriteRegisterWord(RegisterType::PC, 0xAC68);
+    WriteRegisterWord(RegisterType::PC, 0xAC69);
     WriteRegisterWord(RegisterType::SP, 0xDBB7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAC68, 0x49);
@@ -4236,6 +5482,11 @@ void test_49_0030()
 
 void test_49_0031()
 {
+    if (skip_test_49_0031)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4273,7 +5524,7 @@ void test_49_0031()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0x4B);
-    WriteRegisterWord(RegisterType::PC, 0x805A);
+    WriteRegisterWord(RegisterType::PC, 0x805B);
     WriteRegisterWord(RegisterType::SP, 0x7BD3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x805A, 0x49);
@@ -4281,6 +5532,11 @@ void test_49_0031()
 
 void test_49_0032()
 {
+    if (skip_test_49_0032)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4318,7 +5574,7 @@ void test_49_0032()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x03);
     CheckRegisterByte(RegisterType::L, 0xFC);
-    WriteRegisterWord(RegisterType::PC, 0xF415);
+    WriteRegisterWord(RegisterType::PC, 0xF416);
     WriteRegisterWord(RegisterType::SP, 0x6A1D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF415, 0x49);
@@ -4326,6 +5582,11 @@ void test_49_0032()
 
 void test_49_0033()
 {
+    if (skip_test_49_0033)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4363,7 +5624,7 @@ void test_49_0033()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xF4);
     CheckRegisterByte(RegisterType::L, 0xB9);
-    WriteRegisterWord(RegisterType::PC, 0xC5E4);
+    WriteRegisterWord(RegisterType::PC, 0xC5E5);
     WriteRegisterWord(RegisterType::SP, 0xBC93);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC5E4, 0x49);
@@ -4371,6 +5632,11 @@ void test_49_0033()
 
 void test_49_0034()
 {
+    if (skip_test_49_0034)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4408,7 +5674,7 @@ void test_49_0034()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0x2E);
-    WriteRegisterWord(RegisterType::PC, 0x4E4D);
+    WriteRegisterWord(RegisterType::PC, 0x4E4E);
     WriteRegisterWord(RegisterType::SP, 0x4676);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4E4D, 0x49);
@@ -4416,6 +5682,11 @@ void test_49_0034()
 
 void test_49_0035()
 {
+    if (skip_test_49_0035)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4453,7 +5724,7 @@ void test_49_0035()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x8F);
     CheckRegisterByte(RegisterType::L, 0xE8);
-    WriteRegisterWord(RegisterType::PC, 0x6C5F);
+    WriteRegisterWord(RegisterType::PC, 0x6C60);
     WriteRegisterWord(RegisterType::SP, 0xDF1A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6C5F, 0x49);
@@ -4461,6 +5732,11 @@ void test_49_0035()
 
 void test_49_0036()
 {
+    if (skip_test_49_0036)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4498,7 +5774,7 @@ void test_49_0036()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x47);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    WriteRegisterWord(RegisterType::PC, 0x8D05);
+    WriteRegisterWord(RegisterType::PC, 0x8D06);
     WriteRegisterWord(RegisterType::SP, 0x6B66);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8D05, 0x49);
@@ -4506,6 +5782,11 @@ void test_49_0036()
 
 void test_49_0037()
 {
+    if (skip_test_49_0037)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4543,7 +5824,7 @@ void test_49_0037()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xB8);
     CheckRegisterByte(RegisterType::L, 0x5B);
-    WriteRegisterWord(RegisterType::PC, 0x474B);
+    WriteRegisterWord(RegisterType::PC, 0x474C);
     WriteRegisterWord(RegisterType::SP, 0x8359);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x474B, 0x49);
@@ -4551,6 +5832,11 @@ void test_49_0037()
 
 void test_49_0038()
 {
+    if (skip_test_49_0038)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4588,7 +5874,7 @@ void test_49_0038()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x24);
     CheckRegisterByte(RegisterType::L, 0x5B);
-    WriteRegisterWord(RegisterType::PC, 0xCAC7);
+    WriteRegisterWord(RegisterType::PC, 0xCAC8);
     WriteRegisterWord(RegisterType::SP, 0xF2AF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCAC7, 0x49);
@@ -4596,6 +5882,11 @@ void test_49_0038()
 
 void test_49_0039()
 {
+    if (skip_test_49_0039)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4633,7 +5924,7 @@ void test_49_0039()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x75);
     CheckRegisterByte(RegisterType::L, 0xD0);
-    WriteRegisterWord(RegisterType::PC, 0x02D3);
+    WriteRegisterWord(RegisterType::PC, 0x02D4);
     WriteRegisterWord(RegisterType::SP, 0x5622);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x02D3, 0x49);
@@ -4641,6 +5932,11 @@ void test_49_0039()
 
 void test_49_003A()
 {
+    if (skip_test_49_003A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4678,7 +5974,7 @@ void test_49_003A()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xFE);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    WriteRegisterWord(RegisterType::PC, 0x7CF0);
+    WriteRegisterWord(RegisterType::PC, 0x7CF1);
     WriteRegisterWord(RegisterType::SP, 0xBE48);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7CF0, 0x49);
@@ -4686,6 +5982,11 @@ void test_49_003A()
 
 void test_49_003B()
 {
+    if (skip_test_49_003B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4723,7 +6024,7 @@ void test_49_003B()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xC2);
     CheckRegisterByte(RegisterType::L, 0x22);
-    WriteRegisterWord(RegisterType::PC, 0xBF3A);
+    WriteRegisterWord(RegisterType::PC, 0xBF3B);
     WriteRegisterWord(RegisterType::SP, 0x35FF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBF3A, 0x49);
@@ -4731,6 +6032,11 @@ void test_49_003B()
 
 void test_49_003C()
 {
+    if (skip_test_49_003C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4768,7 +6074,7 @@ void test_49_003C()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xD7);
     CheckRegisterByte(RegisterType::L, 0x76);
-    WriteRegisterWord(RegisterType::PC, 0x0FF7);
+    WriteRegisterWord(RegisterType::PC, 0x0FF8);
     WriteRegisterWord(RegisterType::SP, 0xC167);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0FF7, 0x49);
@@ -4776,6 +6082,11 @@ void test_49_003C()
 
 void test_49_003D()
 {
+    if (skip_test_49_003D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4813,7 +6124,7 @@ void test_49_003D()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x35);
     CheckRegisterByte(RegisterType::L, 0xD7);
-    WriteRegisterWord(RegisterType::PC, 0xF68B);
+    WriteRegisterWord(RegisterType::PC, 0xF68C);
     WriteRegisterWord(RegisterType::SP, 0x65E7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF68B, 0x49);
@@ -4821,6 +6132,11 @@ void test_49_003D()
 
 void test_49_003E()
 {
+    if (skip_test_49_003E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4858,7 +6174,7 @@ void test_49_003E()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x6F);
     CheckRegisterByte(RegisterType::L, 0x1C);
-    WriteRegisterWord(RegisterType::PC, 0xEAA1);
+    WriteRegisterWord(RegisterType::PC, 0xEAA2);
     WriteRegisterWord(RegisterType::SP, 0xEC99);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEAA1, 0x49);
@@ -4866,6 +6182,11 @@ void test_49_003E()
 
 void test_49_003F()
 {
+    if (skip_test_49_003F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4903,7 +6224,7 @@ void test_49_003F()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0xF0);
-    WriteRegisterWord(RegisterType::PC, 0x0E07);
+    WriteRegisterWord(RegisterType::PC, 0x0E08);
     WriteRegisterWord(RegisterType::SP, 0x4E97);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0E07, 0x49);
@@ -4911,6 +6232,11 @@ void test_49_003F()
 
 void test_49_0040()
 {
+    if (skip_test_49_0040)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4948,7 +6274,7 @@ void test_49_0040()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x8E);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    WriteRegisterWord(RegisterType::PC, 0x2640);
+    WriteRegisterWord(RegisterType::PC, 0x2641);
     WriteRegisterWord(RegisterType::SP, 0x4963);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2640, 0x49);
@@ -4956,6 +6282,11 @@ void test_49_0040()
 
 void test_49_0041()
 {
+    if (skip_test_49_0041)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -4993,7 +6324,7 @@ void test_49_0041()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xC0);
     CheckRegisterByte(RegisterType::L, 0xCD);
-    WriteRegisterWord(RegisterType::PC, 0xF3E5);
+    WriteRegisterWord(RegisterType::PC, 0xF3E6);
     WriteRegisterWord(RegisterType::SP, 0x2C3D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF3E5, 0x49);
@@ -5001,6 +6332,11 @@ void test_49_0041()
 
 void test_49_0042()
 {
+    if (skip_test_49_0042)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5038,7 +6374,7 @@ void test_49_0042()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xC3);
     CheckRegisterByte(RegisterType::L, 0x62);
-    WriteRegisterWord(RegisterType::PC, 0xD901);
+    WriteRegisterWord(RegisterType::PC, 0xD902);
     WriteRegisterWord(RegisterType::SP, 0xFAE5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD901, 0x49);
@@ -5046,6 +6382,11 @@ void test_49_0042()
 
 void test_49_0043()
 {
+    if (skip_test_49_0043)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5083,7 +6424,7 @@ void test_49_0043()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x5A);
     CheckRegisterByte(RegisterType::L, 0x4C);
-    WriteRegisterWord(RegisterType::PC, 0x5ED9);
+    WriteRegisterWord(RegisterType::PC, 0x5EDA);
     WriteRegisterWord(RegisterType::SP, 0x4943);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5ED9, 0x49);
@@ -5091,6 +6432,11 @@ void test_49_0043()
 
 void test_49_0044()
 {
+    if (skip_test_49_0044)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5128,7 +6474,7 @@ void test_49_0044()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x3C);
     CheckRegisterByte(RegisterType::L, 0x09);
-    WriteRegisterWord(RegisterType::PC, 0x7A4F);
+    WriteRegisterWord(RegisterType::PC, 0x7A50);
     WriteRegisterWord(RegisterType::SP, 0x9F16);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7A4F, 0x49);
@@ -5136,6 +6482,11 @@ void test_49_0044()
 
 void test_49_0045()
 {
+    if (skip_test_49_0045)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5173,7 +6524,7 @@ void test_49_0045()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0x95);
-    WriteRegisterWord(RegisterType::PC, 0xA535);
+    WriteRegisterWord(RegisterType::PC, 0xA536);
     WriteRegisterWord(RegisterType::SP, 0xE512);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA535, 0x49);
@@ -5181,6 +6532,11 @@ void test_49_0045()
 
 void test_49_0046()
 {
+    if (skip_test_49_0046)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5218,7 +6574,7 @@ void test_49_0046()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x55);
     CheckRegisterByte(RegisterType::L, 0x32);
-    WriteRegisterWord(RegisterType::PC, 0x6972);
+    WriteRegisterWord(RegisterType::PC, 0x6973);
     WriteRegisterWord(RegisterType::SP, 0x4BC8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6972, 0x49);
@@ -5226,6 +6582,11 @@ void test_49_0046()
 
 void test_49_0047()
 {
+    if (skip_test_49_0047)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5263,7 +6624,7 @@ void test_49_0047()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xF5);
     CheckRegisterByte(RegisterType::L, 0x32);
-    WriteRegisterWord(RegisterType::PC, 0x6661);
+    WriteRegisterWord(RegisterType::PC, 0x6662);
     WriteRegisterWord(RegisterType::SP, 0x629D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6661, 0x49);
@@ -5271,6 +6632,11 @@ void test_49_0047()
 
 void test_49_0048()
 {
+    if (skip_test_49_0048)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5308,7 +6674,7 @@ void test_49_0048()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x31);
     CheckRegisterByte(RegisterType::L, 0xB1);
-    WriteRegisterWord(RegisterType::PC, 0xD74B);
+    WriteRegisterWord(RegisterType::PC, 0xD74C);
     WriteRegisterWord(RegisterType::SP, 0xCDAD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD74B, 0x49);
@@ -5316,6 +6682,11 @@ void test_49_0048()
 
 void test_49_0049()
 {
+    if (skip_test_49_0049)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5353,7 +6724,7 @@ void test_49_0049()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xB8);
     CheckRegisterByte(RegisterType::L, 0x1F);
-    WriteRegisterWord(RegisterType::PC, 0x197F);
+    WriteRegisterWord(RegisterType::PC, 0x1980);
     WriteRegisterWord(RegisterType::SP, 0xED17);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x197F, 0x49);
@@ -5361,6 +6732,11 @@ void test_49_0049()
 
 void test_49_004A()
 {
+    if (skip_test_49_004A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5398,7 +6774,7 @@ void test_49_004A()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x67);
     CheckRegisterByte(RegisterType::L, 0xC7);
-    WriteRegisterWord(RegisterType::PC, 0xB821);
+    WriteRegisterWord(RegisterType::PC, 0xB822);
     WriteRegisterWord(RegisterType::SP, 0xF7F0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB821, 0x49);
@@ -5406,6 +6782,11 @@ void test_49_004A()
 
 void test_49_004B()
 {
+    if (skip_test_49_004B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5443,7 +6824,7 @@ void test_49_004B()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xCF);
     CheckRegisterByte(RegisterType::L, 0x21);
-    WriteRegisterWord(RegisterType::PC, 0xAE3F);
+    WriteRegisterWord(RegisterType::PC, 0xAE40);
     WriteRegisterWord(RegisterType::SP, 0xEE67);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAE3F, 0x49);
@@ -5451,6 +6832,11 @@ void test_49_004B()
 
 void test_49_004C()
 {
+    if (skip_test_49_004C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5488,7 +6874,7 @@ void test_49_004C()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x8F);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    WriteRegisterWord(RegisterType::PC, 0xB88C);
+    WriteRegisterWord(RegisterType::PC, 0xB88D);
     WriteRegisterWord(RegisterType::SP, 0x9AE8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB88C, 0x49);
@@ -5496,6 +6882,11 @@ void test_49_004C()
 
 void test_49_004D()
 {
+    if (skip_test_49_004D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5533,7 +6924,7 @@ void test_49_004D()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x44);
     CheckRegisterByte(RegisterType::L, 0xED);
-    WriteRegisterWord(RegisterType::PC, 0x1FC5);
+    WriteRegisterWord(RegisterType::PC, 0x1FC6);
     WriteRegisterWord(RegisterType::SP, 0xE05F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1FC5, 0x49);
@@ -5541,6 +6932,11 @@ void test_49_004D()
 
 void test_49_004E()
 {
+    if (skip_test_49_004E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5578,7 +6974,7 @@ void test_49_004E()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x7F);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    WriteRegisterWord(RegisterType::PC, 0xEE2C);
+    WriteRegisterWord(RegisterType::PC, 0xEE2D);
     WriteRegisterWord(RegisterType::SP, 0xA9E6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEE2C, 0x49);
@@ -5586,6 +6982,11 @@ void test_49_004E()
 
 void test_49_004F()
 {
+    if (skip_test_49_004F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5623,7 +7024,7 @@ void test_49_004F()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x4E);
     CheckRegisterByte(RegisterType::L, 0xB4);
-    WriteRegisterWord(RegisterType::PC, 0xC779);
+    WriteRegisterWord(RegisterType::PC, 0xC77A);
     WriteRegisterWord(RegisterType::SP, 0xF89A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC779, 0x49);
@@ -5631,6 +7032,11 @@ void test_49_004F()
 
 void test_49_0050()
 {
+    if (skip_test_49_0050)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5668,7 +7074,7 @@ void test_49_0050()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x2A);
     CheckRegisterByte(RegisterType::L, 0x3A);
-    WriteRegisterWord(RegisterType::PC, 0xBF22);
+    WriteRegisterWord(RegisterType::PC, 0xBF23);
     WriteRegisterWord(RegisterType::SP, 0x84B5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBF22, 0x49);
@@ -5676,6 +7082,11 @@ void test_49_0050()
 
 void test_49_0051()
 {
+    if (skip_test_49_0051)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5713,7 +7124,7 @@ void test_49_0051()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xC1);
     CheckRegisterByte(RegisterType::L, 0x1D);
-    WriteRegisterWord(RegisterType::PC, 0xC612);
+    WriteRegisterWord(RegisterType::PC, 0xC613);
     WriteRegisterWord(RegisterType::SP, 0x4CC7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC612, 0x49);
@@ -5721,6 +7132,11 @@ void test_49_0051()
 
 void test_49_0052()
 {
+    if (skip_test_49_0052)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5758,7 +7174,7 @@ void test_49_0052()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xC1);
     CheckRegisterByte(RegisterType::L, 0x2D);
-    WriteRegisterWord(RegisterType::PC, 0x67CC);
+    WriteRegisterWord(RegisterType::PC, 0x67CD);
     WriteRegisterWord(RegisterType::SP, 0x9E3A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x67CC, 0x49);
@@ -5766,6 +7182,11 @@ void test_49_0052()
 
 void test_49_0053()
 {
+    if (skip_test_49_0053)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5803,7 +7224,7 @@ void test_49_0053()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0x52);
-    WriteRegisterWord(RegisterType::PC, 0x89A9);
+    WriteRegisterWord(RegisterType::PC, 0x89AA);
     WriteRegisterWord(RegisterType::SP, 0x5960);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x89A9, 0x49);
@@ -5811,6 +7232,11 @@ void test_49_0053()
 
 void test_49_0054()
 {
+    if (skip_test_49_0054)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5848,7 +7274,7 @@ void test_49_0054()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x0A);
     CheckRegisterByte(RegisterType::L, 0x4B);
-    WriteRegisterWord(RegisterType::PC, 0x6A98);
+    WriteRegisterWord(RegisterType::PC, 0x6A99);
     WriteRegisterWord(RegisterType::SP, 0x3628);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6A98, 0x49);
@@ -5856,6 +7282,11 @@ void test_49_0054()
 
 void test_49_0055()
 {
+    if (skip_test_49_0055)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5893,7 +7324,7 @@ void test_49_0055()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0x47);
-    WriteRegisterWord(RegisterType::PC, 0xE619);
+    WriteRegisterWord(RegisterType::PC, 0xE61A);
     WriteRegisterWord(RegisterType::SP, 0x8561);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE619, 0x49);
@@ -5901,6 +7332,11 @@ void test_49_0055()
 
 void test_49_0056()
 {
+    if (skip_test_49_0056)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5938,7 +7374,7 @@ void test_49_0056()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xA5);
     CheckRegisterByte(RegisterType::L, 0x1E);
-    WriteRegisterWord(RegisterType::PC, 0x2BC4);
+    WriteRegisterWord(RegisterType::PC, 0x2BC5);
     WriteRegisterWord(RegisterType::SP, 0x56FC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2BC4, 0x49);
@@ -5946,6 +7382,11 @@ void test_49_0056()
 
 void test_49_0057()
 {
+    if (skip_test_49_0057)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -5983,7 +7424,7 @@ void test_49_0057()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x3C);
     CheckRegisterByte(RegisterType::L, 0x2D);
-    WriteRegisterWord(RegisterType::PC, 0xB5BD);
+    WriteRegisterWord(RegisterType::PC, 0xB5BE);
     WriteRegisterWord(RegisterType::SP, 0x4A6E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB5BD, 0x49);
@@ -5991,6 +7432,11 @@ void test_49_0057()
 
 void test_49_0058()
 {
+    if (skip_test_49_0058)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6028,7 +7474,7 @@ void test_49_0058()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xF5);
     CheckRegisterByte(RegisterType::L, 0xA8);
-    WriteRegisterWord(RegisterType::PC, 0x5FFF);
+    WriteRegisterWord(RegisterType::PC, 0x6000);
     WriteRegisterWord(RegisterType::SP, 0x9938);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5FFF, 0x49);
@@ -6036,6 +7482,11 @@ void test_49_0058()
 
 void test_49_0059()
 {
+    if (skip_test_49_0059)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6073,7 +7524,7 @@ void test_49_0059()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x86);
     CheckRegisterByte(RegisterType::L, 0xEA);
-    WriteRegisterWord(RegisterType::PC, 0x33F8);
+    WriteRegisterWord(RegisterType::PC, 0x33F9);
     WriteRegisterWord(RegisterType::SP, 0x68F8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x33F8, 0x49);
@@ -6081,6 +7532,11 @@ void test_49_0059()
 
 void test_49_005A()
 {
+    if (skip_test_49_005A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6118,7 +7574,7 @@ void test_49_005A()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x61);
     CheckRegisterByte(RegisterType::L, 0x58);
-    WriteRegisterWord(RegisterType::PC, 0xF11F);
+    WriteRegisterWord(RegisterType::PC, 0xF120);
     WriteRegisterWord(RegisterType::SP, 0x7BD3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF11F, 0x49);
@@ -6126,6 +7582,11 @@ void test_49_005A()
 
 void test_49_005B()
 {
+    if (skip_test_49_005B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6163,7 +7624,7 @@ void test_49_005B()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x8C);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    WriteRegisterWord(RegisterType::PC, 0x7970);
+    WriteRegisterWord(RegisterType::PC, 0x7971);
     WriteRegisterWord(RegisterType::SP, 0x7E87);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7970, 0x49);
@@ -6171,6 +7632,11 @@ void test_49_005B()
 
 void test_49_005C()
 {
+    if (skip_test_49_005C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6208,7 +7674,7 @@ void test_49_005C()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xC5);
     CheckRegisterByte(RegisterType::L, 0xD2);
-    WriteRegisterWord(RegisterType::PC, 0x69A1);
+    WriteRegisterWord(RegisterType::PC, 0x69A2);
     WriteRegisterWord(RegisterType::SP, 0x6E21);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x69A1, 0x49);
@@ -6216,6 +7682,11 @@ void test_49_005C()
 
 void test_49_005D()
 {
+    if (skip_test_49_005D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6253,7 +7724,7 @@ void test_49_005D()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x2F);
     CheckRegisterByte(RegisterType::L, 0x9C);
-    WriteRegisterWord(RegisterType::PC, 0xE6CD);
+    WriteRegisterWord(RegisterType::PC, 0xE6CE);
     WriteRegisterWord(RegisterType::SP, 0xC2DA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE6CD, 0x49);
@@ -6261,6 +7732,11 @@ void test_49_005D()
 
 void test_49_005E()
 {
+    if (skip_test_49_005E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6298,7 +7774,7 @@ void test_49_005E()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x92);
     CheckRegisterByte(RegisterType::L, 0x7C);
-    WriteRegisterWord(RegisterType::PC, 0xE015);
+    WriteRegisterWord(RegisterType::PC, 0xE016);
     WriteRegisterWord(RegisterType::SP, 0xD5CD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE015, 0x49);
@@ -6306,6 +7782,11 @@ void test_49_005E()
 
 void test_49_005F()
 {
+    if (skip_test_49_005F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6343,7 +7824,7 @@ void test_49_005F()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x2A);
     CheckRegisterByte(RegisterType::L, 0x24);
-    WriteRegisterWord(RegisterType::PC, 0xD294);
+    WriteRegisterWord(RegisterType::PC, 0xD295);
     WriteRegisterWord(RegisterType::SP, 0x21FC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD294, 0x49);
@@ -6351,6 +7832,11 @@ void test_49_005F()
 
 void test_49_0060()
 {
+    if (skip_test_49_0060)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6388,7 +7874,7 @@ void test_49_0060()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xB5);
     CheckRegisterByte(RegisterType::L, 0x29);
-    WriteRegisterWord(RegisterType::PC, 0xF076);
+    WriteRegisterWord(RegisterType::PC, 0xF077);
     WriteRegisterWord(RegisterType::SP, 0x3544);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF076, 0x49);
@@ -6396,6 +7882,11 @@ void test_49_0060()
 
 void test_49_0061()
 {
+    if (skip_test_49_0061)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6433,7 +7924,7 @@ void test_49_0061()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0x6F);
-    WriteRegisterWord(RegisterType::PC, 0x6544);
+    WriteRegisterWord(RegisterType::PC, 0x6545);
     WriteRegisterWord(RegisterType::SP, 0x4332);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6544, 0x49);
@@ -6441,6 +7932,11 @@ void test_49_0061()
 
 void test_49_0062()
 {
+    if (skip_test_49_0062)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6478,7 +7974,7 @@ void test_49_0062()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xE4);
     CheckRegisterByte(RegisterType::L, 0x32);
-    WriteRegisterWord(RegisterType::PC, 0xFF3B);
+    WriteRegisterWord(RegisterType::PC, 0xFF3C);
     WriteRegisterWord(RegisterType::SP, 0x8EBC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFF3B, 0x49);
@@ -6486,6 +7982,11 @@ void test_49_0062()
 
 void test_49_0063()
 {
+    if (skip_test_49_0063)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6523,7 +8024,7 @@ void test_49_0063()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x50);
     CheckRegisterByte(RegisterType::L, 0xF4);
-    WriteRegisterWord(RegisterType::PC, 0xB547);
+    WriteRegisterWord(RegisterType::PC, 0xB548);
     WriteRegisterWord(RegisterType::SP, 0xD92A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB547, 0x49);
@@ -6531,6 +8032,11 @@ void test_49_0063()
 
 void test_49_0064()
 {
+    if (skip_test_49_0064)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6568,7 +8074,7 @@ void test_49_0064()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xA5);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    WriteRegisterWord(RegisterType::PC, 0xC1F5);
+    WriteRegisterWord(RegisterType::PC, 0xC1F6);
     WriteRegisterWord(RegisterType::SP, 0xED9D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC1F5, 0x49);
@@ -6576,6 +8082,11 @@ void test_49_0064()
 
 void test_49_0065()
 {
+    if (skip_test_49_0065)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6613,7 +8124,7 @@ void test_49_0065()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0x8E);
-    WriteRegisterWord(RegisterType::PC, 0x6948);
+    WriteRegisterWord(RegisterType::PC, 0x6949);
     WriteRegisterWord(RegisterType::SP, 0xE8EF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6948, 0x49);
@@ -6621,6 +8132,11 @@ void test_49_0065()
 
 void test_49_0066()
 {
+    if (skip_test_49_0066)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6658,7 +8174,7 @@ void test_49_0066()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x03);
     CheckRegisterByte(RegisterType::L, 0x58);
-    WriteRegisterWord(RegisterType::PC, 0xDF1B);
+    WriteRegisterWord(RegisterType::PC, 0xDF1C);
     WriteRegisterWord(RegisterType::SP, 0xC9F5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDF1B, 0x49);
@@ -6666,6 +8182,11 @@ void test_49_0066()
 
 void test_49_0067()
 {
+    if (skip_test_49_0067)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6703,7 +8224,7 @@ void test_49_0067()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x18);
     CheckRegisterByte(RegisterType::L, 0x7F);
-    WriteRegisterWord(RegisterType::PC, 0x183F);
+    WriteRegisterWord(RegisterType::PC, 0x1840);
     WriteRegisterWord(RegisterType::SP, 0xEFD8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x183F, 0x49);
@@ -6711,6 +8232,11 @@ void test_49_0067()
 
 void test_49_0068()
 {
+    if (skip_test_49_0068)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6748,7 +8274,7 @@ void test_49_0068()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0xC2);
-    WriteRegisterWord(RegisterType::PC, 0xDE20);
+    WriteRegisterWord(RegisterType::PC, 0xDE21);
     WriteRegisterWord(RegisterType::SP, 0xC1ED);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDE20, 0x49);
@@ -6756,6 +8282,11 @@ void test_49_0068()
 
 void test_49_0069()
 {
+    if (skip_test_49_0069)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6793,7 +8324,7 @@ void test_49_0069()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x15);
     CheckRegisterByte(RegisterType::L, 0xCA);
-    WriteRegisterWord(RegisterType::PC, 0x95EF);
+    WriteRegisterWord(RegisterType::PC, 0x95F0);
     WriteRegisterWord(RegisterType::SP, 0xF313);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x95EF, 0x49);
@@ -6801,6 +8332,11 @@ void test_49_0069()
 
 void test_49_006A()
 {
+    if (skip_test_49_006A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6838,7 +8374,7 @@ void test_49_006A()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x7D);
     CheckRegisterByte(RegisterType::L, 0xAD);
-    WriteRegisterWord(RegisterType::PC, 0x935E);
+    WriteRegisterWord(RegisterType::PC, 0x935F);
     WriteRegisterWord(RegisterType::SP, 0xA123);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x935E, 0x49);
@@ -6846,6 +8382,11 @@ void test_49_006A()
 
 void test_49_006B()
 {
+    if (skip_test_49_006B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6883,7 +8424,7 @@ void test_49_006B()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x76);
     CheckRegisterByte(RegisterType::L, 0x28);
-    WriteRegisterWord(RegisterType::PC, 0x5F12);
+    WriteRegisterWord(RegisterType::PC, 0x5F13);
     WriteRegisterWord(RegisterType::SP, 0x9D5F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5F12, 0x49);
@@ -6891,6 +8432,11 @@ void test_49_006B()
 
 void test_49_006C()
 {
+    if (skip_test_49_006C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6928,7 +8474,7 @@ void test_49_006C()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xF4);
     CheckRegisterByte(RegisterType::L, 0xDD);
-    WriteRegisterWord(RegisterType::PC, 0x736C);
+    WriteRegisterWord(RegisterType::PC, 0x736D);
     WriteRegisterWord(RegisterType::SP, 0xCC3F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x736C, 0x49);
@@ -6936,6 +8482,11 @@ void test_49_006C()
 
 void test_49_006D()
 {
+    if (skip_test_49_006D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -6973,7 +8524,7 @@ void test_49_006D()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x04);
     CheckRegisterByte(RegisterType::L, 0xB2);
-    WriteRegisterWord(RegisterType::PC, 0x4FCF);
+    WriteRegisterWord(RegisterType::PC, 0x4FD0);
     WriteRegisterWord(RegisterType::SP, 0x1326);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4FCF, 0x49);
@@ -6981,6 +8532,11 @@ void test_49_006D()
 
 void test_49_006E()
 {
+    if (skip_test_49_006E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7018,7 +8574,7 @@ void test_49_006E()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xAE);
     CheckRegisterByte(RegisterType::L, 0x24);
-    WriteRegisterWord(RegisterType::PC, 0x45B4);
+    WriteRegisterWord(RegisterType::PC, 0x45B5);
     WriteRegisterWord(RegisterType::SP, 0x4B6E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x45B4, 0x49);
@@ -7026,6 +8582,11 @@ void test_49_006E()
 
 void test_49_006F()
 {
+    if (skip_test_49_006F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7063,7 +8624,7 @@ void test_49_006F()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x8D);
     CheckRegisterByte(RegisterType::L, 0x5C);
-    WriteRegisterWord(RegisterType::PC, 0x7FAC);
+    WriteRegisterWord(RegisterType::PC, 0x7FAD);
     WriteRegisterWord(RegisterType::SP, 0xFBA9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7FAC, 0x49);
@@ -7071,6 +8632,11 @@ void test_49_006F()
 
 void test_49_0070()
 {
+    if (skip_test_49_0070)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7108,7 +8674,7 @@ void test_49_0070()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xAA);
     CheckRegisterByte(RegisterType::L, 0x93);
-    WriteRegisterWord(RegisterType::PC, 0xC912);
+    WriteRegisterWord(RegisterType::PC, 0xC913);
     WriteRegisterWord(RegisterType::SP, 0x03AE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC912, 0x49);
@@ -7116,6 +8682,11 @@ void test_49_0070()
 
 void test_49_0071()
 {
+    if (skip_test_49_0071)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7153,7 +8724,7 @@ void test_49_0071()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xAD);
     CheckRegisterByte(RegisterType::L, 0x78);
-    WriteRegisterWord(RegisterType::PC, 0xE7BD);
+    WriteRegisterWord(RegisterType::PC, 0xE7BE);
     WriteRegisterWord(RegisterType::SP, 0xD743);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE7BD, 0x49);
@@ -7161,6 +8732,11 @@ void test_49_0071()
 
 void test_49_0072()
 {
+    if (skip_test_49_0072)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7198,7 +8774,7 @@ void test_49_0072()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xE4);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    WriteRegisterWord(RegisterType::PC, 0x59F5);
+    WriteRegisterWord(RegisterType::PC, 0x59F6);
     WriteRegisterWord(RegisterType::SP, 0x45C3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x59F5, 0x49);
@@ -7206,6 +8782,11 @@ void test_49_0072()
 
 void test_49_0073()
 {
+    if (skip_test_49_0073)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7243,7 +8824,7 @@ void test_49_0073()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xAB);
     CheckRegisterByte(RegisterType::L, 0xFE);
-    WriteRegisterWord(RegisterType::PC, 0xC7E5);
+    WriteRegisterWord(RegisterType::PC, 0xC7E6);
     WriteRegisterWord(RegisterType::SP, 0x0024);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC7E5, 0x49);
@@ -7251,6 +8832,11 @@ void test_49_0073()
 
 void test_49_0074()
 {
+    if (skip_test_49_0074)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7288,7 +8874,7 @@ void test_49_0074()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xD7);
     CheckRegisterByte(RegisterType::L, 0x02);
-    WriteRegisterWord(RegisterType::PC, 0x0FAF);
+    WriteRegisterWord(RegisterType::PC, 0x0FB0);
     WriteRegisterWord(RegisterType::SP, 0xAD2E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0FAF, 0x49);
@@ -7296,6 +8882,11 @@ void test_49_0074()
 
 void test_49_0075()
 {
+    if (skip_test_49_0075)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7333,7 +8924,7 @@ void test_49_0075()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xC3);
     CheckRegisterByte(RegisterType::L, 0xDF);
-    WriteRegisterWord(RegisterType::PC, 0x66D0);
+    WriteRegisterWord(RegisterType::PC, 0x66D1);
     WriteRegisterWord(RegisterType::SP, 0x9EA9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x66D0, 0x49);
@@ -7341,6 +8932,11 @@ void test_49_0075()
 
 void test_49_0076()
 {
+    if (skip_test_49_0076)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7378,7 +8974,7 @@ void test_49_0076()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x08);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    WriteRegisterWord(RegisterType::PC, 0xF15A);
+    WriteRegisterWord(RegisterType::PC, 0xF15B);
     WriteRegisterWord(RegisterType::SP, 0xFD84);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF15A, 0x49);
@@ -7386,6 +8982,11 @@ void test_49_0076()
 
 void test_49_0077()
 {
+    if (skip_test_49_0077)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7423,7 +9024,7 @@ void test_49_0077()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xB1);
     CheckRegisterByte(RegisterType::L, 0x65);
-    WriteRegisterWord(RegisterType::PC, 0x8A4A);
+    WriteRegisterWord(RegisterType::PC, 0x8A4B);
     WriteRegisterWord(RegisterType::SP, 0x791D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8A4A, 0x49);
@@ -7431,6 +9032,11 @@ void test_49_0077()
 
 void test_49_0078()
 {
+    if (skip_test_49_0078)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7468,7 +9074,7 @@ void test_49_0078()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0xDC);
-    WriteRegisterWord(RegisterType::PC, 0x0C0C);
+    WriteRegisterWord(RegisterType::PC, 0x0C0D);
     WriteRegisterWord(RegisterType::SP, 0xE968);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0C0C, 0x49);
@@ -7476,6 +9082,11 @@ void test_49_0078()
 
 void test_49_0079()
 {
+    if (skip_test_49_0079)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7513,7 +9124,7 @@ void test_49_0079()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0xB9);
-    WriteRegisterWord(RegisterType::PC, 0xC922);
+    WriteRegisterWord(RegisterType::PC, 0xC923);
     WriteRegisterWord(RegisterType::SP, 0x0A9D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC922, 0x49);
@@ -7521,6 +9132,11 @@ void test_49_0079()
 
 void test_49_007A()
 {
+    if (skip_test_49_007A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7558,7 +9174,7 @@ void test_49_007A()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xEC);
     CheckRegisterByte(RegisterType::L, 0x2F);
-    WriteRegisterWord(RegisterType::PC, 0x5820);
+    WriteRegisterWord(RegisterType::PC, 0x5821);
     WriteRegisterWord(RegisterType::SP, 0x5D0B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5820, 0x49);
@@ -7566,6 +9182,11 @@ void test_49_007A()
 
 void test_49_007B()
 {
+    if (skip_test_49_007B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7603,7 +9224,7 @@ void test_49_007B()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0xD8);
-    WriteRegisterWord(RegisterType::PC, 0xB46E);
+    WriteRegisterWord(RegisterType::PC, 0xB46F);
     WriteRegisterWord(RegisterType::SP, 0xB98C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB46E, 0x49);
@@ -7611,6 +9232,11 @@ void test_49_007B()
 
 void test_49_007C()
 {
+    if (skip_test_49_007C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7648,7 +9274,7 @@ void test_49_007C()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xFF);
     CheckRegisterByte(RegisterType::L, 0x61);
-    WriteRegisterWord(RegisterType::PC, 0x3B50);
+    WriteRegisterWord(RegisterType::PC, 0x3B51);
     WriteRegisterWord(RegisterType::SP, 0x1F12);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3B50, 0x49);
@@ -7656,6 +9282,11 @@ void test_49_007C()
 
 void test_49_007D()
 {
+    if (skip_test_49_007D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7693,7 +9324,7 @@ void test_49_007D()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0xAB);
-    WriteRegisterWord(RegisterType::PC, 0x5CFB);
+    WriteRegisterWord(RegisterType::PC, 0x5CFC);
     WriteRegisterWord(RegisterType::SP, 0xEA34);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5CFB, 0x49);
@@ -7701,6 +9332,11 @@ void test_49_007D()
 
 void test_49_007E()
 {
+    if (skip_test_49_007E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7738,7 +9374,7 @@ void test_49_007E()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xBB);
     CheckRegisterByte(RegisterType::L, 0xC3);
-    WriteRegisterWord(RegisterType::PC, 0x3FD8);
+    WriteRegisterWord(RegisterType::PC, 0x3FD9);
     WriteRegisterWord(RegisterType::SP, 0x25ED);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3FD8, 0x49);
@@ -7746,6 +9382,11 @@ void test_49_007E()
 
 void test_49_007F()
 {
+    if (skip_test_49_007F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7783,7 +9424,7 @@ void test_49_007F()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    WriteRegisterWord(RegisterType::PC, 0xD9FA);
+    WriteRegisterWord(RegisterType::PC, 0xD9FB);
     WriteRegisterWord(RegisterType::SP, 0x9D44);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD9FA, 0x49);
@@ -7791,6 +9432,11 @@ void test_49_007F()
 
 void test_49_0080()
 {
+    if (skip_test_49_0080)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7828,7 +9474,7 @@ void test_49_0080()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x53);
     CheckRegisterByte(RegisterType::L, 0x30);
-    WriteRegisterWord(RegisterType::PC, 0xE92D);
+    WriteRegisterWord(RegisterType::PC, 0xE92E);
     WriteRegisterWord(RegisterType::SP, 0x9D14);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE92D, 0x49);
@@ -7836,6 +9482,11 @@ void test_49_0080()
 
 void test_49_0081()
 {
+    if (skip_test_49_0081)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7873,7 +9524,7 @@ void test_49_0081()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x25);
     CheckRegisterByte(RegisterType::L, 0x51);
-    WriteRegisterWord(RegisterType::PC, 0x89FD);
+    WriteRegisterWord(RegisterType::PC, 0x89FE);
     WriteRegisterWord(RegisterType::SP, 0x7315);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x89FD, 0x49);
@@ -7881,6 +9532,11 @@ void test_49_0081()
 
 void test_49_0082()
 {
+    if (skip_test_49_0082)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7918,7 +9574,7 @@ void test_49_0082()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0x20);
-    WriteRegisterWord(RegisterType::PC, 0xF7BE);
+    WriteRegisterWord(RegisterType::PC, 0xF7BF);
     WriteRegisterWord(RegisterType::SP, 0x5675);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF7BE, 0x49);
@@ -7926,6 +9582,11 @@ void test_49_0082()
 
 void test_49_0083()
 {
+    if (skip_test_49_0083)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -7963,7 +9624,7 @@ void test_49_0083()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0xEF);
-    WriteRegisterWord(RegisterType::PC, 0xBC0E);
+    WriteRegisterWord(RegisterType::PC, 0xBC0F);
     WriteRegisterWord(RegisterType::SP, 0x2758);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBC0E, 0x49);
@@ -7971,6 +9632,11 @@ void test_49_0083()
 
 void test_49_0084()
 {
+    if (skip_test_49_0084)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8008,7 +9674,7 @@ void test_49_0084()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xF1);
     CheckRegisterByte(RegisterType::L, 0x09);
-    WriteRegisterWord(RegisterType::PC, 0xF8EE);
+    WriteRegisterWord(RegisterType::PC, 0xF8EF);
     WriteRegisterWord(RegisterType::SP, 0xC2CB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF8EE, 0x49);
@@ -8016,6 +9682,11 @@ void test_49_0084()
 
 void test_49_0085()
 {
+    if (skip_test_49_0085)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8053,7 +9724,7 @@ void test_49_0085()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0x88);
-    WriteRegisterWord(RegisterType::PC, 0xEB7E);
+    WriteRegisterWord(RegisterType::PC, 0xEB7F);
     WriteRegisterWord(RegisterType::SP, 0x8996);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEB7E, 0x49);
@@ -8061,6 +9732,11 @@ void test_49_0085()
 
 void test_49_0086()
 {
+    if (skip_test_49_0086)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8098,7 +9774,7 @@ void test_49_0086()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0x3F);
-    WriteRegisterWord(RegisterType::PC, 0x32F4);
+    WriteRegisterWord(RegisterType::PC, 0x32F5);
     WriteRegisterWord(RegisterType::SP, 0x09FE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x32F4, 0x49);
@@ -8106,6 +9782,11 @@ void test_49_0086()
 
 void test_49_0087()
 {
+    if (skip_test_49_0087)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8143,7 +9824,7 @@ void test_49_0087()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x1D);
     CheckRegisterByte(RegisterType::L, 0x92);
-    WriteRegisterWord(RegisterType::PC, 0x71E7);
+    WriteRegisterWord(RegisterType::PC, 0x71E8);
     WriteRegisterWord(RegisterType::SP, 0xBFE4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x71E7, 0x49);
@@ -8151,6 +9832,11 @@ void test_49_0087()
 
 void test_49_0088()
 {
+    if (skip_test_49_0088)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8188,7 +9874,7 @@ void test_49_0088()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0x4A);
-    WriteRegisterWord(RegisterType::PC, 0x0C86);
+    WriteRegisterWord(RegisterType::PC, 0x0C87);
     WriteRegisterWord(RegisterType::SP, 0x343B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0C86, 0x49);
@@ -8196,6 +9882,11 @@ void test_49_0088()
 
 void test_49_0089()
 {
+    if (skip_test_49_0089)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8233,7 +9924,7 @@ void test_49_0089()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x70);
     CheckRegisterByte(RegisterType::L, 0xC9);
-    WriteRegisterWord(RegisterType::PC, 0xBE48);
+    WriteRegisterWord(RegisterType::PC, 0xBE49);
     WriteRegisterWord(RegisterType::SP, 0x7E4C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBE48, 0x49);
@@ -8241,6 +9932,11 @@ void test_49_0089()
 
 void test_49_008A()
 {
+    if (skip_test_49_008A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8278,7 +9974,7 @@ void test_49_008A()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x0E);
     CheckRegisterByte(RegisterType::L, 0x31);
-    WriteRegisterWord(RegisterType::PC, 0x9E56);
+    WriteRegisterWord(RegisterType::PC, 0x9E57);
     WriteRegisterWord(RegisterType::SP, 0x8214);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9E56, 0x49);
@@ -8286,6 +9982,11 @@ void test_49_008A()
 
 void test_49_008B()
 {
+    if (skip_test_49_008B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8323,7 +10024,7 @@ void test_49_008B()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x62);
     CheckRegisterByte(RegisterType::L, 0x10);
-    WriteRegisterWord(RegisterType::PC, 0x119E);
+    WriteRegisterWord(RegisterType::PC, 0x119F);
     WriteRegisterWord(RegisterType::SP, 0x041A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x119E, 0x49);
@@ -8331,6 +10032,11 @@ void test_49_008B()
 
 void test_49_008C()
 {
+    if (skip_test_49_008C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8368,7 +10074,7 @@ void test_49_008C()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xE1);
     CheckRegisterByte(RegisterType::L, 0x5A);
-    WriteRegisterWord(RegisterType::PC, 0x5C3A);
+    WriteRegisterWord(RegisterType::PC, 0x5C3B);
     WriteRegisterWord(RegisterType::SP, 0xF483);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5C3A, 0x49);
@@ -8376,6 +10082,11 @@ void test_49_008C()
 
 void test_49_008D()
 {
+    if (skip_test_49_008D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8413,7 +10124,7 @@ void test_49_008D()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0xD3);
-    WriteRegisterWord(RegisterType::PC, 0x7A3A);
+    WriteRegisterWord(RegisterType::PC, 0x7A3B);
     WriteRegisterWord(RegisterType::SP, 0x96D6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7A3A, 0x49);
@@ -8421,6 +10132,11 @@ void test_49_008D()
 
 void test_49_008E()
 {
+    if (skip_test_49_008E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8458,7 +10174,7 @@ void test_49_008E()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0xC1);
-    WriteRegisterWord(RegisterType::PC, 0xFA8B);
+    WriteRegisterWord(RegisterType::PC, 0xFA8C);
     WriteRegisterWord(RegisterType::SP, 0xDFB0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFA8B, 0x49);
@@ -8466,6 +10182,11 @@ void test_49_008E()
 
 void test_49_008F()
 {
+    if (skip_test_49_008F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8503,7 +10224,7 @@ void test_49_008F()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x19);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    WriteRegisterWord(RegisterType::PC, 0x6915);
+    WriteRegisterWord(RegisterType::PC, 0x6916);
     WriteRegisterWord(RegisterType::SP, 0xD4D5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6915, 0x49);
@@ -8511,6 +10232,11 @@ void test_49_008F()
 
 void test_49_0090()
 {
+    if (skip_test_49_0090)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8548,7 +10274,7 @@ void test_49_0090()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x3C);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    WriteRegisterWord(RegisterType::PC, 0x1D18);
+    WriteRegisterWord(RegisterType::PC, 0x1D19);
     WriteRegisterWord(RegisterType::SP, 0x49E9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1D18, 0x49);
@@ -8556,6 +10282,11 @@ void test_49_0090()
 
 void test_49_0091()
 {
+    if (skip_test_49_0091)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8593,7 +10324,7 @@ void test_49_0091()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xED);
     CheckRegisterByte(RegisterType::L, 0xE3);
-    WriteRegisterWord(RegisterType::PC, 0x4AB4);
+    WriteRegisterWord(RegisterType::PC, 0x4AB5);
     WriteRegisterWord(RegisterType::SP, 0x51D0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4AB4, 0x49);
@@ -8601,6 +10332,11 @@ void test_49_0091()
 
 void test_49_0092()
 {
+    if (skip_test_49_0092)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8638,7 +10374,7 @@ void test_49_0092()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x31);
     CheckRegisterByte(RegisterType::L, 0x75);
-    WriteRegisterWord(RegisterType::PC, 0x388E);
+    WriteRegisterWord(RegisterType::PC, 0x388F);
     WriteRegisterWord(RegisterType::SP, 0xA614);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x388E, 0x49);
@@ -8646,6 +10382,11 @@ void test_49_0092()
 
 void test_49_0093()
 {
+    if (skip_test_49_0093)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8683,7 +10424,7 @@ void test_49_0093()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xA9);
     CheckRegisterByte(RegisterType::L, 0x39);
-    WriteRegisterWord(RegisterType::PC, 0xA334);
+    WriteRegisterWord(RegisterType::PC, 0xA335);
     WriteRegisterWord(RegisterType::SP, 0x630F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA334, 0x49);
@@ -8691,6 +10432,11 @@ void test_49_0093()
 
 void test_49_0094()
 {
+    if (skip_test_49_0094)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8728,7 +10474,7 @@ void test_49_0094()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0x5E);
-    WriteRegisterWord(RegisterType::PC, 0xC21C);
+    WriteRegisterWord(RegisterType::PC, 0xC21D);
     WriteRegisterWord(RegisterType::SP, 0x5780);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC21C, 0x49);
@@ -8736,6 +10482,11 @@ void test_49_0094()
 
 void test_49_0095()
 {
+    if (skip_test_49_0095)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8773,7 +10524,7 @@ void test_49_0095()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xE2);
     CheckRegisterByte(RegisterType::L, 0x64);
-    WriteRegisterWord(RegisterType::PC, 0xC595);
+    WriteRegisterWord(RegisterType::PC, 0xC596);
     WriteRegisterWord(RegisterType::SP, 0xB73C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC595, 0x49);
@@ -8781,6 +10532,11 @@ void test_49_0095()
 
 void test_49_0096()
 {
+    if (skip_test_49_0096)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8818,7 +10574,7 @@ void test_49_0096()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x63);
     CheckRegisterByte(RegisterType::L, 0x97);
-    WriteRegisterWord(RegisterType::PC, 0xEF67);
+    WriteRegisterWord(RegisterType::PC, 0xEF68);
     WriteRegisterWord(RegisterType::SP, 0x92CE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEF67, 0x49);
@@ -8826,6 +10582,11 @@ void test_49_0096()
 
 void test_49_0097()
 {
+    if (skip_test_49_0097)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8863,7 +10624,7 @@ void test_49_0097()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xA2);
     CheckRegisterByte(RegisterType::L, 0x63);
-    WriteRegisterWord(RegisterType::PC, 0xB2A9);
+    WriteRegisterWord(RegisterType::PC, 0xB2AA);
     WriteRegisterWord(RegisterType::SP, 0xC576);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB2A9, 0x49);
@@ -8871,6 +10632,11 @@ void test_49_0097()
 
 void test_49_0098()
 {
+    if (skip_test_49_0098)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8908,7 +10674,7 @@ void test_49_0098()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x85);
     CheckRegisterByte(RegisterType::L, 0xD1);
-    WriteRegisterWord(RegisterType::PC, 0x9C42);
+    WriteRegisterWord(RegisterType::PC, 0x9C43);
     WriteRegisterWord(RegisterType::SP, 0x3144);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9C42, 0x49);
@@ -8916,6 +10682,11 @@ void test_49_0098()
 
 void test_49_0099()
 {
+    if (skip_test_49_0099)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8953,7 +10724,7 @@ void test_49_0099()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xE2);
     CheckRegisterByte(RegisterType::L, 0x1D);
-    WriteRegisterWord(RegisterType::PC, 0x210E);
+    WriteRegisterWord(RegisterType::PC, 0x210F);
     WriteRegisterWord(RegisterType::SP, 0x7DDC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x210E, 0x49);
@@ -8961,6 +10732,11 @@ void test_49_0099()
 
 void test_49_009A()
 {
+    if (skip_test_49_009A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -8998,7 +10774,7 @@ void test_49_009A()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xF3);
     CheckRegisterByte(RegisterType::L, 0x3E);
-    WriteRegisterWord(RegisterType::PC, 0x2F12);
+    WriteRegisterWord(RegisterType::PC, 0x2F13);
     WriteRegisterWord(RegisterType::SP, 0x78D1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2F12, 0x49);
@@ -9006,6 +10782,11 @@ void test_49_009A()
 
 void test_49_009B()
 {
+    if (skip_test_49_009B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9043,7 +10824,7 @@ void test_49_009B()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xBA);
     CheckRegisterByte(RegisterType::L, 0x00);
-    WriteRegisterWord(RegisterType::PC, 0x6A1C);
+    WriteRegisterWord(RegisterType::PC, 0x6A1D);
     WriteRegisterWord(RegisterType::SP, 0xEB50);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6A1C, 0x49);
@@ -9051,6 +10832,11 @@ void test_49_009B()
 
 void test_49_009C()
 {
+    if (skip_test_49_009C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9088,7 +10874,7 @@ void test_49_009C()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x21);
     CheckRegisterByte(RegisterType::L, 0x6E);
-    WriteRegisterWord(RegisterType::PC, 0x86E4);
+    WriteRegisterWord(RegisterType::PC, 0x86E5);
     WriteRegisterWord(RegisterType::SP, 0x875D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x86E4, 0x49);
@@ -9096,6 +10882,11 @@ void test_49_009C()
 
 void test_49_009D()
 {
+    if (skip_test_49_009D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9133,7 +10924,7 @@ void test_49_009D()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xDB);
     CheckRegisterByte(RegisterType::L, 0x78);
-    WriteRegisterWord(RegisterType::PC, 0xFA55);
+    WriteRegisterWord(RegisterType::PC, 0xFA56);
     WriteRegisterWord(RegisterType::SP, 0xE28A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFA55, 0x49);
@@ -9141,6 +10932,11 @@ void test_49_009D()
 
 void test_49_009E()
 {
+    if (skip_test_49_009E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9178,7 +10974,7 @@ void test_49_009E()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x7C);
     CheckRegisterByte(RegisterType::L, 0x9C);
-    WriteRegisterWord(RegisterType::PC, 0xBB2F);
+    WriteRegisterWord(RegisterType::PC, 0xBB30);
     WriteRegisterWord(RegisterType::SP, 0xC4A0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBB2F, 0x49);
@@ -9186,6 +10982,11 @@ void test_49_009E()
 
 void test_49_009F()
 {
+    if (skip_test_49_009F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9223,7 +11024,7 @@ void test_49_009F()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xCF);
     CheckRegisterByte(RegisterType::L, 0x2E);
-    WriteRegisterWord(RegisterType::PC, 0x32E0);
+    WriteRegisterWord(RegisterType::PC, 0x32E1);
     WriteRegisterWord(RegisterType::SP, 0x1B35);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x32E0, 0x49);
@@ -9231,6 +11032,11 @@ void test_49_009F()
 
 void test_49_00A0()
 {
+    if (skip_test_49_00A0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9268,7 +11074,7 @@ void test_49_00A0()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x07);
     CheckRegisterByte(RegisterType::L, 0x01);
-    WriteRegisterWord(RegisterType::PC, 0x051E);
+    WriteRegisterWord(RegisterType::PC, 0x051F);
     WriteRegisterWord(RegisterType::SP, 0x8DD8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x051E, 0x49);
@@ -9276,6 +11082,11 @@ void test_49_00A0()
 
 void test_49_00A1()
 {
+    if (skip_test_49_00A1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9313,7 +11124,7 @@ void test_49_00A1()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x7C);
     CheckRegisterByte(RegisterType::L, 0x4E);
-    WriteRegisterWord(RegisterType::PC, 0xDC33);
+    WriteRegisterWord(RegisterType::PC, 0xDC34);
     WriteRegisterWord(RegisterType::SP, 0xD609);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDC33, 0x49);
@@ -9321,6 +11132,11 @@ void test_49_00A1()
 
 void test_49_00A2()
 {
+    if (skip_test_49_00A2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9358,7 +11174,7 @@ void test_49_00A2()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xA7);
     CheckRegisterByte(RegisterType::L, 0x24);
-    WriteRegisterWord(RegisterType::PC, 0x64A4);
+    WriteRegisterWord(RegisterType::PC, 0x64A5);
     WriteRegisterWord(RegisterType::SP, 0x2893);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x64A4, 0x49);
@@ -9366,6 +11182,11 @@ void test_49_00A2()
 
 void test_49_00A3()
 {
+    if (skip_test_49_00A3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9403,7 +11224,7 @@ void test_49_00A3()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xCA);
     CheckRegisterByte(RegisterType::L, 0xA3);
-    WriteRegisterWord(RegisterType::PC, 0xB8D5);
+    WriteRegisterWord(RegisterType::PC, 0xB8D6);
     WriteRegisterWord(RegisterType::SP, 0x346E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB8D5, 0x49);
@@ -9411,6 +11232,11 @@ void test_49_00A3()
 
 void test_49_00A4()
 {
+    if (skip_test_49_00A4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9448,7 +11274,7 @@ void test_49_00A4()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x01);
     CheckRegisterByte(RegisterType::L, 0x67);
-    WriteRegisterWord(RegisterType::PC, 0x1F97);
+    WriteRegisterWord(RegisterType::PC, 0x1F98);
     WriteRegisterWord(RegisterType::SP, 0xBF12);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1F97, 0x49);
@@ -9456,6 +11282,11 @@ void test_49_00A4()
 
 void test_49_00A5()
 {
+    if (skip_test_49_00A5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9493,7 +11324,7 @@ void test_49_00A5()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x43);
     CheckRegisterByte(RegisterType::L, 0x49);
-    WriteRegisterWord(RegisterType::PC, 0x0ACE);
+    WriteRegisterWord(RegisterType::PC, 0x0ACF);
     WriteRegisterWord(RegisterType::SP, 0x2392);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0ACE, 0x49);
@@ -9501,6 +11332,11 @@ void test_49_00A5()
 
 void test_49_00A6()
 {
+    if (skip_test_49_00A6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9538,7 +11374,7 @@ void test_49_00A6()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x48);
     CheckRegisterByte(RegisterType::L, 0xA2);
-    WriteRegisterWord(RegisterType::PC, 0xB6F3);
+    WriteRegisterWord(RegisterType::PC, 0xB6F4);
     WriteRegisterWord(RegisterType::SP, 0x03DC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB6F3, 0x49);
@@ -9546,6 +11382,11 @@ void test_49_00A6()
 
 void test_49_00A7()
 {
+    if (skip_test_49_00A7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9583,7 +11424,7 @@ void test_49_00A7()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x6F);
     CheckRegisterByte(RegisterType::L, 0x77);
-    WriteRegisterWord(RegisterType::PC, 0x2130);
+    WriteRegisterWord(RegisterType::PC, 0x2131);
     WriteRegisterWord(RegisterType::SP, 0xA4BF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2130, 0x49);
@@ -9591,6 +11432,11 @@ void test_49_00A7()
 
 void test_49_00A8()
 {
+    if (skip_test_49_00A8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9628,7 +11474,7 @@ void test_49_00A8()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x91);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    WriteRegisterWord(RegisterType::PC, 0x0C34);
+    WriteRegisterWord(RegisterType::PC, 0x0C35);
     WriteRegisterWord(RegisterType::SP, 0x2BAB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0C34, 0x49);
@@ -9636,6 +11482,11 @@ void test_49_00A8()
 
 void test_49_00A9()
 {
+    if (skip_test_49_00A9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9673,7 +11524,7 @@ void test_49_00A9()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x22);
     CheckRegisterByte(RegisterType::L, 0x49);
-    WriteRegisterWord(RegisterType::PC, 0xCA24);
+    WriteRegisterWord(RegisterType::PC, 0xCA25);
     WriteRegisterWord(RegisterType::SP, 0xC1BB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCA24, 0x49);
@@ -9681,6 +11532,11 @@ void test_49_00A9()
 
 void test_49_00AA()
 {
+    if (skip_test_49_00AA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9718,7 +11574,7 @@ void test_49_00AA()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x99);
     CheckRegisterByte(RegisterType::L, 0x04);
-    WriteRegisterWord(RegisterType::PC, 0x2CA2);
+    WriteRegisterWord(RegisterType::PC, 0x2CA3);
     WriteRegisterWord(RegisterType::SP, 0xDC92);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2CA2, 0x49);
@@ -9726,6 +11582,11 @@ void test_49_00AA()
 
 void test_49_00AB()
 {
+    if (skip_test_49_00AB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9763,7 +11624,7 @@ void test_49_00AB()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x0C);
     CheckRegisterByte(RegisterType::L, 0x59);
-    WriteRegisterWord(RegisterType::PC, 0x6C91);
+    WriteRegisterWord(RegisterType::PC, 0x6C92);
     WriteRegisterWord(RegisterType::SP, 0x950E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6C91, 0x49);
@@ -9771,6 +11632,11 @@ void test_49_00AB()
 
 void test_49_00AC()
 {
+    if (skip_test_49_00AC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9808,7 +11674,7 @@ void test_49_00AC()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x3F);
     CheckRegisterByte(RegisterType::L, 0x5C);
-    WriteRegisterWord(RegisterType::PC, 0x78F9);
+    WriteRegisterWord(RegisterType::PC, 0x78FA);
     WriteRegisterWord(RegisterType::SP, 0xC7B1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x78F9, 0x49);
@@ -9816,6 +11682,11 @@ void test_49_00AC()
 
 void test_49_00AD()
 {
+    if (skip_test_49_00AD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9853,7 +11724,7 @@ void test_49_00AD()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x12);
     CheckRegisterByte(RegisterType::L, 0xC7);
-    WriteRegisterWord(RegisterType::PC, 0xD317);
+    WriteRegisterWord(RegisterType::PC, 0xD318);
     WriteRegisterWord(RegisterType::SP, 0xDC72);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD317, 0x49);
@@ -9861,6 +11732,11 @@ void test_49_00AD()
 
 void test_49_00AE()
 {
+    if (skip_test_49_00AE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9898,7 +11774,7 @@ void test_49_00AE()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xBF);
     CheckRegisterByte(RegisterType::L, 0xC8);
-    WriteRegisterWord(RegisterType::PC, 0xA0A8);
+    WriteRegisterWord(RegisterType::PC, 0xA0A9);
     WriteRegisterWord(RegisterType::SP, 0x3132);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA0A8, 0x49);
@@ -9906,6 +11782,11 @@ void test_49_00AE()
 
 void test_49_00AF()
 {
+    if (skip_test_49_00AF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9943,7 +11824,7 @@ void test_49_00AF()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x73);
     CheckRegisterByte(RegisterType::L, 0x0B);
-    WriteRegisterWord(RegisterType::PC, 0x7EE8);
+    WriteRegisterWord(RegisterType::PC, 0x7EE9);
     WriteRegisterWord(RegisterType::SP, 0x9E1B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7EE8, 0x49);
@@ -9951,6 +11832,11 @@ void test_49_00AF()
 
 void test_49_00B0()
 {
+    if (skip_test_49_00B0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -9988,7 +11874,7 @@ void test_49_00B0()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x97);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    WriteRegisterWord(RegisterType::PC, 0x6BE7);
+    WriteRegisterWord(RegisterType::PC, 0x6BE8);
     WriteRegisterWord(RegisterType::SP, 0xBD1D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6BE7, 0x49);
@@ -9996,6 +11882,11 @@ void test_49_00B0()
 
 void test_49_00B1()
 {
+    if (skip_test_49_00B1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10033,7 +11924,7 @@ void test_49_00B1()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x08);
     CheckRegisterByte(RegisterType::L, 0x25);
-    WriteRegisterWord(RegisterType::PC, 0xAF2E);
+    WriteRegisterWord(RegisterType::PC, 0xAF2F);
     WriteRegisterWord(RegisterType::SP, 0x6C7F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAF2E, 0x49);
@@ -10041,6 +11932,11 @@ void test_49_00B1()
 
 void test_49_00B2()
 {
+    if (skip_test_49_00B2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10078,7 +11974,7 @@ void test_49_00B2()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0xAF);
-    WriteRegisterWord(RegisterType::PC, 0x5236);
+    WriteRegisterWord(RegisterType::PC, 0x5237);
     WriteRegisterWord(RegisterType::SP, 0x4880);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5236, 0x49);
@@ -10086,6 +11982,11 @@ void test_49_00B2()
 
 void test_49_00B3()
 {
+    if (skip_test_49_00B3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10123,7 +12024,7 @@ void test_49_00B3()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x74);
     CheckRegisterByte(RegisterType::L, 0x8F);
-    WriteRegisterWord(RegisterType::PC, 0xF2BF);
+    WriteRegisterWord(RegisterType::PC, 0xF2C0);
     WriteRegisterWord(RegisterType::SP, 0xD153);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF2BF, 0x49);
@@ -10131,6 +12032,11 @@ void test_49_00B3()
 
 void test_49_00B4()
 {
+    if (skip_test_49_00B4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10168,7 +12074,7 @@ void test_49_00B4()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x6A);
     CheckRegisterByte(RegisterType::L, 0x40);
-    WriteRegisterWord(RegisterType::PC, 0xC580);
+    WriteRegisterWord(RegisterType::PC, 0xC581);
     WriteRegisterWord(RegisterType::SP, 0xC0FE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC580, 0x49);
@@ -10176,6 +12082,11 @@ void test_49_00B4()
 
 void test_49_00B5()
 {
+    if (skip_test_49_00B5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10213,7 +12124,7 @@ void test_49_00B5()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x89);
     CheckRegisterByte(RegisterType::L, 0x6F);
-    WriteRegisterWord(RegisterType::PC, 0x142B);
+    WriteRegisterWord(RegisterType::PC, 0x142C);
     WriteRegisterWord(RegisterType::SP, 0x66D7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x142B, 0x49);
@@ -10221,6 +12132,11 @@ void test_49_00B5()
 
 void test_49_00B6()
 {
+    if (skip_test_49_00B6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10258,7 +12174,7 @@ void test_49_00B6()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xE4);
     CheckRegisterByte(RegisterType::L, 0x29);
-    WriteRegisterWord(RegisterType::PC, 0xC09F);
+    WriteRegisterWord(RegisterType::PC, 0xC0A0);
     WriteRegisterWord(RegisterType::SP, 0xFAEA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC09F, 0x49);
@@ -10266,6 +12182,11 @@ void test_49_00B6()
 
 void test_49_00B7()
 {
+    if (skip_test_49_00B7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10303,7 +12224,7 @@ void test_49_00B7()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x43);
     CheckRegisterByte(RegisterType::L, 0x9A);
-    WriteRegisterWord(RegisterType::PC, 0x7E5B);
+    WriteRegisterWord(RegisterType::PC, 0x7E5C);
     WriteRegisterWord(RegisterType::SP, 0xAA26);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7E5B, 0x49);
@@ -10311,6 +12232,11 @@ void test_49_00B7()
 
 void test_49_00B8()
 {
+    if (skip_test_49_00B8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10348,7 +12274,7 @@ void test_49_00B8()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x5E);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    WriteRegisterWord(RegisterType::PC, 0xE84C);
+    WriteRegisterWord(RegisterType::PC, 0xE84D);
     WriteRegisterWord(RegisterType::SP, 0xDD7B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE84C, 0x49);
@@ -10356,6 +12282,11 @@ void test_49_00B8()
 
 void test_49_00B9()
 {
+    if (skip_test_49_00B9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10393,7 +12324,7 @@ void test_49_00B9()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x7A);
     CheckRegisterByte(RegisterType::L, 0xB6);
-    WriteRegisterWord(RegisterType::PC, 0x8306);
+    WriteRegisterWord(RegisterType::PC, 0x8307);
     WriteRegisterWord(RegisterType::SP, 0x73C8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8306, 0x49);
@@ -10401,6 +12332,11 @@ void test_49_00B9()
 
 void test_49_00BA()
 {
+    if (skip_test_49_00BA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10438,7 +12374,7 @@ void test_49_00BA()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xE6);
     CheckRegisterByte(RegisterType::L, 0x66);
-    WriteRegisterWord(RegisterType::PC, 0xD55A);
+    WriteRegisterWord(RegisterType::PC, 0xD55B);
     WriteRegisterWord(RegisterType::SP, 0x4340);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD55A, 0x49);
@@ -10446,6 +12382,11 @@ void test_49_00BA()
 
 void test_49_00BB()
 {
+    if (skip_test_49_00BB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10483,7 +12424,7 @@ void test_49_00BB()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xCC);
     CheckRegisterByte(RegisterType::L, 0xFF);
-    WriteRegisterWord(RegisterType::PC, 0x7299);
+    WriteRegisterWord(RegisterType::PC, 0x729A);
     WriteRegisterWord(RegisterType::SP, 0xCE1B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7299, 0x49);
@@ -10491,6 +12432,11 @@ void test_49_00BB()
 
 void test_49_00BC()
 {
+    if (skip_test_49_00BC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10528,7 +12474,7 @@ void test_49_00BC()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x0C);
     CheckRegisterByte(RegisterType::L, 0xD4);
-    WriteRegisterWord(RegisterType::PC, 0x6D61);
+    WriteRegisterWord(RegisterType::PC, 0x6D62);
     WriteRegisterWord(RegisterType::SP, 0x3A5D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6D61, 0x49);
@@ -10536,6 +12482,11 @@ void test_49_00BC()
 
 void test_49_00BD()
 {
+    if (skip_test_49_00BD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10573,7 +12524,7 @@ void test_49_00BD()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xE0);
     CheckRegisterByte(RegisterType::L, 0xF3);
-    WriteRegisterWord(RegisterType::PC, 0xE079);
+    WriteRegisterWord(RegisterType::PC, 0xE07A);
     WriteRegisterWord(RegisterType::SP, 0x1C3E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE079, 0x49);
@@ -10581,6 +12532,11 @@ void test_49_00BD()
 
 void test_49_00BE()
 {
+    if (skip_test_49_00BE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10618,7 +12574,7 @@ void test_49_00BE()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0xD4);
-    WriteRegisterWord(RegisterType::PC, 0x549C);
+    WriteRegisterWord(RegisterType::PC, 0x549D);
     WriteRegisterWord(RegisterType::SP, 0x1B0D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x549C, 0x49);
@@ -10626,6 +12582,11 @@ void test_49_00BE()
 
 void test_49_00BF()
 {
+    if (skip_test_49_00BF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10663,7 +12624,7 @@ void test_49_00BF()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0xB6);
-    WriteRegisterWord(RegisterType::PC, 0x5E5F);
+    WriteRegisterWord(RegisterType::PC, 0x5E60);
     WriteRegisterWord(RegisterType::SP, 0xAE81);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5E5F, 0x49);
@@ -10671,6 +12632,11 @@ void test_49_00BF()
 
 void test_49_00C0()
 {
+    if (skip_test_49_00C0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10708,7 +12674,7 @@ void test_49_00C0()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xE9);
     CheckRegisterByte(RegisterType::L, 0x8C);
-    WriteRegisterWord(RegisterType::PC, 0x980C);
+    WriteRegisterWord(RegisterType::PC, 0x980D);
     WriteRegisterWord(RegisterType::SP, 0xBD9C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x980C, 0x49);
@@ -10716,6 +12682,11 @@ void test_49_00C0()
 
 void test_49_00C1()
 {
+    if (skip_test_49_00C1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10753,7 +12724,7 @@ void test_49_00C1()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0x77);
-    WriteRegisterWord(RegisterType::PC, 0x0DF7);
+    WriteRegisterWord(RegisterType::PC, 0x0DF8);
     WriteRegisterWord(RegisterType::SP, 0xF879);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0DF7, 0x49);
@@ -10761,6 +12732,11 @@ void test_49_00C1()
 
 void test_49_00C2()
 {
+    if (skip_test_49_00C2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10798,7 +12774,7 @@ void test_49_00C2()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xC4);
     CheckRegisterByte(RegisterType::L, 0x96);
-    WriteRegisterWord(RegisterType::PC, 0x802C);
+    WriteRegisterWord(RegisterType::PC, 0x802D);
     WriteRegisterWord(RegisterType::SP, 0x0AA4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x802C, 0x49);
@@ -10806,6 +12782,11 @@ void test_49_00C2()
 
 void test_49_00C3()
 {
+    if (skip_test_49_00C3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10843,7 +12824,7 @@ void test_49_00C3()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xA7);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    WriteRegisterWord(RegisterType::PC, 0xFF8F);
+    WriteRegisterWord(RegisterType::PC, 0xFF90);
     WriteRegisterWord(RegisterType::SP, 0xE93E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFF8F, 0x49);
@@ -10851,6 +12832,11 @@ void test_49_00C3()
 
 void test_49_00C4()
 {
+    if (skip_test_49_00C4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10888,7 +12874,7 @@ void test_49_00C4()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x44);
     CheckRegisterByte(RegisterType::L, 0xAE);
-    WriteRegisterWord(RegisterType::PC, 0x6D3A);
+    WriteRegisterWord(RegisterType::PC, 0x6D3B);
     WriteRegisterWord(RegisterType::SP, 0xB127);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6D3A, 0x49);
@@ -10896,6 +12882,11 @@ void test_49_00C4()
 
 void test_49_00C5()
 {
+    if (skip_test_49_00C5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10933,7 +12924,7 @@ void test_49_00C5()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xBF);
     CheckRegisterByte(RegisterType::L, 0x78);
-    WriteRegisterWord(RegisterType::PC, 0xEC82);
+    WriteRegisterWord(RegisterType::PC, 0xEC83);
     WriteRegisterWord(RegisterType::SP, 0xD565);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEC82, 0x49);
@@ -10941,6 +12932,11 @@ void test_49_00C5()
 
 void test_49_00C6()
 {
+    if (skip_test_49_00C6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -10978,7 +12974,7 @@ void test_49_00C6()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x7F);
     CheckRegisterByte(RegisterType::L, 0x2F);
-    WriteRegisterWord(RegisterType::PC, 0x7942);
+    WriteRegisterWord(RegisterType::PC, 0x7943);
     WriteRegisterWord(RegisterType::SP, 0x50FF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7942, 0x49);
@@ -10986,6 +12982,11 @@ void test_49_00C6()
 
 void test_49_00C7()
 {
+    if (skip_test_49_00C7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11023,7 +13024,7 @@ void test_49_00C7()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x6B);
     CheckRegisterByte(RegisterType::L, 0xF4);
-    WriteRegisterWord(RegisterType::PC, 0x3AC0);
+    WriteRegisterWord(RegisterType::PC, 0x3AC1);
     WriteRegisterWord(RegisterType::SP, 0x2C6E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3AC0, 0x49);
@@ -11031,6 +13032,11 @@ void test_49_00C7()
 
 void test_49_00C8()
 {
+    if (skip_test_49_00C8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11068,7 +13074,7 @@ void test_49_00C8()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x25);
     CheckRegisterByte(RegisterType::L, 0x0E);
-    WriteRegisterWord(RegisterType::PC, 0xE37B);
+    WriteRegisterWord(RegisterType::PC, 0xE37C);
     WriteRegisterWord(RegisterType::SP, 0xA079);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE37B, 0x49);
@@ -11076,6 +13082,11 @@ void test_49_00C8()
 
 void test_49_00C9()
 {
+    if (skip_test_49_00C9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11113,7 +13124,7 @@ void test_49_00C9()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xDB);
     CheckRegisterByte(RegisterType::L, 0x1E);
-    WriteRegisterWord(RegisterType::PC, 0xBC12);
+    WriteRegisterWord(RegisterType::PC, 0xBC13);
     WriteRegisterWord(RegisterType::SP, 0x3731);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBC12, 0x49);
@@ -11121,6 +13132,11 @@ void test_49_00C9()
 
 void test_49_00CA()
 {
+    if (skip_test_49_00CA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11158,7 +13174,7 @@ void test_49_00CA()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x90);
     CheckRegisterByte(RegisterType::L, 0x73);
-    WriteRegisterWord(RegisterType::PC, 0x64D9);
+    WriteRegisterWord(RegisterType::PC, 0x64DA);
     WriteRegisterWord(RegisterType::SP, 0xF02F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x64D9, 0x49);
@@ -11166,6 +13182,11 @@ void test_49_00CA()
 
 void test_49_00CB()
 {
+    if (skip_test_49_00CB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11203,7 +13224,7 @@ void test_49_00CB()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x3A);
     CheckRegisterByte(RegisterType::L, 0x95);
-    WriteRegisterWord(RegisterType::PC, 0x30FC);
+    WriteRegisterWord(RegisterType::PC, 0x30FD);
     WriteRegisterWord(RegisterType::SP, 0x2574);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x30FC, 0x49);
@@ -11211,6 +13232,11 @@ void test_49_00CB()
 
 void test_49_00CC()
 {
+    if (skip_test_49_00CC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11248,7 +13274,7 @@ void test_49_00CC()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0x18);
-    WriteRegisterWord(RegisterType::PC, 0x51DE);
+    WriteRegisterWord(RegisterType::PC, 0x51DF);
     WriteRegisterWord(RegisterType::SP, 0xBE37);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x51DE, 0x49);
@@ -11256,6 +13282,11 @@ void test_49_00CC()
 
 void test_49_00CD()
 {
+    if (skip_test_49_00CD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11293,7 +13324,7 @@ void test_49_00CD()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xA8);
     CheckRegisterByte(RegisterType::L, 0xC1);
-    WriteRegisterWord(RegisterType::PC, 0xBE15);
+    WriteRegisterWord(RegisterType::PC, 0xBE16);
     WriteRegisterWord(RegisterType::SP, 0xE5B0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBE15, 0x49);
@@ -11301,6 +13332,11 @@ void test_49_00CD()
 
 void test_49_00CE()
 {
+    if (skip_test_49_00CE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11338,7 +13374,7 @@ void test_49_00CE()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x41);
     CheckRegisterByte(RegisterType::L, 0x6B);
-    WriteRegisterWord(RegisterType::PC, 0xF885);
+    WriteRegisterWord(RegisterType::PC, 0xF886);
     WriteRegisterWord(RegisterType::SP, 0xFD21);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF885, 0x49);
@@ -11346,6 +13382,11 @@ void test_49_00CE()
 
 void test_49_00CF()
 {
+    if (skip_test_49_00CF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11383,7 +13424,7 @@ void test_49_00CF()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0x2E);
-    WriteRegisterWord(RegisterType::PC, 0x1A24);
+    WriteRegisterWord(RegisterType::PC, 0x1A25);
     WriteRegisterWord(RegisterType::SP, 0x134F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1A24, 0x49);
@@ -11391,6 +13432,11 @@ void test_49_00CF()
 
 void test_49_00D0()
 {
+    if (skip_test_49_00D0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11428,7 +13474,7 @@ void test_49_00D0()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x7C);
     CheckRegisterByte(RegisterType::L, 0xDF);
-    WriteRegisterWord(RegisterType::PC, 0x352D);
+    WriteRegisterWord(RegisterType::PC, 0x352E);
     WriteRegisterWord(RegisterType::SP, 0xE11B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x352D, 0x49);
@@ -11436,6 +13482,11 @@ void test_49_00D0()
 
 void test_49_00D1()
 {
+    if (skip_test_49_00D1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11473,7 +13524,7 @@ void test_49_00D1()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xDA);
     CheckRegisterByte(RegisterType::L, 0x0E);
-    WriteRegisterWord(RegisterType::PC, 0x8EAE);
+    WriteRegisterWord(RegisterType::PC, 0x8EAF);
     WriteRegisterWord(RegisterType::SP, 0x9AEF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8EAE, 0x49);
@@ -11481,6 +13532,11 @@ void test_49_00D1()
 
 void test_49_00D2()
 {
+    if (skip_test_49_00D2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11518,7 +13574,7 @@ void test_49_00D2()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x99);
     CheckRegisterByte(RegisterType::L, 0xEB);
-    WriteRegisterWord(RegisterType::PC, 0x4860);
+    WriteRegisterWord(RegisterType::PC, 0x4861);
     WriteRegisterWord(RegisterType::SP, 0x8106);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4860, 0x49);
@@ -11526,6 +13582,11 @@ void test_49_00D2()
 
 void test_49_00D3()
 {
+    if (skip_test_49_00D3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11563,7 +13624,7 @@ void test_49_00D3()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x82);
     CheckRegisterByte(RegisterType::L, 0x95);
-    WriteRegisterWord(RegisterType::PC, 0x687B);
+    WriteRegisterWord(RegisterType::PC, 0x687C);
     WriteRegisterWord(RegisterType::SP, 0x22F6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x687B, 0x49);
@@ -11571,6 +13632,11 @@ void test_49_00D3()
 
 void test_49_00D4()
 {
+    if (skip_test_49_00D4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11608,7 +13674,7 @@ void test_49_00D4()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0x35);
-    WriteRegisterWord(RegisterType::PC, 0x36E1);
+    WriteRegisterWord(RegisterType::PC, 0x36E2);
     WriteRegisterWord(RegisterType::SP, 0x95D5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x36E1, 0x49);
@@ -11616,6 +13682,11 @@ void test_49_00D4()
 
 void test_49_00D5()
 {
+    if (skip_test_49_00D5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11653,7 +13724,7 @@ void test_49_00D5()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0x0F);
-    WriteRegisterWord(RegisterType::PC, 0xF4FF);
+    WriteRegisterWord(RegisterType::PC, 0xF500);
     WriteRegisterWord(RegisterType::SP, 0x2D20);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF4FF, 0x49);
@@ -11661,6 +13732,11 @@ void test_49_00D5()
 
 void test_49_00D6()
 {
+    if (skip_test_49_00D6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11698,7 +13774,7 @@ void test_49_00D6()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x91);
     CheckRegisterByte(RegisterType::L, 0xEC);
-    WriteRegisterWord(RegisterType::PC, 0x595C);
+    WriteRegisterWord(RegisterType::PC, 0x595D);
     WriteRegisterWord(RegisterType::SP, 0x4955);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x595C, 0x49);
@@ -11706,6 +13782,11 @@ void test_49_00D6()
 
 void test_49_00D7()
 {
+    if (skip_test_49_00D7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11743,7 +13824,7 @@ void test_49_00D7()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xC5);
     CheckRegisterByte(RegisterType::L, 0xB1);
-    WriteRegisterWord(RegisterType::PC, 0x3CF7);
+    WriteRegisterWord(RegisterType::PC, 0x3CF8);
     WriteRegisterWord(RegisterType::SP, 0x65F1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3CF7, 0x49);
@@ -11751,6 +13832,11 @@ void test_49_00D7()
 
 void test_49_00D8()
 {
+    if (skip_test_49_00D8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11788,7 +13874,7 @@ void test_49_00D8()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0x15);
-    WriteRegisterWord(RegisterType::PC, 0xE893);
+    WriteRegisterWord(RegisterType::PC, 0xE894);
     WriteRegisterWord(RegisterType::SP, 0xC29B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE893, 0x49);
@@ -11796,6 +13882,11 @@ void test_49_00D8()
 
 void test_49_00D9()
 {
+    if (skip_test_49_00D9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11833,7 +13924,7 @@ void test_49_00D9()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xF5);
     CheckRegisterByte(RegisterType::L, 0x1A);
-    WriteRegisterWord(RegisterType::PC, 0xA2F5);
+    WriteRegisterWord(RegisterType::PC, 0xA2F6);
     WriteRegisterWord(RegisterType::SP, 0xA385);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA2F5, 0x49);
@@ -11841,6 +13932,11 @@ void test_49_00D9()
 
 void test_49_00DA()
 {
+    if (skip_test_49_00DA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11878,7 +13974,7 @@ void test_49_00DA()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xB7);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    WriteRegisterWord(RegisterType::PC, 0x9220);
+    WriteRegisterWord(RegisterType::PC, 0x9221);
     WriteRegisterWord(RegisterType::SP, 0x05E5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9220, 0x49);
@@ -11886,6 +13982,11 @@ void test_49_00DA()
 
 void test_49_00DB()
 {
+    if (skip_test_49_00DB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11923,7 +14024,7 @@ void test_49_00DB()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x8C);
     CheckRegisterByte(RegisterType::L, 0xCC);
-    WriteRegisterWord(RegisterType::PC, 0x52BF);
+    WriteRegisterWord(RegisterType::PC, 0x52C0);
     WriteRegisterWord(RegisterType::SP, 0xF9A1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x52BF, 0x49);
@@ -11931,6 +14032,11 @@ void test_49_00DB()
 
 void test_49_00DC()
 {
+    if (skip_test_49_00DC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -11968,7 +14074,7 @@ void test_49_00DC()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xF8);
     CheckRegisterByte(RegisterType::L, 0xF8);
-    WriteRegisterWord(RegisterType::PC, 0x5DF5);
+    WriteRegisterWord(RegisterType::PC, 0x5DF6);
     WriteRegisterWord(RegisterType::SP, 0x2BDC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5DF5, 0x49);
@@ -11976,6 +14082,11 @@ void test_49_00DC()
 
 void test_49_00DD()
 {
+    if (skip_test_49_00DD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12013,7 +14124,7 @@ void test_49_00DD()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x71);
     CheckRegisterByte(RegisterType::L, 0x32);
-    WriteRegisterWord(RegisterType::PC, 0x8AB1);
+    WriteRegisterWord(RegisterType::PC, 0x8AB2);
     WriteRegisterWord(RegisterType::SP, 0xE867);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8AB1, 0x49);
@@ -12021,6 +14132,11 @@ void test_49_00DD()
 
 void test_49_00DE()
 {
+    if (skip_test_49_00DE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12058,7 +14174,7 @@ void test_49_00DE()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x16);
     CheckRegisterByte(RegisterType::L, 0xFB);
-    WriteRegisterWord(RegisterType::PC, 0x1EDD);
+    WriteRegisterWord(RegisterType::PC, 0x1EDE);
     WriteRegisterWord(RegisterType::SP, 0x2AAE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1EDD, 0x49);
@@ -12066,6 +14182,11 @@ void test_49_00DE()
 
 void test_49_00DF()
 {
+    if (skip_test_49_00DF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12103,7 +14224,7 @@ void test_49_00DF()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xF1);
     CheckRegisterByte(RegisterType::L, 0x5B);
-    WriteRegisterWord(RegisterType::PC, 0x98D3);
+    WriteRegisterWord(RegisterType::PC, 0x98D4);
     WriteRegisterWord(RegisterType::SP, 0xF94C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x98D3, 0x49);
@@ -12111,6 +14232,11 @@ void test_49_00DF()
 
 void test_49_00E0()
 {
+    if (skip_test_49_00E0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12148,7 +14274,7 @@ void test_49_00E0()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x51);
     CheckRegisterByte(RegisterType::L, 0xE7);
-    WriteRegisterWord(RegisterType::PC, 0x8244);
+    WriteRegisterWord(RegisterType::PC, 0x8245);
     WriteRegisterWord(RegisterType::SP, 0x0C60);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8244, 0x49);
@@ -12156,6 +14282,11 @@ void test_49_00E0()
 
 void test_49_00E1()
 {
+    if (skip_test_49_00E1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12193,7 +14324,7 @@ void test_49_00E1()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xA4);
     CheckRegisterByte(RegisterType::L, 0xA3);
-    WriteRegisterWord(RegisterType::PC, 0xE198);
+    WriteRegisterWord(RegisterType::PC, 0xE199);
     WriteRegisterWord(RegisterType::SP, 0x4DE6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE198, 0x49);
@@ -12201,6 +14332,11 @@ void test_49_00E1()
 
 void test_49_00E2()
 {
+    if (skip_test_49_00E2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12238,7 +14374,7 @@ void test_49_00E2()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x2E);
     CheckRegisterByte(RegisterType::L, 0xE2);
-    WriteRegisterWord(RegisterType::PC, 0xDBB4);
+    WriteRegisterWord(RegisterType::PC, 0xDBB5);
     WriteRegisterWord(RegisterType::SP, 0x385F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDBB4, 0x49);
@@ -12246,6 +14382,11 @@ void test_49_00E2()
 
 void test_49_00E3()
 {
+    if (skip_test_49_00E3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12283,7 +14424,7 @@ void test_49_00E3()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x8A);
     CheckRegisterByte(RegisterType::L, 0xA3);
-    WriteRegisterWord(RegisterType::PC, 0xE316);
+    WriteRegisterWord(RegisterType::PC, 0xE317);
     WriteRegisterWord(RegisterType::SP, 0xE7BD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE316, 0x49);
@@ -12291,6 +14432,11 @@ void test_49_00E3()
 
 void test_49_00E4()
 {
+    if (skip_test_49_00E4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12328,7 +14474,7 @@ void test_49_00E4()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x9B);
     CheckRegisterByte(RegisterType::L, 0xF5);
-    WriteRegisterWord(RegisterType::PC, 0xE90D);
+    WriteRegisterWord(RegisterType::PC, 0xE90E);
     WriteRegisterWord(RegisterType::SP, 0xCDBC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE90D, 0x49);
@@ -12336,6 +14482,11 @@ void test_49_00E4()
 
 void test_49_00E5()
 {
+    if (skip_test_49_00E5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12373,7 +14524,7 @@ void test_49_00E5()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0x06);
-    WriteRegisterWord(RegisterType::PC, 0xC531);
+    WriteRegisterWord(RegisterType::PC, 0xC532);
     WriteRegisterWord(RegisterType::SP, 0x3877);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC531, 0x49);
@@ -12381,6 +14532,11 @@ void test_49_00E5()
 
 void test_49_00E6()
 {
+    if (skip_test_49_00E6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12418,7 +14574,7 @@ void test_49_00E6()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x3D);
     CheckRegisterByte(RegisterType::L, 0x9D);
-    WriteRegisterWord(RegisterType::PC, 0xF4BF);
+    WriteRegisterWord(RegisterType::PC, 0xF4C0);
     WriteRegisterWord(RegisterType::SP, 0xDE31);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF4BF, 0x49);
@@ -12426,6 +14582,11 @@ void test_49_00E6()
 
 void test_49_00E7()
 {
+    if (skip_test_49_00E7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12463,7 +14624,7 @@ void test_49_00E7()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x67);
     CheckRegisterByte(RegisterType::L, 0xBB);
-    WriteRegisterWord(RegisterType::PC, 0xFEE9);
+    WriteRegisterWord(RegisterType::PC, 0xFEEA);
     WriteRegisterWord(RegisterType::SP, 0x4F0D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFEE9, 0x49);
@@ -12471,6 +14632,11 @@ void test_49_00E7()
 
 void test_49_00E8()
 {
+    if (skip_test_49_00E8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12508,7 +14674,7 @@ void test_49_00E8()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xA2);
     CheckRegisterByte(RegisterType::L, 0x36);
-    WriteRegisterWord(RegisterType::PC, 0xA698);
+    WriteRegisterWord(RegisterType::PC, 0xA699);
     WriteRegisterWord(RegisterType::SP, 0x9DCA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA698, 0x49);
@@ -12516,6 +14682,11 @@ void test_49_00E8()
 
 void test_49_00E9()
 {
+    if (skip_test_49_00E9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12553,7 +14724,7 @@ void test_49_00E9()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x19);
     CheckRegisterByte(RegisterType::L, 0xB8);
-    WriteRegisterWord(RegisterType::PC, 0x5350);
+    WriteRegisterWord(RegisterType::PC, 0x5351);
     WriteRegisterWord(RegisterType::SP, 0x12AA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5350, 0x49);
@@ -12561,6 +14732,11 @@ void test_49_00E9()
 
 void test_49_00EA()
 {
+    if (skip_test_49_00EA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12598,7 +14774,7 @@ void test_49_00EA()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x81);
     CheckRegisterByte(RegisterType::L, 0xCA);
-    WriteRegisterWord(RegisterType::PC, 0x6B56);
+    WriteRegisterWord(RegisterType::PC, 0x6B57);
     WriteRegisterWord(RegisterType::SP, 0x7365);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6B56, 0x49);
@@ -12606,6 +14782,11 @@ void test_49_00EA()
 
 void test_49_00EB()
 {
+    if (skip_test_49_00EB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12643,7 +14824,7 @@ void test_49_00EB()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xC9);
     CheckRegisterByte(RegisterType::L, 0x83);
-    WriteRegisterWord(RegisterType::PC, 0xFB73);
+    WriteRegisterWord(RegisterType::PC, 0xFB74);
     WriteRegisterWord(RegisterType::SP, 0xA930);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFB73, 0x49);
@@ -12651,6 +14832,11 @@ void test_49_00EB()
 
 void test_49_00EC()
 {
+    if (skip_test_49_00EC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12688,7 +14874,7 @@ void test_49_00EC()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x83);
     CheckRegisterByte(RegisterType::L, 0x92);
-    WriteRegisterWord(RegisterType::PC, 0xE736);
+    WriteRegisterWord(RegisterType::PC, 0xE737);
     WriteRegisterWord(RegisterType::SP, 0xAF0B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE736, 0x49);
@@ -12696,6 +14882,11 @@ void test_49_00EC()
 
 void test_49_00ED()
 {
+    if (skip_test_49_00ED)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12733,7 +14924,7 @@ void test_49_00ED()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0x86);
-    WriteRegisterWord(RegisterType::PC, 0x4C59);
+    WriteRegisterWord(RegisterType::PC, 0x4C5A);
     WriteRegisterWord(RegisterType::SP, 0x9FB8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4C59, 0x49);
@@ -12741,6 +14932,11 @@ void test_49_00ED()
 
 void test_49_00EE()
 {
+    if (skip_test_49_00EE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12778,7 +14974,7 @@ void test_49_00EE()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xBE);
     CheckRegisterByte(RegisterType::L, 0x58);
-    WriteRegisterWord(RegisterType::PC, 0xB538);
+    WriteRegisterWord(RegisterType::PC, 0xB539);
     WriteRegisterWord(RegisterType::SP, 0xDB03);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB538, 0x49);
@@ -12786,6 +14982,11 @@ void test_49_00EE()
 
 void test_49_00EF()
 {
+    if (skip_test_49_00EF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12823,7 +15024,7 @@ void test_49_00EF()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xEB);
     CheckRegisterByte(RegisterType::L, 0x44);
-    WriteRegisterWord(RegisterType::PC, 0x9576);
+    WriteRegisterWord(RegisterType::PC, 0x9577);
     WriteRegisterWord(RegisterType::SP, 0x3CC4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9576, 0x49);
@@ -12831,6 +15032,11 @@ void test_49_00EF()
 
 void test_49_00F0()
 {
+    if (skip_test_49_00F0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12868,7 +15074,7 @@ void test_49_00F0()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x35);
     CheckRegisterByte(RegisterType::L, 0x0A);
-    WriteRegisterWord(RegisterType::PC, 0x7CB3);
+    WriteRegisterWord(RegisterType::PC, 0x7CB4);
     WriteRegisterWord(RegisterType::SP, 0x979C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7CB3, 0x49);
@@ -12876,6 +15082,11 @@ void test_49_00F0()
 
 void test_49_00F1()
 {
+    if (skip_test_49_00F1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12913,7 +15124,7 @@ void test_49_00F1()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x30);
     CheckRegisterByte(RegisterType::L, 0x7B);
-    WriteRegisterWord(RegisterType::PC, 0xA01D);
+    WriteRegisterWord(RegisterType::PC, 0xA01E);
     WriteRegisterWord(RegisterType::SP, 0x1BAB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA01D, 0x49);
@@ -12921,6 +15132,11 @@ void test_49_00F1()
 
 void test_49_00F2()
 {
+    if (skip_test_49_00F2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -12958,7 +15174,7 @@ void test_49_00F2()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xF5);
     CheckRegisterByte(RegisterType::L, 0xA7);
-    WriteRegisterWord(RegisterType::PC, 0xDAF6);
+    WriteRegisterWord(RegisterType::PC, 0xDAF7);
     WriteRegisterWord(RegisterType::SP, 0xED97);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDAF6, 0x49);
@@ -12966,6 +15182,11 @@ void test_49_00F2()
 
 void test_49_00F3()
 {
+    if (skip_test_49_00F3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13003,7 +15224,7 @@ void test_49_00F3()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0x27);
-    WriteRegisterWord(RegisterType::PC, 0xEE71);
+    WriteRegisterWord(RegisterType::PC, 0xEE72);
     WriteRegisterWord(RegisterType::SP, 0x0BDA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEE71, 0x49);
@@ -13011,6 +15232,11 @@ void test_49_00F3()
 
 void test_49_00F4()
 {
+    if (skip_test_49_00F4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13048,7 +15274,7 @@ void test_49_00F4()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xD4);
     CheckRegisterByte(RegisterType::L, 0x41);
-    WriteRegisterWord(RegisterType::PC, 0xD1C1);
+    WriteRegisterWord(RegisterType::PC, 0xD1C2);
     WriteRegisterWord(RegisterType::SP, 0xE998);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD1C1, 0x49);
@@ -13056,6 +15282,11 @@ void test_49_00F4()
 
 void test_49_00F5()
 {
+    if (skip_test_49_00F5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13093,7 +15324,7 @@ void test_49_00F5()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x39);
     CheckRegisterByte(RegisterType::L, 0xAC);
-    WriteRegisterWord(RegisterType::PC, 0xB325);
+    WriteRegisterWord(RegisterType::PC, 0xB326);
     WriteRegisterWord(RegisterType::SP, 0x652F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB325, 0x49);
@@ -13101,6 +15332,11 @@ void test_49_00F5()
 
 void test_49_00F6()
 {
+    if (skip_test_49_00F6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13138,7 +15374,7 @@ void test_49_00F6()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x9B);
     CheckRegisterByte(RegisterType::L, 0x05);
-    WriteRegisterWord(RegisterType::PC, 0x43FE);
+    WriteRegisterWord(RegisterType::PC, 0x43FF);
     WriteRegisterWord(RegisterType::SP, 0x0120);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x43FE, 0x49);
@@ -13146,6 +15382,11 @@ void test_49_00F6()
 
 void test_49_00F7()
 {
+    if (skip_test_49_00F7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13183,7 +15424,7 @@ void test_49_00F7()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x2A);
     CheckRegisterByte(RegisterType::L, 0x2D);
-    WriteRegisterWord(RegisterType::PC, 0x377A);
+    WriteRegisterWord(RegisterType::PC, 0x377B);
     WriteRegisterWord(RegisterType::SP, 0x2259);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x377A, 0x49);
@@ -13191,6 +15432,11 @@ void test_49_00F7()
 
 void test_49_00F8()
 {
+    if (skip_test_49_00F8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13228,7 +15474,7 @@ void test_49_00F8()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x96);
     CheckRegisterByte(RegisterType::L, 0x85);
-    WriteRegisterWord(RegisterType::PC, 0x488E);
+    WriteRegisterWord(RegisterType::PC, 0x488F);
     WriteRegisterWord(RegisterType::SP, 0xF068);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x488E, 0x49);
@@ -13236,6 +15482,11 @@ void test_49_00F8()
 
 void test_49_00F9()
 {
+    if (skip_test_49_00F9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13273,7 +15524,7 @@ void test_49_00F9()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x81);
     CheckRegisterByte(RegisterType::L, 0xC2);
-    WriteRegisterWord(RegisterType::PC, 0xCE43);
+    WriteRegisterWord(RegisterType::PC, 0xCE44);
     WriteRegisterWord(RegisterType::SP, 0x6F3D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCE43, 0x49);
@@ -13281,6 +15532,11 @@ void test_49_00F9()
 
 void test_49_00FA()
 {
+    if (skip_test_49_00FA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13318,7 +15574,7 @@ void test_49_00FA()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x6F);
     CheckRegisterByte(RegisterType::L, 0x65);
-    WriteRegisterWord(RegisterType::PC, 0x8CA5);
+    WriteRegisterWord(RegisterType::PC, 0x8CA6);
     WriteRegisterWord(RegisterType::SP, 0x3314);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8CA5, 0x49);
@@ -13326,6 +15582,11 @@ void test_49_00FA()
 
 void test_49_00FB()
 {
+    if (skip_test_49_00FB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13363,7 +15624,7 @@ void test_49_00FB()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xEA);
     CheckRegisterByte(RegisterType::L, 0x53);
-    WriteRegisterWord(RegisterType::PC, 0x35BD);
+    WriteRegisterWord(RegisterType::PC, 0x35BE);
     WriteRegisterWord(RegisterType::SP, 0x8F7D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x35BD, 0x49);
@@ -13371,6 +15632,11 @@ void test_49_00FB()
 
 void test_49_00FC()
 {
+    if (skip_test_49_00FC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13408,7 +15674,7 @@ void test_49_00FC()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xB5);
     CheckRegisterByte(RegisterType::L, 0x6B);
-    WriteRegisterWord(RegisterType::PC, 0x04ED);
+    WriteRegisterWord(RegisterType::PC, 0x04EE);
     WriteRegisterWord(RegisterType::SP, 0x42F8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x04ED, 0x49);
@@ -13416,6 +15682,11 @@ void test_49_00FC()
 
 void test_49_00FD()
 {
+    if (skip_test_49_00FD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13453,7 +15724,7 @@ void test_49_00FD()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xBF);
     CheckRegisterByte(RegisterType::L, 0x50);
-    WriteRegisterWord(RegisterType::PC, 0x8837);
+    WriteRegisterWord(RegisterType::PC, 0x8838);
     WriteRegisterWord(RegisterType::SP, 0xAADE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8837, 0x49);
@@ -13461,6 +15732,11 @@ void test_49_00FD()
 
 void test_49_00FE()
 {
+    if (skip_test_49_00FE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13498,7 +15774,7 @@ void test_49_00FE()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0x3D);
-    WriteRegisterWord(RegisterType::PC, 0xD0C5);
+    WriteRegisterWord(RegisterType::PC, 0xD0C6);
     WriteRegisterWord(RegisterType::SP, 0x9B0D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD0C5, 0x49);
@@ -13506,6 +15782,11 @@ void test_49_00FE()
 
 void test_49_00FF()
 {
+    if (skip_test_49_00FF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13543,7 +15824,7 @@ void test_49_00FF()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0xF7);
-    WriteRegisterWord(RegisterType::PC, 0x2400);
+    WriteRegisterWord(RegisterType::PC, 0x2401);
     WriteRegisterWord(RegisterType::SP, 0xA4C8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2400, 0x49);
@@ -13551,6 +15832,11 @@ void test_49_00FF()
 
 void test_49_0100()
 {
+    if (skip_test_49_0100)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13588,7 +15874,7 @@ void test_49_0100()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0x3E);
-    WriteRegisterWord(RegisterType::PC, 0xE318);
+    WriteRegisterWord(RegisterType::PC, 0xE319);
     WriteRegisterWord(RegisterType::SP, 0x5A40);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE318, 0x49);
@@ -13596,6 +15882,11 @@ void test_49_0100()
 
 void test_49_0101()
 {
+    if (skip_test_49_0101)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13633,7 +15924,7 @@ void test_49_0101()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x68);
     CheckRegisterByte(RegisterType::L, 0xC5);
-    WriteRegisterWord(RegisterType::PC, 0x80C5);
+    WriteRegisterWord(RegisterType::PC, 0x80C6);
     WriteRegisterWord(RegisterType::SP, 0x31DA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x80C5, 0x49);
@@ -13641,6 +15932,11 @@ void test_49_0101()
 
 void test_49_0102()
 {
+    if (skip_test_49_0102)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13678,7 +15974,7 @@ void test_49_0102()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xAD);
     CheckRegisterByte(RegisterType::L, 0xB2);
-    WriteRegisterWord(RegisterType::PC, 0xB059);
+    WriteRegisterWord(RegisterType::PC, 0xB05A);
     WriteRegisterWord(RegisterType::SP, 0xD53D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB059, 0x49);
@@ -13686,6 +15982,11 @@ void test_49_0102()
 
 void test_49_0103()
 {
+    if (skip_test_49_0103)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13723,7 +16024,7 @@ void test_49_0103()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xDB);
     CheckRegisterByte(RegisterType::L, 0x25);
-    WriteRegisterWord(RegisterType::PC, 0x3F8B);
+    WriteRegisterWord(RegisterType::PC, 0x3F8C);
     WriteRegisterWord(RegisterType::SP, 0xE737);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3F8B, 0x49);
@@ -13731,6 +16032,11 @@ void test_49_0103()
 
 void test_49_0104()
 {
+    if (skip_test_49_0104)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13768,7 +16074,7 @@ void test_49_0104()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x0A);
     CheckRegisterByte(RegisterType::L, 0x1F);
-    WriteRegisterWord(RegisterType::PC, 0x8F6F);
+    WriteRegisterWord(RegisterType::PC, 0x8F70);
     WriteRegisterWord(RegisterType::SP, 0x4CDD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8F6F, 0x49);
@@ -13776,6 +16082,11 @@ void test_49_0104()
 
 void test_49_0105()
 {
+    if (skip_test_49_0105)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13813,7 +16124,7 @@ void test_49_0105()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xC9);
     CheckRegisterByte(RegisterType::L, 0x5D);
-    WriteRegisterWord(RegisterType::PC, 0xE7A4);
+    WriteRegisterWord(RegisterType::PC, 0xE7A5);
     WriteRegisterWord(RegisterType::SP, 0x7A82);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE7A4, 0x49);
@@ -13821,6 +16132,11 @@ void test_49_0105()
 
 void test_49_0106()
 {
+    if (skip_test_49_0106)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13858,7 +16174,7 @@ void test_49_0106()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x1A);
     CheckRegisterByte(RegisterType::L, 0x3B);
-    WriteRegisterWord(RegisterType::PC, 0x2E47);
+    WriteRegisterWord(RegisterType::PC, 0x2E48);
     WriteRegisterWord(RegisterType::SP, 0xFF46);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2E47, 0x49);
@@ -13866,6 +16182,11 @@ void test_49_0106()
 
 void test_49_0107()
 {
+    if (skip_test_49_0107)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13903,7 +16224,7 @@ void test_49_0107()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0x8E);
-    WriteRegisterWord(RegisterType::PC, 0x2D96);
+    WriteRegisterWord(RegisterType::PC, 0x2D97);
     WriteRegisterWord(RegisterType::SP, 0xB9E8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2D96, 0x49);
@@ -13911,6 +16232,11 @@ void test_49_0107()
 
 void test_49_0108()
 {
+    if (skip_test_49_0108)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13948,7 +16274,7 @@ void test_49_0108()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0xFB);
-    WriteRegisterWord(RegisterType::PC, 0x7DC6);
+    WriteRegisterWord(RegisterType::PC, 0x7DC7);
     WriteRegisterWord(RegisterType::SP, 0xFC59);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7DC6, 0x49);
@@ -13956,6 +16282,11 @@ void test_49_0108()
 
 void test_49_0109()
 {
+    if (skip_test_49_0109)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -13993,7 +16324,7 @@ void test_49_0109()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x63);
     CheckRegisterByte(RegisterType::L, 0x6E);
-    WriteRegisterWord(RegisterType::PC, 0x608D);
+    WriteRegisterWord(RegisterType::PC, 0x608E);
     WriteRegisterWord(RegisterType::SP, 0x9B9E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x608D, 0x49);
@@ -14001,6 +16332,11 @@ void test_49_0109()
 
 void test_49_010A()
 {
+    if (skip_test_49_010A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14038,7 +16374,7 @@ void test_49_010A()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0x2D);
-    WriteRegisterWord(RegisterType::PC, 0xBF44);
+    WriteRegisterWord(RegisterType::PC, 0xBF45);
     WriteRegisterWord(RegisterType::SP, 0xD0DF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBF44, 0x49);
@@ -14046,6 +16382,11 @@ void test_49_010A()
 
 void test_49_010B()
 {
+    if (skip_test_49_010B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14083,7 +16424,7 @@ void test_49_010B()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x73);
     CheckRegisterByte(RegisterType::L, 0xBC);
-    WriteRegisterWord(RegisterType::PC, 0x140C);
+    WriteRegisterWord(RegisterType::PC, 0x140D);
     WriteRegisterWord(RegisterType::SP, 0x58F4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x140C, 0x49);
@@ -14091,6 +16432,11 @@ void test_49_010B()
 
 void test_49_010C()
 {
+    if (skip_test_49_010C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14128,7 +16474,7 @@ void test_49_010C()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x53);
     CheckRegisterByte(RegisterType::L, 0x74);
-    WriteRegisterWord(RegisterType::PC, 0x3CDF);
+    WriteRegisterWord(RegisterType::PC, 0x3CE0);
     WriteRegisterWord(RegisterType::SP, 0x848C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3CDF, 0x49);
@@ -14136,6 +16482,11 @@ void test_49_010C()
 
 void test_49_010D()
 {
+    if (skip_test_49_010D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14173,7 +16524,7 @@ void test_49_010D()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x4F);
     CheckRegisterByte(RegisterType::L, 0x4E);
-    WriteRegisterWord(RegisterType::PC, 0x167B);
+    WriteRegisterWord(RegisterType::PC, 0x167C);
     WriteRegisterWord(RegisterType::SP, 0xCA04);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x167B, 0x49);
@@ -14181,6 +16532,11 @@ void test_49_010D()
 
 void test_49_010E()
 {
+    if (skip_test_49_010E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14218,7 +16574,7 @@ void test_49_010E()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0x13);
-    WriteRegisterWord(RegisterType::PC, 0x0663);
+    WriteRegisterWord(RegisterType::PC, 0x0664);
     WriteRegisterWord(RegisterType::SP, 0xE2B6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0663, 0x49);
@@ -14226,6 +16582,11 @@ void test_49_010E()
 
 void test_49_010F()
 {
+    if (skip_test_49_010F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14263,7 +16624,7 @@ void test_49_010F()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0x49);
-    WriteRegisterWord(RegisterType::PC, 0xF41D);
+    WriteRegisterWord(RegisterType::PC, 0xF41E);
     WriteRegisterWord(RegisterType::SP, 0xF3F5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF41D, 0x49);
@@ -14271,6 +16632,11 @@ void test_49_010F()
 
 void test_49_0110()
 {
+    if (skip_test_49_0110)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14308,7 +16674,7 @@ void test_49_0110()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xDA);
     CheckRegisterByte(RegisterType::L, 0x0B);
-    WriteRegisterWord(RegisterType::PC, 0xF1D0);
+    WriteRegisterWord(RegisterType::PC, 0xF1D1);
     WriteRegisterWord(RegisterType::SP, 0x2320);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF1D0, 0x49);
@@ -14316,6 +16682,11 @@ void test_49_0110()
 
 void test_49_0111()
 {
+    if (skip_test_49_0111)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14353,7 +16724,7 @@ void test_49_0111()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xA3);
     CheckRegisterByte(RegisterType::L, 0xBA);
-    WriteRegisterWord(RegisterType::PC, 0xAE8A);
+    WriteRegisterWord(RegisterType::PC, 0xAE8B);
     WriteRegisterWord(RegisterType::SP, 0x6A7E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAE8A, 0x49);
@@ -14361,6 +16732,11 @@ void test_49_0111()
 
 void test_49_0112()
 {
+    if (skip_test_49_0112)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14398,7 +16774,7 @@ void test_49_0112()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x02);
     CheckRegisterByte(RegisterType::L, 0x1B);
-    WriteRegisterWord(RegisterType::PC, 0x2870);
+    WriteRegisterWord(RegisterType::PC, 0x2871);
     WriteRegisterWord(RegisterType::SP, 0xC60E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2870, 0x49);
@@ -14406,6 +16782,11 @@ void test_49_0112()
 
 void test_49_0113()
 {
+    if (skip_test_49_0113)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14443,7 +16824,7 @@ void test_49_0113()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x1C);
     CheckRegisterByte(RegisterType::L, 0x70);
-    WriteRegisterWord(RegisterType::PC, 0x8F98);
+    WriteRegisterWord(RegisterType::PC, 0x8F99);
     WriteRegisterWord(RegisterType::SP, 0x71F0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8F98, 0x49);
@@ -14451,6 +16832,11 @@ void test_49_0113()
 
 void test_49_0114()
 {
+    if (skip_test_49_0114)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14488,7 +16874,7 @@ void test_49_0114()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x00);
     CheckRegisterByte(RegisterType::L, 0xEF);
-    WriteRegisterWord(RegisterType::PC, 0x9ACB);
+    WriteRegisterWord(RegisterType::PC, 0x9ACC);
     WriteRegisterWord(RegisterType::SP, 0x2AB0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9ACB, 0x49);
@@ -14496,6 +16882,11 @@ void test_49_0114()
 
 void test_49_0115()
 {
+    if (skip_test_49_0115)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14533,7 +16924,7 @@ void test_49_0115()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x85);
     CheckRegisterByte(RegisterType::L, 0x71);
-    WriteRegisterWord(RegisterType::PC, 0x1F5C);
+    WriteRegisterWord(RegisterType::PC, 0x1F5D);
     WriteRegisterWord(RegisterType::SP, 0xDB08);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1F5C, 0x49);
@@ -14541,6 +16932,11 @@ void test_49_0115()
 
 void test_49_0116()
 {
+    if (skip_test_49_0116)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14578,7 +16974,7 @@ void test_49_0116()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x00);
     CheckRegisterByte(RegisterType::L, 0x60);
-    WriteRegisterWord(RegisterType::PC, 0xC364);
+    WriteRegisterWord(RegisterType::PC, 0xC365);
     WriteRegisterWord(RegisterType::SP, 0x1586);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC364, 0x49);
@@ -14586,6 +16982,11 @@ void test_49_0116()
 
 void test_49_0117()
 {
+    if (skip_test_49_0117)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14623,7 +17024,7 @@ void test_49_0117()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x01);
     CheckRegisterByte(RegisterType::L, 0xDD);
-    WriteRegisterWord(RegisterType::PC, 0xE5AF);
+    WriteRegisterWord(RegisterType::PC, 0xE5B0);
     WriteRegisterWord(RegisterType::SP, 0x816A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE5AF, 0x49);
@@ -14631,6 +17032,11 @@ void test_49_0117()
 
 void test_49_0118()
 {
+    if (skip_test_49_0118)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14668,7 +17074,7 @@ void test_49_0118()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0xFD);
-    WriteRegisterWord(RegisterType::PC, 0xB318);
+    WriteRegisterWord(RegisterType::PC, 0xB319);
     WriteRegisterWord(RegisterType::SP, 0xA6A4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB318, 0x49);
@@ -14676,6 +17082,11 @@ void test_49_0118()
 
 void test_49_0119()
 {
+    if (skip_test_49_0119)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14713,7 +17124,7 @@ void test_49_0119()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x07);
     CheckRegisterByte(RegisterType::L, 0xFB);
-    WriteRegisterWord(RegisterType::PC, 0x1138);
+    WriteRegisterWord(RegisterType::PC, 0x1139);
     WriteRegisterWord(RegisterType::SP, 0x8300);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1138, 0x49);
@@ -14721,6 +17132,11 @@ void test_49_0119()
 
 void test_49_011A()
 {
+    if (skip_test_49_011A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14758,7 +17174,7 @@ void test_49_011A()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xD6);
     CheckRegisterByte(RegisterType::L, 0xAF);
-    WriteRegisterWord(RegisterType::PC, 0xA4C5);
+    WriteRegisterWord(RegisterType::PC, 0xA4C6);
     WriteRegisterWord(RegisterType::SP, 0x4454);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA4C5, 0x49);
@@ -14766,6 +17182,11 @@ void test_49_011A()
 
 void test_49_011B()
 {
+    if (skip_test_49_011B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14803,7 +17224,7 @@ void test_49_011B()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0x5A);
-    WriteRegisterWord(RegisterType::PC, 0x5B87);
+    WriteRegisterWord(RegisterType::PC, 0x5B88);
     WriteRegisterWord(RegisterType::SP, 0x361A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5B87, 0x49);
@@ -14811,6 +17232,11 @@ void test_49_011B()
 
 void test_49_011C()
 {
+    if (skip_test_49_011C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14848,7 +17274,7 @@ void test_49_011C()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x8A);
     CheckRegisterByte(RegisterType::L, 0x76);
-    WriteRegisterWord(RegisterType::PC, 0xC10A);
+    WriteRegisterWord(RegisterType::PC, 0xC10B);
     WriteRegisterWord(RegisterType::SP, 0x19B1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC10A, 0x49);
@@ -14856,6 +17282,11 @@ void test_49_011C()
 
 void test_49_011D()
 {
+    if (skip_test_49_011D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14893,7 +17324,7 @@ void test_49_011D()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0x0E);
-    WriteRegisterWord(RegisterType::PC, 0xD9C1);
+    WriteRegisterWord(RegisterType::PC, 0xD9C2);
     WriteRegisterWord(RegisterType::SP, 0x6D83);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD9C1, 0x49);
@@ -14901,6 +17332,11 @@ void test_49_011D()
 
 void test_49_011E()
 {
+    if (skip_test_49_011E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14938,7 +17374,7 @@ void test_49_011E()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x9C);
     CheckRegisterByte(RegisterType::L, 0x96);
-    WriteRegisterWord(RegisterType::PC, 0x80C0);
+    WriteRegisterWord(RegisterType::PC, 0x80C1);
     WriteRegisterWord(RegisterType::SP, 0xDED2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x80C0, 0x49);
@@ -14946,6 +17382,11 @@ void test_49_011E()
 
 void test_49_011F()
 {
+    if (skip_test_49_011F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -14983,7 +17424,7 @@ void test_49_011F()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0x2F);
-    WriteRegisterWord(RegisterType::PC, 0x2B37);
+    WriteRegisterWord(RegisterType::PC, 0x2B38);
     WriteRegisterWord(RegisterType::SP, 0x8934);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2B37, 0x49);
@@ -14991,6 +17432,11 @@ void test_49_011F()
 
 void test_49_0120()
 {
+    if (skip_test_49_0120)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15028,7 +17474,7 @@ void test_49_0120()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x97);
     CheckRegisterByte(RegisterType::L, 0xA8);
-    WriteRegisterWord(RegisterType::PC, 0x9218);
+    WriteRegisterWord(RegisterType::PC, 0x9219);
     WriteRegisterWord(RegisterType::SP, 0x76D4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9218, 0x49);
@@ -15036,6 +17482,11 @@ void test_49_0120()
 
 void test_49_0121()
 {
+    if (skip_test_49_0121)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15073,7 +17524,7 @@ void test_49_0121()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x94);
     CheckRegisterByte(RegisterType::L, 0x8D);
-    WriteRegisterWord(RegisterType::PC, 0x74E5);
+    WriteRegisterWord(RegisterType::PC, 0x74E6);
     WriteRegisterWord(RegisterType::SP, 0x5E14);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x74E5, 0x49);
@@ -15081,6 +17532,11 @@ void test_49_0121()
 
 void test_49_0122()
 {
+    if (skip_test_49_0122)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15118,7 +17574,7 @@ void test_49_0122()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x07);
     CheckRegisterByte(RegisterType::L, 0x63);
-    WriteRegisterWord(RegisterType::PC, 0xDA2B);
+    WriteRegisterWord(RegisterType::PC, 0xDA2C);
     WriteRegisterWord(RegisterType::SP, 0x41A0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDA2B, 0x49);
@@ -15126,6 +17582,11 @@ void test_49_0122()
 
 void test_49_0123()
 {
+    if (skip_test_49_0123)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15163,7 +17624,7 @@ void test_49_0123()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x86);
     CheckRegisterByte(RegisterType::L, 0xA7);
-    WriteRegisterWord(RegisterType::PC, 0x9234);
+    WriteRegisterWord(RegisterType::PC, 0x9235);
     WriteRegisterWord(RegisterType::SP, 0xF4AA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9234, 0x49);
@@ -15171,6 +17632,11 @@ void test_49_0123()
 
 void test_49_0124()
 {
+    if (skip_test_49_0124)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15208,7 +17674,7 @@ void test_49_0124()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xC1);
     CheckRegisterByte(RegisterType::L, 0xFE);
-    WriteRegisterWord(RegisterType::PC, 0xE9F3);
+    WriteRegisterWord(RegisterType::PC, 0xE9F4);
     WriteRegisterWord(RegisterType::SP, 0x8B8C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE9F3, 0x49);
@@ -15216,6 +17682,11 @@ void test_49_0124()
 
 void test_49_0125()
 {
+    if (skip_test_49_0125)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15253,7 +17724,7 @@ void test_49_0125()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x7B);
     CheckRegisterByte(RegisterType::L, 0xBE);
-    WriteRegisterWord(RegisterType::PC, 0x81FA);
+    WriteRegisterWord(RegisterType::PC, 0x81FB);
     WriteRegisterWord(RegisterType::SP, 0x3393);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x81FA, 0x49);
@@ -15261,6 +17732,11 @@ void test_49_0125()
 
 void test_49_0126()
 {
+    if (skip_test_49_0126)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15298,7 +17774,7 @@ void test_49_0126()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xA3);
     CheckRegisterByte(RegisterType::L, 0x2B);
-    WriteRegisterWord(RegisterType::PC, 0xBF29);
+    WriteRegisterWord(RegisterType::PC, 0xBF2A);
     WriteRegisterWord(RegisterType::SP, 0x8A5D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBF29, 0x49);
@@ -15306,6 +17782,11 @@ void test_49_0126()
 
 void test_49_0127()
 {
+    if (skip_test_49_0127)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15343,7 +17824,7 @@ void test_49_0127()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x0B);
     CheckRegisterByte(RegisterType::L, 0x74);
-    WriteRegisterWord(RegisterType::PC, 0x0557);
+    WriteRegisterWord(RegisterType::PC, 0x0558);
     WriteRegisterWord(RegisterType::SP, 0xF88B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0557, 0x49);
@@ -15351,6 +17832,11 @@ void test_49_0127()
 
 void test_49_0128()
 {
+    if (skip_test_49_0128)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15388,7 +17874,7 @@ void test_49_0128()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x7D);
     CheckRegisterByte(RegisterType::L, 0xE1);
-    WriteRegisterWord(RegisterType::PC, 0x8092);
+    WriteRegisterWord(RegisterType::PC, 0x8093);
     WriteRegisterWord(RegisterType::SP, 0x5BA5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8092, 0x49);
@@ -15396,6 +17882,11 @@ void test_49_0128()
 
 void test_49_0129()
 {
+    if (skip_test_49_0129)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15433,7 +17924,7 @@ void test_49_0129()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x56);
     CheckRegisterByte(RegisterType::L, 0xF0);
-    WriteRegisterWord(RegisterType::PC, 0xAB64);
+    WriteRegisterWord(RegisterType::PC, 0xAB65);
     WriteRegisterWord(RegisterType::SP, 0x40CF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAB64, 0x49);
@@ -15441,6 +17932,11 @@ void test_49_0129()
 
 void test_49_012A()
 {
+    if (skip_test_49_012A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15478,7 +17974,7 @@ void test_49_012A()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x26);
     CheckRegisterByte(RegisterType::L, 0xA2);
-    WriteRegisterWord(RegisterType::PC, 0xD4CB);
+    WriteRegisterWord(RegisterType::PC, 0xD4CC);
     WriteRegisterWord(RegisterType::SP, 0x9CCE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD4CB, 0x49);
@@ -15486,6 +17982,11 @@ void test_49_012A()
 
 void test_49_012B()
 {
+    if (skip_test_49_012B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15523,7 +18024,7 @@ void test_49_012B()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x38);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    WriteRegisterWord(RegisterType::PC, 0xE855);
+    WriteRegisterWord(RegisterType::PC, 0xE856);
     WriteRegisterWord(RegisterType::SP, 0xC726);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE855, 0x49);
@@ -15531,6 +18032,11 @@ void test_49_012B()
 
 void test_49_012C()
 {
+    if (skip_test_49_012C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15568,7 +18074,7 @@ void test_49_012C()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x32);
     CheckRegisterByte(RegisterType::L, 0x70);
-    WriteRegisterWord(RegisterType::PC, 0x0F55);
+    WriteRegisterWord(RegisterType::PC, 0x0F56);
     WriteRegisterWord(RegisterType::SP, 0x704A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0F55, 0x49);
@@ -15576,6 +18082,11 @@ void test_49_012C()
 
 void test_49_012D()
 {
+    if (skip_test_49_012D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15613,7 +18124,7 @@ void test_49_012D()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x05);
     CheckRegisterByte(RegisterType::L, 0x7F);
-    WriteRegisterWord(RegisterType::PC, 0x5D72);
+    WriteRegisterWord(RegisterType::PC, 0x5D73);
     WriteRegisterWord(RegisterType::SP, 0x80C8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5D72, 0x49);
@@ -15621,6 +18132,11 @@ void test_49_012D()
 
 void test_49_012E()
 {
+    if (skip_test_49_012E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15658,7 +18174,7 @@ void test_49_012E()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xC7);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    WriteRegisterWord(RegisterType::PC, 0xC8AA);
+    WriteRegisterWord(RegisterType::PC, 0xC8AB);
     WriteRegisterWord(RegisterType::SP, 0x4A5C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC8AA, 0x49);
@@ -15666,6 +18182,11 @@ void test_49_012E()
 
 void test_49_012F()
 {
+    if (skip_test_49_012F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15703,7 +18224,7 @@ void test_49_012F()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xFD);
     CheckRegisterByte(RegisterType::L, 0xD4);
-    WriteRegisterWord(RegisterType::PC, 0x740C);
+    WriteRegisterWord(RegisterType::PC, 0x740D);
     WriteRegisterWord(RegisterType::SP, 0xE9D7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x740C, 0x49);
@@ -15711,6 +18232,11 @@ void test_49_012F()
 
 void test_49_0130()
 {
+    if (skip_test_49_0130)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15748,7 +18274,7 @@ void test_49_0130()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x82);
     CheckRegisterByte(RegisterType::L, 0x85);
-    WriteRegisterWord(RegisterType::PC, 0x3D34);
+    WriteRegisterWord(RegisterType::PC, 0x3D35);
     WriteRegisterWord(RegisterType::SP, 0x30A2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3D34, 0x49);
@@ -15756,6 +18282,11 @@ void test_49_0130()
 
 void test_49_0131()
 {
+    if (skip_test_49_0131)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15793,7 +18324,7 @@ void test_49_0131()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x6A);
     CheckRegisterByte(RegisterType::L, 0x48);
-    WriteRegisterWord(RegisterType::PC, 0xCDE6);
+    WriteRegisterWord(RegisterType::PC, 0xCDE7);
     WriteRegisterWord(RegisterType::SP, 0xEB47);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCDE6, 0x49);
@@ -15801,6 +18332,11 @@ void test_49_0131()
 
 void test_49_0132()
 {
+    if (skip_test_49_0132)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15838,7 +18374,7 @@ void test_49_0132()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x68);
     CheckRegisterByte(RegisterType::L, 0xC9);
-    WriteRegisterWord(RegisterType::PC, 0xE22E);
+    WriteRegisterWord(RegisterType::PC, 0xE22F);
     WriteRegisterWord(RegisterType::SP, 0x9CD1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE22E, 0x49);
@@ -15846,6 +18382,11 @@ void test_49_0132()
 
 void test_49_0133()
 {
+    if (skip_test_49_0133)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15883,7 +18424,7 @@ void test_49_0133()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x97);
     CheckRegisterByte(RegisterType::L, 0x78);
-    WriteRegisterWord(RegisterType::PC, 0x4CD1);
+    WriteRegisterWord(RegisterType::PC, 0x4CD2);
     WriteRegisterWord(RegisterType::SP, 0xC153);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4CD1, 0x49);
@@ -15891,6 +18432,11 @@ void test_49_0133()
 
 void test_49_0134()
 {
+    if (skip_test_49_0134)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15928,7 +18474,7 @@ void test_49_0134()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x42);
     CheckRegisterByte(RegisterType::L, 0xDB);
-    WriteRegisterWord(RegisterType::PC, 0xA7B9);
+    WriteRegisterWord(RegisterType::PC, 0xA7BA);
     WriteRegisterWord(RegisterType::SP, 0x6B49);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA7B9, 0x49);
@@ -15936,6 +18482,11 @@ void test_49_0134()
 
 void test_49_0135()
 {
+    if (skip_test_49_0135)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -15973,7 +18524,7 @@ void test_49_0135()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x2C);
     CheckRegisterByte(RegisterType::L, 0x84);
-    WriteRegisterWord(RegisterType::PC, 0x7C97);
+    WriteRegisterWord(RegisterType::PC, 0x7C98);
     WriteRegisterWord(RegisterType::SP, 0x4CE9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7C97, 0x49);
@@ -15981,6 +18532,11 @@ void test_49_0135()
 
 void test_49_0136()
 {
+    if (skip_test_49_0136)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16018,7 +18574,7 @@ void test_49_0136()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0x9E);
-    WriteRegisterWord(RegisterType::PC, 0xAACE);
+    WriteRegisterWord(RegisterType::PC, 0xAACF);
     WriteRegisterWord(RegisterType::SP, 0x4584);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAACE, 0x49);
@@ -16026,6 +18582,11 @@ void test_49_0136()
 
 void test_49_0137()
 {
+    if (skip_test_49_0137)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16063,7 +18624,7 @@ void test_49_0137()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x50);
     CheckRegisterByte(RegisterType::L, 0x5A);
-    WriteRegisterWord(RegisterType::PC, 0x099F);
+    WriteRegisterWord(RegisterType::PC, 0x09A0);
     WriteRegisterWord(RegisterType::SP, 0x4747);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x099F, 0x49);
@@ -16071,6 +18632,11 @@ void test_49_0137()
 
 void test_49_0138()
 {
+    if (skip_test_49_0138)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16108,7 +18674,7 @@ void test_49_0138()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xF4);
     CheckRegisterByte(RegisterType::L, 0xB2);
-    WriteRegisterWord(RegisterType::PC, 0x65D5);
+    WriteRegisterWord(RegisterType::PC, 0x65D6);
     WriteRegisterWord(RegisterType::SP, 0x7CDD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x65D5, 0x49);
@@ -16116,6 +18682,11 @@ void test_49_0138()
 
 void test_49_0139()
 {
+    if (skip_test_49_0139)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16153,7 +18724,7 @@ void test_49_0139()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0xAA);
-    WriteRegisterWord(RegisterType::PC, 0xF9E8);
+    WriteRegisterWord(RegisterType::PC, 0xF9E9);
     WriteRegisterWord(RegisterType::SP, 0xA0A2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF9E8, 0x49);
@@ -16161,6 +18732,11 @@ void test_49_0139()
 
 void test_49_013A()
 {
+    if (skip_test_49_013A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16198,7 +18774,7 @@ void test_49_013A()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x25);
     CheckRegisterByte(RegisterType::L, 0x55);
-    WriteRegisterWord(RegisterType::PC, 0x6230);
+    WriteRegisterWord(RegisterType::PC, 0x6231);
     WriteRegisterWord(RegisterType::SP, 0xF55D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6230, 0x49);
@@ -16206,6 +18782,11 @@ void test_49_013A()
 
 void test_49_013B()
 {
+    if (skip_test_49_013B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16243,7 +18824,7 @@ void test_49_013B()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xAC);
     CheckRegisterByte(RegisterType::L, 0x12);
-    WriteRegisterWord(RegisterType::PC, 0x47D5);
+    WriteRegisterWord(RegisterType::PC, 0x47D6);
     WriteRegisterWord(RegisterType::SP, 0x7394);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x47D5, 0x49);
@@ -16251,6 +18832,11 @@ void test_49_013B()
 
 void test_49_013C()
 {
+    if (skip_test_49_013C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16288,7 +18874,7 @@ void test_49_013C()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x70);
     CheckRegisterByte(RegisterType::L, 0x3F);
-    WriteRegisterWord(RegisterType::PC, 0xAB05);
+    WriteRegisterWord(RegisterType::PC, 0xAB06);
     WriteRegisterWord(RegisterType::SP, 0xDACD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAB05, 0x49);
@@ -16296,6 +18882,11 @@ void test_49_013C()
 
 void test_49_013D()
 {
+    if (skip_test_49_013D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16333,7 +18924,7 @@ void test_49_013D()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xF0);
     CheckRegisterByte(RegisterType::L, 0x75);
-    WriteRegisterWord(RegisterType::PC, 0xF2D6);
+    WriteRegisterWord(RegisterType::PC, 0xF2D7);
     WriteRegisterWord(RegisterType::SP, 0x531A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF2D6, 0x49);
@@ -16341,6 +18932,11 @@ void test_49_013D()
 
 void test_49_013E()
 {
+    if (skip_test_49_013E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16378,7 +18974,7 @@ void test_49_013E()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0x76);
-    WriteRegisterWord(RegisterType::PC, 0xD574);
+    WriteRegisterWord(RegisterType::PC, 0xD575);
     WriteRegisterWord(RegisterType::SP, 0x58B7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD574, 0x49);
@@ -16386,6 +18982,11 @@ void test_49_013E()
 
 void test_49_013F()
 {
+    if (skip_test_49_013F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16423,7 +19024,7 @@ void test_49_013F()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x46);
     CheckRegisterByte(RegisterType::L, 0xAE);
-    WriteRegisterWord(RegisterType::PC, 0x99C6);
+    WriteRegisterWord(RegisterType::PC, 0x99C7);
     WriteRegisterWord(RegisterType::SP, 0xE1CD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x99C6, 0x49);
@@ -16431,6 +19032,11 @@ void test_49_013F()
 
 void test_49_0140()
 {
+    if (skip_test_49_0140)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16468,7 +19074,7 @@ void test_49_0140()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x3C);
     CheckRegisterByte(RegisterType::L, 0x91);
-    WriteRegisterWord(RegisterType::PC, 0xF00C);
+    WriteRegisterWord(RegisterType::PC, 0xF00D);
     WriteRegisterWord(RegisterType::SP, 0x6412);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF00C, 0x49);
@@ -16476,6 +19082,11 @@ void test_49_0140()
 
 void test_49_0141()
 {
+    if (skip_test_49_0141)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16513,7 +19124,7 @@ void test_49_0141()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0x81);
-    WriteRegisterWord(RegisterType::PC, 0x971F);
+    WriteRegisterWord(RegisterType::PC, 0x9720);
     WriteRegisterWord(RegisterType::SP, 0x2F1F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x971F, 0x49);
@@ -16521,6 +19132,11 @@ void test_49_0141()
 
 void test_49_0142()
 {
+    if (skip_test_49_0142)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16558,7 +19174,7 @@ void test_49_0142()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x18);
     CheckRegisterByte(RegisterType::L, 0x69);
-    WriteRegisterWord(RegisterType::PC, 0x4CCE);
+    WriteRegisterWord(RegisterType::PC, 0x4CCF);
     WriteRegisterWord(RegisterType::SP, 0xB1D4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4CCE, 0x49);
@@ -16566,6 +19182,11 @@ void test_49_0142()
 
 void test_49_0143()
 {
+    if (skip_test_49_0143)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16603,7 +19224,7 @@ void test_49_0143()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x71);
     CheckRegisterByte(RegisterType::L, 0x4D);
-    WriteRegisterWord(RegisterType::PC, 0xB2E7);
+    WriteRegisterWord(RegisterType::PC, 0xB2E8);
     WriteRegisterWord(RegisterType::SP, 0x4F09);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB2E7, 0x49);
@@ -16611,6 +19232,11 @@ void test_49_0143()
 
 void test_49_0144()
 {
+    if (skip_test_49_0144)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16648,7 +19274,7 @@ void test_49_0144()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x56);
     CheckRegisterByte(RegisterType::L, 0x78);
-    WriteRegisterWord(RegisterType::PC, 0xD51C);
+    WriteRegisterWord(RegisterType::PC, 0xD51D);
     WriteRegisterWord(RegisterType::SP, 0xBD10);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD51C, 0x49);
@@ -16656,6 +19282,11 @@ void test_49_0144()
 
 void test_49_0145()
 {
+    if (skip_test_49_0145)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16693,7 +19324,7 @@ void test_49_0145()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x7E);
     CheckRegisterByte(RegisterType::L, 0xEA);
-    WriteRegisterWord(RegisterType::PC, 0xEE4D);
+    WriteRegisterWord(RegisterType::PC, 0xEE4E);
     WriteRegisterWord(RegisterType::SP, 0x7381);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEE4D, 0x49);
@@ -16701,6 +19332,11 @@ void test_49_0145()
 
 void test_49_0146()
 {
+    if (skip_test_49_0146)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16738,7 +19374,7 @@ void test_49_0146()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x25);
     CheckRegisterByte(RegisterType::L, 0x28);
-    WriteRegisterWord(RegisterType::PC, 0x700A);
+    WriteRegisterWord(RegisterType::PC, 0x700B);
     WriteRegisterWord(RegisterType::SP, 0x6450);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x700A, 0x49);
@@ -16746,6 +19382,11 @@ void test_49_0146()
 
 void test_49_0147()
 {
+    if (skip_test_49_0147)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16783,7 +19424,7 @@ void test_49_0147()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x3D);
     CheckRegisterByte(RegisterType::L, 0xC1);
-    WriteRegisterWord(RegisterType::PC, 0x235D);
+    WriteRegisterWord(RegisterType::PC, 0x235E);
     WriteRegisterWord(RegisterType::SP, 0x063D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x235D, 0x49);
@@ -16791,6 +19432,11 @@ void test_49_0147()
 
 void test_49_0148()
 {
+    if (skip_test_49_0148)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16828,7 +19474,7 @@ void test_49_0148()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xF0);
     CheckRegisterByte(RegisterType::L, 0x5B);
-    WriteRegisterWord(RegisterType::PC, 0xACB0);
+    WriteRegisterWord(RegisterType::PC, 0xACB1);
     WriteRegisterWord(RegisterType::SP, 0xA57B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xACB0, 0x49);
@@ -16836,6 +19482,11 @@ void test_49_0148()
 
 void test_49_0149()
 {
+    if (skip_test_49_0149)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16873,7 +19524,7 @@ void test_49_0149()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xB2);
     CheckRegisterByte(RegisterType::L, 0x13);
-    WriteRegisterWord(RegisterType::PC, 0x07FF);
+    WriteRegisterWord(RegisterType::PC, 0x0800);
     WriteRegisterWord(RegisterType::SP, 0xCB04);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x07FF, 0x49);
@@ -16881,6 +19532,11 @@ void test_49_0149()
 
 void test_49_014A()
 {
+    if (skip_test_49_014A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16918,7 +19574,7 @@ void test_49_014A()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0x04);
-    WriteRegisterWord(RegisterType::PC, 0x3763);
+    WriteRegisterWord(RegisterType::PC, 0x3764);
     WriteRegisterWord(RegisterType::SP, 0x12F2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3763, 0x49);
@@ -16926,6 +19582,11 @@ void test_49_014A()
 
 void test_49_014B()
 {
+    if (skip_test_49_014B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -16963,7 +19624,7 @@ void test_49_014B()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xE5);
     CheckRegisterByte(RegisterType::L, 0x9A);
-    WriteRegisterWord(RegisterType::PC, 0x9E4B);
+    WriteRegisterWord(RegisterType::PC, 0x9E4C);
     WriteRegisterWord(RegisterType::SP, 0x4F59);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9E4B, 0x49);
@@ -16971,6 +19632,11 @@ void test_49_014B()
 
 void test_49_014C()
 {
+    if (skip_test_49_014C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17008,7 +19674,7 @@ void test_49_014C()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0x76);
-    WriteRegisterWord(RegisterType::PC, 0x56DB);
+    WriteRegisterWord(RegisterType::PC, 0x56DC);
     WriteRegisterWord(RegisterType::SP, 0x747B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x56DB, 0x49);
@@ -17016,6 +19682,11 @@ void test_49_014C()
 
 void test_49_014D()
 {
+    if (skip_test_49_014D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17053,7 +19724,7 @@ void test_49_014D()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x1A);
     CheckRegisterByte(RegisterType::L, 0xB5);
-    WriteRegisterWord(RegisterType::PC, 0x5C52);
+    WriteRegisterWord(RegisterType::PC, 0x5C53);
     WriteRegisterWord(RegisterType::SP, 0x5DAC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5C52, 0x49);
@@ -17061,6 +19732,11 @@ void test_49_014D()
 
 void test_49_014E()
 {
+    if (skip_test_49_014E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17098,7 +19774,7 @@ void test_49_014E()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xAF);
     CheckRegisterByte(RegisterType::L, 0x99);
-    WriteRegisterWord(RegisterType::PC, 0xA39C);
+    WriteRegisterWord(RegisterType::PC, 0xA39D);
     WriteRegisterWord(RegisterType::SP, 0x4724);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA39C, 0x49);
@@ -17106,6 +19782,11 @@ void test_49_014E()
 
 void test_49_014F()
 {
+    if (skip_test_49_014F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17143,7 +19824,7 @@ void test_49_014F()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x16);
     CheckRegisterByte(RegisterType::L, 0x25);
-    WriteRegisterWord(RegisterType::PC, 0x0A08);
+    WriteRegisterWord(RegisterType::PC, 0x0A09);
     WriteRegisterWord(RegisterType::SP, 0x3F13);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0A08, 0x49);
@@ -17151,6 +19832,11 @@ void test_49_014F()
 
 void test_49_0150()
 {
+    if (skip_test_49_0150)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17188,7 +19874,7 @@ void test_49_0150()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x44);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    WriteRegisterWord(RegisterType::PC, 0xF813);
+    WriteRegisterWord(RegisterType::PC, 0xF814);
     WriteRegisterWord(RegisterType::SP, 0x9550);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF813, 0x49);
@@ -17196,6 +19882,11 @@ void test_49_0150()
 
 void test_49_0151()
 {
+    if (skip_test_49_0151)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17233,7 +19924,7 @@ void test_49_0151()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x67);
     CheckRegisterByte(RegisterType::L, 0xE9);
-    WriteRegisterWord(RegisterType::PC, 0x7705);
+    WriteRegisterWord(RegisterType::PC, 0x7706);
     WriteRegisterWord(RegisterType::SP, 0x3386);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7705, 0x49);
@@ -17241,6 +19932,11 @@ void test_49_0151()
 
 void test_49_0152()
 {
+    if (skip_test_49_0152)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17278,7 +19974,7 @@ void test_49_0152()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x12);
     CheckRegisterByte(RegisterType::L, 0xD1);
-    WriteRegisterWord(RegisterType::PC, 0xDEA5);
+    WriteRegisterWord(RegisterType::PC, 0xDEA6);
     WriteRegisterWord(RegisterType::SP, 0x7B16);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDEA5, 0x49);
@@ -17286,6 +19982,11 @@ void test_49_0152()
 
 void test_49_0153()
 {
+    if (skip_test_49_0153)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17323,7 +20024,7 @@ void test_49_0153()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x04);
     CheckRegisterByte(RegisterType::L, 0xCA);
-    WriteRegisterWord(RegisterType::PC, 0x72E9);
+    WriteRegisterWord(RegisterType::PC, 0x72EA);
     WriteRegisterWord(RegisterType::SP, 0x298E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x72E9, 0x49);
@@ -17331,6 +20032,11 @@ void test_49_0153()
 
 void test_49_0154()
 {
+    if (skip_test_49_0154)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17368,7 +20074,7 @@ void test_49_0154()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x2C);
     CheckRegisterByte(RegisterType::L, 0x2B);
-    WriteRegisterWord(RegisterType::PC, 0x52EA);
+    WriteRegisterWord(RegisterType::PC, 0x52EB);
     WriteRegisterWord(RegisterType::SP, 0x2911);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x52EA, 0x49);
@@ -17376,6 +20082,11 @@ void test_49_0154()
 
 void test_49_0155()
 {
+    if (skip_test_49_0155)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17413,7 +20124,7 @@ void test_49_0155()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x96);
     CheckRegisterByte(RegisterType::L, 0x12);
-    WriteRegisterWord(RegisterType::PC, 0xC51E);
+    WriteRegisterWord(RegisterType::PC, 0xC51F);
     WriteRegisterWord(RegisterType::SP, 0x91DA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC51E, 0x49);
@@ -17421,6 +20132,11 @@ void test_49_0155()
 
 void test_49_0156()
 {
+    if (skip_test_49_0156)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17458,7 +20174,7 @@ void test_49_0156()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0x37);
-    WriteRegisterWord(RegisterType::PC, 0x8A99);
+    WriteRegisterWord(RegisterType::PC, 0x8A9A);
     WriteRegisterWord(RegisterType::SP, 0x93DE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8A99, 0x49);
@@ -17466,6 +20182,11 @@ void test_49_0156()
 
 void test_49_0157()
 {
+    if (skip_test_49_0157)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17503,7 +20224,7 @@ void test_49_0157()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x2C);
     CheckRegisterByte(RegisterType::L, 0x3F);
-    WriteRegisterWord(RegisterType::PC, 0x42E1);
+    WriteRegisterWord(RegisterType::PC, 0x42E2);
     WriteRegisterWord(RegisterType::SP, 0x2636);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x42E1, 0x49);
@@ -17511,6 +20232,11 @@ void test_49_0157()
 
 void test_49_0158()
 {
+    if (skip_test_49_0158)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17548,7 +20274,7 @@ void test_49_0158()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x01);
     CheckRegisterByte(RegisterType::L, 0x44);
-    WriteRegisterWord(RegisterType::PC, 0x67B1);
+    WriteRegisterWord(RegisterType::PC, 0x67B2);
     WriteRegisterWord(RegisterType::SP, 0x9A04);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x67B1, 0x49);
@@ -17556,6 +20282,11 @@ void test_49_0158()
 
 void test_49_0159()
 {
+    if (skip_test_49_0159)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17593,7 +20324,7 @@ void test_49_0159()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xBB);
     CheckRegisterByte(RegisterType::L, 0x77);
-    WriteRegisterWord(RegisterType::PC, 0x1C18);
+    WriteRegisterWord(RegisterType::PC, 0x1C19);
     WriteRegisterWord(RegisterType::SP, 0xC224);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1C18, 0x49);
@@ -17601,6 +20332,11 @@ void test_49_0159()
 
 void test_49_015A()
 {
+    if (skip_test_49_015A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17638,7 +20374,7 @@ void test_49_015A()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xA6);
     CheckRegisterByte(RegisterType::L, 0x3B);
-    WriteRegisterWord(RegisterType::PC, 0x4A35);
+    WriteRegisterWord(RegisterType::PC, 0x4A36);
     WriteRegisterWord(RegisterType::SP, 0x8EC2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4A35, 0x49);
@@ -17646,6 +20382,11 @@ void test_49_015A()
 
 void test_49_015B()
 {
+    if (skip_test_49_015B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17683,7 +20424,7 @@ void test_49_015B()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x35);
     CheckRegisterByte(RegisterType::L, 0x7D);
-    WriteRegisterWord(RegisterType::PC, 0xF322);
+    WriteRegisterWord(RegisterType::PC, 0xF323);
     WriteRegisterWord(RegisterType::SP, 0x9667);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF322, 0x49);
@@ -17691,6 +20432,11 @@ void test_49_015B()
 
 void test_49_015C()
 {
+    if (skip_test_49_015C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17728,7 +20474,7 @@ void test_49_015C()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    WriteRegisterWord(RegisterType::PC, 0xC1FE);
+    WriteRegisterWord(RegisterType::PC, 0xC1FF);
     WriteRegisterWord(RegisterType::SP, 0x33C4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC1FE, 0x49);
@@ -17736,6 +20482,11 @@ void test_49_015C()
 
 void test_49_015D()
 {
+    if (skip_test_49_015D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17773,7 +20524,7 @@ void test_49_015D()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xE3);
     CheckRegisterByte(RegisterType::L, 0x98);
-    WriteRegisterWord(RegisterType::PC, 0x3671);
+    WriteRegisterWord(RegisterType::PC, 0x3672);
     WriteRegisterWord(RegisterType::SP, 0x44CC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3671, 0x49);
@@ -17781,6 +20532,11 @@ void test_49_015D()
 
 void test_49_015E()
 {
+    if (skip_test_49_015E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17818,7 +20574,7 @@ void test_49_015E()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x60);
     CheckRegisterByte(RegisterType::L, 0x4F);
-    WriteRegisterWord(RegisterType::PC, 0x9A25);
+    WriteRegisterWord(RegisterType::PC, 0x9A26);
     WriteRegisterWord(RegisterType::SP, 0xEA27);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9A25, 0x49);
@@ -17826,6 +20582,11 @@ void test_49_015E()
 
 void test_49_015F()
 {
+    if (skip_test_49_015F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17863,7 +20624,7 @@ void test_49_015F()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x0A);
     CheckRegisterByte(RegisterType::L, 0x57);
-    WriteRegisterWord(RegisterType::PC, 0xB123);
+    WriteRegisterWord(RegisterType::PC, 0xB124);
     WriteRegisterWord(RegisterType::SP, 0x5CE3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB123, 0x49);
@@ -17871,6 +20632,11 @@ void test_49_015F()
 
 void test_49_0160()
 {
+    if (skip_test_49_0160)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17908,7 +20674,7 @@ void test_49_0160()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xF8);
     CheckRegisterByte(RegisterType::L, 0x80);
-    WriteRegisterWord(RegisterType::PC, 0xC16D);
+    WriteRegisterWord(RegisterType::PC, 0xC16E);
     WriteRegisterWord(RegisterType::SP, 0x3FC6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC16D, 0x49);
@@ -17916,6 +20682,11 @@ void test_49_0160()
 
 void test_49_0161()
 {
+    if (skip_test_49_0161)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17953,7 +20724,7 @@ void test_49_0161()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xE8);
     CheckRegisterByte(RegisterType::L, 0x94);
-    WriteRegisterWord(RegisterType::PC, 0xD76B);
+    WriteRegisterWord(RegisterType::PC, 0xD76C);
     WriteRegisterWord(RegisterType::SP, 0x1518);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD76B, 0x49);
@@ -17961,6 +20732,11 @@ void test_49_0161()
 
 void test_49_0162()
 {
+    if (skip_test_49_0162)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -17998,7 +20774,7 @@ void test_49_0162()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x46);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    WriteRegisterWord(RegisterType::PC, 0xE9EE);
+    WriteRegisterWord(RegisterType::PC, 0xE9EF);
     WriteRegisterWord(RegisterType::SP, 0xCB46);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE9EE, 0x49);
@@ -18006,6 +20782,11 @@ void test_49_0162()
 
 void test_49_0163()
 {
+    if (skip_test_49_0163)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18043,7 +20824,7 @@ void test_49_0163()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0x18);
-    WriteRegisterWord(RegisterType::PC, 0x0839);
+    WriteRegisterWord(RegisterType::PC, 0x083A);
     WriteRegisterWord(RegisterType::SP, 0x5EBB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0839, 0x49);
@@ -18051,6 +20832,11 @@ void test_49_0163()
 
 void test_49_0164()
 {
+    if (skip_test_49_0164)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18088,7 +20874,7 @@ void test_49_0164()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0x73);
-    WriteRegisterWord(RegisterType::PC, 0x78F0);
+    WriteRegisterWord(RegisterType::PC, 0x78F1);
     WriteRegisterWord(RegisterType::SP, 0x85DB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x78F0, 0x49);
@@ -18096,6 +20882,11 @@ void test_49_0164()
 
 void test_49_0165()
 {
+    if (skip_test_49_0165)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18133,7 +20924,7 @@ void test_49_0165()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x38);
     CheckRegisterByte(RegisterType::L, 0x4E);
-    WriteRegisterWord(RegisterType::PC, 0x84DC);
+    WriteRegisterWord(RegisterType::PC, 0x84DD);
     WriteRegisterWord(RegisterType::SP, 0x72D2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x84DC, 0x49);
@@ -18141,6 +20932,11 @@ void test_49_0165()
 
 void test_49_0166()
 {
+    if (skip_test_49_0166)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18178,7 +20974,7 @@ void test_49_0166()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xFB);
     CheckRegisterByte(RegisterType::L, 0xA9);
-    WriteRegisterWord(RegisterType::PC, 0x3635);
+    WriteRegisterWord(RegisterType::PC, 0x3636);
     WriteRegisterWord(RegisterType::SP, 0xEBFB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3635, 0x49);
@@ -18186,6 +20982,11 @@ void test_49_0166()
 
 void test_49_0167()
 {
+    if (skip_test_49_0167)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18223,7 +21024,7 @@ void test_49_0167()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xAF);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    WriteRegisterWord(RegisterType::PC, 0x39EE);
+    WriteRegisterWord(RegisterType::PC, 0x39EF);
     WriteRegisterWord(RegisterType::SP, 0xDEBB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x39EE, 0x49);
@@ -18231,6 +21032,11 @@ void test_49_0167()
 
 void test_49_0168()
 {
+    if (skip_test_49_0168)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18268,7 +21074,7 @@ void test_49_0168()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x71);
     CheckRegisterByte(RegisterType::L, 0x5B);
-    WriteRegisterWord(RegisterType::PC, 0xD444);
+    WriteRegisterWord(RegisterType::PC, 0xD445);
     WriteRegisterWord(RegisterType::SP, 0xBF75);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD444, 0x49);
@@ -18276,6 +21082,11 @@ void test_49_0168()
 
 void test_49_0169()
 {
+    if (skip_test_49_0169)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18313,7 +21124,7 @@ void test_49_0169()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x92);
     CheckRegisterByte(RegisterType::L, 0x29);
-    WriteRegisterWord(RegisterType::PC, 0x93DA);
+    WriteRegisterWord(RegisterType::PC, 0x93DB);
     WriteRegisterWord(RegisterType::SP, 0x1372);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x93DA, 0x49);
@@ -18321,6 +21132,11 @@ void test_49_0169()
 
 void test_49_016A()
 {
+    if (skip_test_49_016A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18358,7 +21174,7 @@ void test_49_016A()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xD7);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    WriteRegisterWord(RegisterType::PC, 0x04C9);
+    WriteRegisterWord(RegisterType::PC, 0x04CA);
     WriteRegisterWord(RegisterType::SP, 0x0B11);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x04C9, 0x49);
@@ -18366,6 +21182,11 @@ void test_49_016A()
 
 void test_49_016B()
 {
+    if (skip_test_49_016B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18403,7 +21224,7 @@ void test_49_016B()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0xAB);
-    WriteRegisterWord(RegisterType::PC, 0x2948);
+    WriteRegisterWord(RegisterType::PC, 0x2949);
     WriteRegisterWord(RegisterType::SP, 0x4156);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2948, 0x49);
@@ -18411,6 +21232,11 @@ void test_49_016B()
 
 void test_49_016C()
 {
+    if (skip_test_49_016C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18448,7 +21274,7 @@ void test_49_016C()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x61);
     CheckRegisterByte(RegisterType::L, 0xB2);
-    WriteRegisterWord(RegisterType::PC, 0xA810);
+    WriteRegisterWord(RegisterType::PC, 0xA811);
     WriteRegisterWord(RegisterType::SP, 0x7E5C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA810, 0x49);
@@ -18456,6 +21282,11 @@ void test_49_016C()
 
 void test_49_016D()
 {
+    if (skip_test_49_016D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18493,7 +21324,7 @@ void test_49_016D()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xF3);
     CheckRegisterByte(RegisterType::L, 0x69);
-    WriteRegisterWord(RegisterType::PC, 0x37DB);
+    WriteRegisterWord(RegisterType::PC, 0x37DC);
     WriteRegisterWord(RegisterType::SP, 0x3DF5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x37DB, 0x49);
@@ -18501,6 +21332,11 @@ void test_49_016D()
 
 void test_49_016E()
 {
+    if (skip_test_49_016E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18538,7 +21374,7 @@ void test_49_016E()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x1F);
     CheckRegisterByte(RegisterType::L, 0xAC);
-    WriteRegisterWord(RegisterType::PC, 0x87D6);
+    WriteRegisterWord(RegisterType::PC, 0x87D7);
     WriteRegisterWord(RegisterType::SP, 0x0D9A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x87D6, 0x49);
@@ -18546,6 +21382,11 @@ void test_49_016E()
 
 void test_49_016F()
 {
+    if (skip_test_49_016F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18583,7 +21424,7 @@ void test_49_016F()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0x05);
-    WriteRegisterWord(RegisterType::PC, 0x4F1E);
+    WriteRegisterWord(RegisterType::PC, 0x4F1F);
     WriteRegisterWord(RegisterType::SP, 0x9BDF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4F1E, 0x49);
@@ -18591,6 +21432,11 @@ void test_49_016F()
 
 void test_49_0170()
 {
+    if (skip_test_49_0170)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18628,7 +21474,7 @@ void test_49_0170()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0x48);
-    WriteRegisterWord(RegisterType::PC, 0x2B5E);
+    WriteRegisterWord(RegisterType::PC, 0x2B5F);
     WriteRegisterWord(RegisterType::SP, 0xB093);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2B5E, 0x49);
@@ -18636,6 +21482,11 @@ void test_49_0170()
 
 void test_49_0171()
 {
+    if (skip_test_49_0171)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18673,7 +21524,7 @@ void test_49_0171()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0x46);
-    WriteRegisterWord(RegisterType::PC, 0x663B);
+    WriteRegisterWord(RegisterType::PC, 0x663C);
     WriteRegisterWord(RegisterType::SP, 0x7F6C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x663B, 0x49);
@@ -18681,6 +21532,11 @@ void test_49_0171()
 
 void test_49_0172()
 {
+    if (skip_test_49_0172)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18718,7 +21574,7 @@ void test_49_0172()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0x75);
-    WriteRegisterWord(RegisterType::PC, 0xBF8B);
+    WriteRegisterWord(RegisterType::PC, 0xBF8C);
     WriteRegisterWord(RegisterType::SP, 0xC441);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBF8B, 0x49);
@@ -18726,6 +21582,11 @@ void test_49_0172()
 
 void test_49_0173()
 {
+    if (skip_test_49_0173)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18763,7 +21624,7 @@ void test_49_0173()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x1A);
     CheckRegisterByte(RegisterType::L, 0xC2);
-    WriteRegisterWord(RegisterType::PC, 0x586A);
+    WriteRegisterWord(RegisterType::PC, 0x586B);
     WriteRegisterWord(RegisterType::SP, 0xD6A7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x586A, 0x49);
@@ -18771,6 +21632,11 @@ void test_49_0173()
 
 void test_49_0174()
 {
+    if (skip_test_49_0174)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18808,7 +21674,7 @@ void test_49_0174()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0x9E);
-    WriteRegisterWord(RegisterType::PC, 0xCA40);
+    WriteRegisterWord(RegisterType::PC, 0xCA41);
     WriteRegisterWord(RegisterType::SP, 0xB10C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCA40, 0x49);
@@ -18816,6 +21682,11 @@ void test_49_0174()
 
 void test_49_0175()
 {
+    if (skip_test_49_0175)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18853,7 +21724,7 @@ void test_49_0175()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0x83);
-    WriteRegisterWord(RegisterType::PC, 0xF83C);
+    WriteRegisterWord(RegisterType::PC, 0xF83D);
     WriteRegisterWord(RegisterType::SP, 0x75BC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF83C, 0x49);
@@ -18861,6 +21732,11 @@ void test_49_0175()
 
 void test_49_0176()
 {
+    if (skip_test_49_0176)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18898,7 +21774,7 @@ void test_49_0176()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x5D);
     CheckRegisterByte(RegisterType::L, 0x79);
-    WriteRegisterWord(RegisterType::PC, 0x11D3);
+    WriteRegisterWord(RegisterType::PC, 0x11D4);
     WriteRegisterWord(RegisterType::SP, 0xA133);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x11D3, 0x49);
@@ -18906,6 +21782,11 @@ void test_49_0176()
 
 void test_49_0177()
 {
+    if (skip_test_49_0177)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18943,7 +21824,7 @@ void test_49_0177()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x94);
     CheckRegisterByte(RegisterType::L, 0xDD);
-    WriteRegisterWord(RegisterType::PC, 0x7456);
+    WriteRegisterWord(RegisterType::PC, 0x7457);
     WriteRegisterWord(RegisterType::SP, 0x5EA2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7456, 0x49);
@@ -18951,6 +21832,11 @@ void test_49_0177()
 
 void test_49_0178()
 {
+    if (skip_test_49_0178)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -18988,7 +21874,7 @@ void test_49_0178()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x3F);
     CheckRegisterByte(RegisterType::L, 0x2A);
-    WriteRegisterWord(RegisterType::PC, 0x3DF3);
+    WriteRegisterWord(RegisterType::PC, 0x3DF4);
     WriteRegisterWord(RegisterType::SP, 0x17A4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3DF3, 0x49);
@@ -18996,6 +21882,11 @@ void test_49_0178()
 
 void test_49_0179()
 {
+    if (skip_test_49_0179)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19033,7 +21924,7 @@ void test_49_0179()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x29);
     CheckRegisterByte(RegisterType::L, 0xB8);
-    WriteRegisterWord(RegisterType::PC, 0xD1FF);
+    WriteRegisterWord(RegisterType::PC, 0xD200);
     WriteRegisterWord(RegisterType::SP, 0x0E42);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD1FF, 0x49);
@@ -19041,6 +21932,11 @@ void test_49_0179()
 
 void test_49_017A()
 {
+    if (skip_test_49_017A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19078,7 +21974,7 @@ void test_49_017A()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xEB);
     CheckRegisterByte(RegisterType::L, 0x6E);
-    WriteRegisterWord(RegisterType::PC, 0xFECA);
+    WriteRegisterWord(RegisterType::PC, 0xFECB);
     WriteRegisterWord(RegisterType::SP, 0x9842);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFECA, 0x49);
@@ -19086,6 +21982,11 @@ void test_49_017A()
 
 void test_49_017B()
 {
+    if (skip_test_49_017B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19123,7 +22024,7 @@ void test_49_017B()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x7C);
     CheckRegisterByte(RegisterType::L, 0xDD);
-    WriteRegisterWord(RegisterType::PC, 0xF742);
+    WriteRegisterWord(RegisterType::PC, 0xF743);
     WriteRegisterWord(RegisterType::SP, 0xBDE1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF742, 0x49);
@@ -19131,6 +22032,11 @@ void test_49_017B()
 
 void test_49_017C()
 {
+    if (skip_test_49_017C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19168,7 +22074,7 @@ void test_49_017C()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xE5);
     CheckRegisterByte(RegisterType::L, 0x93);
-    WriteRegisterWord(RegisterType::PC, 0x3E7E);
+    WriteRegisterWord(RegisterType::PC, 0x3E7F);
     WriteRegisterWord(RegisterType::SP, 0x6C3E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3E7E, 0x49);
@@ -19176,6 +22082,11 @@ void test_49_017C()
 
 void test_49_017D()
 {
+    if (skip_test_49_017D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19213,7 +22124,7 @@ void test_49_017D()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0x41);
-    WriteRegisterWord(RegisterType::PC, 0x0597);
+    WriteRegisterWord(RegisterType::PC, 0x0598);
     WriteRegisterWord(RegisterType::SP, 0xE42D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0597, 0x49);
@@ -19221,6 +22132,11 @@ void test_49_017D()
 
 void test_49_017E()
 {
+    if (skip_test_49_017E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19258,7 +22174,7 @@ void test_49_017E()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0xEE);
-    WriteRegisterWord(RegisterType::PC, 0x9CF9);
+    WriteRegisterWord(RegisterType::PC, 0x9CFA);
     WriteRegisterWord(RegisterType::SP, 0x346E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9CF9, 0x49);
@@ -19266,6 +22182,11 @@ void test_49_017E()
 
 void test_49_017F()
 {
+    if (skip_test_49_017F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19303,7 +22224,7 @@ void test_49_017F()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x5C);
     CheckRegisterByte(RegisterType::L, 0xB7);
-    WriteRegisterWord(RegisterType::PC, 0x0A06);
+    WriteRegisterWord(RegisterType::PC, 0x0A07);
     WriteRegisterWord(RegisterType::SP, 0xC20F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0A06, 0x49);
@@ -19311,6 +22232,11 @@ void test_49_017F()
 
 void test_49_0180()
 {
+    if (skip_test_49_0180)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19348,7 +22274,7 @@ void test_49_0180()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xD5);
     CheckRegisterByte(RegisterType::L, 0x90);
-    WriteRegisterWord(RegisterType::PC, 0xCFB6);
+    WriteRegisterWord(RegisterType::PC, 0xCFB7);
     WriteRegisterWord(RegisterType::SP, 0xEEA7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCFB6, 0x49);
@@ -19356,6 +22282,11 @@ void test_49_0180()
 
 void test_49_0181()
 {
+    if (skip_test_49_0181)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19393,7 +22324,7 @@ void test_49_0181()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x08);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    WriteRegisterWord(RegisterType::PC, 0x0700);
+    WriteRegisterWord(RegisterType::PC, 0x0701);
     WriteRegisterWord(RegisterType::SP, 0x6CF9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0700, 0x49);
@@ -19401,6 +22332,11 @@ void test_49_0181()
 
 void test_49_0182()
 {
+    if (skip_test_49_0182)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19438,7 +22374,7 @@ void test_49_0182()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xDB);
     CheckRegisterByte(RegisterType::L, 0x34);
-    WriteRegisterWord(RegisterType::PC, 0xDE29);
+    WriteRegisterWord(RegisterType::PC, 0xDE2A);
     WriteRegisterWord(RegisterType::SP, 0xD1D4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDE29, 0x49);
@@ -19446,6 +22382,11 @@ void test_49_0182()
 
 void test_49_0183()
 {
+    if (skip_test_49_0183)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19483,7 +22424,7 @@ void test_49_0183()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x7A);
     CheckRegisterByte(RegisterType::L, 0x2A);
-    WriteRegisterWord(RegisterType::PC, 0xDDEF);
+    WriteRegisterWord(RegisterType::PC, 0xDDF0);
     WriteRegisterWord(RegisterType::SP, 0x0ADA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDDEF, 0x49);
@@ -19491,6 +22432,11 @@ void test_49_0183()
 
 void test_49_0184()
 {
+    if (skip_test_49_0184)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19528,7 +22474,7 @@ void test_49_0184()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x0D);
     CheckRegisterByte(RegisterType::L, 0xFD);
-    WriteRegisterWord(RegisterType::PC, 0x9ED1);
+    WriteRegisterWord(RegisterType::PC, 0x9ED2);
     WriteRegisterWord(RegisterType::SP, 0x5A2D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9ED1, 0x49);
@@ -19536,6 +22482,11 @@ void test_49_0184()
 
 void test_49_0185()
 {
+    if (skip_test_49_0185)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19573,7 +22524,7 @@ void test_49_0185()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x0D);
     CheckRegisterByte(RegisterType::L, 0x61);
-    WriteRegisterWord(RegisterType::PC, 0x6DAF);
+    WriteRegisterWord(RegisterType::PC, 0x6DB0);
     WriteRegisterWord(RegisterType::SP, 0x52D2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6DAF, 0x49);
@@ -19581,6 +22532,11 @@ void test_49_0185()
 
 void test_49_0186()
 {
+    if (skip_test_49_0186)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19618,7 +22574,7 @@ void test_49_0186()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x7A);
     CheckRegisterByte(RegisterType::L, 0x07);
-    WriteRegisterWord(RegisterType::PC, 0x84CF);
+    WriteRegisterWord(RegisterType::PC, 0x84D0);
     WriteRegisterWord(RegisterType::SP, 0x7CB5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x84CF, 0x49);
@@ -19626,6 +22582,11 @@ void test_49_0186()
 
 void test_49_0187()
 {
+    if (skip_test_49_0187)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19663,7 +22624,7 @@ void test_49_0187()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0x64);
-    WriteRegisterWord(RegisterType::PC, 0xC852);
+    WriteRegisterWord(RegisterType::PC, 0xC853);
     WriteRegisterWord(RegisterType::SP, 0x5EF9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC852, 0x49);
@@ -19671,6 +22632,11 @@ void test_49_0187()
 
 void test_49_0188()
 {
+    if (skip_test_49_0188)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19708,7 +22674,7 @@ void test_49_0188()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xE6);
     CheckRegisterByte(RegisterType::L, 0xAB);
-    WriteRegisterWord(RegisterType::PC, 0xB03C);
+    WriteRegisterWord(RegisterType::PC, 0xB03D);
     WriteRegisterWord(RegisterType::SP, 0x18E5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB03C, 0x49);
@@ -19716,6 +22682,11 @@ void test_49_0188()
 
 void test_49_0189()
 {
+    if (skip_test_49_0189)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19753,7 +22724,7 @@ void test_49_0189()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x4D);
     CheckRegisterByte(RegisterType::L, 0x05);
-    WriteRegisterWord(RegisterType::PC, 0xF08D);
+    WriteRegisterWord(RegisterType::PC, 0xF08E);
     WriteRegisterWord(RegisterType::SP, 0xA0FE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF08D, 0x49);
@@ -19761,6 +22732,11 @@ void test_49_0189()
 
 void test_49_018A()
 {
+    if (skip_test_49_018A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19798,7 +22774,7 @@ void test_49_018A()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xE7);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    WriteRegisterWord(RegisterType::PC, 0xAE61);
+    WriteRegisterWord(RegisterType::PC, 0xAE62);
     WriteRegisterWord(RegisterType::SP, 0x0EA9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAE61, 0x49);
@@ -19806,6 +22782,11 @@ void test_49_018A()
 
 void test_49_018B()
 {
+    if (skip_test_49_018B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19843,7 +22824,7 @@ void test_49_018B()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xA5);
     CheckRegisterByte(RegisterType::L, 0x7D);
-    WriteRegisterWord(RegisterType::PC, 0x38FA);
+    WriteRegisterWord(RegisterType::PC, 0x38FB);
     WriteRegisterWord(RegisterType::SP, 0x89F6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x38FA, 0x49);
@@ -19851,6 +22832,11 @@ void test_49_018B()
 
 void test_49_018C()
 {
+    if (skip_test_49_018C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19888,7 +22874,7 @@ void test_49_018C()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xEF);
     CheckRegisterByte(RegisterType::L, 0x5A);
-    WriteRegisterWord(RegisterType::PC, 0x53E2);
+    WriteRegisterWord(RegisterType::PC, 0x53E3);
     WriteRegisterWord(RegisterType::SP, 0x47C5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x53E2, 0x49);
@@ -19896,6 +22882,11 @@ void test_49_018C()
 
 void test_49_018D()
 {
+    if (skip_test_49_018D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19933,7 +22924,7 @@ void test_49_018D()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0xB4);
-    WriteRegisterWord(RegisterType::PC, 0x8C65);
+    WriteRegisterWord(RegisterType::PC, 0x8C66);
     WriteRegisterWord(RegisterType::SP, 0x20C4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8C65, 0x49);
@@ -19941,6 +22932,11 @@ void test_49_018D()
 
 void test_49_018E()
 {
+    if (skip_test_49_018E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -19978,7 +22974,7 @@ void test_49_018E()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x7A);
     CheckRegisterByte(RegisterType::L, 0x6E);
-    WriteRegisterWord(RegisterType::PC, 0x8DFB);
+    WriteRegisterWord(RegisterType::PC, 0x8DFC);
     WriteRegisterWord(RegisterType::SP, 0x739D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8DFB, 0x49);
@@ -19986,6 +22982,11 @@ void test_49_018E()
 
 void test_49_018F()
 {
+    if (skip_test_49_018F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20023,7 +23024,7 @@ void test_49_018F()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xAF);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    WriteRegisterWord(RegisterType::PC, 0xD19A);
+    WriteRegisterWord(RegisterType::PC, 0xD19B);
     WriteRegisterWord(RegisterType::SP, 0x843C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD19A, 0x49);
@@ -20031,6 +23032,11 @@ void test_49_018F()
 
 void test_49_0190()
 {
+    if (skip_test_49_0190)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20068,7 +23074,7 @@ void test_49_0190()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x7F);
     CheckRegisterByte(RegisterType::L, 0xB4);
-    WriteRegisterWord(RegisterType::PC, 0x7509);
+    WriteRegisterWord(RegisterType::PC, 0x750A);
     WriteRegisterWord(RegisterType::SP, 0xF42A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7509, 0x49);
@@ -20076,6 +23082,11 @@ void test_49_0190()
 
 void test_49_0191()
 {
+    if (skip_test_49_0191)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20113,7 +23124,7 @@ void test_49_0191()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xFC);
     CheckRegisterByte(RegisterType::L, 0x79);
-    WriteRegisterWord(RegisterType::PC, 0x5345);
+    WriteRegisterWord(RegisterType::PC, 0x5346);
     WriteRegisterWord(RegisterType::SP, 0x85EC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5345, 0x49);
@@ -20121,6 +23132,11 @@ void test_49_0191()
 
 void test_49_0192()
 {
+    if (skip_test_49_0192)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20158,7 +23174,7 @@ void test_49_0192()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x22);
     CheckRegisterByte(RegisterType::L, 0xDA);
-    WriteRegisterWord(RegisterType::PC, 0x03F8);
+    WriteRegisterWord(RegisterType::PC, 0x03F9);
     WriteRegisterWord(RegisterType::SP, 0x1E07);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x03F8, 0x49);
@@ -20166,6 +23182,11 @@ void test_49_0192()
 
 void test_49_0193()
 {
+    if (skip_test_49_0193)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20203,7 +23224,7 @@ void test_49_0193()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xF9);
     CheckRegisterByte(RegisterType::L, 0x7F);
-    WriteRegisterWord(RegisterType::PC, 0xE859);
+    WriteRegisterWord(RegisterType::PC, 0xE85A);
     WriteRegisterWord(RegisterType::SP, 0x5BAE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE859, 0x49);
@@ -20211,6 +23232,11 @@ void test_49_0193()
 
 void test_49_0194()
 {
+    if (skip_test_49_0194)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20248,7 +23274,7 @@ void test_49_0194()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0x90);
-    WriteRegisterWord(RegisterType::PC, 0x431F);
+    WriteRegisterWord(RegisterType::PC, 0x4320);
     WriteRegisterWord(RegisterType::SP, 0x7F69);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x431F, 0x49);
@@ -20256,6 +23282,11 @@ void test_49_0194()
 
 void test_49_0195()
 {
+    if (skip_test_49_0195)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20293,7 +23324,7 @@ void test_49_0195()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x9E);
     CheckRegisterByte(RegisterType::L, 0x08);
-    WriteRegisterWord(RegisterType::PC, 0xF7CB);
+    WriteRegisterWord(RegisterType::PC, 0xF7CC);
     WriteRegisterWord(RegisterType::SP, 0xF003);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF7CB, 0x49);
@@ -20301,6 +23332,11 @@ void test_49_0195()
 
 void test_49_0196()
 {
+    if (skip_test_49_0196)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20338,7 +23374,7 @@ void test_49_0196()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xBA);
     CheckRegisterByte(RegisterType::L, 0x06);
-    WriteRegisterWord(RegisterType::PC, 0xDA9A);
+    WriteRegisterWord(RegisterType::PC, 0xDA9B);
     WriteRegisterWord(RegisterType::SP, 0x35F0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDA9A, 0x49);
@@ -20346,6 +23382,11 @@ void test_49_0196()
 
 void test_49_0197()
 {
+    if (skip_test_49_0197)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20383,7 +23424,7 @@ void test_49_0197()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x6F);
     CheckRegisterByte(RegisterType::L, 0x55);
-    WriteRegisterWord(RegisterType::PC, 0xD6D4);
+    WriteRegisterWord(RegisterType::PC, 0xD6D5);
     WriteRegisterWord(RegisterType::SP, 0xE1C2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD6D4, 0x49);
@@ -20391,6 +23432,11 @@ void test_49_0197()
 
 void test_49_0198()
 {
+    if (skip_test_49_0198)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20428,7 +23474,7 @@ void test_49_0198()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x55);
     CheckRegisterByte(RegisterType::L, 0xFE);
-    WriteRegisterWord(RegisterType::PC, 0xD67A);
+    WriteRegisterWord(RegisterType::PC, 0xD67B);
     WriteRegisterWord(RegisterType::SP, 0x0403);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD67A, 0x49);
@@ -20436,6 +23482,11 @@ void test_49_0198()
 
 void test_49_0199()
 {
+    if (skip_test_49_0199)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20473,7 +23524,7 @@ void test_49_0199()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x17);
     CheckRegisterByte(RegisterType::L, 0xBD);
-    WriteRegisterWord(RegisterType::PC, 0x542E);
+    WriteRegisterWord(RegisterType::PC, 0x542F);
     WriteRegisterWord(RegisterType::SP, 0xC155);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x542E, 0x49);
@@ -20481,6 +23532,11 @@ void test_49_0199()
 
 void test_49_019A()
 {
+    if (skip_test_49_019A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20518,7 +23574,7 @@ void test_49_019A()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xE2);
     CheckRegisterByte(RegisterType::L, 0x57);
-    WriteRegisterWord(RegisterType::PC, 0x7882);
+    WriteRegisterWord(RegisterType::PC, 0x7883);
     WriteRegisterWord(RegisterType::SP, 0x6F63);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7882, 0x49);
@@ -20526,6 +23582,11 @@ void test_49_019A()
 
 void test_49_019B()
 {
+    if (skip_test_49_019B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20563,7 +23624,7 @@ void test_49_019B()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x9F);
     CheckRegisterByte(RegisterType::L, 0xF6);
-    WriteRegisterWord(RegisterType::PC, 0x12F9);
+    WriteRegisterWord(RegisterType::PC, 0x12FA);
     WriteRegisterWord(RegisterType::SP, 0x87EE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x12F9, 0x49);
@@ -20571,6 +23632,11 @@ void test_49_019B()
 
 void test_49_019C()
 {
+    if (skip_test_49_019C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20608,7 +23674,7 @@ void test_49_019C()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x62);
     CheckRegisterByte(RegisterType::L, 0xFB);
-    WriteRegisterWord(RegisterType::PC, 0x5F33);
+    WriteRegisterWord(RegisterType::PC, 0x5F34);
     WriteRegisterWord(RegisterType::SP, 0x71F5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5F33, 0x49);
@@ -20616,6 +23682,11 @@ void test_49_019C()
 
 void test_49_019D()
 {
+    if (skip_test_49_019D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20653,7 +23724,7 @@ void test_49_019D()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x92);
     CheckRegisterByte(RegisterType::L, 0x5E);
-    WriteRegisterWord(RegisterType::PC, 0xD2F0);
+    WriteRegisterWord(RegisterType::PC, 0xD2F1);
     WriteRegisterWord(RegisterType::SP, 0x1BAB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD2F0, 0x49);
@@ -20661,6 +23732,11 @@ void test_49_019D()
 
 void test_49_019E()
 {
+    if (skip_test_49_019E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20698,7 +23774,7 @@ void test_49_019E()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0xF9);
-    WriteRegisterWord(RegisterType::PC, 0x6901);
+    WriteRegisterWord(RegisterType::PC, 0x6902);
     WriteRegisterWord(RegisterType::SP, 0xED3F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6901, 0x49);
@@ -20706,6 +23782,11 @@ void test_49_019E()
 
 void test_49_019F()
 {
+    if (skip_test_49_019F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20743,7 +23824,7 @@ void test_49_019F()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x9F);
     CheckRegisterByte(RegisterType::L, 0xC7);
-    WriteRegisterWord(RegisterType::PC, 0x05D1);
+    WriteRegisterWord(RegisterType::PC, 0x05D2);
     WriteRegisterWord(RegisterType::SP, 0xC780);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x05D1, 0x49);
@@ -20751,6 +23832,11 @@ void test_49_019F()
 
 void test_49_01A0()
 {
+    if (skip_test_49_01A0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20788,7 +23874,7 @@ void test_49_01A0()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xAF);
     CheckRegisterByte(RegisterType::L, 0xE3);
-    WriteRegisterWord(RegisterType::PC, 0x17EE);
+    WriteRegisterWord(RegisterType::PC, 0x17EF);
     WriteRegisterWord(RegisterType::SP, 0x3D70);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x17EE, 0x49);
@@ -20796,6 +23882,11 @@ void test_49_01A0()
 
 void test_49_01A1()
 {
+    if (skip_test_49_01A1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20833,7 +23924,7 @@ void test_49_01A1()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x28);
     CheckRegisterByte(RegisterType::L, 0x03);
-    WriteRegisterWord(RegisterType::PC, 0x697A);
+    WriteRegisterWord(RegisterType::PC, 0x697B);
     WriteRegisterWord(RegisterType::SP, 0xA220);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x697A, 0x49);
@@ -20841,6 +23932,11 @@ void test_49_01A1()
 
 void test_49_01A2()
 {
+    if (skip_test_49_01A2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20878,7 +23974,7 @@ void test_49_01A2()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x8F);
     CheckRegisterByte(RegisterType::L, 0x31);
-    WriteRegisterWord(RegisterType::PC, 0x2689);
+    WriteRegisterWord(RegisterType::PC, 0x268A);
     WriteRegisterWord(RegisterType::SP, 0xFD3D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2689, 0x49);
@@ -20886,6 +23982,11 @@ void test_49_01A2()
 
 void test_49_01A3()
 {
+    if (skip_test_49_01A3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20923,7 +24024,7 @@ void test_49_01A3()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0xAC);
-    WriteRegisterWord(RegisterType::PC, 0xB5E9);
+    WriteRegisterWord(RegisterType::PC, 0xB5EA);
     WriteRegisterWord(RegisterType::SP, 0xA370);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB5E9, 0x49);
@@ -20931,6 +24032,11 @@ void test_49_01A3()
 
 void test_49_01A4()
 {
+    if (skip_test_49_01A4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -20968,7 +24074,7 @@ void test_49_01A4()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xF2);
     CheckRegisterByte(RegisterType::L, 0xAA);
-    WriteRegisterWord(RegisterType::PC, 0x48F9);
+    WriteRegisterWord(RegisterType::PC, 0x48FA);
     WriteRegisterWord(RegisterType::SP, 0xCC77);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x48F9, 0x49);
@@ -20976,6 +24082,11 @@ void test_49_01A4()
 
 void test_49_01A5()
 {
+    if (skip_test_49_01A5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21013,7 +24124,7 @@ void test_49_01A5()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x9C);
     CheckRegisterByte(RegisterType::L, 0x7A);
-    WriteRegisterWord(RegisterType::PC, 0x55F2);
+    WriteRegisterWord(RegisterType::PC, 0x55F3);
     WriteRegisterWord(RegisterType::SP, 0x212A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x55F2, 0x49);
@@ -21021,6 +24132,11 @@ void test_49_01A5()
 
 void test_49_01A6()
 {
+    if (skip_test_49_01A6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21058,7 +24174,7 @@ void test_49_01A6()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x38);
     CheckRegisterByte(RegisterType::L, 0xB6);
-    WriteRegisterWord(RegisterType::PC, 0xEE9C);
+    WriteRegisterWord(RegisterType::PC, 0xEE9D);
     WriteRegisterWord(RegisterType::SP, 0xE916);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEE9C, 0x49);
@@ -21066,6 +24182,11 @@ void test_49_01A6()
 
 void test_49_01A7()
 {
+    if (skip_test_49_01A7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21103,7 +24224,7 @@ void test_49_01A7()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0x37);
-    WriteRegisterWord(RegisterType::PC, 0x4F69);
+    WriteRegisterWord(RegisterType::PC, 0x4F6A);
     WriteRegisterWord(RegisterType::SP, 0xF16E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4F69, 0x49);
@@ -21111,6 +24232,11 @@ void test_49_01A7()
 
 void test_49_01A8()
 {
+    if (skip_test_49_01A8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21148,7 +24274,7 @@ void test_49_01A8()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0x8F);
-    WriteRegisterWord(RegisterType::PC, 0x4BD0);
+    WriteRegisterWord(RegisterType::PC, 0x4BD1);
     WriteRegisterWord(RegisterType::SP, 0xB412);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4BD0, 0x49);
@@ -21156,6 +24282,11 @@ void test_49_01A8()
 
 void test_49_01A9()
 {
+    if (skip_test_49_01A9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21193,7 +24324,7 @@ void test_49_01A9()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xB8);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    WriteRegisterWord(RegisterType::PC, 0x27C6);
+    WriteRegisterWord(RegisterType::PC, 0x27C7);
     WriteRegisterWord(RegisterType::SP, 0x6572);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x27C6, 0x49);
@@ -21201,6 +24332,11 @@ void test_49_01A9()
 
 void test_49_01AA()
 {
+    if (skip_test_49_01AA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21238,7 +24374,7 @@ void test_49_01AA()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x17);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    WriteRegisterWord(RegisterType::PC, 0xC4BC);
+    WriteRegisterWord(RegisterType::PC, 0xC4BD);
     WriteRegisterWord(RegisterType::SP, 0x786A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC4BC, 0x49);
@@ -21246,6 +24382,11 @@ void test_49_01AA()
 
 void test_49_01AB()
 {
+    if (skip_test_49_01AB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21283,7 +24424,7 @@ void test_49_01AB()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x19);
     CheckRegisterByte(RegisterType::L, 0x88);
-    WriteRegisterWord(RegisterType::PC, 0x3BC3);
+    WriteRegisterWord(RegisterType::PC, 0x3BC4);
     WriteRegisterWord(RegisterType::SP, 0xEA15);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3BC3, 0x49);
@@ -21291,6 +24432,11 @@ void test_49_01AB()
 
 void test_49_01AC()
 {
+    if (skip_test_49_01AC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21328,7 +24474,7 @@ void test_49_01AC()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x0D);
     CheckRegisterByte(RegisterType::L, 0x85);
-    WriteRegisterWord(RegisterType::PC, 0x1B0C);
+    WriteRegisterWord(RegisterType::PC, 0x1B0D);
     WriteRegisterWord(RegisterType::SP, 0x3765);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1B0C, 0x49);
@@ -21336,6 +24482,11 @@ void test_49_01AC()
 
 void test_49_01AD()
 {
+    if (skip_test_49_01AD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21373,7 +24524,7 @@ void test_49_01AD()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x5C);
     CheckRegisterByte(RegisterType::L, 0xF8);
-    WriteRegisterWord(RegisterType::PC, 0x3F12);
+    WriteRegisterWord(RegisterType::PC, 0x3F13);
     WriteRegisterWord(RegisterType::SP, 0xB8F1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3F12, 0x49);
@@ -21381,6 +24532,11 @@ void test_49_01AD()
 
 void test_49_01AE()
 {
+    if (skip_test_49_01AE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21418,7 +24574,7 @@ void test_49_01AE()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x68);
     CheckRegisterByte(RegisterType::L, 0xD9);
-    WriteRegisterWord(RegisterType::PC, 0xB117);
+    WriteRegisterWord(RegisterType::PC, 0xB118);
     WriteRegisterWord(RegisterType::SP, 0xBC22);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB117, 0x49);
@@ -21426,6 +24582,11 @@ void test_49_01AE()
 
 void test_49_01AF()
 {
+    if (skip_test_49_01AF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21463,7 +24624,7 @@ void test_49_01AF()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0xC9);
-    WriteRegisterWord(RegisterType::PC, 0x3A9B);
+    WriteRegisterWord(RegisterType::PC, 0x3A9C);
     WriteRegisterWord(RegisterType::SP, 0x9016);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3A9B, 0x49);
@@ -21471,6 +24632,11 @@ void test_49_01AF()
 
 void test_49_01B0()
 {
+    if (skip_test_49_01B0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21508,7 +24674,7 @@ void test_49_01B0()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x25);
     CheckRegisterByte(RegisterType::L, 0xEF);
-    WriteRegisterWord(RegisterType::PC, 0x25EE);
+    WriteRegisterWord(RegisterType::PC, 0x25EF);
     WriteRegisterWord(RegisterType::SP, 0x379B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x25EE, 0x49);
@@ -21516,6 +24682,11 @@ void test_49_01B0()
 
 void test_49_01B1()
 {
+    if (skip_test_49_01B1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21553,7 +24724,7 @@ void test_49_01B1()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x73);
     CheckRegisterByte(RegisterType::L, 0x01);
-    WriteRegisterWord(RegisterType::PC, 0x9048);
+    WriteRegisterWord(RegisterType::PC, 0x9049);
     WriteRegisterWord(RegisterType::SP, 0x7163);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9048, 0x49);
@@ -21561,6 +24732,11 @@ void test_49_01B1()
 
 void test_49_01B2()
 {
+    if (skip_test_49_01B2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21598,7 +24774,7 @@ void test_49_01B2()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0x2D);
-    WriteRegisterWord(RegisterType::PC, 0x618F);
+    WriteRegisterWord(RegisterType::PC, 0x6190);
     WriteRegisterWord(RegisterType::SP, 0xF605);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x618F, 0x49);
@@ -21606,6 +24782,11 @@ void test_49_01B2()
 
 void test_49_01B3()
 {
+    if (skip_test_49_01B3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21643,7 +24824,7 @@ void test_49_01B3()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x43);
     CheckRegisterByte(RegisterType::L, 0xE7);
-    WriteRegisterWord(RegisterType::PC, 0x40A0);
+    WriteRegisterWord(RegisterType::PC, 0x40A1);
     WriteRegisterWord(RegisterType::SP, 0xAA34);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x40A0, 0x49);
@@ -21651,6 +24832,11 @@ void test_49_01B3()
 
 void test_49_01B4()
 {
+    if (skip_test_49_01B4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21688,7 +24874,7 @@ void test_49_01B4()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x86);
     CheckRegisterByte(RegisterType::L, 0xCA);
-    WriteRegisterWord(RegisterType::PC, 0x0844);
+    WriteRegisterWord(RegisterType::PC, 0x0845);
     WriteRegisterWord(RegisterType::SP, 0x4637);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0844, 0x49);
@@ -21696,6 +24882,11 @@ void test_49_01B4()
 
 void test_49_01B5()
 {
+    if (skip_test_49_01B5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21733,7 +24924,7 @@ void test_49_01B5()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xA3);
     CheckRegisterByte(RegisterType::L, 0x33);
-    WriteRegisterWord(RegisterType::PC, 0x0C64);
+    WriteRegisterWord(RegisterType::PC, 0x0C65);
     WriteRegisterWord(RegisterType::SP, 0xD027);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0C64, 0x49);
@@ -21741,6 +24932,11 @@ void test_49_01B5()
 
 void test_49_01B6()
 {
+    if (skip_test_49_01B6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21778,7 +24974,7 @@ void test_49_01B6()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xFD);
     CheckRegisterByte(RegisterType::L, 0x55);
-    WriteRegisterWord(RegisterType::PC, 0xBC29);
+    WriteRegisterWord(RegisterType::PC, 0xBC2A);
     WriteRegisterWord(RegisterType::SP, 0xF56E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBC29, 0x49);
@@ -21786,6 +24982,11 @@ void test_49_01B6()
 
 void test_49_01B7()
 {
+    if (skip_test_49_01B7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21823,7 +25024,7 @@ void test_49_01B7()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xBE);
     CheckRegisterByte(RegisterType::L, 0x68);
-    WriteRegisterWord(RegisterType::PC, 0x00E9);
+    WriteRegisterWord(RegisterType::PC, 0x00EA);
     WriteRegisterWord(RegisterType::SP, 0x73B2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x00E9, 0x49);
@@ -21831,6 +25032,11 @@ void test_49_01B7()
 
 void test_49_01B8()
 {
+    if (skip_test_49_01B8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21868,7 +25074,7 @@ void test_49_01B8()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0xAC);
-    WriteRegisterWord(RegisterType::PC, 0x5E0A);
+    WriteRegisterWord(RegisterType::PC, 0x5E0B);
     WriteRegisterWord(RegisterType::SP, 0xD42B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5E0A, 0x49);
@@ -21876,6 +25082,11 @@ void test_49_01B8()
 
 void test_49_01B9()
 {
+    if (skip_test_49_01B9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21913,7 +25124,7 @@ void test_49_01B9()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xA1);
     CheckRegisterByte(RegisterType::L, 0x75);
-    WriteRegisterWord(RegisterType::PC, 0x092B);
+    WriteRegisterWord(RegisterType::PC, 0x092C);
     WriteRegisterWord(RegisterType::SP, 0x8999);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x092B, 0x49);
@@ -21921,6 +25132,11 @@ void test_49_01B9()
 
 void test_49_01BA()
 {
+    if (skip_test_49_01BA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -21958,7 +25174,7 @@ void test_49_01BA()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0x98);
-    WriteRegisterWord(RegisterType::PC, 0xE385);
+    WriteRegisterWord(RegisterType::PC, 0xE386);
     WriteRegisterWord(RegisterType::SP, 0x4778);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE385, 0x49);
@@ -21966,6 +25182,11 @@ void test_49_01BA()
 
 void test_49_01BB()
 {
+    if (skip_test_49_01BB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22003,7 +25224,7 @@ void test_49_01BB()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x74);
     CheckRegisterByte(RegisterType::L, 0xB0);
-    WriteRegisterWord(RegisterType::PC, 0x9685);
+    WriteRegisterWord(RegisterType::PC, 0x9686);
     WriteRegisterWord(RegisterType::SP, 0xDDE7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9685, 0x49);
@@ -22011,6 +25232,11 @@ void test_49_01BB()
 
 void test_49_01BC()
 {
+    if (skip_test_49_01BC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22048,7 +25274,7 @@ void test_49_01BC()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x93);
     CheckRegisterByte(RegisterType::L, 0x06);
-    WriteRegisterWord(RegisterType::PC, 0x5609);
+    WriteRegisterWord(RegisterType::PC, 0x560A);
     WriteRegisterWord(RegisterType::SP, 0x4B2C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5609, 0x49);
@@ -22056,6 +25282,11 @@ void test_49_01BC()
 
 void test_49_01BD()
 {
+    if (skip_test_49_01BD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22093,7 +25324,7 @@ void test_49_01BD()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0xF2);
-    WriteRegisterWord(RegisterType::PC, 0x3C47);
+    WriteRegisterWord(RegisterType::PC, 0x3C48);
     WriteRegisterWord(RegisterType::SP, 0x8D54);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3C47, 0x49);
@@ -22101,6 +25332,11 @@ void test_49_01BD()
 
 void test_49_01BE()
 {
+    if (skip_test_49_01BE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22138,7 +25374,7 @@ void test_49_01BE()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x1A);
     CheckRegisterByte(RegisterType::L, 0x30);
-    WriteRegisterWord(RegisterType::PC, 0x700E);
+    WriteRegisterWord(RegisterType::PC, 0x700F);
     WriteRegisterWord(RegisterType::SP, 0x869E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x700E, 0x49);
@@ -22146,6 +25382,11 @@ void test_49_01BE()
 
 void test_49_01BF()
 {
+    if (skip_test_49_01BF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22183,7 +25424,7 @@ void test_49_01BF()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x23);
     CheckRegisterByte(RegisterType::L, 0xB6);
-    WriteRegisterWord(RegisterType::PC, 0x4AB9);
+    WriteRegisterWord(RegisterType::PC, 0x4ABA);
     WriteRegisterWord(RegisterType::SP, 0xD075);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4AB9, 0x49);
@@ -22191,6 +25432,11 @@ void test_49_01BF()
 
 void test_49_01C0()
 {
+    if (skip_test_49_01C0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22228,7 +25474,7 @@ void test_49_01C0()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x31);
     CheckRegisterByte(RegisterType::L, 0x52);
-    WriteRegisterWord(RegisterType::PC, 0x9FFE);
+    WriteRegisterWord(RegisterType::PC, 0x9FFF);
     WriteRegisterWord(RegisterType::SP, 0x0368);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9FFE, 0x49);
@@ -22236,6 +25482,11 @@ void test_49_01C0()
 
 void test_49_01C1()
 {
+    if (skip_test_49_01C1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22273,7 +25524,7 @@ void test_49_01C1()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0xA5);
-    WriteRegisterWord(RegisterType::PC, 0xE804);
+    WriteRegisterWord(RegisterType::PC, 0xE805);
     WriteRegisterWord(RegisterType::SP, 0x63DC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE804, 0x49);
@@ -22281,6 +25532,11 @@ void test_49_01C1()
 
 void test_49_01C2()
 {
+    if (skip_test_49_01C2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22318,7 +25574,7 @@ void test_49_01C2()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x3F);
     CheckRegisterByte(RegisterType::L, 0xE3);
-    WriteRegisterWord(RegisterType::PC, 0x9335);
+    WriteRegisterWord(RegisterType::PC, 0x9336);
     WriteRegisterWord(RegisterType::SP, 0xC9AE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9335, 0x49);
@@ -22326,6 +25582,11 @@ void test_49_01C2()
 
 void test_49_01C3()
 {
+    if (skip_test_49_01C3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22363,7 +25624,7 @@ void test_49_01C3()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    WriteRegisterWord(RegisterType::PC, 0xD910);
+    WriteRegisterWord(RegisterType::PC, 0xD911);
     WriteRegisterWord(RegisterType::SP, 0x97E6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD910, 0x49);
@@ -22371,6 +25632,11 @@ void test_49_01C3()
 
 void test_49_01C4()
 {
+    if (skip_test_49_01C4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22408,7 +25674,7 @@ void test_49_01C4()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x08);
     CheckRegisterByte(RegisterType::L, 0xEF);
-    WriteRegisterWord(RegisterType::PC, 0xF15B);
+    WriteRegisterWord(RegisterType::PC, 0xF15C);
     WriteRegisterWord(RegisterType::SP, 0x383F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF15B, 0x49);
@@ -22416,6 +25682,11 @@ void test_49_01C4()
 
 void test_49_01C5()
 {
+    if (skip_test_49_01C5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22453,7 +25724,7 @@ void test_49_01C5()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xC0);
     CheckRegisterByte(RegisterType::L, 0x69);
-    WriteRegisterWord(RegisterType::PC, 0xFA91);
+    WriteRegisterWord(RegisterType::PC, 0xFA92);
     WriteRegisterWord(RegisterType::SP, 0x9930);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFA91, 0x49);
@@ -22461,6 +25732,11 @@ void test_49_01C5()
 
 void test_49_01C6()
 {
+    if (skip_test_49_01C6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22498,7 +25774,7 @@ void test_49_01C6()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    WriteRegisterWord(RegisterType::PC, 0x3A47);
+    WriteRegisterWord(RegisterType::PC, 0x3A48);
     WriteRegisterWord(RegisterType::SP, 0x147E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3A47, 0x49);
@@ -22506,6 +25782,11 @@ void test_49_01C6()
 
 void test_49_01C7()
 {
+    if (skip_test_49_01C7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22543,7 +25824,7 @@ void test_49_01C7()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x16);
     CheckRegisterByte(RegisterType::L, 0xB8);
-    WriteRegisterWord(RegisterType::PC, 0x4D55);
+    WriteRegisterWord(RegisterType::PC, 0x4D56);
     WriteRegisterWord(RegisterType::SP, 0xD27D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4D55, 0x49);
@@ -22551,6 +25832,11 @@ void test_49_01C7()
 
 void test_49_01C8()
 {
+    if (skip_test_49_01C8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22588,7 +25874,7 @@ void test_49_01C8()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xC5);
     CheckRegisterByte(RegisterType::L, 0x53);
-    WriteRegisterWord(RegisterType::PC, 0xFB8A);
+    WriteRegisterWord(RegisterType::PC, 0xFB8B);
     WriteRegisterWord(RegisterType::SP, 0xF302);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFB8A, 0x49);
@@ -22596,6 +25882,11 @@ void test_49_01C8()
 
 void test_49_01C9()
 {
+    if (skip_test_49_01C9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22633,7 +25924,7 @@ void test_49_01C9()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x3F);
     CheckRegisterByte(RegisterType::L, 0xE8);
-    WriteRegisterWord(RegisterType::PC, 0x4110);
+    WriteRegisterWord(RegisterType::PC, 0x4111);
     WriteRegisterWord(RegisterType::SP, 0xC4ED);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4110, 0x49);
@@ -22641,6 +25932,11 @@ void test_49_01C9()
 
 void test_49_01CA()
 {
+    if (skip_test_49_01CA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22678,7 +25974,7 @@ void test_49_01CA()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x2F);
     CheckRegisterByte(RegisterType::L, 0x7B);
-    WriteRegisterWord(RegisterType::PC, 0x50A2);
+    WriteRegisterWord(RegisterType::PC, 0x50A3);
     WriteRegisterWord(RegisterType::SP, 0x52F8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x50A2, 0x49);
@@ -22686,6 +25982,11 @@ void test_49_01CA()
 
 void test_49_01CB()
 {
+    if (skip_test_49_01CB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22723,7 +26024,7 @@ void test_49_01CB()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x8D);
     CheckRegisterByte(RegisterType::L, 0xAE);
-    WriteRegisterWord(RegisterType::PC, 0x8418);
+    WriteRegisterWord(RegisterType::PC, 0x8419);
     WriteRegisterWord(RegisterType::SP, 0xC106);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8418, 0x49);
@@ -22731,6 +26032,11 @@ void test_49_01CB()
 
 void test_49_01CC()
 {
+    if (skip_test_49_01CC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22768,7 +26074,7 @@ void test_49_01CC()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x2A);
     CheckRegisterByte(RegisterType::L, 0xEA);
-    WriteRegisterWord(RegisterType::PC, 0x2745);
+    WriteRegisterWord(RegisterType::PC, 0x2746);
     WriteRegisterWord(RegisterType::SP, 0xF9FF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2745, 0x49);
@@ -22776,6 +26082,11 @@ void test_49_01CC()
 
 void test_49_01CD()
 {
+    if (skip_test_49_01CD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22813,7 +26124,7 @@ void test_49_01CD()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x56);
     CheckRegisterByte(RegisterType::L, 0x2B);
-    WriteRegisterWord(RegisterType::PC, 0xDE58);
+    WriteRegisterWord(RegisterType::PC, 0xDE59);
     WriteRegisterWord(RegisterType::SP, 0x955B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDE58, 0x49);
@@ -22821,6 +26132,11 @@ void test_49_01CD()
 
 void test_49_01CE()
 {
+    if (skip_test_49_01CE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22858,7 +26174,7 @@ void test_49_01CE()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x30);
     CheckRegisterByte(RegisterType::L, 0xED);
-    WriteRegisterWord(RegisterType::PC, 0xE346);
+    WriteRegisterWord(RegisterType::PC, 0xE347);
     WriteRegisterWord(RegisterType::SP, 0xAA70);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE346, 0x49);
@@ -22866,6 +26182,11 @@ void test_49_01CE()
 
 void test_49_01CF()
 {
+    if (skip_test_49_01CF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22903,7 +26224,7 @@ void test_49_01CF()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x62);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    WriteRegisterWord(RegisterType::PC, 0x769D);
+    WriteRegisterWord(RegisterType::PC, 0x769E);
     WriteRegisterWord(RegisterType::SP, 0x1605);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x769D, 0x49);
@@ -22911,6 +26232,11 @@ void test_49_01CF()
 
 void test_49_01D0()
 {
+    if (skip_test_49_01D0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22948,7 +26274,7 @@ void test_49_01D0()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0x51);
-    WriteRegisterWord(RegisterType::PC, 0x6934);
+    WriteRegisterWord(RegisterType::PC, 0x6935);
     WriteRegisterWord(RegisterType::SP, 0x0178);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6934, 0x49);
@@ -22956,6 +26282,11 @@ void test_49_01D0()
 
 void test_49_01D1()
 {
+    if (skip_test_49_01D1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -22993,7 +26324,7 @@ void test_49_01D1()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x1D);
     CheckRegisterByte(RegisterType::L, 0x17);
-    WriteRegisterWord(RegisterType::PC, 0x051E);
+    WriteRegisterWord(RegisterType::PC, 0x051F);
     WriteRegisterWord(RegisterType::SP, 0xEB68);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x051E, 0x49);
@@ -23001,6 +26332,11 @@ void test_49_01D1()
 
 void test_49_01D2()
 {
+    if (skip_test_49_01D2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23038,7 +26374,7 @@ void test_49_01D2()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xA9);
     CheckRegisterByte(RegisterType::L, 0xEC);
-    WriteRegisterWord(RegisterType::PC, 0xB786);
+    WriteRegisterWord(RegisterType::PC, 0xB787);
     WriteRegisterWord(RegisterType::SP, 0x118D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB786, 0x49);
@@ -23046,6 +26382,11 @@ void test_49_01D2()
 
 void test_49_01D3()
 {
+    if (skip_test_49_01D3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23083,7 +26424,7 @@ void test_49_01D3()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x88);
     CheckRegisterByte(RegisterType::L, 0x79);
-    WriteRegisterWord(RegisterType::PC, 0x6656);
+    WriteRegisterWord(RegisterType::PC, 0x6657);
     WriteRegisterWord(RegisterType::SP, 0xA428);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6656, 0x49);
@@ -23091,6 +26432,11 @@ void test_49_01D3()
 
 void test_49_01D4()
 {
+    if (skip_test_49_01D4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23128,7 +26474,7 @@ void test_49_01D4()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x98);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    WriteRegisterWord(RegisterType::PC, 0x6C9C);
+    WriteRegisterWord(RegisterType::PC, 0x6C9D);
     WriteRegisterWord(RegisterType::SP, 0x54D3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6C9C, 0x49);
@@ -23136,6 +26482,11 @@ void test_49_01D4()
 
 void test_49_01D5()
 {
+    if (skip_test_49_01D5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23173,7 +26524,7 @@ void test_49_01D5()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x1C);
     CheckRegisterByte(RegisterType::L, 0xC3);
-    WriteRegisterWord(RegisterType::PC, 0x544C);
+    WriteRegisterWord(RegisterType::PC, 0x544D);
     WriteRegisterWord(RegisterType::SP, 0x6CFC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x544C, 0x49);
@@ -23181,6 +26532,11 @@ void test_49_01D5()
 
 void test_49_01D6()
 {
+    if (skip_test_49_01D6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23218,7 +26574,7 @@ void test_49_01D6()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x98);
     CheckRegisterByte(RegisterType::L, 0x9D);
-    WriteRegisterWord(RegisterType::PC, 0x912D);
+    WriteRegisterWord(RegisterType::PC, 0x912E);
     WriteRegisterWord(RegisterType::SP, 0xF936);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x912D, 0x49);
@@ -23226,6 +26582,11 @@ void test_49_01D6()
 
 void test_49_01D7()
 {
+    if (skip_test_49_01D7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23263,7 +26624,7 @@ void test_49_01D7()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x39);
     CheckRegisterByte(RegisterType::L, 0xF8);
-    WriteRegisterWord(RegisterType::PC, 0x7C9D);
+    WriteRegisterWord(RegisterType::PC, 0x7C9E);
     WriteRegisterWord(RegisterType::SP, 0xD533);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7C9D, 0x49);
@@ -23271,6 +26632,11 @@ void test_49_01D7()
 
 void test_49_01D8()
 {
+    if (skip_test_49_01D8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23308,7 +26674,7 @@ void test_49_01D8()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x77);
     CheckRegisterByte(RegisterType::L, 0xCB);
-    WriteRegisterWord(RegisterType::PC, 0xC277);
+    WriteRegisterWord(RegisterType::PC, 0xC278);
     WriteRegisterWord(RegisterType::SP, 0x46EC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC277, 0x49);
@@ -23316,6 +26682,11 @@ void test_49_01D8()
 
 void test_49_01D9()
 {
+    if (skip_test_49_01D9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23353,7 +26724,7 @@ void test_49_01D9()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x5E);
     CheckRegisterByte(RegisterType::L, 0xE8);
-    WriteRegisterWord(RegisterType::PC, 0x55EE);
+    WriteRegisterWord(RegisterType::PC, 0x55EF);
     WriteRegisterWord(RegisterType::SP, 0x838D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x55EE, 0x49);
@@ -23361,6 +26732,11 @@ void test_49_01D9()
 
 void test_49_01DA()
 {
+    if (skip_test_49_01DA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23398,7 +26774,7 @@ void test_49_01DA()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x64);
     CheckRegisterByte(RegisterType::L, 0x68);
-    WriteRegisterWord(RegisterType::PC, 0x9F78);
+    WriteRegisterWord(RegisterType::PC, 0x9F79);
     WriteRegisterWord(RegisterType::SP, 0xD97C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9F78, 0x49);
@@ -23406,6 +26782,11 @@ void test_49_01DA()
 
 void test_49_01DB()
 {
+    if (skip_test_49_01DB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23443,7 +26824,7 @@ void test_49_01DB()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x67);
     CheckRegisterByte(RegisterType::L, 0x24);
-    WriteRegisterWord(RegisterType::PC, 0x2646);
+    WriteRegisterWord(RegisterType::PC, 0x2647);
     WriteRegisterWord(RegisterType::SP, 0x6348);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2646, 0x49);
@@ -23451,6 +26832,11 @@ void test_49_01DB()
 
 void test_49_01DC()
 {
+    if (skip_test_49_01DC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23488,7 +26874,7 @@ void test_49_01DC()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x18);
     CheckRegisterByte(RegisterType::L, 0x06);
-    WriteRegisterWord(RegisterType::PC, 0x7321);
+    WriteRegisterWord(RegisterType::PC, 0x7322);
     WriteRegisterWord(RegisterType::SP, 0xDC85);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7321, 0x49);
@@ -23496,6 +26882,11 @@ void test_49_01DC()
 
 void test_49_01DD()
 {
+    if (skip_test_49_01DD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23533,7 +26924,7 @@ void test_49_01DD()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xEC);
     CheckRegisterByte(RegisterType::L, 0x8E);
-    WriteRegisterWord(RegisterType::PC, 0xB2F7);
+    WriteRegisterWord(RegisterType::PC, 0xB2F8);
     WriteRegisterWord(RegisterType::SP, 0x9B30);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB2F7, 0x49);
@@ -23541,6 +26932,11 @@ void test_49_01DD()
 
 void test_49_01DE()
 {
+    if (skip_test_49_01DE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23578,7 +26974,7 @@ void test_49_01DE()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x4D);
     CheckRegisterByte(RegisterType::L, 0x5F);
-    WriteRegisterWord(RegisterType::PC, 0xB126);
+    WriteRegisterWord(RegisterType::PC, 0xB127);
     WriteRegisterWord(RegisterType::SP, 0xDCB4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB126, 0x49);
@@ -23586,6 +26982,11 @@ void test_49_01DE()
 
 void test_49_01DF()
 {
+    if (skip_test_49_01DF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23623,7 +27024,7 @@ void test_49_01DF()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0xCD);
-    WriteRegisterWord(RegisterType::PC, 0x3033);
+    WriteRegisterWord(RegisterType::PC, 0x3034);
     WriteRegisterWord(RegisterType::SP, 0x79C0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3033, 0x49);
@@ -23631,6 +27032,11 @@ void test_49_01DF()
 
 void test_49_01E0()
 {
+    if (skip_test_49_01E0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23668,7 +27074,7 @@ void test_49_01E0()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x15);
     CheckRegisterByte(RegisterType::L, 0x0F);
-    WriteRegisterWord(RegisterType::PC, 0xBEEF);
+    WriteRegisterWord(RegisterType::PC, 0xBEF0);
     WriteRegisterWord(RegisterType::SP, 0x99FF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBEEF, 0x49);
@@ -23676,6 +27082,11 @@ void test_49_01E0()
 
 void test_49_01E1()
 {
+    if (skip_test_49_01E1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23713,7 +27124,7 @@ void test_49_01E1()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x9B);
     CheckRegisterByte(RegisterType::L, 0x28);
-    WriteRegisterWord(RegisterType::PC, 0xA057);
+    WriteRegisterWord(RegisterType::PC, 0xA058);
     WriteRegisterWord(RegisterType::SP, 0xB320);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA057, 0x49);
@@ -23721,6 +27132,11 @@ void test_49_01E1()
 
 void test_49_01E2()
 {
+    if (skip_test_49_01E2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23758,7 +27174,7 @@ void test_49_01E2()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x05);
     CheckRegisterByte(RegisterType::L, 0x79);
-    WriteRegisterWord(RegisterType::PC, 0x5151);
+    WriteRegisterWord(RegisterType::PC, 0x5152);
     WriteRegisterWord(RegisterType::SP, 0xC59D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5151, 0x49);
@@ -23766,6 +27182,11 @@ void test_49_01E2()
 
 void test_49_01E3()
 {
+    if (skip_test_49_01E3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23803,7 +27224,7 @@ void test_49_01E3()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0xA3);
-    WriteRegisterWord(RegisterType::PC, 0x60AC);
+    WriteRegisterWord(RegisterType::PC, 0x60AD);
     WriteRegisterWord(RegisterType::SP, 0x99B8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x60AC, 0x49);
@@ -23811,6 +27232,11 @@ void test_49_01E3()
 
 void test_49_01E4()
 {
+    if (skip_test_49_01E4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23848,7 +27274,7 @@ void test_49_01E4()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x26);
     CheckRegisterByte(RegisterType::L, 0xFC);
-    WriteRegisterWord(RegisterType::PC, 0xC42D);
+    WriteRegisterWord(RegisterType::PC, 0xC42E);
     WriteRegisterWord(RegisterType::SP, 0xFE0F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC42D, 0x49);
@@ -23856,6 +27282,11 @@ void test_49_01E4()
 
 void test_49_01E5()
 {
+    if (skip_test_49_01E5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23893,7 +27324,7 @@ void test_49_01E5()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x7F);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    WriteRegisterWord(RegisterType::PC, 0xB6B0);
+    WriteRegisterWord(RegisterType::PC, 0xB6B1);
     WriteRegisterWord(RegisterType::SP, 0x7D0E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB6B0, 0x49);
@@ -23901,6 +27332,11 @@ void test_49_01E5()
 
 void test_49_01E6()
 {
+    if (skip_test_49_01E6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23938,7 +27374,7 @@ void test_49_01E6()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xA8);
     CheckRegisterByte(RegisterType::L, 0x47);
-    WriteRegisterWord(RegisterType::PC, 0x1111);
+    WriteRegisterWord(RegisterType::PC, 0x1112);
     WriteRegisterWord(RegisterType::SP, 0xD3CA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1111, 0x49);
@@ -23946,6 +27382,11 @@ void test_49_01E6()
 
 void test_49_01E7()
 {
+    if (skip_test_49_01E7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -23983,7 +27424,7 @@ void test_49_01E7()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x31);
     CheckRegisterByte(RegisterType::L, 0x10);
-    WriteRegisterWord(RegisterType::PC, 0x3C28);
+    WriteRegisterWord(RegisterType::PC, 0x3C29);
     WriteRegisterWord(RegisterType::SP, 0x5DAD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3C28, 0x49);
@@ -23991,6 +27432,11 @@ void test_49_01E7()
 
 void test_49_01E8()
 {
+    if (skip_test_49_01E8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24028,7 +27474,7 @@ void test_49_01E8()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xD4);
     CheckRegisterByte(RegisterType::L, 0xAD);
-    WriteRegisterWord(RegisterType::PC, 0xCA6E);
+    WriteRegisterWord(RegisterType::PC, 0xCA6F);
     WriteRegisterWord(RegisterType::SP, 0x756E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCA6E, 0x49);
@@ -24036,6 +27482,11 @@ void test_49_01E8()
 
 void test_49_01E9()
 {
+    if (skip_test_49_01E9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24073,7 +27524,7 @@ void test_49_01E9()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x89);
     CheckRegisterByte(RegisterType::L, 0x10);
-    WriteRegisterWord(RegisterType::PC, 0xBF01);
+    WriteRegisterWord(RegisterType::PC, 0xBF02);
     WriteRegisterWord(RegisterType::SP, 0xF705);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBF01, 0x49);
@@ -24081,6 +27532,11 @@ void test_49_01E9()
 
 void test_49_01EA()
 {
+    if (skip_test_49_01EA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24118,7 +27574,7 @@ void test_49_01EA()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xC0);
     CheckRegisterByte(RegisterType::L, 0xC6);
-    WriteRegisterWord(RegisterType::PC, 0xB412);
+    WriteRegisterWord(RegisterType::PC, 0xB413);
     WriteRegisterWord(RegisterType::SP, 0x8071);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB412, 0x49);
@@ -24126,6 +27582,11 @@ void test_49_01EA()
 
 void test_49_01EB()
 {
+    if (skip_test_49_01EB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24163,7 +27624,7 @@ void test_49_01EB()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xDD);
     CheckRegisterByte(RegisterType::L, 0xF1);
-    WriteRegisterWord(RegisterType::PC, 0x43E2);
+    WriteRegisterWord(RegisterType::PC, 0x43E3);
     WriteRegisterWord(RegisterType::SP, 0x0F9E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x43E2, 0x49);
@@ -24171,6 +27632,11 @@ void test_49_01EB()
 
 void test_49_01EC()
 {
+    if (skip_test_49_01EC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24208,7 +27674,7 @@ void test_49_01EC()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x8A);
     CheckRegisterByte(RegisterType::L, 0xE8);
-    WriteRegisterWord(RegisterType::PC, 0x398E);
+    WriteRegisterWord(RegisterType::PC, 0x398F);
     WriteRegisterWord(RegisterType::SP, 0xFE24);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x398E, 0x49);
@@ -24216,6 +27682,11 @@ void test_49_01EC()
 
 void test_49_01ED()
 {
+    if (skip_test_49_01ED)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24253,7 +27724,7 @@ void test_49_01ED()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x05);
     CheckRegisterByte(RegisterType::L, 0xDE);
-    WriteRegisterWord(RegisterType::PC, 0x9C4D);
+    WriteRegisterWord(RegisterType::PC, 0x9C4E);
     WriteRegisterWord(RegisterType::SP, 0xC29D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9C4D, 0x49);
@@ -24261,6 +27732,11 @@ void test_49_01ED()
 
 void test_49_01EE()
 {
+    if (skip_test_49_01EE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24298,7 +27774,7 @@ void test_49_01EE()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0xA4);
-    WriteRegisterWord(RegisterType::PC, 0x5FB2);
+    WriteRegisterWord(RegisterType::PC, 0x5FB3);
     WriteRegisterWord(RegisterType::SP, 0xFA53);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5FB2, 0x49);
@@ -24306,6 +27782,11 @@ void test_49_01EE()
 
 void test_49_01EF()
 {
+    if (skip_test_49_01EF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24343,7 +27824,7 @@ void test_49_01EF()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x2C);
     CheckRegisterByte(RegisterType::L, 0x35);
-    WriteRegisterWord(RegisterType::PC, 0x54F6);
+    WriteRegisterWord(RegisterType::PC, 0x54F7);
     WriteRegisterWord(RegisterType::SP, 0x25AC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x54F6, 0x49);
@@ -24351,6 +27832,11 @@ void test_49_01EF()
 
 void test_49_01F0()
 {
+    if (skip_test_49_01F0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24388,7 +27874,7 @@ void test_49_01F0()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x71);
     CheckRegisterByte(RegisterType::L, 0x5C);
-    WriteRegisterWord(RegisterType::PC, 0x3290);
+    WriteRegisterWord(RegisterType::PC, 0x3291);
     WriteRegisterWord(RegisterType::SP, 0xEB09);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3290, 0x49);
@@ -24396,6 +27882,11 @@ void test_49_01F0()
 
 void test_49_01F1()
 {
+    if (skip_test_49_01F1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24433,7 +27924,7 @@ void test_49_01F1()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xBE);
     CheckRegisterByte(RegisterType::L, 0xD6);
-    WriteRegisterWord(RegisterType::PC, 0x36F1);
+    WriteRegisterWord(RegisterType::PC, 0x36F2);
     WriteRegisterWord(RegisterType::SP, 0x1ECE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x36F1, 0x49);
@@ -24441,6 +27932,11 @@ void test_49_01F1()
 
 void test_49_01F2()
 {
+    if (skip_test_49_01F2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24478,7 +27974,7 @@ void test_49_01F2()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xA1);
     CheckRegisterByte(RegisterType::L, 0x76);
-    WriteRegisterWord(RegisterType::PC, 0x4E24);
+    WriteRegisterWord(RegisterType::PC, 0x4E25);
     WriteRegisterWord(RegisterType::SP, 0x2C7C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4E24, 0x49);
@@ -24486,6 +27982,11 @@ void test_49_01F2()
 
 void test_49_01F3()
 {
+    if (skip_test_49_01F3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24523,7 +28024,7 @@ void test_49_01F3()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x80);
     CheckRegisterByte(RegisterType::L, 0x0E);
-    WriteRegisterWord(RegisterType::PC, 0x61FA);
+    WriteRegisterWord(RegisterType::PC, 0x61FB);
     WriteRegisterWord(RegisterType::SP, 0x7DDE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x61FA, 0x49);
@@ -24531,6 +28032,11 @@ void test_49_01F3()
 
 void test_49_01F4()
 {
+    if (skip_test_49_01F4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24568,7 +28074,7 @@ void test_49_01F4()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x56);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    WriteRegisterWord(RegisterType::PC, 0xA4F2);
+    WriteRegisterWord(RegisterType::PC, 0xA4F3);
     WriteRegisterWord(RegisterType::SP, 0xE9D9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA4F2, 0x49);
@@ -24576,6 +28082,11 @@ void test_49_01F4()
 
 void test_49_01F5()
 {
+    if (skip_test_49_01F5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24613,7 +28124,7 @@ void test_49_01F5()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x6E);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    WriteRegisterWord(RegisterType::PC, 0xC7C5);
+    WriteRegisterWord(RegisterType::PC, 0xC7C6);
     WriteRegisterWord(RegisterType::SP, 0x35E0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC7C5, 0x49);
@@ -24621,6 +28132,11 @@ void test_49_01F5()
 
 void test_49_01F6()
 {
+    if (skip_test_49_01F6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24658,7 +28174,7 @@ void test_49_01F6()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x13);
     CheckRegisterByte(RegisterType::L, 0xA7);
-    WriteRegisterWord(RegisterType::PC, 0xEC42);
+    WriteRegisterWord(RegisterType::PC, 0xEC43);
     WriteRegisterWord(RegisterType::SP, 0xD7CC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEC42, 0x49);
@@ -24666,6 +28182,11 @@ void test_49_01F6()
 
 void test_49_01F7()
 {
+    if (skip_test_49_01F7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24703,7 +28224,7 @@ void test_49_01F7()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xC4);
     CheckRegisterByte(RegisterType::L, 0x36);
-    WriteRegisterWord(RegisterType::PC, 0xF082);
+    WriteRegisterWord(RegisterType::PC, 0xF083);
     WriteRegisterWord(RegisterType::SP, 0x04E4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF082, 0x49);
@@ -24711,6 +28232,11 @@ void test_49_01F7()
 
 void test_49_01F8()
 {
+    if (skip_test_49_01F8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24748,7 +28274,7 @@ void test_49_01F8()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xF8);
     CheckRegisterByte(RegisterType::L, 0xFD);
-    WriteRegisterWord(RegisterType::PC, 0x0242);
+    WriteRegisterWord(RegisterType::PC, 0x0243);
     WriteRegisterWord(RegisterType::SP, 0x6C5D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0242, 0x49);
@@ -24756,6 +28282,11 @@ void test_49_01F8()
 
 void test_49_01F9()
 {
+    if (skip_test_49_01F9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24793,7 +28324,7 @@ void test_49_01F9()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x13);
     CheckRegisterByte(RegisterType::L, 0xB3);
-    WriteRegisterWord(RegisterType::PC, 0xB7B3);
+    WriteRegisterWord(RegisterType::PC, 0xB7B4);
     WriteRegisterWord(RegisterType::SP, 0x4B93);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB7B3, 0x49);
@@ -24801,6 +28332,11 @@ void test_49_01F9()
 
 void test_49_01FA()
 {
+    if (skip_test_49_01FA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24838,7 +28374,7 @@ void test_49_01FA()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xB5);
     CheckRegisterByte(RegisterType::L, 0x37);
-    WriteRegisterWord(RegisterType::PC, 0x070C);
+    WriteRegisterWord(RegisterType::PC, 0x070D);
     WriteRegisterWord(RegisterType::SP, 0xAA83);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x070C, 0x49);
@@ -24846,6 +28382,11 @@ void test_49_01FA()
 
 void test_49_01FB()
 {
+    if (skip_test_49_01FB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24883,7 +28424,7 @@ void test_49_01FB()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xD0);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    WriteRegisterWord(RegisterType::PC, 0xD06C);
+    WriteRegisterWord(RegisterType::PC, 0xD06D);
     WriteRegisterWord(RegisterType::SP, 0x3F3A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD06C, 0x49);
@@ -24891,6 +28432,11 @@ void test_49_01FB()
 
 void test_49_01FC()
 {
+    if (skip_test_49_01FC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24928,7 +28474,7 @@ void test_49_01FC()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x2E);
     CheckRegisterByte(RegisterType::L, 0x03);
-    WriteRegisterWord(RegisterType::PC, 0x84CE);
+    WriteRegisterWord(RegisterType::PC, 0x84CF);
     WriteRegisterWord(RegisterType::SP, 0x16C2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x84CE, 0x49);
@@ -24936,6 +28482,11 @@ void test_49_01FC()
 
 void test_49_01FD()
 {
+    if (skip_test_49_01FD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -24973,7 +28524,7 @@ void test_49_01FD()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x68);
     CheckRegisterByte(RegisterType::L, 0xDD);
-    WriteRegisterWord(RegisterType::PC, 0x4057);
+    WriteRegisterWord(RegisterType::PC, 0x4058);
     WriteRegisterWord(RegisterType::SP, 0x2D32);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4057, 0x49);
@@ -24981,6 +28532,11 @@ void test_49_01FD()
 
 void test_49_01FE()
 {
+    if (skip_test_49_01FE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25018,7 +28574,7 @@ void test_49_01FE()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x38);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    WriteRegisterWord(RegisterType::PC, 0x5D8B);
+    WriteRegisterWord(RegisterType::PC, 0x5D8C);
     WriteRegisterWord(RegisterType::SP, 0x1C52);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5D8B, 0x49);
@@ -25026,6 +28582,11 @@ void test_49_01FE()
 
 void test_49_01FF()
 {
+    if (skip_test_49_01FF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25063,7 +28624,7 @@ void test_49_01FF()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xA9);
     CheckRegisterByte(RegisterType::L, 0x2C);
-    WriteRegisterWord(RegisterType::PC, 0x9FA9);
+    WriteRegisterWord(RegisterType::PC, 0x9FAA);
     WriteRegisterWord(RegisterType::SP, 0x3745);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9FA9, 0x49);
@@ -25071,6 +28632,11 @@ void test_49_01FF()
 
 void test_49_0200()
 {
+    if (skip_test_49_0200)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25108,7 +28674,7 @@ void test_49_0200()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xCF);
     CheckRegisterByte(RegisterType::L, 0xB7);
-    WriteRegisterWord(RegisterType::PC, 0x059B);
+    WriteRegisterWord(RegisterType::PC, 0x059C);
     WriteRegisterWord(RegisterType::SP, 0x4348);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x059B, 0x49);
@@ -25116,6 +28682,11 @@ void test_49_0200()
 
 void test_49_0201()
 {
+    if (skip_test_49_0201)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25153,7 +28724,7 @@ void test_49_0201()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x8D);
     CheckRegisterByte(RegisterType::L, 0x5C);
-    WriteRegisterWord(RegisterType::PC, 0xE5B1);
+    WriteRegisterWord(RegisterType::PC, 0xE5B2);
     WriteRegisterWord(RegisterType::SP, 0x10CB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE5B1, 0x49);
@@ -25161,6 +28732,11 @@ void test_49_0201()
 
 void test_49_0202()
 {
+    if (skip_test_49_0202)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25198,7 +28774,7 @@ void test_49_0202()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xDD);
     CheckRegisterByte(RegisterType::L, 0xBC);
-    WriteRegisterWord(RegisterType::PC, 0x3E4A);
+    WriteRegisterWord(RegisterType::PC, 0x3E4B);
     WriteRegisterWord(RegisterType::SP, 0xD478);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3E4A, 0x49);
@@ -25206,6 +28782,11 @@ void test_49_0202()
 
 void test_49_0203()
 {
+    if (skip_test_49_0203)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25243,7 +28824,7 @@ void test_49_0203()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x36);
     CheckRegisterByte(RegisterType::L, 0xA5);
-    WriteRegisterWord(RegisterType::PC, 0x38E3);
+    WriteRegisterWord(RegisterType::PC, 0x38E4);
     WriteRegisterWord(RegisterType::SP, 0xDD33);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x38E3, 0x49);
@@ -25251,6 +28832,11 @@ void test_49_0203()
 
 void test_49_0204()
 {
+    if (skip_test_49_0204)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25288,7 +28874,7 @@ void test_49_0204()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0x62);
-    WriteRegisterWord(RegisterType::PC, 0xD56E);
+    WriteRegisterWord(RegisterType::PC, 0xD56F);
     WriteRegisterWord(RegisterType::SP, 0x907C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD56E, 0x49);
@@ -25296,6 +28882,11 @@ void test_49_0204()
 
 void test_49_0205()
 {
+    if (skip_test_49_0205)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25333,7 +28924,7 @@ void test_49_0205()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xC5);
     CheckRegisterByte(RegisterType::L, 0x60);
-    WriteRegisterWord(RegisterType::PC, 0xA073);
+    WriteRegisterWord(RegisterType::PC, 0xA074);
     WriteRegisterWord(RegisterType::SP, 0x7354);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA073, 0x49);
@@ -25341,6 +28932,11 @@ void test_49_0205()
 
 void test_49_0206()
 {
+    if (skip_test_49_0206)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25378,7 +28974,7 @@ void test_49_0206()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xC9);
     CheckRegisterByte(RegisterType::L, 0x09);
-    WriteRegisterWord(RegisterType::PC, 0x2C0B);
+    WriteRegisterWord(RegisterType::PC, 0x2C0C);
     WriteRegisterWord(RegisterType::SP, 0x1AC5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2C0B, 0x49);
@@ -25386,6 +28982,11 @@ void test_49_0206()
 
 void test_49_0207()
 {
+    if (skip_test_49_0207)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25423,7 +29024,7 @@ void test_49_0207()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0x7D);
-    WriteRegisterWord(RegisterType::PC, 0x0B52);
+    WriteRegisterWord(RegisterType::PC, 0x0B53);
     WriteRegisterWord(RegisterType::SP, 0xE466);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0B52, 0x49);
@@ -25431,6 +29032,11 @@ void test_49_0207()
 
 void test_49_0208()
 {
+    if (skip_test_49_0208)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25468,7 +29074,7 @@ void test_49_0208()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x79);
     CheckRegisterByte(RegisterType::L, 0xC6);
-    WriteRegisterWord(RegisterType::PC, 0x099E);
+    WriteRegisterWord(RegisterType::PC, 0x099F);
     WriteRegisterWord(RegisterType::SP, 0x0ADC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x099E, 0x49);
@@ -25476,6 +29082,11 @@ void test_49_0208()
 
 void test_49_0209()
 {
+    if (skip_test_49_0209)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25513,7 +29124,7 @@ void test_49_0209()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x58);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    WriteRegisterWord(RegisterType::PC, 0xD1C8);
+    WriteRegisterWord(RegisterType::PC, 0xD1C9);
     WriteRegisterWord(RegisterType::SP, 0x421C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD1C8, 0x49);
@@ -25521,6 +29132,11 @@ void test_49_0209()
 
 void test_49_020A()
 {
+    if (skip_test_49_020A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25558,7 +29174,7 @@ void test_49_020A()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xE0);
     CheckRegisterByte(RegisterType::L, 0xC2);
-    WriteRegisterWord(RegisterType::PC, 0x7C45);
+    WriteRegisterWord(RegisterType::PC, 0x7C46);
     WriteRegisterWord(RegisterType::SP, 0x332C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7C45, 0x49);
@@ -25566,6 +29182,11 @@ void test_49_020A()
 
 void test_49_020B()
 {
+    if (skip_test_49_020B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25603,7 +29224,7 @@ void test_49_020B()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x8C);
     CheckRegisterByte(RegisterType::L, 0xDF);
-    WriteRegisterWord(RegisterType::PC, 0xFFA0);
+    WriteRegisterWord(RegisterType::PC, 0xFFA1);
     WriteRegisterWord(RegisterType::SP, 0x6B74);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFFA0, 0x49);
@@ -25611,6 +29232,11 @@ void test_49_020B()
 
 void test_49_020C()
 {
+    if (skip_test_49_020C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25648,7 +29274,7 @@ void test_49_020C()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x59);
     CheckRegisterByte(RegisterType::L, 0xD3);
-    WriteRegisterWord(RegisterType::PC, 0xDB1D);
+    WriteRegisterWord(RegisterType::PC, 0xDB1E);
     WriteRegisterWord(RegisterType::SP, 0x546E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDB1D, 0x49);
@@ -25656,6 +29282,11 @@ void test_49_020C()
 
 void test_49_020D()
 {
+    if (skip_test_49_020D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25693,7 +29324,7 @@ void test_49_020D()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x4F);
     CheckRegisterByte(RegisterType::L, 0xDF);
-    WriteRegisterWord(RegisterType::PC, 0xE284);
+    WriteRegisterWord(RegisterType::PC, 0xE285);
     WriteRegisterWord(RegisterType::SP, 0x2184);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE284, 0x49);
@@ -25701,6 +29332,11 @@ void test_49_020D()
 
 void test_49_020E()
 {
+    if (skip_test_49_020E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25738,7 +29374,7 @@ void test_49_020E()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x53);
     CheckRegisterByte(RegisterType::L, 0x0A);
-    WriteRegisterWord(RegisterType::PC, 0xA1E5);
+    WriteRegisterWord(RegisterType::PC, 0xA1E6);
     WriteRegisterWord(RegisterType::SP, 0x763D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA1E5, 0x49);
@@ -25746,6 +29382,11 @@ void test_49_020E()
 
 void test_49_020F()
 {
+    if (skip_test_49_020F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25783,7 +29424,7 @@ void test_49_020F()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x4E);
     CheckRegisterByte(RegisterType::L, 0x65);
-    WriteRegisterWord(RegisterType::PC, 0xAB23);
+    WriteRegisterWord(RegisterType::PC, 0xAB24);
     WriteRegisterWord(RegisterType::SP, 0x7DA3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAB23, 0x49);
@@ -25791,6 +29432,11 @@ void test_49_020F()
 
 void test_49_0210()
 {
+    if (skip_test_49_0210)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25828,7 +29474,7 @@ void test_49_0210()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x13);
     CheckRegisterByte(RegisterType::L, 0x43);
-    WriteRegisterWord(RegisterType::PC, 0x9E3E);
+    WriteRegisterWord(RegisterType::PC, 0x9E3F);
     WriteRegisterWord(RegisterType::SP, 0x2826);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9E3E, 0x49);
@@ -25836,6 +29482,11 @@ void test_49_0210()
 
 void test_49_0211()
 {
+    if (skip_test_49_0211)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25873,7 +29524,7 @@ void test_49_0211()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x6B);
     CheckRegisterByte(RegisterType::L, 0x7D);
-    WriteRegisterWord(RegisterType::PC, 0x179A);
+    WriteRegisterWord(RegisterType::PC, 0x179B);
     WriteRegisterWord(RegisterType::SP, 0xF2DD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x179A, 0x49);
@@ -25881,6 +29532,11 @@ void test_49_0211()
 
 void test_49_0212()
 {
+    if (skip_test_49_0212)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25918,7 +29574,7 @@ void test_49_0212()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x5C);
     CheckRegisterByte(RegisterType::L, 0x68);
-    WriteRegisterWord(RegisterType::PC, 0xB436);
+    WriteRegisterWord(RegisterType::PC, 0xB437);
     WriteRegisterWord(RegisterType::SP, 0x360C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB436, 0x49);
@@ -25926,6 +29582,11 @@ void test_49_0212()
 
 void test_49_0213()
 {
+    if (skip_test_49_0213)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -25963,7 +29624,7 @@ void test_49_0213()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x29);
     CheckRegisterByte(RegisterType::L, 0x1F);
-    WriteRegisterWord(RegisterType::PC, 0xAA6A);
+    WriteRegisterWord(RegisterType::PC, 0xAA6B);
     WriteRegisterWord(RegisterType::SP, 0x3029);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAA6A, 0x49);
@@ -25971,6 +29632,11 @@ void test_49_0213()
 
 void test_49_0214()
 {
+    if (skip_test_49_0214)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26008,7 +29674,7 @@ void test_49_0214()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x83);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    WriteRegisterWord(RegisterType::PC, 0x7295);
+    WriteRegisterWord(RegisterType::PC, 0x7296);
     WriteRegisterWord(RegisterType::SP, 0xDA8E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7295, 0x49);
@@ -26016,6 +29682,11 @@ void test_49_0214()
 
 void test_49_0215()
 {
+    if (skip_test_49_0215)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26053,7 +29724,7 @@ void test_49_0215()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0xC0);
-    WriteRegisterWord(RegisterType::PC, 0xA49D);
+    WriteRegisterWord(RegisterType::PC, 0xA49E);
     WriteRegisterWord(RegisterType::SP, 0xB4EF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA49D, 0x49);
@@ -26061,6 +29732,11 @@ void test_49_0215()
 
 void test_49_0216()
 {
+    if (skip_test_49_0216)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26098,7 +29774,7 @@ void test_49_0216()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xB7);
     CheckRegisterByte(RegisterType::L, 0x80);
-    WriteRegisterWord(RegisterType::PC, 0x38E3);
+    WriteRegisterWord(RegisterType::PC, 0x38E4);
     WriteRegisterWord(RegisterType::SP, 0x0427);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x38E3, 0x49);
@@ -26106,6 +29782,11 @@ void test_49_0216()
 
 void test_49_0217()
 {
+    if (skip_test_49_0217)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26143,7 +29824,7 @@ void test_49_0217()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0xAA);
-    WriteRegisterWord(RegisterType::PC, 0x29ED);
+    WriteRegisterWord(RegisterType::PC, 0x29EE);
     WriteRegisterWord(RegisterType::SP, 0xBE83);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x29ED, 0x49);
@@ -26151,6 +29832,11 @@ void test_49_0217()
 
 void test_49_0218()
 {
+    if (skip_test_49_0218)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26188,7 +29874,7 @@ void test_49_0218()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xCE);
     CheckRegisterByte(RegisterType::L, 0x38);
-    WriteRegisterWord(RegisterType::PC, 0x9496);
+    WriteRegisterWord(RegisterType::PC, 0x9497);
     WriteRegisterWord(RegisterType::SP, 0xD66E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9496, 0x49);
@@ -26196,6 +29882,11 @@ void test_49_0218()
 
 void test_49_0219()
 {
+    if (skip_test_49_0219)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26233,7 +29924,7 @@ void test_49_0219()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xE7);
     CheckRegisterByte(RegisterType::L, 0x31);
-    WriteRegisterWord(RegisterType::PC, 0x37C9);
+    WriteRegisterWord(RegisterType::PC, 0x37CA);
     WriteRegisterWord(RegisterType::SP, 0x5CC6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x37C9, 0x49);
@@ -26241,6 +29932,11 @@ void test_49_0219()
 
 void test_49_021A()
 {
+    if (skip_test_49_021A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26278,7 +29974,7 @@ void test_49_021A()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0xBE);
-    WriteRegisterWord(RegisterType::PC, 0x551A);
+    WriteRegisterWord(RegisterType::PC, 0x551B);
     WriteRegisterWord(RegisterType::SP, 0xB017);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x551A, 0x49);
@@ -26286,6 +29982,11 @@ void test_49_021A()
 
 void test_49_021B()
 {
+    if (skip_test_49_021B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26323,7 +30024,7 @@ void test_49_021B()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0x4B);
-    WriteRegisterWord(RegisterType::PC, 0xA665);
+    WriteRegisterWord(RegisterType::PC, 0xA666);
     WriteRegisterWord(RegisterType::SP, 0x9ABA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA665, 0x49);
@@ -26331,6 +30032,11 @@ void test_49_021B()
 
 void test_49_021C()
 {
+    if (skip_test_49_021C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26368,7 +30074,7 @@ void test_49_021C()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x9C);
     CheckRegisterByte(RegisterType::L, 0x81);
-    WriteRegisterWord(RegisterType::PC, 0xE529);
+    WriteRegisterWord(RegisterType::PC, 0xE52A);
     WriteRegisterWord(RegisterType::SP, 0x89DD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE529, 0x49);
@@ -26376,6 +30082,11 @@ void test_49_021C()
 
 void test_49_021D()
 {
+    if (skip_test_49_021D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26413,7 +30124,7 @@ void test_49_021D()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x54);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    WriteRegisterWord(RegisterType::PC, 0x336B);
+    WriteRegisterWord(RegisterType::PC, 0x336C);
     WriteRegisterWord(RegisterType::SP, 0xF67A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x336B, 0x49);
@@ -26421,6 +30132,11 @@ void test_49_021D()
 
 void test_49_021E()
 {
+    if (skip_test_49_021E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26458,7 +30174,7 @@ void test_49_021E()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x23);
     CheckRegisterByte(RegisterType::L, 0x44);
-    WriteRegisterWord(RegisterType::PC, 0x40BA);
+    WriteRegisterWord(RegisterType::PC, 0x40BB);
     WriteRegisterWord(RegisterType::SP, 0x408D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x40BA, 0x49);
@@ -26466,6 +30182,11 @@ void test_49_021E()
 
 void test_49_021F()
 {
+    if (skip_test_49_021F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26503,7 +30224,7 @@ void test_49_021F()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x56);
     CheckRegisterByte(RegisterType::L, 0xBA);
-    WriteRegisterWord(RegisterType::PC, 0x1808);
+    WriteRegisterWord(RegisterType::PC, 0x1809);
     WriteRegisterWord(RegisterType::SP, 0x7FFC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1808, 0x49);
@@ -26511,6 +30232,11 @@ void test_49_021F()
 
 void test_49_0220()
 {
+    if (skip_test_49_0220)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26548,7 +30274,7 @@ void test_49_0220()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x24);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    WriteRegisterWord(RegisterType::PC, 0x1517);
+    WriteRegisterWord(RegisterType::PC, 0x1518);
     WriteRegisterWord(RegisterType::SP, 0x1220);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1517, 0x49);
@@ -26556,6 +30282,11 @@ void test_49_0220()
 
 void test_49_0221()
 {
+    if (skip_test_49_0221)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26593,7 +30324,7 @@ void test_49_0221()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xCA);
     CheckRegisterByte(RegisterType::L, 0x5B);
-    WriteRegisterWord(RegisterType::PC, 0x0E23);
+    WriteRegisterWord(RegisterType::PC, 0x0E24);
     WriteRegisterWord(RegisterType::SP, 0x114B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0E23, 0x49);
@@ -26601,6 +30332,11 @@ void test_49_0221()
 
 void test_49_0222()
 {
+    if (skip_test_49_0222)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26638,7 +30374,7 @@ void test_49_0222()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x5F);
     CheckRegisterByte(RegisterType::L, 0x69);
-    WriteRegisterWord(RegisterType::PC, 0x4EA9);
+    WriteRegisterWord(RegisterType::PC, 0x4EAA);
     WriteRegisterWord(RegisterType::SP, 0xE6DB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4EA9, 0x49);
@@ -26646,6 +30382,11 @@ void test_49_0222()
 
 void test_49_0223()
 {
+    if (skip_test_49_0223)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26683,7 +30424,7 @@ void test_49_0223()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0xCA);
-    WriteRegisterWord(RegisterType::PC, 0x1B1A);
+    WriteRegisterWord(RegisterType::PC, 0x1B1B);
     WriteRegisterWord(RegisterType::SP, 0xBE18);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1B1A, 0x49);
@@ -26691,6 +30432,11 @@ void test_49_0223()
 
 void test_49_0224()
 {
+    if (skip_test_49_0224)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26728,7 +30474,7 @@ void test_49_0224()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x97);
     CheckRegisterByte(RegisterType::L, 0xD4);
-    WriteRegisterWord(RegisterType::PC, 0x8675);
+    WriteRegisterWord(RegisterType::PC, 0x8676);
     WriteRegisterWord(RegisterType::SP, 0xAF37);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8675, 0x49);
@@ -26736,6 +30482,11 @@ void test_49_0224()
 
 void test_49_0225()
 {
+    if (skip_test_49_0225)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26773,7 +30524,7 @@ void test_49_0225()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x77);
     CheckRegisterByte(RegisterType::L, 0xE7);
-    WriteRegisterWord(RegisterType::PC, 0x5027);
+    WriteRegisterWord(RegisterType::PC, 0x5028);
     WriteRegisterWord(RegisterType::SP, 0x1550);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5027, 0x49);
@@ -26781,6 +30532,11 @@ void test_49_0225()
 
 void test_49_0226()
 {
+    if (skip_test_49_0226)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26818,7 +30574,7 @@ void test_49_0226()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xAA);
     CheckRegisterByte(RegisterType::L, 0x16);
-    WriteRegisterWord(RegisterType::PC, 0x40BC);
+    WriteRegisterWord(RegisterType::PC, 0x40BD);
     WriteRegisterWord(RegisterType::SP, 0x6243);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x40BC, 0x49);
@@ -26826,6 +30582,11 @@ void test_49_0226()
 
 void test_49_0227()
 {
+    if (skip_test_49_0227)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26863,7 +30624,7 @@ void test_49_0227()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x68);
     CheckRegisterByte(RegisterType::L, 0x1A);
-    WriteRegisterWord(RegisterType::PC, 0xC0CE);
+    WriteRegisterWord(RegisterType::PC, 0xC0CF);
     WriteRegisterWord(RegisterType::SP, 0x058F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC0CE, 0x49);
@@ -26871,6 +30632,11 @@ void test_49_0227()
 
 void test_49_0228()
 {
+    if (skip_test_49_0228)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26908,7 +30674,7 @@ void test_49_0228()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xAF);
     CheckRegisterByte(RegisterType::L, 0xCF);
-    WriteRegisterWord(RegisterType::PC, 0x15DC);
+    WriteRegisterWord(RegisterType::PC, 0x15DD);
     WriteRegisterWord(RegisterType::SP, 0x7B34);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x15DC, 0x49);
@@ -26916,6 +30682,11 @@ void test_49_0228()
 
 void test_49_0229()
 {
+    if (skip_test_49_0229)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26953,7 +30724,7 @@ void test_49_0229()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0xA5);
-    WriteRegisterWord(RegisterType::PC, 0xD079);
+    WriteRegisterWord(RegisterType::PC, 0xD07A);
     WriteRegisterWord(RegisterType::SP, 0x2BFD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD079, 0x49);
@@ -26961,6 +30732,11 @@ void test_49_0229()
 
 void test_49_022A()
 {
+    if (skip_test_49_022A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -26998,7 +30774,7 @@ void test_49_022A()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xA7);
     CheckRegisterByte(RegisterType::L, 0xBF);
-    WriteRegisterWord(RegisterType::PC, 0xD8B0);
+    WriteRegisterWord(RegisterType::PC, 0xD8B1);
     WriteRegisterWord(RegisterType::SP, 0x20EF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD8B0, 0x49);
@@ -27006,6 +30782,11 @@ void test_49_022A()
 
 void test_49_022B()
 {
+    if (skip_test_49_022B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27043,7 +30824,7 @@ void test_49_022B()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xD7);
     CheckRegisterByte(RegisterType::L, 0x1F);
-    WriteRegisterWord(RegisterType::PC, 0xF2A2);
+    WriteRegisterWord(RegisterType::PC, 0xF2A3);
     WriteRegisterWord(RegisterType::SP, 0xCA34);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF2A2, 0x49);
@@ -27051,6 +30832,11 @@ void test_49_022B()
 
 void test_49_022C()
 {
+    if (skip_test_49_022C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27088,7 +30874,7 @@ void test_49_022C()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xA1);
     CheckRegisterByte(RegisterType::L, 0x1C);
-    WriteRegisterWord(RegisterType::PC, 0x6F01);
+    WriteRegisterWord(RegisterType::PC, 0x6F02);
     WriteRegisterWord(RegisterType::SP, 0x6719);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6F01, 0x49);
@@ -27096,6 +30882,11 @@ void test_49_022C()
 
 void test_49_022D()
 {
+    if (skip_test_49_022D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27133,7 +30924,7 @@ void test_49_022D()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x24);
     CheckRegisterByte(RegisterType::L, 0x42);
-    WriteRegisterWord(RegisterType::PC, 0x9461);
+    WriteRegisterWord(RegisterType::PC, 0x9462);
     WriteRegisterWord(RegisterType::SP, 0x3565);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9461, 0x49);
@@ -27141,6 +30932,11 @@ void test_49_022D()
 
 void test_49_022E()
 {
+    if (skip_test_49_022E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27178,7 +30974,7 @@ void test_49_022E()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xB1);
     CheckRegisterByte(RegisterType::L, 0x4C);
-    WriteRegisterWord(RegisterType::PC, 0x31FF);
+    WriteRegisterWord(RegisterType::PC, 0x3200);
     WriteRegisterWord(RegisterType::SP, 0xB651);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x31FF, 0x49);
@@ -27186,6 +30982,11 @@ void test_49_022E()
 
 void test_49_022F()
 {
+    if (skip_test_49_022F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27223,7 +31024,7 @@ void test_49_022F()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xBB);
     CheckRegisterByte(RegisterType::L, 0x3E);
-    WriteRegisterWord(RegisterType::PC, 0xF1E9);
+    WriteRegisterWord(RegisterType::PC, 0xF1EA);
     WriteRegisterWord(RegisterType::SP, 0xF59F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF1E9, 0x49);
@@ -27231,6 +31032,11 @@ void test_49_022F()
 
 void test_49_0230()
 {
+    if (skip_test_49_0230)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27268,7 +31074,7 @@ void test_49_0230()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x01);
     CheckRegisterByte(RegisterType::L, 0xBB);
-    WriteRegisterWord(RegisterType::PC, 0x50EA);
+    WriteRegisterWord(RegisterType::PC, 0x50EB);
     WriteRegisterWord(RegisterType::SP, 0xB807);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x50EA, 0x49);
@@ -27276,6 +31082,11 @@ void test_49_0230()
 
 void test_49_0231()
 {
+    if (skip_test_49_0231)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27313,7 +31124,7 @@ void test_49_0231()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x3C);
     CheckRegisterByte(RegisterType::L, 0x2F);
-    WriteRegisterWord(RegisterType::PC, 0xED19);
+    WriteRegisterWord(RegisterType::PC, 0xED1A);
     WriteRegisterWord(RegisterType::SP, 0x8999);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xED19, 0x49);
@@ -27321,6 +31132,11 @@ void test_49_0231()
 
 void test_49_0232()
 {
+    if (skip_test_49_0232)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27358,7 +31174,7 @@ void test_49_0232()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xC5);
     CheckRegisterByte(RegisterType::L, 0xB2);
-    WriteRegisterWord(RegisterType::PC, 0x4674);
+    WriteRegisterWord(RegisterType::PC, 0x4675);
     WriteRegisterWord(RegisterType::SP, 0x7BD8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4674, 0x49);
@@ -27366,6 +31182,11 @@ void test_49_0232()
 
 void test_49_0233()
 {
+    if (skip_test_49_0233)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27403,7 +31224,7 @@ void test_49_0233()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xAD);
     CheckRegisterByte(RegisterType::L, 0xDA);
-    WriteRegisterWord(RegisterType::PC, 0xED47);
+    WriteRegisterWord(RegisterType::PC, 0xED48);
     WriteRegisterWord(RegisterType::SP, 0xCC4F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xED47, 0x49);
@@ -27411,6 +31232,11 @@ void test_49_0233()
 
 void test_49_0234()
 {
+    if (skip_test_49_0234)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27448,7 +31274,7 @@ void test_49_0234()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x8C);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    WriteRegisterWord(RegisterType::PC, 0x4249);
+    WriteRegisterWord(RegisterType::PC, 0x424A);
     WriteRegisterWord(RegisterType::SP, 0x23E0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4249, 0x49);
@@ -27456,6 +31282,11 @@ void test_49_0234()
 
 void test_49_0235()
 {
+    if (skip_test_49_0235)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27493,7 +31324,7 @@ void test_49_0235()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x76);
     CheckRegisterByte(RegisterType::L, 0xA6);
-    WriteRegisterWord(RegisterType::PC, 0x7832);
+    WriteRegisterWord(RegisterType::PC, 0x7833);
     WriteRegisterWord(RegisterType::SP, 0x9CE8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7832, 0x49);
@@ -27501,6 +31332,11 @@ void test_49_0235()
 
 void test_49_0236()
 {
+    if (skip_test_49_0236)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27538,7 +31374,7 @@ void test_49_0236()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0x0C);
-    WriteRegisterWord(RegisterType::PC, 0xB118);
+    WriteRegisterWord(RegisterType::PC, 0xB119);
     WriteRegisterWord(RegisterType::SP, 0x08EC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB118, 0x49);
@@ -27546,6 +31382,11 @@ void test_49_0236()
 
 void test_49_0237()
 {
+    if (skip_test_49_0237)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27583,7 +31424,7 @@ void test_49_0237()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xB9);
     CheckRegisterByte(RegisterType::L, 0x7A);
-    WriteRegisterWord(RegisterType::PC, 0x86F4);
+    WriteRegisterWord(RegisterType::PC, 0x86F5);
     WriteRegisterWord(RegisterType::SP, 0x4E63);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x86F4, 0x49);
@@ -27591,6 +31432,11 @@ void test_49_0237()
 
 void test_49_0238()
 {
+    if (skip_test_49_0238)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27628,7 +31474,7 @@ void test_49_0238()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xD7);
     CheckRegisterByte(RegisterType::L, 0x4A);
-    WriteRegisterWord(RegisterType::PC, 0x1234);
+    WriteRegisterWord(RegisterType::PC, 0x1235);
     WriteRegisterWord(RegisterType::SP, 0x6A50);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1234, 0x49);
@@ -27636,6 +31482,11 @@ void test_49_0238()
 
 void test_49_0239()
 {
+    if (skip_test_49_0239)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27673,7 +31524,7 @@ void test_49_0239()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x84);
     CheckRegisterByte(RegisterType::L, 0xAC);
-    WriteRegisterWord(RegisterType::PC, 0xE0FA);
+    WriteRegisterWord(RegisterType::PC, 0xE0FB);
     WriteRegisterWord(RegisterType::SP, 0x0F57);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE0FA, 0x49);
@@ -27681,6 +31532,11 @@ void test_49_0239()
 
 void test_49_023A()
 {
+    if (skip_test_49_023A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27718,7 +31574,7 @@ void test_49_023A()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x0E);
     CheckRegisterByte(RegisterType::L, 0x17);
-    WriteRegisterWord(RegisterType::PC, 0x1C7E);
+    WriteRegisterWord(RegisterType::PC, 0x1C7F);
     WriteRegisterWord(RegisterType::SP, 0x18A3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1C7E, 0x49);
@@ -27726,6 +31582,11 @@ void test_49_023A()
 
 void test_49_023B()
 {
+    if (skip_test_49_023B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27763,7 +31624,7 @@ void test_49_023B()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x07);
     CheckRegisterByte(RegisterType::L, 0xAD);
-    WriteRegisterWord(RegisterType::PC, 0x6C21);
+    WriteRegisterWord(RegisterType::PC, 0x6C22);
     WriteRegisterWord(RegisterType::SP, 0xB2F7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6C21, 0x49);
@@ -27771,6 +31632,11 @@ void test_49_023B()
 
 void test_49_023C()
 {
+    if (skip_test_49_023C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27808,7 +31674,7 @@ void test_49_023C()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x80);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    WriteRegisterWord(RegisterType::PC, 0x9F2B);
+    WriteRegisterWord(RegisterType::PC, 0x9F2C);
     WriteRegisterWord(RegisterType::SP, 0x8530);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9F2B, 0x49);
@@ -27816,6 +31682,11 @@ void test_49_023C()
 
 void test_49_023D()
 {
+    if (skip_test_49_023D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27853,7 +31724,7 @@ void test_49_023D()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x35);
     CheckRegisterByte(RegisterType::L, 0x87);
-    WriteRegisterWord(RegisterType::PC, 0x5B84);
+    WriteRegisterWord(RegisterType::PC, 0x5B85);
     WriteRegisterWord(RegisterType::SP, 0x2D32);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5B84, 0x49);
@@ -27861,6 +31732,11 @@ void test_49_023D()
 
 void test_49_023E()
 {
+    if (skip_test_49_023E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27898,7 +31774,7 @@ void test_49_023E()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xDD);
     CheckRegisterByte(RegisterType::L, 0xC3);
-    WriteRegisterWord(RegisterType::PC, 0xA8F5);
+    WriteRegisterWord(RegisterType::PC, 0xA8F6);
     WriteRegisterWord(RegisterType::SP, 0x4423);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA8F5, 0x49);
@@ -27906,6 +31782,11 @@ void test_49_023E()
 
 void test_49_023F()
 {
+    if (skip_test_49_023F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27943,7 +31824,7 @@ void test_49_023F()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xB5);
     CheckRegisterByte(RegisterType::L, 0xAF);
-    WriteRegisterWord(RegisterType::PC, 0xC2E1);
+    WriteRegisterWord(RegisterType::PC, 0xC2E2);
     WriteRegisterWord(RegisterType::SP, 0x4150);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC2E1, 0x49);
@@ -27951,6 +31832,11 @@ void test_49_023F()
 
 void test_49_0240()
 {
+    if (skip_test_49_0240)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -27988,7 +31874,7 @@ void test_49_0240()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x5A);
     CheckRegisterByte(RegisterType::L, 0x35);
-    WriteRegisterWord(RegisterType::PC, 0x29A7);
+    WriteRegisterWord(RegisterType::PC, 0x29A8);
     WriteRegisterWord(RegisterType::SP, 0x708B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x29A7, 0x49);
@@ -27996,6 +31882,11 @@ void test_49_0240()
 
 void test_49_0241()
 {
+    if (skip_test_49_0241)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28033,7 +31924,7 @@ void test_49_0241()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x13);
     CheckRegisterByte(RegisterType::L, 0x2C);
-    WriteRegisterWord(RegisterType::PC, 0x8F07);
+    WriteRegisterWord(RegisterType::PC, 0x8F08);
     WriteRegisterWord(RegisterType::SP, 0xA952);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8F07, 0x49);
@@ -28041,6 +31932,11 @@ void test_49_0241()
 
 void test_49_0242()
 {
+    if (skip_test_49_0242)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28078,7 +31974,7 @@ void test_49_0242()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xED);
     CheckRegisterByte(RegisterType::L, 0x5E);
-    WriteRegisterWord(RegisterType::PC, 0x627A);
+    WriteRegisterWord(RegisterType::PC, 0x627B);
     WriteRegisterWord(RegisterType::SP, 0xD712);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x627A, 0x49);
@@ -28086,6 +31982,11 @@ void test_49_0242()
 
 void test_49_0243()
 {
+    if (skip_test_49_0243)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28123,7 +32024,7 @@ void test_49_0243()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0xD1);
-    WriteRegisterWord(RegisterType::PC, 0x8113);
+    WriteRegisterWord(RegisterType::PC, 0x8114);
     WriteRegisterWord(RegisterType::SP, 0xCD4A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8113, 0x49);
@@ -28131,6 +32032,11 @@ void test_49_0243()
 
 void test_49_0244()
 {
+    if (skip_test_49_0244)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28168,7 +32074,7 @@ void test_49_0244()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xCF);
     CheckRegisterByte(RegisterType::L, 0x2F);
-    WriteRegisterWord(RegisterType::PC, 0xCB90);
+    WriteRegisterWord(RegisterType::PC, 0xCB91);
     WriteRegisterWord(RegisterType::SP, 0x836F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCB90, 0x49);
@@ -28176,6 +32082,11 @@ void test_49_0244()
 
 void test_49_0245()
 {
+    if (skip_test_49_0245)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28213,7 +32124,7 @@ void test_49_0245()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x83);
     CheckRegisterByte(RegisterType::L, 0x0C);
-    WriteRegisterWord(RegisterType::PC, 0xFA54);
+    WriteRegisterWord(RegisterType::PC, 0xFA55);
     WriteRegisterWord(RegisterType::SP, 0xC237);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFA54, 0x49);
@@ -28221,6 +32132,11 @@ void test_49_0245()
 
 void test_49_0246()
 {
+    if (skip_test_49_0246)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28258,7 +32174,7 @@ void test_49_0246()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xB3);
     CheckRegisterByte(RegisterType::L, 0x1C);
-    WriteRegisterWord(RegisterType::PC, 0x720C);
+    WriteRegisterWord(RegisterType::PC, 0x720D);
     WriteRegisterWord(RegisterType::SP, 0x723D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x720C, 0x49);
@@ -28266,6 +32182,11 @@ void test_49_0246()
 
 void test_49_0247()
 {
+    if (skip_test_49_0247)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28303,7 +32224,7 @@ void test_49_0247()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xEE);
     CheckRegisterByte(RegisterType::L, 0xCD);
-    WriteRegisterWord(RegisterType::PC, 0x8D39);
+    WriteRegisterWord(RegisterType::PC, 0x8D3A);
     WriteRegisterWord(RegisterType::SP, 0x207E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8D39, 0x49);
@@ -28311,6 +32232,11 @@ void test_49_0247()
 
 void test_49_0248()
 {
+    if (skip_test_49_0248)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28348,7 +32274,7 @@ void test_49_0248()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0x2A);
-    WriteRegisterWord(RegisterType::PC, 0x3DDC);
+    WriteRegisterWord(RegisterType::PC, 0x3DDD);
     WriteRegisterWord(RegisterType::SP, 0x7124);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3DDC, 0x49);
@@ -28356,6 +32282,11 @@ void test_49_0248()
 
 void test_49_0249()
 {
+    if (skip_test_49_0249)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28393,7 +32324,7 @@ void test_49_0249()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0x73);
-    WriteRegisterWord(RegisterType::PC, 0xFBDA);
+    WriteRegisterWord(RegisterType::PC, 0xFBDB);
     WriteRegisterWord(RegisterType::SP, 0x95E4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFBDA, 0x49);
@@ -28401,6 +32332,11 @@ void test_49_0249()
 
 void test_49_024A()
 {
+    if (skip_test_49_024A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28438,7 +32374,7 @@ void test_49_024A()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x2B);
     CheckRegisterByte(RegisterType::L, 0xEA);
-    WriteRegisterWord(RegisterType::PC, 0x1CDC);
+    WriteRegisterWord(RegisterType::PC, 0x1CDD);
     WriteRegisterWord(RegisterType::SP, 0xEEDA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1CDC, 0x49);
@@ -28446,6 +32382,11 @@ void test_49_024A()
 
 void test_49_024B()
 {
+    if (skip_test_49_024B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28483,7 +32424,7 @@ void test_49_024B()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x28);
     CheckRegisterByte(RegisterType::L, 0xCB);
-    WriteRegisterWord(RegisterType::PC, 0x4C71);
+    WriteRegisterWord(RegisterType::PC, 0x4C72);
     WriteRegisterWord(RegisterType::SP, 0x42D1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4C71, 0x49);
@@ -28491,6 +32432,11 @@ void test_49_024B()
 
 void test_49_024C()
 {
+    if (skip_test_49_024C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28528,7 +32474,7 @@ void test_49_024C()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xC5);
     CheckRegisterByte(RegisterType::L, 0x85);
-    WriteRegisterWord(RegisterType::PC, 0x7AF7);
+    WriteRegisterWord(RegisterType::PC, 0x7AF8);
     WriteRegisterWord(RegisterType::SP, 0xEF51);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7AF7, 0x49);
@@ -28536,6 +32482,11 @@ void test_49_024C()
 
 void test_49_024D()
 {
+    if (skip_test_49_024D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28573,7 +32524,7 @@ void test_49_024D()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x9A);
     CheckRegisterByte(RegisterType::L, 0x7A);
-    WriteRegisterWord(RegisterType::PC, 0x7C34);
+    WriteRegisterWord(RegisterType::PC, 0x7C35);
     WriteRegisterWord(RegisterType::SP, 0x396C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7C34, 0x49);
@@ -28581,6 +32532,11 @@ void test_49_024D()
 
 void test_49_024E()
 {
+    if (skip_test_49_024E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28618,7 +32574,7 @@ void test_49_024E()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x85);
     CheckRegisterByte(RegisterType::L, 0xE7);
-    WriteRegisterWord(RegisterType::PC, 0x387B);
+    WriteRegisterWord(RegisterType::PC, 0x387C);
     WriteRegisterWord(RegisterType::SP, 0x855C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x387B, 0x49);
@@ -28626,6 +32582,11 @@ void test_49_024E()
 
 void test_49_024F()
 {
+    if (skip_test_49_024F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28663,7 +32624,7 @@ void test_49_024F()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xBE);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    WriteRegisterWord(RegisterType::PC, 0xC047);
+    WriteRegisterWord(RegisterType::PC, 0xC048);
     WriteRegisterWord(RegisterType::SP, 0xF09E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC047, 0x49);
@@ -28671,6 +32632,11 @@ void test_49_024F()
 
 void test_49_0250()
 {
+    if (skip_test_49_0250)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28708,7 +32674,7 @@ void test_49_0250()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x0D);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    WriteRegisterWord(RegisterType::PC, 0xE5B3);
+    WriteRegisterWord(RegisterType::PC, 0xE5B4);
     WriteRegisterWord(RegisterType::SP, 0xCECA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE5B3, 0x49);
@@ -28716,6 +32682,11 @@ void test_49_0250()
 
 void test_49_0251()
 {
+    if (skip_test_49_0251)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28753,7 +32724,7 @@ void test_49_0251()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xBE);
     CheckRegisterByte(RegisterType::L, 0xCD);
-    WriteRegisterWord(RegisterType::PC, 0x225A);
+    WriteRegisterWord(RegisterType::PC, 0x225B);
     WriteRegisterWord(RegisterType::SP, 0xC389);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x225A, 0x49);
@@ -28761,6 +32732,11 @@ void test_49_0251()
 
 void test_49_0252()
 {
+    if (skip_test_49_0252)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28798,7 +32774,7 @@ void test_49_0252()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x36);
     CheckRegisterByte(RegisterType::L, 0xF9);
-    WriteRegisterWord(RegisterType::PC, 0x81B9);
+    WriteRegisterWord(RegisterType::PC, 0x81BA);
     WriteRegisterWord(RegisterType::SP, 0x94F3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x81B9, 0x49);
@@ -28806,6 +32782,11 @@ void test_49_0252()
 
 void test_49_0253()
 {
+    if (skip_test_49_0253)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28843,7 +32824,7 @@ void test_49_0253()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x53);
     CheckRegisterByte(RegisterType::L, 0xC1);
-    WriteRegisterWord(RegisterType::PC, 0x26D9);
+    WriteRegisterWord(RegisterType::PC, 0x26DA);
     WriteRegisterWord(RegisterType::SP, 0xF8A8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x26D9, 0x49);
@@ -28851,6 +32832,11 @@ void test_49_0253()
 
 void test_49_0254()
 {
+    if (skip_test_49_0254)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28888,7 +32874,7 @@ void test_49_0254()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0x72);
-    WriteRegisterWord(RegisterType::PC, 0x65F3);
+    WriteRegisterWord(RegisterType::PC, 0x65F4);
     WriteRegisterWord(RegisterType::SP, 0xDF3F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x65F3, 0x49);
@@ -28896,6 +32882,11 @@ void test_49_0254()
 
 void test_49_0255()
 {
+    if (skip_test_49_0255)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28933,7 +32924,7 @@ void test_49_0255()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xF3);
     CheckRegisterByte(RegisterType::L, 0x9F);
-    WriteRegisterWord(RegisterType::PC, 0xCCDA);
+    WriteRegisterWord(RegisterType::PC, 0xCCDB);
     WriteRegisterWord(RegisterType::SP, 0x74F6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCCDA, 0x49);
@@ -28941,6 +32932,11 @@ void test_49_0255()
 
 void test_49_0256()
 {
+    if (skip_test_49_0256)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -28978,7 +32974,7 @@ void test_49_0256()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x16);
     CheckRegisterByte(RegisterType::L, 0x8A);
-    WriteRegisterWord(RegisterType::PC, 0x1FD9);
+    WriteRegisterWord(RegisterType::PC, 0x1FDA);
     WriteRegisterWord(RegisterType::SP, 0xFB5A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1FD9, 0x49);
@@ -28986,6 +32982,11 @@ void test_49_0256()
 
 void test_49_0257()
 {
+    if (skip_test_49_0257)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29023,7 +33024,7 @@ void test_49_0257()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0xFE);
-    WriteRegisterWord(RegisterType::PC, 0x1A7F);
+    WriteRegisterWord(RegisterType::PC, 0x1A80);
     WriteRegisterWord(RegisterType::SP, 0x59C9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1A7F, 0x49);
@@ -29031,6 +33032,11 @@ void test_49_0257()
 
 void test_49_0258()
 {
+    if (skip_test_49_0258)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29068,7 +33074,7 @@ void test_49_0258()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x40);
     CheckRegisterByte(RegisterType::L, 0xA3);
-    WriteRegisterWord(RegisterType::PC, 0x877E);
+    WriteRegisterWord(RegisterType::PC, 0x877F);
     WriteRegisterWord(RegisterType::SP, 0x4D85);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x877E, 0x49);
@@ -29076,6 +33082,11 @@ void test_49_0258()
 
 void test_49_0259()
 {
+    if (skip_test_49_0259)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29113,7 +33124,7 @@ void test_49_0259()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xE3);
     CheckRegisterByte(RegisterType::L, 0x80);
-    WriteRegisterWord(RegisterType::PC, 0xE840);
+    WriteRegisterWord(RegisterType::PC, 0xE841);
     WriteRegisterWord(RegisterType::SP, 0x0900);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE840, 0x49);
@@ -29121,6 +33132,11 @@ void test_49_0259()
 
 void test_49_025A()
 {
+    if (skip_test_49_025A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29158,7 +33174,7 @@ void test_49_025A()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x86);
     CheckRegisterByte(RegisterType::L, 0xC5);
-    WriteRegisterWord(RegisterType::PC, 0x3EB8);
+    WriteRegisterWord(RegisterType::PC, 0x3EB9);
     WriteRegisterWord(RegisterType::SP, 0x447C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3EB8, 0x49);
@@ -29166,6 +33182,11 @@ void test_49_025A()
 
 void test_49_025B()
 {
+    if (skip_test_49_025B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29203,7 +33224,7 @@ void test_49_025B()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0xA4);
-    WriteRegisterWord(RegisterType::PC, 0xE169);
+    WriteRegisterWord(RegisterType::PC, 0xE16A);
     WriteRegisterWord(RegisterType::SP, 0xED6A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE169, 0x49);
@@ -29211,6 +33232,11 @@ void test_49_025B()
 
 void test_49_025C()
 {
+    if (skip_test_49_025C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29248,7 +33274,7 @@ void test_49_025C()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0xB8);
-    WriteRegisterWord(RegisterType::PC, 0x40B1);
+    WriteRegisterWord(RegisterType::PC, 0x40B2);
     WriteRegisterWord(RegisterType::SP, 0x5586);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x40B1, 0x49);
@@ -29256,6 +33282,11 @@ void test_49_025C()
 
 void test_49_025D()
 {
+    if (skip_test_49_025D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29293,7 +33324,7 @@ void test_49_025D()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x36);
     CheckRegisterByte(RegisterType::L, 0xB0);
-    WriteRegisterWord(RegisterType::PC, 0xCB68);
+    WriteRegisterWord(RegisterType::PC, 0xCB69);
     WriteRegisterWord(RegisterType::SP, 0xC8AB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCB68, 0x49);
@@ -29301,6 +33332,11 @@ void test_49_025D()
 
 void test_49_025E()
 {
+    if (skip_test_49_025E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29338,7 +33374,7 @@ void test_49_025E()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xDE);
     CheckRegisterByte(RegisterType::L, 0x74);
-    WriteRegisterWord(RegisterType::PC, 0xFB56);
+    WriteRegisterWord(RegisterType::PC, 0xFB57);
     WriteRegisterWord(RegisterType::SP, 0x0A85);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFB56, 0x49);
@@ -29346,6 +33382,11 @@ void test_49_025E()
 
 void test_49_025F()
 {
+    if (skip_test_49_025F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29383,7 +33424,7 @@ void test_49_025F()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x7D);
     CheckRegisterByte(RegisterType::L, 0xD6);
-    WriteRegisterWord(RegisterType::PC, 0x8232);
+    WriteRegisterWord(RegisterType::PC, 0x8233);
     WriteRegisterWord(RegisterType::SP, 0xF253);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8232, 0x49);
@@ -29391,6 +33432,11 @@ void test_49_025F()
 
 void test_49_0260()
 {
+    if (skip_test_49_0260)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29428,7 +33474,7 @@ void test_49_0260()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xD0);
     CheckRegisterByte(RegisterType::L, 0x30);
-    WriteRegisterWord(RegisterType::PC, 0x754C);
+    WriteRegisterWord(RegisterType::PC, 0x754D);
     WriteRegisterWord(RegisterType::SP, 0x926F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x754C, 0x49);
@@ -29436,6 +33482,11 @@ void test_49_0260()
 
 void test_49_0261()
 {
+    if (skip_test_49_0261)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29473,7 +33524,7 @@ void test_49_0261()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x3A);
     CheckRegisterByte(RegisterType::L, 0x4E);
-    WriteRegisterWord(RegisterType::PC, 0x0614);
+    WriteRegisterWord(RegisterType::PC, 0x0615);
     WriteRegisterWord(RegisterType::SP, 0xFC6C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0614, 0x49);
@@ -29481,6 +33532,11 @@ void test_49_0261()
 
 void test_49_0262()
 {
+    if (skip_test_49_0262)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29518,7 +33574,7 @@ void test_49_0262()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0xCC);
-    WriteRegisterWord(RegisterType::PC, 0x85EE);
+    WriteRegisterWord(RegisterType::PC, 0x85EF);
     WriteRegisterWord(RegisterType::SP, 0xA27D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x85EE, 0x49);
@@ -29526,6 +33582,11 @@ void test_49_0262()
 
 void test_49_0263()
 {
+    if (skip_test_49_0263)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29563,7 +33624,7 @@ void test_49_0263()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x43);
     CheckRegisterByte(RegisterType::L, 0xB7);
-    WriteRegisterWord(RegisterType::PC, 0xD41E);
+    WriteRegisterWord(RegisterType::PC, 0xD41F);
     WriteRegisterWord(RegisterType::SP, 0x6A6F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD41E, 0x49);
@@ -29571,6 +33632,11 @@ void test_49_0263()
 
 void test_49_0264()
 {
+    if (skip_test_49_0264)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29608,7 +33674,7 @@ void test_49_0264()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    WriteRegisterWord(RegisterType::PC, 0x5DB0);
+    WriteRegisterWord(RegisterType::PC, 0x5DB1);
     WriteRegisterWord(RegisterType::SP, 0xAE60);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5DB0, 0x49);
@@ -29616,6 +33682,11 @@ void test_49_0264()
 
 void test_49_0265()
 {
+    if (skip_test_49_0265)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29653,7 +33724,7 @@ void test_49_0265()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0xE9);
-    WriteRegisterWord(RegisterType::PC, 0xBD8F);
+    WriteRegisterWord(RegisterType::PC, 0xBD90);
     WriteRegisterWord(RegisterType::SP, 0xA8F4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBD8F, 0x49);
@@ -29661,6 +33732,11 @@ void test_49_0265()
 
 void test_49_0266()
 {
+    if (skip_test_49_0266)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29698,7 +33774,7 @@ void test_49_0266()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0x91);
-    WriteRegisterWord(RegisterType::PC, 0x7755);
+    WriteRegisterWord(RegisterType::PC, 0x7756);
     WriteRegisterWord(RegisterType::SP, 0x0E07);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7755, 0x49);
@@ -29706,6 +33782,11 @@ void test_49_0266()
 
 void test_49_0267()
 {
+    if (skip_test_49_0267)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29743,7 +33824,7 @@ void test_49_0267()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xF3);
     CheckRegisterByte(RegisterType::L, 0xFF);
-    WriteRegisterWord(RegisterType::PC, 0xF2B5);
+    WriteRegisterWord(RegisterType::PC, 0xF2B6);
     WriteRegisterWord(RegisterType::SP, 0x5F80);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF2B5, 0x49);
@@ -29751,6 +33832,11 @@ void test_49_0267()
 
 void test_49_0268()
 {
+    if (skip_test_49_0268)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29788,7 +33874,7 @@ void test_49_0268()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xE8);
     CheckRegisterByte(RegisterType::L, 0xF0);
-    WriteRegisterWord(RegisterType::PC, 0xF460);
+    WriteRegisterWord(RegisterType::PC, 0xF461);
     WriteRegisterWord(RegisterType::SP, 0xF7E7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF460, 0x49);
@@ -29796,6 +33882,11 @@ void test_49_0268()
 
 void test_49_0269()
 {
+    if (skip_test_49_0269)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29833,7 +33924,7 @@ void test_49_0269()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xD2);
     CheckRegisterByte(RegisterType::L, 0x19);
-    WriteRegisterWord(RegisterType::PC, 0x6A87);
+    WriteRegisterWord(RegisterType::PC, 0x6A88);
     WriteRegisterWord(RegisterType::SP, 0x9CDA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6A87, 0x49);
@@ -29841,6 +33932,11 @@ void test_49_0269()
 
 void test_49_026A()
 {
+    if (skip_test_49_026A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29878,7 +33974,7 @@ void test_49_026A()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x2E);
     CheckRegisterByte(RegisterType::L, 0x97);
-    WriteRegisterWord(RegisterType::PC, 0x9454);
+    WriteRegisterWord(RegisterType::PC, 0x9455);
     WriteRegisterWord(RegisterType::SP, 0x1FC0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9454, 0x49);
@@ -29886,6 +33982,11 @@ void test_49_026A()
 
 void test_49_026B()
 {
+    if (skip_test_49_026B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29923,7 +34024,7 @@ void test_49_026B()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0x8F);
-    WriteRegisterWord(RegisterType::PC, 0x2AAE);
+    WriteRegisterWord(RegisterType::PC, 0x2AAF);
     WriteRegisterWord(RegisterType::SP, 0x56B4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2AAE, 0x49);
@@ -29931,6 +34032,11 @@ void test_49_026B()
 
 void test_49_026C()
 {
+    if (skip_test_49_026C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -29968,7 +34074,7 @@ void test_49_026C()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x39);
     CheckRegisterByte(RegisterType::L, 0xE1);
-    WriteRegisterWord(RegisterType::PC, 0xCE0C);
+    WriteRegisterWord(RegisterType::PC, 0xCE0D);
     WriteRegisterWord(RegisterType::SP, 0xBF80);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCE0C, 0x49);
@@ -29976,6 +34082,11 @@ void test_49_026C()
 
 void test_49_026D()
 {
+    if (skip_test_49_026D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30013,7 +34124,7 @@ void test_49_026D()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x79);
     CheckRegisterByte(RegisterType::L, 0xCE);
-    WriteRegisterWord(RegisterType::PC, 0xF365);
+    WriteRegisterWord(RegisterType::PC, 0xF366);
     WriteRegisterWord(RegisterType::SP, 0x186B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF365, 0x49);
@@ -30021,6 +34132,11 @@ void test_49_026D()
 
 void test_49_026E()
 {
+    if (skip_test_49_026E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30058,7 +34174,7 @@ void test_49_026E()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x0D);
     CheckRegisterByte(RegisterType::L, 0x92);
-    WriteRegisterWord(RegisterType::PC, 0x138D);
+    WriteRegisterWord(RegisterType::PC, 0x138E);
     WriteRegisterWord(RegisterType::SP, 0xFBEF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x138D, 0x49);
@@ -30066,6 +34182,11 @@ void test_49_026E()
 
 void test_49_026F()
 {
+    if (skip_test_49_026F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30103,7 +34224,7 @@ void test_49_026F()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x20);
     CheckRegisterByte(RegisterType::L, 0x2E);
-    WriteRegisterWord(RegisterType::PC, 0xF934);
+    WriteRegisterWord(RegisterType::PC, 0xF935);
     WriteRegisterWord(RegisterType::SP, 0x4515);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF934, 0x49);
@@ -30111,6 +34232,11 @@ void test_49_026F()
 
 void test_49_0270()
 {
+    if (skip_test_49_0270)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30148,7 +34274,7 @@ void test_49_0270()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0x2A);
-    WriteRegisterWord(RegisterType::PC, 0x92AB);
+    WriteRegisterWord(RegisterType::PC, 0x92AC);
     WriteRegisterWord(RegisterType::SP, 0x24AC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x92AB, 0x49);
@@ -30156,6 +34282,11 @@ void test_49_0270()
 
 void test_49_0271()
 {
+    if (skip_test_49_0271)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30193,7 +34324,7 @@ void test_49_0271()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x8E);
     CheckRegisterByte(RegisterType::L, 0x16);
-    WriteRegisterWord(RegisterType::PC, 0x1431);
+    WriteRegisterWord(RegisterType::PC, 0x1432);
     WriteRegisterWord(RegisterType::SP, 0xE3A3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1431, 0x49);
@@ -30201,6 +34332,11 @@ void test_49_0271()
 
 void test_49_0272()
 {
+    if (skip_test_49_0272)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30238,7 +34374,7 @@ void test_49_0272()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x48);
     CheckRegisterByte(RegisterType::L, 0x7C);
-    WriteRegisterWord(RegisterType::PC, 0xE1D7);
+    WriteRegisterWord(RegisterType::PC, 0xE1D8);
     WriteRegisterWord(RegisterType::SP, 0x0377);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE1D7, 0x49);
@@ -30246,6 +34382,11 @@ void test_49_0272()
 
 void test_49_0273()
 {
+    if (skip_test_49_0273)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30283,7 +34424,7 @@ void test_49_0273()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x58);
     CheckRegisterByte(RegisterType::L, 0xD4);
-    WriteRegisterWord(RegisterType::PC, 0xC94B);
+    WriteRegisterWord(RegisterType::PC, 0xC94C);
     WriteRegisterWord(RegisterType::SP, 0x7DBB);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC94B, 0x49);
@@ -30291,6 +34432,11 @@ void test_49_0273()
 
 void test_49_0274()
 {
+    if (skip_test_49_0274)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30328,7 +34474,7 @@ void test_49_0274()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x08);
     CheckRegisterByte(RegisterType::L, 0x24);
-    WriteRegisterWord(RegisterType::PC, 0xD970);
+    WriteRegisterWord(RegisterType::PC, 0xD971);
     WriteRegisterWord(RegisterType::SP, 0xD178);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD970, 0x49);
@@ -30336,6 +34482,11 @@ void test_49_0274()
 
 void test_49_0275()
 {
+    if (skip_test_49_0275)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30373,7 +34524,7 @@ void test_49_0275()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x20);
     CheckRegisterByte(RegisterType::L, 0x9E);
-    WriteRegisterWord(RegisterType::PC, 0xF5F4);
+    WriteRegisterWord(RegisterType::PC, 0xF5F5);
     WriteRegisterWord(RegisterType::SP, 0x9C0C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF5F4, 0x49);
@@ -30381,6 +34532,11 @@ void test_49_0275()
 
 void test_49_0276()
 {
+    if (skip_test_49_0276)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30418,7 +34574,7 @@ void test_49_0276()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xDB);
     CheckRegisterByte(RegisterType::L, 0x71);
-    WriteRegisterWord(RegisterType::PC, 0x60BD);
+    WriteRegisterWord(RegisterType::PC, 0x60BE);
     WriteRegisterWord(RegisterType::SP, 0x0A0E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x60BD, 0x49);
@@ -30426,6 +34582,11 @@ void test_49_0276()
 
 void test_49_0277()
 {
+    if (skip_test_49_0277)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30463,7 +34624,7 @@ void test_49_0277()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x30);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    WriteRegisterWord(RegisterType::PC, 0xB2FC);
+    WriteRegisterWord(RegisterType::PC, 0xB2FD);
     WriteRegisterWord(RegisterType::SP, 0x60FC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB2FC, 0x49);
@@ -30471,6 +34632,11 @@ void test_49_0277()
 
 void test_49_0278()
 {
+    if (skip_test_49_0278)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30508,7 +34674,7 @@ void test_49_0278()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x46);
     CheckRegisterByte(RegisterType::L, 0x26);
-    WriteRegisterWord(RegisterType::PC, 0x64AD);
+    WriteRegisterWord(RegisterType::PC, 0x64AE);
     WriteRegisterWord(RegisterType::SP, 0x52C7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x64AD, 0x49);
@@ -30516,6 +34682,11 @@ void test_49_0278()
 
 void test_49_0279()
 {
+    if (skip_test_49_0279)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30553,7 +34724,7 @@ void test_49_0279()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x03);
     CheckRegisterByte(RegisterType::L, 0x59);
-    WriteRegisterWord(RegisterType::PC, 0x22E0);
+    WriteRegisterWord(RegisterType::PC, 0x22E1);
     WriteRegisterWord(RegisterType::SP, 0xAA07);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x22E0, 0x49);
@@ -30561,6 +34732,11 @@ void test_49_0279()
 
 void test_49_027A()
 {
+    if (skip_test_49_027A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30598,7 +34774,7 @@ void test_49_027A()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0x06);
-    WriteRegisterWord(RegisterType::PC, 0x94BF);
+    WriteRegisterWord(RegisterType::PC, 0x94C0);
     WriteRegisterWord(RegisterType::SP, 0x73D7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x94BF, 0x49);
@@ -30606,6 +34782,11 @@ void test_49_027A()
 
 void test_49_027B()
 {
+    if (skip_test_49_027B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30643,7 +34824,7 @@ void test_49_027B()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x7E);
     CheckRegisterByte(RegisterType::L, 0x38);
-    WriteRegisterWord(RegisterType::PC, 0x4892);
+    WriteRegisterWord(RegisterType::PC, 0x4893);
     WriteRegisterWord(RegisterType::SP, 0xF44F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4892, 0x49);
@@ -30651,6 +34832,11 @@ void test_49_027B()
 
 void test_49_027C()
 {
+    if (skip_test_49_027C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30688,7 +34874,7 @@ void test_49_027C()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xE0);
     CheckRegisterByte(RegisterType::L, 0x87);
-    WriteRegisterWord(RegisterType::PC, 0xEE5B);
+    WriteRegisterWord(RegisterType::PC, 0xEE5C);
     WriteRegisterWord(RegisterType::SP, 0xE99A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEE5B, 0x49);
@@ -30696,6 +34882,11 @@ void test_49_027C()
 
 void test_49_027D()
 {
+    if (skip_test_49_027D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30733,7 +34924,7 @@ void test_49_027D()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xE3);
     CheckRegisterByte(RegisterType::L, 0x84);
-    WriteRegisterWord(RegisterType::PC, 0x45CA);
+    WriteRegisterWord(RegisterType::PC, 0x45CB);
     WriteRegisterWord(RegisterType::SP, 0x11B9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x45CA, 0x49);
@@ -30741,6 +34932,11 @@ void test_49_027D()
 
 void test_49_027E()
 {
+    if (skip_test_49_027E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30778,7 +34974,7 @@ void test_49_027E()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x37);
     CheckRegisterByte(RegisterType::L, 0x04);
-    WriteRegisterWord(RegisterType::PC, 0x7B73);
+    WriteRegisterWord(RegisterType::PC, 0x7B74);
     WriteRegisterWord(RegisterType::SP, 0xE332);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7B73, 0x49);
@@ -30786,6 +34982,11 @@ void test_49_027E()
 
 void test_49_027F()
 {
+    if (skip_test_49_027F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30823,7 +35024,7 @@ void test_49_027F()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x38);
     CheckRegisterByte(RegisterType::L, 0xDA);
-    WriteRegisterWord(RegisterType::PC, 0x17D0);
+    WriteRegisterWord(RegisterType::PC, 0x17D1);
     WriteRegisterWord(RegisterType::SP, 0x02EA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x17D0, 0x49);
@@ -30831,6 +35032,11 @@ void test_49_027F()
 
 void test_49_0280()
 {
+    if (skip_test_49_0280)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30868,7 +35074,7 @@ void test_49_0280()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xFE);
     CheckRegisterByte(RegisterType::L, 0x86);
-    WriteRegisterWord(RegisterType::PC, 0xF00B);
+    WriteRegisterWord(RegisterType::PC, 0xF00C);
     WriteRegisterWord(RegisterType::SP, 0x79CD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF00B, 0x49);
@@ -30876,6 +35082,11 @@ void test_49_0280()
 
 void test_49_0281()
 {
+    if (skip_test_49_0281)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30913,7 +35124,7 @@ void test_49_0281()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xE7);
     CheckRegisterByte(RegisterType::L, 0x02);
-    WriteRegisterWord(RegisterType::PC, 0xCB22);
+    WriteRegisterWord(RegisterType::PC, 0xCB23);
     WriteRegisterWord(RegisterType::SP, 0xDBD8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCB22, 0x49);
@@ -30921,6 +35132,11 @@ void test_49_0281()
 
 void test_49_0282()
 {
+    if (skip_test_49_0282)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -30958,7 +35174,7 @@ void test_49_0282()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x96);
     CheckRegisterByte(RegisterType::L, 0x02);
-    WriteRegisterWord(RegisterType::PC, 0x8E9C);
+    WriteRegisterWord(RegisterType::PC, 0x8E9D);
     WriteRegisterWord(RegisterType::SP, 0x1BF6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8E9C, 0x49);
@@ -30966,6 +35182,11 @@ void test_49_0282()
 
 void test_49_0283()
 {
+    if (skip_test_49_0283)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31003,7 +35224,7 @@ void test_49_0283()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xC1);
     CheckRegisterByte(RegisterType::L, 0x8F);
-    WriteRegisterWord(RegisterType::PC, 0x9A51);
+    WriteRegisterWord(RegisterType::PC, 0x9A52);
     WriteRegisterWord(RegisterType::SP, 0xE1D3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9A51, 0x49);
@@ -31011,6 +35232,11 @@ void test_49_0283()
 
 void test_49_0284()
 {
+    if (skip_test_49_0284)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31048,7 +35274,7 @@ void test_49_0284()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x87);
     CheckRegisterByte(RegisterType::L, 0x2E);
-    WriteRegisterWord(RegisterType::PC, 0x103C);
+    WriteRegisterWord(RegisterType::PC, 0x103D);
     WriteRegisterWord(RegisterType::SP, 0x8567);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x103C, 0x49);
@@ -31056,6 +35282,11 @@ void test_49_0284()
 
 void test_49_0285()
 {
+    if (skip_test_49_0285)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31093,7 +35324,7 @@ void test_49_0285()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x58);
     CheckRegisterByte(RegisterType::L, 0x46);
-    WriteRegisterWord(RegisterType::PC, 0xA14C);
+    WriteRegisterWord(RegisterType::PC, 0xA14D);
     WriteRegisterWord(RegisterType::SP, 0x0675);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA14C, 0x49);
@@ -31101,6 +35332,11 @@ void test_49_0285()
 
 void test_49_0286()
 {
+    if (skip_test_49_0286)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31138,7 +35374,7 @@ void test_49_0286()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x1D);
     CheckRegisterByte(RegisterType::L, 0x7C);
-    WriteRegisterWord(RegisterType::PC, 0x4709);
+    WriteRegisterWord(RegisterType::PC, 0x470A);
     WriteRegisterWord(RegisterType::SP, 0xE777);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4709, 0x49);
@@ -31146,6 +35382,11 @@ void test_49_0286()
 
 void test_49_0287()
 {
+    if (skip_test_49_0287)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31183,7 +35424,7 @@ void test_49_0287()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x5E);
     CheckRegisterByte(RegisterType::L, 0xC4);
-    WriteRegisterWord(RegisterType::PC, 0x955B);
+    WriteRegisterWord(RegisterType::PC, 0x955C);
     WriteRegisterWord(RegisterType::SP, 0x3840);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x955B, 0x49);
@@ -31191,6 +35432,11 @@ void test_49_0287()
 
 void test_49_0288()
 {
+    if (skip_test_49_0288)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31228,7 +35474,7 @@ void test_49_0288()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xDD);
     CheckRegisterByte(RegisterType::L, 0x83);
-    WriteRegisterWord(RegisterType::PC, 0x2995);
+    WriteRegisterWord(RegisterType::PC, 0x2996);
     WriteRegisterWord(RegisterType::SP, 0x3C38);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2995, 0x49);
@@ -31236,6 +35482,11 @@ void test_49_0288()
 
 void test_49_0289()
 {
+    if (skip_test_49_0289)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31273,7 +35524,7 @@ void test_49_0289()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xE1);
     CheckRegisterByte(RegisterType::L, 0x09);
-    WriteRegisterWord(RegisterType::PC, 0xC46E);
+    WriteRegisterWord(RegisterType::PC, 0xC46F);
     WriteRegisterWord(RegisterType::SP, 0x866A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC46E, 0x49);
@@ -31281,6 +35532,11 @@ void test_49_0289()
 
 void test_49_028A()
 {
+    if (skip_test_49_028A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31318,7 +35574,7 @@ void test_49_028A()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x48);
     CheckRegisterByte(RegisterType::L, 0xB2);
-    WriteRegisterWord(RegisterType::PC, 0x08B4);
+    WriteRegisterWord(RegisterType::PC, 0x08B5);
     WriteRegisterWord(RegisterType::SP, 0x7765);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x08B4, 0x49);
@@ -31326,6 +35582,11 @@ void test_49_028A()
 
 void test_49_028B()
 {
+    if (skip_test_49_028B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31363,7 +35624,7 @@ void test_49_028B()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xAE);
     CheckRegisterByte(RegisterType::L, 0x15);
-    WriteRegisterWord(RegisterType::PC, 0x11B7);
+    WriteRegisterWord(RegisterType::PC, 0x11B8);
     WriteRegisterWord(RegisterType::SP, 0xEA1E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x11B7, 0x49);
@@ -31371,6 +35632,11 @@ void test_49_028B()
 
 void test_49_028C()
 {
+    if (skip_test_49_028C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31408,7 +35674,7 @@ void test_49_028C()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x15);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    WriteRegisterWord(RegisterType::PC, 0x0628);
+    WriteRegisterWord(RegisterType::PC, 0x0629);
     WriteRegisterWord(RegisterType::SP, 0xAB41);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0628, 0x49);
@@ -31416,6 +35682,11 @@ void test_49_028C()
 
 void test_49_028D()
 {
+    if (skip_test_49_028D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31453,7 +35724,7 @@ void test_49_028D()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0xA5);
-    WriteRegisterWord(RegisterType::PC, 0x1FEF);
+    WriteRegisterWord(RegisterType::PC, 0x1FF0);
     WriteRegisterWord(RegisterType::SP, 0x0E61);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1FEF, 0x49);
@@ -31461,6 +35732,11 @@ void test_49_028D()
 
 void test_49_028E()
 {
+    if (skip_test_49_028E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31498,7 +35774,7 @@ void test_49_028E()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0x5B);
-    WriteRegisterWord(RegisterType::PC, 0x0FAB);
+    WriteRegisterWord(RegisterType::PC, 0x0FAC);
     WriteRegisterWord(RegisterType::SP, 0x9539);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0FAB, 0x49);
@@ -31506,6 +35782,11 @@ void test_49_028E()
 
 void test_49_028F()
 {
+    if (skip_test_49_028F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31543,7 +35824,7 @@ void test_49_028F()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xFE);
     CheckRegisterByte(RegisterType::L, 0xEC);
-    WriteRegisterWord(RegisterType::PC, 0x6A00);
+    WriteRegisterWord(RegisterType::PC, 0x6A01);
     WriteRegisterWord(RegisterType::SP, 0x1E34);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6A00, 0x49);
@@ -31551,6 +35832,11 @@ void test_49_028F()
 
 void test_49_0290()
 {
+    if (skip_test_49_0290)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31588,7 +35874,7 @@ void test_49_0290()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xE8);
     CheckRegisterByte(RegisterType::L, 0x84);
-    WriteRegisterWord(RegisterType::PC, 0x00F6);
+    WriteRegisterWord(RegisterType::PC, 0x00F7);
     WriteRegisterWord(RegisterType::SP, 0xACF2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x00F6, 0x49);
@@ -31596,6 +35882,11 @@ void test_49_0290()
 
 void test_49_0291()
 {
+    if (skip_test_49_0291)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31633,7 +35924,7 @@ void test_49_0291()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0xEE);
-    WriteRegisterWord(RegisterType::PC, 0x94A1);
+    WriteRegisterWord(RegisterType::PC, 0x94A2);
     WriteRegisterWord(RegisterType::SP, 0x50C3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x94A1, 0x49);
@@ -31641,6 +35932,11 @@ void test_49_0291()
 
 void test_49_0292()
 {
+    if (skip_test_49_0292)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31678,7 +35974,7 @@ void test_49_0292()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x19);
     CheckRegisterByte(RegisterType::L, 0x1A);
-    WriteRegisterWord(RegisterType::PC, 0x098C);
+    WriteRegisterWord(RegisterType::PC, 0x098D);
     WriteRegisterWord(RegisterType::SP, 0xB387);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x098C, 0x49);
@@ -31686,6 +35982,11 @@ void test_49_0292()
 
 void test_49_0293()
 {
+    if (skip_test_49_0293)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31723,7 +36024,7 @@ void test_49_0293()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x78);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    WriteRegisterWord(RegisterType::PC, 0xC577);
+    WriteRegisterWord(RegisterType::PC, 0xC578);
     WriteRegisterWord(RegisterType::SP, 0xA62A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC577, 0x49);
@@ -31731,6 +36032,11 @@ void test_49_0293()
 
 void test_49_0294()
 {
+    if (skip_test_49_0294)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31768,7 +36074,7 @@ void test_49_0294()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x33);
     CheckRegisterByte(RegisterType::L, 0x8E);
-    WriteRegisterWord(RegisterType::PC, 0xDE49);
+    WriteRegisterWord(RegisterType::PC, 0xDE4A);
     WriteRegisterWord(RegisterType::SP, 0xA9FA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDE49, 0x49);
@@ -31776,6 +36082,11 @@ void test_49_0294()
 
 void test_49_0295()
 {
+    if (skip_test_49_0295)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31813,7 +36124,7 @@ void test_49_0295()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xF1);
     CheckRegisterByte(RegisterType::L, 0xDD);
-    WriteRegisterWord(RegisterType::PC, 0x0C92);
+    WriteRegisterWord(RegisterType::PC, 0x0C93);
     WriteRegisterWord(RegisterType::SP, 0x90D8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0C92, 0x49);
@@ -31821,6 +36132,11 @@ void test_49_0295()
 
 void test_49_0296()
 {
+    if (skip_test_49_0296)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31858,7 +36174,7 @@ void test_49_0296()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x3D);
     CheckRegisterByte(RegisterType::L, 0xFF);
-    WriteRegisterWord(RegisterType::PC, 0xEDDB);
+    WriteRegisterWord(RegisterType::PC, 0xEDDC);
     WriteRegisterWord(RegisterType::SP, 0x5564);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEDDB, 0x49);
@@ -31866,6 +36182,11 @@ void test_49_0296()
 
 void test_49_0297()
 {
+    if (skip_test_49_0297)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31903,7 +36224,7 @@ void test_49_0297()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x02);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    WriteRegisterWord(RegisterType::PC, 0xEB67);
+    WriteRegisterWord(RegisterType::PC, 0xEB68);
     WriteRegisterWord(RegisterType::SP, 0x8B72);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEB67, 0x49);
@@ -31911,6 +36232,11 @@ void test_49_0297()
 
 void test_49_0298()
 {
+    if (skip_test_49_0298)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31948,7 +36274,7 @@ void test_49_0298()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x58);
     CheckRegisterByte(RegisterType::L, 0xB1);
-    WriteRegisterWord(RegisterType::PC, 0x9EFA);
+    WriteRegisterWord(RegisterType::PC, 0x9EFB);
     WriteRegisterWord(RegisterType::SP, 0xE722);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9EFA, 0x49);
@@ -31956,6 +36282,11 @@ void test_49_0298()
 
 void test_49_0299()
 {
+    if (skip_test_49_0299)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -31993,7 +36324,7 @@ void test_49_0299()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x2C);
     CheckRegisterByte(RegisterType::L, 0xD1);
-    WriteRegisterWord(RegisterType::PC, 0xF067);
+    WriteRegisterWord(RegisterType::PC, 0xF068);
     WriteRegisterWord(RegisterType::SP, 0xCE98);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF067, 0x49);
@@ -32001,6 +36332,11 @@ void test_49_0299()
 
 void test_49_029A()
 {
+    if (skip_test_49_029A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32038,7 +36374,7 @@ void test_49_029A()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x18);
     CheckRegisterByte(RegisterType::L, 0x54);
-    WriteRegisterWord(RegisterType::PC, 0x7D3C);
+    WriteRegisterWord(RegisterType::PC, 0x7D3D);
     WriteRegisterWord(RegisterType::SP, 0xF031);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7D3C, 0x49);
@@ -32046,6 +36382,11 @@ void test_49_029A()
 
 void test_49_029B()
 {
+    if (skip_test_49_029B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32083,7 +36424,7 @@ void test_49_029B()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x8D);
     CheckRegisterByte(RegisterType::L, 0xAC);
-    WriteRegisterWord(RegisterType::PC, 0xAC09);
+    WriteRegisterWord(RegisterType::PC, 0xAC0A);
     WriteRegisterWord(RegisterType::SP, 0xCCA1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAC09, 0x49);
@@ -32091,6 +36432,11 @@ void test_49_029B()
 
 void test_49_029C()
 {
+    if (skip_test_49_029C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32128,7 +36474,7 @@ void test_49_029C()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x18);
     CheckRegisterByte(RegisterType::L, 0xEA);
-    WriteRegisterWord(RegisterType::PC, 0xF732);
+    WriteRegisterWord(RegisterType::PC, 0xF733);
     WriteRegisterWord(RegisterType::SP, 0x01A7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF732, 0x49);
@@ -32136,6 +36482,11 @@ void test_49_029C()
 
 void test_49_029D()
 {
+    if (skip_test_49_029D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32173,7 +36524,7 @@ void test_49_029D()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x9B);
     CheckRegisterByte(RegisterType::L, 0x17);
-    WriteRegisterWord(RegisterType::PC, 0x531D);
+    WriteRegisterWord(RegisterType::PC, 0x531E);
     WriteRegisterWord(RegisterType::SP, 0xF9DA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x531D, 0x49);
@@ -32181,6 +36532,11 @@ void test_49_029D()
 
 void test_49_029E()
 {
+    if (skip_test_49_029E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32218,7 +36574,7 @@ void test_49_029E()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xCC);
     CheckRegisterByte(RegisterType::L, 0x34);
-    WriteRegisterWord(RegisterType::PC, 0x7141);
+    WriteRegisterWord(RegisterType::PC, 0x7142);
     WriteRegisterWord(RegisterType::SP, 0xBD65);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7141, 0x49);
@@ -32226,6 +36582,11 @@ void test_49_029E()
 
 void test_49_029F()
 {
+    if (skip_test_49_029F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32263,7 +36624,7 @@ void test_49_029F()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xB2);
     CheckRegisterByte(RegisterType::L, 0xE9);
-    WriteRegisterWord(RegisterType::PC, 0xCDE1);
+    WriteRegisterWord(RegisterType::PC, 0xCDE2);
     WriteRegisterWord(RegisterType::SP, 0xA665);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCDE1, 0x49);
@@ -32271,6 +36632,11 @@ void test_49_029F()
 
 void test_49_02A0()
 {
+    if (skip_test_49_02A0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32308,7 +36674,7 @@ void test_49_02A0()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0xE2);
-    WriteRegisterWord(RegisterType::PC, 0xCE86);
+    WriteRegisterWord(RegisterType::PC, 0xCE87);
     WriteRegisterWord(RegisterType::SP, 0x6AFF);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCE86, 0x49);
@@ -32316,6 +36682,11 @@ void test_49_02A0()
 
 void test_49_02A1()
 {
+    if (skip_test_49_02A1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32353,7 +36724,7 @@ void test_49_02A1()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xE7);
     CheckRegisterByte(RegisterType::L, 0xC9);
-    WriteRegisterWord(RegisterType::PC, 0xD164);
+    WriteRegisterWord(RegisterType::PC, 0xD165);
     WriteRegisterWord(RegisterType::SP, 0xD014);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD164, 0x49);
@@ -32361,6 +36732,11 @@ void test_49_02A1()
 
 void test_49_02A2()
 {
+    if (skip_test_49_02A2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32398,7 +36774,7 @@ void test_49_02A2()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xF3);
     CheckRegisterByte(RegisterType::L, 0x07);
-    WriteRegisterWord(RegisterType::PC, 0xB614);
+    WriteRegisterWord(RegisterType::PC, 0xB615);
     WriteRegisterWord(RegisterType::SP, 0x75D3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB614, 0x49);
@@ -32406,6 +36782,11 @@ void test_49_02A2()
 
 void test_49_02A3()
 {
+    if (skip_test_49_02A3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32443,7 +36824,7 @@ void test_49_02A3()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xD7);
     CheckRegisterByte(RegisterType::L, 0xF5);
-    WriteRegisterWord(RegisterType::PC, 0x9998);
+    WriteRegisterWord(RegisterType::PC, 0x9999);
     WriteRegisterWord(RegisterType::SP, 0xD92D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9998, 0x49);
@@ -32451,6 +36832,11 @@ void test_49_02A3()
 
 void test_49_02A4()
 {
+    if (skip_test_49_02A4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32488,7 +36874,7 @@ void test_49_02A4()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x42);
     CheckRegisterByte(RegisterType::L, 0x2F);
-    WriteRegisterWord(RegisterType::PC, 0x1348);
+    WriteRegisterWord(RegisterType::PC, 0x1349);
     WriteRegisterWord(RegisterType::SP, 0x018D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1348, 0x49);
@@ -32496,6 +36882,11 @@ void test_49_02A4()
 
 void test_49_02A5()
 {
+    if (skip_test_49_02A5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32533,7 +36924,7 @@ void test_49_02A5()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x41);
     CheckRegisterByte(RegisterType::L, 0x1A);
-    WriteRegisterWord(RegisterType::PC, 0x6752);
+    WriteRegisterWord(RegisterType::PC, 0x6753);
     WriteRegisterWord(RegisterType::SP, 0xE454);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6752, 0x49);
@@ -32541,6 +36932,11 @@ void test_49_02A5()
 
 void test_49_02A6()
 {
+    if (skip_test_49_02A6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32578,7 +36974,7 @@ void test_49_02A6()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xAA);
     CheckRegisterByte(RegisterType::L, 0xE3);
-    WriteRegisterWord(RegisterType::PC, 0x943C);
+    WriteRegisterWord(RegisterType::PC, 0x943D);
     WriteRegisterWord(RegisterType::SP, 0x0B88);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x943C, 0x49);
@@ -32586,6 +36982,11 @@ void test_49_02A6()
 
 void test_49_02A7()
 {
+    if (skip_test_49_02A7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32623,7 +37024,7 @@ void test_49_02A7()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x44);
     CheckRegisterByte(RegisterType::L, 0x1C);
-    WriteRegisterWord(RegisterType::PC, 0xF641);
+    WriteRegisterWord(RegisterType::PC, 0xF642);
     WriteRegisterWord(RegisterType::SP, 0x735D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF641, 0x49);
@@ -32631,6 +37032,11 @@ void test_49_02A7()
 
 void test_49_02A8()
 {
+    if (skip_test_49_02A8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32668,7 +37074,7 @@ void test_49_02A8()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x32);
     CheckRegisterByte(RegisterType::L, 0x09);
-    WriteRegisterWord(RegisterType::PC, 0xC4C2);
+    WriteRegisterWord(RegisterType::PC, 0xC4C3);
     WriteRegisterWord(RegisterType::SP, 0xD183);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC4C2, 0x49);
@@ -32676,6 +37082,11 @@ void test_49_02A8()
 
 void test_49_02A9()
 {
+    if (skip_test_49_02A9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32713,7 +37124,7 @@ void test_49_02A9()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xA3);
     CheckRegisterByte(RegisterType::L, 0xCD);
-    WriteRegisterWord(RegisterType::PC, 0x0D61);
+    WriteRegisterWord(RegisterType::PC, 0x0D62);
     WriteRegisterWord(RegisterType::SP, 0x7B13);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0D61, 0x49);
@@ -32721,6 +37132,11 @@ void test_49_02A9()
 
 void test_49_02AA()
 {
+    if (skip_test_49_02AA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32758,7 +37174,7 @@ void test_49_02AA()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x91);
     CheckRegisterByte(RegisterType::L, 0xB3);
-    WriteRegisterWord(RegisterType::PC, 0x93BB);
+    WriteRegisterWord(RegisterType::PC, 0x93BC);
     WriteRegisterWord(RegisterType::SP, 0x9FF0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x93BB, 0x49);
@@ -32766,6 +37182,11 @@ void test_49_02AA()
 
 void test_49_02AB()
 {
+    if (skip_test_49_02AB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32803,7 +37224,7 @@ void test_49_02AB()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x4B);
     CheckRegisterByte(RegisterType::L, 0xC7);
-    WriteRegisterWord(RegisterType::PC, 0xF858);
+    WriteRegisterWord(RegisterType::PC, 0xF859);
     WriteRegisterWord(RegisterType::SP, 0x6272);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF858, 0x49);
@@ -32811,6 +37232,11 @@ void test_49_02AB()
 
 void test_49_02AC()
 {
+    if (skip_test_49_02AC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32848,7 +37274,7 @@ void test_49_02AC()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x57);
     CheckRegisterByte(RegisterType::L, 0x32);
-    WriteRegisterWord(RegisterType::PC, 0x68C8);
+    WriteRegisterWord(RegisterType::PC, 0x68C9);
     WriteRegisterWord(RegisterType::SP, 0xBF46);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x68C8, 0x49);
@@ -32856,6 +37282,11 @@ void test_49_02AC()
 
 void test_49_02AD()
 {
+    if (skip_test_49_02AD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32893,7 +37324,7 @@ void test_49_02AD()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0xEA);
-    WriteRegisterWord(RegisterType::PC, 0xD894);
+    WriteRegisterWord(RegisterType::PC, 0xD895);
     WriteRegisterWord(RegisterType::SP, 0x1D18);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD894, 0x49);
@@ -32901,6 +37332,11 @@ void test_49_02AD()
 
 void test_49_02AE()
 {
+    if (skip_test_49_02AE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32938,7 +37374,7 @@ void test_49_02AE()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x76);
     CheckRegisterByte(RegisterType::L, 0x7A);
-    WriteRegisterWord(RegisterType::PC, 0x96ED);
+    WriteRegisterWord(RegisterType::PC, 0x96EE);
     WriteRegisterWord(RegisterType::SP, 0x29EC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x96ED, 0x49);
@@ -32946,6 +37382,11 @@ void test_49_02AE()
 
 void test_49_02AF()
 {
+    if (skip_test_49_02AF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -32983,7 +37424,7 @@ void test_49_02AF()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x44);
     CheckRegisterByte(RegisterType::L, 0x58);
-    WriteRegisterWord(RegisterType::PC, 0xE76B);
+    WriteRegisterWord(RegisterType::PC, 0xE76C);
     WriteRegisterWord(RegisterType::SP, 0xD33B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE76B, 0x49);
@@ -32991,6 +37432,11 @@ void test_49_02AF()
 
 void test_49_02B0()
 {
+    if (skip_test_49_02B0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33028,7 +37474,7 @@ void test_49_02B0()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x76);
     CheckRegisterByte(RegisterType::L, 0xE4);
-    WriteRegisterWord(RegisterType::PC, 0x6218);
+    WriteRegisterWord(RegisterType::PC, 0x6219);
     WriteRegisterWord(RegisterType::SP, 0x2107);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6218, 0x49);
@@ -33036,6 +37482,11 @@ void test_49_02B0()
 
 void test_49_02B1()
 {
+    if (skip_test_49_02B1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33073,7 +37524,7 @@ void test_49_02B1()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xF4);
     CheckRegisterByte(RegisterType::L, 0xB2);
-    WriteRegisterWord(RegisterType::PC, 0xB79B);
+    WriteRegisterWord(RegisterType::PC, 0xB79C);
     WriteRegisterWord(RegisterType::SP, 0xCD31);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB79B, 0x49);
@@ -33081,6 +37532,11 @@ void test_49_02B1()
 
 void test_49_02B2()
 {
+    if (skip_test_49_02B2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33118,7 +37574,7 @@ void test_49_02B2()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x0C);
     CheckRegisterByte(RegisterType::L, 0xD7);
-    WriteRegisterWord(RegisterType::PC, 0x1C48);
+    WriteRegisterWord(RegisterType::PC, 0x1C49);
     WriteRegisterWord(RegisterType::SP, 0xA19A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1C48, 0x49);
@@ -33126,6 +37582,11 @@ void test_49_02B2()
 
 void test_49_02B3()
 {
+    if (skip_test_49_02B3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33163,7 +37624,7 @@ void test_49_02B3()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x5B);
     CheckRegisterByte(RegisterType::L, 0xEF);
-    WriteRegisterWord(RegisterType::PC, 0x17A2);
+    WriteRegisterWord(RegisterType::PC, 0x17A3);
     WriteRegisterWord(RegisterType::SP, 0x84F1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x17A2, 0x49);
@@ -33171,6 +37632,11 @@ void test_49_02B3()
 
 void test_49_02B4()
 {
+    if (skip_test_49_02B4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33208,7 +37674,7 @@ void test_49_02B4()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xC1);
     CheckRegisterByte(RegisterType::L, 0x1A);
-    WriteRegisterWord(RegisterType::PC, 0xA776);
+    WriteRegisterWord(RegisterType::PC, 0xA777);
     WriteRegisterWord(RegisterType::SP, 0x0C31);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA776, 0x49);
@@ -33216,6 +37682,11 @@ void test_49_02B4()
 
 void test_49_02B5()
 {
+    if (skip_test_49_02B5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33253,7 +37724,7 @@ void test_49_02B5()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x53);
     CheckRegisterByte(RegisterType::L, 0x8D);
-    WriteRegisterWord(RegisterType::PC, 0x32FC);
+    WriteRegisterWord(RegisterType::PC, 0x32FD);
     WriteRegisterWord(RegisterType::SP, 0xE239);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x32FC, 0x49);
@@ -33261,6 +37732,11 @@ void test_49_02B5()
 
 void test_49_02B6()
 {
+    if (skip_test_49_02B6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33298,7 +37774,7 @@ void test_49_02B6()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0xB0);
-    WriteRegisterWord(RegisterType::PC, 0xA42A);
+    WriteRegisterWord(RegisterType::PC, 0xA42B);
     WriteRegisterWord(RegisterType::SP, 0x014A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA42A, 0x49);
@@ -33306,6 +37782,11 @@ void test_49_02B6()
 
 void test_49_02B7()
 {
+    if (skip_test_49_02B7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33343,7 +37824,7 @@ void test_49_02B7()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x2B);
     CheckRegisterByte(RegisterType::L, 0xD4);
-    WriteRegisterWord(RegisterType::PC, 0x8E70);
+    WriteRegisterWord(RegisterType::PC, 0x8E71);
     WriteRegisterWord(RegisterType::SP, 0x3385);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8E70, 0x49);
@@ -33351,6 +37832,11 @@ void test_49_02B7()
 
 void test_49_02B8()
 {
+    if (skip_test_49_02B8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33388,7 +37874,7 @@ void test_49_02B8()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xA9);
     CheckRegisterByte(RegisterType::L, 0xC2);
-    WriteRegisterWord(RegisterType::PC, 0x9789);
+    WriteRegisterWord(RegisterType::PC, 0x978A);
     WriteRegisterWord(RegisterType::SP, 0xD33C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9789, 0x49);
@@ -33396,6 +37882,11 @@ void test_49_02B8()
 
 void test_49_02B9()
 {
+    if (skip_test_49_02B9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33433,7 +37924,7 @@ void test_49_02B9()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xA8);
     CheckRegisterByte(RegisterType::L, 0x6E);
-    WriteRegisterWord(RegisterType::PC, 0x9BF8);
+    WriteRegisterWord(RegisterType::PC, 0x9BF9);
     WriteRegisterWord(RegisterType::SP, 0xE530);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9BF8, 0x49);
@@ -33441,6 +37932,11 @@ void test_49_02B9()
 
 void test_49_02BA()
 {
+    if (skip_test_49_02BA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33478,7 +37974,7 @@ void test_49_02BA()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xAA);
     CheckRegisterByte(RegisterType::L, 0xE9);
-    WriteRegisterWord(RegisterType::PC, 0x7750);
+    WriteRegisterWord(RegisterType::PC, 0x7751);
     WriteRegisterWord(RegisterType::SP, 0x820C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7750, 0x49);
@@ -33486,6 +37982,11 @@ void test_49_02BA()
 
 void test_49_02BB()
 {
+    if (skip_test_49_02BB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33523,7 +38024,7 @@ void test_49_02BB()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x1F);
     CheckRegisterByte(RegisterType::L, 0xD8);
-    WriteRegisterWord(RegisterType::PC, 0xE75F);
+    WriteRegisterWord(RegisterType::PC, 0xE760);
     WriteRegisterWord(RegisterType::SP, 0x76E8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE75F, 0x49);
@@ -33531,6 +38032,11 @@ void test_49_02BB()
 
 void test_49_02BC()
 {
+    if (skip_test_49_02BC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33568,7 +38074,7 @@ void test_49_02BC()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xFD);
     CheckRegisterByte(RegisterType::L, 0x97);
-    WriteRegisterWord(RegisterType::PC, 0xEC8A);
+    WriteRegisterWord(RegisterType::PC, 0xEC8B);
     WriteRegisterWord(RegisterType::SP, 0xD405);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEC8A, 0x49);
@@ -33576,6 +38082,11 @@ void test_49_02BC()
 
 void test_49_02BD()
 {
+    if (skip_test_49_02BD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33613,7 +38124,7 @@ void test_49_02BD()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x01);
     CheckRegisterByte(RegisterType::L, 0x33);
-    WriteRegisterWord(RegisterType::PC, 0x2F9D);
+    WriteRegisterWord(RegisterType::PC, 0x2F9E);
     WriteRegisterWord(RegisterType::SP, 0x320D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2F9D, 0x49);
@@ -33621,6 +38132,11 @@ void test_49_02BD()
 
 void test_49_02BE()
 {
+    if (skip_test_49_02BE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33658,7 +38174,7 @@ void test_49_02BE()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x5F);
     CheckRegisterByte(RegisterType::L, 0xE1);
-    WriteRegisterWord(RegisterType::PC, 0x0B12);
+    WriteRegisterWord(RegisterType::PC, 0x0B13);
     WriteRegisterWord(RegisterType::SP, 0x14E7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0B12, 0x49);
@@ -33666,6 +38182,11 @@ void test_49_02BE()
 
 void test_49_02BF()
 {
+    if (skip_test_49_02BF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33703,7 +38224,7 @@ void test_49_02BF()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xB7);
     CheckRegisterByte(RegisterType::L, 0xE6);
-    WriteRegisterWord(RegisterType::PC, 0xD156);
+    WriteRegisterWord(RegisterType::PC, 0xD157);
     WriteRegisterWord(RegisterType::SP, 0x287C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD156, 0x49);
@@ -33711,6 +38232,11 @@ void test_49_02BF()
 
 void test_49_02C0()
 {
+    if (skip_test_49_02C0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33748,7 +38274,7 @@ void test_49_02C0()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x28);
     CheckRegisterByte(RegisterType::L, 0x7E);
-    WriteRegisterWord(RegisterType::PC, 0x6F90);
+    WriteRegisterWord(RegisterType::PC, 0x6F91);
     WriteRegisterWord(RegisterType::SP, 0x456C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6F90, 0x49);
@@ -33756,6 +38282,11 @@ void test_49_02C0()
 
 void test_49_02C1()
 {
+    if (skip_test_49_02C1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33793,7 +38324,7 @@ void test_49_02C1()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xDD);
     CheckRegisterByte(RegisterType::L, 0x2C);
-    WriteRegisterWord(RegisterType::PC, 0x4138);
+    WriteRegisterWord(RegisterType::PC, 0x4139);
     WriteRegisterWord(RegisterType::SP, 0x2C68);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4138, 0x49);
@@ -33801,6 +38332,11 @@ void test_49_02C1()
 
 void test_49_02C2()
 {
+    if (skip_test_49_02C2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33838,7 +38374,7 @@ void test_49_02C2()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x43);
     CheckRegisterByte(RegisterType::L, 0xBC);
-    WriteRegisterWord(RegisterType::PC, 0x4A0D);
+    WriteRegisterWord(RegisterType::PC, 0x4A0E);
     WriteRegisterWord(RegisterType::SP, 0x5FA6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4A0D, 0x49);
@@ -33846,6 +38382,11 @@ void test_49_02C2()
 
 void test_49_02C3()
 {
+    if (skip_test_49_02C3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33883,7 +38424,7 @@ void test_49_02C3()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x87);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    WriteRegisterWord(RegisterType::PC, 0x0BA7);
+    WriteRegisterWord(RegisterType::PC, 0x0BA8);
     WriteRegisterWord(RegisterType::SP, 0x12C6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0BA7, 0x49);
@@ -33891,6 +38432,11 @@ void test_49_02C3()
 
 void test_49_02C4()
 {
+    if (skip_test_49_02C4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33928,7 +38474,7 @@ void test_49_02C4()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x62);
     CheckRegisterByte(RegisterType::L, 0xB7);
-    WriteRegisterWord(RegisterType::PC, 0x7152);
+    WriteRegisterWord(RegisterType::PC, 0x7153);
     WriteRegisterWord(RegisterType::SP, 0x6098);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7152, 0x49);
@@ -33936,6 +38482,11 @@ void test_49_02C4()
 
 void test_49_02C5()
 {
+    if (skip_test_49_02C5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -33973,7 +38524,7 @@ void test_49_02C5()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xFE);
     CheckRegisterByte(RegisterType::L, 0xAC);
-    WriteRegisterWord(RegisterType::PC, 0xF4CB);
+    WriteRegisterWord(RegisterType::PC, 0xF4CC);
     WriteRegisterWord(RegisterType::SP, 0x5227);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF4CB, 0x49);
@@ -33981,6 +38532,11 @@ void test_49_02C5()
 
 void test_49_02C6()
 {
+    if (skip_test_49_02C6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34018,7 +38574,7 @@ void test_49_02C6()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xC4);
     CheckRegisterByte(RegisterType::L, 0xC2);
-    WriteRegisterWord(RegisterType::PC, 0x8C65);
+    WriteRegisterWord(RegisterType::PC, 0x8C66);
     WriteRegisterWord(RegisterType::SP, 0x6323);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8C65, 0x49);
@@ -34026,6 +38582,11 @@ void test_49_02C6()
 
 void test_49_02C7()
 {
+    if (skip_test_49_02C7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34063,7 +38624,7 @@ void test_49_02C7()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0xD7);
-    WriteRegisterWord(RegisterType::PC, 0xCA62);
+    WriteRegisterWord(RegisterType::PC, 0xCA63);
     WriteRegisterWord(RegisterType::SP, 0x4AC0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCA62, 0x49);
@@ -34071,6 +38632,11 @@ void test_49_02C7()
 
 void test_49_02C8()
 {
+    if (skip_test_49_02C8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34108,7 +38674,7 @@ void test_49_02C8()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xD9);
     CheckRegisterByte(RegisterType::L, 0xD7);
-    WriteRegisterWord(RegisterType::PC, 0x16F0);
+    WriteRegisterWord(RegisterType::PC, 0x16F1);
     WriteRegisterWord(RegisterType::SP, 0x704D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x16F0, 0x49);
@@ -34116,6 +38682,11 @@ void test_49_02C8()
 
 void test_49_02C9()
 {
+    if (skip_test_49_02C9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34153,7 +38724,7 @@ void test_49_02C9()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xDD);
     CheckRegisterByte(RegisterType::L, 0x17);
-    WriteRegisterWord(RegisterType::PC, 0x310A);
+    WriteRegisterWord(RegisterType::PC, 0x310B);
     WriteRegisterWord(RegisterType::SP, 0x8237);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x310A, 0x49);
@@ -34161,6 +38732,11 @@ void test_49_02C9()
 
 void test_49_02CA()
 {
+    if (skip_test_49_02CA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34198,7 +38774,7 @@ void test_49_02CA()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x9B);
     CheckRegisterByte(RegisterType::L, 0x76);
-    WriteRegisterWord(RegisterType::PC, 0xF025);
+    WriteRegisterWord(RegisterType::PC, 0xF026);
     WriteRegisterWord(RegisterType::SP, 0x6506);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF025, 0x49);
@@ -34206,6 +38782,11 @@ void test_49_02CA()
 
 void test_49_02CB()
 {
+    if (skip_test_49_02CB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34243,7 +38824,7 @@ void test_49_02CB()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x33);
     CheckRegisterByte(RegisterType::L, 0x3A);
-    WriteRegisterWord(RegisterType::PC, 0xFFFD);
+    WriteRegisterWord(RegisterType::PC, 0xFFFE);
     WriteRegisterWord(RegisterType::SP, 0xB804);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFFFD, 0x49);
@@ -34251,6 +38832,11 @@ void test_49_02CB()
 
 void test_49_02CC()
 {
+    if (skip_test_49_02CC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34288,7 +38874,7 @@ void test_49_02CC()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0x73);
-    WriteRegisterWord(RegisterType::PC, 0x3E0C);
+    WriteRegisterWord(RegisterType::PC, 0x3E0D);
     WriteRegisterWord(RegisterType::SP, 0x3D3A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3E0C, 0x49);
@@ -34296,6 +38882,11 @@ void test_49_02CC()
 
 void test_49_02CD()
 {
+    if (skip_test_49_02CD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34333,7 +38924,7 @@ void test_49_02CD()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x33);
     CheckRegisterByte(RegisterType::L, 0x99);
-    WriteRegisterWord(RegisterType::PC, 0xCA88);
+    WriteRegisterWord(RegisterType::PC, 0xCA89);
     WriteRegisterWord(RegisterType::SP, 0xBAB3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCA88, 0x49);
@@ -34341,6 +38932,11 @@ void test_49_02CD()
 
 void test_49_02CE()
 {
+    if (skip_test_49_02CE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34378,7 +38974,7 @@ void test_49_02CE()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x8A);
     CheckRegisterByte(RegisterType::L, 0x4E);
-    WriteRegisterWord(RegisterType::PC, 0x25F5);
+    WriteRegisterWord(RegisterType::PC, 0x25F6);
     WriteRegisterWord(RegisterType::SP, 0xDA87);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x25F5, 0x49);
@@ -34386,6 +38982,11 @@ void test_49_02CE()
 
 void test_49_02CF()
 {
+    if (skip_test_49_02CF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34423,7 +39024,7 @@ void test_49_02CF()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x9C);
     CheckRegisterByte(RegisterType::L, 0x8A);
-    WriteRegisterWord(RegisterType::PC, 0x13A6);
+    WriteRegisterWord(RegisterType::PC, 0x13A7);
     WriteRegisterWord(RegisterType::SP, 0xE13D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x13A6, 0x49);
@@ -34431,6 +39032,11 @@ void test_49_02CF()
 
 void test_49_02D0()
 {
+    if (skip_test_49_02D0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34468,7 +39074,7 @@ void test_49_02D0()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x28);
     CheckRegisterByte(RegisterType::L, 0x96);
-    WriteRegisterWord(RegisterType::PC, 0x23A4);
+    WriteRegisterWord(RegisterType::PC, 0x23A5);
     WriteRegisterWord(RegisterType::SP, 0xA54D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x23A4, 0x49);
@@ -34476,6 +39082,11 @@ void test_49_02D0()
 
 void test_49_02D1()
 {
+    if (skip_test_49_02D1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34513,7 +39124,7 @@ void test_49_02D1()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xAC);
     CheckRegisterByte(RegisterType::L, 0xE1);
-    WriteRegisterWord(RegisterType::PC, 0x646F);
+    WriteRegisterWord(RegisterType::PC, 0x6470);
     WriteRegisterWord(RegisterType::SP, 0x551A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x646F, 0x49);
@@ -34521,6 +39132,11 @@ void test_49_02D1()
 
 void test_49_02D2()
 {
+    if (skip_test_49_02D2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34558,7 +39174,7 @@ void test_49_02D2()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xE5);
     CheckRegisterByte(RegisterType::L, 0x75);
-    WriteRegisterWord(RegisterType::PC, 0x9066);
+    WriteRegisterWord(RegisterType::PC, 0x9067);
     WriteRegisterWord(RegisterType::SP, 0x4BC7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9066, 0x49);
@@ -34566,6 +39182,11 @@ void test_49_02D2()
 
 void test_49_02D3()
 {
+    if (skip_test_49_02D3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34603,7 +39224,7 @@ void test_49_02D3()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0x3B);
-    WriteRegisterWord(RegisterType::PC, 0x77C1);
+    WriteRegisterWord(RegisterType::PC, 0x77C2);
     WriteRegisterWord(RegisterType::SP, 0xCC4E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x77C1, 0x49);
@@ -34611,6 +39232,11 @@ void test_49_02D3()
 
 void test_49_02D4()
 {
+    if (skip_test_49_02D4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34648,7 +39274,7 @@ void test_49_02D4()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x3D);
     CheckRegisterByte(RegisterType::L, 0x5A);
-    WriteRegisterWord(RegisterType::PC, 0x275B);
+    WriteRegisterWord(RegisterType::PC, 0x275C);
     WriteRegisterWord(RegisterType::SP, 0x1AC5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x275B, 0x49);
@@ -34656,6 +39282,11 @@ void test_49_02D4()
 
 void test_49_02D5()
 {
+    if (skip_test_49_02D5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34693,7 +39324,7 @@ void test_49_02D5()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xE0);
     CheckRegisterByte(RegisterType::L, 0x0A);
-    WriteRegisterWord(RegisterType::PC, 0xF0A9);
+    WriteRegisterWord(RegisterType::PC, 0xF0AA);
     WriteRegisterWord(RegisterType::SP, 0x58F8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF0A9, 0x49);
@@ -34701,6 +39332,11 @@ void test_49_02D5()
 
 void test_49_02D6()
 {
+    if (skip_test_49_02D6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34738,7 +39374,7 @@ void test_49_02D6()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x23);
     CheckRegisterByte(RegisterType::L, 0xB0);
-    WriteRegisterWord(RegisterType::PC, 0xDD46);
+    WriteRegisterWord(RegisterType::PC, 0xDD47);
     WriteRegisterWord(RegisterType::SP, 0xC94F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDD46, 0x49);
@@ -34746,6 +39382,11 @@ void test_49_02D6()
 
 void test_49_02D7()
 {
+    if (skip_test_49_02D7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34783,7 +39424,7 @@ void test_49_02D7()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xF2);
     CheckRegisterByte(RegisterType::L, 0x1C);
-    WriteRegisterWord(RegisterType::PC, 0x2628);
+    WriteRegisterWord(RegisterType::PC, 0x2629);
     WriteRegisterWord(RegisterType::SP, 0x5338);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2628, 0x49);
@@ -34791,6 +39432,11 @@ void test_49_02D7()
 
 void test_49_02D8()
 {
+    if (skip_test_49_02D8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34828,7 +39474,7 @@ void test_49_02D8()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    WriteRegisterWord(RegisterType::PC, 0x6E1C);
+    WriteRegisterWord(RegisterType::PC, 0x6E1D);
     WriteRegisterWord(RegisterType::SP, 0x88A6);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6E1C, 0x49);
@@ -34836,6 +39482,11 @@ void test_49_02D8()
 
 void test_49_02D9()
 {
+    if (skip_test_49_02D9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34873,7 +39524,7 @@ void test_49_02D9()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x9A);
     CheckRegisterByte(RegisterType::L, 0x7F);
-    WriteRegisterWord(RegisterType::PC, 0x5142);
+    WriteRegisterWord(RegisterType::PC, 0x5143);
     WriteRegisterWord(RegisterType::SP, 0x02C9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5142, 0x49);
@@ -34881,6 +39532,11 @@ void test_49_02D9()
 
 void test_49_02DA()
 {
+    if (skip_test_49_02DA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34918,7 +39574,7 @@ void test_49_02DA()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0x21);
-    WriteRegisterWord(RegisterType::PC, 0xA925);
+    WriteRegisterWord(RegisterType::PC, 0xA926);
     WriteRegisterWord(RegisterType::SP, 0x1F04);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA925, 0x49);
@@ -34926,6 +39582,11 @@ void test_49_02DA()
 
 void test_49_02DB()
 {
+    if (skip_test_49_02DB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -34963,7 +39624,7 @@ void test_49_02DB()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xA8);
     CheckRegisterByte(RegisterType::L, 0x20);
-    WriteRegisterWord(RegisterType::PC, 0x2EA1);
+    WriteRegisterWord(RegisterType::PC, 0x2EA2);
     WriteRegisterWord(RegisterType::SP, 0x3574);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2EA1, 0x49);
@@ -34971,6 +39632,11 @@ void test_49_02DB()
 
 void test_49_02DC()
 {
+    if (skip_test_49_02DC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35008,7 +39674,7 @@ void test_49_02DC()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x82);
     CheckRegisterByte(RegisterType::L, 0xD4);
-    WriteRegisterWord(RegisterType::PC, 0x931E);
+    WriteRegisterWord(RegisterType::PC, 0x931F);
     WriteRegisterWord(RegisterType::SP, 0x4FAA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x931E, 0x49);
@@ -35016,6 +39682,11 @@ void test_49_02DC()
 
 void test_49_02DD()
 {
+    if (skip_test_49_02DD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35053,7 +39724,7 @@ void test_49_02DD()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xCC);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    WriteRegisterWord(RegisterType::PC, 0x5CC5);
+    WriteRegisterWord(RegisterType::PC, 0x5CC6);
     WriteRegisterWord(RegisterType::SP, 0xBB11);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5CC5, 0x49);
@@ -35061,6 +39732,11 @@ void test_49_02DD()
 
 void test_49_02DE()
 {
+    if (skip_test_49_02DE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35098,7 +39774,7 @@ void test_49_02DE()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x31);
     CheckRegisterByte(RegisterType::L, 0xFF);
-    WriteRegisterWord(RegisterType::PC, 0x2148);
+    WriteRegisterWord(RegisterType::PC, 0x2149);
     WriteRegisterWord(RegisterType::SP, 0xCE71);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2148, 0x49);
@@ -35106,6 +39782,11 @@ void test_49_02DE()
 
 void test_49_02DF()
 {
+    if (skip_test_49_02DF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35143,7 +39824,7 @@ void test_49_02DF()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xC9);
     CheckRegisterByte(RegisterType::L, 0x9B);
-    WriteRegisterWord(RegisterType::PC, 0xDD1A);
+    WriteRegisterWord(RegisterType::PC, 0xDD1B);
     WriteRegisterWord(RegisterType::SP, 0x4A02);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDD1A, 0x49);
@@ -35151,6 +39832,11 @@ void test_49_02DF()
 
 void test_49_02E0()
 {
+    if (skip_test_49_02E0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35188,7 +39874,7 @@ void test_49_02E0()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x5E);
     CheckRegisterByte(RegisterType::L, 0x87);
-    WriteRegisterWord(RegisterType::PC, 0x5D12);
+    WriteRegisterWord(RegisterType::PC, 0x5D13);
     WriteRegisterWord(RegisterType::SP, 0x61FE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5D12, 0x49);
@@ -35196,6 +39882,11 @@ void test_49_02E0()
 
 void test_49_02E1()
 {
+    if (skip_test_49_02E1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35233,7 +39924,7 @@ void test_49_02E1()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x4E);
     CheckRegisterByte(RegisterType::L, 0xFB);
-    WriteRegisterWord(RegisterType::PC, 0xBA8F);
+    WriteRegisterWord(RegisterType::PC, 0xBA90);
     WriteRegisterWord(RegisterType::SP, 0xD778);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBA8F, 0x49);
@@ -35241,6 +39932,11 @@ void test_49_02E1()
 
 void test_49_02E2()
 {
+    if (skip_test_49_02E2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35278,7 +39974,7 @@ void test_49_02E2()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0xBA);
-    WriteRegisterWord(RegisterType::PC, 0xBEE1);
+    WriteRegisterWord(RegisterType::PC, 0xBEE2);
     WriteRegisterWord(RegisterType::SP, 0xA8C8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBEE1, 0x49);
@@ -35286,6 +39982,11 @@ void test_49_02E2()
 
 void test_49_02E3()
 {
+    if (skip_test_49_02E3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35323,7 +40024,7 @@ void test_49_02E3()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x71);
     CheckRegisterByte(RegisterType::L, 0xE2);
-    WriteRegisterWord(RegisterType::PC, 0xA776);
+    WriteRegisterWord(RegisterType::PC, 0xA777);
     WriteRegisterWord(RegisterType::SP, 0x7110);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA776, 0x49);
@@ -35331,6 +40032,11 @@ void test_49_02E3()
 
 void test_49_02E4()
 {
+    if (skip_test_49_02E4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35368,7 +40074,7 @@ void test_49_02E4()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x88);
     CheckRegisterByte(RegisterType::L, 0x57);
-    WriteRegisterWord(RegisterType::PC, 0x7E2F);
+    WriteRegisterWord(RegisterType::PC, 0x7E30);
     WriteRegisterWord(RegisterType::SP, 0x41D9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7E2F, 0x49);
@@ -35376,6 +40082,11 @@ void test_49_02E4()
 
 void test_49_02E5()
 {
+    if (skip_test_49_02E5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35413,7 +40124,7 @@ void test_49_02E5()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x9B);
     CheckRegisterByte(RegisterType::L, 0x13);
-    WriteRegisterWord(RegisterType::PC, 0x28B0);
+    WriteRegisterWord(RegisterType::PC, 0x28B1);
     WriteRegisterWord(RegisterType::SP, 0x241C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x28B0, 0x49);
@@ -35421,6 +40132,11 @@ void test_49_02E5()
 
 void test_49_02E6()
 {
+    if (skip_test_49_02E6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35458,7 +40174,7 @@ void test_49_02E6()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x8D);
     CheckRegisterByte(RegisterType::L, 0xA9);
-    WriteRegisterWord(RegisterType::PC, 0xC372);
+    WriteRegisterWord(RegisterType::PC, 0xC373);
     WriteRegisterWord(RegisterType::SP, 0x32F1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC372, 0x49);
@@ -35466,6 +40182,11 @@ void test_49_02E6()
 
 void test_49_02E7()
 {
+    if (skip_test_49_02E7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35503,7 +40224,7 @@ void test_49_02E7()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x60);
     CheckRegisterByte(RegisterType::L, 0xC6);
-    WriteRegisterWord(RegisterType::PC, 0xB68E);
+    WriteRegisterWord(RegisterType::PC, 0xB68F);
     WriteRegisterWord(RegisterType::SP, 0x2105);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB68E, 0x49);
@@ -35511,6 +40232,11 @@ void test_49_02E7()
 
 void test_49_02E8()
 {
+    if (skip_test_49_02E8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35548,7 +40274,7 @@ void test_49_02E8()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x15);
     CheckRegisterByte(RegisterType::L, 0xF8);
-    WriteRegisterWord(RegisterType::PC, 0x2C6A);
+    WriteRegisterWord(RegisterType::PC, 0x2C6B);
     WriteRegisterWord(RegisterType::SP, 0x5964);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2C6A, 0x49);
@@ -35556,6 +40282,11 @@ void test_49_02E8()
 
 void test_49_02E9()
 {
+    if (skip_test_49_02E9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35593,7 +40324,7 @@ void test_49_02E9()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x20);
     CheckRegisterByte(RegisterType::L, 0x64);
-    WriteRegisterWord(RegisterType::PC, 0xADC5);
+    WriteRegisterWord(RegisterType::PC, 0xADC6);
     WriteRegisterWord(RegisterType::SP, 0x9ED5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xADC5, 0x49);
@@ -35601,6 +40332,11 @@ void test_49_02E9()
 
 void test_49_02EA()
 {
+    if (skip_test_49_02EA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35638,7 +40374,7 @@ void test_49_02EA()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x62);
     CheckRegisterByte(RegisterType::L, 0x2A);
-    WriteRegisterWord(RegisterType::PC, 0x1150);
+    WriteRegisterWord(RegisterType::PC, 0x1151);
     WriteRegisterWord(RegisterType::SP, 0x63B7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1150, 0x49);
@@ -35646,6 +40382,11 @@ void test_49_02EA()
 
 void test_49_02EB()
 {
+    if (skip_test_49_02EB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35683,7 +40424,7 @@ void test_49_02EB()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xBD);
     CheckRegisterByte(RegisterType::L, 0x2F);
-    WriteRegisterWord(RegisterType::PC, 0x70CE);
+    WriteRegisterWord(RegisterType::PC, 0x70CF);
     WriteRegisterWord(RegisterType::SP, 0x7D9F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x70CE, 0x49);
@@ -35691,6 +40432,11 @@ void test_49_02EB()
 
 void test_49_02EC()
 {
+    if (skip_test_49_02EC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35728,7 +40474,7 @@ void test_49_02EC()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xF8);
     CheckRegisterByte(RegisterType::L, 0xD0);
-    WriteRegisterWord(RegisterType::PC, 0x5671);
+    WriteRegisterWord(RegisterType::PC, 0x5672);
     WriteRegisterWord(RegisterType::SP, 0x340A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5671, 0x49);
@@ -35736,6 +40482,11 @@ void test_49_02EC()
 
 void test_49_02ED()
 {
+    if (skip_test_49_02ED)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35773,7 +40524,7 @@ void test_49_02ED()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x61);
     CheckRegisterByte(RegisterType::L, 0x55);
-    WriteRegisterWord(RegisterType::PC, 0xF51B);
+    WriteRegisterWord(RegisterType::PC, 0xF51C);
     WriteRegisterWord(RegisterType::SP, 0xA706);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF51B, 0x49);
@@ -35781,6 +40532,11 @@ void test_49_02ED()
 
 void test_49_02EE()
 {
+    if (skip_test_49_02EE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35818,7 +40574,7 @@ void test_49_02EE()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x01);
     CheckRegisterByte(RegisterType::L, 0x78);
-    WriteRegisterWord(RegisterType::PC, 0x8CB8);
+    WriteRegisterWord(RegisterType::PC, 0x8CB9);
     WriteRegisterWord(RegisterType::SP, 0x3761);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8CB8, 0x49);
@@ -35826,6 +40582,11 @@ void test_49_02EE()
 
 void test_49_02EF()
 {
+    if (skip_test_49_02EF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35863,7 +40624,7 @@ void test_49_02EF()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0x01);
-    WriteRegisterWord(RegisterType::PC, 0x8F9C);
+    WriteRegisterWord(RegisterType::PC, 0x8F9D);
     WriteRegisterWord(RegisterType::SP, 0x7598);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8F9C, 0x49);
@@ -35871,6 +40632,11 @@ void test_49_02EF()
 
 void test_49_02F0()
 {
+    if (skip_test_49_02F0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35908,7 +40674,7 @@ void test_49_02F0()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xC1);
     CheckRegisterByte(RegisterType::L, 0xDE);
-    WriteRegisterWord(RegisterType::PC, 0x838D);
+    WriteRegisterWord(RegisterType::PC, 0x838E);
     WriteRegisterWord(RegisterType::SP, 0x3565);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x838D, 0x49);
@@ -35916,6 +40682,11 @@ void test_49_02F0()
 
 void test_49_02F1()
 {
+    if (skip_test_49_02F1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35953,7 +40724,7 @@ void test_49_02F1()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x44);
     CheckRegisterByte(RegisterType::L, 0xAA);
-    WriteRegisterWord(RegisterType::PC, 0x1A82);
+    WriteRegisterWord(RegisterType::PC, 0x1A83);
     WriteRegisterWord(RegisterType::SP, 0x0085);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1A82, 0x49);
@@ -35961,6 +40732,11 @@ void test_49_02F1()
 
 void test_49_02F2()
 {
+    if (skip_test_49_02F2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -35998,7 +40774,7 @@ void test_49_02F2()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x7A);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    WriteRegisterWord(RegisterType::PC, 0x92D1);
+    WriteRegisterWord(RegisterType::PC, 0x92D2);
     WriteRegisterWord(RegisterType::SP, 0xB518);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x92D1, 0x49);
@@ -36006,6 +40782,11 @@ void test_49_02F2()
 
 void test_49_02F3()
 {
+    if (skip_test_49_02F3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36043,7 +40824,7 @@ void test_49_02F3()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x59);
     CheckRegisterByte(RegisterType::L, 0xE2);
-    WriteRegisterWord(RegisterType::PC, 0xE46A);
+    WriteRegisterWord(RegisterType::PC, 0xE46B);
     WriteRegisterWord(RegisterType::SP, 0x4449);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE46A, 0x49);
@@ -36051,6 +40832,11 @@ void test_49_02F3()
 
 void test_49_02F4()
 {
+    if (skip_test_49_02F4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36088,7 +40874,7 @@ void test_49_02F4()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x29);
     CheckRegisterByte(RegisterType::L, 0xAA);
-    WriteRegisterWord(RegisterType::PC, 0x86C9);
+    WriteRegisterWord(RegisterType::PC, 0x86CA);
     WriteRegisterWord(RegisterType::SP, 0x0636);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x86C9, 0x49);
@@ -36096,6 +40882,11 @@ void test_49_02F4()
 
 void test_49_02F5()
 {
+    if (skip_test_49_02F5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36133,7 +40924,7 @@ void test_49_02F5()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x56);
     CheckRegisterByte(RegisterType::L, 0x15);
-    WriteRegisterWord(RegisterType::PC, 0xE795);
+    WriteRegisterWord(RegisterType::PC, 0xE796);
     WriteRegisterWord(RegisterType::SP, 0x0EB8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE795, 0x49);
@@ -36141,6 +40932,11 @@ void test_49_02F5()
 
 void test_49_02F6()
 {
+    if (skip_test_49_02F6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36178,7 +40974,7 @@ void test_49_02F6()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x6B);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    WriteRegisterWord(RegisterType::PC, 0xACC2);
+    WriteRegisterWord(RegisterType::PC, 0xACC3);
     WriteRegisterWord(RegisterType::SP, 0x5894);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xACC2, 0x49);
@@ -36186,6 +40982,11 @@ void test_49_02F6()
 
 void test_49_02F7()
 {
+    if (skip_test_49_02F7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36223,7 +41024,7 @@ void test_49_02F7()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xFE);
     CheckRegisterByte(RegisterType::L, 0x71);
-    WriteRegisterWord(RegisterType::PC, 0x4ED0);
+    WriteRegisterWord(RegisterType::PC, 0x4ED1);
     WriteRegisterWord(RegisterType::SP, 0xEDAA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4ED0, 0x49);
@@ -36231,6 +41032,11 @@ void test_49_02F7()
 
 void test_49_02F8()
 {
+    if (skip_test_49_02F8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36268,7 +41074,7 @@ void test_49_02F8()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0xA3);
-    WriteRegisterWord(RegisterType::PC, 0x5AA5);
+    WriteRegisterWord(RegisterType::PC, 0x5AA6);
     WriteRegisterWord(RegisterType::SP, 0x23D6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5AA5, 0x49);
@@ -36276,6 +41082,11 @@ void test_49_02F8()
 
 void test_49_02F9()
 {
+    if (skip_test_49_02F9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36313,7 +41124,7 @@ void test_49_02F9()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x27);
     CheckRegisterByte(RegisterType::L, 0xA6);
-    WriteRegisterWord(RegisterType::PC, 0x8290);
+    WriteRegisterWord(RegisterType::PC, 0x8291);
     WriteRegisterWord(RegisterType::SP, 0xB457);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8290, 0x49);
@@ -36321,6 +41132,11 @@ void test_49_02F9()
 
 void test_49_02FA()
 {
+    if (skip_test_49_02FA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36358,7 +41174,7 @@ void test_49_02FA()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x04);
     CheckRegisterByte(RegisterType::L, 0xE3);
-    WriteRegisterWord(RegisterType::PC, 0xE0B8);
+    WriteRegisterWord(RegisterType::PC, 0xE0B9);
     WriteRegisterWord(RegisterType::SP, 0xAA06);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE0B8, 0x49);
@@ -36366,6 +41182,11 @@ void test_49_02FA()
 
 void test_49_02FB()
 {
+    if (skip_test_49_02FB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36403,7 +41224,7 @@ void test_49_02FB()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x7D);
     CheckRegisterByte(RegisterType::L, 0x1E);
-    WriteRegisterWord(RegisterType::PC, 0xF96E);
+    WriteRegisterWord(RegisterType::PC, 0xF96F);
     WriteRegisterWord(RegisterType::SP, 0xEB78);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF96E, 0x49);
@@ -36411,6 +41232,11 @@ void test_49_02FB()
 
 void test_49_02FC()
 {
+    if (skip_test_49_02FC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36448,7 +41274,7 @@ void test_49_02FC()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xCB);
     CheckRegisterByte(RegisterType::L, 0x76);
-    WriteRegisterWord(RegisterType::PC, 0x8497);
+    WriteRegisterWord(RegisterType::PC, 0x8498);
     WriteRegisterWord(RegisterType::SP, 0x64D4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8497, 0x49);
@@ -36456,6 +41282,11 @@ void test_49_02FC()
 
 void test_49_02FD()
 {
+    if (skip_test_49_02FD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36493,7 +41324,7 @@ void test_49_02FD()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x73);
     CheckRegisterByte(RegisterType::L, 0xB0);
-    WriteRegisterWord(RegisterType::PC, 0xFEA0);
+    WriteRegisterWord(RegisterType::PC, 0xFEA1);
     WriteRegisterWord(RegisterType::SP, 0xFB73);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFEA0, 0x49);
@@ -36501,6 +41332,11 @@ void test_49_02FD()
 
 void test_49_02FE()
 {
+    if (skip_test_49_02FE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36538,7 +41374,7 @@ void test_49_02FE()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0xC9);
-    WriteRegisterWord(RegisterType::PC, 0x5517);
+    WriteRegisterWord(RegisterType::PC, 0x5518);
     WriteRegisterWord(RegisterType::SP, 0x6B11);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5517, 0x49);
@@ -36546,6 +41382,11 @@ void test_49_02FE()
 
 void test_49_02FF()
 {
+    if (skip_test_49_02FF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36583,7 +41424,7 @@ void test_49_02FF()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x33);
     CheckRegisterByte(RegisterType::L, 0xDB);
-    WriteRegisterWord(RegisterType::PC, 0xBF05);
+    WriteRegisterWord(RegisterType::PC, 0xBF06);
     WriteRegisterWord(RegisterType::SP, 0xE32F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBF05, 0x49);
@@ -36591,6 +41432,11 @@ void test_49_02FF()
 
 void test_49_0300()
 {
+    if (skip_test_49_0300)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36628,7 +41474,7 @@ void test_49_0300()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x29);
     CheckRegisterByte(RegisterType::L, 0xE1);
-    WriteRegisterWord(RegisterType::PC, 0x13FF);
+    WriteRegisterWord(RegisterType::PC, 0x1400);
     WriteRegisterWord(RegisterType::SP, 0x5CA0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x13FF, 0x49);
@@ -36636,6 +41482,11 @@ void test_49_0300()
 
 void test_49_0301()
 {
+    if (skip_test_49_0301)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36673,7 +41524,7 @@ void test_49_0301()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x7B);
     CheckRegisterByte(RegisterType::L, 0x4D);
-    WriteRegisterWord(RegisterType::PC, 0x90B7);
+    WriteRegisterWord(RegisterType::PC, 0x90B8);
     WriteRegisterWord(RegisterType::SP, 0x0272);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x90B7, 0x49);
@@ -36681,6 +41532,11 @@ void test_49_0301()
 
 void test_49_0302()
 {
+    if (skip_test_49_0302)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36718,7 +41574,7 @@ void test_49_0302()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x4E);
     CheckRegisterByte(RegisterType::L, 0x77);
-    WriteRegisterWord(RegisterType::PC, 0x3D76);
+    WriteRegisterWord(RegisterType::PC, 0x3D77);
     WriteRegisterWord(RegisterType::SP, 0xA965);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3D76, 0x49);
@@ -36726,6 +41582,11 @@ void test_49_0302()
 
 void test_49_0303()
 {
+    if (skip_test_49_0303)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36763,7 +41624,7 @@ void test_49_0303()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xD1);
     CheckRegisterByte(RegisterType::L, 0x4D);
-    WriteRegisterWord(RegisterType::PC, 0x4607);
+    WriteRegisterWord(RegisterType::PC, 0x4608);
     WriteRegisterWord(RegisterType::SP, 0xF113);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4607, 0x49);
@@ -36771,6 +41632,11 @@ void test_49_0303()
 
 void test_49_0304()
 {
+    if (skip_test_49_0304)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36808,7 +41674,7 @@ void test_49_0304()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x25);
     CheckRegisterByte(RegisterType::L, 0xBF);
-    WriteRegisterWord(RegisterType::PC, 0xDC08);
+    WriteRegisterWord(RegisterType::PC, 0xDC09);
     WriteRegisterWord(RegisterType::SP, 0x3B9B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDC08, 0x49);
@@ -36816,6 +41682,11 @@ void test_49_0304()
 
 void test_49_0305()
 {
+    if (skip_test_49_0305)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36853,7 +41724,7 @@ void test_49_0305()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x55);
     CheckRegisterByte(RegisterType::L, 0xF4);
-    WriteRegisterWord(RegisterType::PC, 0xE455);
+    WriteRegisterWord(RegisterType::PC, 0xE456);
     WriteRegisterWord(RegisterType::SP, 0x548B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE455, 0x49);
@@ -36861,6 +41732,11 @@ void test_49_0305()
 
 void test_49_0306()
 {
+    if (skip_test_49_0306)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36898,7 +41774,7 @@ void test_49_0306()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x92);
     CheckRegisterByte(RegisterType::L, 0xEE);
-    WriteRegisterWord(RegisterType::PC, 0xC364);
+    WriteRegisterWord(RegisterType::PC, 0xC365);
     WriteRegisterWord(RegisterType::SP, 0x93E0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC364, 0x49);
@@ -36906,6 +41782,11 @@ void test_49_0306()
 
 void test_49_0307()
 {
+    if (skip_test_49_0307)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36943,7 +41824,7 @@ void test_49_0307()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x2C);
     CheckRegisterByte(RegisterType::L, 0x95);
-    WriteRegisterWord(RegisterType::PC, 0xAC4A);
+    WriteRegisterWord(RegisterType::PC, 0xAC4B);
     WriteRegisterWord(RegisterType::SP, 0x61C9);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xAC4A, 0x49);
@@ -36951,6 +41832,11 @@ void test_49_0307()
 
 void test_49_0308()
 {
+    if (skip_test_49_0308)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -36988,7 +41874,7 @@ void test_49_0308()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x05);
     CheckRegisterByte(RegisterType::L, 0x4A);
-    WriteRegisterWord(RegisterType::PC, 0x820B);
+    WriteRegisterWord(RegisterType::PC, 0x820C);
     WriteRegisterWord(RegisterType::SP, 0x5EE0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x820B, 0x49);
@@ -36996,6 +41882,11 @@ void test_49_0308()
 
 void test_49_0309()
 {
+    if (skip_test_49_0309)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37033,7 +41924,7 @@ void test_49_0309()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x7E);
     CheckRegisterByte(RegisterType::L, 0x46);
-    WriteRegisterWord(RegisterType::PC, 0xEDC0);
+    WriteRegisterWord(RegisterType::PC, 0xEDC1);
     WriteRegisterWord(RegisterType::SP, 0xD899);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEDC0, 0x49);
@@ -37041,6 +41932,11 @@ void test_49_0309()
 
 void test_49_030A()
 {
+    if (skip_test_49_030A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37078,7 +41974,7 @@ void test_49_030A()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x07);
     CheckRegisterByte(RegisterType::L, 0x21);
-    WriteRegisterWord(RegisterType::PC, 0x1634);
+    WriteRegisterWord(RegisterType::PC, 0x1635);
     WriteRegisterWord(RegisterType::SP, 0x990A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1634, 0x49);
@@ -37086,6 +41982,11 @@ void test_49_030A()
 
 void test_49_030B()
 {
+    if (skip_test_49_030B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37123,7 +42024,7 @@ void test_49_030B()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0x87);
-    WriteRegisterWord(RegisterType::PC, 0x9FB1);
+    WriteRegisterWord(RegisterType::PC, 0x9FB2);
     WriteRegisterWord(RegisterType::SP, 0xBA67);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9FB1, 0x49);
@@ -37131,6 +42032,11 @@ void test_49_030B()
 
 void test_49_030C()
 {
+    if (skip_test_49_030C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37168,7 +42074,7 @@ void test_49_030C()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x3A);
     CheckRegisterByte(RegisterType::L, 0xF9);
-    WriteRegisterWord(RegisterType::PC, 0x1586);
+    WriteRegisterWord(RegisterType::PC, 0x1587);
     WriteRegisterWord(RegisterType::SP, 0x770B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1586, 0x49);
@@ -37176,6 +42082,11 @@ void test_49_030C()
 
 void test_49_030D()
 {
+    if (skip_test_49_030D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37213,7 +42124,7 @@ void test_49_030D()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x3C);
     CheckRegisterByte(RegisterType::L, 0x14);
-    WriteRegisterWord(RegisterType::PC, 0x83E6);
+    WriteRegisterWord(RegisterType::PC, 0x83E7);
     WriteRegisterWord(RegisterType::SP, 0x319C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x83E6, 0x49);
@@ -37221,6 +42132,11 @@ void test_49_030D()
 
 void test_49_030E()
 {
+    if (skip_test_49_030E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37258,7 +42174,7 @@ void test_49_030E()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x0F);
     CheckRegisterByte(RegisterType::L, 0x36);
-    WriteRegisterWord(RegisterType::PC, 0x4FEB);
+    WriteRegisterWord(RegisterType::PC, 0x4FEC);
     WriteRegisterWord(RegisterType::SP, 0xBADA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4FEB, 0x49);
@@ -37266,6 +42182,11 @@ void test_49_030E()
 
 void test_49_030F()
 {
+    if (skip_test_49_030F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37303,7 +42224,7 @@ void test_49_030F()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x87);
     CheckRegisterByte(RegisterType::L, 0x81);
-    WriteRegisterWord(RegisterType::PC, 0xD0BD);
+    WriteRegisterWord(RegisterType::PC, 0xD0BE);
     WriteRegisterWord(RegisterType::SP, 0xBDC5);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD0BD, 0x49);
@@ -37311,6 +42232,11 @@ void test_49_030F()
 
 void test_49_0310()
 {
+    if (skip_test_49_0310)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37348,7 +42274,7 @@ void test_49_0310()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xED);
     CheckRegisterByte(RegisterType::L, 0x32);
-    WriteRegisterWord(RegisterType::PC, 0xF274);
+    WriteRegisterWord(RegisterType::PC, 0xF275);
     WriteRegisterWord(RegisterType::SP, 0xDF5E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF274, 0x49);
@@ -37356,6 +42282,11 @@ void test_49_0310()
 
 void test_49_0311()
 {
+    if (skip_test_49_0311)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37393,7 +42324,7 @@ void test_49_0311()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xF5);
     CheckRegisterByte(RegisterType::L, 0x24);
-    WriteRegisterWord(RegisterType::PC, 0x6F89);
+    WriteRegisterWord(RegisterType::PC, 0x6F8A);
     WriteRegisterWord(RegisterType::SP, 0x32E5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6F89, 0x49);
@@ -37401,6 +42332,11 @@ void test_49_0311()
 
 void test_49_0312()
 {
+    if (skip_test_49_0312)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37438,7 +42374,7 @@ void test_49_0312()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x14);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    WriteRegisterWord(RegisterType::PC, 0xE6FE);
+    WriteRegisterWord(RegisterType::PC, 0xE6FF);
     WriteRegisterWord(RegisterType::SP, 0x94CD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE6FE, 0x49);
@@ -37446,6 +42382,11 @@ void test_49_0312()
 
 void test_49_0313()
 {
+    if (skip_test_49_0313)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37483,7 +42424,7 @@ void test_49_0313()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xFD);
     CheckRegisterByte(RegisterType::L, 0x21);
-    WriteRegisterWord(RegisterType::PC, 0x26F6);
+    WriteRegisterWord(RegisterType::PC, 0x26F7);
     WriteRegisterWord(RegisterType::SP, 0x9763);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x26F6, 0x49);
@@ -37491,6 +42432,11 @@ void test_49_0313()
 
 void test_49_0314()
 {
+    if (skip_test_49_0314)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37528,7 +42474,7 @@ void test_49_0314()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x9E);
     CheckRegisterByte(RegisterType::L, 0xD3);
-    WriteRegisterWord(RegisterType::PC, 0x4FFA);
+    WriteRegisterWord(RegisterType::PC, 0x4FFB);
     WriteRegisterWord(RegisterType::SP, 0x3B69);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4FFA, 0x49);
@@ -37536,6 +42482,11 @@ void test_49_0314()
 
 void test_49_0315()
 {
+    if (skip_test_49_0315)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37573,7 +42524,7 @@ void test_49_0315()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xE9);
     CheckRegisterByte(RegisterType::L, 0xB6);
-    WriteRegisterWord(RegisterType::PC, 0x562A);
+    WriteRegisterWord(RegisterType::PC, 0x562B);
     WriteRegisterWord(RegisterType::SP, 0x57F1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x562A, 0x49);
@@ -37581,6 +42532,11 @@ void test_49_0315()
 
 void test_49_0316()
 {
+    if (skip_test_49_0316)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37618,7 +42574,7 @@ void test_49_0316()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0x87);
-    WriteRegisterWord(RegisterType::PC, 0x9B84);
+    WriteRegisterWord(RegisterType::PC, 0x9B85);
     WriteRegisterWord(RegisterType::SP, 0x31C0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9B84, 0x49);
@@ -37626,6 +42582,11 @@ void test_49_0316()
 
 void test_49_0317()
 {
+    if (skip_test_49_0317)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37663,7 +42624,7 @@ void test_49_0317()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x46);
     CheckRegisterByte(RegisterType::L, 0x73);
-    WriteRegisterWord(RegisterType::PC, 0x4636);
+    WriteRegisterWord(RegisterType::PC, 0x4637);
     WriteRegisterWord(RegisterType::SP, 0x4F8B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4636, 0x49);
@@ -37671,6 +42632,11 @@ void test_49_0317()
 
 void test_49_0318()
 {
+    if (skip_test_49_0318)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37708,7 +42674,7 @@ void test_49_0318()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x5C);
     CheckRegisterByte(RegisterType::L, 0xB7);
-    WriteRegisterWord(RegisterType::PC, 0x4086);
+    WriteRegisterWord(RegisterType::PC, 0x4087);
     WriteRegisterWord(RegisterType::SP, 0x9FCD);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4086, 0x49);
@@ -37716,6 +42682,11 @@ void test_49_0318()
 
 void test_49_0319()
 {
+    if (skip_test_49_0319)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37753,7 +42724,7 @@ void test_49_0319()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xF3);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    WriteRegisterWord(RegisterType::PC, 0xD0C3);
+    WriteRegisterWord(RegisterType::PC, 0xD0C4);
     WriteRegisterWord(RegisterType::SP, 0xBBD3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD0C3, 0x49);
@@ -37761,6 +42732,11 @@ void test_49_0319()
 
 void test_49_031A()
 {
+    if (skip_test_49_031A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37798,7 +42774,7 @@ void test_49_031A()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x85);
     CheckRegisterByte(RegisterType::L, 0x13);
-    WriteRegisterWord(RegisterType::PC, 0x40FC);
+    WriteRegisterWord(RegisterType::PC, 0x40FD);
     WriteRegisterWord(RegisterType::SP, 0xA685);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x40FC, 0x49);
@@ -37806,6 +42782,11 @@ void test_49_031A()
 
 void test_49_031B()
 {
+    if (skip_test_49_031B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37843,7 +42824,7 @@ void test_49_031B()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xA0);
     CheckRegisterByte(RegisterType::L, 0xB3);
-    WriteRegisterWord(RegisterType::PC, 0x3534);
+    WriteRegisterWord(RegisterType::PC, 0x3535);
     WriteRegisterWord(RegisterType::SP, 0x1AAC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3534, 0x49);
@@ -37851,6 +42832,11 @@ void test_49_031B()
 
 void test_49_031C()
 {
+    if (skip_test_49_031C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37888,7 +42874,7 @@ void test_49_031C()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x11);
     CheckRegisterByte(RegisterType::L, 0x58);
-    WriteRegisterWord(RegisterType::PC, 0x3770);
+    WriteRegisterWord(RegisterType::PC, 0x3771);
     WriteRegisterWord(RegisterType::SP, 0x2811);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3770, 0x49);
@@ -37896,6 +42882,11 @@ void test_49_031C()
 
 void test_49_031D()
 {
+    if (skip_test_49_031D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37933,7 +42924,7 @@ void test_49_031D()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xB3);
     CheckRegisterByte(RegisterType::L, 0x63);
-    WriteRegisterWord(RegisterType::PC, 0xAB52);
+    WriteRegisterWord(RegisterType::PC, 0xAB53);
     WriteRegisterWord(RegisterType::SP, 0x7A1A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xAB52, 0x49);
@@ -37941,6 +42932,11 @@ void test_49_031D()
 
 void test_49_031E()
 {
+    if (skip_test_49_031E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -37978,7 +42974,7 @@ void test_49_031E()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x81);
     CheckRegisterByte(RegisterType::L, 0x63);
-    WriteRegisterWord(RegisterType::PC, 0x6C6D);
+    WriteRegisterWord(RegisterType::PC, 0x6C6E);
     WriteRegisterWord(RegisterType::SP, 0x77E4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6C6D, 0x49);
@@ -37986,6 +42982,11 @@ void test_49_031E()
 
 void test_49_031F()
 {
+    if (skip_test_49_031F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38023,7 +43024,7 @@ void test_49_031F()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xB5);
     CheckRegisterByte(RegisterType::L, 0x78);
-    WriteRegisterWord(RegisterType::PC, 0x823D);
+    WriteRegisterWord(RegisterType::PC, 0x823E);
     WriteRegisterWord(RegisterType::SP, 0xC17A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x823D, 0x49);
@@ -38031,6 +43032,11 @@ void test_49_031F()
 
 void test_49_0320()
 {
+    if (skip_test_49_0320)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38068,7 +43074,7 @@ void test_49_0320()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x95);
     CheckRegisterByte(RegisterType::L, 0x19);
-    WriteRegisterWord(RegisterType::PC, 0x1962);
+    WriteRegisterWord(RegisterType::PC, 0x1963);
     WriteRegisterWord(RegisterType::SP, 0xE337);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1962, 0x49);
@@ -38076,6 +43082,11 @@ void test_49_0320()
 
 void test_49_0321()
 {
+    if (skip_test_49_0321)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38113,7 +43124,7 @@ void test_49_0321()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xE5);
     CheckRegisterByte(RegisterType::L, 0x6D);
-    WriteRegisterWord(RegisterType::PC, 0x0BD4);
+    WriteRegisterWord(RegisterType::PC, 0x0BD5);
     WriteRegisterWord(RegisterType::SP, 0xC340);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0BD4, 0x49);
@@ -38121,6 +43132,11 @@ void test_49_0321()
 
 void test_49_0322()
 {
+    if (skip_test_49_0322)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38158,7 +43174,7 @@ void test_49_0322()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x83);
     CheckRegisterByte(RegisterType::L, 0xBD);
-    WriteRegisterWord(RegisterType::PC, 0x2014);
+    WriteRegisterWord(RegisterType::PC, 0x2015);
     WriteRegisterWord(RegisterType::SP, 0x4EE4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x2014, 0x49);
@@ -38166,6 +43182,11 @@ void test_49_0322()
 
 void test_49_0323()
 {
+    if (skip_test_49_0323)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38203,7 +43224,7 @@ void test_49_0323()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x85);
     CheckRegisterByte(RegisterType::L, 0x77);
-    WriteRegisterWord(RegisterType::PC, 0x51C0);
+    WriteRegisterWord(RegisterType::PC, 0x51C1);
     WriteRegisterWord(RegisterType::SP, 0x46EB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x51C0, 0x49);
@@ -38211,6 +43232,11 @@ void test_49_0323()
 
 void test_49_0324()
 {
+    if (skip_test_49_0324)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38248,7 +43274,7 @@ void test_49_0324()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xD9);
     CheckRegisterByte(RegisterType::L, 0xB5);
-    WriteRegisterWord(RegisterType::PC, 0x02B6);
+    WriteRegisterWord(RegisterType::PC, 0x02B7);
     WriteRegisterWord(RegisterType::SP, 0xCAD3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x02B6, 0x49);
@@ -38256,6 +43282,11 @@ void test_49_0324()
 
 void test_49_0325()
 {
+    if (skip_test_49_0325)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38293,7 +43324,7 @@ void test_49_0325()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xF3);
     CheckRegisterByte(RegisterType::L, 0x3A);
-    WriteRegisterWord(RegisterType::PC, 0x175F);
+    WriteRegisterWord(RegisterType::PC, 0x1760);
     WriteRegisterWord(RegisterType::SP, 0x526A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x175F, 0x49);
@@ -38301,6 +43332,11 @@ void test_49_0325()
 
 void test_49_0326()
 {
+    if (skip_test_49_0326)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38338,7 +43374,7 @@ void test_49_0326()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x68);
     CheckRegisterByte(RegisterType::L, 0xA1);
-    WriteRegisterWord(RegisterType::PC, 0x4C9A);
+    WriteRegisterWord(RegisterType::PC, 0x4C9B);
     WriteRegisterWord(RegisterType::SP, 0x28BC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4C9A, 0x49);
@@ -38346,6 +43382,11 @@ void test_49_0326()
 
 void test_49_0327()
 {
+    if (skip_test_49_0327)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38383,7 +43424,7 @@ void test_49_0327()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x5C);
     CheckRegisterByte(RegisterType::L, 0x72);
-    WriteRegisterWord(RegisterType::PC, 0x266A);
+    WriteRegisterWord(RegisterType::PC, 0x266B);
     WriteRegisterWord(RegisterType::SP, 0xCA81);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x266A, 0x49);
@@ -38391,6 +43432,11 @@ void test_49_0327()
 
 void test_49_0328()
 {
+    if (skip_test_49_0328)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38428,7 +43474,7 @@ void test_49_0328()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xC6);
     CheckRegisterByte(RegisterType::L, 0x9E);
-    WriteRegisterWord(RegisterType::PC, 0xC79E);
+    WriteRegisterWord(RegisterType::PC, 0xC79F);
     WriteRegisterWord(RegisterType::SP, 0xC8F0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC79E, 0x49);
@@ -38436,6 +43482,11 @@ void test_49_0328()
 
 void test_49_0329()
 {
+    if (skip_test_49_0329)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38473,7 +43524,7 @@ void test_49_0329()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x63);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    WriteRegisterWord(RegisterType::PC, 0x8E7D);
+    WriteRegisterWord(RegisterType::PC, 0x8E7E);
     WriteRegisterWord(RegisterType::SP, 0xC1A2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x8E7D, 0x49);
@@ -38481,6 +43532,11 @@ void test_49_0329()
 
 void test_49_032A()
 {
+    if (skip_test_49_032A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38518,7 +43574,7 @@ void test_49_032A()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x15);
     CheckRegisterByte(RegisterType::L, 0x91);
-    WriteRegisterWord(RegisterType::PC, 0x42E4);
+    WriteRegisterWord(RegisterType::PC, 0x42E5);
     WriteRegisterWord(RegisterType::SP, 0x200C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x42E4, 0x49);
@@ -38526,6 +43582,11 @@ void test_49_032A()
 
 void test_49_032B()
 {
+    if (skip_test_49_032B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38563,7 +43624,7 @@ void test_49_032B()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xE7);
     CheckRegisterByte(RegisterType::L, 0x67);
-    WriteRegisterWord(RegisterType::PC, 0xBED0);
+    WriteRegisterWord(RegisterType::PC, 0xBED1);
     WriteRegisterWord(RegisterType::SP, 0xBF7F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBED0, 0x49);
@@ -38571,6 +43632,11 @@ void test_49_032B()
 
 void test_49_032C()
 {
+    if (skip_test_49_032C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38608,7 +43674,7 @@ void test_49_032C()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xA6);
     CheckRegisterByte(RegisterType::L, 0x11);
-    WriteRegisterWord(RegisterType::PC, 0x03E5);
+    WriteRegisterWord(RegisterType::PC, 0x03E6);
     WriteRegisterWord(RegisterType::SP, 0xBA38);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x03E5, 0x49);
@@ -38616,6 +43682,11 @@ void test_49_032C()
 
 void test_49_032D()
 {
+    if (skip_test_49_032D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38653,7 +43724,7 @@ void test_49_032D()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x90);
     CheckRegisterByte(RegisterType::L, 0x61);
-    WriteRegisterWord(RegisterType::PC, 0xB550);
+    WriteRegisterWord(RegisterType::PC, 0xB551);
     WriteRegisterWord(RegisterType::SP, 0xB548);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB550, 0x49);
@@ -38661,6 +43732,11 @@ void test_49_032D()
 
 void test_49_032E()
 {
+    if (skip_test_49_032E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38698,7 +43774,7 @@ void test_49_032E()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0x23);
-    WriteRegisterWord(RegisterType::PC, 0x919C);
+    WriteRegisterWord(RegisterType::PC, 0x919D);
     WriteRegisterWord(RegisterType::SP, 0xF03B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x919C, 0x49);
@@ -38706,6 +43782,11 @@ void test_49_032E()
 
 void test_49_032F()
 {
+    if (skip_test_49_032F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38743,7 +43824,7 @@ void test_49_032F()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xD6);
     CheckRegisterByte(RegisterType::L, 0xAE);
-    WriteRegisterWord(RegisterType::PC, 0x7C48);
+    WriteRegisterWord(RegisterType::PC, 0x7C49);
     WriteRegisterWord(RegisterType::SP, 0x6833);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7C48, 0x49);
@@ -38751,6 +43832,11 @@ void test_49_032F()
 
 void test_49_0330()
 {
+    if (skip_test_49_0330)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38788,7 +43874,7 @@ void test_49_0330()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0x53);
-    WriteRegisterWord(RegisterType::PC, 0xE453);
+    WriteRegisterWord(RegisterType::PC, 0xE454);
     WriteRegisterWord(RegisterType::SP, 0x249C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE453, 0x49);
@@ -38796,6 +43882,11 @@ void test_49_0330()
 
 void test_49_0331()
 {
+    if (skip_test_49_0331)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38833,7 +43924,7 @@ void test_49_0331()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xAE);
     CheckRegisterByte(RegisterType::L, 0xE5);
-    WriteRegisterWord(RegisterType::PC, 0x7F16);
+    WriteRegisterWord(RegisterType::PC, 0x7F17);
     WriteRegisterWord(RegisterType::SP, 0x1176);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7F16, 0x49);
@@ -38841,6 +43932,11 @@ void test_49_0331()
 
 void test_49_0332()
 {
+    if (skip_test_49_0332)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38878,7 +43974,7 @@ void test_49_0332()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0x6E);
-    WriteRegisterWord(RegisterType::PC, 0x0739);
+    WriteRegisterWord(RegisterType::PC, 0x073A);
     WriteRegisterWord(RegisterType::SP, 0xD1BB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0739, 0x49);
@@ -38886,6 +43982,11 @@ void test_49_0332()
 
 void test_49_0333()
 {
+    if (skip_test_49_0333)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38923,7 +44024,7 @@ void test_49_0333()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xFB);
     CheckRegisterByte(RegisterType::L, 0x40);
-    WriteRegisterWord(RegisterType::PC, 0x05CD);
+    WriteRegisterWord(RegisterType::PC, 0x05CE);
     WriteRegisterWord(RegisterType::SP, 0x750A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x05CD, 0x49);
@@ -38931,6 +44032,11 @@ void test_49_0333()
 
 void test_49_0334()
 {
+    if (skip_test_49_0334)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -38968,7 +44074,7 @@ void test_49_0334()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x92);
     CheckRegisterByte(RegisterType::L, 0xED);
-    WriteRegisterWord(RegisterType::PC, 0x1887);
+    WriteRegisterWord(RegisterType::PC, 0x1888);
     WriteRegisterWord(RegisterType::SP, 0x4796);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1887, 0x49);
@@ -38976,6 +44082,11 @@ void test_49_0334()
 
 void test_49_0335()
 {
+    if (skip_test_49_0335)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39013,7 +44124,7 @@ void test_49_0335()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x03);
     CheckRegisterByte(RegisterType::L, 0xC6);
-    WriteRegisterWord(RegisterType::PC, 0x6DC5);
+    WriteRegisterWord(RegisterType::PC, 0x6DC6);
     WriteRegisterWord(RegisterType::SP, 0x8DA7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6DC5, 0x49);
@@ -39021,6 +44132,11 @@ void test_49_0335()
 
 void test_49_0336()
 {
+    if (skip_test_49_0336)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39058,7 +44174,7 @@ void test_49_0336()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x07);
     CheckRegisterByte(RegisterType::L, 0x9A);
-    WriteRegisterWord(RegisterType::PC, 0x9BA8);
+    WriteRegisterWord(RegisterType::PC, 0x9BA9);
     WriteRegisterWord(RegisterType::SP, 0x067E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9BA8, 0x49);
@@ -39066,6 +44182,11 @@ void test_49_0336()
 
 void test_49_0337()
 {
+    if (skip_test_49_0337)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39103,7 +44224,7 @@ void test_49_0337()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xC3);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    WriteRegisterWord(RegisterType::PC, 0xDC38);
+    WriteRegisterWord(RegisterType::PC, 0xDC39);
     WriteRegisterWord(RegisterType::SP, 0x1ABA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xDC38, 0x49);
@@ -39111,6 +44232,11 @@ void test_49_0337()
 
 void test_49_0338()
 {
+    if (skip_test_49_0338)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39148,7 +44274,7 @@ void test_49_0338()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xDA);
     CheckRegisterByte(RegisterType::L, 0x96);
-    WriteRegisterWord(RegisterType::PC, 0xDEED);
+    WriteRegisterWord(RegisterType::PC, 0xDEEE);
     WriteRegisterWord(RegisterType::SP, 0x7F19);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDEED, 0x49);
@@ -39156,6 +44282,11 @@ void test_49_0338()
 
 void test_49_0339()
 {
+    if (skip_test_49_0339)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39193,7 +44324,7 @@ void test_49_0339()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xD2);
     CheckRegisterByte(RegisterType::L, 0xB8);
-    WriteRegisterWord(RegisterType::PC, 0x475F);
+    WriteRegisterWord(RegisterType::PC, 0x4760);
     WriteRegisterWord(RegisterType::SP, 0xC3B7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x475F, 0x49);
@@ -39201,6 +44332,11 @@ void test_49_0339()
 
 void test_49_033A()
 {
+    if (skip_test_49_033A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39238,7 +44374,7 @@ void test_49_033A()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x74);
     CheckRegisterByte(RegisterType::L, 0x50);
-    WriteRegisterWord(RegisterType::PC, 0xDD93);
+    WriteRegisterWord(RegisterType::PC, 0xDD94);
     WriteRegisterWord(RegisterType::SP, 0x82B4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDD93, 0x49);
@@ -39246,6 +44382,11 @@ void test_49_033A()
 
 void test_49_033B()
 {
+    if (skip_test_49_033B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39283,7 +44424,7 @@ void test_49_033B()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xBD);
     CheckRegisterByte(RegisterType::L, 0xDB);
-    WriteRegisterWord(RegisterType::PC, 0xF25B);
+    WriteRegisterWord(RegisterType::PC, 0xF25C);
     WriteRegisterWord(RegisterType::SP, 0x54A8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF25B, 0x49);
@@ -39291,6 +44432,11 @@ void test_49_033B()
 
 void test_49_033C()
 {
+    if (skip_test_49_033C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39328,7 +44474,7 @@ void test_49_033C()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xE7);
     CheckRegisterByte(RegisterType::L, 0xA9);
-    WriteRegisterWord(RegisterType::PC, 0x09AB);
+    WriteRegisterWord(RegisterType::PC, 0x09AC);
     WriteRegisterWord(RegisterType::SP, 0x6D05);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x09AB, 0x49);
@@ -39336,6 +44482,11 @@ void test_49_033C()
 
 void test_49_033D()
 {
+    if (skip_test_49_033D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39373,7 +44524,7 @@ void test_49_033D()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xAD);
     CheckRegisterByte(RegisterType::L, 0xEA);
-    WriteRegisterWord(RegisterType::PC, 0x1597);
+    WriteRegisterWord(RegisterType::PC, 0x1598);
     WriteRegisterWord(RegisterType::SP, 0xCBB3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1597, 0x49);
@@ -39381,6 +44532,11 @@ void test_49_033D()
 
 void test_49_033E()
 {
+    if (skip_test_49_033E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39418,7 +44574,7 @@ void test_49_033E()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x72);
     CheckRegisterByte(RegisterType::L, 0x2B);
-    WriteRegisterWord(RegisterType::PC, 0x3595);
+    WriteRegisterWord(RegisterType::PC, 0x3596);
     WriteRegisterWord(RegisterType::SP, 0xAB9B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3595, 0x49);
@@ -39426,6 +44582,11 @@ void test_49_033E()
 
 void test_49_033F()
 {
+    if (skip_test_49_033F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39463,7 +44624,7 @@ void test_49_033F()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x9C);
     CheckRegisterByte(RegisterType::L, 0x25);
-    WriteRegisterWord(RegisterType::PC, 0x8A51);
+    WriteRegisterWord(RegisterType::PC, 0x8A52);
     WriteRegisterWord(RegisterType::SP, 0xE77C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8A51, 0x49);
@@ -39471,6 +44632,11 @@ void test_49_033F()
 
 void test_49_0340()
 {
+    if (skip_test_49_0340)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39508,7 +44674,7 @@ void test_49_0340()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0x5B);
-    WriteRegisterWord(RegisterType::PC, 0xB8D5);
+    WriteRegisterWord(RegisterType::PC, 0xB8D6);
     WriteRegisterWord(RegisterType::SP, 0x7E7F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB8D5, 0x49);
@@ -39516,6 +44682,11 @@ void test_49_0340()
 
 void test_49_0341()
 {
+    if (skip_test_49_0341)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39553,7 +44724,7 @@ void test_49_0341()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x66);
     CheckRegisterByte(RegisterType::L, 0x3C);
-    WriteRegisterWord(RegisterType::PC, 0xD9E8);
+    WriteRegisterWord(RegisterType::PC, 0xD9E9);
     WriteRegisterWord(RegisterType::SP, 0x6101);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD9E8, 0x49);
@@ -39561,6 +44732,11 @@ void test_49_0341()
 
 void test_49_0342()
 {
+    if (skip_test_49_0342)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39598,7 +44774,7 @@ void test_49_0342()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xE1);
     CheckRegisterByte(RegisterType::L, 0x83);
-    WriteRegisterWord(RegisterType::PC, 0xD935);
+    WriteRegisterWord(RegisterType::PC, 0xD936);
     WriteRegisterWord(RegisterType::SP, 0x61C2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD935, 0x49);
@@ -39606,6 +44782,11 @@ void test_49_0342()
 
 void test_49_0343()
 {
+    if (skip_test_49_0343)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39643,7 +44824,7 @@ void test_49_0343()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xB7);
     CheckRegisterByte(RegisterType::L, 0x38);
-    WriteRegisterWord(RegisterType::PC, 0x7A4D);
+    WriteRegisterWord(RegisterType::PC, 0x7A4E);
     WriteRegisterWord(RegisterType::SP, 0x116D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7A4D, 0x49);
@@ -39651,6 +44832,11 @@ void test_49_0343()
 
 void test_49_0344()
 {
+    if (skip_test_49_0344)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39688,7 +44874,7 @@ void test_49_0344()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0xD4);
-    WriteRegisterWord(RegisterType::PC, 0x1457);
+    WriteRegisterWord(RegisterType::PC, 0x1458);
     WriteRegisterWord(RegisterType::SP, 0x0373);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1457, 0x49);
@@ -39696,6 +44882,11 @@ void test_49_0344()
 
 void test_49_0345()
 {
+    if (skip_test_49_0345)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39733,7 +44924,7 @@ void test_49_0345()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xC7);
     CheckRegisterByte(RegisterType::L, 0x84);
-    WriteRegisterWord(RegisterType::PC, 0xD661);
+    WriteRegisterWord(RegisterType::PC, 0xD662);
     WriteRegisterWord(RegisterType::SP, 0xAB7B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD661, 0x49);
@@ -39741,6 +44932,11 @@ void test_49_0345()
 
 void test_49_0346()
 {
+    if (skip_test_49_0346)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39778,7 +44974,7 @@ void test_49_0346()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xFD);
     CheckRegisterByte(RegisterType::L, 0x35);
-    WriteRegisterWord(RegisterType::PC, 0x68B0);
+    WriteRegisterWord(RegisterType::PC, 0x68B1);
     WriteRegisterWord(RegisterType::SP, 0xB01F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x68B0, 0x49);
@@ -39786,6 +44982,11 @@ void test_49_0346()
 
 void test_49_0347()
 {
+    if (skip_test_49_0347)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39823,7 +45024,7 @@ void test_49_0347()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x5C);
     CheckRegisterByte(RegisterType::L, 0x8A);
-    WriteRegisterWord(RegisterType::PC, 0xCD9A);
+    WriteRegisterWord(RegisterType::PC, 0xCD9B);
     WriteRegisterWord(RegisterType::SP, 0xA14A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCD9A, 0x49);
@@ -39831,6 +45032,11 @@ void test_49_0347()
 
 void test_49_0348()
 {
+    if (skip_test_49_0348)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39868,7 +45074,7 @@ void test_49_0348()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xE4);
     CheckRegisterByte(RegisterType::L, 0x3A);
-    WriteRegisterWord(RegisterType::PC, 0xE3A7);
+    WriteRegisterWord(RegisterType::PC, 0xE3A8);
     WriteRegisterWord(RegisterType::SP, 0xD986);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE3A7, 0x49);
@@ -39876,6 +45082,11 @@ void test_49_0348()
 
 void test_49_0349()
 {
+    if (skip_test_49_0349)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39913,7 +45124,7 @@ void test_49_0349()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x2B);
     CheckRegisterByte(RegisterType::L, 0x1E);
-    WriteRegisterWord(RegisterType::PC, 0xE6A2);
+    WriteRegisterWord(RegisterType::PC, 0xE6A3);
     WriteRegisterWord(RegisterType::SP, 0x4538);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE6A2, 0x49);
@@ -39921,6 +45132,11 @@ void test_49_0349()
 
 void test_49_034A()
 {
+    if (skip_test_49_034A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -39958,7 +45174,7 @@ void test_49_034A()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x13);
     CheckRegisterByte(RegisterType::L, 0x43);
-    WriteRegisterWord(RegisterType::PC, 0x4A53);
+    WriteRegisterWord(RegisterType::PC, 0x4A54);
     WriteRegisterWord(RegisterType::SP, 0x3249);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4A53, 0x49);
@@ -39966,6 +45182,11 @@ void test_49_034A()
 
 void test_49_034B()
 {
+    if (skip_test_49_034B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40003,7 +45224,7 @@ void test_49_034B()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xCF);
     CheckRegisterByte(RegisterType::L, 0x67);
-    WriteRegisterWord(RegisterType::PC, 0x581A);
+    WriteRegisterWord(RegisterType::PC, 0x581B);
     WriteRegisterWord(RegisterType::SP, 0x1F67);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x581A, 0x49);
@@ -40011,6 +45232,11 @@ void test_49_034B()
 
 void test_49_034C()
 {
+    if (skip_test_49_034C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40048,7 +45274,7 @@ void test_49_034C()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x71);
     CheckRegisterByte(RegisterType::L, 0xF9);
-    WriteRegisterWord(RegisterType::PC, 0x45DA);
+    WriteRegisterWord(RegisterType::PC, 0x45DB);
     WriteRegisterWord(RegisterType::SP, 0x7E38);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x45DA, 0x49);
@@ -40056,6 +45282,11 @@ void test_49_034C()
 
 void test_49_034D()
 {
+    if (skip_test_49_034D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40093,7 +45324,7 @@ void test_49_034D()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x3F);
     CheckRegisterByte(RegisterType::L, 0xC5);
-    WriteRegisterWord(RegisterType::PC, 0x9114);
+    WriteRegisterWord(RegisterType::PC, 0x9115);
     WriteRegisterWord(RegisterType::SP, 0xC43A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9114, 0x49);
@@ -40101,6 +45332,11 @@ void test_49_034D()
 
 void test_49_034E()
 {
+    if (skip_test_49_034E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40138,7 +45374,7 @@ void test_49_034E()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xB7);
     CheckRegisterByte(RegisterType::L, 0x47);
-    WriteRegisterWord(RegisterType::PC, 0xB96C);
+    WriteRegisterWord(RegisterType::PC, 0xB96D);
     WriteRegisterWord(RegisterType::SP, 0x210A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB96C, 0x49);
@@ -40146,6 +45382,11 @@ void test_49_034E()
 
 void test_49_034F()
 {
+    if (skip_test_49_034F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40183,7 +45424,7 @@ void test_49_034F()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xAB);
     CheckRegisterByte(RegisterType::L, 0x4A);
-    WriteRegisterWord(RegisterType::PC, 0x31B1);
+    WriteRegisterWord(RegisterType::PC, 0x31B2);
     WriteRegisterWord(RegisterType::SP, 0xC6DE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x31B1, 0x49);
@@ -40191,6 +45432,11 @@ void test_49_034F()
 
 void test_49_0350()
 {
+    if (skip_test_49_0350)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40228,7 +45474,7 @@ void test_49_0350()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xEC);
     CheckRegisterByte(RegisterType::L, 0x31);
-    WriteRegisterWord(RegisterType::PC, 0xA414);
+    WriteRegisterWord(RegisterType::PC, 0xA415);
     WriteRegisterWord(RegisterType::SP, 0xC0E5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA414, 0x49);
@@ -40236,6 +45482,11 @@ void test_49_0350()
 
 void test_49_0351()
 {
+    if (skip_test_49_0351)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40273,7 +45524,7 @@ void test_49_0351()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x8A);
     CheckRegisterByte(RegisterType::L, 0xBF);
-    WriteRegisterWord(RegisterType::PC, 0x7BA7);
+    WriteRegisterWord(RegisterType::PC, 0x7BA8);
     WriteRegisterWord(RegisterType::SP, 0xABEC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7BA7, 0x49);
@@ -40281,6 +45532,11 @@ void test_49_0351()
 
 void test_49_0352()
 {
+    if (skip_test_49_0352)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40318,7 +45574,7 @@ void test_49_0352()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xA9);
     CheckRegisterByte(RegisterType::L, 0xF0);
-    WriteRegisterWord(RegisterType::PC, 0x5692);
+    WriteRegisterWord(RegisterType::PC, 0x5693);
     WriteRegisterWord(RegisterType::SP, 0x3802);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5692, 0x49);
@@ -40326,6 +45582,11 @@ void test_49_0352()
 
 void test_49_0353()
 {
+    if (skip_test_49_0353)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40363,7 +45624,7 @@ void test_49_0353()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xBE);
     CheckRegisterByte(RegisterType::L, 0xE3);
-    WriteRegisterWord(RegisterType::PC, 0xA9BC);
+    WriteRegisterWord(RegisterType::PC, 0xA9BD);
     WriteRegisterWord(RegisterType::SP, 0xA9E4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA9BC, 0x49);
@@ -40371,6 +45632,11 @@ void test_49_0353()
 
 void test_49_0354()
 {
+    if (skip_test_49_0354)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40408,7 +45674,7 @@ void test_49_0354()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x0A);
     CheckRegisterByte(RegisterType::L, 0x12);
-    WriteRegisterWord(RegisterType::PC, 0xEF59);
+    WriteRegisterWord(RegisterType::PC, 0xEF5A);
     WriteRegisterWord(RegisterType::SP, 0x4BB3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEF59, 0x49);
@@ -40416,6 +45682,11 @@ void test_49_0354()
 
 void test_49_0355()
 {
+    if (skip_test_49_0355)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40453,7 +45724,7 @@ void test_49_0355()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xF0);
     CheckRegisterByte(RegisterType::L, 0x0C);
-    WriteRegisterWord(RegisterType::PC, 0x69AD);
+    WriteRegisterWord(RegisterType::PC, 0x69AE);
     WriteRegisterWord(RegisterType::SP, 0x6F2E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x69AD, 0x49);
@@ -40461,6 +45732,11 @@ void test_49_0355()
 
 void test_49_0356()
 {
+    if (skip_test_49_0356)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40498,7 +45774,7 @@ void test_49_0356()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x10);
     CheckRegisterByte(RegisterType::L, 0xEB);
-    WriteRegisterWord(RegisterType::PC, 0x8F0C);
+    WriteRegisterWord(RegisterType::PC, 0x8F0D);
     WriteRegisterWord(RegisterType::SP, 0x6957);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8F0C, 0x49);
@@ -40506,6 +45782,11 @@ void test_49_0356()
 
 void test_49_0357()
 {
+    if (skip_test_49_0357)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40543,7 +45824,7 @@ void test_49_0357()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xAF);
     CheckRegisterByte(RegisterType::L, 0x32);
-    WriteRegisterWord(RegisterType::PC, 0x64C1);
+    WriteRegisterWord(RegisterType::PC, 0x64C2);
     WriteRegisterWord(RegisterType::SP, 0x77B2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x64C1, 0x49);
@@ -40551,6 +45832,11 @@ void test_49_0357()
 
 void test_49_0358()
 {
+    if (skip_test_49_0358)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40588,7 +45874,7 @@ void test_49_0358()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0xB9);
-    WriteRegisterWord(RegisterType::PC, 0x1803);
+    WriteRegisterWord(RegisterType::PC, 0x1804);
     WriteRegisterWord(RegisterType::SP, 0x6E52);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1803, 0x49);
@@ -40596,6 +45882,11 @@ void test_49_0358()
 
 void test_49_0359()
 {
+    if (skip_test_49_0359)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40633,7 +45924,7 @@ void test_49_0359()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0x94);
-    WriteRegisterWord(RegisterType::PC, 0xBE04);
+    WriteRegisterWord(RegisterType::PC, 0xBE05);
     WriteRegisterWord(RegisterType::SP, 0xA6D1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xBE04, 0x49);
@@ -40641,6 +45932,11 @@ void test_49_0359()
 
 void test_49_035A()
 {
+    if (skip_test_49_035A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40678,7 +45974,7 @@ void test_49_035A()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x5F);
     CheckRegisterByte(RegisterType::L, 0x02);
-    WriteRegisterWord(RegisterType::PC, 0xC7D3);
+    WriteRegisterWord(RegisterType::PC, 0xC7D4);
     WriteRegisterWord(RegisterType::SP, 0x49F4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC7D3, 0x49);
@@ -40686,6 +45982,11 @@ void test_49_035A()
 
 void test_49_035B()
 {
+    if (skip_test_49_035B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40723,7 +46024,7 @@ void test_49_035B()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xDE);
     CheckRegisterByte(RegisterType::L, 0xE4);
-    WriteRegisterWord(RegisterType::PC, 0x16C6);
+    WriteRegisterWord(RegisterType::PC, 0x16C7);
     WriteRegisterWord(RegisterType::SP, 0xFB3C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x16C6, 0x49);
@@ -40731,6 +46032,11 @@ void test_49_035B()
 
 void test_49_035C()
 {
+    if (skip_test_49_035C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40768,7 +46074,7 @@ void test_49_035C()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0x36);
-    WriteRegisterWord(RegisterType::PC, 0x5F66);
+    WriteRegisterWord(RegisterType::PC, 0x5F67);
     WriteRegisterWord(RegisterType::SP, 0x12C7);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5F66, 0x49);
@@ -40776,6 +46082,11 @@ void test_49_035C()
 
 void test_49_035D()
 {
+    if (skip_test_49_035D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40813,7 +46124,7 @@ void test_49_035D()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xA5);
     CheckRegisterByte(RegisterType::L, 0x53);
-    WriteRegisterWord(RegisterType::PC, 0x0038);
+    WriteRegisterWord(RegisterType::PC, 0x0039);
     WriteRegisterWord(RegisterType::SP, 0x7309);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0038, 0x49);
@@ -40821,6 +46132,11 @@ void test_49_035D()
 
 void test_49_035E()
 {
+    if (skip_test_49_035E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40858,7 +46174,7 @@ void test_49_035E()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x1F);
     CheckRegisterByte(RegisterType::L, 0x3D);
-    WriteRegisterWord(RegisterType::PC, 0x897F);
+    WriteRegisterWord(RegisterType::PC, 0x8980);
     WriteRegisterWord(RegisterType::SP, 0x586E);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x897F, 0x49);
@@ -40866,6 +46182,11 @@ void test_49_035E()
 
 void test_49_035F()
 {
+    if (skip_test_49_035F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40903,7 +46224,7 @@ void test_49_035F()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0x86);
-    WriteRegisterWord(RegisterType::PC, 0x775C);
+    WriteRegisterWord(RegisterType::PC, 0x775D);
     WriteRegisterWord(RegisterType::SP, 0x2D0A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x775C, 0x49);
@@ -40911,6 +46232,11 @@ void test_49_035F()
 
 void test_49_0360()
 {
+    if (skip_test_49_0360)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40948,7 +46274,7 @@ void test_49_0360()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xE4);
     CheckRegisterByte(RegisterType::L, 0x8B);
-    WriteRegisterWord(RegisterType::PC, 0xF24D);
+    WriteRegisterWord(RegisterType::PC, 0xF24E);
     WriteRegisterWord(RegisterType::SP, 0x4001);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xF24D, 0x49);
@@ -40956,6 +46282,11 @@ void test_49_0360()
 
 void test_49_0361()
 {
+    if (skip_test_49_0361)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -40993,7 +46324,7 @@ void test_49_0361()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0xA4);
     CheckRegisterByte(RegisterType::L, 0x45);
-    WriteRegisterWord(RegisterType::PC, 0x5871);
+    WriteRegisterWord(RegisterType::PC, 0x5872);
     WriteRegisterWord(RegisterType::SP, 0x1DBF);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5871, 0x49);
@@ -41001,6 +46332,11 @@ void test_49_0361()
 
 void test_49_0362()
 {
+    if (skip_test_49_0362)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41038,7 +46374,7 @@ void test_49_0362()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x63);
     CheckRegisterByte(RegisterType::L, 0x4C);
-    WriteRegisterWord(RegisterType::PC, 0xB7ED);
+    WriteRegisterWord(RegisterType::PC, 0xB7EE);
     WriteRegisterWord(RegisterType::SP, 0xF0C5);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB7ED, 0x49);
@@ -41046,6 +46382,11 @@ void test_49_0362()
 
 void test_49_0363()
 {
+    if (skip_test_49_0363)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41083,7 +46424,7 @@ void test_49_0363()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x9D);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    WriteRegisterWord(RegisterType::PC, 0xFA04);
+    WriteRegisterWord(RegisterType::PC, 0xFA05);
     WriteRegisterWord(RegisterType::SP, 0xA922);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xFA04, 0x49);
@@ -41091,6 +46432,11 @@ void test_49_0363()
 
 void test_49_0364()
 {
+    if (skip_test_49_0364)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41128,7 +46474,7 @@ void test_49_0364()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0x7D);
-    WriteRegisterWord(RegisterType::PC, 0xECC4);
+    WriteRegisterWord(RegisterType::PC, 0xECC5);
     WriteRegisterWord(RegisterType::SP, 0xB17D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xECC4, 0x49);
@@ -41136,6 +46482,11 @@ void test_49_0364()
 
 void test_49_0365()
 {
+    if (skip_test_49_0365)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41173,7 +46524,7 @@ void test_49_0365()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x50);
     CheckRegisterByte(RegisterType::L, 0x9D);
-    WriteRegisterWord(RegisterType::PC, 0xE04A);
+    WriteRegisterWord(RegisterType::PC, 0xE04B);
     WriteRegisterWord(RegisterType::SP, 0x85DC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE04A, 0x49);
@@ -41181,6 +46532,11 @@ void test_49_0365()
 
 void test_49_0366()
 {
+    if (skip_test_49_0366)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41218,7 +46574,7 @@ void test_49_0366()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x5E);
     CheckRegisterByte(RegisterType::L, 0x49);
-    WriteRegisterWord(RegisterType::PC, 0x8495);
+    WriteRegisterWord(RegisterType::PC, 0x8496);
     WriteRegisterWord(RegisterType::SP, 0xCE49);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x8495, 0x49);
@@ -41226,6 +46582,11 @@ void test_49_0366()
 
 void test_49_0367()
 {
+    if (skip_test_49_0367)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41263,7 +46624,7 @@ void test_49_0367()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x5B);
     CheckRegisterByte(RegisterType::L, 0x3D);
-    WriteRegisterWord(RegisterType::PC, 0x0279);
+    WriteRegisterWord(RegisterType::PC, 0x027A);
     WriteRegisterWord(RegisterType::SP, 0x3D79);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0279, 0x49);
@@ -41271,6 +46632,11 @@ void test_49_0367()
 
 void test_49_0368()
 {
+    if (skip_test_49_0368)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41308,7 +46674,7 @@ void test_49_0368()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0xE1);
     CheckRegisterByte(RegisterType::L, 0x83);
-    WriteRegisterWord(RegisterType::PC, 0x4A23);
+    WriteRegisterWord(RegisterType::PC, 0x4A24);
     WriteRegisterWord(RegisterType::SP, 0xCA51);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4A23, 0x49);
@@ -41316,6 +46682,11 @@ void test_49_0368()
 
 void test_49_0369()
 {
+    if (skip_test_49_0369)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41353,7 +46724,7 @@ void test_49_0369()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x69);
     CheckRegisterByte(RegisterType::L, 0xD0);
-    WriteRegisterWord(RegisterType::PC, 0xEBDC);
+    WriteRegisterWord(RegisterType::PC, 0xEBDD);
     WriteRegisterWord(RegisterType::SP, 0x3880);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEBDC, 0x49);
@@ -41361,6 +46732,11 @@ void test_49_0369()
 
 void test_49_036A()
 {
+    if (skip_test_49_036A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41398,7 +46774,7 @@ void test_49_036A()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0x19);
-    WriteRegisterWord(RegisterType::PC, 0x57AB);
+    WriteRegisterWord(RegisterType::PC, 0x57AC);
     WriteRegisterWord(RegisterType::SP, 0x21FC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x57AB, 0x49);
@@ -41406,6 +46782,11 @@ void test_49_036A()
 
 void test_49_036B()
 {
+    if (skip_test_49_036B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41443,7 +46824,7 @@ void test_49_036B()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x25);
     CheckRegisterByte(RegisterType::L, 0x22);
-    WriteRegisterWord(RegisterType::PC, 0x657B);
+    WriteRegisterWord(RegisterType::PC, 0x657C);
     WriteRegisterWord(RegisterType::SP, 0x2328);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x657B, 0x49);
@@ -41451,6 +46832,11 @@ void test_49_036B()
 
 void test_49_036C()
 {
+    if (skip_test_49_036C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41488,7 +46874,7 @@ void test_49_036C()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0x01);
-    WriteRegisterWord(RegisterType::PC, 0xB0B9);
+    WriteRegisterWord(RegisterType::PC, 0xB0BA);
     WriteRegisterWord(RegisterType::SP, 0x1614);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB0B9, 0x49);
@@ -41496,6 +46882,11 @@ void test_49_036C()
 
 void test_49_036D()
 {
+    if (skip_test_49_036D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41533,7 +46924,7 @@ void test_49_036D()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x98);
     CheckRegisterByte(RegisterType::L, 0x30);
-    WriteRegisterWord(RegisterType::PC, 0x9BC3);
+    WriteRegisterWord(RegisterType::PC, 0x9BC4);
     WriteRegisterWord(RegisterType::SP, 0x06F1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9BC3, 0x49);
@@ -41541,6 +46932,11 @@ void test_49_036D()
 
 void test_49_036E()
 {
+    if (skip_test_49_036E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41578,7 +46974,7 @@ void test_49_036E()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0x39);
-    WriteRegisterWord(RegisterType::PC, 0x3874);
+    WriteRegisterWord(RegisterType::PC, 0x3875);
     WriteRegisterWord(RegisterType::SP, 0xB380);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3874, 0x49);
@@ -41586,6 +46982,11 @@ void test_49_036E()
 
 void test_49_036F()
 {
+    if (skip_test_49_036F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41623,7 +47024,7 @@ void test_49_036F()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xE1);
     CheckRegisterByte(RegisterType::L, 0x82);
-    WriteRegisterWord(RegisterType::PC, 0x1E5B);
+    WriteRegisterWord(RegisterType::PC, 0x1E5C);
     WriteRegisterWord(RegisterType::SP, 0x570C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1E5B, 0x49);
@@ -41631,6 +47032,11 @@ void test_49_036F()
 
 void test_49_0370()
 {
+    if (skip_test_49_0370)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41668,7 +47074,7 @@ void test_49_0370()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0x57);
-    WriteRegisterWord(RegisterType::PC, 0x33C2);
+    WriteRegisterWord(RegisterType::PC, 0x33C3);
     WriteRegisterWord(RegisterType::SP, 0x11E9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x33C2, 0x49);
@@ -41676,6 +47082,11 @@ void test_49_0370()
 
 void test_49_0371()
 {
+    if (skip_test_49_0371)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41713,7 +47124,7 @@ void test_49_0371()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x0C);
     CheckRegisterByte(RegisterType::L, 0xF7);
-    WriteRegisterWord(RegisterType::PC, 0xEA21);
+    WriteRegisterWord(RegisterType::PC, 0xEA22);
     WriteRegisterWord(RegisterType::SP, 0x7B64);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEA21, 0x49);
@@ -41721,6 +47132,11 @@ void test_49_0371()
 
 void test_49_0372()
 {
+    if (skip_test_49_0372)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41758,7 +47174,7 @@ void test_49_0372()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x6A);
     CheckRegisterByte(RegisterType::L, 0x3E);
-    WriteRegisterWord(RegisterType::PC, 0xC19A);
+    WriteRegisterWord(RegisterType::PC, 0xC19B);
     WriteRegisterWord(RegisterType::SP, 0x3306);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC19A, 0x49);
@@ -41766,6 +47182,11 @@ void test_49_0372()
 
 void test_49_0373()
 {
+    if (skip_test_49_0373)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41803,7 +47224,7 @@ void test_49_0373()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xF3);
     CheckRegisterByte(RegisterType::L, 0x40);
-    WriteRegisterWord(RegisterType::PC, 0xB272);
+    WriteRegisterWord(RegisterType::PC, 0xB273);
     WriteRegisterWord(RegisterType::SP, 0x200E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB272, 0x49);
@@ -41811,6 +47232,11 @@ void test_49_0373()
 
 void test_49_0374()
 {
+    if (skip_test_49_0374)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41848,7 +47274,7 @@ void test_49_0374()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xC3);
     CheckRegisterByte(RegisterType::L, 0x0B);
-    WriteRegisterWord(RegisterType::PC, 0x7942);
+    WriteRegisterWord(RegisterType::PC, 0x7943);
     WriteRegisterWord(RegisterType::SP, 0x816F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7942, 0x49);
@@ -41856,6 +47282,11 @@ void test_49_0374()
 
 void test_49_0375()
 {
+    if (skip_test_49_0375)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41893,7 +47324,7 @@ void test_49_0375()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x8E);
     CheckRegisterByte(RegisterType::L, 0x3D);
-    WriteRegisterWord(RegisterType::PC, 0x10E3);
+    WriteRegisterWord(RegisterType::PC, 0x10E4);
     WriteRegisterWord(RegisterType::SP, 0x550C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x10E3, 0x49);
@@ -41901,6 +47332,11 @@ void test_49_0375()
 
 void test_49_0376()
 {
+    if (skip_test_49_0376)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41938,7 +47374,7 @@ void test_49_0376()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xB8);
     CheckRegisterByte(RegisterType::L, 0x68);
-    WriteRegisterWord(RegisterType::PC, 0x68A8);
+    WriteRegisterWord(RegisterType::PC, 0x68A9);
     WriteRegisterWord(RegisterType::SP, 0xCB27);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x68A8, 0x49);
@@ -41946,6 +47382,11 @@ void test_49_0376()
 
 void test_49_0377()
 {
+    if (skip_test_49_0377)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -41983,7 +47424,7 @@ void test_49_0377()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xCD);
     CheckRegisterByte(RegisterType::L, 0xCB);
-    WriteRegisterWord(RegisterType::PC, 0x7F3B);
+    WriteRegisterWord(RegisterType::PC, 0x7F3C);
     WriteRegisterWord(RegisterType::SP, 0xEB0D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7F3B, 0x49);
@@ -41991,6 +47432,11 @@ void test_49_0377()
 
 void test_49_0378()
 {
+    if (skip_test_49_0378)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42028,7 +47474,7 @@ void test_49_0378()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xC9);
     CheckRegisterByte(RegisterType::L, 0x41);
-    WriteRegisterWord(RegisterType::PC, 0x239A);
+    WriteRegisterWord(RegisterType::PC, 0x239B);
     WriteRegisterWord(RegisterType::SP, 0xA1CC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x239A, 0x49);
@@ -42036,6 +47482,11 @@ void test_49_0378()
 
 void test_49_0379()
 {
+    if (skip_test_49_0379)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42073,7 +47524,7 @@ void test_49_0379()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x43);
     CheckRegisterByte(RegisterType::L, 0x57);
-    WriteRegisterWord(RegisterType::PC, 0xCA88);
+    WriteRegisterWord(RegisterType::PC, 0xCA89);
     WriteRegisterWord(RegisterType::SP, 0x9A16);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCA88, 0x49);
@@ -42081,6 +47532,11 @@ void test_49_0379()
 
 void test_49_037A()
 {
+    if (skip_test_49_037A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42118,7 +47574,7 @@ void test_49_037A()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x65);
     CheckRegisterByte(RegisterType::L, 0x98);
-    WriteRegisterWord(RegisterType::PC, 0x46EC);
+    WriteRegisterWord(RegisterType::PC, 0x46ED);
     WriteRegisterWord(RegisterType::SP, 0x96CE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x46EC, 0x49);
@@ -42126,6 +47582,11 @@ void test_49_037A()
 
 void test_49_037B()
 {
+    if (skip_test_49_037B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42163,7 +47624,7 @@ void test_49_037B()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x34);
     CheckRegisterByte(RegisterType::L, 0xFA);
-    WriteRegisterWord(RegisterType::PC, 0x1B2E);
+    WriteRegisterWord(RegisterType::PC, 0x1B2F);
     WriteRegisterWord(RegisterType::SP, 0xF273);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1B2E, 0x49);
@@ -42171,6 +47632,11 @@ void test_49_037B()
 
 void test_49_037C()
 {
+    if (skip_test_49_037C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42208,7 +47674,7 @@ void test_49_037C()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x2E);
     CheckRegisterByte(RegisterType::L, 0xD1);
-    WriteRegisterWord(RegisterType::PC, 0x0F53);
+    WriteRegisterWord(RegisterType::PC, 0x0F54);
     WriteRegisterWord(RegisterType::SP, 0x8AE8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0F53, 0x49);
@@ -42216,6 +47682,11 @@ void test_49_037C()
 
 void test_49_037D()
 {
+    if (skip_test_49_037D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42253,7 +47724,7 @@ void test_49_037D()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x90);
     CheckRegisterByte(RegisterType::L, 0xDD);
-    WriteRegisterWord(RegisterType::PC, 0x24D5);
+    WriteRegisterWord(RegisterType::PC, 0x24D6);
     WriteRegisterWord(RegisterType::SP, 0x059C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x24D5, 0x49);
@@ -42261,6 +47732,11 @@ void test_49_037D()
 
 void test_49_037E()
 {
+    if (skip_test_49_037E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42298,7 +47774,7 @@ void test_49_037E()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0xDF);
-    WriteRegisterWord(RegisterType::PC, 0x5ACD);
+    WriteRegisterWord(RegisterType::PC, 0x5ACE);
     WriteRegisterWord(RegisterType::SP, 0x4A2B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5ACD, 0x49);
@@ -42306,6 +47782,11 @@ void test_49_037E()
 
 void test_49_037F()
 {
+    if (skip_test_49_037F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42343,7 +47824,7 @@ void test_49_037F()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x5F);
     CheckRegisterByte(RegisterType::L, 0xE7);
-    WriteRegisterWord(RegisterType::PC, 0x07B2);
+    WriteRegisterWord(RegisterType::PC, 0x07B3);
     WriteRegisterWord(RegisterType::SP, 0x0E40);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x07B2, 0x49);
@@ -42351,6 +47832,11 @@ void test_49_037F()
 
 void test_49_0380()
 {
+    if (skip_test_49_0380)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42388,7 +47874,7 @@ void test_49_0380()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x8D);
     CheckRegisterByte(RegisterType::L, 0xE2);
-    WriteRegisterWord(RegisterType::PC, 0x6094);
+    WriteRegisterWord(RegisterType::PC, 0x6095);
     WriteRegisterWord(RegisterType::SP, 0x205B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x6094, 0x49);
@@ -42396,6 +47882,11 @@ void test_49_0380()
 
 void test_49_0381()
 {
+    if (skip_test_49_0381)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42433,7 +47924,7 @@ void test_49_0381()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xFC);
     CheckRegisterByte(RegisterType::L, 0x52);
-    WriteRegisterWord(RegisterType::PC, 0x2F59);
+    WriteRegisterWord(RegisterType::PC, 0x2F5A);
     WriteRegisterWord(RegisterType::SP, 0x12CC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2F59, 0x49);
@@ -42441,6 +47932,11 @@ void test_49_0381()
 
 void test_49_0382()
 {
+    if (skip_test_49_0382)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42478,7 +47974,7 @@ void test_49_0382()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x1E);
     CheckRegisterByte(RegisterType::L, 0xA0);
-    WriteRegisterWord(RegisterType::PC, 0xE1FA);
+    WriteRegisterWord(RegisterType::PC, 0xE1FB);
     WriteRegisterWord(RegisterType::SP, 0xB839);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE1FA, 0x49);
@@ -42486,6 +47982,11 @@ void test_49_0382()
 
 void test_49_0383()
 {
+    if (skip_test_49_0383)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42523,7 +48024,7 @@ void test_49_0383()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x48);
     CheckRegisterByte(RegisterType::L, 0xF0);
-    WriteRegisterWord(RegisterType::PC, 0xA771);
+    WriteRegisterWord(RegisterType::PC, 0xA772);
     WriteRegisterWord(RegisterType::SP, 0xA484);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA771, 0x49);
@@ -42531,6 +48032,11 @@ void test_49_0383()
 
 void test_49_0384()
 {
+    if (skip_test_49_0384)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42568,7 +48074,7 @@ void test_49_0384()
     CheckRegisterFlag(0xD0);
     CheckRegisterByte(RegisterType::H, 0x93);
     CheckRegisterByte(RegisterType::L, 0xA2);
-    WriteRegisterWord(RegisterType::PC, 0xC23F);
+    WriteRegisterWord(RegisterType::PC, 0xC240);
     WriteRegisterWord(RegisterType::SP, 0x3D9F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC23F, 0x49);
@@ -42576,6 +48082,11 @@ void test_49_0384()
 
 void test_49_0385()
 {
+    if (skip_test_49_0385)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42613,7 +48124,7 @@ void test_49_0385()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x95);
     CheckRegisterByte(RegisterType::L, 0x7F);
-    WriteRegisterWord(RegisterType::PC, 0x5817);
+    WriteRegisterWord(RegisterType::PC, 0x5818);
     WriteRegisterWord(RegisterType::SP, 0x3C23);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5817, 0x49);
@@ -42621,6 +48132,11 @@ void test_49_0385()
 
 void test_49_0386()
 {
+    if (skip_test_49_0386)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42658,7 +48174,7 @@ void test_49_0386()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xEC);
     CheckRegisterByte(RegisterType::L, 0x6F);
-    WriteRegisterWord(RegisterType::PC, 0xA9F8);
+    WriteRegisterWord(RegisterType::PC, 0xA9F9);
     WriteRegisterWord(RegisterType::SP, 0x12CE);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA9F8, 0x49);
@@ -42666,6 +48182,11 @@ void test_49_0386()
 
 void test_49_0387()
 {
+    if (skip_test_49_0387)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42703,7 +48224,7 @@ void test_49_0387()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xC1);
     CheckRegisterByte(RegisterType::L, 0xA9);
-    WriteRegisterWord(RegisterType::PC, 0x3248);
+    WriteRegisterWord(RegisterType::PC, 0x3249);
     WriteRegisterWord(RegisterType::SP, 0x8F72);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3248, 0x49);
@@ -42711,6 +48232,11 @@ void test_49_0387()
 
 void test_49_0388()
 {
+    if (skip_test_49_0388)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42748,7 +48274,7 @@ void test_49_0388()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x51);
     CheckRegisterByte(RegisterType::L, 0x70);
-    WriteRegisterWord(RegisterType::PC, 0x002B);
+    WriteRegisterWord(RegisterType::PC, 0x002C);
     WriteRegisterWord(RegisterType::SP, 0x53CD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x002B, 0x49);
@@ -42756,6 +48282,11 @@ void test_49_0388()
 
 void test_49_0389()
 {
+    if (skip_test_49_0389)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42793,7 +48324,7 @@ void test_49_0389()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xB1);
     CheckRegisterByte(RegisterType::L, 0x42);
-    WriteRegisterWord(RegisterType::PC, 0xD4BA);
+    WriteRegisterWord(RegisterType::PC, 0xD4BB);
     WriteRegisterWord(RegisterType::SP, 0x58E0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xD4BA, 0x49);
@@ -42801,6 +48332,11 @@ void test_49_0389()
 
 void test_49_038A()
 {
+    if (skip_test_49_038A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42838,7 +48374,7 @@ void test_49_038A()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0x5E);
-    WriteRegisterWord(RegisterType::PC, 0xDC3A);
+    WriteRegisterWord(RegisterType::PC, 0xDC3B);
     WriteRegisterWord(RegisterType::SP, 0x8A91);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xDC3A, 0x49);
@@ -42846,6 +48382,11 @@ void test_49_038A()
 
 void test_49_038B()
 {
+    if (skip_test_49_038B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42883,7 +48424,7 @@ void test_49_038B()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x55);
     CheckRegisterByte(RegisterType::L, 0x3D);
-    WriteRegisterWord(RegisterType::PC, 0xD30F);
+    WriteRegisterWord(RegisterType::PC, 0xD310);
     WriteRegisterWord(RegisterType::SP, 0x9C05);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD30F, 0x49);
@@ -42891,6 +48432,11 @@ void test_49_038B()
 
 void test_49_038C()
 {
+    if (skip_test_49_038C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42928,7 +48474,7 @@ void test_49_038C()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x47);
     CheckRegisterByte(RegisterType::L, 0xA2);
-    WriteRegisterWord(RegisterType::PC, 0x4766);
+    WriteRegisterWord(RegisterType::PC, 0x4767);
     WriteRegisterWord(RegisterType::SP, 0x0B95);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4766, 0x49);
@@ -42936,6 +48482,11 @@ void test_49_038C()
 
 void test_49_038D()
 {
+    if (skip_test_49_038D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -42973,7 +48524,7 @@ void test_49_038D()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x3D);
     CheckRegisterByte(RegisterType::L, 0x99);
-    WriteRegisterWord(RegisterType::PC, 0x7E3F);
+    WriteRegisterWord(RegisterType::PC, 0x7E40);
     WriteRegisterWord(RegisterType::SP, 0x89AC);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7E3F, 0x49);
@@ -42981,6 +48532,11 @@ void test_49_038D()
 
 void test_49_038E()
 {
+    if (skip_test_49_038E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43018,7 +48574,7 @@ void test_49_038E()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x37);
     CheckRegisterByte(RegisterType::L, 0xE1);
-    WriteRegisterWord(RegisterType::PC, 0x7DE8);
+    WriteRegisterWord(RegisterType::PC, 0x7DE9);
     WriteRegisterWord(RegisterType::SP, 0x817E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x7DE8, 0x49);
@@ -43026,6 +48582,11 @@ void test_49_038E()
 
 void test_49_038F()
 {
+    if (skip_test_49_038F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43063,7 +48624,7 @@ void test_49_038F()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x08);
     CheckRegisterByte(RegisterType::L, 0x89);
-    WriteRegisterWord(RegisterType::PC, 0x0147);
+    WriteRegisterWord(RegisterType::PC, 0x0148);
     WriteRegisterWord(RegisterType::SP, 0xB7C4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0147, 0x49);
@@ -43071,6 +48632,11 @@ void test_49_038F()
 
 void test_49_0390()
 {
+    if (skip_test_49_0390)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43108,7 +48674,7 @@ void test_49_0390()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0xAD);
-    WriteRegisterWord(RegisterType::PC, 0xE819);
+    WriteRegisterWord(RegisterType::PC, 0xE81A);
     WriteRegisterWord(RegisterType::SP, 0x4422);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE819, 0x49);
@@ -43116,6 +48682,11 @@ void test_49_0390()
 
 void test_49_0391()
 {
+    if (skip_test_49_0391)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43153,7 +48724,7 @@ void test_49_0391()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xE6);
     CheckRegisterByte(RegisterType::L, 0xE3);
-    WriteRegisterWord(RegisterType::PC, 0x778F);
+    WriteRegisterWord(RegisterType::PC, 0x7790);
     WriteRegisterWord(RegisterType::SP, 0xC6B0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x778F, 0x49);
@@ -43161,6 +48732,11 @@ void test_49_0391()
 
 void test_49_0392()
 {
+    if (skip_test_49_0392)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43198,7 +48774,7 @@ void test_49_0392()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0x87);
-    WriteRegisterWord(RegisterType::PC, 0x25BD);
+    WriteRegisterWord(RegisterType::PC, 0x25BE);
     WriteRegisterWord(RegisterType::SP, 0xD27C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x25BD, 0x49);
@@ -43206,6 +48782,11 @@ void test_49_0392()
 
 void test_49_0393()
 {
+    if (skip_test_49_0393)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43243,7 +48824,7 @@ void test_49_0393()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x09);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    WriteRegisterWord(RegisterType::PC, 0xB47B);
+    WriteRegisterWord(RegisterType::PC, 0xB47C);
     WriteRegisterWord(RegisterType::SP, 0x95CA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB47B, 0x49);
@@ -43251,6 +48832,11 @@ void test_49_0393()
 
 void test_49_0394()
 {
+    if (skip_test_49_0394)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43288,7 +48874,7 @@ void test_49_0394()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xDC);
     CheckRegisterByte(RegisterType::L, 0x46);
-    WriteRegisterWord(RegisterType::PC, 0x624C);
+    WriteRegisterWord(RegisterType::PC, 0x624D);
     WriteRegisterWord(RegisterType::SP, 0x762D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x624C, 0x49);
@@ -43296,6 +48882,11 @@ void test_49_0394()
 
 void test_49_0395()
 {
+    if (skip_test_49_0395)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43333,7 +48924,7 @@ void test_49_0395()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0x7F);
-    WriteRegisterWord(RegisterType::PC, 0xA4E9);
+    WriteRegisterWord(RegisterType::PC, 0xA4EA);
     WriteRegisterWord(RegisterType::SP, 0x7B68);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA4E9, 0x49);
@@ -43341,6 +48932,11 @@ void test_49_0395()
 
 void test_49_0396()
 {
+    if (skip_test_49_0396)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43378,7 +48974,7 @@ void test_49_0396()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x8D);
     CheckRegisterByte(RegisterType::L, 0x6C);
-    WriteRegisterWord(RegisterType::PC, 0xCD26);
+    WriteRegisterWord(RegisterType::PC, 0xCD27);
     WriteRegisterWord(RegisterType::SP, 0x8EFD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCD26, 0x49);
@@ -43386,6 +48982,11 @@ void test_49_0396()
 
 void test_49_0397()
 {
+    if (skip_test_49_0397)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43423,7 +49024,7 @@ void test_49_0397()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xC6);
     CheckRegisterByte(RegisterType::L, 0x58);
-    WriteRegisterWord(RegisterType::PC, 0x0BFF);
+    WriteRegisterWord(RegisterType::PC, 0x0C00);
     WriteRegisterWord(RegisterType::SP, 0xE604);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0BFF, 0x49);
@@ -43431,6 +49032,11 @@ void test_49_0397()
 
 void test_49_0398()
 {
+    if (skip_test_49_0398)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43468,7 +49074,7 @@ void test_49_0398()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xE0);
     CheckRegisterByte(RegisterType::L, 0xE0);
-    WriteRegisterWord(RegisterType::PC, 0xCADC);
+    WriteRegisterWord(RegisterType::PC, 0xCADD);
     WriteRegisterWord(RegisterType::SP, 0x256F);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCADC, 0x49);
@@ -43476,6 +49082,11 @@ void test_49_0398()
 
 void test_49_0399()
 {
+    if (skip_test_49_0399)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43513,7 +49124,7 @@ void test_49_0399()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x41);
     CheckRegisterByte(RegisterType::L, 0xDE);
-    WriteRegisterWord(RegisterType::PC, 0xE7B5);
+    WriteRegisterWord(RegisterType::PC, 0xE7B6);
     WriteRegisterWord(RegisterType::SP, 0xBDB0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE7B5, 0x49);
@@ -43521,6 +49132,11 @@ void test_49_0399()
 
 void test_49_039A()
 {
+    if (skip_test_49_039A)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43558,7 +49174,7 @@ void test_49_039A()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x3C);
     CheckRegisterByte(RegisterType::L, 0xDC);
-    WriteRegisterWord(RegisterType::PC, 0x5A56);
+    WriteRegisterWord(RegisterType::PC, 0x5A57);
     WriteRegisterWord(RegisterType::SP, 0xB0A8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5A56, 0x49);
@@ -43566,6 +49182,11 @@ void test_49_039A()
 
 void test_49_039B()
 {
+    if (skip_test_49_039B)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43603,7 +49224,7 @@ void test_49_039B()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xC7);
     CheckRegisterByte(RegisterType::L, 0x5C);
-    WriteRegisterWord(RegisterType::PC, 0x2834);
+    WriteRegisterWord(RegisterType::PC, 0x2835);
     WriteRegisterWord(RegisterType::SP, 0xFC43);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x2834, 0x49);
@@ -43611,6 +49232,11 @@ void test_49_039B()
 
 void test_49_039C()
 {
+    if (skip_test_49_039C)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43648,7 +49274,7 @@ void test_49_039C()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x34);
     CheckRegisterByte(RegisterType::L, 0x9E);
-    WriteRegisterWord(RegisterType::PC, 0x6320);
+    WriteRegisterWord(RegisterType::PC, 0x6321);
     WriteRegisterWord(RegisterType::SP, 0xD4BE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6320, 0x49);
@@ -43656,6 +49282,11 @@ void test_49_039C()
 
 void test_49_039D()
 {
+    if (skip_test_49_039D)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43693,7 +49324,7 @@ void test_49_039D()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x8B);
     CheckRegisterByte(RegisterType::L, 0xEF);
-    WriteRegisterWord(RegisterType::PC, 0x54C7);
+    WriteRegisterWord(RegisterType::PC, 0x54C8);
     WriteRegisterWord(RegisterType::SP, 0x377E);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x54C7, 0x49);
@@ -43701,6 +49332,11 @@ void test_49_039D()
 
 void test_49_039E()
 {
+    if (skip_test_49_039E)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43738,7 +49374,7 @@ void test_49_039E()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xA8);
     CheckRegisterByte(RegisterType::L, 0x1D);
-    WriteRegisterWord(RegisterType::PC, 0xE324);
+    WriteRegisterWord(RegisterType::PC, 0xE325);
     WriteRegisterWord(RegisterType::SP, 0x3F78);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE324, 0x49);
@@ -43746,6 +49382,11 @@ void test_49_039E()
 
 void test_49_039F()
 {
+    if (skip_test_49_039F)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43783,7 +49424,7 @@ void test_49_039F()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0xFB);
     CheckRegisterByte(RegisterType::L, 0xC1);
-    WriteRegisterWord(RegisterType::PC, 0x5CC2);
+    WriteRegisterWord(RegisterType::PC, 0x5CC3);
     WriteRegisterWord(RegisterType::SP, 0xC4B4);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5CC2, 0x49);
@@ -43791,6 +49432,11 @@ void test_49_039F()
 
 void test_49_03A0()
 {
+    if (skip_test_49_03A0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43828,7 +49474,7 @@ void test_49_03A0()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0x88);
     CheckRegisterByte(RegisterType::L, 0x31);
-    WriteRegisterWord(RegisterType::PC, 0x27E4);
+    WriteRegisterWord(RegisterType::PC, 0x27E5);
     WriteRegisterWord(RegisterType::SP, 0xA632);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x27E4, 0x49);
@@ -43836,6 +49482,11 @@ void test_49_03A0()
 
 void test_49_03A1()
 {
+    if (skip_test_49_03A1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43873,7 +49524,7 @@ void test_49_03A1()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xEC);
     CheckRegisterByte(RegisterType::L, 0xFE);
-    WriteRegisterWord(RegisterType::PC, 0x0FD1);
+    WriteRegisterWord(RegisterType::PC, 0x0FD2);
     WriteRegisterWord(RegisterType::SP, 0xE4A7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0FD1, 0x49);
@@ -43881,6 +49532,11 @@ void test_49_03A1()
 
 void test_49_03A2()
 {
+    if (skip_test_49_03A2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43918,7 +49574,7 @@ void test_49_03A2()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x4E);
     CheckRegisterByte(RegisterType::L, 0x0B);
-    WriteRegisterWord(RegisterType::PC, 0xA3DC);
+    WriteRegisterWord(RegisterType::PC, 0xA3DD);
     WriteRegisterWord(RegisterType::SP, 0xA171);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xA3DC, 0x49);
@@ -43926,6 +49582,11 @@ void test_49_03A2()
 
 void test_49_03A3()
 {
+    if (skip_test_49_03A3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -43963,7 +49624,7 @@ void test_49_03A3()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x03);
     CheckRegisterByte(RegisterType::L, 0x61);
-    WriteRegisterWord(RegisterType::PC, 0x0352);
+    WriteRegisterWord(RegisterType::PC, 0x0353);
     WriteRegisterWord(RegisterType::SP, 0xC521);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0352, 0x49);
@@ -43971,6 +49632,11 @@ void test_49_03A3()
 
 void test_49_03A4()
 {
+    if (skip_test_49_03A4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44008,7 +49674,7 @@ void test_49_03A4()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xE1);
     CheckRegisterByte(RegisterType::L, 0x6B);
-    WriteRegisterWord(RegisterType::PC, 0x49D9);
+    WriteRegisterWord(RegisterType::PC, 0x49DA);
     WriteRegisterWord(RegisterType::SP, 0xCEC3);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x49D9, 0x49);
@@ -44016,6 +49682,11 @@ void test_49_03A4()
 
 void test_49_03A5()
 {
+    if (skip_test_49_03A5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44053,7 +49724,7 @@ void test_49_03A5()
     CheckRegisterFlag(0xA0);
     CheckRegisterByte(RegisterType::H, 0x1B);
     CheckRegisterByte(RegisterType::L, 0x7B);
-    WriteRegisterWord(RegisterType::PC, 0x06BE);
+    WriteRegisterWord(RegisterType::PC, 0x06BF);
     WriteRegisterWord(RegisterType::SP, 0xD74D);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x06BE, 0x49);
@@ -44061,6 +49732,11 @@ void test_49_03A5()
 
 void test_49_03A6()
 {
+    if (skip_test_49_03A6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44098,7 +49774,7 @@ void test_49_03A6()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0x14);
-    WriteRegisterWord(RegisterType::PC, 0x17DF);
+    WriteRegisterWord(RegisterType::PC, 0x17E0);
     WriteRegisterWord(RegisterType::SP, 0x2782);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x17DF, 0x49);
@@ -44106,6 +49782,11 @@ void test_49_03A6()
 
 void test_49_03A7()
 {
+    if (skip_test_49_03A7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44143,7 +49824,7 @@ void test_49_03A7()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x03);
     CheckRegisterByte(RegisterType::L, 0x27);
-    WriteRegisterWord(RegisterType::PC, 0x1144);
+    WriteRegisterWord(RegisterType::PC, 0x1145);
     WriteRegisterWord(RegisterType::SP, 0x812F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x1144, 0x49);
@@ -44151,6 +49832,11 @@ void test_49_03A7()
 
 void test_49_03A8()
 {
+    if (skip_test_49_03A8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44188,7 +49874,7 @@ void test_49_03A8()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x36);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    WriteRegisterWord(RegisterType::PC, 0x4F39);
+    WriteRegisterWord(RegisterType::PC, 0x4F3A);
     WriteRegisterWord(RegisterType::SP, 0xFD2B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4F39, 0x49);
@@ -44196,6 +49882,11 @@ void test_49_03A8()
 
 void test_49_03A9()
 {
+    if (skip_test_49_03A9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44233,7 +49924,7 @@ void test_49_03A9()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x51);
     CheckRegisterByte(RegisterType::L, 0x84);
-    WriteRegisterWord(RegisterType::PC, 0xA433);
+    WriteRegisterWord(RegisterType::PC, 0xA434);
     WriteRegisterWord(RegisterType::SP, 0x0CAB);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xA433, 0x49);
@@ -44241,6 +49932,11 @@ void test_49_03A9()
 
 void test_49_03AA()
 {
+    if (skip_test_49_03AA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44278,7 +49974,7 @@ void test_49_03AA()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xDA);
     CheckRegisterByte(RegisterType::L, 0x53);
-    WriteRegisterWord(RegisterType::PC, 0xD154);
+    WriteRegisterWord(RegisterType::PC, 0xD155);
     WriteRegisterWord(RegisterType::SP, 0x2EC4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD154, 0x49);
@@ -44286,6 +49982,11 @@ void test_49_03AA()
 
 void test_49_03AB()
 {
+    if (skip_test_49_03AB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44323,7 +50024,7 @@ void test_49_03AB()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xC8);
     CheckRegisterByte(RegisterType::L, 0x0D);
-    WriteRegisterWord(RegisterType::PC, 0x5FF1);
+    WriteRegisterWord(RegisterType::PC, 0x5FF2);
     WriteRegisterWord(RegisterType::SP, 0xF9C2);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x5FF1, 0x49);
@@ -44331,6 +50032,11 @@ void test_49_03AB()
 
 void test_49_03AC()
 {
+    if (skip_test_49_03AC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44368,7 +50074,7 @@ void test_49_03AC()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xF1);
     CheckRegisterByte(RegisterType::L, 0x0C);
-    WriteRegisterWord(RegisterType::PC, 0xBA84);
+    WriteRegisterWord(RegisterType::PC, 0xBA85);
     WriteRegisterWord(RegisterType::SP, 0xB24B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xBA84, 0x49);
@@ -44376,6 +50082,11 @@ void test_49_03AC()
 
 void test_49_03AD()
 {
+    if (skip_test_49_03AD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44413,7 +50124,7 @@ void test_49_03AD()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0x6C);
     CheckRegisterByte(RegisterType::L, 0xB8);
-    WriteRegisterWord(RegisterType::PC, 0xC00C);
+    WriteRegisterWord(RegisterType::PC, 0xC00D);
     WriteRegisterWord(RegisterType::SP, 0xF475);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC00C, 0x49);
@@ -44421,6 +50132,11 @@ void test_49_03AD()
 
 void test_49_03AE()
 {
+    if (skip_test_49_03AE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44458,7 +50174,7 @@ void test_49_03AE()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xC2);
     CheckRegisterByte(RegisterType::L, 0x83);
-    WriteRegisterWord(RegisterType::PC, 0xB8EA);
+    WriteRegisterWord(RegisterType::PC, 0xB8EB);
     WriteRegisterWord(RegisterType::SP, 0xAA81);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB8EA, 0x49);
@@ -44466,6 +50182,11 @@ void test_49_03AE()
 
 void test_49_03AF()
 {
+    if (skip_test_49_03AF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44503,7 +50224,7 @@ void test_49_03AF()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x4A);
     CheckRegisterByte(RegisterType::L, 0x7B);
-    WriteRegisterWord(RegisterType::PC, 0x0EC6);
+    WriteRegisterWord(RegisterType::PC, 0x0EC7);
     WriteRegisterWord(RegisterType::SP, 0xEBE8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x0EC6, 0x49);
@@ -44511,6 +50232,11 @@ void test_49_03AF()
 
 void test_49_03B0()
 {
+    if (skip_test_49_03B0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44548,7 +50274,7 @@ void test_49_03B0()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xF7);
     CheckRegisterByte(RegisterType::L, 0x08);
-    WriteRegisterWord(RegisterType::PC, 0xC2ED);
+    WriteRegisterWord(RegisterType::PC, 0xC2EE);
     WriteRegisterWord(RegisterType::SP, 0x7E60);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xC2ED, 0x49);
@@ -44556,6 +50282,11 @@ void test_49_03B0()
 
 void test_49_03B1()
 {
+    if (skip_test_49_03B1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44593,7 +50324,7 @@ void test_49_03B1()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0x13);
-    WriteRegisterWord(RegisterType::PC, 0x5B20);
+    WriteRegisterWord(RegisterType::PC, 0x5B21);
     WriteRegisterWord(RegisterType::SP, 0xD50C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5B20, 0x49);
@@ -44601,6 +50332,11 @@ void test_49_03B1()
 
 void test_49_03B2()
 {
+    if (skip_test_49_03B2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44638,7 +50374,7 @@ void test_49_03B2()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0x37);
-    WriteRegisterWord(RegisterType::PC, 0xABDB);
+    WriteRegisterWord(RegisterType::PC, 0xABDC);
     WriteRegisterWord(RegisterType::SP, 0x65E1);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xABDB, 0x49);
@@ -44646,6 +50382,11 @@ void test_49_03B2()
 
 void test_49_03B3()
 {
+    if (skip_test_49_03B3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44683,7 +50424,7 @@ void test_49_03B3()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x8D);
     CheckRegisterByte(RegisterType::L, 0x58);
-    WriteRegisterWord(RegisterType::PC, 0x0F38);
+    WriteRegisterWord(RegisterType::PC, 0x0F39);
     WriteRegisterWord(RegisterType::SP, 0xBC11);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0F38, 0x49);
@@ -44691,6 +50432,11 @@ void test_49_03B3()
 
 void test_49_03B4()
 {
+    if (skip_test_49_03B4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44728,7 +50474,7 @@ void test_49_03B4()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x86);
     CheckRegisterByte(RegisterType::L, 0xC1);
-    WriteRegisterWord(RegisterType::PC, 0x473F);
+    WriteRegisterWord(RegisterType::PC, 0x4740);
     WriteRegisterWord(RegisterType::SP, 0xC044);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x473F, 0x49);
@@ -44736,6 +50482,11 @@ void test_49_03B4()
 
 void test_49_03B5()
 {
+    if (skip_test_49_03B5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44773,7 +50524,7 @@ void test_49_03B5()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x53);
     CheckRegisterByte(RegisterType::L, 0xF9);
-    WriteRegisterWord(RegisterType::PC, 0x9784);
+    WriteRegisterWord(RegisterType::PC, 0x9785);
     WriteRegisterWord(RegisterType::SP, 0x40A4);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9784, 0x49);
@@ -44781,6 +50532,11 @@ void test_49_03B5()
 
 void test_49_03B6()
 {
+    if (skip_test_49_03B6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44818,7 +50574,7 @@ void test_49_03B6()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0x8A);
     CheckRegisterByte(RegisterType::L, 0x22);
-    WriteRegisterWord(RegisterType::PC, 0xE059);
+    WriteRegisterWord(RegisterType::PC, 0xE05A);
     WriteRegisterWord(RegisterType::SP, 0xDC60);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xE059, 0x49);
@@ -44826,6 +50582,11 @@ void test_49_03B6()
 
 void test_49_03B7()
 {
+    if (skip_test_49_03B7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44863,7 +50624,7 @@ void test_49_03B7()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x6D);
     CheckRegisterByte(RegisterType::L, 0xD5);
-    WriteRegisterWord(RegisterType::PC, 0x82E1);
+    WriteRegisterWord(RegisterType::PC, 0x82E2);
     WriteRegisterWord(RegisterType::SP, 0x3765);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x82E1, 0x49);
@@ -44871,6 +50632,11 @@ void test_49_03B7()
 
 void test_49_03B8()
 {
+    if (skip_test_49_03B8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44908,7 +50674,7 @@ void test_49_03B8()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xE0);
     CheckRegisterByte(RegisterType::L, 0x1F);
-    WriteRegisterWord(RegisterType::PC, 0xE727);
+    WriteRegisterWord(RegisterType::PC, 0xE728);
     WriteRegisterWord(RegisterType::SP, 0xBAF2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xE727, 0x49);
@@ -44916,6 +50682,11 @@ void test_49_03B8()
 
 void test_49_03B9()
 {
+    if (skip_test_49_03B9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44953,7 +50724,7 @@ void test_49_03B9()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0x26);
     CheckRegisterByte(RegisterType::L, 0x9F);
-    WriteRegisterWord(RegisterType::PC, 0xEB76);
+    WriteRegisterWord(RegisterType::PC, 0xEB77);
     WriteRegisterWord(RegisterType::SP, 0x5E95);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xEB76, 0x49);
@@ -44961,6 +50732,11 @@ void test_49_03B9()
 
 void test_49_03BA()
 {
+    if (skip_test_49_03BA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -44998,7 +50774,7 @@ void test_49_03BA()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x97);
     CheckRegisterByte(RegisterType::L, 0xF7);
-    WriteRegisterWord(RegisterType::PC, 0x0608);
+    WriteRegisterWord(RegisterType::PC, 0x0609);
     WriteRegisterWord(RegisterType::SP, 0xEA04);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x0608, 0x49);
@@ -45006,6 +50782,11 @@ void test_49_03BA()
 
 void test_49_03BB()
 {
+    if (skip_test_49_03BB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45043,7 +50824,7 @@ void test_49_03BB()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x91);
     CheckRegisterByte(RegisterType::L, 0xF8);
-    WriteRegisterWord(RegisterType::PC, 0xFD1F);
+    WriteRegisterWord(RegisterType::PC, 0xFD20);
     WriteRegisterWord(RegisterType::SP, 0xCB29);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xFD1F, 0x49);
@@ -45051,6 +50832,11 @@ void test_49_03BB()
 
 void test_49_03BC()
 {
+    if (skip_test_49_03BC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45088,7 +50874,7 @@ void test_49_03BC()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xD3);
     CheckRegisterByte(RegisterType::L, 0x47);
-    WriteRegisterWord(RegisterType::PC, 0x4CCA);
+    WriteRegisterWord(RegisterType::PC, 0x4CCB);
     WriteRegisterWord(RegisterType::SP, 0x2299);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x4CCA, 0x49);
@@ -45096,6 +50882,11 @@ void test_49_03BC()
 
 void test_49_03BD()
 {
+    if (skip_test_49_03BD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45133,7 +50924,7 @@ void test_49_03BD()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x87);
     CheckRegisterByte(RegisterType::L, 0x05);
-    WriteRegisterWord(RegisterType::PC, 0x1E77);
+    WriteRegisterWord(RegisterType::PC, 0x1E78);
     WriteRegisterWord(RegisterType::SP, 0xD22C);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1E77, 0x49);
@@ -45141,6 +50932,11 @@ void test_49_03BD()
 
 void test_49_03BE()
 {
+    if (skip_test_49_03BE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45178,7 +50974,7 @@ void test_49_03BE()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x18);
     CheckRegisterByte(RegisterType::L, 0x0A);
-    WriteRegisterWord(RegisterType::PC, 0x90B3);
+    WriteRegisterWord(RegisterType::PC, 0x90B4);
     WriteRegisterWord(RegisterType::SP, 0x140B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x90B3, 0x49);
@@ -45186,6 +50982,11 @@ void test_49_03BE()
 
 void test_49_03BF()
 {
+    if (skip_test_49_03BF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45223,7 +51024,7 @@ void test_49_03BF()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xB3);
     CheckRegisterByte(RegisterType::L, 0xF8);
-    WriteRegisterWord(RegisterType::PC, 0xC029);
+    WriteRegisterWord(RegisterType::PC, 0xC02A);
     WriteRegisterWord(RegisterType::SP, 0x27F0);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC029, 0x49);
@@ -45231,6 +51032,11 @@ void test_49_03BF()
 
 void test_49_03C0()
 {
+    if (skip_test_49_03C0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45268,7 +51074,7 @@ void test_49_03C0()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xDF);
     CheckRegisterByte(RegisterType::L, 0xBC);
-    WriteRegisterWord(RegisterType::PC, 0x7C15);
+    WriteRegisterWord(RegisterType::PC, 0x7C16);
     WriteRegisterWord(RegisterType::SP, 0xA482);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x7C15, 0x49);
@@ -45276,6 +51082,11 @@ void test_49_03C0()
 
 void test_49_03C1()
 {
+    if (skip_test_49_03C1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45313,7 +51124,7 @@ void test_49_03C1()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0x6E);
-    WriteRegisterWord(RegisterType::PC, 0x6FED);
+    WriteRegisterWord(RegisterType::PC, 0x6FEE);
     WriteRegisterWord(RegisterType::SP, 0x4A17);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6FED, 0x49);
@@ -45321,6 +51132,11 @@ void test_49_03C1()
 
 void test_49_03C2()
 {
+    if (skip_test_49_03C2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45358,7 +51174,7 @@ void test_49_03C2()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x12);
     CheckRegisterByte(RegisterType::L, 0x46);
-    WriteRegisterWord(RegisterType::PC, 0x733C);
+    WriteRegisterWord(RegisterType::PC, 0x733D);
     WriteRegisterWord(RegisterType::SP, 0xF2B2);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x733C, 0x49);
@@ -45366,6 +51182,11 @@ void test_49_03C2()
 
 void test_49_03C3()
 {
+    if (skip_test_49_03C3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45403,7 +51224,7 @@ void test_49_03C3()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0xE7);
     CheckRegisterByte(RegisterType::L, 0x83);
-    WriteRegisterWord(RegisterType::PC, 0x97D9);
+    WriteRegisterWord(RegisterType::PC, 0x97DA);
     WriteRegisterWord(RegisterType::SP, 0xE475);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x97D9, 0x49);
@@ -45411,6 +51232,11 @@ void test_49_03C3()
 
 void test_49_03C4()
 {
+    if (skip_test_49_03C4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45448,7 +51274,7 @@ void test_49_03C4()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x7B);
     CheckRegisterByte(RegisterType::L, 0x6E);
-    WriteRegisterWord(RegisterType::PC, 0x016E);
+    WriteRegisterWord(RegisterType::PC, 0x016F);
     WriteRegisterWord(RegisterType::SP, 0x1AAC);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x016E, 0x49);
@@ -45456,6 +51282,11 @@ void test_49_03C4()
 
 void test_49_03C5()
 {
+    if (skip_test_49_03C5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45493,7 +51324,7 @@ void test_49_03C5()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0xB0);
     CheckRegisterByte(RegisterType::L, 0xFF);
-    WriteRegisterWord(RegisterType::PC, 0xD359);
+    WriteRegisterWord(RegisterType::PC, 0xD35A);
     WriteRegisterWord(RegisterType::SP, 0xEA21);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD359, 0x49);
@@ -45501,6 +51332,11 @@ void test_49_03C5()
 
 void test_49_03C6()
 {
+    if (skip_test_49_03C6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45538,7 +51374,7 @@ void test_49_03C6()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xBE);
     CheckRegisterByte(RegisterType::L, 0xFE);
-    WriteRegisterWord(RegisterType::PC, 0x59CD);
+    WriteRegisterWord(RegisterType::PC, 0x59CE);
     WriteRegisterWord(RegisterType::SP, 0x64AE);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x59CD, 0x49);
@@ -45546,6 +51382,11 @@ void test_49_03C6()
 
 void test_49_03C7()
 {
+    if (skip_test_49_03C7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45583,7 +51424,7 @@ void test_49_03C7()
     CheckRegisterFlag(0xB0);
     CheckRegisterByte(RegisterType::H, 0xB6);
     CheckRegisterByte(RegisterType::L, 0xA5);
-    WriteRegisterWord(RegisterType::PC, 0x69BD);
+    WriteRegisterWord(RegisterType::PC, 0x69BE);
     WriteRegisterWord(RegisterType::SP, 0xAE25);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x69BD, 0x49);
@@ -45591,6 +51432,11 @@ void test_49_03C7()
 
 void test_49_03C8()
 {
+    if (skip_test_49_03C8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45628,7 +51474,7 @@ void test_49_03C8()
     CheckRegisterFlag(0x40);
     CheckRegisterByte(RegisterType::H, 0xD9);
     CheckRegisterByte(RegisterType::L, 0x99);
-    WriteRegisterWord(RegisterType::PC, 0xCBFF);
+    WriteRegisterWord(RegisterType::PC, 0xCC00);
     WriteRegisterWord(RegisterType::SP, 0x8F54);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xCBFF, 0x49);
@@ -45636,6 +51482,11 @@ void test_49_03C8()
 
 void test_49_03C9()
 {
+    if (skip_test_49_03C9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45673,7 +51524,7 @@ void test_49_03C9()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0x5C);
     CheckRegisterByte(RegisterType::L, 0x09);
-    WriteRegisterWord(RegisterType::PC, 0x31C6);
+    WriteRegisterWord(RegisterType::PC, 0x31C7);
     WriteRegisterWord(RegisterType::SP, 0x2FE8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x31C6, 0x49);
@@ -45681,6 +51532,11 @@ void test_49_03C9()
 
 void test_49_03CA()
 {
+    if (skip_test_49_03CA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45718,7 +51574,7 @@ void test_49_03CA()
     CheckRegisterFlag(0x90);
     CheckRegisterByte(RegisterType::H, 0x2D);
     CheckRegisterByte(RegisterType::L, 0x28);
-    WriteRegisterWord(RegisterType::PC, 0x584F);
+    WriteRegisterWord(RegisterType::PC, 0x5850);
     WriteRegisterWord(RegisterType::SP, 0x12C0);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x584F, 0x49);
@@ -45726,6 +51582,11 @@ void test_49_03CA()
 
 void test_49_03CB()
 {
+    if (skip_test_49_03CB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45763,7 +51624,7 @@ void test_49_03CB()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0xEE);
     CheckRegisterByte(RegisterType::L, 0x07);
-    WriteRegisterWord(RegisterType::PC, 0xB418);
+    WriteRegisterWord(RegisterType::PC, 0xB419);
     WriteRegisterWord(RegisterType::SP, 0x0AA8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xB418, 0x49);
@@ -45771,6 +51632,11 @@ void test_49_03CB()
 
 void test_49_03CC()
 {
+    if (skip_test_49_03CC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45808,7 +51674,7 @@ void test_49_03CC()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xF1);
     CheckRegisterByte(RegisterType::L, 0x21);
-    WriteRegisterWord(RegisterType::PC, 0x1A2D);
+    WriteRegisterWord(RegisterType::PC, 0x1A2E);
     WriteRegisterWord(RegisterType::SP, 0x5657);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1A2D, 0x49);
@@ -45816,6 +51682,11 @@ void test_49_03CC()
 
 void test_49_03CD()
 {
+    if (skip_test_49_03CD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45853,7 +51724,7 @@ void test_49_03CD()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x9F);
     CheckRegisterByte(RegisterType::L, 0x43);
-    WriteRegisterWord(RegisterType::PC, 0x331A);
+    WriteRegisterWord(RegisterType::PC, 0x331B);
     WriteRegisterWord(RegisterType::SP, 0xEDDD);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x331A, 0x49);
@@ -45861,6 +51732,11 @@ void test_49_03CD()
 
 void test_49_03CE()
 {
+    if (skip_test_49_03CE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45898,7 +51774,7 @@ void test_49_03CE()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xD5);
     CheckRegisterByte(RegisterType::L, 0xDF);
-    WriteRegisterWord(RegisterType::PC, 0xC110);
+    WriteRegisterWord(RegisterType::PC, 0xC111);
     WriteRegisterWord(RegisterType::SP, 0xA20C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xC110, 0x49);
@@ -45906,6 +51782,11 @@ void test_49_03CE()
 
 void test_49_03CF()
 {
+    if (skip_test_49_03CF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45943,7 +51824,7 @@ void test_49_03CF()
     CheckRegisterFlag(0x00);
     CheckRegisterByte(RegisterType::H, 0xC7);
     CheckRegisterByte(RegisterType::L, 0x45);
-    WriteRegisterWord(RegisterType::PC, 0x09EF);
+    WriteRegisterWord(RegisterType::PC, 0x09F0);
     WriteRegisterWord(RegisterType::SP, 0xEB1B);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x09EF, 0x49);
@@ -45951,6 +51832,11 @@ void test_49_03CF()
 
 void test_49_03D0()
 {
+    if (skip_test_49_03D0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -45988,7 +51874,7 @@ void test_49_03D0()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xED);
     CheckRegisterByte(RegisterType::L, 0x19);
-    WriteRegisterWord(RegisterType::PC, 0x3CE1);
+    WriteRegisterWord(RegisterType::PC, 0x3CE2);
     WriteRegisterWord(RegisterType::SP, 0x4204);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x3CE1, 0x49);
@@ -45996,6 +51882,11 @@ void test_49_03D0()
 
 void test_49_03D1()
 {
+    if (skip_test_49_03D1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46033,7 +51924,7 @@ void test_49_03D1()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0x5F);
-    WriteRegisterWord(RegisterType::PC, 0x9BEB);
+    WriteRegisterWord(RegisterType::PC, 0x9BEC);
     WriteRegisterWord(RegisterType::SP, 0xAA68);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x9BEB, 0x49);
@@ -46041,6 +51932,11 @@ void test_49_03D1()
 
 void test_49_03D2()
 {
+    if (skip_test_49_03D2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46078,7 +51974,7 @@ void test_49_03D2()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0x1D);
     CheckRegisterByte(RegisterType::L, 0xDF);
-    WriteRegisterWord(RegisterType::PC, 0xD241);
+    WriteRegisterWord(RegisterType::PC, 0xD242);
     WriteRegisterWord(RegisterType::SP, 0xC91D);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xD241, 0x49);
@@ -46086,6 +51982,11 @@ void test_49_03D2()
 
 void test_49_03D3()
 {
+    if (skip_test_49_03D3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46123,7 +52024,7 @@ void test_49_03D3()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x41);
     CheckRegisterByte(RegisterType::L, 0x2F);
-    WriteRegisterWord(RegisterType::PC, 0xADDA);
+    WriteRegisterWord(RegisterType::PC, 0xADDB);
     WriteRegisterWord(RegisterType::SP, 0x1E7F);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xADDA, 0x49);
@@ -46131,6 +52032,11 @@ void test_49_03D3()
 
 void test_49_03D4()
 {
+    if (skip_test_49_03D4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46168,7 +52074,7 @@ void test_49_03D4()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x17);
     CheckRegisterByte(RegisterType::L, 0x3D);
-    WriteRegisterWord(RegisterType::PC, 0x6174);
+    WriteRegisterWord(RegisterType::PC, 0x6175);
     WriteRegisterWord(RegisterType::SP, 0xD4DA);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6174, 0x49);
@@ -46176,6 +52082,11 @@ void test_49_03D4()
 
 void test_49_03D5()
 {
+    if (skip_test_49_03D5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46213,7 +52124,7 @@ void test_49_03D5()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x9F);
     CheckRegisterByte(RegisterType::L, 0xC1);
-    WriteRegisterWord(RegisterType::PC, 0x38F5);
+    WriteRegisterWord(RegisterType::PC, 0x38F6);
     WriteRegisterWord(RegisterType::SP, 0x771A);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x38F5, 0x49);
@@ -46221,6 +52132,11 @@ void test_49_03D5()
 
 void test_49_03D6()
 {
+    if (skip_test_49_03D6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46258,7 +52174,7 @@ void test_49_03D6()
     CheckRegisterFlag(0xE0);
     CheckRegisterByte(RegisterType::H, 0xE9);
     CheckRegisterByte(RegisterType::L, 0x91);
-    WriteRegisterWord(RegisterType::PC, 0x68F1);
+    WriteRegisterWord(RegisterType::PC, 0x68F2);
     WriteRegisterWord(RegisterType::SP, 0x08E3);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x68F1, 0x49);
@@ -46266,6 +52182,11 @@ void test_49_03D6()
 
 void test_49_03D7()
 {
+    if (skip_test_49_03D7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46303,7 +52224,7 @@ void test_49_03D7()
     CheckRegisterFlag(0x70);
     CheckRegisterByte(RegisterType::H, 0xCF);
     CheckRegisterByte(RegisterType::L, 0xF7);
-    WriteRegisterWord(RegisterType::PC, 0x3517);
+    WriteRegisterWord(RegisterType::PC, 0x3518);
     WriteRegisterWord(RegisterType::SP, 0x87C8);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3517, 0x49);
@@ -46311,6 +52232,11 @@ void test_49_03D7()
 
 void test_49_03D8()
 {
+    if (skip_test_49_03D8)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46348,7 +52274,7 @@ void test_49_03D8()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xD8);
     CheckRegisterByte(RegisterType::L, 0x8E);
-    WriteRegisterWord(RegisterType::PC, 0x3CBF);
+    WriteRegisterWord(RegisterType::PC, 0x3CC0);
     WriteRegisterWord(RegisterType::SP, 0xDB78);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3CBF, 0x49);
@@ -46356,6 +52282,11 @@ void test_49_03D8()
 
 void test_49_03D9()
 {
+    if (skip_test_49_03D9)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46393,7 +52324,7 @@ void test_49_03D9()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x0C);
     CheckRegisterByte(RegisterType::L, 0x51);
-    WriteRegisterWord(RegisterType::PC, 0xCA43);
+    WriteRegisterWord(RegisterType::PC, 0xCA44);
     WriteRegisterWord(RegisterType::SP, 0xD622);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xCA43, 0x49);
@@ -46401,6 +52332,11 @@ void test_49_03D9()
 
 void test_49_03DA()
 {
+    if (skip_test_49_03DA)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46438,7 +52374,7 @@ void test_49_03DA()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0xB9);
     CheckRegisterByte(RegisterType::L, 0xEA);
-    WriteRegisterWord(RegisterType::PC, 0x4A8F);
+    WriteRegisterWord(RegisterType::PC, 0x4A90);
     WriteRegisterWord(RegisterType::SP, 0x44D1);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x4A8F, 0x49);
@@ -46446,6 +52382,11 @@ void test_49_03DA()
 
 void test_49_03DB()
 {
+    if (skip_test_49_03DB)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46483,7 +52424,7 @@ void test_49_03DB()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x4C);
     CheckRegisterByte(RegisterType::L, 0x58);
-    WriteRegisterWord(RegisterType::PC, 0x982B);
+    WriteRegisterWord(RegisterType::PC, 0x982C);
     WriteRegisterWord(RegisterType::SP, 0xE0D6);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x982B, 0x49);
@@ -46491,6 +52432,11 @@ void test_49_03DB()
 
 void test_49_03DC()
 {
+    if (skip_test_49_03DC)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46528,7 +52474,7 @@ void test_49_03DC()
     CheckRegisterFlag(0xC0);
     CheckRegisterByte(RegisterType::H, 0x29);
     CheckRegisterByte(RegisterType::L, 0xE4);
-    WriteRegisterWord(RegisterType::PC, 0x1DB2);
+    WriteRegisterWord(RegisterType::PC, 0x1DB3);
     WriteRegisterWord(RegisterType::SP, 0x9908);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x1DB2, 0x49);
@@ -46536,6 +52482,11 @@ void test_49_03DC()
 
 void test_49_03DD()
 {
+    if (skip_test_49_03DD)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46573,7 +52524,7 @@ void test_49_03DD()
     CheckRegisterFlag(0x10);
     CheckRegisterByte(RegisterType::H, 0x27);
     CheckRegisterByte(RegisterType::L, 0x32);
-    WriteRegisterWord(RegisterType::PC, 0x963C);
+    WriteRegisterWord(RegisterType::PC, 0x963D);
     WriteRegisterWord(RegisterType::SP, 0xCEC7);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x963C, 0x49);
@@ -46581,6 +52532,11 @@ void test_49_03DD()
 
 void test_49_03DE()
 {
+    if (skip_test_49_03DE)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46618,7 +52574,7 @@ void test_49_03DE()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xFA);
     CheckRegisterByte(RegisterType::L, 0xE7);
-    WriteRegisterWord(RegisterType::PC, 0x052A);
+    WriteRegisterWord(RegisterType::PC, 0x052B);
     WriteRegisterWord(RegisterType::SP, 0x760C);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x052A, 0x49);
@@ -46626,6 +52582,11 @@ void test_49_03DE()
 
 void test_49_03DF()
 {
+    if (skip_test_49_03DF)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46663,7 +52624,7 @@ void test_49_03DF()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x94);
     CheckRegisterByte(RegisterType::L, 0xDB);
-    WriteRegisterWord(RegisterType::PC, 0xB0CA);
+    WriteRegisterWord(RegisterType::PC, 0xB0CB);
     WriteRegisterWord(RegisterType::SP, 0xDF0B);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xB0CA, 0x49);
@@ -46671,6 +52632,11 @@ void test_49_03DF()
 
 void test_49_03E0()
 {
+    if (skip_test_49_03E0)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46708,7 +52674,7 @@ void test_49_03E0()
     CheckRegisterFlag(0x30);
     CheckRegisterByte(RegisterType::H, 0x7B);
     CheckRegisterByte(RegisterType::L, 0xD3);
-    WriteRegisterWord(RegisterType::PC, 0x9C68);
+    WriteRegisterWord(RegisterType::PC, 0x9C69);
     WriteRegisterWord(RegisterType::SP, 0x970A);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x9C68, 0x49);
@@ -46716,6 +52682,11 @@ void test_49_03E0()
 
 void test_49_03E1()
 {
+    if (skip_test_49_03E1)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46753,7 +52724,7 @@ void test_49_03E1()
     CheckRegisterFlag(0x20);
     CheckRegisterByte(RegisterType::H, 0x93);
     CheckRegisterByte(RegisterType::L, 0xD7);
-    WriteRegisterWord(RegisterType::PC, 0xF050);
+    WriteRegisterWord(RegisterType::PC, 0xF051);
     WriteRegisterWord(RegisterType::SP, 0x8EE8);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF050, 0x49);
@@ -46761,6 +52732,11 @@ void test_49_03E1()
 
 void test_49_03E2()
 {
+    if (skip_test_49_03E2)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46798,7 +52774,7 @@ void test_49_03E2()
     CheckRegisterFlag(0x60);
     CheckRegisterByte(RegisterType::H, 0xBB);
     CheckRegisterByte(RegisterType::L, 0x3B);
-    WriteRegisterWord(RegisterType::PC, 0x6D6A);
+    WriteRegisterWord(RegisterType::PC, 0x6D6B);
     WriteRegisterWord(RegisterType::SP, 0x7727);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x6D6A, 0x49);
@@ -46806,6 +52782,11 @@ void test_49_03E2()
 
 void test_49_03E3()
 {
+    if (skip_test_49_03E3)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46843,7 +52824,7 @@ void test_49_03E3()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0x42);
     CheckRegisterByte(RegisterType::L, 0xB4);
-    WriteRegisterWord(RegisterType::PC, 0xEFBD);
+    WriteRegisterWord(RegisterType::PC, 0xEFBE);
     WriteRegisterWord(RegisterType::SP, 0xE198);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0xEFBD, 0x49);
@@ -46851,6 +52832,11 @@ void test_49_03E3()
 
 void test_49_03E4()
 {
+    if (skip_test_49_03E4)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46888,7 +52874,7 @@ void test_49_03E4()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0x98);
     CheckRegisterByte(RegisterType::L, 0x2F);
-    WriteRegisterWord(RegisterType::PC, 0x3917);
+    WriteRegisterWord(RegisterType::PC, 0x3918);
     WriteRegisterWord(RegisterType::SP, 0x6E55);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3917, 0x49);
@@ -46896,6 +52882,11 @@ void test_49_03E4()
 
 void test_49_03E5()
 {
+    if (skip_test_49_03E5)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46933,7 +52924,7 @@ void test_49_03E5()
     CheckRegisterFlag(0x50);
     CheckRegisterByte(RegisterType::H, 0xBC);
     CheckRegisterByte(RegisterType::L, 0x76);
-    WriteRegisterWord(RegisterType::PC, 0x3513);
+    WriteRegisterWord(RegisterType::PC, 0x3514);
     WriteRegisterWord(RegisterType::SP, 0x5ACA);
     TEST_ASSERT(mmap.IMEEnabled());
     CheckMemory(0x3513, 0x49);
@@ -46941,6 +52932,11 @@ void test_49_03E5()
 
 void test_49_03E6()
 {
+    if (skip_test_49_03E6)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -46978,7 +52974,7 @@ void test_49_03E6()
     CheckRegisterFlag(0xF0);
     CheckRegisterByte(RegisterType::H, 0x9B);
     CheckRegisterByte(RegisterType::L, 0x8C);
-    WriteRegisterWord(RegisterType::PC, 0x5595);
+    WriteRegisterWord(RegisterType::PC, 0x5596);
     WriteRegisterWord(RegisterType::SP, 0x13F9);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0x5595, 0x49);
@@ -46986,6 +52982,11 @@ void test_49_03E6()
 
 void test_49_03E7()
 {
+    if (skip_test_49_03E7)
+    {
+        TEST_SKIP("Skipping");
+        return;
+    }
     mmap.Reset();
     TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
 
@@ -47023,7 +53024,7 @@ void test_49_03E7()
     CheckRegisterFlag(0x80);
     CheckRegisterByte(RegisterType::H, 0xEA);
     CheckRegisterByte(RegisterType::L, 0xA4);
-    WriteRegisterWord(RegisterType::PC, 0xF512);
+    WriteRegisterWord(RegisterType::PC, 0xF513);
     WriteRegisterWord(RegisterType::SP, 0x9450);
     TEST_ASSERT(!mmap.IMEEnabled());
     CheckMemory(0xF512, 0x49);
