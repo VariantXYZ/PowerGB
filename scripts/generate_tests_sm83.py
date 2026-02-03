@@ -16,11 +16,23 @@ SUPPORTED_OPCODES = ([
     (0x40,"ld"), # LD B, B
     (0x47,"ld"), # LD B, A
     (0x49,"ld"), # LD C, C
+    (0x4F,"ld"), # LD C, A
     (0x52,"ld"), # LD D, D
+    (0x57,"ld"), # LD D, A
     (0x5B,"ld"), # LD E, E
+    (0x5F,"ld"), # LD E, A
     (0x64,"ld"), # LD H, H
+    (0x67,"ld"), # LD H, A
     (0x6D,"ld"), # LD L, L
+    (0x6F,"ld"), # LD L, A
+    (0x77,"ld"), # LD [HL], A
     (0x78,"ld"), # LD A, B
+    (0x79,"ld"), # LD A, C
+    (0x7A,"ld"), # LD A, D
+    (0x7B,"ld"), # LD A, E
+    (0x7C,"ld"), # LD A, H
+    (0x7D,"ld"), # LD A, L
+    (0x7E,"ld"), # LD A, [HL]
     (0x7F,"ld"), # LD A, A
 ])
 

@@ -17,10 +17,9 @@ using namespace pgb::common;
 using namespace pgb::cpu;
 using namespace pgb::memory;
 
-// NOP + 13 ld instructions
+// NOP + 25 ld instructions
 // Note how we explicitly only include instruction_ld in this test
-static_assert(instruction::InstructionRegistryNoPrefix::Size == 14);
-// static_assert(instruction::InstructionRegistryNoPrefix::Ticks[0x0A] == 4);
+static_assert(instruction::InstructionRegistryNoPrefix::Size == 26);
 
 static auto registers = RegisterFile();
 static auto mmap      = MemoryMap(registers, MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount);
