@@ -74,6 +74,9 @@ private:
     // Stack pointer
     Block<16, 16> _SP;
 
+    // Internal-instruction temporary
+    Block<16, 8> _WZ;
+
 protected:
     friend memory::MemoryMap;
 
@@ -97,6 +100,11 @@ protected:
 
     constexpr bool&       IME() { return _IME; }
     constexpr const bool& IME() const { return _IME; }
+
+    // Temporary reference
+    constexpr Byte& W() { return _WZ[0]; }
+    constexpr Byte& Z() { return _WZ[1]; }
+    constexpr const Word WZ() const { return _WZ.Word<0>(); }
 
 public:
     // Flag read

@@ -79,7 +79,7 @@ public:
     // Execute specific operation
     template <std::size_t T>
     constexpr static auto ExecuteCycle(memory::MemoryMap& memory) noexcept
-        requires(T < Ticks)
+        requires(T < sizeof...(Operations))
     {
         return std::get<T>(std::forward_as_tuple(Operations...))(memory);
     }
