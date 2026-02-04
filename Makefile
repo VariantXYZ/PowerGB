@@ -13,8 +13,13 @@ SCRIPTS_DIR := $(BASE_DIR)/scripts
 CXX := c++
 LD := $(CXX)
 AR := ar
-CC_OPT_FLAGS := -flto=thin -O2
-LD_OPT_FLAGS := -flto=thin -O2 -Wl,--thinlto-cache-dir=$(BASE_DIR)/.thinlto_cache
+ifeq ($(BUILD_TYPE), Release)
+CC_OPT_FLAGS := -O2 -flto=thin
+LD_OPT_FLAGS := -O2 -flto=thin -Wl,--thinlto-cache-dir=$(BASE_DIR)/.thinlto_cache
+else
+CC_OPT_FLAGS := -O0
+LD_OPT_FLAGS := -O0
+endif
 PYTHON := python3
 
 MODULES := \

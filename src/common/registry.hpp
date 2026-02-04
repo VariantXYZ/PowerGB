@@ -23,6 +23,10 @@ struct List
 namespace detail
 {
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-warning-option"
+#pragma GCC diagnostic ignored "-Wnon-template-friend"
+
 // Forward-declaration of Nth, used as a unique key in the list (Tag + 'N')
 // 'Tag' specifies a particular registry
 template <typename Tag, auto>
@@ -31,6 +35,8 @@ struct Nth
     // Friend-injection: Forward-declare friend function (defined via ADL in 'Set')
     auto friend Get(Nth) noexcept;
 };
+
+#pragma GCC diagnostic pop
 
 // For a particular Tag + N, set 'T'
 // This effectively 'stores' a mapping
