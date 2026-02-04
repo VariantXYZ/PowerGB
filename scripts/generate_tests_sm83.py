@@ -13,18 +13,62 @@ SUPPORTED_OPCODES = ([
     (0x0A,"ld"), # LD A, [BC]
     (0x12,"ld"), # LD [DE], A
     (0x1A,"ld"), # LD A, [DE]
+    # 0x40 to 0x7F is the main load block
     (0x40,"ld"), # LD B, B
+    (0x41,"ld"), # LD B, C
+    (0x42,"ld"), # LD B, D
+    (0x43,"ld"), # LD B, E
+    (0x44,"ld"), # LD B, H
+    (0x45,"ld"), # LD B, L
+    (0x46,"ld"), # LD B, [HL]
     (0x47,"ld"), # LD B, A
+    (0x48,"ld"), # LD C, B
     (0x49,"ld"), # LD C, C
+    (0x4A,"ld"), # LD C, D
+    (0x4B,"ld"), # LD C, E
+    (0x4C,"ld"), # LD C, H
+    (0x4D,"ld"), # LD C, L
+    (0x4E,"ld"), # LD C, [HL]
     (0x4F,"ld"), # LD C, A
+    (0x50,"ld"), # LD D, B
+    (0x51,"ld"), # LD D, C
     (0x52,"ld"), # LD D, D
+    (0x53,"ld"), # LD D, E
+    (0x54,"ld"), # LD D, H
+    (0x55,"ld"), # LD D, L
+    (0x56,"ld"), # LD D, [HL]
     (0x57,"ld"), # LD D, A
+    (0x58,"ld"), # LD E, B
+    (0x59,"ld"), # LD E, C
+    (0x5A,"ld"), # LD E, D
     (0x5B,"ld"), # LD E, E
+    (0x5C,"ld"), # LD E, H
+    (0x5D,"ld"), # LD E, L
+    (0x5E,"ld"), # LD E, [HL]
     (0x5F,"ld"), # LD E, A
+    (0x60,"ld"), # LD H, B
+    (0x61,"ld"), # LD H, C
+    (0x62,"ld"), # LD H, D
+    (0x63,"ld"), # LD H, E
     (0x64,"ld"), # LD H, H
+    (0x65,"ld"), # LD H, L
+    (0x66,"ld"), # LD H, [HL]
     (0x67,"ld"), # LD H, A
+    (0x68,"ld"), # LD L, B
+    (0x69,"ld"), # LD L, C
+    (0x6A,"ld"), # LD L, D
+    (0x6B,"ld"), # LD L, E
+    (0x6C,"ld"), # LD L, H
     (0x6D,"ld"), # LD L, L
+    (0x6E,"ld"), # LD L, [HL]
     (0x6F,"ld"), # LD L, A
+    (0x70,"ld"), # LD [HL], B
+    (0x71,"ld"), # LD [HL], C
+    (0x72,"ld"), # LD [HL], D
+    (0x73,"ld"), # LD [HL], E
+    (0x74,"ld"), # LD [HL], H
+    (0x75,"ld"), # LD [HL], L
+    # 0x76 is HALT ('ld [hl], [hl]')
     (0x77,"ld"), # LD [HL], A
     (0x78,"ld"), # LD A, B
     (0x79,"ld"), # LD A, C
