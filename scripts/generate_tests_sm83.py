@@ -9,6 +9,7 @@ assert os.path.exists(f"{repository_path}/v1/00.json"), "sm83 directory is not c
 
 SUPPORTED_OPCODES = ([
     (0x00,"nop"), # NOP
+    (0x01,"ld"), # LD BC, nnnn
     (0x02,"ld"), # LD [BC], A
     (0x0A,"ld"), # LD A, [BC]
     (0x12,"ld"), # LD [DE], A

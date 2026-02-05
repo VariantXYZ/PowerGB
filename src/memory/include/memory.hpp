@@ -61,7 +61,7 @@ public:
     using ResultAccessReadOnlyProhibitedAddress = common::Result<"Accessing read-only prohibited address">;
     using ResultAccessCrossesRegionBoundary     = common::Result<"Access width would result in crossing region boundaries">;
 
-    template <typename T>
+    template <typename T, typename... R>
     using BaseAccessResultSet =
         common::ResultSet<
             /* Type */ T,
@@ -70,7 +70,8 @@ public:
             ResultAccessInvalidAddress,
             ResultAccessProhibitedAddress,
             ResultAccessReadOnlyProhibitedAddress,
-            ResultAccessCrossesRegionBoundary>;
+            ResultAccessCrossesRegionBoundary,
+            R...>;
 
     using BankSetResultSet =
         common::ResultSet<
@@ -83,12 +84,13 @@ public:
     using WordAccessResultSet              = BaseAccessResultSet<const Word>;
 
     using ResultAccessRegisterInvalidWidth = common::Result<"Register access does not match register width">;
-    template <typename T>
+    template <typename T, typename... R>
     using BaseRegisterAccessResultSet =
         common::ResultSet<
             /* Type */ T,
             common::ResultSuccess,
-            ResultAccessRegisterInvalidWidth>;
+            ResultAccessRegisterInvalidWidth,
+            R...>;
 
     using Register8AccessResultSet             = BaseRegisterAccessResultSet<const Byte>;
     using Register16AccessResultSet            = BaseRegisterAccessResultSet<const Word>;
@@ -270,9 +272,13 @@ public:
     ModifyStateRegisterResultSet IncrementPC() noexcept;
     ModifyStateRegisterResultSet DecrementPC() noexcept;
 
-    void EnableIME() noexcept { _registers.EnableIME(); }
-    void DisableIME() noexcept { _registers.DisableIME(); }
-    bool IMEEnabled() const noexcept { return _registers.IME(); }
+    void EnableIME() noexcept;
+    void DisableIME() noexcept;
+    bool IMEEnabled() const noexcept;
+
+    const Word GetTemp() const noexcept;
+    Byte&      GetTempLo() noexcept;
+    Byte&      GetTempHi() noexcept;
 };
 
 } // namespace pgb::memory

@@ -36,21 +36,61 @@ inline NoOpResultSet NoOp(memory::MemoryMap&) noexcept
     return NoOpResultSet::DefaultResultSuccess();
 }
 
+using IncrementPCResultSet = memory::MemoryMap::BaseAccessResultSet<void, memory::MemoryMap::ResultRegisterOverflow>;
+// PC++
+inline IncrementPCResultSet IncrementPC(memory::MemoryMap& mmap) noexcept
+{
+    auto pcIncResult = mmap.IncrementPC();
+    return pcIncResult;
+}
+
 using LoadIrResultSet = memory::MemoryMap::BaseAccessResultSet<void>;
-// IR <- [PC]; ++PC;
-inline LoadIrResultSet LoadIR(memory::MemoryMap& mmap) noexcept
+// IR <- [PC]
+inline LoadIrResultSet LoadIRPC(memory::MemoryMap& mmap) noexcept
 {
     auto pc     = mmap.ReadPC();
     auto result = mmap.ReadByte(pc);
     if (result.IsSuccess())
     {
         mmap.WriteByte(cpu::RegisterType::IR, result);
-        auto pcIncResult = mmap.IncrementPC();
-        if (pcIncResult.IsFailure())
-        {
-            // TODO: Need to support result sets concatenating result sets so I can just add the result for this to it
-            return LoadIrResultSet::DefaultResultFailure();
-        }
+    }
+    return result;
+}
+
+using LoadTempResultSet = memory::MemoryMap::BaseAccessResultSet<void>;
+// Z <- [PC];
+inline LoadTempResultSet LoadTempLoPC(memory::MemoryMap& mmap) noexcept
+{
+    auto pc     = mmap.ReadPC();
+    auto result = mmap.ReadByte(pc);
+    if (result.IsSuccess())
+    {
+        auto& Z = mmap.GetTempLo();
+        Z       = result;
+    }
+    return result;
+}
+// W <- [PC];
+inline LoadTempResultSet LoadTempHiPC(memory::MemoryMap& mmap) noexcept
+{
+    auto pc     = mmap.ReadPC();
+    auto result = mmap.ReadByte(pc);
+    if (result.IsSuccess())
+    {
+        auto& W = mmap.GetTempHi();
+        W       = result;
+    }
+    return result;
+}
+// Z <- [WZ];
+inline LoadTempResultSet LoadTempLoTemp(memory::MemoryMap& mmap) noexcept
+{
+    auto wz     = mmap.GetTemp();
+    auto result = mmap.ReadByte(wz);
+    if (result.IsSuccess())
+    {
+        auto& Z = mmap.GetTempLo();
+        Z       = result;
     }
     return result;
 }
@@ -74,6 +114,13 @@ public:
         std::size_t t = 0;
         (void)((Operations(memory).IsSuccess() ? (++t, true) : false) && ...);
         return t == sizeof...(Operations) ? Ticks : t;
+    }
+
+    // Execute all operations ignoring the result value
+    // Ignoring the results should allow the compiler to more heavily inline everything
+    constexpr static void ExecuteAllForce(memory::MemoryMap& memory) noexcept
+    {
+        (void)((Operations(memory)), ...);
     }
 
     // Execute specific operation
