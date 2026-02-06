@@ -152,11 +152,12 @@ using Ld_BC_Imm_Decoder = Instantiate<InstructionDecoder<"ld bc, nnnn", 0x01, Ld
 using Ld_BC_A_Decoder   = Instantiate<InstructionDecoder<"ld [bc], a", 0x02, LdMem<RegisterType::BC, RegisterType::A>>>::Type;
 
 using Ld_A_BC_Decoder   = Instantiate<InstructionDecoder<"ld a, [bc]", 0x0A, LdMem<RegisterType::A, RegisterType::BC>>>::Type;
-
+using Ld_DE_Imm_Decoder = Instantiate<InstructionDecoder<"ld de, nnnn", 0x11, LdImm<RegisterType::DE>>>::Type;
 using Ld_DE_A_Decoder   = Instantiate<InstructionDecoder<"ld [de], a", 0x12, LdMem<RegisterType::DE, RegisterType::A>>>::Type;
 
 using Ld_A_DE_Decoder   = Instantiate<InstructionDecoder<"ld a, [de]", 0x1A, LdMem<RegisterType::A, RegisterType::DE>>>::Type;
-
+using Ld_HL_Imm_Decoder = Instantiate<InstructionDecoder<"ld hl, nnnn", 0x21, LdImm<RegisterType::HL>>>::Type;
+using Ld_SP_Imm_Decoder = Instantiate<InstructionDecoder<"ld sp, nnnn", 0x31, LdImm<RegisterType::SP>>>::Type;
 using Ld_B_B_Decoder    = Instantiate<InstructionDecoder<"ld b, b", 0x40, NOP>>::Type;
 using Ld_B_C_Decoder    = Instantiate<InstructionDecoder<"ld b, c", 0x41, LdReg<RegisterType::B, RegisterType::C>>>::Type;
 using Ld_B_D_Decoder    = Instantiate<InstructionDecoder<"ld b, d", 0x42, LdReg<RegisterType::B, RegisterType::D>>>::Type;
