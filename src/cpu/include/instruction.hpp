@@ -29,6 +29,13 @@ public:
     }
 };
 
+enum IncrementMode
+{
+    None = 0,
+    Increment,
+    Decrement
+};
+
 using NoOpResultSet = common::ResultSet<void, common::ResultSuccess>;
 // nop
 inline NoOpResultSet NoOp(memory::MemoryMap&) noexcept
@@ -42,6 +49,27 @@ inline IncrementPCResultSet IncrementPC(memory::MemoryMap& mmap) noexcept
 {
     auto pcIncResult = mmap.IncrementPC();
     return pcIncResult;
+}
+
+// Reg++ or Reg--
+using IncrementRegResultSet = memory::MemoryMap::BaseRegisterAccessResultSet<void>;
+template <RegisterType T, IncrementMode Mode>
+inline IncrementRegResultSet SingleStepRegister(memory::MemoryMap& mmap) noexcept
+{
+    if (Mode == IncrementMode::None)
+    {
+        return IncrementRegResultSet::DefaultResultSuccess();
+    }
+
+    auto getResult = mmap.ReadWord(T);
+
+    if (getResult.IsSuccess())
+    {
+        auto value     = static_cast<const Word>(getResult) + (Mode == IncrementMode::Increment ? 1 : -1);
+        auto setResult = mmap.WriteWord(T, value);
+        return setResult;
+    }
+    return getResult;
 }
 
 using LoadIrResultSet = memory::MemoryMap::BaseAccessResultSet<void>;

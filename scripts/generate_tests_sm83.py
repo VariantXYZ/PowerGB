@@ -16,7 +16,11 @@ SUPPORTED_OPCODES = ([
     (0x12,"ld"), # LD [DE], A
     (0x1A,"ld"), # LD A, [DE]
     (0x21,"ld"), # LD HL, nnnn
+    (0x22,"ld"), # LD HL+, A
+    (0x2A,"ld"), # LD A, [HL+]
     (0x31,"ld"), # LD SP, nnnn
+    (0x32,"ld"), # LD HL-, A
+    (0x3A,"ld"), # LD A, [HL-]
     # 0x40 to 0x7F is the main load block
     (0x40,"ld"), # LD B, B
     (0x41,"ld"), # LD B, C
