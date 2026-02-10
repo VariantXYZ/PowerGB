@@ -13,12 +13,35 @@ SCRIPTS_DIR := $(BASE_DIR)/scripts
 CXX := c++
 LD := $(CXX)
 AR := ar
-ifeq ($(BUILD_TYPE), Release)
-CC_OPT_FLAGS := -O2 -flto=thin
-LD_OPT_FLAGS := -O2 -flto=thin -Wl,--thinlto-cache-dir=$(BASE_DIR)/.thinlto_cache
+
+ifneq '' '$(shell which mold)'
+# If 'mold' is available, try to use it to speed up debug build times
+MOLD_LD := -fuse-ld=mold
+endif
+
+# Set flags based on compiler (gcc vs clang)
+COMPILER_VERSION = $(shell $(CXX) --version)
+ifneq '' '$(findstring clang,$(COMPILER_VERSION))'
+# Rely on lld for clang release, otherwise use mold for iteration time
+RELEASE_CC := -flto=thin
+RELEASE_LD := -flto=thin -fuse-ld=lld -Wl,--thinlto-cache-dir=$(BASE_DIR)/.thinlto_cache
+DEBUG_CC :=
+DEBUG_LD := $(MOLD_LD)
+else ifneq '' '$(findstring g++,$(COMPILER_VERSION))'
+# In gcc's case, default to mold as the linker if available
+RELEASE_CC := -flto
+RELEASE_LD := -flto $(MOLD_LD)
+DEBUG_CC := -flto
+DEBUG_LD := -flto $(MOLD_LD)
 else
-CC_OPT_FLAGS := -O0
-LD_OPT_FLAGS := -O0
+endif
+
+ifeq ($(BUILD_TYPE), Release)
+CC_OPT_FLAGS := -O2 $(RELEASE_CC)
+LD_OPT_FLAGS := -O2 $(RELEASE_LD)
+else
+CC_OPT_FLAGS := -O0 $(DEBUG_CC)
+LD_OPT_FLAGS := -O0 $(DEBUG_LD)
 endif
 PYTHON := python3
 
@@ -67,6 +90,7 @@ pc := %
 default: $(TESTS_BASIC)
 build_all_tests: $(TESTS_BASIC) $(TESTS_SM83)
 clean:
+	rm -r $(BASE_DIR)/.thinlto_cache || exit 0
 	rm -r $(BUILD_DIR) || exit 0
 
 run_all_tests: run_all_tests_basic run_all_tests_sm83
