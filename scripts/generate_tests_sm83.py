@@ -11,16 +11,23 @@ SUPPORTED_OPCODES = ([
     (0x00,"nop"), # NOP
     (0x01,"ld"), # LD BC, nnnn
     (0x02,"ld"), # LD [BC], A
+    (0x06,"ld"), # LD B, nn
     (0x0A,"ld"), # LD A, [BC]
+    (0x0E,"ld"), # LD C, nn
     (0x11,"ld"), # LD DE, nnnn
     (0x12,"ld"), # LD [DE], A
+    (0x16,"ld"), # LD D, nn
     (0x1A,"ld"), # LD A, [DE]
+    (0x1E,"ld"), # LD E, nn
     (0x21,"ld"), # LD HL, nnnn
     (0x22,"ld"), # LD HL+, A
+    (0x26,"ld"), # LD H, nn
     (0x2A,"ld"), # LD A, [HL+]
+    (0x2E,"ld"), # LD L, nn
     (0x31,"ld"), # LD SP, nnnn
     (0x32,"ld"), # LD HL-, A
     (0x3A,"ld"), # LD A, [HL-]
+    (0x3E,"ld"), # LD A, nn
     # 0x40 to 0x7F is the main load block
     (0x40,"ld"), # LD B, B
     (0x41,"ld"), # LD B, C
@@ -193,7 +200,7 @@ void test_{test_name}()
                     if address >= 0xFEA0 and address <= 0xFEFF:
                         # Don't bother with tests that right to illegal locations'
                         skip_test = True
-                    test_content.append(f"    WriteRegisterWord(RegisterType::{val.upper()}, 0x{address:04X});")
+                    test_content.append(f"    CheckRegisterWord(RegisterType::{val.upper()}, 0x{address:04X});")
                 elif val in ("a", "b", "c", "d", "e", "h", "l", "ie"):
                     test_content.append(f"    CheckRegisterByte(RegisterType::{val.upper()}, 0x{test['final'][val]:02X});")
                 elif val == 'f':
