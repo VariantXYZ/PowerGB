@@ -104,7 +104,8 @@ run_all_tests_sm83: $(RUN_ALL_TESTS_SM83)
 
 # exec=never is to prevent child processes from being spawned
 run_test_%: $(BUILD_DIR)/test/%
-	$< --exec=never
+	$< --exec=never --quiet && { echo "$* passed"; exit 0; } || { echo "$* failed"; exit 1; }
+
 
 # Auto-generate scripts
 generate_tests_sm83: $(TEST_DIR_SM83)

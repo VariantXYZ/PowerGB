@@ -820,7 +820,7 @@ acutest_check_(int cond, const char* file, int line, const char* fmt, ...)
 
         result_str = "failed";
         result_color = ACUTEST_COLOR_RED_;
-        verbose_level = 2;
+        verbose_level = 0;
     }
 
     if(acutest_verbose_level_ >= verbose_level) {
