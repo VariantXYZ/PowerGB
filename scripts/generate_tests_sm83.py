@@ -180,6 +180,7 @@ void test_{test_name}()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == {len(test['cycles']) * 4});
     }}
 
     // Final state

@@ -3063,6 +3063,7 @@ void test_70_0000()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3115,6 +3116,7 @@ void test_70_0001()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3167,6 +3169,7 @@ void test_70_0002()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3219,6 +3222,7 @@ void test_70_0003()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3271,6 +3275,7 @@ void test_70_0004()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3323,6 +3328,7 @@ void test_70_0005()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3375,6 +3381,7 @@ void test_70_0006()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3427,6 +3434,7 @@ void test_70_0007()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3479,6 +3487,7 @@ void test_70_0008()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3531,6 +3540,7 @@ void test_70_0009()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3583,6 +3593,7 @@ void test_70_000A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3635,6 +3646,7 @@ void test_70_000B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3687,6 +3699,7 @@ void test_70_000C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3739,6 +3752,7 @@ void test_70_000D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3791,6 +3805,7 @@ void test_70_000E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3843,6 +3858,7 @@ void test_70_000F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3895,6 +3911,7 @@ void test_70_0010()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3947,6 +3964,7 @@ void test_70_0011()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -3999,6 +4017,7 @@ void test_70_0012()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4051,6 +4070,7 @@ void test_70_0013()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4103,6 +4123,7 @@ void test_70_0014()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4155,6 +4176,7 @@ void test_70_0015()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4207,6 +4229,7 @@ void test_70_0016()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4259,6 +4282,7 @@ void test_70_0017()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4311,6 +4335,7 @@ void test_70_0018()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4363,6 +4388,7 @@ void test_70_0019()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4415,6 +4441,7 @@ void test_70_001A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4467,6 +4494,7 @@ void test_70_001B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4519,6 +4547,7 @@ void test_70_001C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4571,6 +4600,7 @@ void test_70_001D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4623,6 +4653,7 @@ void test_70_001E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4675,6 +4706,7 @@ void test_70_001F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4727,6 +4759,7 @@ void test_70_0020()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4779,6 +4812,7 @@ void test_70_0021()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4831,6 +4865,7 @@ void test_70_0022()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4883,6 +4918,7 @@ void test_70_0023()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4935,6 +4971,7 @@ void test_70_0024()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -4987,6 +5024,7 @@ void test_70_0025()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5039,6 +5077,7 @@ void test_70_0026()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5091,6 +5130,7 @@ void test_70_0027()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5143,6 +5183,7 @@ void test_70_0028()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5195,6 +5236,7 @@ void test_70_0029()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5247,6 +5289,7 @@ void test_70_002A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5299,6 +5342,7 @@ void test_70_002B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5351,6 +5395,7 @@ void test_70_002C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5403,6 +5448,7 @@ void test_70_002D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5455,6 +5501,7 @@ void test_70_002E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5507,6 +5554,7 @@ void test_70_002F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5559,6 +5607,7 @@ void test_70_0030()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5611,6 +5660,7 @@ void test_70_0031()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5663,6 +5713,7 @@ void test_70_0032()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5715,6 +5766,7 @@ void test_70_0033()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5767,6 +5819,7 @@ void test_70_0034()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5819,6 +5872,7 @@ void test_70_0035()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5871,6 +5925,7 @@ void test_70_0036()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5923,6 +5978,7 @@ void test_70_0037()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -5975,6 +6031,7 @@ void test_70_0038()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6027,6 +6084,7 @@ void test_70_0039()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6079,6 +6137,7 @@ void test_70_003A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6131,6 +6190,7 @@ void test_70_003B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6183,6 +6243,7 @@ void test_70_003C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6235,6 +6296,7 @@ void test_70_003D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6287,6 +6349,7 @@ void test_70_003E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6339,6 +6402,7 @@ void test_70_003F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6391,6 +6455,7 @@ void test_70_0040()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6443,6 +6508,7 @@ void test_70_0041()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6495,6 +6561,7 @@ void test_70_0042()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6547,6 +6614,7 @@ void test_70_0043()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6599,6 +6667,7 @@ void test_70_0044()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6651,6 +6720,7 @@ void test_70_0045()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6703,6 +6773,7 @@ void test_70_0046()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6755,6 +6826,7 @@ void test_70_0047()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6807,6 +6879,7 @@ void test_70_0048()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6859,6 +6932,7 @@ void test_70_0049()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6911,6 +6985,7 @@ void test_70_004A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -6963,6 +7038,7 @@ void test_70_004B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7015,6 +7091,7 @@ void test_70_004C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7067,6 +7144,7 @@ void test_70_004D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7119,6 +7197,7 @@ void test_70_004E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7171,6 +7250,7 @@ void test_70_004F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7223,6 +7303,7 @@ void test_70_0050()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7275,6 +7356,7 @@ void test_70_0051()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7327,6 +7409,7 @@ void test_70_0052()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7379,6 +7462,7 @@ void test_70_0053()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7431,6 +7515,7 @@ void test_70_0054()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7483,6 +7568,7 @@ void test_70_0055()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7535,6 +7621,7 @@ void test_70_0056()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7587,6 +7674,7 @@ void test_70_0057()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7639,6 +7727,7 @@ void test_70_0058()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7691,6 +7780,7 @@ void test_70_0059()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7743,6 +7833,7 @@ void test_70_005A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7795,6 +7886,7 @@ void test_70_005B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7847,6 +7939,7 @@ void test_70_005C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7899,6 +7992,7 @@ void test_70_005D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -7951,6 +8045,7 @@ void test_70_005E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8003,6 +8098,7 @@ void test_70_005F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8055,6 +8151,7 @@ void test_70_0060()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8107,6 +8204,7 @@ void test_70_0061()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8159,6 +8257,7 @@ void test_70_0062()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8211,6 +8310,7 @@ void test_70_0063()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8263,6 +8363,7 @@ void test_70_0064()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8315,6 +8416,7 @@ void test_70_0065()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8367,6 +8469,7 @@ void test_70_0066()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8419,6 +8522,7 @@ void test_70_0067()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8471,6 +8575,7 @@ void test_70_0068()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8523,6 +8628,7 @@ void test_70_0069()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8575,6 +8681,7 @@ void test_70_006A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8627,6 +8734,7 @@ void test_70_006B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8679,6 +8787,7 @@ void test_70_006C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8731,6 +8840,7 @@ void test_70_006D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8783,6 +8893,7 @@ void test_70_006E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8835,6 +8946,7 @@ void test_70_006F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8887,6 +8999,7 @@ void test_70_0070()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8939,6 +9052,7 @@ void test_70_0071()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -8991,6 +9105,7 @@ void test_70_0072()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9043,6 +9158,7 @@ void test_70_0073()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9095,6 +9211,7 @@ void test_70_0074()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9147,6 +9264,7 @@ void test_70_0075()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9199,6 +9317,7 @@ void test_70_0076()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9251,6 +9370,7 @@ void test_70_0077()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9303,6 +9423,7 @@ void test_70_0078()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9355,6 +9476,7 @@ void test_70_0079()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9407,6 +9529,7 @@ void test_70_007A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9459,6 +9582,7 @@ void test_70_007B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9511,6 +9635,7 @@ void test_70_007C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9563,6 +9688,7 @@ void test_70_007D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9615,6 +9741,7 @@ void test_70_007E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9667,6 +9794,7 @@ void test_70_007F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9719,6 +9847,7 @@ void test_70_0080()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9771,6 +9900,7 @@ void test_70_0081()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9823,6 +9953,7 @@ void test_70_0082()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9875,6 +10006,7 @@ void test_70_0083()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9927,6 +10059,7 @@ void test_70_0084()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -9979,6 +10112,7 @@ void test_70_0085()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10031,6 +10165,7 @@ void test_70_0086()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10083,6 +10218,7 @@ void test_70_0087()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10135,6 +10271,7 @@ void test_70_0088()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10187,6 +10324,7 @@ void test_70_0089()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10239,6 +10377,7 @@ void test_70_008A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10291,6 +10430,7 @@ void test_70_008B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10343,6 +10483,7 @@ void test_70_008C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10395,6 +10536,7 @@ void test_70_008D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10447,6 +10589,7 @@ void test_70_008E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10499,6 +10642,7 @@ void test_70_008F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10551,6 +10695,7 @@ void test_70_0090()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10603,6 +10748,7 @@ void test_70_0091()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10655,6 +10801,7 @@ void test_70_0092()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10707,6 +10854,7 @@ void test_70_0093()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10759,6 +10907,7 @@ void test_70_0094()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10811,6 +10960,7 @@ void test_70_0095()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10863,6 +11013,7 @@ void test_70_0096()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10915,6 +11066,7 @@ void test_70_0097()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -10967,6 +11119,7 @@ void test_70_0098()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11019,6 +11172,7 @@ void test_70_0099()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11071,6 +11225,7 @@ void test_70_009A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11123,6 +11278,7 @@ void test_70_009B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11175,6 +11331,7 @@ void test_70_009C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11227,6 +11384,7 @@ void test_70_009D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11279,6 +11437,7 @@ void test_70_009E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11331,6 +11490,7 @@ void test_70_009F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11383,6 +11543,7 @@ void test_70_00A0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11435,6 +11596,7 @@ void test_70_00A1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11487,6 +11649,7 @@ void test_70_00A2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11539,6 +11702,7 @@ void test_70_00A3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11591,6 +11755,7 @@ void test_70_00A4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11643,6 +11808,7 @@ void test_70_00A5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11695,6 +11861,7 @@ void test_70_00A6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11747,6 +11914,7 @@ void test_70_00A7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11799,6 +11967,7 @@ void test_70_00A8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11851,6 +12020,7 @@ void test_70_00A9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11903,6 +12073,7 @@ void test_70_00AA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -11955,6 +12126,7 @@ void test_70_00AB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12007,6 +12179,7 @@ void test_70_00AC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12059,6 +12232,7 @@ void test_70_00AD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12111,6 +12285,7 @@ void test_70_00AE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12163,6 +12338,7 @@ void test_70_00AF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12215,6 +12391,7 @@ void test_70_00B0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12267,6 +12444,7 @@ void test_70_00B1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12319,6 +12497,7 @@ void test_70_00B2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12371,6 +12550,7 @@ void test_70_00B3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12423,6 +12603,7 @@ void test_70_00B4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12475,6 +12656,7 @@ void test_70_00B5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12527,6 +12709,7 @@ void test_70_00B6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12579,6 +12762,7 @@ void test_70_00B7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12631,6 +12815,7 @@ void test_70_00B8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12683,6 +12868,7 @@ void test_70_00B9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12735,6 +12921,7 @@ void test_70_00BA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12787,6 +12974,7 @@ void test_70_00BB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12839,6 +13027,7 @@ void test_70_00BC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12891,6 +13080,7 @@ void test_70_00BD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12943,6 +13133,7 @@ void test_70_00BE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -12995,6 +13186,7 @@ void test_70_00BF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13047,6 +13239,7 @@ void test_70_00C0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13099,6 +13292,7 @@ void test_70_00C1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13151,6 +13345,7 @@ void test_70_00C2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13203,6 +13398,7 @@ void test_70_00C3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13255,6 +13451,7 @@ void test_70_00C4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13307,6 +13504,7 @@ void test_70_00C5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13359,6 +13557,7 @@ void test_70_00C6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13411,6 +13610,7 @@ void test_70_00C7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13463,6 +13663,7 @@ void test_70_00C8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13515,6 +13716,7 @@ void test_70_00C9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13567,6 +13769,7 @@ void test_70_00CA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13619,6 +13822,7 @@ void test_70_00CB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13671,6 +13875,7 @@ void test_70_00CC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13723,6 +13928,7 @@ void test_70_00CD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13775,6 +13981,7 @@ void test_70_00CE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13827,6 +14034,7 @@ void test_70_00CF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13879,6 +14087,7 @@ void test_70_00D0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13931,6 +14140,7 @@ void test_70_00D1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -13983,6 +14193,7 @@ void test_70_00D2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14035,6 +14246,7 @@ void test_70_00D3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14087,6 +14299,7 @@ void test_70_00D4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14139,6 +14352,7 @@ void test_70_00D5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14191,6 +14405,7 @@ void test_70_00D6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14243,6 +14458,7 @@ void test_70_00D7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14295,6 +14511,7 @@ void test_70_00D8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14347,6 +14564,7 @@ void test_70_00D9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14399,6 +14617,7 @@ void test_70_00DA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14451,6 +14670,7 @@ void test_70_00DB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14503,6 +14723,7 @@ void test_70_00DC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14555,6 +14776,7 @@ void test_70_00DD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14607,6 +14829,7 @@ void test_70_00DE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14659,6 +14882,7 @@ void test_70_00DF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14711,6 +14935,7 @@ void test_70_00E0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14763,6 +14988,7 @@ void test_70_00E1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14815,6 +15041,7 @@ void test_70_00E2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14867,6 +15094,7 @@ void test_70_00E3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14919,6 +15147,7 @@ void test_70_00E4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -14971,6 +15200,7 @@ void test_70_00E5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15023,6 +15253,7 @@ void test_70_00E6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15075,6 +15306,7 @@ void test_70_00E7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15127,6 +15359,7 @@ void test_70_00E8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15179,6 +15412,7 @@ void test_70_00E9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15231,6 +15465,7 @@ void test_70_00EA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15283,6 +15518,7 @@ void test_70_00EB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15335,6 +15571,7 @@ void test_70_00EC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15387,6 +15624,7 @@ void test_70_00ED()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15439,6 +15677,7 @@ void test_70_00EE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15491,6 +15730,7 @@ void test_70_00EF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15543,6 +15783,7 @@ void test_70_00F0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15595,6 +15836,7 @@ void test_70_00F1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15647,6 +15889,7 @@ void test_70_00F2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15699,6 +15942,7 @@ void test_70_00F3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15751,6 +15995,7 @@ void test_70_00F4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15803,6 +16048,7 @@ void test_70_00F5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15855,6 +16101,7 @@ void test_70_00F6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15907,6 +16154,7 @@ void test_70_00F7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -15959,6 +16207,7 @@ void test_70_00F8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16011,6 +16260,7 @@ void test_70_00F9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16063,6 +16313,7 @@ void test_70_00FA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16115,6 +16366,7 @@ void test_70_00FB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16167,6 +16419,7 @@ void test_70_00FC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16219,6 +16472,7 @@ void test_70_00FD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16271,6 +16525,7 @@ void test_70_00FE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16323,6 +16578,7 @@ void test_70_00FF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16375,6 +16631,7 @@ void test_70_0100()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16427,6 +16684,7 @@ void test_70_0101()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16479,6 +16737,7 @@ void test_70_0102()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16531,6 +16790,7 @@ void test_70_0103()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16583,6 +16843,7 @@ void test_70_0104()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16635,6 +16896,7 @@ void test_70_0105()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16687,6 +16949,7 @@ void test_70_0106()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16739,6 +17002,7 @@ void test_70_0107()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16791,6 +17055,7 @@ void test_70_0108()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16843,6 +17108,7 @@ void test_70_0109()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16895,6 +17161,7 @@ void test_70_010A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16947,6 +17214,7 @@ void test_70_010B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -16999,6 +17267,7 @@ void test_70_010C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17051,6 +17320,7 @@ void test_70_010D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17103,6 +17373,7 @@ void test_70_010E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17155,6 +17426,7 @@ void test_70_010F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17207,6 +17479,7 @@ void test_70_0110()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17259,6 +17532,7 @@ void test_70_0111()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17311,6 +17585,7 @@ void test_70_0112()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17363,6 +17638,7 @@ void test_70_0113()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17415,6 +17691,7 @@ void test_70_0114()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17467,6 +17744,7 @@ void test_70_0115()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17519,6 +17797,7 @@ void test_70_0116()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17571,6 +17850,7 @@ void test_70_0117()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17623,6 +17903,7 @@ void test_70_0118()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17675,6 +17956,7 @@ void test_70_0119()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17727,6 +18009,7 @@ void test_70_011A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17779,6 +18062,7 @@ void test_70_011B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17831,6 +18115,7 @@ void test_70_011C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17883,6 +18168,7 @@ void test_70_011D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17935,6 +18221,7 @@ void test_70_011E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -17987,6 +18274,7 @@ void test_70_011F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18039,6 +18327,7 @@ void test_70_0120()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18091,6 +18380,7 @@ void test_70_0121()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18143,6 +18433,7 @@ void test_70_0122()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18195,6 +18486,7 @@ void test_70_0123()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18247,6 +18539,7 @@ void test_70_0124()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18299,6 +18592,7 @@ void test_70_0125()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18351,6 +18645,7 @@ void test_70_0126()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18403,6 +18698,7 @@ void test_70_0127()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18455,6 +18751,7 @@ void test_70_0128()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18507,6 +18804,7 @@ void test_70_0129()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18559,6 +18857,7 @@ void test_70_012A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18611,6 +18910,7 @@ void test_70_012B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18663,6 +18963,7 @@ void test_70_012C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18715,6 +19016,7 @@ void test_70_012D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18767,6 +19069,7 @@ void test_70_012E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18819,6 +19122,7 @@ void test_70_012F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18871,6 +19175,7 @@ void test_70_0130()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18923,6 +19228,7 @@ void test_70_0131()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -18975,6 +19281,7 @@ void test_70_0132()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19027,6 +19334,7 @@ void test_70_0133()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19079,6 +19387,7 @@ void test_70_0134()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19131,6 +19440,7 @@ void test_70_0135()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19183,6 +19493,7 @@ void test_70_0136()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19235,6 +19546,7 @@ void test_70_0137()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19287,6 +19599,7 @@ void test_70_0138()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19339,6 +19652,7 @@ void test_70_0139()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19391,6 +19705,7 @@ void test_70_013A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19443,6 +19758,7 @@ void test_70_013B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19495,6 +19811,7 @@ void test_70_013C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19547,6 +19864,7 @@ void test_70_013D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19599,6 +19917,7 @@ void test_70_013E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19651,6 +19970,7 @@ void test_70_013F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19703,6 +20023,7 @@ void test_70_0140()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19755,6 +20076,7 @@ void test_70_0141()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19807,6 +20129,7 @@ void test_70_0142()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19859,6 +20182,7 @@ void test_70_0143()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19911,6 +20235,7 @@ void test_70_0144()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -19963,6 +20288,7 @@ void test_70_0145()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20015,6 +20341,7 @@ void test_70_0146()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20067,6 +20394,7 @@ void test_70_0147()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20119,6 +20447,7 @@ void test_70_0148()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20171,6 +20500,7 @@ void test_70_0149()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20223,6 +20553,7 @@ void test_70_014A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20275,6 +20606,7 @@ void test_70_014B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20327,6 +20659,7 @@ void test_70_014C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20379,6 +20712,7 @@ void test_70_014D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20431,6 +20765,7 @@ void test_70_014E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20483,6 +20818,7 @@ void test_70_014F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20535,6 +20871,7 @@ void test_70_0150()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20587,6 +20924,7 @@ void test_70_0151()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20639,6 +20977,7 @@ void test_70_0152()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20691,6 +21030,7 @@ void test_70_0153()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20743,6 +21083,7 @@ void test_70_0154()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20795,6 +21136,7 @@ void test_70_0155()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20847,6 +21189,7 @@ void test_70_0156()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20899,6 +21242,7 @@ void test_70_0157()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -20951,6 +21295,7 @@ void test_70_0158()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21003,6 +21348,7 @@ void test_70_0159()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21055,6 +21401,7 @@ void test_70_015A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21107,6 +21454,7 @@ void test_70_015B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21159,6 +21507,7 @@ void test_70_015C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21211,6 +21560,7 @@ void test_70_015D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21263,6 +21613,7 @@ void test_70_015E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21315,6 +21666,7 @@ void test_70_015F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21367,6 +21719,7 @@ void test_70_0160()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21419,6 +21772,7 @@ void test_70_0161()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21471,6 +21825,7 @@ void test_70_0162()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21523,6 +21878,7 @@ void test_70_0163()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21575,6 +21931,7 @@ void test_70_0164()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21627,6 +21984,7 @@ void test_70_0165()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21679,6 +22037,7 @@ void test_70_0166()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21731,6 +22090,7 @@ void test_70_0167()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21783,6 +22143,7 @@ void test_70_0168()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21835,6 +22196,7 @@ void test_70_0169()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21887,6 +22249,7 @@ void test_70_016A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21939,6 +22302,7 @@ void test_70_016B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -21991,6 +22355,7 @@ void test_70_016C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22043,6 +22408,7 @@ void test_70_016D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22095,6 +22461,7 @@ void test_70_016E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22147,6 +22514,7 @@ void test_70_016F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22199,6 +22567,7 @@ void test_70_0170()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22251,6 +22620,7 @@ void test_70_0171()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22303,6 +22673,7 @@ void test_70_0172()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22355,6 +22726,7 @@ void test_70_0173()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22407,6 +22779,7 @@ void test_70_0174()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22459,6 +22832,7 @@ void test_70_0175()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22511,6 +22885,7 @@ void test_70_0176()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22563,6 +22938,7 @@ void test_70_0177()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22615,6 +22991,7 @@ void test_70_0178()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22667,6 +23044,7 @@ void test_70_0179()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22719,6 +23097,7 @@ void test_70_017A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22771,6 +23150,7 @@ void test_70_017B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22823,6 +23203,7 @@ void test_70_017C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22875,6 +23256,7 @@ void test_70_017D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22927,6 +23309,7 @@ void test_70_017E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -22979,6 +23362,7 @@ void test_70_017F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23031,6 +23415,7 @@ void test_70_0180()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23083,6 +23468,7 @@ void test_70_0181()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23135,6 +23521,7 @@ void test_70_0182()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23187,6 +23574,7 @@ void test_70_0183()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23239,6 +23627,7 @@ void test_70_0184()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23291,6 +23680,7 @@ void test_70_0185()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23343,6 +23733,7 @@ void test_70_0186()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23395,6 +23786,7 @@ void test_70_0187()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23447,6 +23839,7 @@ void test_70_0188()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23499,6 +23892,7 @@ void test_70_0189()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23551,6 +23945,7 @@ void test_70_018A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23603,6 +23998,7 @@ void test_70_018B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23655,6 +24051,7 @@ void test_70_018C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23707,6 +24104,7 @@ void test_70_018D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23759,6 +24157,7 @@ void test_70_018E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23811,6 +24210,7 @@ void test_70_018F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23863,6 +24263,7 @@ void test_70_0190()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23915,6 +24316,7 @@ void test_70_0191()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -23967,6 +24369,7 @@ void test_70_0192()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24019,6 +24422,7 @@ void test_70_0193()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24071,6 +24475,7 @@ void test_70_0194()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24123,6 +24528,7 @@ void test_70_0195()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24175,6 +24581,7 @@ void test_70_0196()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24227,6 +24634,7 @@ void test_70_0197()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24279,6 +24687,7 @@ void test_70_0198()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24331,6 +24740,7 @@ void test_70_0199()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24383,6 +24793,7 @@ void test_70_019A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24435,6 +24846,7 @@ void test_70_019B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24487,6 +24899,7 @@ void test_70_019C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24539,6 +24952,7 @@ void test_70_019D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24591,6 +25005,7 @@ void test_70_019E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24643,6 +25058,7 @@ void test_70_019F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24695,6 +25111,7 @@ void test_70_01A0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24747,6 +25164,7 @@ void test_70_01A1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24799,6 +25217,7 @@ void test_70_01A2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24851,6 +25270,7 @@ void test_70_01A3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24903,6 +25323,7 @@ void test_70_01A4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -24955,6 +25376,7 @@ void test_70_01A5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25007,6 +25429,7 @@ void test_70_01A6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25059,6 +25482,7 @@ void test_70_01A7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25111,6 +25535,7 @@ void test_70_01A8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25163,6 +25588,7 @@ void test_70_01A9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25215,6 +25641,7 @@ void test_70_01AA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25267,6 +25694,7 @@ void test_70_01AB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25319,6 +25747,7 @@ void test_70_01AC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25371,6 +25800,7 @@ void test_70_01AD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25423,6 +25853,7 @@ void test_70_01AE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25475,6 +25906,7 @@ void test_70_01AF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25527,6 +25959,7 @@ void test_70_01B0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25579,6 +26012,7 @@ void test_70_01B1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25631,6 +26065,7 @@ void test_70_01B2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25683,6 +26118,7 @@ void test_70_01B3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25735,6 +26171,7 @@ void test_70_01B4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25787,6 +26224,7 @@ void test_70_01B5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25839,6 +26277,7 @@ void test_70_01B6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25891,6 +26330,7 @@ void test_70_01B7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25943,6 +26383,7 @@ void test_70_01B8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -25995,6 +26436,7 @@ void test_70_01B9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26047,6 +26489,7 @@ void test_70_01BA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26099,6 +26542,7 @@ void test_70_01BB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26151,6 +26595,7 @@ void test_70_01BC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26203,6 +26648,7 @@ void test_70_01BD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26255,6 +26701,7 @@ void test_70_01BE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26307,6 +26754,7 @@ void test_70_01BF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26359,6 +26807,7 @@ void test_70_01C0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26411,6 +26860,7 @@ void test_70_01C1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26463,6 +26913,7 @@ void test_70_01C2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26515,6 +26966,7 @@ void test_70_01C3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26567,6 +27019,7 @@ void test_70_01C4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26619,6 +27072,7 @@ void test_70_01C5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26671,6 +27125,7 @@ void test_70_01C6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26723,6 +27178,7 @@ void test_70_01C7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26775,6 +27231,7 @@ void test_70_01C8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26827,6 +27284,7 @@ void test_70_01C9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26879,6 +27337,7 @@ void test_70_01CA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26931,6 +27390,7 @@ void test_70_01CB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -26983,6 +27443,7 @@ void test_70_01CC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27035,6 +27496,7 @@ void test_70_01CD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27087,6 +27549,7 @@ void test_70_01CE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27139,6 +27602,7 @@ void test_70_01CF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27191,6 +27655,7 @@ void test_70_01D0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27243,6 +27708,7 @@ void test_70_01D1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27295,6 +27761,7 @@ void test_70_01D2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27347,6 +27814,7 @@ void test_70_01D3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27399,6 +27867,7 @@ void test_70_01D4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27451,6 +27920,7 @@ void test_70_01D5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27503,6 +27973,7 @@ void test_70_01D6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27555,6 +28026,7 @@ void test_70_01D7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27607,6 +28079,7 @@ void test_70_01D8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27659,6 +28132,7 @@ void test_70_01D9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27711,6 +28185,7 @@ void test_70_01DA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27763,6 +28238,7 @@ void test_70_01DB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27815,6 +28291,7 @@ void test_70_01DC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27867,6 +28344,7 @@ void test_70_01DD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27919,6 +28397,7 @@ void test_70_01DE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -27971,6 +28450,7 @@ void test_70_01DF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28023,6 +28503,7 @@ void test_70_01E0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28075,6 +28556,7 @@ void test_70_01E1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28127,6 +28609,7 @@ void test_70_01E2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28179,6 +28662,7 @@ void test_70_01E3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28231,6 +28715,7 @@ void test_70_01E4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28283,6 +28768,7 @@ void test_70_01E5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28335,6 +28821,7 @@ void test_70_01E6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28387,6 +28874,7 @@ void test_70_01E7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28439,6 +28927,7 @@ void test_70_01E8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28491,6 +28980,7 @@ void test_70_01E9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28543,6 +29033,7 @@ void test_70_01EA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28595,6 +29086,7 @@ void test_70_01EB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28647,6 +29139,7 @@ void test_70_01EC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28699,6 +29192,7 @@ void test_70_01ED()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28751,6 +29245,7 @@ void test_70_01EE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28803,6 +29298,7 @@ void test_70_01EF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28855,6 +29351,7 @@ void test_70_01F0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28907,6 +29404,7 @@ void test_70_01F1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -28959,6 +29457,7 @@ void test_70_01F2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29011,6 +29510,7 @@ void test_70_01F3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29063,6 +29563,7 @@ void test_70_01F4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29115,6 +29616,7 @@ void test_70_01F5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29167,6 +29669,7 @@ void test_70_01F6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29219,6 +29722,7 @@ void test_70_01F7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29271,6 +29775,7 @@ void test_70_01F8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29323,6 +29828,7 @@ void test_70_01F9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29375,6 +29881,7 @@ void test_70_01FA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29427,6 +29934,7 @@ void test_70_01FB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29479,6 +29987,7 @@ void test_70_01FC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29531,6 +30040,7 @@ void test_70_01FD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29583,6 +30093,7 @@ void test_70_01FE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29635,6 +30146,7 @@ void test_70_01FF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29687,6 +30199,7 @@ void test_70_0200()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29739,6 +30252,7 @@ void test_70_0201()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29791,6 +30305,7 @@ void test_70_0202()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29843,6 +30358,7 @@ void test_70_0203()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29895,6 +30411,7 @@ void test_70_0204()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29947,6 +30464,7 @@ void test_70_0205()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -29999,6 +30517,7 @@ void test_70_0206()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30051,6 +30570,7 @@ void test_70_0207()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30103,6 +30623,7 @@ void test_70_0208()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30155,6 +30676,7 @@ void test_70_0209()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30207,6 +30729,7 @@ void test_70_020A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30259,6 +30782,7 @@ void test_70_020B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30311,6 +30835,7 @@ void test_70_020C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30363,6 +30888,7 @@ void test_70_020D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30415,6 +30941,7 @@ void test_70_020E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30467,6 +30994,7 @@ void test_70_020F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30519,6 +31047,7 @@ void test_70_0210()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30571,6 +31100,7 @@ void test_70_0211()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30623,6 +31153,7 @@ void test_70_0212()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30675,6 +31206,7 @@ void test_70_0213()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30727,6 +31259,7 @@ void test_70_0214()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30779,6 +31312,7 @@ void test_70_0215()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30831,6 +31365,7 @@ void test_70_0216()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30883,6 +31418,7 @@ void test_70_0217()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30935,6 +31471,7 @@ void test_70_0218()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -30987,6 +31524,7 @@ void test_70_0219()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31039,6 +31577,7 @@ void test_70_021A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31091,6 +31630,7 @@ void test_70_021B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31143,6 +31683,7 @@ void test_70_021C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31195,6 +31736,7 @@ void test_70_021D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31247,6 +31789,7 @@ void test_70_021E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31299,6 +31842,7 @@ void test_70_021F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31351,6 +31895,7 @@ void test_70_0220()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31403,6 +31948,7 @@ void test_70_0221()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31455,6 +32001,7 @@ void test_70_0222()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31507,6 +32054,7 @@ void test_70_0223()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31559,6 +32107,7 @@ void test_70_0224()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31611,6 +32160,7 @@ void test_70_0225()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31663,6 +32213,7 @@ void test_70_0226()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31715,6 +32266,7 @@ void test_70_0227()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31767,6 +32319,7 @@ void test_70_0228()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31819,6 +32372,7 @@ void test_70_0229()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31871,6 +32425,7 @@ void test_70_022A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31923,6 +32478,7 @@ void test_70_022B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -31975,6 +32531,7 @@ void test_70_022C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32027,6 +32584,7 @@ void test_70_022D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32079,6 +32637,7 @@ void test_70_022E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32131,6 +32690,7 @@ void test_70_022F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32183,6 +32743,7 @@ void test_70_0230()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32235,6 +32796,7 @@ void test_70_0231()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32287,6 +32849,7 @@ void test_70_0232()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32339,6 +32902,7 @@ void test_70_0233()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32391,6 +32955,7 @@ void test_70_0234()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32443,6 +33008,7 @@ void test_70_0235()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32495,6 +33061,7 @@ void test_70_0236()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32547,6 +33114,7 @@ void test_70_0237()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32599,6 +33167,7 @@ void test_70_0238()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32651,6 +33220,7 @@ void test_70_0239()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32703,6 +33273,7 @@ void test_70_023A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32755,6 +33326,7 @@ void test_70_023B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32807,6 +33379,7 @@ void test_70_023C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32859,6 +33432,7 @@ void test_70_023D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32911,6 +33485,7 @@ void test_70_023E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -32963,6 +33538,7 @@ void test_70_023F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33015,6 +33591,7 @@ void test_70_0240()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33067,6 +33644,7 @@ void test_70_0241()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33119,6 +33697,7 @@ void test_70_0242()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33171,6 +33750,7 @@ void test_70_0243()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33223,6 +33803,7 @@ void test_70_0244()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33275,6 +33856,7 @@ void test_70_0245()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33327,6 +33909,7 @@ void test_70_0246()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33379,6 +33962,7 @@ void test_70_0247()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33431,6 +34015,7 @@ void test_70_0248()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33483,6 +34068,7 @@ void test_70_0249()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33535,6 +34121,7 @@ void test_70_024A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33587,6 +34174,7 @@ void test_70_024B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33639,6 +34227,7 @@ void test_70_024C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33691,6 +34280,7 @@ void test_70_024D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33743,6 +34333,7 @@ void test_70_024E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33795,6 +34386,7 @@ void test_70_024F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33847,6 +34439,7 @@ void test_70_0250()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33899,6 +34492,7 @@ void test_70_0251()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -33951,6 +34545,7 @@ void test_70_0252()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34003,6 +34598,7 @@ void test_70_0253()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34055,6 +34651,7 @@ void test_70_0254()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34107,6 +34704,7 @@ void test_70_0255()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34159,6 +34757,7 @@ void test_70_0256()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34211,6 +34810,7 @@ void test_70_0257()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34263,6 +34863,7 @@ void test_70_0258()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34315,6 +34916,7 @@ void test_70_0259()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34367,6 +34969,7 @@ void test_70_025A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34419,6 +35022,7 @@ void test_70_025B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34471,6 +35075,7 @@ void test_70_025C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34523,6 +35128,7 @@ void test_70_025D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34575,6 +35181,7 @@ void test_70_025E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34627,6 +35234,7 @@ void test_70_025F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34679,6 +35287,7 @@ void test_70_0260()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34731,6 +35340,7 @@ void test_70_0261()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34783,6 +35393,7 @@ void test_70_0262()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34835,6 +35446,7 @@ void test_70_0263()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34887,6 +35499,7 @@ void test_70_0264()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34939,6 +35552,7 @@ void test_70_0265()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -34991,6 +35605,7 @@ void test_70_0266()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35043,6 +35658,7 @@ void test_70_0267()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35095,6 +35711,7 @@ void test_70_0268()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35147,6 +35764,7 @@ void test_70_0269()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35199,6 +35817,7 @@ void test_70_026A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35251,6 +35870,7 @@ void test_70_026B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35303,6 +35923,7 @@ void test_70_026C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35355,6 +35976,7 @@ void test_70_026D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35407,6 +36029,7 @@ void test_70_026E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35459,6 +36082,7 @@ void test_70_026F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35511,6 +36135,7 @@ void test_70_0270()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35563,6 +36188,7 @@ void test_70_0271()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35615,6 +36241,7 @@ void test_70_0272()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35667,6 +36294,7 @@ void test_70_0273()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35719,6 +36347,7 @@ void test_70_0274()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35771,6 +36400,7 @@ void test_70_0275()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35823,6 +36453,7 @@ void test_70_0276()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35875,6 +36506,7 @@ void test_70_0277()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35927,6 +36559,7 @@ void test_70_0278()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -35979,6 +36612,7 @@ void test_70_0279()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36031,6 +36665,7 @@ void test_70_027A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36083,6 +36718,7 @@ void test_70_027B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36135,6 +36771,7 @@ void test_70_027C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36187,6 +36824,7 @@ void test_70_027D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36239,6 +36877,7 @@ void test_70_027E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36291,6 +36930,7 @@ void test_70_027F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36343,6 +36983,7 @@ void test_70_0280()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36395,6 +37036,7 @@ void test_70_0281()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36447,6 +37089,7 @@ void test_70_0282()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36499,6 +37142,7 @@ void test_70_0283()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36551,6 +37195,7 @@ void test_70_0284()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36603,6 +37248,7 @@ void test_70_0285()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36655,6 +37301,7 @@ void test_70_0286()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36707,6 +37354,7 @@ void test_70_0287()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36759,6 +37407,7 @@ void test_70_0288()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36811,6 +37460,7 @@ void test_70_0289()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36863,6 +37513,7 @@ void test_70_028A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36915,6 +37566,7 @@ void test_70_028B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -36967,6 +37619,7 @@ void test_70_028C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37019,6 +37672,7 @@ void test_70_028D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37071,6 +37725,7 @@ void test_70_028E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37123,6 +37778,7 @@ void test_70_028F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37175,6 +37831,7 @@ void test_70_0290()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37227,6 +37884,7 @@ void test_70_0291()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37279,6 +37937,7 @@ void test_70_0292()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37331,6 +37990,7 @@ void test_70_0293()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37383,6 +38043,7 @@ void test_70_0294()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37435,6 +38096,7 @@ void test_70_0295()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37487,6 +38149,7 @@ void test_70_0296()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37539,6 +38202,7 @@ void test_70_0297()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37591,6 +38255,7 @@ void test_70_0298()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37643,6 +38308,7 @@ void test_70_0299()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37695,6 +38361,7 @@ void test_70_029A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37747,6 +38414,7 @@ void test_70_029B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37799,6 +38467,7 @@ void test_70_029C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37851,6 +38520,7 @@ void test_70_029D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37903,6 +38573,7 @@ void test_70_029E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -37955,6 +38626,7 @@ void test_70_029F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38007,6 +38679,7 @@ void test_70_02A0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38059,6 +38732,7 @@ void test_70_02A1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38111,6 +38785,7 @@ void test_70_02A2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38163,6 +38838,7 @@ void test_70_02A3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38215,6 +38891,7 @@ void test_70_02A4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38267,6 +38944,7 @@ void test_70_02A5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38319,6 +38997,7 @@ void test_70_02A6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38371,6 +39050,7 @@ void test_70_02A7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38423,6 +39103,7 @@ void test_70_02A8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38475,6 +39156,7 @@ void test_70_02A9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38527,6 +39209,7 @@ void test_70_02AA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38579,6 +39262,7 @@ void test_70_02AB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38631,6 +39315,7 @@ void test_70_02AC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38683,6 +39368,7 @@ void test_70_02AD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38735,6 +39421,7 @@ void test_70_02AE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38787,6 +39474,7 @@ void test_70_02AF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38839,6 +39527,7 @@ void test_70_02B0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38891,6 +39580,7 @@ void test_70_02B1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38943,6 +39633,7 @@ void test_70_02B2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -38995,6 +39686,7 @@ void test_70_02B3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39047,6 +39739,7 @@ void test_70_02B4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39099,6 +39792,7 @@ void test_70_02B5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39151,6 +39845,7 @@ void test_70_02B6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39203,6 +39898,7 @@ void test_70_02B7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39255,6 +39951,7 @@ void test_70_02B8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39307,6 +40004,7 @@ void test_70_02B9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39359,6 +40057,7 @@ void test_70_02BA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39411,6 +40110,7 @@ void test_70_02BB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39463,6 +40163,7 @@ void test_70_02BC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39515,6 +40216,7 @@ void test_70_02BD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39567,6 +40269,7 @@ void test_70_02BE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39619,6 +40322,7 @@ void test_70_02BF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39671,6 +40375,7 @@ void test_70_02C0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39723,6 +40428,7 @@ void test_70_02C1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39775,6 +40481,7 @@ void test_70_02C2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39827,6 +40534,7 @@ void test_70_02C3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39879,6 +40587,7 @@ void test_70_02C4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39931,6 +40640,7 @@ void test_70_02C5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -39983,6 +40693,7 @@ void test_70_02C6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40035,6 +40746,7 @@ void test_70_02C7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40087,6 +40799,7 @@ void test_70_02C8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40139,6 +40852,7 @@ void test_70_02C9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40191,6 +40905,7 @@ void test_70_02CA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40243,6 +40958,7 @@ void test_70_02CB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40295,6 +41011,7 @@ void test_70_02CC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40347,6 +41064,7 @@ void test_70_02CD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40399,6 +41117,7 @@ void test_70_02CE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40451,6 +41170,7 @@ void test_70_02CF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40503,6 +41223,7 @@ void test_70_02D0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40555,6 +41276,7 @@ void test_70_02D1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40607,6 +41329,7 @@ void test_70_02D2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40659,6 +41382,7 @@ void test_70_02D3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40711,6 +41435,7 @@ void test_70_02D4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40763,6 +41488,7 @@ void test_70_02D5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40815,6 +41541,7 @@ void test_70_02D6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40867,6 +41594,7 @@ void test_70_02D7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40919,6 +41647,7 @@ void test_70_02D8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -40971,6 +41700,7 @@ void test_70_02D9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41023,6 +41753,7 @@ void test_70_02DA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41075,6 +41806,7 @@ void test_70_02DB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41127,6 +41859,7 @@ void test_70_02DC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41179,6 +41912,7 @@ void test_70_02DD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41231,6 +41965,7 @@ void test_70_02DE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41283,6 +42018,7 @@ void test_70_02DF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41335,6 +42071,7 @@ void test_70_02E0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41387,6 +42124,7 @@ void test_70_02E1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41439,6 +42177,7 @@ void test_70_02E2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41491,6 +42230,7 @@ void test_70_02E3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41543,6 +42283,7 @@ void test_70_02E4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41595,6 +42336,7 @@ void test_70_02E5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41647,6 +42389,7 @@ void test_70_02E6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41699,6 +42442,7 @@ void test_70_02E7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41751,6 +42495,7 @@ void test_70_02E8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41803,6 +42548,7 @@ void test_70_02E9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41855,6 +42601,7 @@ void test_70_02EA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41907,6 +42654,7 @@ void test_70_02EB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -41959,6 +42707,7 @@ void test_70_02EC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42011,6 +42760,7 @@ void test_70_02ED()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42063,6 +42813,7 @@ void test_70_02EE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42115,6 +42866,7 @@ void test_70_02EF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42167,6 +42919,7 @@ void test_70_02F0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42219,6 +42972,7 @@ void test_70_02F1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42271,6 +43025,7 @@ void test_70_02F2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42323,6 +43078,7 @@ void test_70_02F3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42375,6 +43131,7 @@ void test_70_02F4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42427,6 +43184,7 @@ void test_70_02F5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42479,6 +43237,7 @@ void test_70_02F6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42531,6 +43290,7 @@ void test_70_02F7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42583,6 +43343,7 @@ void test_70_02F8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42635,6 +43396,7 @@ void test_70_02F9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42687,6 +43449,7 @@ void test_70_02FA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42739,6 +43502,7 @@ void test_70_02FB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42791,6 +43555,7 @@ void test_70_02FC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42843,6 +43608,7 @@ void test_70_02FD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42895,6 +43661,7 @@ void test_70_02FE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42947,6 +43714,7 @@ void test_70_02FF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -42999,6 +43767,7 @@ void test_70_0300()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43051,6 +43820,7 @@ void test_70_0301()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43103,6 +43873,7 @@ void test_70_0302()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43155,6 +43926,7 @@ void test_70_0303()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43207,6 +43979,7 @@ void test_70_0304()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43259,6 +44032,7 @@ void test_70_0305()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43311,6 +44085,7 @@ void test_70_0306()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43363,6 +44138,7 @@ void test_70_0307()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43415,6 +44191,7 @@ void test_70_0308()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43467,6 +44244,7 @@ void test_70_0309()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43519,6 +44297,7 @@ void test_70_030A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43571,6 +44350,7 @@ void test_70_030B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43623,6 +44403,7 @@ void test_70_030C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43675,6 +44456,7 @@ void test_70_030D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43727,6 +44509,7 @@ void test_70_030E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43779,6 +44562,7 @@ void test_70_030F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43831,6 +44615,7 @@ void test_70_0310()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43883,6 +44668,7 @@ void test_70_0311()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43935,6 +44721,7 @@ void test_70_0312()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -43987,6 +44774,7 @@ void test_70_0313()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44039,6 +44827,7 @@ void test_70_0314()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44091,6 +44880,7 @@ void test_70_0315()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44143,6 +44933,7 @@ void test_70_0316()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44195,6 +44986,7 @@ void test_70_0317()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44247,6 +45039,7 @@ void test_70_0318()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44299,6 +45092,7 @@ void test_70_0319()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44351,6 +45145,7 @@ void test_70_031A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44403,6 +45198,7 @@ void test_70_031B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44455,6 +45251,7 @@ void test_70_031C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44507,6 +45304,7 @@ void test_70_031D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44559,6 +45357,7 @@ void test_70_031E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44611,6 +45410,7 @@ void test_70_031F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44663,6 +45463,7 @@ void test_70_0320()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44715,6 +45516,7 @@ void test_70_0321()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44767,6 +45569,7 @@ void test_70_0322()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44819,6 +45622,7 @@ void test_70_0323()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44871,6 +45675,7 @@ void test_70_0324()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44923,6 +45728,7 @@ void test_70_0325()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -44975,6 +45781,7 @@ void test_70_0326()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45027,6 +45834,7 @@ void test_70_0327()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45079,6 +45887,7 @@ void test_70_0328()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45131,6 +45940,7 @@ void test_70_0329()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45183,6 +45993,7 @@ void test_70_032A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45235,6 +46046,7 @@ void test_70_032B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45287,6 +46099,7 @@ void test_70_032C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45339,6 +46152,7 @@ void test_70_032D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45391,6 +46205,7 @@ void test_70_032E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45443,6 +46258,7 @@ void test_70_032F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45495,6 +46311,7 @@ void test_70_0330()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45547,6 +46364,7 @@ void test_70_0331()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45599,6 +46417,7 @@ void test_70_0332()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45651,6 +46470,7 @@ void test_70_0333()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45703,6 +46523,7 @@ void test_70_0334()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45755,6 +46576,7 @@ void test_70_0335()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45807,6 +46629,7 @@ void test_70_0336()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45859,6 +46682,7 @@ void test_70_0337()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45911,6 +46735,7 @@ void test_70_0338()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -45963,6 +46788,7 @@ void test_70_0339()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46015,6 +46841,7 @@ void test_70_033A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46067,6 +46894,7 @@ void test_70_033B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46119,6 +46947,7 @@ void test_70_033C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46171,6 +47000,7 @@ void test_70_033D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46223,6 +47053,7 @@ void test_70_033E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46275,6 +47106,7 @@ void test_70_033F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46327,6 +47159,7 @@ void test_70_0340()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46379,6 +47212,7 @@ void test_70_0341()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46431,6 +47265,7 @@ void test_70_0342()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46483,6 +47318,7 @@ void test_70_0343()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46535,6 +47371,7 @@ void test_70_0344()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46587,6 +47424,7 @@ void test_70_0345()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46639,6 +47477,7 @@ void test_70_0346()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46691,6 +47530,7 @@ void test_70_0347()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46743,6 +47583,7 @@ void test_70_0348()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46795,6 +47636,7 @@ void test_70_0349()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46847,6 +47689,7 @@ void test_70_034A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46899,6 +47742,7 @@ void test_70_034B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -46951,6 +47795,7 @@ void test_70_034C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47003,6 +47848,7 @@ void test_70_034D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47055,6 +47901,7 @@ void test_70_034E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47107,6 +47954,7 @@ void test_70_034F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47159,6 +48007,7 @@ void test_70_0350()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47211,6 +48060,7 @@ void test_70_0351()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47263,6 +48113,7 @@ void test_70_0352()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47315,6 +48166,7 @@ void test_70_0353()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47367,6 +48219,7 @@ void test_70_0354()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47419,6 +48272,7 @@ void test_70_0355()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47471,6 +48325,7 @@ void test_70_0356()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47523,6 +48378,7 @@ void test_70_0357()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47575,6 +48431,7 @@ void test_70_0358()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47627,6 +48484,7 @@ void test_70_0359()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47679,6 +48537,7 @@ void test_70_035A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47731,6 +48590,7 @@ void test_70_035B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47783,6 +48643,7 @@ void test_70_035C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47835,6 +48696,7 @@ void test_70_035D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47887,6 +48749,7 @@ void test_70_035E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47939,6 +48802,7 @@ void test_70_035F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -47991,6 +48855,7 @@ void test_70_0360()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48043,6 +48908,7 @@ void test_70_0361()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48095,6 +48961,7 @@ void test_70_0362()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48147,6 +49014,7 @@ void test_70_0363()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48199,6 +49067,7 @@ void test_70_0364()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48251,6 +49120,7 @@ void test_70_0365()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48303,6 +49173,7 @@ void test_70_0366()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48355,6 +49226,7 @@ void test_70_0367()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48407,6 +49279,7 @@ void test_70_0368()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48459,6 +49332,7 @@ void test_70_0369()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48511,6 +49385,7 @@ void test_70_036A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48563,6 +49438,7 @@ void test_70_036B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48615,6 +49491,7 @@ void test_70_036C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48667,6 +49544,7 @@ void test_70_036D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48719,6 +49597,7 @@ void test_70_036E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48771,6 +49650,7 @@ void test_70_036F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48823,6 +49703,7 @@ void test_70_0370()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48875,6 +49756,7 @@ void test_70_0371()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48927,6 +49809,7 @@ void test_70_0372()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -48979,6 +49862,7 @@ void test_70_0373()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49031,6 +49915,7 @@ void test_70_0374()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49083,6 +49968,7 @@ void test_70_0375()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49135,6 +50021,7 @@ void test_70_0376()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49187,6 +50074,7 @@ void test_70_0377()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49239,6 +50127,7 @@ void test_70_0378()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49291,6 +50180,7 @@ void test_70_0379()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49343,6 +50233,7 @@ void test_70_037A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49395,6 +50286,7 @@ void test_70_037B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49447,6 +50339,7 @@ void test_70_037C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49499,6 +50392,7 @@ void test_70_037D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49551,6 +50445,7 @@ void test_70_037E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49603,6 +50498,7 @@ void test_70_037F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49655,6 +50551,7 @@ void test_70_0380()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49707,6 +50604,7 @@ void test_70_0381()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49759,6 +50657,7 @@ void test_70_0382()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49811,6 +50710,7 @@ void test_70_0383()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49863,6 +50763,7 @@ void test_70_0384()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49915,6 +50816,7 @@ void test_70_0385()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -49967,6 +50869,7 @@ void test_70_0386()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50019,6 +50922,7 @@ void test_70_0387()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50071,6 +50975,7 @@ void test_70_0388()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50123,6 +51028,7 @@ void test_70_0389()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50175,6 +51081,7 @@ void test_70_038A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50227,6 +51134,7 @@ void test_70_038B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50279,6 +51187,7 @@ void test_70_038C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50331,6 +51240,7 @@ void test_70_038D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50383,6 +51293,7 @@ void test_70_038E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50435,6 +51346,7 @@ void test_70_038F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50487,6 +51399,7 @@ void test_70_0390()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50539,6 +51452,7 @@ void test_70_0391()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50591,6 +51505,7 @@ void test_70_0392()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50643,6 +51558,7 @@ void test_70_0393()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50695,6 +51611,7 @@ void test_70_0394()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50747,6 +51664,7 @@ void test_70_0395()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50799,6 +51717,7 @@ void test_70_0396()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50851,6 +51770,7 @@ void test_70_0397()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50903,6 +51823,7 @@ void test_70_0398()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -50955,6 +51876,7 @@ void test_70_0399()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51007,6 +51929,7 @@ void test_70_039A()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51059,6 +51982,7 @@ void test_70_039B()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51111,6 +52035,7 @@ void test_70_039C()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51163,6 +52088,7 @@ void test_70_039D()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51215,6 +52141,7 @@ void test_70_039E()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51267,6 +52194,7 @@ void test_70_039F()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51319,6 +52247,7 @@ void test_70_03A0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51371,6 +52300,7 @@ void test_70_03A1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51423,6 +52353,7 @@ void test_70_03A2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51475,6 +52406,7 @@ void test_70_03A3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51527,6 +52459,7 @@ void test_70_03A4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51579,6 +52512,7 @@ void test_70_03A5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51631,6 +52565,7 @@ void test_70_03A6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51683,6 +52618,7 @@ void test_70_03A7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51735,6 +52671,7 @@ void test_70_03A8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51787,6 +52724,7 @@ void test_70_03A9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51839,6 +52777,7 @@ void test_70_03AA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51891,6 +52830,7 @@ void test_70_03AB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51943,6 +52883,7 @@ void test_70_03AC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -51995,6 +52936,7 @@ void test_70_03AD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52047,6 +52989,7 @@ void test_70_03AE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52099,6 +53042,7 @@ void test_70_03AF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52151,6 +53095,7 @@ void test_70_03B0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52203,6 +53148,7 @@ void test_70_03B1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52255,6 +53201,7 @@ void test_70_03B2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52307,6 +53254,7 @@ void test_70_03B3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52359,6 +53307,7 @@ void test_70_03B4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52411,6 +53360,7 @@ void test_70_03B5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52463,6 +53413,7 @@ void test_70_03B6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52515,6 +53466,7 @@ void test_70_03B7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52567,6 +53519,7 @@ void test_70_03B8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52619,6 +53572,7 @@ void test_70_03B9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52671,6 +53625,7 @@ void test_70_03BA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52723,6 +53678,7 @@ void test_70_03BB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52775,6 +53731,7 @@ void test_70_03BC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52827,6 +53784,7 @@ void test_70_03BD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52879,6 +53837,7 @@ void test_70_03BE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52931,6 +53890,7 @@ void test_70_03BF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -52983,6 +53943,7 @@ void test_70_03C0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53035,6 +53996,7 @@ void test_70_03C1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53087,6 +54049,7 @@ void test_70_03C2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53139,6 +54102,7 @@ void test_70_03C3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53191,6 +54155,7 @@ void test_70_03C4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53243,6 +54208,7 @@ void test_70_03C5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53295,6 +54261,7 @@ void test_70_03C6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53347,6 +54314,7 @@ void test_70_03C7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53399,6 +54367,7 @@ void test_70_03C8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53451,6 +54420,7 @@ void test_70_03C9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53503,6 +54473,7 @@ void test_70_03CA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53555,6 +54526,7 @@ void test_70_03CB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53607,6 +54579,7 @@ void test_70_03CC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53659,6 +54632,7 @@ void test_70_03CD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53711,6 +54685,7 @@ void test_70_03CE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53763,6 +54738,7 @@ void test_70_03CF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53815,6 +54791,7 @@ void test_70_03D0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53867,6 +54844,7 @@ void test_70_03D1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53919,6 +54897,7 @@ void test_70_03D2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -53971,6 +54950,7 @@ void test_70_03D3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54023,6 +55003,7 @@ void test_70_03D4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54075,6 +55056,7 @@ void test_70_03D5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54127,6 +55109,7 @@ void test_70_03D6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54179,6 +55162,7 @@ void test_70_03D7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54231,6 +55215,7 @@ void test_70_03D8()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54283,6 +55268,7 @@ void test_70_03D9()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54335,6 +55321,7 @@ void test_70_03DA()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54387,6 +55374,7 @@ void test_70_03DB()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54439,6 +55427,7 @@ void test_70_03DC()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54491,6 +55480,7 @@ void test_70_03DD()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54543,6 +55533,7 @@ void test_70_03DE()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54595,6 +55586,7 @@ void test_70_03DF()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54647,6 +55639,7 @@ void test_70_03E0()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54699,6 +55692,7 @@ void test_70_03E1()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54751,6 +55745,7 @@ void test_70_03E2()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54803,6 +55798,7 @@ void test_70_03E3()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54855,6 +55851,7 @@ void test_70_03E4()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54907,6 +55904,7 @@ void test_70_03E5()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -54959,6 +55957,7 @@ void test_70_03E6()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
@@ -55011,6 +56010,7 @@ void test_70_03E7()
          TEST_ASSERT(resultByte.IsSuccess());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
+         TEST_ASSERT(ticks == 8);
     }
 
     // Final state
