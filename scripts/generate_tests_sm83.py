@@ -25,7 +25,8 @@ SUPPORTED_OPCODES = ([
     (0x2A,"ld"), # LD A, [HL+]
     (0x2E,"ld"), # LD L, nn
     (0x31,"ld"), # LD SP, nnnn
-    (0x32,"ld"), # LD HL-, A
+    (0x32,"ld"), # LD [HL-], A
+    (0x36,"ld"), # LD [HL], nn
     (0x3A,"ld"), # LD A, [HL-]
     (0x3E,"ld"), # LD A, nn
     # 0x40 to 0x7F is the main load block
