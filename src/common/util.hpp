@@ -41,4 +41,22 @@ constexpr bool types_are_unique_v<T> = true;
 template <typename... T>
 concept types_are_unique = (types_are_unique_v<T...>);
 
+template <auto... Values>
+consteval bool AllUniqueValues()
+{
+    constexpr std::array values{Values...};
+
+    for (auto i = 0; i < values.size(); ++i)
+    {
+        for (auto j = i + 1; j < values.size(); ++j)
+        {
+            if (values[i] == values[j])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 } // namespace pgb::common::util

@@ -30,6 +30,9 @@ struct DecoderHelper;
 template <typename... Decoders>
 struct DecoderHelper<registry::List<Decoders...>>
 {
+    static_assert(util::AllUniqueValues<Decoders::Opcode...>());
+    static_assert(util::AllUniqueValues<Decoders::Instruction...>());
+
     // For opcode decoding, we only care about going from an 8-bit integer to a specific Decoder class, so just create a 256 element array
     // Doing this also lets us flag errors for unsupported opcodes
     static constexpr std::size_t Size = 0xFF + 1;
