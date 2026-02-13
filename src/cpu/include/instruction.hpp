@@ -62,7 +62,6 @@ inline IncrementRegResultSet SingleStepRegister(memory::MemoryMap& mmap) noexcep
     }
 
     auto getResult = mmap.ReadWord(T);
-
     if (getResult.IsSuccess())
     {
         auto value     = static_cast<const Word>(getResult) + (Mode == IncrementMode::Increment ? 1 : -1);
@@ -70,6 +69,21 @@ inline IncrementRegResultSet SingleStepRegister(memory::MemoryMap& mmap) noexcep
         return setResult;
     }
     return getResult;
+}
+
+// Temp++ or Temp--
+template <IncrementMode Mode>
+inline IncrementRegResultSet SingleStepTemp(memory::MemoryMap& mmap) noexcept
+{
+    if (Mode == IncrementMode::None)
+    {
+        return IncrementRegResultSet::DefaultResultSuccess();
+    }
+
+    auto wz = mmap.GetTemp();
+    wz++;
+    mmap.GetTempHi() = wz.HighByte();
+    mmap.GetTempLo() = wz.LowByte();
 }
 
 using LoadIrResultSet = memory::MemoryMap::BaseAccessResultSet<void>;
@@ -119,6 +133,20 @@ inline LoadTempResultSet LoadTempLoTemp(memory::MemoryMap& mmap) noexcept
     {
         auto& Z = mmap.GetTempLo();
         Z       = result;
+    }
+    return result;
+}
+
+using LoadReg16ResultSet = memory::MemoryMap::BaseAccessResultSet<void, memory::MemoryMap::ResultAccessRegisterInvalidWidth>;
+// [WZ] <- Reg16 (2 bytes)
+template <RegisterType Source>
+inline LoadReg16ResultSet LoadTempIndirectReg16(memory::MemoryMap& mmap) noexcept
+{
+    auto wz     = mmap.GetTemp();
+    auto result = mmap.ReadWord(Source);
+    if (result.IsSuccess())
+    {
+        return mmap.WriteWordLE(wz, result);
     }
     return result;
 }

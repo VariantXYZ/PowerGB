@@ -185,6 +185,16 @@ using LdImm8Indirect = Instruction<
     IncrementPC,
     LoadIRPC>;
 
+using LoadSp = Instruction<
+    20,
+    IncrementPC,
+    LoadTempLoPC,
+    IncrementPC,
+    LoadTempHiPC,
+    LoadTempIndirectReg16<RegisterType::SP>,
+    IncrementPC,
+    LoadIRPC>;
+
 // x1 (x from 0 to 3)
 using Ld_BC_Imm_Decoder         = Instantiate<InstructionDecoder<"ld bc, nnnn", 0x01, LdImm16<RegisterType::BC>>>::Type;
 using Ld_DE_Imm_Decoder         = Instantiate<InstructionDecoder<"ld de, nnnn", 0x11, LdImm16<RegisterType::DE>>>::Type;
@@ -201,9 +211,9 @@ using Ld_A_HLDec_Decoder        = Instantiate<InstructionDecoder<"ld [hld], a", 
 using Ld_B_Imm_Decoder          = Instantiate<InstructionDecoder<"ld b, nn", 0x06, LdImm8<RegisterType::B>>>::Type;
 using Ld_D_Imm_Decoder          = Instantiate<InstructionDecoder<"ld d, nn", 0x16, LdImm8<RegisterType::D>>>::Type;
 using Ld_H_Imm_Decoder          = Instantiate<InstructionDecoder<"ld h, nn", 0x26, LdImm8<RegisterType::H>>>::Type;
-using Ld_HL_ImmIndirect_Decoder = Instantiate<InstructionDecoder<"ld [hl], nn", 0x36, LdImm8Indirect<RegisterType::HL>>>::Type;
+using Ld_HLIndirect_Imm_Decoder = Instantiate<InstructionDecoder<"ld [hl], nn", 0x36, LdImm8Indirect<RegisterType::HL>>>::Type;
 
-// TODO 0x08 ld [nnnn], sp
+using Ld_Indirect_SP_Decoder    = Instantiate<InstructionDecoder<"ld [nnnn], sp", 0x08, LoadSp>>::Type;
 
 // xA (x from 0 to 3)
 using Ld_A_BC_Decoder           = Instantiate<InstructionDecoder<"ld a, [bc]", 0x0A, LdMem<RegisterType::A, RegisterType::BC>>>::Type;

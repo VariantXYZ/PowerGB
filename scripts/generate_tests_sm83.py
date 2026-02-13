@@ -12,6 +12,7 @@ SUPPORTED_OPCODES = ([
     (0x01,"ld"), # LD BC, nnnn
     (0x02,"ld"), # LD [BC], A
     (0x06,"ld"), # LD B, nn
+    (0x08,"ld"), # LD [nnnn], sp
     (0x0A,"ld"), # LD A, [BC]
     (0x0E,"ld"), # LD C, nn
     (0x11,"ld"), # LD DE, nnnn
