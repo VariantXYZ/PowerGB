@@ -37,7 +37,7 @@ using InstructionLoadRegisterVoidResultSet = LoadResultSet<void>;
 // 8 -> 8
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source> && LdOperandIs8Bit<Destination> && LdOperandIs8Bit<Source>)
-constexpr InstructionLoadRegister8ResultSet Load(MemoryMap& mmap) noexcept
+inline constexpr InstructionLoadRegister8ResultSet Load(MemoryMap& mmap) noexcept
 {
     auto src = mmap.ReadByte(Source);
     if (src.IsFailure())
@@ -50,7 +50,7 @@ constexpr InstructionLoadRegister8ResultSet Load(MemoryMap& mmap) noexcept
 // 16 -> 16
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source> && !LdOperandIs8Bit<Destination> && !LdOperandIs8Bit<Source>)
-constexpr InstructionLoadRegister16ResultSet Load(MemoryMap& mmap) noexcept
+inline constexpr InstructionLoadRegister16ResultSet Load(MemoryMap& mmap) noexcept
 {
     auto src = mmap.ReadWord(Source);
     if (src.IsFailure())
@@ -63,7 +63,7 @@ constexpr InstructionLoadRegister16ResultSet Load(MemoryMap& mmap) noexcept
 // [Reg16] -> 8
 template <auto Destination, auto Source>
     requires(IsRegister8Bit<Destination> && IsRegister16Bit<Source>)
-constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
+inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
 {
     auto src = mmap.ReadWord(Source);
     if (src.IsFailure())
@@ -85,7 +85,7 @@ constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
 // 8 -> [Reg16]
 template <auto Destination, auto Source>
     requires(IsRegister8Bit<Source> && IsRegister16Bit<Destination>)
-constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
+inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
 {
     auto src = mmap.ReadByte(Source);
     if (src.IsFailure())
@@ -195,6 +195,17 @@ using LoadSp = Instruction<
     IncrementPC,
     LoadIRPC>;
 
+using LoadAIndirect = Instruction<
+    16,
+    IncrementPC,
+    LoadTempLoPC,
+    IncrementPC,
+    LoadTempHiPC,
+    LoadTempLoTemp,
+    LoadReg8TempLo<RegisterType::A>,
+    IncrementPC,
+    LoadIRPC>;
+
 // x1 (x from 0 to 3)
 using Ld_BC_Imm_Decoder         = Instantiate<InstructionDecoder<"ld bc, nnnn", 0x01, LdImm16<RegisterType::BC>>>::Type;
 using Ld_DE_Imm_Decoder         = Instantiate<InstructionDecoder<"ld de, nnnn", 0x11, LdImm16<RegisterType::DE>>>::Type;
@@ -301,6 +312,8 @@ using Ld_A_A_Decoder            = Instantiate<InstructionDecoder<"ld a, a", 0x7F
 
 // TODO: x0 (x from E to F)
 // TODO: x2 (x from E to F)
+
 // TODO: xA (x from E to F)
+using Ld_A_Indirect_Decoder     = Instantiate<InstructionDecoder<"ld a, [nnnn]", 0xFA, LoadAIndirect>>::Type;
 
 } // namespace pgb::cpu::instruction
