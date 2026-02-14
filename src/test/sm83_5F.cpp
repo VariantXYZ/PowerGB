@@ -10,18 +10,18 @@ using namespace pgb::memory;
 using namespace pgb::cpu;
 
 static auto registers = RegisterFile();
-static auto mmap      = MemoryMap(registers, MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount);
+static auto mmap      = MemoryMap(registers, MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
 
 
-#define WriteRegisterWord(register, value) do { auto result = mmap.WriteWord(register, value); TEST_ASSERT(result.IsSuccess()); } while(0)
-#define WriteRegisterByte(register, value) do { auto result = mmap.WriteByte(register, value); TEST_ASSERT(result.IsSuccess()); } while(0)
+#define WriteRegisterWord(register, value) do { auto result = mmap.WriteWord(register, value); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); } while(0)
+#define WriteRegisterByte(register, value) do { auto result = mmap.WriteByte(register, value); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); } while(0)
 #define WriteRegisterFlag(value) do { TEST_ASSERT(static_cast<const Byte>(mmap.WriteFlagByte(static_cast<const Byte&>(value))) == 0x00); } while(0)
-#define WriteMemory(address, value) do { auto result = mmap.WriteByte(address, value); TEST_ASSERT(result.IsSuccess()); } while(0)
+#define WriteMemory(address, value) do { auto result = mmap.WriteByte(address, value); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); } while(0)
 
-#define CheckRegisterWord(register, value) do { auto result = mmap.ReadWord(register); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Word&>(result) == value); } while(0)
-#define CheckRegisterByte(register, value) do { auto result = mmap.ReadByte(register); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); } while(0)
+#define CheckRegisterWord(register, value) do { auto result = mmap.ReadWord(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Word&>(result) == value); } while(0)
+#define CheckRegisterByte(register, value) do { auto result = mmap.ReadByte(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Byte&>(result) == value); } while(0)
 #define CheckRegisterFlag(value) do { TEST_ASSERT(static_cast<const Byte>(mmap.ReadFlagByte()) == value); } while(0)
-#define CheckMemory(address, value) do { auto result = mmap.ReadByte(address); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); } while(0)
+#define CheckMemory(address, value) do { auto result = mmap.ReadByte(address); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT_(static_cast<const Byte&>(result) == value, "%hhu != %hhu", static_cast<const Byte&>(result).data, value); } while(0)
 
 static_assert(instruction::InstructionRegistryNoPrefix::Callbacks[0x5F] != nullptr);
 static_assert(instruction::InstructionRegistryNoPrefix::Ticks[0x5F] != 0);
@@ -3038,7 +3038,8 @@ void test_5F_0000()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3059,7 +3060,7 @@ void test_5F_0000()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3089,7 +3090,8 @@ void test_5F_0001()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3110,7 +3112,7 @@ void test_5F_0001()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3140,7 +3142,8 @@ void test_5F_0002()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3161,7 +3164,7 @@ void test_5F_0002()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3191,7 +3194,8 @@ void test_5F_0003()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3212,7 +3216,7 @@ void test_5F_0003()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3242,7 +3246,8 @@ void test_5F_0004()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3263,7 +3268,7 @@ void test_5F_0004()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3293,7 +3298,8 @@ void test_5F_0005()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3314,7 +3320,7 @@ void test_5F_0005()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3344,7 +3350,8 @@ void test_5F_0006()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3365,7 +3372,7 @@ void test_5F_0006()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3395,7 +3402,8 @@ void test_5F_0007()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3416,7 +3424,7 @@ void test_5F_0007()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3446,7 +3454,8 @@ void test_5F_0008()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3467,7 +3476,7 @@ void test_5F_0008()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3497,7 +3506,8 @@ void test_5F_0009()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3518,7 +3528,7 @@ void test_5F_0009()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3548,7 +3558,8 @@ void test_5F_000A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3569,7 +3580,7 @@ void test_5F_000A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3599,7 +3610,8 @@ void test_5F_000B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3620,7 +3632,7 @@ void test_5F_000B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3650,7 +3662,8 @@ void test_5F_000C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3671,7 +3684,7 @@ void test_5F_000C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3701,7 +3714,8 @@ void test_5F_000D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3722,7 +3736,7 @@ void test_5F_000D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3752,7 +3766,8 @@ void test_5F_000E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3773,7 +3788,7 @@ void test_5F_000E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3803,7 +3818,8 @@ void test_5F_000F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3824,7 +3840,7 @@ void test_5F_000F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3854,7 +3870,8 @@ void test_5F_0010()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3875,7 +3892,7 @@ void test_5F_0010()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3905,7 +3922,8 @@ void test_5F_0011()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3926,7 +3944,7 @@ void test_5F_0011()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -3956,7 +3974,8 @@ void test_5F_0012()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3977,7 +3996,7 @@ void test_5F_0012()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4007,7 +4026,8 @@ void test_5F_0013()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4028,7 +4048,7 @@ void test_5F_0013()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4058,7 +4078,8 @@ void test_5F_0014()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4079,7 +4100,7 @@ void test_5F_0014()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4109,7 +4130,8 @@ void test_5F_0015()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4130,7 +4152,7 @@ void test_5F_0015()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4160,7 +4182,8 @@ void test_5F_0016()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4181,7 +4204,7 @@ void test_5F_0016()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4211,7 +4234,8 @@ void test_5F_0017()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4232,7 +4256,7 @@ void test_5F_0017()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4262,7 +4286,8 @@ void test_5F_0018()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4283,7 +4308,7 @@ void test_5F_0018()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4313,7 +4338,8 @@ void test_5F_0019()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4334,7 +4360,7 @@ void test_5F_0019()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4364,7 +4390,8 @@ void test_5F_001A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4385,7 +4412,7 @@ void test_5F_001A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4415,7 +4442,8 @@ void test_5F_001B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4436,7 +4464,7 @@ void test_5F_001B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4466,7 +4494,8 @@ void test_5F_001C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4487,7 +4516,7 @@ void test_5F_001C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4517,7 +4546,8 @@ void test_5F_001D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4538,7 +4568,7 @@ void test_5F_001D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4568,7 +4598,8 @@ void test_5F_001E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4589,7 +4620,7 @@ void test_5F_001E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4619,7 +4650,8 @@ void test_5F_001F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4640,7 +4672,7 @@ void test_5F_001F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4670,7 +4702,8 @@ void test_5F_0020()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4691,7 +4724,7 @@ void test_5F_0020()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4721,7 +4754,8 @@ void test_5F_0021()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4742,7 +4776,7 @@ void test_5F_0021()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4772,7 +4806,8 @@ void test_5F_0022()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4793,7 +4828,7 @@ void test_5F_0022()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4823,7 +4858,8 @@ void test_5F_0023()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4844,7 +4880,7 @@ void test_5F_0023()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4874,7 +4910,8 @@ void test_5F_0024()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4895,7 +4932,7 @@ void test_5F_0024()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4925,7 +4962,8 @@ void test_5F_0025()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4946,7 +4984,7 @@ void test_5F_0025()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -4976,7 +5014,8 @@ void test_5F_0026()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4997,7 +5036,7 @@ void test_5F_0026()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5027,7 +5066,8 @@ void test_5F_0027()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5048,7 +5088,7 @@ void test_5F_0027()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5078,7 +5118,8 @@ void test_5F_0028()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5099,7 +5140,7 @@ void test_5F_0028()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5129,7 +5170,8 @@ void test_5F_0029()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5150,7 +5192,7 @@ void test_5F_0029()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5180,7 +5222,8 @@ void test_5F_002A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5201,7 +5244,7 @@ void test_5F_002A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5231,7 +5274,8 @@ void test_5F_002B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5252,7 +5296,7 @@ void test_5F_002B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5282,7 +5326,8 @@ void test_5F_002C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5303,7 +5348,7 @@ void test_5F_002C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5333,7 +5378,8 @@ void test_5F_002D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5354,7 +5400,7 @@ void test_5F_002D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5384,7 +5430,8 @@ void test_5F_002E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5405,7 +5452,7 @@ void test_5F_002E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5435,7 +5482,8 @@ void test_5F_002F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5456,7 +5504,7 @@ void test_5F_002F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5486,7 +5534,8 @@ void test_5F_0030()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5507,7 +5556,7 @@ void test_5F_0030()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5537,7 +5586,8 @@ void test_5F_0031()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5558,7 +5608,7 @@ void test_5F_0031()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5588,7 +5638,8 @@ void test_5F_0032()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5609,7 +5660,7 @@ void test_5F_0032()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5639,7 +5690,8 @@ void test_5F_0033()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5660,7 +5712,7 @@ void test_5F_0033()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5690,7 +5742,8 @@ void test_5F_0034()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5711,7 +5764,7 @@ void test_5F_0034()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5741,7 +5794,8 @@ void test_5F_0035()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5762,7 +5816,7 @@ void test_5F_0035()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5792,7 +5846,8 @@ void test_5F_0036()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5813,7 +5868,7 @@ void test_5F_0036()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5843,7 +5898,8 @@ void test_5F_0037()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5864,7 +5920,7 @@ void test_5F_0037()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5894,7 +5950,8 @@ void test_5F_0038()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5915,7 +5972,7 @@ void test_5F_0038()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5945,7 +6002,8 @@ void test_5F_0039()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5966,7 +6024,7 @@ void test_5F_0039()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -5996,7 +6054,8 @@ void test_5F_003A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6017,7 +6076,7 @@ void test_5F_003A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6047,7 +6106,8 @@ void test_5F_003B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6068,7 +6128,7 @@ void test_5F_003B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6098,7 +6158,8 @@ void test_5F_003C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6119,7 +6180,7 @@ void test_5F_003C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6149,7 +6210,8 @@ void test_5F_003D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6170,7 +6232,7 @@ void test_5F_003D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6200,7 +6262,8 @@ void test_5F_003E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6221,7 +6284,7 @@ void test_5F_003E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6251,7 +6314,8 @@ void test_5F_003F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6272,7 +6336,7 @@ void test_5F_003F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6302,7 +6366,8 @@ void test_5F_0040()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6323,7 +6388,7 @@ void test_5F_0040()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6353,7 +6418,8 @@ void test_5F_0041()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6374,7 +6440,7 @@ void test_5F_0041()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6404,7 +6470,8 @@ void test_5F_0042()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6425,7 +6492,7 @@ void test_5F_0042()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6455,7 +6522,8 @@ void test_5F_0043()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6476,7 +6544,7 @@ void test_5F_0043()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6506,7 +6574,8 @@ void test_5F_0044()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6527,7 +6596,7 @@ void test_5F_0044()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6557,7 +6626,8 @@ void test_5F_0045()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6578,7 +6648,7 @@ void test_5F_0045()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6608,7 +6678,8 @@ void test_5F_0046()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6629,7 +6700,7 @@ void test_5F_0046()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6659,7 +6730,8 @@ void test_5F_0047()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6680,7 +6752,7 @@ void test_5F_0047()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6710,7 +6782,8 @@ void test_5F_0048()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6731,7 +6804,7 @@ void test_5F_0048()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6761,7 +6834,8 @@ void test_5F_0049()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6782,7 +6856,7 @@ void test_5F_0049()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6812,7 +6886,8 @@ void test_5F_004A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6833,7 +6908,7 @@ void test_5F_004A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6863,7 +6938,8 @@ void test_5F_004B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6884,7 +6960,7 @@ void test_5F_004B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6914,7 +6990,8 @@ void test_5F_004C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6935,7 +7012,7 @@ void test_5F_004C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -6965,7 +7042,8 @@ void test_5F_004D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6986,7 +7064,7 @@ void test_5F_004D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7016,7 +7094,8 @@ void test_5F_004E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7037,7 +7116,7 @@ void test_5F_004E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7067,7 +7146,8 @@ void test_5F_004F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7088,7 +7168,7 @@ void test_5F_004F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7118,7 +7198,8 @@ void test_5F_0050()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7139,7 +7220,7 @@ void test_5F_0050()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7169,7 +7250,8 @@ void test_5F_0051()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7190,7 +7272,7 @@ void test_5F_0051()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7220,7 +7302,8 @@ void test_5F_0052()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7241,7 +7324,7 @@ void test_5F_0052()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7271,7 +7354,8 @@ void test_5F_0053()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7292,7 +7376,7 @@ void test_5F_0053()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7322,7 +7406,8 @@ void test_5F_0054()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7343,7 +7428,7 @@ void test_5F_0054()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7373,7 +7458,8 @@ void test_5F_0055()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7394,7 +7480,7 @@ void test_5F_0055()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7424,7 +7510,8 @@ void test_5F_0056()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7445,7 +7532,7 @@ void test_5F_0056()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7475,7 +7562,8 @@ void test_5F_0057()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7496,7 +7584,7 @@ void test_5F_0057()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7526,7 +7614,8 @@ void test_5F_0058()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7547,7 +7636,7 @@ void test_5F_0058()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7577,7 +7666,8 @@ void test_5F_0059()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7598,7 +7688,7 @@ void test_5F_0059()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7628,7 +7718,8 @@ void test_5F_005A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7649,7 +7740,7 @@ void test_5F_005A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7679,7 +7770,8 @@ void test_5F_005B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7700,7 +7792,7 @@ void test_5F_005B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7730,7 +7822,8 @@ void test_5F_005C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7751,7 +7844,7 @@ void test_5F_005C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7781,7 +7874,8 @@ void test_5F_005D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7802,7 +7896,7 @@ void test_5F_005D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7832,7 +7926,8 @@ void test_5F_005E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7853,7 +7948,7 @@ void test_5F_005E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7883,7 +7978,8 @@ void test_5F_005F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7904,7 +8000,7 @@ void test_5F_005F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7934,7 +8030,8 @@ void test_5F_0060()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7955,7 +8052,7 @@ void test_5F_0060()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -7985,7 +8082,8 @@ void test_5F_0061()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8006,7 +8104,7 @@ void test_5F_0061()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8036,7 +8134,8 @@ void test_5F_0062()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8057,7 +8156,7 @@ void test_5F_0062()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8087,7 +8186,8 @@ void test_5F_0063()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8108,7 +8208,7 @@ void test_5F_0063()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8138,7 +8238,8 @@ void test_5F_0064()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8159,7 +8260,7 @@ void test_5F_0064()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8189,7 +8290,8 @@ void test_5F_0065()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8210,7 +8312,7 @@ void test_5F_0065()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8240,7 +8342,8 @@ void test_5F_0066()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8261,7 +8364,7 @@ void test_5F_0066()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8291,7 +8394,8 @@ void test_5F_0067()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8312,7 +8416,7 @@ void test_5F_0067()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8342,7 +8446,8 @@ void test_5F_0068()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8363,7 +8468,7 @@ void test_5F_0068()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8393,7 +8498,8 @@ void test_5F_0069()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8414,7 +8520,7 @@ void test_5F_0069()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8444,7 +8550,8 @@ void test_5F_006A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8465,7 +8572,7 @@ void test_5F_006A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8495,7 +8602,8 @@ void test_5F_006B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8516,7 +8624,7 @@ void test_5F_006B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8546,7 +8654,8 @@ void test_5F_006C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8567,7 +8676,7 @@ void test_5F_006C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8597,7 +8706,8 @@ void test_5F_006D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8618,7 +8728,7 @@ void test_5F_006D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8648,7 +8758,8 @@ void test_5F_006E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8669,7 +8780,7 @@ void test_5F_006E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8699,7 +8810,8 @@ void test_5F_006F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8720,7 +8832,7 @@ void test_5F_006F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8750,7 +8862,8 @@ void test_5F_0070()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8771,7 +8884,7 @@ void test_5F_0070()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8801,7 +8914,8 @@ void test_5F_0071()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8822,7 +8936,7 @@ void test_5F_0071()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8852,7 +8966,8 @@ void test_5F_0072()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8873,7 +8988,7 @@ void test_5F_0072()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8903,7 +9018,8 @@ void test_5F_0073()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8924,7 +9040,7 @@ void test_5F_0073()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -8954,7 +9070,8 @@ void test_5F_0074()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8975,7 +9092,7 @@ void test_5F_0074()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9005,7 +9122,8 @@ void test_5F_0075()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9026,7 +9144,7 @@ void test_5F_0075()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9056,7 +9174,8 @@ void test_5F_0076()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9077,7 +9196,7 @@ void test_5F_0076()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9107,7 +9226,8 @@ void test_5F_0077()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9128,7 +9248,7 @@ void test_5F_0077()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9158,7 +9278,8 @@ void test_5F_0078()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9179,7 +9300,7 @@ void test_5F_0078()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9209,7 +9330,8 @@ void test_5F_0079()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9230,7 +9352,7 @@ void test_5F_0079()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9260,7 +9382,8 @@ void test_5F_007A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9281,7 +9404,7 @@ void test_5F_007A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9311,7 +9434,8 @@ void test_5F_007B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9332,7 +9456,7 @@ void test_5F_007B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9362,7 +9486,8 @@ void test_5F_007C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9383,7 +9508,7 @@ void test_5F_007C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9413,7 +9538,8 @@ void test_5F_007D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9434,7 +9560,7 @@ void test_5F_007D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9464,7 +9590,8 @@ void test_5F_007E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9485,7 +9612,7 @@ void test_5F_007E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9515,7 +9642,8 @@ void test_5F_007F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9536,7 +9664,7 @@ void test_5F_007F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9566,7 +9694,8 @@ void test_5F_0080()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9587,7 +9716,7 @@ void test_5F_0080()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9617,7 +9746,8 @@ void test_5F_0081()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9638,7 +9768,7 @@ void test_5F_0081()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9668,7 +9798,8 @@ void test_5F_0082()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9689,7 +9820,7 @@ void test_5F_0082()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9719,7 +9850,8 @@ void test_5F_0083()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9740,7 +9872,7 @@ void test_5F_0083()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9770,7 +9902,8 @@ void test_5F_0084()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9791,7 +9924,7 @@ void test_5F_0084()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9821,7 +9954,8 @@ void test_5F_0085()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9842,7 +9976,7 @@ void test_5F_0085()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9872,7 +10006,8 @@ void test_5F_0086()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9893,7 +10028,7 @@ void test_5F_0086()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9923,7 +10058,8 @@ void test_5F_0087()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9944,7 +10080,7 @@ void test_5F_0087()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -9974,7 +10110,8 @@ void test_5F_0088()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9995,7 +10132,7 @@ void test_5F_0088()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10025,7 +10162,8 @@ void test_5F_0089()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10046,7 +10184,7 @@ void test_5F_0089()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10076,7 +10214,8 @@ void test_5F_008A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10097,7 +10236,7 @@ void test_5F_008A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10127,7 +10266,8 @@ void test_5F_008B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10148,7 +10288,7 @@ void test_5F_008B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10178,7 +10318,8 @@ void test_5F_008C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10199,7 +10340,7 @@ void test_5F_008C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10229,7 +10370,8 @@ void test_5F_008D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10250,7 +10392,7 @@ void test_5F_008D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10280,7 +10422,8 @@ void test_5F_008E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10301,7 +10444,7 @@ void test_5F_008E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10331,7 +10474,8 @@ void test_5F_008F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10352,7 +10496,7 @@ void test_5F_008F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10382,7 +10526,8 @@ void test_5F_0090()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10403,7 +10548,7 @@ void test_5F_0090()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10433,7 +10578,8 @@ void test_5F_0091()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10454,7 +10600,7 @@ void test_5F_0091()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10484,7 +10630,8 @@ void test_5F_0092()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10505,7 +10652,7 @@ void test_5F_0092()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10535,7 +10682,8 @@ void test_5F_0093()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10556,7 +10704,7 @@ void test_5F_0093()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10586,7 +10734,8 @@ void test_5F_0094()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10607,7 +10756,7 @@ void test_5F_0094()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10637,7 +10786,8 @@ void test_5F_0095()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10658,7 +10808,7 @@ void test_5F_0095()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10688,7 +10838,8 @@ void test_5F_0096()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10709,7 +10860,7 @@ void test_5F_0096()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10739,7 +10890,8 @@ void test_5F_0097()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10760,7 +10912,7 @@ void test_5F_0097()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10790,7 +10942,8 @@ void test_5F_0098()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10811,7 +10964,7 @@ void test_5F_0098()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10841,7 +10994,8 @@ void test_5F_0099()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10862,7 +11016,7 @@ void test_5F_0099()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10892,7 +11046,8 @@ void test_5F_009A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10913,7 +11068,7 @@ void test_5F_009A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10943,7 +11098,8 @@ void test_5F_009B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10964,7 +11120,7 @@ void test_5F_009B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -10994,7 +11150,8 @@ void test_5F_009C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11015,7 +11172,7 @@ void test_5F_009C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11045,7 +11202,8 @@ void test_5F_009D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11066,7 +11224,7 @@ void test_5F_009D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11096,7 +11254,8 @@ void test_5F_009E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11117,7 +11276,7 @@ void test_5F_009E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11147,7 +11306,8 @@ void test_5F_009F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11168,7 +11328,7 @@ void test_5F_009F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11198,7 +11358,8 @@ void test_5F_00A0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11219,7 +11380,7 @@ void test_5F_00A0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11249,7 +11410,8 @@ void test_5F_00A1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11270,7 +11432,7 @@ void test_5F_00A1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11300,7 +11462,8 @@ void test_5F_00A2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11321,7 +11484,7 @@ void test_5F_00A2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11351,7 +11514,8 @@ void test_5F_00A3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11372,7 +11536,7 @@ void test_5F_00A3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11402,7 +11566,8 @@ void test_5F_00A4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11423,7 +11588,7 @@ void test_5F_00A4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11453,7 +11618,8 @@ void test_5F_00A5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11474,7 +11640,7 @@ void test_5F_00A5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11504,7 +11670,8 @@ void test_5F_00A6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11525,7 +11692,7 @@ void test_5F_00A6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11555,7 +11722,8 @@ void test_5F_00A7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11576,7 +11744,7 @@ void test_5F_00A7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11606,7 +11774,8 @@ void test_5F_00A8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11627,7 +11796,7 @@ void test_5F_00A8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11657,7 +11826,8 @@ void test_5F_00A9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11678,7 +11848,7 @@ void test_5F_00A9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11708,7 +11878,8 @@ void test_5F_00AA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11729,7 +11900,7 @@ void test_5F_00AA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11759,7 +11930,8 @@ void test_5F_00AB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11780,7 +11952,7 @@ void test_5F_00AB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11810,7 +11982,8 @@ void test_5F_00AC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11831,7 +12004,7 @@ void test_5F_00AC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11861,7 +12034,8 @@ void test_5F_00AD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11882,7 +12056,7 @@ void test_5F_00AD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11912,7 +12086,8 @@ void test_5F_00AE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11933,7 +12108,7 @@ void test_5F_00AE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -11963,7 +12138,8 @@ void test_5F_00AF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11984,7 +12160,7 @@ void test_5F_00AF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12014,7 +12190,8 @@ void test_5F_00B0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12035,7 +12212,7 @@ void test_5F_00B0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12065,7 +12242,8 @@ void test_5F_00B1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12086,7 +12264,7 @@ void test_5F_00B1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12116,7 +12294,8 @@ void test_5F_00B2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12137,7 +12316,7 @@ void test_5F_00B2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12167,7 +12346,8 @@ void test_5F_00B3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12188,7 +12368,7 @@ void test_5F_00B3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12218,7 +12398,8 @@ void test_5F_00B4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12239,7 +12420,7 @@ void test_5F_00B4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12269,7 +12450,8 @@ void test_5F_00B5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12290,7 +12472,7 @@ void test_5F_00B5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12320,7 +12502,8 @@ void test_5F_00B6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12341,7 +12524,7 @@ void test_5F_00B6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12371,7 +12554,8 @@ void test_5F_00B7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12392,7 +12576,7 @@ void test_5F_00B7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12422,7 +12606,8 @@ void test_5F_00B8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12443,7 +12628,7 @@ void test_5F_00B8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12473,7 +12658,8 @@ void test_5F_00B9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12494,7 +12680,7 @@ void test_5F_00B9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12524,7 +12710,8 @@ void test_5F_00BA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12545,7 +12732,7 @@ void test_5F_00BA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12575,7 +12762,8 @@ void test_5F_00BB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12596,7 +12784,7 @@ void test_5F_00BB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12626,7 +12814,8 @@ void test_5F_00BC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12647,7 +12836,7 @@ void test_5F_00BC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12677,7 +12866,8 @@ void test_5F_00BD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12698,7 +12888,7 @@ void test_5F_00BD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12728,7 +12918,8 @@ void test_5F_00BE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12749,7 +12940,7 @@ void test_5F_00BE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12779,7 +12970,8 @@ void test_5F_00BF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12800,7 +12992,7 @@ void test_5F_00BF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12830,7 +13022,8 @@ void test_5F_00C0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12851,7 +13044,7 @@ void test_5F_00C0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12881,7 +13074,8 @@ void test_5F_00C1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12902,7 +13096,7 @@ void test_5F_00C1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12932,7 +13126,8 @@ void test_5F_00C2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12953,7 +13148,7 @@ void test_5F_00C2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -12983,7 +13178,8 @@ void test_5F_00C3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13004,7 +13200,7 @@ void test_5F_00C3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13034,7 +13230,8 @@ void test_5F_00C4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13055,7 +13252,7 @@ void test_5F_00C4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13085,7 +13282,8 @@ void test_5F_00C5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13106,7 +13304,7 @@ void test_5F_00C5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13136,7 +13334,8 @@ void test_5F_00C6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13157,7 +13356,7 @@ void test_5F_00C6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13187,7 +13386,8 @@ void test_5F_00C7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13208,7 +13408,7 @@ void test_5F_00C7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13238,7 +13438,8 @@ void test_5F_00C8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13259,7 +13460,7 @@ void test_5F_00C8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13289,7 +13490,8 @@ void test_5F_00C9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13310,7 +13512,7 @@ void test_5F_00C9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13340,7 +13542,8 @@ void test_5F_00CA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13361,7 +13564,7 @@ void test_5F_00CA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13391,7 +13594,8 @@ void test_5F_00CB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13412,7 +13616,7 @@ void test_5F_00CB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13442,7 +13646,8 @@ void test_5F_00CC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13463,7 +13668,7 @@ void test_5F_00CC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13493,7 +13698,8 @@ void test_5F_00CD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13514,7 +13720,7 @@ void test_5F_00CD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13544,7 +13750,8 @@ void test_5F_00CE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13565,7 +13772,7 @@ void test_5F_00CE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13595,7 +13802,8 @@ void test_5F_00CF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13616,7 +13824,7 @@ void test_5F_00CF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13646,7 +13854,8 @@ void test_5F_00D0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13667,7 +13876,7 @@ void test_5F_00D0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13697,7 +13906,8 @@ void test_5F_00D1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13718,7 +13928,7 @@ void test_5F_00D1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13748,7 +13958,8 @@ void test_5F_00D2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13769,7 +13980,7 @@ void test_5F_00D2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13799,7 +14010,8 @@ void test_5F_00D3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13820,7 +14032,7 @@ void test_5F_00D3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13850,7 +14062,8 @@ void test_5F_00D4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13871,7 +14084,7 @@ void test_5F_00D4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13901,7 +14114,8 @@ void test_5F_00D5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13922,7 +14136,7 @@ void test_5F_00D5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -13952,7 +14166,8 @@ void test_5F_00D6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13973,7 +14188,7 @@ void test_5F_00D6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14003,7 +14218,8 @@ void test_5F_00D7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14024,7 +14240,7 @@ void test_5F_00D7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14054,7 +14270,8 @@ void test_5F_00D8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14075,7 +14292,7 @@ void test_5F_00D8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14105,7 +14322,8 @@ void test_5F_00D9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14126,7 +14344,7 @@ void test_5F_00D9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14156,7 +14374,8 @@ void test_5F_00DA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14177,7 +14396,7 @@ void test_5F_00DA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14207,7 +14426,8 @@ void test_5F_00DB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14228,7 +14448,7 @@ void test_5F_00DB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14258,7 +14478,8 @@ void test_5F_00DC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14279,7 +14500,7 @@ void test_5F_00DC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14309,7 +14530,8 @@ void test_5F_00DD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14330,7 +14552,7 @@ void test_5F_00DD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14360,7 +14582,8 @@ void test_5F_00DE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14381,7 +14604,7 @@ void test_5F_00DE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14411,7 +14634,8 @@ void test_5F_00DF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14432,7 +14656,7 @@ void test_5F_00DF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14462,7 +14686,8 @@ void test_5F_00E0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14483,7 +14708,7 @@ void test_5F_00E0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14513,7 +14738,8 @@ void test_5F_00E1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14534,7 +14760,7 @@ void test_5F_00E1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14564,7 +14790,8 @@ void test_5F_00E2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14585,7 +14812,7 @@ void test_5F_00E2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14615,7 +14842,8 @@ void test_5F_00E3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14636,7 +14864,7 @@ void test_5F_00E3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14666,7 +14894,8 @@ void test_5F_00E4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14687,7 +14916,7 @@ void test_5F_00E4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14717,7 +14946,8 @@ void test_5F_00E5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14738,7 +14968,7 @@ void test_5F_00E5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14768,7 +14998,8 @@ void test_5F_00E6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14789,7 +15020,7 @@ void test_5F_00E6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14819,7 +15050,8 @@ void test_5F_00E7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14840,7 +15072,7 @@ void test_5F_00E7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14870,7 +15102,8 @@ void test_5F_00E8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14891,7 +15124,7 @@ void test_5F_00E8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14921,7 +15154,8 @@ void test_5F_00E9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14942,7 +15176,7 @@ void test_5F_00E9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -14972,7 +15206,8 @@ void test_5F_00EA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14993,7 +15228,7 @@ void test_5F_00EA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15023,7 +15258,8 @@ void test_5F_00EB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15044,7 +15280,7 @@ void test_5F_00EB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15074,7 +15310,8 @@ void test_5F_00EC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15095,7 +15332,7 @@ void test_5F_00EC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15125,7 +15362,8 @@ void test_5F_00ED()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15146,7 +15384,7 @@ void test_5F_00ED()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15176,7 +15414,8 @@ void test_5F_00EE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15197,7 +15436,7 @@ void test_5F_00EE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15227,7 +15466,8 @@ void test_5F_00EF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15248,7 +15488,7 @@ void test_5F_00EF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15278,7 +15518,8 @@ void test_5F_00F0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15299,7 +15540,7 @@ void test_5F_00F0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15329,7 +15570,8 @@ void test_5F_00F1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15350,7 +15592,7 @@ void test_5F_00F1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15380,7 +15622,8 @@ void test_5F_00F2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15401,7 +15644,7 @@ void test_5F_00F2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15431,7 +15674,8 @@ void test_5F_00F3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15452,7 +15696,7 @@ void test_5F_00F3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15482,7 +15726,8 @@ void test_5F_00F4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15503,7 +15748,7 @@ void test_5F_00F4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15533,7 +15778,8 @@ void test_5F_00F5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15554,7 +15800,7 @@ void test_5F_00F5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15584,7 +15830,8 @@ void test_5F_00F6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15605,7 +15852,7 @@ void test_5F_00F6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15635,7 +15882,8 @@ void test_5F_00F7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15656,7 +15904,7 @@ void test_5F_00F7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15686,7 +15934,8 @@ void test_5F_00F8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15707,7 +15956,7 @@ void test_5F_00F8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15737,7 +15986,8 @@ void test_5F_00F9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15758,7 +16008,7 @@ void test_5F_00F9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15788,7 +16038,8 @@ void test_5F_00FA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15809,7 +16060,7 @@ void test_5F_00FA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15839,7 +16090,8 @@ void test_5F_00FB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15860,7 +16112,7 @@ void test_5F_00FB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15890,7 +16142,8 @@ void test_5F_00FC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15911,7 +16164,7 @@ void test_5F_00FC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15941,7 +16194,8 @@ void test_5F_00FD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15962,7 +16216,7 @@ void test_5F_00FD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -15992,7 +16246,8 @@ void test_5F_00FE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16013,7 +16268,7 @@ void test_5F_00FE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16043,7 +16298,8 @@ void test_5F_00FF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16064,7 +16320,7 @@ void test_5F_00FF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16094,7 +16350,8 @@ void test_5F_0100()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16115,7 +16372,7 @@ void test_5F_0100()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16145,7 +16402,8 @@ void test_5F_0101()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16166,7 +16424,7 @@ void test_5F_0101()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16196,7 +16454,8 @@ void test_5F_0102()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16217,7 +16476,7 @@ void test_5F_0102()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16247,7 +16506,8 @@ void test_5F_0103()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16268,7 +16528,7 @@ void test_5F_0103()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16298,7 +16558,8 @@ void test_5F_0104()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16319,7 +16580,7 @@ void test_5F_0104()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16349,7 +16610,8 @@ void test_5F_0105()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16370,7 +16632,7 @@ void test_5F_0105()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16400,7 +16662,8 @@ void test_5F_0106()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16421,7 +16684,7 @@ void test_5F_0106()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16451,7 +16714,8 @@ void test_5F_0107()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16472,7 +16736,7 @@ void test_5F_0107()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16502,7 +16766,8 @@ void test_5F_0108()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16523,7 +16788,7 @@ void test_5F_0108()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16553,7 +16818,8 @@ void test_5F_0109()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16574,7 +16840,7 @@ void test_5F_0109()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16604,7 +16870,8 @@ void test_5F_010A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16625,7 +16892,7 @@ void test_5F_010A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16655,7 +16922,8 @@ void test_5F_010B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16676,7 +16944,7 @@ void test_5F_010B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16706,7 +16974,8 @@ void test_5F_010C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16727,7 +16996,7 @@ void test_5F_010C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16757,7 +17026,8 @@ void test_5F_010D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16778,7 +17048,7 @@ void test_5F_010D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16808,7 +17078,8 @@ void test_5F_010E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16829,7 +17100,7 @@ void test_5F_010E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16859,7 +17130,8 @@ void test_5F_010F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16880,7 +17152,7 @@ void test_5F_010F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16910,7 +17182,8 @@ void test_5F_0110()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16931,7 +17204,7 @@ void test_5F_0110()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -16961,7 +17234,8 @@ void test_5F_0111()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16982,7 +17256,7 @@ void test_5F_0111()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17012,7 +17286,8 @@ void test_5F_0112()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17033,7 +17308,7 @@ void test_5F_0112()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17063,7 +17338,8 @@ void test_5F_0113()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17084,7 +17360,7 @@ void test_5F_0113()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17114,7 +17390,8 @@ void test_5F_0114()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17135,7 +17412,7 @@ void test_5F_0114()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17165,7 +17442,8 @@ void test_5F_0115()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17186,7 +17464,7 @@ void test_5F_0115()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17216,7 +17494,8 @@ void test_5F_0116()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17237,7 +17516,7 @@ void test_5F_0116()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17267,7 +17546,8 @@ void test_5F_0117()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17288,7 +17568,7 @@ void test_5F_0117()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17318,7 +17598,8 @@ void test_5F_0118()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17339,7 +17620,7 @@ void test_5F_0118()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17369,7 +17650,8 @@ void test_5F_0119()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17390,7 +17672,7 @@ void test_5F_0119()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17420,7 +17702,8 @@ void test_5F_011A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17441,7 +17724,7 @@ void test_5F_011A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17471,7 +17754,8 @@ void test_5F_011B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17492,7 +17776,7 @@ void test_5F_011B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17522,7 +17806,8 @@ void test_5F_011C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17543,7 +17828,7 @@ void test_5F_011C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17573,7 +17858,8 @@ void test_5F_011D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17594,7 +17880,7 @@ void test_5F_011D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17624,7 +17910,8 @@ void test_5F_011E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17645,7 +17932,7 @@ void test_5F_011E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17675,7 +17962,8 @@ void test_5F_011F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17696,7 +17984,7 @@ void test_5F_011F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17726,7 +18014,8 @@ void test_5F_0120()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17747,7 +18036,7 @@ void test_5F_0120()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17777,7 +18066,8 @@ void test_5F_0121()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17798,7 +18088,7 @@ void test_5F_0121()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17828,7 +18118,8 @@ void test_5F_0122()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17849,7 +18140,7 @@ void test_5F_0122()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17879,7 +18170,8 @@ void test_5F_0123()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17900,7 +18192,7 @@ void test_5F_0123()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17930,7 +18222,8 @@ void test_5F_0124()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17951,7 +18244,7 @@ void test_5F_0124()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -17981,7 +18274,8 @@ void test_5F_0125()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18002,7 +18296,7 @@ void test_5F_0125()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18032,7 +18326,8 @@ void test_5F_0126()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18053,7 +18348,7 @@ void test_5F_0126()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18083,7 +18378,8 @@ void test_5F_0127()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18104,7 +18400,7 @@ void test_5F_0127()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18134,7 +18430,8 @@ void test_5F_0128()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18155,7 +18452,7 @@ void test_5F_0128()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18185,7 +18482,8 @@ void test_5F_0129()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18206,7 +18504,7 @@ void test_5F_0129()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18236,7 +18534,8 @@ void test_5F_012A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18257,7 +18556,7 @@ void test_5F_012A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18287,7 +18586,8 @@ void test_5F_012B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18308,7 +18608,7 @@ void test_5F_012B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18338,7 +18638,8 @@ void test_5F_012C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18359,7 +18660,7 @@ void test_5F_012C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18389,7 +18690,8 @@ void test_5F_012D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18410,7 +18712,7 @@ void test_5F_012D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18440,7 +18742,8 @@ void test_5F_012E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18461,7 +18764,7 @@ void test_5F_012E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18491,7 +18794,8 @@ void test_5F_012F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18512,7 +18816,7 @@ void test_5F_012F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18542,7 +18846,8 @@ void test_5F_0130()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18563,7 +18868,7 @@ void test_5F_0130()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18593,7 +18898,8 @@ void test_5F_0131()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18614,7 +18920,7 @@ void test_5F_0131()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18644,7 +18950,8 @@ void test_5F_0132()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18665,7 +18972,7 @@ void test_5F_0132()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18695,7 +19002,8 @@ void test_5F_0133()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18716,7 +19024,7 @@ void test_5F_0133()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18746,7 +19054,8 @@ void test_5F_0134()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18767,7 +19076,7 @@ void test_5F_0134()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18797,7 +19106,8 @@ void test_5F_0135()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18818,7 +19128,7 @@ void test_5F_0135()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18848,7 +19158,8 @@ void test_5F_0136()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18869,7 +19180,7 @@ void test_5F_0136()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18899,7 +19210,8 @@ void test_5F_0137()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18920,7 +19232,7 @@ void test_5F_0137()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -18950,7 +19262,8 @@ void test_5F_0138()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18971,7 +19284,7 @@ void test_5F_0138()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19001,7 +19314,8 @@ void test_5F_0139()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19022,7 +19336,7 @@ void test_5F_0139()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19052,7 +19366,8 @@ void test_5F_013A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19073,7 +19388,7 @@ void test_5F_013A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19103,7 +19418,8 @@ void test_5F_013B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19124,7 +19440,7 @@ void test_5F_013B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19154,7 +19470,8 @@ void test_5F_013C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19175,7 +19492,7 @@ void test_5F_013C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19205,7 +19522,8 @@ void test_5F_013D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19226,7 +19544,7 @@ void test_5F_013D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19256,7 +19574,8 @@ void test_5F_013E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19277,7 +19596,7 @@ void test_5F_013E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19307,7 +19626,8 @@ void test_5F_013F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19328,7 +19648,7 @@ void test_5F_013F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19358,7 +19678,8 @@ void test_5F_0140()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19379,7 +19700,7 @@ void test_5F_0140()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19409,7 +19730,8 @@ void test_5F_0141()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19430,7 +19752,7 @@ void test_5F_0141()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19460,7 +19782,8 @@ void test_5F_0142()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19481,7 +19804,7 @@ void test_5F_0142()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19511,7 +19834,8 @@ void test_5F_0143()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19532,7 +19856,7 @@ void test_5F_0143()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19562,7 +19886,8 @@ void test_5F_0144()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19583,7 +19908,7 @@ void test_5F_0144()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19613,7 +19938,8 @@ void test_5F_0145()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19634,7 +19960,7 @@ void test_5F_0145()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19664,7 +19990,8 @@ void test_5F_0146()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19685,7 +20012,7 @@ void test_5F_0146()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19715,7 +20042,8 @@ void test_5F_0147()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19736,7 +20064,7 @@ void test_5F_0147()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19766,7 +20094,8 @@ void test_5F_0148()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19787,7 +20116,7 @@ void test_5F_0148()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19817,7 +20146,8 @@ void test_5F_0149()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19838,7 +20168,7 @@ void test_5F_0149()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19868,7 +20198,8 @@ void test_5F_014A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19889,7 +20220,7 @@ void test_5F_014A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19919,7 +20250,8 @@ void test_5F_014B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19940,7 +20272,7 @@ void test_5F_014B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -19970,7 +20302,8 @@ void test_5F_014C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19991,7 +20324,7 @@ void test_5F_014C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20021,7 +20354,8 @@ void test_5F_014D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20042,7 +20376,7 @@ void test_5F_014D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20072,7 +20406,8 @@ void test_5F_014E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20093,7 +20428,7 @@ void test_5F_014E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20123,7 +20458,8 @@ void test_5F_014F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20144,7 +20480,7 @@ void test_5F_014F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20174,7 +20510,8 @@ void test_5F_0150()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20195,7 +20532,7 @@ void test_5F_0150()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20225,7 +20562,8 @@ void test_5F_0151()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20246,7 +20584,7 @@ void test_5F_0151()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20276,7 +20614,8 @@ void test_5F_0152()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20297,7 +20636,7 @@ void test_5F_0152()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20327,7 +20666,8 @@ void test_5F_0153()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20348,7 +20688,7 @@ void test_5F_0153()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20378,7 +20718,8 @@ void test_5F_0154()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20399,7 +20740,7 @@ void test_5F_0154()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20429,7 +20770,8 @@ void test_5F_0155()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20450,7 +20792,7 @@ void test_5F_0155()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20480,7 +20822,8 @@ void test_5F_0156()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20501,7 +20844,7 @@ void test_5F_0156()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20531,7 +20874,8 @@ void test_5F_0157()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20552,7 +20896,7 @@ void test_5F_0157()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20582,7 +20926,8 @@ void test_5F_0158()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20603,7 +20948,7 @@ void test_5F_0158()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20633,7 +20978,8 @@ void test_5F_0159()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20654,7 +21000,7 @@ void test_5F_0159()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20684,7 +21030,8 @@ void test_5F_015A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20705,7 +21052,7 @@ void test_5F_015A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20735,7 +21082,8 @@ void test_5F_015B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20756,7 +21104,7 @@ void test_5F_015B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20786,7 +21134,8 @@ void test_5F_015C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20807,7 +21156,7 @@ void test_5F_015C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20837,7 +21186,8 @@ void test_5F_015D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20858,7 +21208,7 @@ void test_5F_015D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20888,7 +21238,8 @@ void test_5F_015E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20909,7 +21260,7 @@ void test_5F_015E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20939,7 +21290,8 @@ void test_5F_015F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20960,7 +21312,7 @@ void test_5F_015F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -20990,7 +21342,8 @@ void test_5F_0160()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21011,7 +21364,7 @@ void test_5F_0160()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21041,7 +21394,8 @@ void test_5F_0161()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21062,7 +21416,7 @@ void test_5F_0161()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21092,7 +21446,8 @@ void test_5F_0162()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21113,7 +21468,7 @@ void test_5F_0162()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21143,7 +21498,8 @@ void test_5F_0163()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21164,7 +21520,7 @@ void test_5F_0163()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21194,7 +21550,8 @@ void test_5F_0164()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21215,7 +21572,7 @@ void test_5F_0164()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21245,7 +21602,8 @@ void test_5F_0165()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21266,7 +21624,7 @@ void test_5F_0165()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21296,7 +21654,8 @@ void test_5F_0166()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21317,7 +21676,7 @@ void test_5F_0166()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21347,7 +21706,8 @@ void test_5F_0167()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21368,7 +21728,7 @@ void test_5F_0167()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21398,7 +21758,8 @@ void test_5F_0168()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21419,7 +21780,7 @@ void test_5F_0168()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21449,7 +21810,8 @@ void test_5F_0169()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21470,7 +21832,7 @@ void test_5F_0169()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21500,7 +21862,8 @@ void test_5F_016A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21521,7 +21884,7 @@ void test_5F_016A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21551,7 +21914,8 @@ void test_5F_016B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21572,7 +21936,7 @@ void test_5F_016B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21602,7 +21966,8 @@ void test_5F_016C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21623,7 +21988,7 @@ void test_5F_016C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21653,7 +22018,8 @@ void test_5F_016D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21674,7 +22040,7 @@ void test_5F_016D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21704,7 +22070,8 @@ void test_5F_016E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21725,7 +22092,7 @@ void test_5F_016E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21755,7 +22122,8 @@ void test_5F_016F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21776,7 +22144,7 @@ void test_5F_016F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21806,7 +22174,8 @@ void test_5F_0170()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21827,7 +22196,7 @@ void test_5F_0170()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21857,7 +22226,8 @@ void test_5F_0171()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21878,7 +22248,7 @@ void test_5F_0171()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21908,7 +22278,8 @@ void test_5F_0172()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21929,7 +22300,7 @@ void test_5F_0172()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -21959,7 +22330,8 @@ void test_5F_0173()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21980,7 +22352,7 @@ void test_5F_0173()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22010,7 +22382,8 @@ void test_5F_0174()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22031,7 +22404,7 @@ void test_5F_0174()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22061,7 +22434,8 @@ void test_5F_0175()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22082,7 +22456,7 @@ void test_5F_0175()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22112,7 +22486,8 @@ void test_5F_0176()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22133,7 +22508,7 @@ void test_5F_0176()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22163,7 +22538,8 @@ void test_5F_0177()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22184,7 +22560,7 @@ void test_5F_0177()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22214,7 +22590,8 @@ void test_5F_0178()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22235,7 +22612,7 @@ void test_5F_0178()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22265,7 +22642,8 @@ void test_5F_0179()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22286,7 +22664,7 @@ void test_5F_0179()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22316,7 +22694,8 @@ void test_5F_017A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22337,7 +22716,7 @@ void test_5F_017A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22367,7 +22746,8 @@ void test_5F_017B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22388,7 +22768,7 @@ void test_5F_017B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22418,7 +22798,8 @@ void test_5F_017C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22439,7 +22820,7 @@ void test_5F_017C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22469,7 +22850,8 @@ void test_5F_017D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22490,7 +22872,7 @@ void test_5F_017D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22520,7 +22902,8 @@ void test_5F_017E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22541,7 +22924,7 @@ void test_5F_017E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22571,7 +22954,8 @@ void test_5F_017F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22592,7 +22976,7 @@ void test_5F_017F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22622,7 +23006,8 @@ void test_5F_0180()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22643,7 +23028,7 @@ void test_5F_0180()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22673,7 +23058,8 @@ void test_5F_0181()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22694,7 +23080,7 @@ void test_5F_0181()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22724,7 +23110,8 @@ void test_5F_0182()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22745,7 +23132,7 @@ void test_5F_0182()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22775,7 +23162,8 @@ void test_5F_0183()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22796,7 +23184,7 @@ void test_5F_0183()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22826,7 +23214,8 @@ void test_5F_0184()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22847,7 +23236,7 @@ void test_5F_0184()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22877,7 +23266,8 @@ void test_5F_0185()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22898,7 +23288,7 @@ void test_5F_0185()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22928,7 +23318,8 @@ void test_5F_0186()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22949,7 +23340,7 @@ void test_5F_0186()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -22979,7 +23370,8 @@ void test_5F_0187()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23000,7 +23392,7 @@ void test_5F_0187()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23030,7 +23422,8 @@ void test_5F_0188()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23051,7 +23444,7 @@ void test_5F_0188()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23081,7 +23474,8 @@ void test_5F_0189()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23102,7 +23496,7 @@ void test_5F_0189()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23132,7 +23526,8 @@ void test_5F_018A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23153,7 +23548,7 @@ void test_5F_018A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23183,7 +23578,8 @@ void test_5F_018B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23204,7 +23600,7 @@ void test_5F_018B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23234,7 +23630,8 @@ void test_5F_018C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23255,7 +23652,7 @@ void test_5F_018C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23285,7 +23682,8 @@ void test_5F_018D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23306,7 +23704,7 @@ void test_5F_018D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23336,7 +23734,8 @@ void test_5F_018E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23357,7 +23756,7 @@ void test_5F_018E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23387,7 +23786,8 @@ void test_5F_018F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23408,7 +23808,7 @@ void test_5F_018F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23438,7 +23838,8 @@ void test_5F_0190()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23459,7 +23860,7 @@ void test_5F_0190()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23489,7 +23890,8 @@ void test_5F_0191()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23510,7 +23912,7 @@ void test_5F_0191()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23540,7 +23942,8 @@ void test_5F_0192()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23561,7 +23964,7 @@ void test_5F_0192()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23591,7 +23994,8 @@ void test_5F_0193()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23612,7 +24016,7 @@ void test_5F_0193()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23642,7 +24046,8 @@ void test_5F_0194()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23663,7 +24068,7 @@ void test_5F_0194()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23693,7 +24098,8 @@ void test_5F_0195()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23714,7 +24120,7 @@ void test_5F_0195()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23744,7 +24150,8 @@ void test_5F_0196()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23765,7 +24172,7 @@ void test_5F_0196()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23795,7 +24202,8 @@ void test_5F_0197()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23816,7 +24224,7 @@ void test_5F_0197()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23846,7 +24254,8 @@ void test_5F_0198()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23867,7 +24276,7 @@ void test_5F_0198()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23897,7 +24306,8 @@ void test_5F_0199()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23918,7 +24328,7 @@ void test_5F_0199()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23948,7 +24358,8 @@ void test_5F_019A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23969,7 +24380,7 @@ void test_5F_019A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -23999,7 +24410,8 @@ void test_5F_019B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24020,7 +24432,7 @@ void test_5F_019B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24050,7 +24462,8 @@ void test_5F_019C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24071,7 +24484,7 @@ void test_5F_019C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24101,7 +24514,8 @@ void test_5F_019D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24122,7 +24536,7 @@ void test_5F_019D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24152,7 +24566,8 @@ void test_5F_019E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24173,7 +24588,7 @@ void test_5F_019E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24203,7 +24618,8 @@ void test_5F_019F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24224,7 +24640,7 @@ void test_5F_019F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24254,7 +24670,8 @@ void test_5F_01A0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24275,7 +24692,7 @@ void test_5F_01A0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24305,7 +24722,8 @@ void test_5F_01A1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24326,7 +24744,7 @@ void test_5F_01A1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24356,7 +24774,8 @@ void test_5F_01A2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24377,7 +24796,7 @@ void test_5F_01A2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24407,7 +24826,8 @@ void test_5F_01A3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24428,7 +24848,7 @@ void test_5F_01A3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24458,7 +24878,8 @@ void test_5F_01A4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24479,7 +24900,7 @@ void test_5F_01A4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24509,7 +24930,8 @@ void test_5F_01A5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24530,7 +24952,7 @@ void test_5F_01A5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24560,7 +24982,8 @@ void test_5F_01A6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24581,7 +25004,7 @@ void test_5F_01A6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24611,7 +25034,8 @@ void test_5F_01A7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24632,7 +25056,7 @@ void test_5F_01A7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24662,7 +25086,8 @@ void test_5F_01A8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24683,7 +25108,7 @@ void test_5F_01A8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24713,7 +25138,8 @@ void test_5F_01A9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24734,7 +25160,7 @@ void test_5F_01A9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24764,7 +25190,8 @@ void test_5F_01AA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24785,7 +25212,7 @@ void test_5F_01AA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24815,7 +25242,8 @@ void test_5F_01AB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24836,7 +25264,7 @@ void test_5F_01AB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24866,7 +25294,8 @@ void test_5F_01AC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24887,7 +25316,7 @@ void test_5F_01AC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24917,7 +25346,8 @@ void test_5F_01AD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24938,7 +25368,7 @@ void test_5F_01AD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -24968,7 +25398,8 @@ void test_5F_01AE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24989,7 +25420,7 @@ void test_5F_01AE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25019,7 +25450,8 @@ void test_5F_01AF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25040,7 +25472,7 @@ void test_5F_01AF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25070,7 +25502,8 @@ void test_5F_01B0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25091,7 +25524,7 @@ void test_5F_01B0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25121,7 +25554,8 @@ void test_5F_01B1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25142,7 +25576,7 @@ void test_5F_01B1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25172,7 +25606,8 @@ void test_5F_01B2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25193,7 +25628,7 @@ void test_5F_01B2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25223,7 +25658,8 @@ void test_5F_01B3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25244,7 +25680,7 @@ void test_5F_01B3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25274,7 +25710,8 @@ void test_5F_01B4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25295,7 +25732,7 @@ void test_5F_01B4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25325,7 +25762,8 @@ void test_5F_01B5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25346,7 +25784,7 @@ void test_5F_01B5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25376,7 +25814,8 @@ void test_5F_01B6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25397,7 +25836,7 @@ void test_5F_01B6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25427,7 +25866,8 @@ void test_5F_01B7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25448,7 +25888,7 @@ void test_5F_01B7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25478,7 +25918,8 @@ void test_5F_01B8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25499,7 +25940,7 @@ void test_5F_01B8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25529,7 +25970,8 @@ void test_5F_01B9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25550,7 +25992,7 @@ void test_5F_01B9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25580,7 +26022,8 @@ void test_5F_01BA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25601,7 +26044,7 @@ void test_5F_01BA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25631,7 +26074,8 @@ void test_5F_01BB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25652,7 +26096,7 @@ void test_5F_01BB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25682,7 +26126,8 @@ void test_5F_01BC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25703,7 +26148,7 @@ void test_5F_01BC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25733,7 +26178,8 @@ void test_5F_01BD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25754,7 +26200,7 @@ void test_5F_01BD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25784,7 +26230,8 @@ void test_5F_01BE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25805,7 +26252,7 @@ void test_5F_01BE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25835,7 +26282,8 @@ void test_5F_01BF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25856,7 +26304,7 @@ void test_5F_01BF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25886,7 +26334,8 @@ void test_5F_01C0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25907,7 +26356,7 @@ void test_5F_01C0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25937,7 +26386,8 @@ void test_5F_01C1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25958,7 +26408,7 @@ void test_5F_01C1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -25988,7 +26438,8 @@ void test_5F_01C2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26009,7 +26460,7 @@ void test_5F_01C2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26039,7 +26490,8 @@ void test_5F_01C3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26060,7 +26512,7 @@ void test_5F_01C3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26090,7 +26542,8 @@ void test_5F_01C4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26111,7 +26564,7 @@ void test_5F_01C4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26141,7 +26594,8 @@ void test_5F_01C5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26162,7 +26616,7 @@ void test_5F_01C5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26192,7 +26646,8 @@ void test_5F_01C6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26213,7 +26668,7 @@ void test_5F_01C6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26243,7 +26698,8 @@ void test_5F_01C7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26264,7 +26720,7 @@ void test_5F_01C7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26294,7 +26750,8 @@ void test_5F_01C8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26315,7 +26772,7 @@ void test_5F_01C8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26345,7 +26802,8 @@ void test_5F_01C9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26366,7 +26824,7 @@ void test_5F_01C9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26396,7 +26854,8 @@ void test_5F_01CA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26417,7 +26876,7 @@ void test_5F_01CA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26447,7 +26906,8 @@ void test_5F_01CB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26468,7 +26928,7 @@ void test_5F_01CB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26498,7 +26958,8 @@ void test_5F_01CC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26519,7 +26980,7 @@ void test_5F_01CC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26549,7 +27010,8 @@ void test_5F_01CD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26570,7 +27032,7 @@ void test_5F_01CD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26600,7 +27062,8 @@ void test_5F_01CE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26621,7 +27084,7 @@ void test_5F_01CE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26651,7 +27114,8 @@ void test_5F_01CF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26672,7 +27136,7 @@ void test_5F_01CF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26702,7 +27166,8 @@ void test_5F_01D0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26723,7 +27188,7 @@ void test_5F_01D0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26753,7 +27218,8 @@ void test_5F_01D1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26774,7 +27240,7 @@ void test_5F_01D1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26804,7 +27270,8 @@ void test_5F_01D2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26825,7 +27292,7 @@ void test_5F_01D2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26855,7 +27322,8 @@ void test_5F_01D3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26876,7 +27344,7 @@ void test_5F_01D3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26906,7 +27374,8 @@ void test_5F_01D4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26927,7 +27396,7 @@ void test_5F_01D4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -26957,7 +27426,8 @@ void test_5F_01D5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26978,7 +27448,7 @@ void test_5F_01D5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27008,7 +27478,8 @@ void test_5F_01D6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27029,7 +27500,7 @@ void test_5F_01D6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27059,7 +27530,8 @@ void test_5F_01D7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27080,7 +27552,7 @@ void test_5F_01D7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27110,7 +27582,8 @@ void test_5F_01D8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27131,7 +27604,7 @@ void test_5F_01D8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27161,7 +27634,8 @@ void test_5F_01D9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27182,7 +27656,7 @@ void test_5F_01D9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27212,7 +27686,8 @@ void test_5F_01DA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27233,7 +27708,7 @@ void test_5F_01DA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27263,7 +27738,8 @@ void test_5F_01DB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27284,7 +27760,7 @@ void test_5F_01DB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27314,7 +27790,8 @@ void test_5F_01DC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27335,7 +27812,7 @@ void test_5F_01DC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27365,7 +27842,8 @@ void test_5F_01DD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27386,7 +27864,7 @@ void test_5F_01DD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27416,7 +27894,8 @@ void test_5F_01DE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27437,7 +27916,7 @@ void test_5F_01DE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27467,7 +27946,8 @@ void test_5F_01DF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27488,7 +27968,7 @@ void test_5F_01DF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27518,7 +27998,8 @@ void test_5F_01E0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27539,7 +28020,7 @@ void test_5F_01E0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27569,7 +28050,8 @@ void test_5F_01E1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27590,7 +28072,7 @@ void test_5F_01E1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27620,7 +28102,8 @@ void test_5F_01E2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27641,7 +28124,7 @@ void test_5F_01E2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27671,7 +28154,8 @@ void test_5F_01E3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27692,7 +28176,7 @@ void test_5F_01E3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27722,7 +28206,8 @@ void test_5F_01E4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27743,7 +28228,7 @@ void test_5F_01E4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27773,7 +28258,8 @@ void test_5F_01E5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27794,7 +28280,7 @@ void test_5F_01E5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27824,7 +28310,8 @@ void test_5F_01E6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27845,7 +28332,7 @@ void test_5F_01E6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27875,7 +28362,8 @@ void test_5F_01E7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27896,7 +28384,7 @@ void test_5F_01E7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27926,7 +28414,8 @@ void test_5F_01E8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27947,7 +28436,7 @@ void test_5F_01E8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -27977,7 +28466,8 @@ void test_5F_01E9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27998,7 +28488,7 @@ void test_5F_01E9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28028,7 +28518,8 @@ void test_5F_01EA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28049,7 +28540,7 @@ void test_5F_01EA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28079,7 +28570,8 @@ void test_5F_01EB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28100,7 +28592,7 @@ void test_5F_01EB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28130,7 +28622,8 @@ void test_5F_01EC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28151,7 +28644,7 @@ void test_5F_01EC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28181,7 +28674,8 @@ void test_5F_01ED()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28202,7 +28696,7 @@ void test_5F_01ED()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28232,7 +28726,8 @@ void test_5F_01EE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28253,7 +28748,7 @@ void test_5F_01EE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28283,7 +28778,8 @@ void test_5F_01EF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28304,7 +28800,7 @@ void test_5F_01EF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28334,7 +28830,8 @@ void test_5F_01F0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28355,7 +28852,7 @@ void test_5F_01F0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28385,7 +28882,8 @@ void test_5F_01F1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28406,7 +28904,7 @@ void test_5F_01F1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28436,7 +28934,8 @@ void test_5F_01F2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28457,7 +28956,7 @@ void test_5F_01F2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28487,7 +28986,8 @@ void test_5F_01F3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28508,7 +29008,7 @@ void test_5F_01F3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28538,7 +29038,8 @@ void test_5F_01F4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28559,7 +29060,7 @@ void test_5F_01F4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28589,7 +29090,8 @@ void test_5F_01F5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28610,7 +29112,7 @@ void test_5F_01F5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28640,7 +29142,8 @@ void test_5F_01F6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28661,7 +29164,7 @@ void test_5F_01F6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28691,7 +29194,8 @@ void test_5F_01F7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28712,7 +29216,7 @@ void test_5F_01F7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28742,7 +29246,8 @@ void test_5F_01F8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28763,7 +29268,7 @@ void test_5F_01F8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28793,7 +29298,8 @@ void test_5F_01F9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28814,7 +29320,7 @@ void test_5F_01F9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28844,7 +29350,8 @@ void test_5F_01FA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28865,7 +29372,7 @@ void test_5F_01FA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28895,7 +29402,8 @@ void test_5F_01FB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28916,7 +29424,7 @@ void test_5F_01FB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28946,7 +29454,8 @@ void test_5F_01FC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28967,7 +29476,7 @@ void test_5F_01FC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -28997,7 +29506,8 @@ void test_5F_01FD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29018,7 +29528,7 @@ void test_5F_01FD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29048,7 +29558,8 @@ void test_5F_01FE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29069,7 +29580,7 @@ void test_5F_01FE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29099,7 +29610,8 @@ void test_5F_01FF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29120,7 +29632,7 @@ void test_5F_01FF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29150,7 +29662,8 @@ void test_5F_0200()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29171,7 +29684,7 @@ void test_5F_0200()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29201,7 +29714,8 @@ void test_5F_0201()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29222,7 +29736,7 @@ void test_5F_0201()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29252,7 +29766,8 @@ void test_5F_0202()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29273,7 +29788,7 @@ void test_5F_0202()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29303,7 +29818,8 @@ void test_5F_0203()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29324,7 +29840,7 @@ void test_5F_0203()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29354,7 +29870,8 @@ void test_5F_0204()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29375,7 +29892,7 @@ void test_5F_0204()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29405,7 +29922,8 @@ void test_5F_0205()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29426,7 +29944,7 @@ void test_5F_0205()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29456,7 +29974,8 @@ void test_5F_0206()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29477,7 +29996,7 @@ void test_5F_0206()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29507,7 +30026,8 @@ void test_5F_0207()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29528,7 +30048,7 @@ void test_5F_0207()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29558,7 +30078,8 @@ void test_5F_0208()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29579,7 +30100,7 @@ void test_5F_0208()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29609,7 +30130,8 @@ void test_5F_0209()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29630,7 +30152,7 @@ void test_5F_0209()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29660,7 +30182,8 @@ void test_5F_020A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29681,7 +30204,7 @@ void test_5F_020A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29711,7 +30234,8 @@ void test_5F_020B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29732,7 +30256,7 @@ void test_5F_020B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29762,7 +30286,8 @@ void test_5F_020C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29783,7 +30308,7 @@ void test_5F_020C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29813,7 +30338,8 @@ void test_5F_020D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29834,7 +30360,7 @@ void test_5F_020D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29864,7 +30390,8 @@ void test_5F_020E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29885,7 +30412,7 @@ void test_5F_020E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29915,7 +30442,8 @@ void test_5F_020F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29936,7 +30464,7 @@ void test_5F_020F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -29966,7 +30494,8 @@ void test_5F_0210()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29987,7 +30516,7 @@ void test_5F_0210()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30017,7 +30546,8 @@ void test_5F_0211()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30038,7 +30568,7 @@ void test_5F_0211()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30068,7 +30598,8 @@ void test_5F_0212()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30089,7 +30620,7 @@ void test_5F_0212()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30119,7 +30650,8 @@ void test_5F_0213()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30140,7 +30672,7 @@ void test_5F_0213()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30170,7 +30702,8 @@ void test_5F_0214()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30191,7 +30724,7 @@ void test_5F_0214()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30221,7 +30754,8 @@ void test_5F_0215()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30242,7 +30776,7 @@ void test_5F_0215()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30272,7 +30806,8 @@ void test_5F_0216()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30293,7 +30828,7 @@ void test_5F_0216()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30323,7 +30858,8 @@ void test_5F_0217()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30344,7 +30880,7 @@ void test_5F_0217()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30374,7 +30910,8 @@ void test_5F_0218()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30395,7 +30932,7 @@ void test_5F_0218()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30425,7 +30962,8 @@ void test_5F_0219()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30446,7 +30984,7 @@ void test_5F_0219()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30476,7 +31014,8 @@ void test_5F_021A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30497,7 +31036,7 @@ void test_5F_021A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30527,7 +31066,8 @@ void test_5F_021B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30548,7 +31088,7 @@ void test_5F_021B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30578,7 +31118,8 @@ void test_5F_021C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30599,7 +31140,7 @@ void test_5F_021C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30629,7 +31170,8 @@ void test_5F_021D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30650,7 +31192,7 @@ void test_5F_021D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30680,7 +31222,8 @@ void test_5F_021E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30701,7 +31244,7 @@ void test_5F_021E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30731,7 +31274,8 @@ void test_5F_021F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30752,7 +31296,7 @@ void test_5F_021F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30782,7 +31326,8 @@ void test_5F_0220()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30803,7 +31348,7 @@ void test_5F_0220()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30833,7 +31378,8 @@ void test_5F_0221()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30854,7 +31400,7 @@ void test_5F_0221()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30884,7 +31430,8 @@ void test_5F_0222()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30905,7 +31452,7 @@ void test_5F_0222()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30935,7 +31482,8 @@ void test_5F_0223()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30956,7 +31504,7 @@ void test_5F_0223()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -30986,7 +31534,8 @@ void test_5F_0224()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31007,7 +31556,7 @@ void test_5F_0224()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31037,7 +31586,8 @@ void test_5F_0225()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31058,7 +31608,7 @@ void test_5F_0225()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31088,7 +31638,8 @@ void test_5F_0226()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31109,7 +31660,7 @@ void test_5F_0226()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31139,7 +31690,8 @@ void test_5F_0227()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31160,7 +31712,7 @@ void test_5F_0227()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31190,7 +31742,8 @@ void test_5F_0228()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31211,7 +31764,7 @@ void test_5F_0228()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31241,7 +31794,8 @@ void test_5F_0229()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31262,7 +31816,7 @@ void test_5F_0229()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31292,7 +31846,8 @@ void test_5F_022A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31313,7 +31868,7 @@ void test_5F_022A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31343,7 +31898,8 @@ void test_5F_022B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31364,7 +31920,7 @@ void test_5F_022B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31394,7 +31950,8 @@ void test_5F_022C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31415,7 +31972,7 @@ void test_5F_022C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31445,7 +32002,8 @@ void test_5F_022D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31466,7 +32024,7 @@ void test_5F_022D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31496,7 +32054,8 @@ void test_5F_022E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31517,7 +32076,7 @@ void test_5F_022E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31547,7 +32106,8 @@ void test_5F_022F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31568,7 +32128,7 @@ void test_5F_022F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31598,7 +32158,8 @@ void test_5F_0230()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31619,7 +32180,7 @@ void test_5F_0230()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31649,7 +32210,8 @@ void test_5F_0231()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31670,7 +32232,7 @@ void test_5F_0231()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31700,7 +32262,8 @@ void test_5F_0232()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31721,7 +32284,7 @@ void test_5F_0232()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31751,7 +32314,8 @@ void test_5F_0233()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31772,7 +32336,7 @@ void test_5F_0233()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31802,7 +32366,8 @@ void test_5F_0234()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31823,7 +32388,7 @@ void test_5F_0234()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31853,7 +32418,8 @@ void test_5F_0235()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31874,7 +32440,7 @@ void test_5F_0235()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31904,7 +32470,8 @@ void test_5F_0236()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31925,7 +32492,7 @@ void test_5F_0236()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -31955,7 +32522,8 @@ void test_5F_0237()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31976,7 +32544,7 @@ void test_5F_0237()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32006,7 +32574,8 @@ void test_5F_0238()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32027,7 +32596,7 @@ void test_5F_0238()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32057,7 +32626,8 @@ void test_5F_0239()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32078,7 +32648,7 @@ void test_5F_0239()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32108,7 +32678,8 @@ void test_5F_023A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32129,7 +32700,7 @@ void test_5F_023A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32159,7 +32730,8 @@ void test_5F_023B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32180,7 +32752,7 @@ void test_5F_023B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32210,7 +32782,8 @@ void test_5F_023C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32231,7 +32804,7 @@ void test_5F_023C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32261,7 +32834,8 @@ void test_5F_023D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32282,7 +32856,7 @@ void test_5F_023D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32312,7 +32886,8 @@ void test_5F_023E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32333,7 +32908,7 @@ void test_5F_023E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32363,7 +32938,8 @@ void test_5F_023F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32384,7 +32960,7 @@ void test_5F_023F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32414,7 +32990,8 @@ void test_5F_0240()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32435,7 +33012,7 @@ void test_5F_0240()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32465,7 +33042,8 @@ void test_5F_0241()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32486,7 +33064,7 @@ void test_5F_0241()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32516,7 +33094,8 @@ void test_5F_0242()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32537,7 +33116,7 @@ void test_5F_0242()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32567,7 +33146,8 @@ void test_5F_0243()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32588,7 +33168,7 @@ void test_5F_0243()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32618,7 +33198,8 @@ void test_5F_0244()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32639,7 +33220,7 @@ void test_5F_0244()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32669,7 +33250,8 @@ void test_5F_0245()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32690,7 +33272,7 @@ void test_5F_0245()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32720,7 +33302,8 @@ void test_5F_0246()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32741,7 +33324,7 @@ void test_5F_0246()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32771,7 +33354,8 @@ void test_5F_0247()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32792,7 +33376,7 @@ void test_5F_0247()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32822,7 +33406,8 @@ void test_5F_0248()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32843,7 +33428,7 @@ void test_5F_0248()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32873,7 +33458,8 @@ void test_5F_0249()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32894,7 +33480,7 @@ void test_5F_0249()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32924,7 +33510,8 @@ void test_5F_024A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32945,7 +33532,7 @@ void test_5F_024A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -32975,7 +33562,8 @@ void test_5F_024B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32996,7 +33584,7 @@ void test_5F_024B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33026,7 +33614,8 @@ void test_5F_024C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33047,7 +33636,7 @@ void test_5F_024C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33077,7 +33666,8 @@ void test_5F_024D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33098,7 +33688,7 @@ void test_5F_024D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33128,7 +33718,8 @@ void test_5F_024E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33149,7 +33740,7 @@ void test_5F_024E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33179,7 +33770,8 @@ void test_5F_024F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33200,7 +33792,7 @@ void test_5F_024F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33230,7 +33822,8 @@ void test_5F_0250()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33251,7 +33844,7 @@ void test_5F_0250()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33281,7 +33874,8 @@ void test_5F_0251()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33302,7 +33896,7 @@ void test_5F_0251()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33332,7 +33926,8 @@ void test_5F_0252()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33353,7 +33948,7 @@ void test_5F_0252()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33383,7 +33978,8 @@ void test_5F_0253()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33404,7 +34000,7 @@ void test_5F_0253()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33434,7 +34030,8 @@ void test_5F_0254()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33455,7 +34052,7 @@ void test_5F_0254()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33485,7 +34082,8 @@ void test_5F_0255()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33506,7 +34104,7 @@ void test_5F_0255()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33536,7 +34134,8 @@ void test_5F_0256()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33557,7 +34156,7 @@ void test_5F_0256()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33587,7 +34186,8 @@ void test_5F_0257()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33608,7 +34208,7 @@ void test_5F_0257()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33638,7 +34238,8 @@ void test_5F_0258()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33659,7 +34260,7 @@ void test_5F_0258()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33689,7 +34290,8 @@ void test_5F_0259()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33710,7 +34312,7 @@ void test_5F_0259()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33740,7 +34342,8 @@ void test_5F_025A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33761,7 +34364,7 @@ void test_5F_025A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33791,7 +34394,8 @@ void test_5F_025B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33812,7 +34416,7 @@ void test_5F_025B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33842,7 +34446,8 @@ void test_5F_025C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33863,7 +34468,7 @@ void test_5F_025C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33893,7 +34498,8 @@ void test_5F_025D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33914,7 +34520,7 @@ void test_5F_025D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33944,7 +34550,8 @@ void test_5F_025E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33965,7 +34572,7 @@ void test_5F_025E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -33995,7 +34602,8 @@ void test_5F_025F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34016,7 +34624,7 @@ void test_5F_025F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34046,7 +34654,8 @@ void test_5F_0260()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34067,7 +34676,7 @@ void test_5F_0260()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34097,7 +34706,8 @@ void test_5F_0261()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34118,7 +34728,7 @@ void test_5F_0261()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34148,7 +34758,8 @@ void test_5F_0262()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34169,7 +34780,7 @@ void test_5F_0262()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34199,7 +34810,8 @@ void test_5F_0263()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34220,7 +34832,7 @@ void test_5F_0263()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34250,7 +34862,8 @@ void test_5F_0264()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34271,7 +34884,7 @@ void test_5F_0264()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34301,7 +34914,8 @@ void test_5F_0265()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34322,7 +34936,7 @@ void test_5F_0265()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34352,7 +34966,8 @@ void test_5F_0266()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34373,7 +34988,7 @@ void test_5F_0266()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34403,7 +35018,8 @@ void test_5F_0267()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34424,7 +35040,7 @@ void test_5F_0267()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34454,7 +35070,8 @@ void test_5F_0268()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34475,7 +35092,7 @@ void test_5F_0268()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34505,7 +35122,8 @@ void test_5F_0269()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34526,7 +35144,7 @@ void test_5F_0269()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34556,7 +35174,8 @@ void test_5F_026A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34577,7 +35196,7 @@ void test_5F_026A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34607,7 +35226,8 @@ void test_5F_026B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34628,7 +35248,7 @@ void test_5F_026B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34658,7 +35278,8 @@ void test_5F_026C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34679,7 +35300,7 @@ void test_5F_026C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34709,7 +35330,8 @@ void test_5F_026D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34730,7 +35352,7 @@ void test_5F_026D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34760,7 +35382,8 @@ void test_5F_026E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34781,7 +35404,7 @@ void test_5F_026E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34811,7 +35434,8 @@ void test_5F_026F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34832,7 +35456,7 @@ void test_5F_026F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34862,7 +35486,8 @@ void test_5F_0270()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34883,7 +35508,7 @@ void test_5F_0270()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34913,7 +35538,8 @@ void test_5F_0271()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34934,7 +35560,7 @@ void test_5F_0271()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -34964,7 +35590,8 @@ void test_5F_0272()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34985,7 +35612,7 @@ void test_5F_0272()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35015,7 +35642,8 @@ void test_5F_0273()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35036,7 +35664,7 @@ void test_5F_0273()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35066,7 +35694,8 @@ void test_5F_0274()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35087,7 +35716,7 @@ void test_5F_0274()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35117,7 +35746,8 @@ void test_5F_0275()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35138,7 +35768,7 @@ void test_5F_0275()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35168,7 +35798,8 @@ void test_5F_0276()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35189,7 +35820,7 @@ void test_5F_0276()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35219,7 +35850,8 @@ void test_5F_0277()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35240,7 +35872,7 @@ void test_5F_0277()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35270,7 +35902,8 @@ void test_5F_0278()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35291,7 +35924,7 @@ void test_5F_0278()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35321,7 +35954,8 @@ void test_5F_0279()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35342,7 +35976,7 @@ void test_5F_0279()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35372,7 +36006,8 @@ void test_5F_027A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35393,7 +36028,7 @@ void test_5F_027A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35423,7 +36058,8 @@ void test_5F_027B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35444,7 +36080,7 @@ void test_5F_027B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35474,7 +36110,8 @@ void test_5F_027C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35495,7 +36132,7 @@ void test_5F_027C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35525,7 +36162,8 @@ void test_5F_027D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35546,7 +36184,7 @@ void test_5F_027D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35576,7 +36214,8 @@ void test_5F_027E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35597,7 +36236,7 @@ void test_5F_027E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35627,7 +36266,8 @@ void test_5F_027F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35648,7 +36288,7 @@ void test_5F_027F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35678,7 +36318,8 @@ void test_5F_0280()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35699,7 +36340,7 @@ void test_5F_0280()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35729,7 +36370,8 @@ void test_5F_0281()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35750,7 +36392,7 @@ void test_5F_0281()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35780,7 +36422,8 @@ void test_5F_0282()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35801,7 +36444,7 @@ void test_5F_0282()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35831,7 +36474,8 @@ void test_5F_0283()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35852,7 +36496,7 @@ void test_5F_0283()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35882,7 +36526,8 @@ void test_5F_0284()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35903,7 +36548,7 @@ void test_5F_0284()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35933,7 +36578,8 @@ void test_5F_0285()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35954,7 +36600,7 @@ void test_5F_0285()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -35984,7 +36630,8 @@ void test_5F_0286()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36005,7 +36652,7 @@ void test_5F_0286()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36035,7 +36682,8 @@ void test_5F_0287()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36056,7 +36704,7 @@ void test_5F_0287()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36086,7 +36734,8 @@ void test_5F_0288()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36107,7 +36756,7 @@ void test_5F_0288()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36137,7 +36786,8 @@ void test_5F_0289()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36158,7 +36808,7 @@ void test_5F_0289()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36188,7 +36838,8 @@ void test_5F_028A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36209,7 +36860,7 @@ void test_5F_028A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36239,7 +36890,8 @@ void test_5F_028B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36260,7 +36912,7 @@ void test_5F_028B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36290,7 +36942,8 @@ void test_5F_028C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36311,7 +36964,7 @@ void test_5F_028C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36341,7 +36994,8 @@ void test_5F_028D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36362,7 +37016,7 @@ void test_5F_028D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36392,7 +37046,8 @@ void test_5F_028E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36413,7 +37068,7 @@ void test_5F_028E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36443,7 +37098,8 @@ void test_5F_028F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36464,7 +37120,7 @@ void test_5F_028F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36494,7 +37150,8 @@ void test_5F_0290()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36515,7 +37172,7 @@ void test_5F_0290()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36545,7 +37202,8 @@ void test_5F_0291()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36566,7 +37224,7 @@ void test_5F_0291()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36596,7 +37254,8 @@ void test_5F_0292()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36617,7 +37276,7 @@ void test_5F_0292()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36647,7 +37306,8 @@ void test_5F_0293()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36668,7 +37328,7 @@ void test_5F_0293()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36698,7 +37358,8 @@ void test_5F_0294()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36719,7 +37380,7 @@ void test_5F_0294()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36749,7 +37410,8 @@ void test_5F_0295()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36770,7 +37432,7 @@ void test_5F_0295()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36800,7 +37462,8 @@ void test_5F_0296()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36821,7 +37484,7 @@ void test_5F_0296()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36851,7 +37514,8 @@ void test_5F_0297()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36872,7 +37536,7 @@ void test_5F_0297()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36902,7 +37566,8 @@ void test_5F_0298()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36923,7 +37588,7 @@ void test_5F_0298()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -36953,7 +37618,8 @@ void test_5F_0299()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36974,7 +37640,7 @@ void test_5F_0299()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37004,7 +37670,8 @@ void test_5F_029A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37025,7 +37692,7 @@ void test_5F_029A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37055,7 +37722,8 @@ void test_5F_029B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37076,7 +37744,7 @@ void test_5F_029B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37106,7 +37774,8 @@ void test_5F_029C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37127,7 +37796,7 @@ void test_5F_029C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37157,7 +37826,8 @@ void test_5F_029D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37178,7 +37848,7 @@ void test_5F_029D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37208,7 +37878,8 @@ void test_5F_029E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37229,7 +37900,7 @@ void test_5F_029E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37259,7 +37930,8 @@ void test_5F_029F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37280,7 +37952,7 @@ void test_5F_029F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37310,7 +37982,8 @@ void test_5F_02A0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37331,7 +38004,7 @@ void test_5F_02A0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37361,7 +38034,8 @@ void test_5F_02A1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37382,7 +38056,7 @@ void test_5F_02A1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37412,7 +38086,8 @@ void test_5F_02A2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37433,7 +38108,7 @@ void test_5F_02A2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37463,7 +38138,8 @@ void test_5F_02A3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37484,7 +38160,7 @@ void test_5F_02A3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37514,7 +38190,8 @@ void test_5F_02A4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37535,7 +38212,7 @@ void test_5F_02A4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37565,7 +38242,8 @@ void test_5F_02A5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37586,7 +38264,7 @@ void test_5F_02A5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37616,7 +38294,8 @@ void test_5F_02A6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37637,7 +38316,7 @@ void test_5F_02A6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37667,7 +38346,8 @@ void test_5F_02A7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37688,7 +38368,7 @@ void test_5F_02A7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37718,7 +38398,8 @@ void test_5F_02A8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37739,7 +38420,7 @@ void test_5F_02A8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37769,7 +38450,8 @@ void test_5F_02A9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37790,7 +38472,7 @@ void test_5F_02A9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37820,7 +38502,8 @@ void test_5F_02AA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37841,7 +38524,7 @@ void test_5F_02AA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37871,7 +38554,8 @@ void test_5F_02AB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37892,7 +38576,7 @@ void test_5F_02AB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37922,7 +38606,8 @@ void test_5F_02AC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37943,7 +38628,7 @@ void test_5F_02AC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -37973,7 +38658,8 @@ void test_5F_02AD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37994,7 +38680,7 @@ void test_5F_02AD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38024,7 +38710,8 @@ void test_5F_02AE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38045,7 +38732,7 @@ void test_5F_02AE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38075,7 +38762,8 @@ void test_5F_02AF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38096,7 +38784,7 @@ void test_5F_02AF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38126,7 +38814,8 @@ void test_5F_02B0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38147,7 +38836,7 @@ void test_5F_02B0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38177,7 +38866,8 @@ void test_5F_02B1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38198,7 +38888,7 @@ void test_5F_02B1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38228,7 +38918,8 @@ void test_5F_02B2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38249,7 +38940,7 @@ void test_5F_02B2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38279,7 +38970,8 @@ void test_5F_02B3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38300,7 +38992,7 @@ void test_5F_02B3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38330,7 +39022,8 @@ void test_5F_02B4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38351,7 +39044,7 @@ void test_5F_02B4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38381,7 +39074,8 @@ void test_5F_02B5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38402,7 +39096,7 @@ void test_5F_02B5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38432,7 +39126,8 @@ void test_5F_02B6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38453,7 +39148,7 @@ void test_5F_02B6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38483,7 +39178,8 @@ void test_5F_02B7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38504,7 +39200,7 @@ void test_5F_02B7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38534,7 +39230,8 @@ void test_5F_02B8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38555,7 +39252,7 @@ void test_5F_02B8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38585,7 +39282,8 @@ void test_5F_02B9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38606,7 +39304,7 @@ void test_5F_02B9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38636,7 +39334,8 @@ void test_5F_02BA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38657,7 +39356,7 @@ void test_5F_02BA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38687,7 +39386,8 @@ void test_5F_02BB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38708,7 +39408,7 @@ void test_5F_02BB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38738,7 +39438,8 @@ void test_5F_02BC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38759,7 +39460,7 @@ void test_5F_02BC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38789,7 +39490,8 @@ void test_5F_02BD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38810,7 +39512,7 @@ void test_5F_02BD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38840,7 +39542,8 @@ void test_5F_02BE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38861,7 +39564,7 @@ void test_5F_02BE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38891,7 +39594,8 @@ void test_5F_02BF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38912,7 +39616,7 @@ void test_5F_02BF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38942,7 +39646,8 @@ void test_5F_02C0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38963,7 +39668,7 @@ void test_5F_02C0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -38993,7 +39698,8 @@ void test_5F_02C1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39014,7 +39720,7 @@ void test_5F_02C1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39044,7 +39750,8 @@ void test_5F_02C2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39065,7 +39772,7 @@ void test_5F_02C2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39095,7 +39802,8 @@ void test_5F_02C3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39116,7 +39824,7 @@ void test_5F_02C3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39146,7 +39854,8 @@ void test_5F_02C4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39167,7 +39876,7 @@ void test_5F_02C4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39197,7 +39906,8 @@ void test_5F_02C5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39218,7 +39928,7 @@ void test_5F_02C5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39248,7 +39958,8 @@ void test_5F_02C6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39269,7 +39980,7 @@ void test_5F_02C6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39299,7 +40010,8 @@ void test_5F_02C7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39320,7 +40032,7 @@ void test_5F_02C7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39350,7 +40062,8 @@ void test_5F_02C8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39371,7 +40084,7 @@ void test_5F_02C8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39401,7 +40114,8 @@ void test_5F_02C9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39422,7 +40136,7 @@ void test_5F_02C9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39452,7 +40166,8 @@ void test_5F_02CA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39473,7 +40188,7 @@ void test_5F_02CA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39503,7 +40218,8 @@ void test_5F_02CB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39524,7 +40240,7 @@ void test_5F_02CB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39554,7 +40270,8 @@ void test_5F_02CC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39575,7 +40292,7 @@ void test_5F_02CC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39605,7 +40322,8 @@ void test_5F_02CD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39626,7 +40344,7 @@ void test_5F_02CD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39656,7 +40374,8 @@ void test_5F_02CE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39677,7 +40396,7 @@ void test_5F_02CE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39707,7 +40426,8 @@ void test_5F_02CF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39728,7 +40448,7 @@ void test_5F_02CF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39758,7 +40478,8 @@ void test_5F_02D0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39779,7 +40500,7 @@ void test_5F_02D0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39809,7 +40530,8 @@ void test_5F_02D1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39830,7 +40552,7 @@ void test_5F_02D1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39860,7 +40582,8 @@ void test_5F_02D2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39881,7 +40604,7 @@ void test_5F_02D2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39911,7 +40634,8 @@ void test_5F_02D3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39932,7 +40656,7 @@ void test_5F_02D3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -39962,7 +40686,8 @@ void test_5F_02D4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39983,7 +40708,7 @@ void test_5F_02D4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40013,7 +40738,8 @@ void test_5F_02D5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40034,7 +40760,7 @@ void test_5F_02D5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40064,7 +40790,8 @@ void test_5F_02D6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40085,7 +40812,7 @@ void test_5F_02D6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40115,7 +40842,8 @@ void test_5F_02D7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40136,7 +40864,7 @@ void test_5F_02D7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40166,7 +40894,8 @@ void test_5F_02D8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40187,7 +40916,7 @@ void test_5F_02D8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40217,7 +40946,8 @@ void test_5F_02D9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40238,7 +40968,7 @@ void test_5F_02D9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40268,7 +40998,8 @@ void test_5F_02DA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40289,7 +41020,7 @@ void test_5F_02DA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40319,7 +41050,8 @@ void test_5F_02DB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40340,7 +41072,7 @@ void test_5F_02DB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40370,7 +41102,8 @@ void test_5F_02DC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40391,7 +41124,7 @@ void test_5F_02DC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40421,7 +41154,8 @@ void test_5F_02DD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40442,7 +41176,7 @@ void test_5F_02DD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40472,7 +41206,8 @@ void test_5F_02DE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40493,7 +41228,7 @@ void test_5F_02DE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40523,7 +41258,8 @@ void test_5F_02DF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40544,7 +41280,7 @@ void test_5F_02DF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40574,7 +41310,8 @@ void test_5F_02E0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40595,7 +41332,7 @@ void test_5F_02E0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40625,7 +41362,8 @@ void test_5F_02E1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40646,7 +41384,7 @@ void test_5F_02E1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40676,7 +41414,8 @@ void test_5F_02E2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40697,7 +41436,7 @@ void test_5F_02E2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40727,7 +41466,8 @@ void test_5F_02E3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40748,7 +41488,7 @@ void test_5F_02E3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40778,7 +41518,8 @@ void test_5F_02E4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40799,7 +41540,7 @@ void test_5F_02E4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40829,7 +41570,8 @@ void test_5F_02E5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40850,7 +41592,7 @@ void test_5F_02E5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40880,7 +41622,8 @@ void test_5F_02E6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40901,7 +41644,7 @@ void test_5F_02E6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40931,7 +41674,8 @@ void test_5F_02E7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40952,7 +41696,7 @@ void test_5F_02E7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -40982,7 +41726,8 @@ void test_5F_02E8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41003,7 +41748,7 @@ void test_5F_02E8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41033,7 +41778,8 @@ void test_5F_02E9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41054,7 +41800,7 @@ void test_5F_02E9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41084,7 +41830,8 @@ void test_5F_02EA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41105,7 +41852,7 @@ void test_5F_02EA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41135,7 +41882,8 @@ void test_5F_02EB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41156,7 +41904,7 @@ void test_5F_02EB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41186,7 +41934,8 @@ void test_5F_02EC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41207,7 +41956,7 @@ void test_5F_02EC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41237,7 +41986,8 @@ void test_5F_02ED()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41258,7 +42008,7 @@ void test_5F_02ED()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41288,7 +42038,8 @@ void test_5F_02EE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41309,7 +42060,7 @@ void test_5F_02EE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41339,7 +42090,8 @@ void test_5F_02EF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41360,7 +42112,7 @@ void test_5F_02EF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41390,7 +42142,8 @@ void test_5F_02F0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41411,7 +42164,7 @@ void test_5F_02F0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41441,7 +42194,8 @@ void test_5F_02F1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41462,7 +42216,7 @@ void test_5F_02F1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41492,7 +42246,8 @@ void test_5F_02F2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41513,7 +42268,7 @@ void test_5F_02F2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41543,7 +42298,8 @@ void test_5F_02F3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41564,7 +42320,7 @@ void test_5F_02F3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41594,7 +42350,8 @@ void test_5F_02F4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41615,7 +42372,7 @@ void test_5F_02F4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41645,7 +42402,8 @@ void test_5F_02F5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41666,7 +42424,7 @@ void test_5F_02F5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41696,7 +42454,8 @@ void test_5F_02F6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41717,7 +42476,7 @@ void test_5F_02F6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41747,7 +42506,8 @@ void test_5F_02F7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41768,7 +42528,7 @@ void test_5F_02F7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41798,7 +42558,8 @@ void test_5F_02F8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41819,7 +42580,7 @@ void test_5F_02F8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41849,7 +42610,8 @@ void test_5F_02F9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41870,7 +42632,7 @@ void test_5F_02F9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41900,7 +42662,8 @@ void test_5F_02FA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41921,7 +42684,7 @@ void test_5F_02FA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -41951,7 +42714,8 @@ void test_5F_02FB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41972,7 +42736,7 @@ void test_5F_02FB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42002,7 +42766,8 @@ void test_5F_02FC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42023,7 +42788,7 @@ void test_5F_02FC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42053,7 +42818,8 @@ void test_5F_02FD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42074,7 +42840,7 @@ void test_5F_02FD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42104,7 +42870,8 @@ void test_5F_02FE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42125,7 +42892,7 @@ void test_5F_02FE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42155,7 +42922,8 @@ void test_5F_02FF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42176,7 +42944,7 @@ void test_5F_02FF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42206,7 +42974,8 @@ void test_5F_0300()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42227,7 +42996,7 @@ void test_5F_0300()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42257,7 +43026,8 @@ void test_5F_0301()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42278,7 +43048,7 @@ void test_5F_0301()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42308,7 +43078,8 @@ void test_5F_0302()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42329,7 +43100,7 @@ void test_5F_0302()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42359,7 +43130,8 @@ void test_5F_0303()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42380,7 +43152,7 @@ void test_5F_0303()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42410,7 +43182,8 @@ void test_5F_0304()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42431,7 +43204,7 @@ void test_5F_0304()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42461,7 +43234,8 @@ void test_5F_0305()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42482,7 +43256,7 @@ void test_5F_0305()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42512,7 +43286,8 @@ void test_5F_0306()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42533,7 +43308,7 @@ void test_5F_0306()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42563,7 +43338,8 @@ void test_5F_0307()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42584,7 +43360,7 @@ void test_5F_0307()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42614,7 +43390,8 @@ void test_5F_0308()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42635,7 +43412,7 @@ void test_5F_0308()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42665,7 +43442,8 @@ void test_5F_0309()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42686,7 +43464,7 @@ void test_5F_0309()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42716,7 +43494,8 @@ void test_5F_030A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42737,7 +43516,7 @@ void test_5F_030A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42767,7 +43546,8 @@ void test_5F_030B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42788,7 +43568,7 @@ void test_5F_030B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42818,7 +43598,8 @@ void test_5F_030C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42839,7 +43620,7 @@ void test_5F_030C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42869,7 +43650,8 @@ void test_5F_030D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42890,7 +43672,7 @@ void test_5F_030D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42920,7 +43702,8 @@ void test_5F_030E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42941,7 +43724,7 @@ void test_5F_030E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -42971,7 +43754,8 @@ void test_5F_030F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42992,7 +43776,7 @@ void test_5F_030F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43022,7 +43806,8 @@ void test_5F_0310()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43043,7 +43828,7 @@ void test_5F_0310()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43073,7 +43858,8 @@ void test_5F_0311()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43094,7 +43880,7 @@ void test_5F_0311()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43124,7 +43910,8 @@ void test_5F_0312()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43145,7 +43932,7 @@ void test_5F_0312()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43175,7 +43962,8 @@ void test_5F_0313()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43196,7 +43984,7 @@ void test_5F_0313()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43226,7 +44014,8 @@ void test_5F_0314()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43247,7 +44036,7 @@ void test_5F_0314()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43277,7 +44066,8 @@ void test_5F_0315()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43298,7 +44088,7 @@ void test_5F_0315()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43328,7 +44118,8 @@ void test_5F_0316()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43349,7 +44140,7 @@ void test_5F_0316()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43379,7 +44170,8 @@ void test_5F_0317()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43400,7 +44192,7 @@ void test_5F_0317()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43430,7 +44222,8 @@ void test_5F_0318()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43451,7 +44244,7 @@ void test_5F_0318()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43481,7 +44274,8 @@ void test_5F_0319()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43502,7 +44296,7 @@ void test_5F_0319()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43532,7 +44326,8 @@ void test_5F_031A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43553,7 +44348,7 @@ void test_5F_031A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43583,7 +44378,8 @@ void test_5F_031B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43604,7 +44400,7 @@ void test_5F_031B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43634,7 +44430,8 @@ void test_5F_031C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43655,7 +44452,7 @@ void test_5F_031C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43685,7 +44482,8 @@ void test_5F_031D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43706,7 +44504,7 @@ void test_5F_031D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43736,7 +44534,8 @@ void test_5F_031E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43757,7 +44556,7 @@ void test_5F_031E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43787,7 +44586,8 @@ void test_5F_031F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43808,7 +44608,7 @@ void test_5F_031F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43838,7 +44638,8 @@ void test_5F_0320()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43859,7 +44660,7 @@ void test_5F_0320()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43889,7 +44690,8 @@ void test_5F_0321()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43910,7 +44712,7 @@ void test_5F_0321()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43940,7 +44742,8 @@ void test_5F_0322()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43961,7 +44764,7 @@ void test_5F_0322()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -43991,7 +44794,8 @@ void test_5F_0323()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44012,7 +44816,7 @@ void test_5F_0323()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44042,7 +44846,8 @@ void test_5F_0324()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44063,7 +44868,7 @@ void test_5F_0324()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44093,7 +44898,8 @@ void test_5F_0325()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44114,7 +44920,7 @@ void test_5F_0325()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44144,7 +44950,8 @@ void test_5F_0326()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44165,7 +44972,7 @@ void test_5F_0326()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44195,7 +45002,8 @@ void test_5F_0327()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44216,7 +45024,7 @@ void test_5F_0327()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44246,7 +45054,8 @@ void test_5F_0328()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44267,7 +45076,7 @@ void test_5F_0328()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44297,7 +45106,8 @@ void test_5F_0329()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44318,7 +45128,7 @@ void test_5F_0329()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44348,7 +45158,8 @@ void test_5F_032A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44369,7 +45180,7 @@ void test_5F_032A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44399,7 +45210,8 @@ void test_5F_032B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44420,7 +45232,7 @@ void test_5F_032B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44450,7 +45262,8 @@ void test_5F_032C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44471,7 +45284,7 @@ void test_5F_032C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44501,7 +45314,8 @@ void test_5F_032D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44522,7 +45336,7 @@ void test_5F_032D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44552,7 +45366,8 @@ void test_5F_032E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44573,7 +45388,7 @@ void test_5F_032E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44603,7 +45418,8 @@ void test_5F_032F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44624,7 +45440,7 @@ void test_5F_032F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44654,7 +45470,8 @@ void test_5F_0330()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44675,7 +45492,7 @@ void test_5F_0330()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44705,7 +45522,8 @@ void test_5F_0331()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44726,7 +45544,7 @@ void test_5F_0331()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44756,7 +45574,8 @@ void test_5F_0332()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44777,7 +45596,7 @@ void test_5F_0332()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44807,7 +45626,8 @@ void test_5F_0333()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44828,7 +45648,7 @@ void test_5F_0333()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44858,7 +45678,8 @@ void test_5F_0334()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44879,7 +45700,7 @@ void test_5F_0334()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44909,7 +45730,8 @@ void test_5F_0335()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44930,7 +45752,7 @@ void test_5F_0335()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -44960,7 +45782,8 @@ void test_5F_0336()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44981,7 +45804,7 @@ void test_5F_0336()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45011,7 +45834,8 @@ void test_5F_0337()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45032,7 +45856,7 @@ void test_5F_0337()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45062,7 +45886,8 @@ void test_5F_0338()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45083,7 +45908,7 @@ void test_5F_0338()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45113,7 +45938,8 @@ void test_5F_0339()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45134,7 +45960,7 @@ void test_5F_0339()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45164,7 +45990,8 @@ void test_5F_033A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45185,7 +46012,7 @@ void test_5F_033A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45215,7 +46042,8 @@ void test_5F_033B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45236,7 +46064,7 @@ void test_5F_033B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45266,7 +46094,8 @@ void test_5F_033C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45287,7 +46116,7 @@ void test_5F_033C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45317,7 +46146,8 @@ void test_5F_033D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45338,7 +46168,7 @@ void test_5F_033D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45368,7 +46198,8 @@ void test_5F_033E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45389,7 +46220,7 @@ void test_5F_033E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45419,7 +46250,8 @@ void test_5F_033F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45440,7 +46272,7 @@ void test_5F_033F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45470,7 +46302,8 @@ void test_5F_0340()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45491,7 +46324,7 @@ void test_5F_0340()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45521,7 +46354,8 @@ void test_5F_0341()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45542,7 +46376,7 @@ void test_5F_0341()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45572,7 +46406,8 @@ void test_5F_0342()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45593,7 +46428,7 @@ void test_5F_0342()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45623,7 +46458,8 @@ void test_5F_0343()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45644,7 +46480,7 @@ void test_5F_0343()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45674,7 +46510,8 @@ void test_5F_0344()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45695,7 +46532,7 @@ void test_5F_0344()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45725,7 +46562,8 @@ void test_5F_0345()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45746,7 +46584,7 @@ void test_5F_0345()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45776,7 +46614,8 @@ void test_5F_0346()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45797,7 +46636,7 @@ void test_5F_0346()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45827,7 +46666,8 @@ void test_5F_0347()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45848,7 +46688,7 @@ void test_5F_0347()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45878,7 +46718,8 @@ void test_5F_0348()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45899,7 +46740,7 @@ void test_5F_0348()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45929,7 +46770,8 @@ void test_5F_0349()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45950,7 +46792,7 @@ void test_5F_0349()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -45980,7 +46822,8 @@ void test_5F_034A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46001,7 +46844,7 @@ void test_5F_034A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46031,7 +46874,8 @@ void test_5F_034B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46052,7 +46896,7 @@ void test_5F_034B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46082,7 +46926,8 @@ void test_5F_034C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46103,7 +46948,7 @@ void test_5F_034C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46133,7 +46978,8 @@ void test_5F_034D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46154,7 +47000,7 @@ void test_5F_034D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46184,7 +47030,8 @@ void test_5F_034E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46205,7 +47052,7 @@ void test_5F_034E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46235,7 +47082,8 @@ void test_5F_034F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46256,7 +47104,7 @@ void test_5F_034F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46286,7 +47134,8 @@ void test_5F_0350()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46307,7 +47156,7 @@ void test_5F_0350()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46337,7 +47186,8 @@ void test_5F_0351()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46358,7 +47208,7 @@ void test_5F_0351()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46388,7 +47238,8 @@ void test_5F_0352()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46409,7 +47260,7 @@ void test_5F_0352()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46439,7 +47290,8 @@ void test_5F_0353()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46460,7 +47312,7 @@ void test_5F_0353()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46490,7 +47342,8 @@ void test_5F_0354()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46511,7 +47364,7 @@ void test_5F_0354()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46541,7 +47394,8 @@ void test_5F_0355()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46562,7 +47416,7 @@ void test_5F_0355()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46592,7 +47446,8 @@ void test_5F_0356()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46613,7 +47468,7 @@ void test_5F_0356()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46643,7 +47498,8 @@ void test_5F_0357()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46664,7 +47520,7 @@ void test_5F_0357()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46694,7 +47550,8 @@ void test_5F_0358()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46715,7 +47572,7 @@ void test_5F_0358()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46745,7 +47602,8 @@ void test_5F_0359()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46766,7 +47624,7 @@ void test_5F_0359()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46796,7 +47654,8 @@ void test_5F_035A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46817,7 +47676,7 @@ void test_5F_035A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46847,7 +47706,8 @@ void test_5F_035B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46868,7 +47728,7 @@ void test_5F_035B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46898,7 +47758,8 @@ void test_5F_035C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46919,7 +47780,7 @@ void test_5F_035C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -46949,7 +47810,8 @@ void test_5F_035D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46970,7 +47832,7 @@ void test_5F_035D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47000,7 +47862,8 @@ void test_5F_035E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47021,7 +47884,7 @@ void test_5F_035E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47051,7 +47914,8 @@ void test_5F_035F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47072,7 +47936,7 @@ void test_5F_035F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47102,7 +47966,8 @@ void test_5F_0360()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47123,7 +47988,7 @@ void test_5F_0360()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47153,7 +48018,8 @@ void test_5F_0361()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47174,7 +48040,7 @@ void test_5F_0361()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47204,7 +48070,8 @@ void test_5F_0362()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47225,7 +48092,7 @@ void test_5F_0362()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47255,7 +48122,8 @@ void test_5F_0363()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47276,7 +48144,7 @@ void test_5F_0363()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47306,7 +48174,8 @@ void test_5F_0364()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47327,7 +48196,7 @@ void test_5F_0364()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47357,7 +48226,8 @@ void test_5F_0365()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47378,7 +48248,7 @@ void test_5F_0365()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47408,7 +48278,8 @@ void test_5F_0366()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47429,7 +48300,7 @@ void test_5F_0366()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47459,7 +48330,8 @@ void test_5F_0367()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47480,7 +48352,7 @@ void test_5F_0367()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47510,7 +48382,8 @@ void test_5F_0368()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47531,7 +48404,7 @@ void test_5F_0368()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47561,7 +48434,8 @@ void test_5F_0369()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47582,7 +48456,7 @@ void test_5F_0369()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47612,7 +48486,8 @@ void test_5F_036A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47633,7 +48508,7 @@ void test_5F_036A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47663,7 +48538,8 @@ void test_5F_036B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47684,7 +48560,7 @@ void test_5F_036B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47714,7 +48590,8 @@ void test_5F_036C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47735,7 +48612,7 @@ void test_5F_036C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47765,7 +48642,8 @@ void test_5F_036D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47786,7 +48664,7 @@ void test_5F_036D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47816,7 +48694,8 @@ void test_5F_036E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47837,7 +48716,7 @@ void test_5F_036E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47867,7 +48746,8 @@ void test_5F_036F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47888,7 +48768,7 @@ void test_5F_036F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47918,7 +48798,8 @@ void test_5F_0370()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47939,7 +48820,7 @@ void test_5F_0370()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -47969,7 +48850,8 @@ void test_5F_0371()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47990,7 +48872,7 @@ void test_5F_0371()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48020,7 +48902,8 @@ void test_5F_0372()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48041,7 +48924,7 @@ void test_5F_0372()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48071,7 +48954,8 @@ void test_5F_0373()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48092,7 +48976,7 @@ void test_5F_0373()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48122,7 +49006,8 @@ void test_5F_0374()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48143,7 +49028,7 @@ void test_5F_0374()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48173,7 +49058,8 @@ void test_5F_0375()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48194,7 +49080,7 @@ void test_5F_0375()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48224,7 +49110,8 @@ void test_5F_0376()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48245,7 +49132,7 @@ void test_5F_0376()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48275,7 +49162,8 @@ void test_5F_0377()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48296,7 +49184,7 @@ void test_5F_0377()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48326,7 +49214,8 @@ void test_5F_0378()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48347,7 +49236,7 @@ void test_5F_0378()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48377,7 +49266,8 @@ void test_5F_0379()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48398,7 +49288,7 @@ void test_5F_0379()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48428,7 +49318,8 @@ void test_5F_037A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48449,7 +49340,7 @@ void test_5F_037A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48479,7 +49370,8 @@ void test_5F_037B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48500,7 +49392,7 @@ void test_5F_037B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48530,7 +49422,8 @@ void test_5F_037C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48551,7 +49444,7 @@ void test_5F_037C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48581,7 +49474,8 @@ void test_5F_037D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48602,7 +49496,7 @@ void test_5F_037D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48632,7 +49526,8 @@ void test_5F_037E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48653,7 +49548,7 @@ void test_5F_037E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48683,7 +49578,8 @@ void test_5F_037F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48704,7 +49600,7 @@ void test_5F_037F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48734,7 +49630,8 @@ void test_5F_0380()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48755,7 +49652,7 @@ void test_5F_0380()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48785,7 +49682,8 @@ void test_5F_0381()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48806,7 +49704,7 @@ void test_5F_0381()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48836,7 +49734,8 @@ void test_5F_0382()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48857,7 +49756,7 @@ void test_5F_0382()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48887,7 +49786,8 @@ void test_5F_0383()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48908,7 +49808,7 @@ void test_5F_0383()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48938,7 +49838,8 @@ void test_5F_0384()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48959,7 +49860,7 @@ void test_5F_0384()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -48989,7 +49890,8 @@ void test_5F_0385()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49010,7 +49912,7 @@ void test_5F_0385()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49040,7 +49942,8 @@ void test_5F_0386()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49061,7 +49964,7 @@ void test_5F_0386()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49091,7 +49994,8 @@ void test_5F_0387()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49112,7 +50016,7 @@ void test_5F_0387()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49142,7 +50046,8 @@ void test_5F_0388()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49163,7 +50068,7 @@ void test_5F_0388()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49193,7 +50098,8 @@ void test_5F_0389()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49214,7 +50120,7 @@ void test_5F_0389()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49244,7 +50150,8 @@ void test_5F_038A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49265,7 +50172,7 @@ void test_5F_038A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49295,7 +50202,8 @@ void test_5F_038B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49316,7 +50224,7 @@ void test_5F_038B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49346,7 +50254,8 @@ void test_5F_038C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49367,7 +50276,7 @@ void test_5F_038C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49397,7 +50306,8 @@ void test_5F_038D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49418,7 +50328,7 @@ void test_5F_038D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49448,7 +50358,8 @@ void test_5F_038E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49469,7 +50380,7 @@ void test_5F_038E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49499,7 +50410,8 @@ void test_5F_038F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49520,7 +50432,7 @@ void test_5F_038F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49550,7 +50462,8 @@ void test_5F_0390()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49571,7 +50484,7 @@ void test_5F_0390()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49601,7 +50514,8 @@ void test_5F_0391()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49622,7 +50536,7 @@ void test_5F_0391()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49652,7 +50566,8 @@ void test_5F_0392()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49673,7 +50588,7 @@ void test_5F_0392()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49703,7 +50618,8 @@ void test_5F_0393()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49724,7 +50640,7 @@ void test_5F_0393()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49754,7 +50670,8 @@ void test_5F_0394()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49775,7 +50692,7 @@ void test_5F_0394()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49805,7 +50722,8 @@ void test_5F_0395()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49826,7 +50744,7 @@ void test_5F_0395()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49856,7 +50774,8 @@ void test_5F_0396()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49877,7 +50796,7 @@ void test_5F_0396()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49907,7 +50826,8 @@ void test_5F_0397()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49928,7 +50848,7 @@ void test_5F_0397()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -49958,7 +50878,8 @@ void test_5F_0398()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49979,7 +50900,7 @@ void test_5F_0398()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50009,7 +50930,8 @@ void test_5F_0399()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50030,7 +50952,7 @@ void test_5F_0399()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50060,7 +50982,8 @@ void test_5F_039A()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50081,7 +51004,7 @@ void test_5F_039A()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50111,7 +51034,8 @@ void test_5F_039B()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50132,7 +51056,7 @@ void test_5F_039B()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50162,7 +51086,8 @@ void test_5F_039C()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50183,7 +51108,7 @@ void test_5F_039C()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50213,7 +51138,8 @@ void test_5F_039D()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50234,7 +51160,7 @@ void test_5F_039D()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50264,7 +51190,8 @@ void test_5F_039E()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50285,7 +51212,7 @@ void test_5F_039E()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50315,7 +51242,8 @@ void test_5F_039F()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50336,7 +51264,7 @@ void test_5F_039F()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50366,7 +51294,8 @@ void test_5F_03A0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50387,7 +51316,7 @@ void test_5F_03A0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50417,7 +51346,8 @@ void test_5F_03A1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50438,7 +51368,7 @@ void test_5F_03A1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50468,7 +51398,8 @@ void test_5F_03A2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50489,7 +51420,7 @@ void test_5F_03A2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50519,7 +51450,8 @@ void test_5F_03A3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50540,7 +51472,7 @@ void test_5F_03A3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50570,7 +51502,8 @@ void test_5F_03A4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50591,7 +51524,7 @@ void test_5F_03A4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50621,7 +51554,8 @@ void test_5F_03A5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50642,7 +51576,7 @@ void test_5F_03A5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50672,7 +51606,8 @@ void test_5F_03A6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50693,7 +51628,7 @@ void test_5F_03A6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50723,7 +51658,8 @@ void test_5F_03A7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50744,7 +51680,7 @@ void test_5F_03A7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50774,7 +51710,8 @@ void test_5F_03A8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50795,7 +51732,7 @@ void test_5F_03A8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50825,7 +51762,8 @@ void test_5F_03A9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50846,7 +51784,7 @@ void test_5F_03A9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50876,7 +51814,8 @@ void test_5F_03AA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50897,7 +51836,7 @@ void test_5F_03AA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50927,7 +51866,8 @@ void test_5F_03AB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50948,7 +51888,7 @@ void test_5F_03AB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -50978,7 +51918,8 @@ void test_5F_03AC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50999,7 +51940,7 @@ void test_5F_03AC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51029,7 +51970,8 @@ void test_5F_03AD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51050,7 +51992,7 @@ void test_5F_03AD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51080,7 +52022,8 @@ void test_5F_03AE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51101,7 +52044,7 @@ void test_5F_03AE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51131,7 +52074,8 @@ void test_5F_03AF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51152,7 +52096,7 @@ void test_5F_03AF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51182,7 +52126,8 @@ void test_5F_03B0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51203,7 +52148,7 @@ void test_5F_03B0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51233,7 +52178,8 @@ void test_5F_03B1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51254,7 +52200,7 @@ void test_5F_03B1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51284,7 +52230,8 @@ void test_5F_03B2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51305,7 +52252,7 @@ void test_5F_03B2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51335,7 +52282,8 @@ void test_5F_03B3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51356,7 +52304,7 @@ void test_5F_03B3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51386,7 +52334,8 @@ void test_5F_03B4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51407,7 +52356,7 @@ void test_5F_03B4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51437,7 +52386,8 @@ void test_5F_03B5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51458,7 +52408,7 @@ void test_5F_03B5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51488,7 +52438,8 @@ void test_5F_03B6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51509,7 +52460,7 @@ void test_5F_03B6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51539,7 +52490,8 @@ void test_5F_03B7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51560,7 +52512,7 @@ void test_5F_03B7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51590,7 +52542,8 @@ void test_5F_03B8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51611,7 +52564,7 @@ void test_5F_03B8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51641,7 +52594,8 @@ void test_5F_03B9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51662,7 +52616,7 @@ void test_5F_03B9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51692,7 +52646,8 @@ void test_5F_03BA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51713,7 +52668,7 @@ void test_5F_03BA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51743,7 +52698,8 @@ void test_5F_03BB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51764,7 +52720,7 @@ void test_5F_03BB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51794,7 +52750,8 @@ void test_5F_03BC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51815,7 +52772,7 @@ void test_5F_03BC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51845,7 +52802,8 @@ void test_5F_03BD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51866,7 +52824,7 @@ void test_5F_03BD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51896,7 +52854,8 @@ void test_5F_03BE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51917,7 +52876,7 @@ void test_5F_03BE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51947,7 +52906,8 @@ void test_5F_03BF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51968,7 +52928,7 @@ void test_5F_03BF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -51998,7 +52958,8 @@ void test_5F_03C0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52019,7 +52980,7 @@ void test_5F_03C0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52049,7 +53010,8 @@ void test_5F_03C1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52070,7 +53032,7 @@ void test_5F_03C1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52100,7 +53062,8 @@ void test_5F_03C2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52121,7 +53084,7 @@ void test_5F_03C2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52151,7 +53114,8 @@ void test_5F_03C3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52172,7 +53136,7 @@ void test_5F_03C3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52202,7 +53166,8 @@ void test_5F_03C4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52223,7 +53188,7 @@ void test_5F_03C4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52253,7 +53218,8 @@ void test_5F_03C5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52274,7 +53240,7 @@ void test_5F_03C5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52304,7 +53270,8 @@ void test_5F_03C6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52325,7 +53292,7 @@ void test_5F_03C6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52355,7 +53322,8 @@ void test_5F_03C7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52376,7 +53344,7 @@ void test_5F_03C7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52406,7 +53374,8 @@ void test_5F_03C8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52427,7 +53396,7 @@ void test_5F_03C8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52457,7 +53426,8 @@ void test_5F_03C9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52478,7 +53448,7 @@ void test_5F_03C9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52508,7 +53478,8 @@ void test_5F_03CA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52529,7 +53500,7 @@ void test_5F_03CA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52559,7 +53530,8 @@ void test_5F_03CB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52580,7 +53552,7 @@ void test_5F_03CB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52610,7 +53582,8 @@ void test_5F_03CC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52631,7 +53604,7 @@ void test_5F_03CC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52661,7 +53634,8 @@ void test_5F_03CD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52682,7 +53656,7 @@ void test_5F_03CD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52712,7 +53686,8 @@ void test_5F_03CE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52733,7 +53708,7 @@ void test_5F_03CE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52763,7 +53738,8 @@ void test_5F_03CF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52784,7 +53760,7 @@ void test_5F_03CF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52814,7 +53790,8 @@ void test_5F_03D0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52835,7 +53812,7 @@ void test_5F_03D0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52865,7 +53842,8 @@ void test_5F_03D1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52886,7 +53864,7 @@ void test_5F_03D1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52916,7 +53894,8 @@ void test_5F_03D2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52937,7 +53916,7 @@ void test_5F_03D2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -52967,7 +53946,8 @@ void test_5F_03D3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52988,7 +53968,7 @@ void test_5F_03D3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53018,7 +53998,8 @@ void test_5F_03D4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53039,7 +54020,7 @@ void test_5F_03D4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53069,7 +54050,8 @@ void test_5F_03D5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53090,7 +54072,7 @@ void test_5F_03D5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53120,7 +54102,8 @@ void test_5F_03D6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53141,7 +54124,7 @@ void test_5F_03D6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53171,7 +54154,8 @@ void test_5F_03D7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53192,7 +54176,7 @@ void test_5F_03D7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53222,7 +54206,8 @@ void test_5F_03D8()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53243,7 +54228,7 @@ void test_5F_03D8()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53273,7 +54258,8 @@ void test_5F_03D9()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53294,7 +54280,7 @@ void test_5F_03D9()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53324,7 +54310,8 @@ void test_5F_03DA()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53345,7 +54332,7 @@ void test_5F_03DA()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53375,7 +54362,8 @@ void test_5F_03DB()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53396,7 +54384,7 @@ void test_5F_03DB()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53426,7 +54414,8 @@ void test_5F_03DC()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53447,7 +54436,7 @@ void test_5F_03DC()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53477,7 +54466,8 @@ void test_5F_03DD()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53498,7 +54488,7 @@ void test_5F_03DD()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53528,7 +54518,8 @@ void test_5F_03DE()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53549,7 +54540,7 @@ void test_5F_03DE()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53579,7 +54570,8 @@ void test_5F_03DF()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53600,7 +54592,7 @@ void test_5F_03DF()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53630,7 +54622,8 @@ void test_5F_03E0()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53651,7 +54644,7 @@ void test_5F_03E0()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53681,7 +54674,8 @@ void test_5F_03E1()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53702,7 +54696,7 @@ void test_5F_03E1()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53732,7 +54726,8 @@ void test_5F_03E2()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53753,7 +54748,7 @@ void test_5F_03E2()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53783,7 +54778,8 @@ void test_5F_03E3()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53804,7 +54800,7 @@ void test_5F_03E3()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53834,7 +54830,8 @@ void test_5F_03E4()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53855,7 +54852,7 @@ void test_5F_03E4()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53885,7 +54882,8 @@ void test_5F_03E5()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53906,7 +54904,7 @@ void test_5F_03E5()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53936,7 +54934,8 @@ void test_5F_03E6()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53957,7 +54956,7 @@ void test_5F_03E6()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);
@@ -53987,7 +54986,8 @@ void test_5F_03E7()
         return;
     }
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54008,7 +55008,7 @@ void test_5F_03E7()
     // Execute single step
     {
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == 4);

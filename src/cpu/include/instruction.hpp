@@ -199,6 +199,15 @@ inline LoadRegResultSet LoadTempIndirect(memory::MemoryMap& mmap) noexcept
     return result;
 }
 
+// Imm8 -> Z
+template <bool IsTempHi, const Byte Source>
+inline LoadRegResultSet LoadTempImm8(memory::MemoryMap& mmap) noexcept
+{
+    auto& t = IsTempHi ? mmap.GetTempHi() : mmap.GetTempLo();
+    t = Source;
+    return LoadRegResultSet::DefaultResultSuccess();
+}
+
 template <std::size_t Ticks_, Operation... Operations>
 class Instruction
 {

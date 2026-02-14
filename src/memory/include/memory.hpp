@@ -23,10 +23,15 @@ constexpr static const std::size_t ValidWramBankCount[]        = {2, 8};
 constexpr static std::size_t MaxBankValue                      = 0x1FF;
 constexpr static std::size_t MaxAddressValue                   = 0xFFFF;
 
-constexpr static std::size_t MaxRomBankCount                   = 0x200;
+constexpr static std::size_t MaxRomBankCount                   = MaxBankValue + 1;
 constexpr static std::size_t MaxVramBankCount                  = 2;
 constexpr static std::size_t MaxEramBankCount                  = 16;
 constexpr static std::size_t MaxWramBankCount                  = 8;
+
+constexpr static std::size_t MinRomBankCount                   = 2;
+constexpr static std::size_t MinVramBankCount                  = 1;
+constexpr static std::size_t MinEramBankCount                  = 0;
+constexpr static std::size_t MinWramBankCount                  = 2;
 
 constexpr static std::size_t RomBankSize                       = 0x4000;
 constexpr static std::size_t VramBankSize                      = 0x2000;

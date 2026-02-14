@@ -162,13 +162,13 @@ using LoadSp = Instruction<
     IncrementPC,
     LoadIRPC>;
 
-template <bool ReadFromMemory>
+template <bool ReadFromMemory, bool IsLdh>
 using LoadAIndirect = Instruction<
-    /*Ticks*/ 16,
+    /*Ticks*/ IsLdh ? 12 : 16,
     IncrementPC,
     LoadTempLoPC,
-    IncrementPC,
-    LoadTempHiPC,
+    IsLdh ? NoOp<IncrementPCResultSet> : IncrementPC,
+    IsLdh ? LoadTempImm8<true, 0xFF> : LoadTempHiPC,
     ReadFromMemory ? LoadTempLoTemp : NoOp<LoadRegResultSet>,
     ReadFromMemory ? LoadReg8TempLo<RegisterType::A> : LoadTempIndirect<RegisterType::A>,
     IncrementPC,
@@ -278,10 +278,11 @@ using Ld_A_L_Decoder            = Instantiate<InstructionDecoder<"ld a, l", 0x7D
 using Ld_A_HL_Decoder           = Instantiate<InstructionDecoder<"ld a, [hl]", 0x7E, LdMem<RegisterType::A, RegisterType::HL>>>::Type;
 using Ld_A_A_Decoder            = Instantiate<InstructionDecoder<"ld a, a", 0x7F, NOP>>::Type;
 
-// TODO: x0 (x from E to F)
+using Ldh_Indirect_A_Decoder    = Instantiate<InstructionDecoder<"ldh [nn], a", 0xE0, LoadAIndirect<false, true>>>::Type;
+using Ldh_A_Indirect_Decoder    = Instantiate<InstructionDecoder<"ldh a, [nn]", 0xF0, LoadAIndirect<true, true>>>::Type;
 // TODO: x2 (x from E to F)
 
-using Ld_Indirect_A_Decoder     = Instantiate<InstructionDecoder<"ld [nnnn], a", 0xEA, LoadAIndirect<false>>>::Type;
-using Ld_A_Indirect_Decoder     = Instantiate<InstructionDecoder<"ld a, [nnnn]", 0xFA, LoadAIndirect<true>>>::Type;
+using Ld_Indirect_A_Decoder     = Instantiate<InstructionDecoder<"ld [nnnn], a", 0xEA, LoadAIndirect<false, false>>>::Type;
+using Ld_A_Indirect_Decoder     = Instantiate<InstructionDecoder<"ld a, [nnnn]", 0xFA, LoadAIndirect<true, false>>>::Type;
 
 } // namespace pgb::cpu::instruction

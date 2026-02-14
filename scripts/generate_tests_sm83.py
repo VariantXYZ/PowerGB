@@ -95,6 +95,8 @@ SUPPORTED_OPCODES = ([
     (0x7D,"ld"), # LD A, L
     (0x7E,"ld"), # LD A, [HL]
     (0x7F,"ld"), # LD A, A
+    (0xE0,"ld"), # LDH [nn], A
+    (0xF0,"ld"), # LDH A, [nn]
     (0xEA,"ld"), # LD [nnnn], A
     (0xFA,"ld"), # LD A, [nnnn]
 ])
@@ -118,18 +120,18 @@ for info in SUPPORTED_OPCODES:
         output_fn.write(f"using namespace pgb::cpu;\n\n")
 
         output_fn.write(f"static auto registers = RegisterFile();\n")
-        output_fn.write(f"static auto mmap      = MemoryMap(registers, MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount);\n\n")
+        output_fn.write(f"static auto mmap      = MemoryMap(registers, MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);\n\n")
 
         output_fn.write(f"""
-#define WriteRegisterWord(register, value) do {{ auto result = mmap.WriteWord(register, value); TEST_ASSERT(result.IsSuccess()); }} while(0)
-#define WriteRegisterByte(register, value) do {{ auto result = mmap.WriteByte(register, value); TEST_ASSERT(result.IsSuccess()); }} while(0)
+#define WriteRegisterWord(register, value) do {{ auto result = mmap.WriteWord(register, value); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); }} while(0)
+#define WriteRegisterByte(register, value) do {{ auto result = mmap.WriteByte(register, value); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); }} while(0)
 #define WriteRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Byte>(mmap.WriteFlagByte(static_cast<const Byte&>(value))) == 0x00); }} while(0)
-#define WriteMemory(address, value) do {{ auto result = mmap.WriteByte(address, value); TEST_ASSERT(result.IsSuccess()); }} while(0)
+#define WriteMemory(address, value) do {{ auto result = mmap.WriteByte(address, value); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); }} while(0)
 
-#define CheckRegisterWord(register, value) do {{ auto result = mmap.ReadWord(register); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Word&>(result) == value); }} while(0)
-#define CheckRegisterByte(register, value) do {{ auto result = mmap.ReadByte(register); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); }} while(0)
+#define CheckRegisterWord(register, value) do {{ auto result = mmap.ReadWord(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Word&>(result) == value); }} while(0)
+#define CheckRegisterByte(register, value) do {{ auto result = mmap.ReadByte(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Byte&>(result) == value); }} while(0)
 #define CheckRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Byte>(mmap.ReadFlagByte()) == value); }} while(0)
-#define CheckMemory(address, value) do {{ auto result = mmap.ReadByte(address); TEST_ASSERT(result.IsSuccess()); TEST_ASSERT(static_cast<const Byte&>(result) == value); }} while(0)
+#define CheckMemory(address, value) do {{ auto result = mmap.ReadByte(address); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT_(static_cast<const Byte&>(result) == value, "%hhu != %hhu", static_cast<const Byte&>(result).data, value); }} while(0)
 
 static_assert(instruction::InstructionRegistryNoPrefix::Callbacks[0x{opcode:02X}] != nullptr);
 static_assert(instruction::InstructionRegistryNoPrefix::Ticks[0x{opcode:02X}] != 0);
@@ -150,7 +152,8 @@ void test_{test_name}()
         return;
     }}
     mmap.Reset();
-    TEST_ASSERT(mmap.Initialize(MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount).IsSuccess());
+    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 """)
@@ -161,7 +164,7 @@ void test_{test_name}()
                     address = test['initial'][val]
                     assert address <= 0xFFFF
                     if address >= 0xFEA0 and address <= 0xFEFF:
-                        # Don't bother with tests that right to illegal locations'
+                        # Don't bother with tests that write to illegal locations
                         skip_test = True
                     test_content.append(f"    WriteRegisterWord(RegisterType::{val.upper()}, 0x{address:04X});")
                 elif val in ("a", "b", "c", "d", "e", "h", "l", "ie"):
@@ -176,11 +179,11 @@ void test_{test_name}()
                     else:
                         test_content.append(f"    mmap.EnableIME();")
                 elif val == "ram":
-                    for ram in test['initial'][val]:
+                    for ram in sorted(test['initial'][val], key=lambda x: x[0], reverse=True):
                         address = ram[0]
                         assert address <= 0xFFFF
                         if address >= 0xFEA0 and address <= 0xFEFF:
-                            # Don't bother with tests that right to illegal locations'
+                            # Don't bother with tests that write to illegal locations
                             skip_test = True
                         test_content.append(f"    WriteMemory(0x{ram[0]:04X}, 0x{ram[1]:02X});")
 
@@ -188,7 +191,7 @@ void test_{test_name}()
     // Execute single step
     {{
          auto resultByte = mmap.ReadByte(mmap.ReadPC());
-         TEST_ASSERT(resultByte.IsSuccess());
+         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
          auto ticks = instruction::InstructionRegistryNoPrefix::Execute(static_cast<const Byte&>(resultByte), mmap);
          TEST_ASSERT(ticks == instruction::InstructionRegistryNoPrefix::Ticks[static_cast<const Byte&>(resultByte)]);
          TEST_ASSERT(ticks == {len(test['cycles']) * 4});
@@ -202,7 +205,7 @@ void test_{test_name}()
                     address = test['final'][val]
                     assert address <= 0xFFFF
                     if address >= 0xFEA0 and address <= 0xFEFF:
-                        # Don't bother with tests that right to illegal locations'
+                        # Don't bother with tests that write to illegal locations
                         skip_test = True
                     test_content.append(f"    CheckRegisterWord(RegisterType::{val.upper()}, 0x{address:04X});")
                 elif val in ("a", "b", "c", "d", "e", "h", "l", "ie"):
@@ -217,11 +220,11 @@ void test_{test_name}()
                     else:
                         test_content.append(f"    TEST_ASSERT(mmap.IMEEnabled());")
                 elif val == "ram":
-                    for ram in test['final'][val]:
+                    for ram in sorted(test['final'][val], key=lambda x: x[0], reverse=False):
                         address = ram[0]
                         assert address <= 0xFFFF
                         if address >= 0xFEA0 and address <= 0xFEFF:
-                            # Don't bother with tests that right to illegal locations'
+                            # Don't bother with tests that write to illegal locations
                             skip_test = True
                         test_content.append(f"    CheckMemory(0x{ram[0]:04X}, 0x{ram[1]:02X});")
 

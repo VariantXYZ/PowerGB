@@ -19,7 +19,7 @@ using namespace pgb::memory;
 
 // NOP + ld instructions
 // Note how we explicitly only include instruction_ld in this test
-static_assert(instruction::InstructionRegistryNoPrefix::Size == 87);
+static_assert(instruction::InstructionRegistryNoPrefix::Size == 89);
 
 static auto registers = RegisterFile();
 static auto mmap      = MemoryMap(registers, MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount);
