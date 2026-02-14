@@ -103,39 +103,6 @@ inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noex
     return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), static_cast<const Byte>(src));
 }
 
-using LoadRegisterTempLoResultSet = memory::MemoryMap::BaseRegisterAccessResultSet<void>;
-// Z -> Reg8
-template <auto Destination>
-    requires(IsRegister8Bit<Destination>)
-inline LoadRegisterTempLoResultSet LoadReg8TempLo(memory::MemoryMap& mmap) noexcept
-{
-    auto result = mmap.WriteByte(Destination, mmap.GetTempLo());
-    return result;
-}
-
-// Z -> [Reg16]
-template <auto Destination>
-    requires(IsRegister16Bit<Destination>)
-inline InstructionLoadRegisterVoidResultSet LoadReg8TempLoIndirect(memory::MemoryMap& mmap) noexcept
-{
-    auto dstAddr = mmap.ReadWord(Destination);
-    if (dstAddr.IsFailure())
-    {
-        return dstAddr;
-    }
-    const Word w = static_cast<Word>(dstAddr);
-    return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), mmap.GetTempLo());
-}
-
-// WZ -> Reg16
-template <auto Destination>
-    requires(IsRegister16Bit<Destination>)
-inline LoadRegisterTempLoResultSet LoadReg16Temp(memory::MemoryMap& mmap) noexcept
-{
-    auto result = mmap.WriteWord(Destination, mmap.GetTemp());
-    return result;
-}
-
 template <auto Destination, auto Source>
     requires(LdOperand<Destination> && LdOperand<Source>)
 using LdReg = Instruction<
@@ -186,23 +153,24 @@ using LdImm8Indirect = Instruction<
     LoadIRPC>;
 
 using LoadSp = Instruction<
-    20,
+    /*Ticks*/ 20,
     IncrementPC,
     LoadTempLoPC,
     IncrementPC,
     LoadTempHiPC,
-    LoadTempIndirectReg16<RegisterType::SP>,
+    LoadTempIndirect<RegisterType::SP>,
     IncrementPC,
     LoadIRPC>;
 
+template <bool ReadFromMemory>
 using LoadAIndirect = Instruction<
-    16,
+    /*Ticks*/ 16,
     IncrementPC,
     LoadTempLoPC,
     IncrementPC,
     LoadTempHiPC,
-    LoadTempLoTemp,
-    LoadReg8TempLo<RegisterType::A>,
+    ReadFromMemory ? LoadTempLoTemp : NoOp<LoadRegResultSet>,
+    ReadFromMemory ? LoadReg8TempLo<RegisterType::A> : LoadTempIndirect<RegisterType::A>,
     IncrementPC,
     LoadIRPC>;
 
@@ -313,7 +281,7 @@ using Ld_A_A_Decoder            = Instantiate<InstructionDecoder<"ld a, a", 0x7F
 // TODO: x0 (x from E to F)
 // TODO: x2 (x from E to F)
 
-// TODO: xA (x from E to F)
-using Ld_A_Indirect_Decoder     = Instantiate<InstructionDecoder<"ld a, [nnnn]", 0xFA, LoadAIndirect>>::Type;
+using Ld_Indirect_A_Decoder     = Instantiate<InstructionDecoder<"ld [nnnn], a", 0xEA, LoadAIndirect<false>>>::Type;
+using Ld_A_Indirect_Decoder     = Instantiate<InstructionDecoder<"ld a, [nnnn]", 0xFA, LoadAIndirect<true>>>::Type;
 
 } // namespace pgb::cpu::instruction

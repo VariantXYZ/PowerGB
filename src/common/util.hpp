@@ -46,9 +46,9 @@ consteval bool AllUniqueValues()
 {
     constexpr std::array values{Values...};
 
-    for (auto i = 0; i < values.size(); ++i)
+    for (std::size_t i = 0; i < values.size(); ++i)
     {
-        for (auto j = i + 1; j < values.size(); ++j)
+        for (std::size_t j = i + 1; j < values.size(); ++j)
         {
             if (values[i] == values[j])
             {

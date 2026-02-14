@@ -36,14 +36,19 @@ enum IncrementMode
     Decrement
 };
 
-using NoOpResultSet = common::ResultSet<void, common::ResultSuccess>;
+// Define common operaiions
+
+using IncrementPCResultSet  = memory::MemoryMap::BaseAccessResultSet<void, memory::MemoryMap::ResultRegisterOverflow>;
+using IncrementRegResultSet = memory::MemoryMap::BaseRegisterAccessResultSet<void>;
+using LoadRegResultSet      = memory::MemoryMap::BaseAccessResultSet<void, memory::MemoryMap::ResultAccessRegisterInvalidWidth>;
+
 // nop
-inline NoOpResultSet NoOp(memory::MemoryMap&) noexcept
+template <common::ResultSetType R>
+inline R NoOp(memory::MemoryMap&) noexcept
 {
-    return NoOpResultSet::DefaultResultSuccess();
+    return R::DefaultResultSuccess();
 }
 
-using IncrementPCResultSet = memory::MemoryMap::BaseAccessResultSet<void, memory::MemoryMap::ResultRegisterOverflow>;
 // PC++
 inline IncrementPCResultSet IncrementPC(memory::MemoryMap& mmap) noexcept
 {
@@ -52,7 +57,6 @@ inline IncrementPCResultSet IncrementPC(memory::MemoryMap& mmap) noexcept
 }
 
 // Reg++ or Reg--
-using IncrementRegResultSet = memory::MemoryMap::BaseRegisterAccessResultSet<void>;
 template <RegisterType T, IncrementMode Mode>
 inline IncrementRegResultSet SingleStepRegister(memory::MemoryMap& mmap) noexcept
 {
@@ -86,9 +90,8 @@ inline IncrementRegResultSet SingleStepTemp(memory::MemoryMap& mmap) noexcept
     mmap.GetTempLo() = wz.LowByte();
 }
 
-using LoadIrResultSet = memory::MemoryMap::BaseAccessResultSet<void>;
 // IR <- [PC]
-inline LoadIrResultSet LoadIRPC(memory::MemoryMap& mmap) noexcept
+inline LoadRegResultSet LoadIRPC(memory::MemoryMap& mmap) noexcept
 {
     auto pc     = mmap.ReadPC();
     auto result = mmap.ReadByte(pc);
@@ -99,9 +102,8 @@ inline LoadIrResultSet LoadIRPC(memory::MemoryMap& mmap) noexcept
     return result;
 }
 
-using LoadTempResultSet = memory::MemoryMap::BaseAccessResultSet<void>;
 // Z <- [PC];
-inline LoadTempResultSet LoadTempLoPC(memory::MemoryMap& mmap) noexcept
+inline LoadRegResultSet LoadTempLoPC(memory::MemoryMap& mmap) noexcept
 {
     auto pc     = mmap.ReadPC();
     auto result = mmap.ReadByte(pc);
@@ -113,7 +115,7 @@ inline LoadTempResultSet LoadTempLoPC(memory::MemoryMap& mmap) noexcept
     return result;
 }
 // W <- [PC];
-inline LoadTempResultSet LoadTempHiPC(memory::MemoryMap& mmap) noexcept
+inline LoadRegResultSet LoadTempHiPC(memory::MemoryMap& mmap) noexcept
 {
     auto pc     = mmap.ReadPC();
     auto result = mmap.ReadByte(pc);
@@ -125,7 +127,7 @@ inline LoadTempResultSet LoadTempHiPC(memory::MemoryMap& mmap) noexcept
     return result;
 }
 // Z <- [WZ];
-inline LoadTempResultSet LoadTempLoTemp(memory::MemoryMap& mmap) noexcept
+inline LoadRegResultSet LoadTempLoTemp(memory::MemoryMap& mmap) noexcept
 {
     auto wz     = mmap.GetTemp();
     auto result = mmap.ReadByte(wz);
@@ -137,16 +139,62 @@ inline LoadTempResultSet LoadTempLoTemp(memory::MemoryMap& mmap) noexcept
     return result;
 }
 
-using LoadReg16ResultSet = memory::MemoryMap::BaseAccessResultSet<void, memory::MemoryMap::ResultAccessRegisterInvalidWidth>;
+// Z -> Reg8
+template <auto Destination>
+    requires(IsRegister8Bit<Destination>)
+inline LoadRegResultSet LoadReg8TempLo(memory::MemoryMap& mmap) noexcept
+{
+    auto result = mmap.WriteByte(Destination, mmap.GetTempLo());
+    return result;
+}
+
+// Z -> [Reg16]
+template <auto Destination>
+    requires(IsRegister16Bit<Destination>)
+inline LoadRegResultSet LoadReg8TempLoIndirect(memory::MemoryMap& mmap) noexcept
+{
+    auto dstAddr = mmap.ReadWord(Destination);
+    if (dstAddr.IsFailure())
+    {
+        return dstAddr;
+    }
+    const Word w = static_cast<Word>(dstAddr);
+    return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), mmap.GetTempLo());
+}
+
+// WZ -> Reg16
+template <auto Destination>
+    requires(IsRegister16Bit<Destination>)
+inline LoadRegResultSet LoadReg16Temp(memory::MemoryMap& mmap) noexcept
+{
+    auto result = mmap.WriteWord(Destination, mmap.GetTemp());
+    return result;
+}
+
 // [WZ] <- Reg16 (2 bytes)
 template <RegisterType Source>
-inline LoadReg16ResultSet LoadTempIndirectReg16(memory::MemoryMap& mmap) noexcept
+    requires(IsRegister16Bit<Source>)
+inline LoadRegResultSet LoadTempIndirect(memory::MemoryMap& mmap) noexcept
 {
     auto wz     = mmap.GetTemp();
     auto result = mmap.ReadWord(Source);
     if (result.IsSuccess())
     {
         return mmap.WriteWordLE(wz, result);
+    }
+    return result;
+}
+
+// [WZ] <- Reg8
+template <RegisterType Source>
+    requires(IsRegister8Bit<Source>)
+inline LoadRegResultSet LoadTempIndirect(memory::MemoryMap& mmap) noexcept
+{
+    auto wz     = mmap.GetTemp();
+    auto result = mmap.ReadByte(Source);
+    if (result.IsSuccess())
+    {
+        return mmap.WriteByte(wz, result);
     }
     return result;
 }
