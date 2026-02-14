@@ -204,8 +204,22 @@ template <bool IsTempHi, const Byte Source>
 inline LoadRegResultSet LoadTempImm8(memory::MemoryMap& mmap) noexcept
 {
     auto& t = IsTempHi ? mmap.GetTempHi() : mmap.GetTempLo();
-    t = Source;
+    t       = Source;
     return LoadRegResultSet::DefaultResultSuccess();
+}
+
+// Reg8 -> Temp
+template <bool IsTempHi, RegisterType Source>
+    requires(IsRegister8Bit<Source>)
+inline LoadRegResultSet LoadTempReg8(memory::MemoryMap& mmap) noexcept
+{
+    auto& t = IsTempHi ? mmap.GetTempHi() : mmap.GetTempLo();
+    auto  r = mmap.ReadByte(Source);
+    if (r.IsSuccess())
+    {
+        t = static_cast<const Byte&>(r);
+    }
+    return r;
 }
 
 template <std::size_t Ticks_, Operation... Operations>

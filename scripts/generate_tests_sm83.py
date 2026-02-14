@@ -97,6 +97,8 @@ SUPPORTED_OPCODES = ([
     (0x7F,"ld"), # LD A, A
     (0xE0,"ld"), # LDH [nn], A
     (0xF0,"ld"), # LDH A, [nn]
+    (0xE2,"ld"), # LDH [C], A
+    (0xF2,"ld"), # LDH A, [C]
     (0xEA,"ld"), # LD [nnnn], A
     (0xFA,"ld"), # LD A, [nnnn]
 ])

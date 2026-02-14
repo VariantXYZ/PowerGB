@@ -174,6 +174,17 @@ using LoadAIndirect = Instruction<
     IncrementPC,
     LoadIRPC>;
 
+template <bool ReadFromMemory, RegisterType Source>
+    requires(IsRegister8Bit<Source>)
+using LoadHAIndirectReg = Instruction <
+                          8,
+      LoadTempImm8<true, 0xFF>,
+      LoadTempReg8<false, Source>,
+      ReadFromMemory ? LoadTempLoTemp : NoOp<LoadRegResultSet>,
+      ReadFromMemory ? LoadReg8TempLo<RegisterType::A> : LoadTempIndirect<RegisterType::A>,
+      IncrementPC,
+      LoadIRPC > ;
+
 // x1 (x from 0 to 3)
 using Ld_BC_Imm_Decoder         = Instantiate<InstructionDecoder<"ld bc, nnnn", 0x01, LdImm16<RegisterType::BC>>>::Type;
 using Ld_DE_Imm_Decoder         = Instantiate<InstructionDecoder<"ld de, nnnn", 0x11, LdImm16<RegisterType::DE>>>::Type;
@@ -280,7 +291,9 @@ using Ld_A_A_Decoder            = Instantiate<InstructionDecoder<"ld a, a", 0x7F
 
 using Ldh_Indirect_A_Decoder    = Instantiate<InstructionDecoder<"ldh [nn], a", 0xE0, LoadAIndirect<false, true>>>::Type;
 using Ldh_A_Indirect_Decoder    = Instantiate<InstructionDecoder<"ldh a, [nn]", 0xF0, LoadAIndirect<true, true>>>::Type;
-// TODO: x2 (x from E to F)
+
+using Ldh_C_A_Decoder           = Instantiate<InstructionDecoder<"ldh [C], a", 0xE2, LoadHAIndirectReg<false, RegisterType::C>>>::Type;
+using Ldh_A_C_Decoder           = Instantiate<InstructionDecoder<"ldh a, [C]", 0xF2, LoadHAIndirectReg<true, RegisterType::C>>>::Type;
 
 using Ld_Indirect_A_Decoder     = Instantiate<InstructionDecoder<"ld [nnnn], a", 0xEA, LoadAIndirect<false, false>>>::Type;
 using Ld_A_Indirect_Decoder     = Instantiate<InstructionDecoder<"ld a, [nnnn]", 0xFA, LoadAIndirect<true, false>>>::Type;
