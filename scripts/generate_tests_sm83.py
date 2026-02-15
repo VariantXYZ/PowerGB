@@ -99,6 +99,7 @@ SUPPORTED_OPCODES = ([
     (0xF0,"ld"), # LDH A, [nn]
     (0xE2,"ld"), # LDH [C], A
     (0xF2,"ld"), # LDH A, [C]
+    (0xF9,"ld"), # LD SP, HL
     (0xEA,"ld"), # LD [nnnn], A
     (0xFA,"ld"), # LD A, [nnnn]
 ])

@@ -103,10 +103,10 @@ inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noex
     return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), static_cast<const Byte>(src));
 }
 
-template <auto Destination, auto Source>
+template <auto Destination, auto Source, std::size_t Ticks = 4>
     requires(LdOperand<Destination> && LdOperand<Source>)
 using LdReg = Instruction<
-    /*Ticks*/ 4,
+    /*Ticks*/ Ticks,
     Load<Destination, Source>,
     IncrementPC,
     LoadIRPC>;
@@ -294,6 +294,8 @@ using Ldh_A_Indirect_Decoder    = Instantiate<InstructionDecoder<"ldh a, [nn]", 
 
 using Ldh_C_A_Decoder           = Instantiate<InstructionDecoder<"ldh [C], a", 0xE2, LoadHAIndirectReg<false, RegisterType::C>>>::Type;
 using Ldh_A_C_Decoder           = Instantiate<InstructionDecoder<"ldh a, [C]", 0xF2, LoadHAIndirectReg<true, RegisterType::C>>>::Type;
+
+using Ld_SP_HL_Decoder          = Instantiate<InstructionDecoder<"ld sp, hl", 0xF9, LdReg<RegisterType::SP, RegisterType::HL, 8>>>::Type;
 
 using Ld_Indirect_A_Decoder     = Instantiate<InstructionDecoder<"ld [nnnn], a", 0xEA, LoadAIndirect<false, false>>>::Type;
 using Ld_A_Indirect_Decoder     = Instantiate<InstructionDecoder<"ld a, [nnnn]", 0xFA, LoadAIndirect<true, false>>>::Type;
