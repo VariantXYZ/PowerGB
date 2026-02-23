@@ -43,6 +43,60 @@ concept IsRegister8Bit = R < AF;
 template <RegisterType R>
 concept IsRegister16Bit = !IsRegister8Bit<R>;
 
+template <RegisterType T, bool IsHigh>
+    requires(IsRegister16Bit<T>)
+inline constexpr RegisterType GetRegisterComponent()
+{
+    static_assert(T == RegisterType::AF || T == RegisterType::BC || T == RegisterType::DE || T == RegisterType::HL);
+    switch (T)
+    {
+    case RegisterType::AF:
+    {
+        if constexpr (IsHigh)
+        {
+            return RegisterType::A;
+        }
+        else
+        {
+            return RegisterType::F;
+        }
+    }
+    case RegisterType::BC:
+    {
+        if constexpr (IsHigh)
+        {
+            return RegisterType::B;
+        }
+        else
+        {
+            return RegisterType::C;
+        }
+    }
+    case RegisterType::DE:
+    {
+        if constexpr (IsHigh)
+        {
+            return RegisterType::D;
+        }
+        else
+        {
+            return RegisterType::E;
+        }
+    }
+    case RegisterType::HL:
+    {
+        if constexpr (IsHigh)
+        {
+            return RegisterType::H;
+        }
+        else
+        {
+            return RegisterType::L;
+        }
+    }
+    }
+}
+
 class RegisterFile
 {
 private:
@@ -102,8 +156,8 @@ protected:
     constexpr const bool& IME() const { return _IME; }
 
     // Temporary reference
-    constexpr Byte& W() { return _WZ[0]; }
-    constexpr Byte& Z() { return _WZ[1]; }
+    constexpr Byte&      W() { return _WZ[0]; }
+    constexpr Byte&      Z() { return _WZ[1]; }
     constexpr const Word WZ() const { return _WZ.Word<0>(); }
 
 public:

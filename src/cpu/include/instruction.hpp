@@ -58,6 +58,7 @@ inline IncrementPCResultSet IncrementPC(memory::MemoryMap& mmap) noexcept
 
 // Reg++ or Reg--
 template <RegisterType T, IncrementMode Mode>
+    requires(IsRegister16Bit<T>)
 inline IncrementRegResultSet SingleStepRegister(memory::MemoryMap& mmap) noexcept
 {
     if (Mode == IncrementMode::None)
@@ -70,6 +71,25 @@ inline IncrementRegResultSet SingleStepRegister(memory::MemoryMap& mmap) noexcep
     {
         auto value     = static_cast<const Word>(getResult) + (Mode == IncrementMode::Increment ? 1 : -1);
         auto setResult = mmap.WriteWord(T, value);
+        return setResult;
+    }
+    return getResult;
+}
+
+template <RegisterType T, IncrementMode Mode>
+    requires(IsRegister8Bit<T>)
+inline IncrementRegResultSet SingleStepRegister(memory::MemoryMap& mmap) noexcept
+{
+    if (Mode == IncrementMode::None)
+    {
+        return IncrementRegResultSet::DefaultResultSuccess();
+    }
+
+    auto getResult = mmap.ReadByte(T);
+    if (getResult.IsSuccess())
+    {
+        auto value     = static_cast<const Byte>(getResult) + (Mode == IncrementMode::Increment ? 1 : -1);
+        auto setResult = mmap.WriteByte(T, value);
         return setResult;
     }
     return getResult;
