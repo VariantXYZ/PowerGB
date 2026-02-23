@@ -95,13 +95,17 @@ SUPPORTED_OPCODES = ([
     (0x7D,"ld"), # LD A, L
     (0x7E,"ld"), # LD A, [HL]
     (0x7F,"ld"), # LD A, A
+    (0xC1,"ld"), # POP BC
     (0xC5,"ld"), # PUSH BC
+    (0xD1,"ld"), # POP DE
     (0xD5,"ld"), # PUSH DE
     (0xE0,"ld"), # LDH [nn], A
+    (0xE1,"ld"), # POP HL
     (0xE5,"ld"), # PUSH HL
     (0xF0,"ld"), # LDH A, [nn]
     (0xE2,"ld"), # LDH [C], A
     (0xF2,"ld"), # LDH A, [C]
+    (0xF1,"ld"), # POP AF
     (0xF5,"ld"), # PUSH AF
     (0xF9,"ld"), # LD SP, HL
     (0xEA,"ld"), # LD [nnnn], A

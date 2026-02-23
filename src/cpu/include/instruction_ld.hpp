@@ -62,7 +62,7 @@ inline constexpr InstructionLoadRegister16ResultSet Load(MemoryMap& mmap) noexce
 
 // [Reg16] -> 8
 template <auto Destination, auto Source>
-    requires(IsRegister8Bit<Destination> && IsRegister16Bit<Source>)
+    requires(IsRegister8Bit<Destination> && IsRegister16Bit<Source> && Destination != RegisterType::F)
 inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
 {
     auto src = mmap.ReadWord(Source);
@@ -80,6 +80,25 @@ inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noex
     }
 
     return mmap.WriteByte(Destination, static_cast<const Byte>(result));
+}
+
+template <auto Destination, auto Source>
+    requires(IsRegister8Bit<Destination> && IsRegister16Bit<Source> && Destination == RegisterType::F)
+inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
+{
+    auto src = mmap.ReadWord(Source);
+    if (src.IsFailure())
+    {
+        return src;
+    }
+    const Word address = static_cast<Word>(src);
+    auto       result  = mmap.ReadByte(static_cast<uint_fast16_t>(address));
+    if (result.IsFailure())
+    {
+        return result;
+    }
+    mmap.WriteFlagByte(static_cast<const Byte>(result));
+    return InstructionLoadRegisterVoidResultSet::DefaultResultSuccess();
 }
 
 // 8 -> [Reg16]
@@ -104,7 +123,7 @@ inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noex
 }
 
 template <auto Destination, auto Source>
-    requires(Source == RegisterType::F)
+    requires(IsRegister8Bit<Source> && IsRegister16Bit<Destination> && Source == RegisterType::F)
 inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
 {
     auto src     = mmap.ReadFlagByte();
@@ -207,6 +226,17 @@ using PushReg = Instruction<
     Load<RegisterType::SP, GetRegisterComponent<Source, true>()>,
     SingleStepRegister<RegisterType::SP, IncrementMode::Decrement>,
     Load<RegisterType::SP, GetRegisterComponent<Source, false>()>,
+    IncrementPC,
+    LoadIRPC>;
+
+template <RegisterType Destination>
+    requires(IsRegister16Bit<Destination>)
+using PopReg = Instruction<
+    /*Ticks*/ 12,
+    Load<GetRegisterComponent<Destination, false>(), RegisterType::SP>,
+    SingleStepRegister<RegisterType::SP, IncrementMode::Increment>,
+    Load<GetRegisterComponent<Destination, true>(), RegisterType::SP>,
+    SingleStepRegister<RegisterType::SP, IncrementMode::Increment>,
     IncrementPC,
     LoadIRPC>;
 
@@ -314,11 +344,15 @@ using Ld_A_L_Decoder            = Instantiate<InstructionDecoder<"ld a, l", 0x7D
 using Ld_A_HL_Decoder           = Instantiate<InstructionDecoder<"ld a, [hl]", 0x7E, LdMem<RegisterType::A, RegisterType::HL>>>::Type;
 using Ld_A_A_Decoder            = Instantiate<InstructionDecoder<"ld a, a", 0x7F, NOP>>::Type;
 
+using Pop_BC_Decoder            = Instantiate<InstructionDecoder<"pop bc", 0xC1, PopReg<RegisterType::BC>>>::Type;
 using Push_BC_Decoder           = Instantiate<InstructionDecoder<"push bc", 0xC5, PushReg<RegisterType::BC>>>::Type;
+using Pop_DE_Decoder            = Instantiate<InstructionDecoder<"pop de", 0xD1, PopReg<RegisterType::DE>>>::Type;
 using Push_DE_Decoder           = Instantiate<InstructionDecoder<"push de", 0xD5, PushReg<RegisterType::DE>>>::Type;
 using Ldh_Indirect_A_Decoder    = Instantiate<InstructionDecoder<"ldh [nn], a", 0xE0, LoadAIndirect<false, true>>>::Type;
+using Pop_HL_Decoder            = Instantiate<InstructionDecoder<"pop hl", 0xE1, PopReg<RegisterType::HL>>>::Type;
 using Push_HL_Decoder           = Instantiate<InstructionDecoder<"push hl", 0xE5, PushReg<RegisterType::HL>>>::Type;
 using Ldh_A_Indirect_Decoder    = Instantiate<InstructionDecoder<"ldh a, [nn]", 0xF0, LoadAIndirect<true, true>>>::Type;
+using Pop_AF_Decoder            = Instantiate<InstructionDecoder<"pop af", 0xF1, PopReg<RegisterType::AF>>>::Type;
 using Push_AF_Decoder           = Instantiate<InstructionDecoder<"push af", 0xF5, PushReg<RegisterType::AF>>>::Type;
 
 using Ldh_C_A_Decoder           = Instantiate<InstructionDecoder<"ldh [C], a", 0xE2, LoadHAIndirectReg<false, RegisterType::C>>>::Type;
