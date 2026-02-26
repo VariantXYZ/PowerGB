@@ -22,19 +22,19 @@ using namespace pgb;
 using namespace pgb::memory;
 
 using Op0ResultSet = memory::MemoryMap::AccessResultSet;
-Op0ResultSet op0(memory::MemoryMap& mmap)
+Op0ResultSet op0(memory::MemoryMap& mmap) noexcept
 {
     return mmap.WriteByte({0, 0xFFFF}, 0xFF);
 }
 
 using Op1ResultSet = common::ResultSet<void, common::ResultSuccess, common::ResultFailure>;
-constexpr Op1ResultSet op1(memory::MemoryMap&)
+constexpr Op1ResultSet op1(memory::MemoryMap&) noexcept
 {
     return Op1ResultSet::DefaultResultSuccess();
 }
 
 using Op2ResultSet = common::ResultSet<void, common::ResultSuccess, common::ResultFailure>;
-constexpr Op1ResultSet op2(memory::MemoryMap&)
+constexpr Op1ResultSet op2(memory::MemoryMap&) noexcept
 {
     return Op1ResultSet::DefaultResultFailure();
 }

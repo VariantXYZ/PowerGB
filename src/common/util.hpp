@@ -43,6 +43,7 @@ concept types_are_unique = (types_are_unique_v<T...>);
 
 template <auto... Values>
 consteval bool AllUniqueValues()
+    requires(sizeof...(Values) > 0)
 {
     constexpr std::array values{Values...};
 
@@ -56,6 +57,13 @@ consteval bool AllUniqueValues()
             }
         }
     }
+    return true;
+}
+
+template <auto... Values>
+consteval bool AllUniqueValues()
+    requires(sizeof...(Values) == 0)
+{
     return true;
 }
 

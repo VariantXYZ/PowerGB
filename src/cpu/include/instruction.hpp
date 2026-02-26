@@ -9,21 +9,22 @@
 
 namespace pgb::cpu
 {
+
 // An "instruction" is a set operations on state that takes some fixed duration
 // Here, it is defined as:
 // * A set of 'Operands'
 // * A set of 'Operations' (one per tick) that may affect the memory state
-
 template <common::ResultSetType RS>
 class Operation
 {
 public:
-    using FunctionType = RS (*)(memory::MemoryMap&);
+    using ResultSetType = RS;
+    using FunctionType  = ResultSetType (*)(memory::MemoryMap&) noexcept;
     FunctionType _fn;
 
-    constexpr Operation(FunctionType fn) noexcept : _fn(fn) {}
+    consteval inline Operation(FunctionType fn) noexcept : _fn(fn) {}
 
-    constexpr RS operator()(memory::MemoryMap& mmap) const noexcept
+    constexpr inline RS operator()(memory::MemoryMap& mmap) const noexcept
     {
         return _fn(mmap);
     }
@@ -251,6 +252,8 @@ private:
                                                        { return Operations(memory).IsSuccess(); }...};
 
 public:
+    // An easy way to check lengths is to just see how many times we call IncrementPC (just use its type to figure it out)
+    static constexpr std::size_t Length = ((std::is_same_v<typename decltype(Operations)::ResultSetType, IncrementPCResultSet> ? 1 : 0) + ...);
     static constexpr std::size_t Ticks = Ticks_;
     Instruction()                      = delete;
 

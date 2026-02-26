@@ -111,6 +111,9 @@ run_test_%: $(BUILD_DIR)/test/%
 generate_tests_sm83: $(TEST_DIR_SM83)
 	$(PYTHON) $(SCRIPTS_DIR)/generate_tests_sm83.py "$(TEST_DIR)/" "$(SCRIPTS_DIR)/sm83"
 
+generate_tests_length:
+	$(PYTHON) $(SCRIPTS_DIR)/generate_tests_length.py "$(TEST_DIR)/instruction_length.cpp"
+
 # Link executables
 # Dependency is the same named object and all libraries
 .SECONDEXPANSION:

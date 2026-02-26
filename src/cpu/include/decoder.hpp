@@ -56,6 +56,16 @@ struct DecoderHelper<registry::List<Decoders...>>
 
         return ticks;
     }
+
+    static constexpr auto CreateLengthsMap() noexcept
+    {
+        // Initialize all elements to 0 by default
+        std::array<std::size_t, Size> lengths{0};
+
+        ((lengths[Decoders::Opcode] = Decoders::Length), ...);
+
+        return lengths;
+    }
 };
 
 // Tags to group instructions by opcode prefix
@@ -68,6 +78,7 @@ struct InstructionRegistry
 {
     static constexpr auto Callbacks = detail::DecoderHelper<decltype(registry::Registry<RegistryType>())>::CreateCallbackMap();
     static constexpr auto Ticks     = detail::DecoderHelper<decltype(registry::Registry<RegistryType>())>::CreateTicksMap();
+    static constexpr auto Lengths   = detail::DecoderHelper<decltype(registry::Registry<RegistryType>())>::CreateLengthsMap();
     static constexpr auto Size      = decltype(registry::Registry<RegistryType>())::Size;
 
     static constexpr std::size_t Execute(std::uint_fast8_t opCode, memory::MemoryMap& mmap) noexcept
@@ -87,6 +98,7 @@ public:
     constexpr static auto Instruction = Name.value;
     constexpr static auto Opcode      = OpCode;
     constexpr static auto Ticks       = InstructionHandler::Ticks;
+    constexpr static auto Length      = InstructionHandler::Length;
 
     constexpr static std::size_t Execute(memory::MemoryMap& mmap) noexcept
     {

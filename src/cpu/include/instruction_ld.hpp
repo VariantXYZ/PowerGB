@@ -195,13 +195,24 @@ using LoadSp = Instruction<
     IncrementPC,
     LoadIRPC>;
 
-template <bool ReadFromMemory, bool IsLdh>
+template <bool ReadFromMemory>
 using LoadAIndirect = Instruction<
-    /*Ticks*/ IsLdh ? 12 : 16,
+    /*Ticks*/ 16,
     IncrementPC,
     LoadTempLoPC,
-    IsLdh ? NoOp<IncrementPCResultSet> : IncrementPC,
-    IsLdh ? LoadTempImm8<true, 0xFF> : LoadTempHiPC,
+    IncrementPC,
+    LoadTempHiPC,
+    ReadFromMemory ? LoadTempLoTemp : NoOp<LoadRegResultSet>,
+    ReadFromMemory ? LoadReg8TempLo<RegisterType::A> : LoadTempIndirect<RegisterType::A>,
+    IncrementPC,
+    LoadIRPC>;
+
+template <bool ReadFromMemory>
+using LoadHAIndirect = Instruction<
+    /*Ticks*/ 12,
+    IncrementPC,
+    LoadTempLoPC,
+    LoadTempImm8<true, 0xFF>,
     ReadFromMemory ? LoadTempLoTemp : NoOp<LoadRegResultSet>,
     ReadFromMemory ? LoadReg8TempLo<RegisterType::A> : LoadTempIndirect<RegisterType::A>,
     IncrementPC,
@@ -348,10 +359,10 @@ using Pop_BC_Decoder            = Instantiate<InstructionDecoder<"pop bc", 0xC1,
 using Push_BC_Decoder           = Instantiate<InstructionDecoder<"push bc", 0xC5, PushReg<RegisterType::BC>>>::Type;
 using Pop_DE_Decoder            = Instantiate<InstructionDecoder<"pop de", 0xD1, PopReg<RegisterType::DE>>>::Type;
 using Push_DE_Decoder           = Instantiate<InstructionDecoder<"push de", 0xD5, PushReg<RegisterType::DE>>>::Type;
-using Ldh_Indirect_A_Decoder    = Instantiate<InstructionDecoder<"ldh [nn], a", 0xE0, LoadAIndirect<false, true>>>::Type;
+using Ldh_Indirect_A_Decoder    = Instantiate<InstructionDecoder<"ldh [nn], a", 0xE0, LoadHAIndirect<false>>>::Type;
 using Pop_HL_Decoder            = Instantiate<InstructionDecoder<"pop hl", 0xE1, PopReg<RegisterType::HL>>>::Type;
 using Push_HL_Decoder           = Instantiate<InstructionDecoder<"push hl", 0xE5, PushReg<RegisterType::HL>>>::Type;
-using Ldh_A_Indirect_Decoder    = Instantiate<InstructionDecoder<"ldh a, [nn]", 0xF0, LoadAIndirect<true, true>>>::Type;
+using Ldh_A_Indirect_Decoder    = Instantiate<InstructionDecoder<"ldh a, [nn]", 0xF0, LoadHAIndirect<true>>>::Type;
 using Pop_AF_Decoder            = Instantiate<InstructionDecoder<"pop af", 0xF1, PopReg<RegisterType::AF>>>::Type;
 using Push_AF_Decoder           = Instantiate<InstructionDecoder<"push af", 0xF5, PushReg<RegisterType::AF>>>::Type;
 
@@ -360,7 +371,7 @@ using Ldh_A_C_Decoder           = Instantiate<InstructionDecoder<"ldh a, [C]", 0
 
 using Ld_SP_HL_Decoder          = Instantiate<InstructionDecoder<"ld sp, hl", 0xF9, LdReg<RegisterType::SP, RegisterType::HL, 8>>>::Type;
 
-using Ld_Indirect_A_Decoder     = Instantiate<InstructionDecoder<"ld [nnnn], a", 0xEA, LoadAIndirect<false, false>>>::Type;
-using Ld_A_Indirect_Decoder     = Instantiate<InstructionDecoder<"ld a, [nnnn]", 0xFA, LoadAIndirect<true, false>>>::Type;
+using Ld_Indirect_A_Decoder     = Instantiate<InstructionDecoder<"ld [nnnn], a", 0xEA, LoadAIndirect<false>>>::Type;
+using Ld_A_Indirect_Decoder     = Instantiate<InstructionDecoder<"ld a, [nnnn]", 0xFA, LoadAIndirect<true>>>::Type;
 
 } // namespace pgb::cpu::instruction
