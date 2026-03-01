@@ -95,6 +95,7 @@ SUPPORTED_OPCODES = ([
     (0x7D,"ld"), # LD A, L
     (0x7E,"ld"), # LD A, [HL]
     (0x7F,"ld"), # LD A, A
+    (0x80,"alu"), # ADD A, B
     (0xC1,"ld"), # POP BC
     (0xC5,"ld"), # PUSH BC
     (0xD1,"ld"), # POP DE
@@ -141,7 +142,7 @@ for info in SUPPORTED_OPCODES:
 
 #define CheckRegisterWord(register, value) do {{ auto result = mmap.ReadWord(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Word&>(result) == value); }} while(0)
 #define CheckRegisterByte(register, value) do {{ auto result = mmap.ReadByte(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Byte&>(result) == value); }} while(0)
-#define CheckRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Byte>(mmap.ReadFlagByte()) == value); }} while(0)
+#define CheckRegisterFlag(value) do {{ TEST_ASSERT_(static_cast<const Byte>(mmap.ReadFlagByte()) == value, "0x%hhx != 0x%hhx", static_cast<const Byte>(mmap.ReadFlagByte()).data, value); }} while(0)
 #define CheckMemory(address, value) do {{ auto result = mmap.ReadByte(address); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT_(static_cast<const Byte&>(result) == value, "%hhu != %hhu", static_cast<const Byte&>(result).data, value); }} while(0)
 
 static_assert(instruction::InstructionRegistryNoPrefix::Callbacks[0x{opcode:02X}] != nullptr);

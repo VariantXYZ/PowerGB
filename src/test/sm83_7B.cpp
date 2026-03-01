@@ -20,7 +20,7 @@ static auto mmap      = MemoryMap(registers, MinRomBankCount, MinVramBankCount, 
 
 #define CheckRegisterWord(register, value) do { auto result = mmap.ReadWord(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Word&>(result) == value); } while(0)
 #define CheckRegisterByte(register, value) do { auto result = mmap.ReadByte(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Byte&>(result) == value); } while(0)
-#define CheckRegisterFlag(value) do { TEST_ASSERT(static_cast<const Byte>(mmap.ReadFlagByte()) == value); } while(0)
+#define CheckRegisterFlag(value) do { TEST_ASSERT_(static_cast<const Byte>(mmap.ReadFlagByte()) == value, "%hhx != %hhx", static_cast<const Byte>(mmap.ReadFlagByte()).data, value); } while(0)
 #define CheckMemory(address, value) do { auto result = mmap.ReadByte(address); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT_(static_cast<const Byte&>(result) == value, "%hhu != %hhu", static_cast<const Byte&>(result).data, value); } while(0)
 
 static_assert(instruction::InstructionRegistryNoPrefix::Callbacks[0x7B] != nullptr);
