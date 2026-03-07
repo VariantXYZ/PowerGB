@@ -96,6 +96,19 @@ SUPPORTED_OPCODES = ([
     (0x7E,"ld"), # LD A, [HL]
     (0x7F,"ld"), # LD A, A
     (0x80,"alu"), # ADD A, B
+    (0x81,"alu"), # ADD A, C
+    (0x82,"alu"), # ADD A, D
+    (0x83,"alu"), # ADD A, E
+    (0x84,"alu"), # ADD A, H
+    (0x85,"alu"), # ADD A, L
+    (0x86,"alu"), # ADD A, [HL]
+    (0x90,"alu"), # SUB A, B
+    (0x91,"alu"), # SUB A, C
+    (0x92,"alu"), # SUB A, D
+    (0x93,"alu"), # SUB A, E
+    (0x94,"alu"), # SUB A, H
+    (0x95,"alu"), # SUB A, L
+    (0x96,"alu"), # SUB A, [HL]
     (0xC1,"ld"), # POP BC
     (0xC5,"ld"), # PUSH BC
     (0xD1,"ld"), # POP DE
