@@ -102,6 +102,15 @@ SUPPORTED_OPCODES = ([
     (0x84,"alu"), # ADD A, H
     (0x85,"alu"), # ADD A, L
     (0x86,"alu"), # ADD A, [HL]
+    (0x87,"alu"), # ADD A, A
+    (0x88,"alu"), # ADC A, B
+    (0x89,"alu"), # ADC A, C
+    (0x8A,"alu"), # ADC A, D
+    (0x8B,"alu"), # ADC A, E
+    (0x8C,"alu"), # ADC A, H
+    (0x8D,"alu"), # ADC A, L
+    (0x8E,"alu"), # ADC A, [HL]
+    (0x8F,"alu"), # ADC A, A
     (0x90,"alu"), # SUB A, B
     (0x91,"alu"), # SUB A, C
     (0x92,"alu"), # SUB A, D
@@ -109,6 +118,47 @@ SUPPORTED_OPCODES = ([
     (0x94,"alu"), # SUB A, H
     (0x95,"alu"), # SUB A, L
     (0x96,"alu"), # SUB A, [HL]
+    (0x97,"alu"), # SUB A, A
+    (0x98,"alu"), # SBC A, B
+    (0x99,"alu"), # SBC A, C
+    (0x9A,"alu"), # SBC A, D
+    (0x9B,"alu"), # SBC A, E
+    (0x9C,"alu"), # SBC A, H
+    (0x9D,"alu"), # SBC A, L
+    (0x9E,"alu"), # SBC A, [HL]
+    (0x9F,"alu"), # SBC A, A
+    (0xA0,"alu"), # AND A, B
+    (0xA1,"alu"), # AND A, C
+    (0xA2,"alu"), # AND A, D
+    (0xA3,"alu"), # AND A, E
+    (0xA4,"alu"), # AND A, H
+    (0xA5,"alu"), # AND A, L
+    (0xA6,"alu"), # AND A, [HL]
+    (0xA7,"alu"), # AND A, A
+    (0xA8,"alu"), # XOR A, B
+    (0xA9,"alu"), # XOR A, C
+    (0xAA,"alu"), # XOR A, D
+    (0xAB,"alu"), # XOR A, E
+    (0xAC,"alu"), # XOR A, H
+    (0xAD,"alu"), # XOR A, L
+    (0xAE,"alu"), # XOR A, [HL]
+    (0xAF,"alu"), # XOR A, A
+    (0xB0,"alu"), # OR A, B
+    (0xB1,"alu"), # OR A, C
+    (0xB2,"alu"), # OR A, D
+    (0xB3,"alu"), # OR A, E
+    (0xB4,"alu"), # OR A, H
+    (0xB5,"alu"), # OR A, L
+    (0xB6,"alu"), # OR A, [HL]
+    (0xB7,"alu"), # OR A, A
+    (0xB8,"alu"), # CP A, B
+    (0xB9,"alu"), # CP A, C
+    (0xBA,"alu"), # CP A, D
+    (0xBB,"alu"), # CP A, E
+    (0xBC,"alu"), # CP A, H
+    (0xBD,"alu"), # CP A, L
+    (0xBE,"alu"), # CP A, [HL]
+    (0xBF,"alu"), # CP A, A
     (0xC1,"ld"), # POP BC
     (0xC5,"ld"), # PUSH BC
     (0xD1,"ld"), # POP DE
