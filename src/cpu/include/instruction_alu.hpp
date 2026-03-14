@@ -28,8 +28,8 @@ using BasicAluResultSet             = AluResultSet<void, memory::MemoryMap::Resu
 using BasicAluOperationCallback     = std::int_fast32_t (*)(Byte /*Destination*/, Byte /*Operand*/, bool /*Carry bit*/);
 using BasicAluOperationFlagCallback = Nibble (*)(std::int_fast32_t /*Result*/, Byte /*Destination*/, Byte /*Operand*/);
 
-template <RegisterType Destination, RegisterType Operand, auto Operation, auto Flag>
-    requires(IsRegister8Bit<Destination> && (IsRegister8Bit<Operand> || IsRegister16Bit<Operand>))
+template <RegisterType Destination, auto Operand, auto Operation, auto Flag>
+    requires(IsRegister8Bit<Destination> && (IsRegister8Bit<Operand> || IsRegister16Bit<Operand> || std::is_same_v<decltype(Operand), Byte>))
 inline BasicAluResultSet BasicAluOperation(MemoryMap& mmap) noexcept
 {
     auto dst = mmap.ReadByte(Destination);
@@ -39,7 +39,11 @@ inline BasicAluResultSet BasicAluOperation(MemoryMap& mmap) noexcept
     }
 
     Byte srcValue;
-    if constexpr (IsRegister8Bit<Operand>)
+    if constexpr (std::is_same_v<decltype(Operand), Byte>)
+    {
+        srcValue = Operand;
+    }
+    else if constexpr (IsRegister8Bit<Operand>)
     {
         // Operand is a value
         auto src = mmap.ReadByte(Operand);
@@ -65,6 +69,10 @@ inline BasicAluResultSet BasicAluOperation(MemoryMap& mmap) noexcept
         }
         srcValue = static_cast<const Byte>(src);
     }
+    else
+    {
+        static_assert(false);
+    }
 
     // Note that src value is specifically not a reference
     auto&              dstValue    = static_cast<const Byte&>(dst);
@@ -77,7 +85,7 @@ inline BasicAluResultSet BasicAluOperation(MemoryMap& mmap) noexcept
     return result;
 }
 
-template <RegisterType Destination, RegisterType Operand, bool Carry>
+template <RegisterType Destination, auto Operand, bool Carry>
 inline BasicAluResultSet AddReg(MemoryMap& mmap) noexcept
 {
     return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte srcValue, Nibble flag)
@@ -102,7 +110,7 @@ inline BasicAluResultSet AddReg(MemoryMap& mmap) noexcept
                              }>(mmap);
 }
 
-template <RegisterType Destination, RegisterType Operand, bool Carry>
+template <RegisterType Destination, auto Operand, bool Carry>
 inline BasicAluResultSet SubReg(MemoryMap& mmap) noexcept
 {
     return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte srcValue, Nibble flag)
@@ -125,6 +133,18 @@ inline BasicAluResultSet SubReg(MemoryMap& mmap) noexcept
                                  bool C           = value < 0;
                                  return Z << 3 | N << 2 | H << 1 | C << 0;
                              }>(mmap);
+}
+
+template <RegisterType Destination, IncrementMode Mode>
+    requires(IsRegister8Bit<Destination>)
+inline BasicAluResultSet SingleStepRegisterWithFlag(MemoryMap& mmap) noexcept
+{
+    auto flag   = mmap.ReadFlag();
+    auto result = Mode == IncrementMode::Increment ? AddReg<Destination, (Byte)1, false>(mmap) : SubReg<Destination, (Byte)1, false>(mmap);
+
+    // 'C' flag is not affected by 8-bit single step instructions
+    mmap.WriteFlag((mmap.ReadFlag() & 0b1110) | (flag & 0b0001));
+    return result;
 }
 
 template <RegisterType Destination, RegisterType Operand>
@@ -264,21 +284,43 @@ using Cp = Instruction<
 // 16-bit increment and decrement, do not set any flags
 template <auto Destination, IncrementMode Mode>
     requires(IsRegister16Bit<Destination> && Destination != RegisterType::AF)
-using SingleStep = Instruction<
+using SingleStep16 = Instruction<
     /*Ticks*/ 8,
     SingleStepRegister<Destination, Mode>,
     IncrementPC,
     LoadIRPC>;
 
-using Inc_BC_Decoder           = Instantiate<InstructionDecoder<"inc bc", 0x03, SingleStep<RegisterType::BC, IncrementMode::Increment>>>::Type;
-using Inc_DE_Decoder           = Instantiate<InstructionDecoder<"inc de", 0x13, SingleStep<RegisterType::DE, IncrementMode::Increment>>>::Type;
-using Inc_HL_Decoder           = Instantiate<InstructionDecoder<"inc hl", 0x23, SingleStep<RegisterType::HL, IncrementMode::Increment>>>::Type;
-using Inc_SP_Decoder           = Instantiate<InstructionDecoder<"inc sp", 0x33, SingleStep<RegisterType::SP, IncrementMode::Increment>>>::Type;
+template <auto Destination, IncrementMode Mode>
+    requires(IsRegister8Bit<Destination> && Destination != RegisterType::F)
+using SingleStep8 = Instruction<
+    /*Ticks*/ 4,
+    SingleStepRegisterWithFlag<Destination, Mode>,
+    IncrementPC,
+    LoadIRPC>;
 
-using Dec_BC_Decoder           = Instantiate<InstructionDecoder<"dec bc", 0x0B, SingleStep<RegisterType::BC, IncrementMode::Decrement>>>::Type;
-using Dec_DE_Decoder           = Instantiate<InstructionDecoder<"dec de", 0x1B, SingleStep<RegisterType::DE, IncrementMode::Decrement>>>::Type;
-using Dec_HL_Decoder           = Instantiate<InstructionDecoder<"dec hl", 0x2B, SingleStep<RegisterType::HL, IncrementMode::Decrement>>>::Type;
-using Dec_SP_Decoder           = Instantiate<InstructionDecoder<"dec sp", 0x3B, SingleStep<RegisterType::SP, IncrementMode::Decrement>>>::Type;
+using Inc_BC_Decoder           = Instantiate<InstructionDecoder<"inc bc", 0x03, SingleStep16<RegisterType::BC, IncrementMode::Increment>>>::Type;
+using Inc_B_Decoder            = Instantiate<InstructionDecoder<"inc b", 0x04, SingleStep8<RegisterType::B, IncrementMode::Increment>>>::Type;
+using Dec_B_Decoder            = Instantiate<InstructionDecoder<"dec b", 0x05, SingleStep8<RegisterType::B, IncrementMode::Decrement>>>::Type;
+using Dec_BC_Decoder           = Instantiate<InstructionDecoder<"dec bc", 0x0B, SingleStep16<RegisterType::BC, IncrementMode::Decrement>>>::Type;
+using Inc_C_Decoder            = Instantiate<InstructionDecoder<"inc c", 0x0C, SingleStep8<RegisterType::C, IncrementMode::Increment>>>::Type;
+using Dec_C_Decoder            = Instantiate<InstructionDecoder<"dec c", 0x0D, SingleStep8<RegisterType::C, IncrementMode::Decrement>>>::Type;
+using Inc_DE_Decoder           = Instantiate<InstructionDecoder<"inc de", 0x13, SingleStep16<RegisterType::DE, IncrementMode::Increment>>>::Type;
+using Inc_D_Decoder            = Instantiate<InstructionDecoder<"inc d", 0x14, SingleStep8<RegisterType::D, IncrementMode::Increment>>>::Type;
+using Dec_D_Decoder            = Instantiate<InstructionDecoder<"dec d", 0x15, SingleStep8<RegisterType::D, IncrementMode::Decrement>>>::Type;
+using Dec_DE_Decoder           = Instantiate<InstructionDecoder<"dec de", 0x1B, SingleStep16<RegisterType::DE, IncrementMode::Decrement>>>::Type;
+using Inc_E_Decoder            = Instantiate<InstructionDecoder<"inc e", 0x1C, SingleStep8<RegisterType::E, IncrementMode::Increment>>>::Type;
+using Dec_E_Decoder            = Instantiate<InstructionDecoder<"dec e", 0x1D, SingleStep8<RegisterType::E, IncrementMode::Decrement>>>::Type;
+using Inc_HL_Decoder           = Instantiate<InstructionDecoder<"inc hl", 0x23, SingleStep16<RegisterType::HL, IncrementMode::Increment>>>::Type;
+using Inc_H_Decoder            = Instantiate<InstructionDecoder<"inc h", 0x24, SingleStep8<RegisterType::H, IncrementMode::Increment>>>::Type;
+using Dec_H_Decoder            = Instantiate<InstructionDecoder<"dec h", 0x25, SingleStep8<RegisterType::H, IncrementMode::Decrement>>>::Type;
+using Dec_HL_Decoder           = Instantiate<InstructionDecoder<"dec hl", 0x2B, SingleStep16<RegisterType::HL, IncrementMode::Decrement>>>::Type;
+using Inc_L_Decoder            = Instantiate<InstructionDecoder<"inc l", 0x2C, SingleStep8<RegisterType::L, IncrementMode::Increment>>>::Type;
+using Dec_L_Decoder            = Instantiate<InstructionDecoder<"dec l", 0x2D, SingleStep8<RegisterType::L, IncrementMode::Decrement>>>::Type;
+using Inc_SP_Decoder           = Instantiate<InstructionDecoder<"inc sp", 0x33, SingleStep16<RegisterType::SP, IncrementMode::Increment>>>::Type;
+// TODO: inc [hl] and dec [hl] need to be handled separately
+using Dec_SP_Decoder           = Instantiate<InstructionDecoder<"dec sp", 0x3B, SingleStep16<RegisterType::SP, IncrementMode::Decrement>>>::Type;
+using Inc_A_Decoder            = Instantiate<InstructionDecoder<"inc a", 0x3C, SingleStep8<RegisterType::A, IncrementMode::Increment>>>::Type;
+using Dec_A_Decoder            = Instantiate<InstructionDecoder<"dec a", 0x3D, SingleStep8<RegisterType::A, IncrementMode::Decrement>>>::Type;
 
 using Add_A_B_Decoder          = Instantiate<InstructionDecoder<"add a, b", 0x80, Add<RegisterType::A, RegisterType::B>>>::Type;
 using Add_A_C_Decoder          = Instantiate<InstructionDecoder<"add a, c", 0x81, Add<RegisterType::A, RegisterType::C>>>::Type;
