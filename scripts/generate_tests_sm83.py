@@ -11,24 +11,32 @@ SUPPORTED_OPCODES = ([
     (0x00,"nop"), # NOP
     (0x01,"ld"), # LD BC, nnnn
     (0x02,"ld"), # LD [BC], A
+    (0x03,"alu"), # INC BC
     (0x06,"ld"), # LD B, nn
     (0x08,"ld"), # LD [nnnn], sp
     (0x0A,"ld"), # LD A, [BC]
+    (0x0B,"alu"), # DEC BC
     (0x0E,"ld"), # LD C, nn
     (0x11,"ld"), # LD DE, nnnn
     (0x12,"ld"), # LD [DE], A
+    (0x13,"alu"), # INC DE
     (0x16,"ld"), # LD D, nn
     (0x1A,"ld"), # LD A, [DE]
+    (0x1B,"alu"), # DEC DE
     (0x1E,"ld"), # LD E, nn
     (0x21,"ld"), # LD HL, nnnn
     (0x22,"ld"), # LD HL+, A
+    (0x23,"alu"), # INC HL
     (0x26,"ld"), # LD H, nn
     (0x2A,"ld"), # LD A, [HL+]
+    (0x2B,"alu"), # DEC HL
     (0x2E,"ld"), # LD L, nn
     (0x31,"ld"), # LD SP, nnnn
     (0x32,"ld"), # LD [HL-], A
+    (0x33,"alu"), # INC SP
     (0x36,"ld"), # LD [HL], nn
     (0x3A,"ld"), # LD A, [HL-]
+    (0x3B,"alu"), # DEC SP
     (0x3E,"ld"), # LD A, nn
     # 0x40 to 0x7F is the main load block
     (0x40,"ld"), # LD B, B

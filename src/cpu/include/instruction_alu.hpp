@@ -261,6 +261,25 @@ using Cp = Instruction<
     IncrementPC,
     LoadIRPC>;
 
+// 16-bit increment and decrement, do not set any flags
+template <auto Destination, IncrementMode Mode>
+    requires(IsRegister16Bit<Destination> && Destination != RegisterType::AF)
+using SingleStep = Instruction<
+    /*Ticks*/ 8,
+    SingleStepRegister<Destination, Mode>,
+    IncrementPC,
+    LoadIRPC>;
+
+using Inc_BC_Decoder           = Instantiate<InstructionDecoder<"inc bc", 0x03, SingleStep<RegisterType::BC, IncrementMode::Increment>>>::Type;
+using Inc_DE_Decoder           = Instantiate<InstructionDecoder<"inc de", 0x13, SingleStep<RegisterType::DE, IncrementMode::Increment>>>::Type;
+using Inc_HL_Decoder           = Instantiate<InstructionDecoder<"inc hl", 0x23, SingleStep<RegisterType::HL, IncrementMode::Increment>>>::Type;
+using Inc_SP_Decoder           = Instantiate<InstructionDecoder<"inc sp", 0x33, SingleStep<RegisterType::SP, IncrementMode::Increment>>>::Type;
+
+using Dec_BC_Decoder           = Instantiate<InstructionDecoder<"dec bc", 0x0B, SingleStep<RegisterType::BC, IncrementMode::Decrement>>>::Type;
+using Dec_DE_Decoder           = Instantiate<InstructionDecoder<"dec de", 0x1B, SingleStep<RegisterType::DE, IncrementMode::Decrement>>>::Type;
+using Dec_HL_Decoder           = Instantiate<InstructionDecoder<"dec hl", 0x2B, SingleStep<RegisterType::HL, IncrementMode::Decrement>>>::Type;
+using Dec_SP_Decoder           = Instantiate<InstructionDecoder<"dec sp", 0x3B, SingleStep<RegisterType::SP, IncrementMode::Decrement>>>::Type;
+
 using Add_A_B_Decoder          = Instantiate<InstructionDecoder<"add a, b", 0x80, Add<RegisterType::A, RegisterType::B>>>::Type;
 using Add_A_C_Decoder          = Instantiate<InstructionDecoder<"add a, c", 0x81, Add<RegisterType::A, RegisterType::C>>>::Type;
 using Add_A_D_Decoder          = Instantiate<InstructionDecoder<"add a, d", 0x82, Add<RegisterType::A, RegisterType::D>>>::Type;
