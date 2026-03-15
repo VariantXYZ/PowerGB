@@ -109,6 +109,8 @@ inline IncrementRegResultSet SingleStepTemp(memory::MemoryMap& mmap) noexcept
     wz++;
     mmap.GetTempHi() = wz.HighByte();
     mmap.GetTempLo() = wz.LowByte();
+
+    return IncrementRegResultSet::DefaultResultSuccess();
 }
 
 // IR <- [PC]
@@ -183,6 +185,31 @@ inline LoadRegResultSet LoadReg8TempLoIndirect(memory::MemoryMap& mmap) noexcept
     return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), mmap.GetTempLo());
 }
 
+// Z <- [Reg16]
+template <auto Source>
+    requires(IsRegister16Bit<Source>)
+inline LoadRegResultSet LoadIndirectReg8TempLo(memory::MemoryMap& mmap) noexcept
+{
+    auto srcAddr = mmap.ReadWord(Source);
+    if (srcAddr.IsFailure())
+    {
+        return srcAddr;
+    }
+
+    const Word w      = static_cast<Word>(srcAddr);
+    auto       result = mmap.ReadByte(w);
+
+    if (result.IsFailure())
+    {
+        return result;
+    }
+
+    auto& z = mmap.GetTempLo();
+    z       = static_cast<Byte>(result);
+
+    return LoadRegResultSet::DefaultResultSuccess();
+}
+
 // WZ -> Reg16
 template <auto Destination>
     requires(IsRegister16Bit<Destination>)
@@ -254,8 +281,8 @@ private:
 public:
     // An easy way to check lengths is to just see how many times we call IncrementPC (just use its type to figure it out)
     static constexpr std::size_t Length = ((std::is_same_v<typename decltype(Operations)::ResultSetType, IncrementPCResultSet> ? 1 : 0) + ...);
-    static constexpr std::size_t Ticks = Ticks_;
-    Instruction()                      = delete;
+    static constexpr std::size_t Ticks  = Ticks_;
+    Instruction()                       = delete;
 
     // Execute all operations until a failure occurs
     // Returns the failing operation index, otherwise the total number of ticks expected

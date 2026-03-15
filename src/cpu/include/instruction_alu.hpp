@@ -139,12 +139,35 @@ template <RegisterType Destination, IncrementMode Mode>
     requires(IsRegister8Bit<Destination>)
 inline BasicAluResultSet SingleStepRegisterWithFlag(MemoryMap& mmap) noexcept
 {
+    static_assert(Mode != IncrementMode::None);
     auto flag   = mmap.ReadFlag();
     auto result = Mode == IncrementMode::Increment ? AddReg<Destination, (Byte)1, false>(mmap) : SubReg<Destination, (Byte)1, false>(mmap);
 
     // 'C' flag is not affected by 8-bit single step instructions
     mmap.WriteFlag((mmap.ReadFlag() & 0b1110) | (flag & 0b0001));
     return result;
+}
+
+template <IncrementMode Mode>
+inline BasicAluResultSet SingleStepTempLoWithFlag(MemoryMap& mmap) noexcept
+{
+    static_assert(Mode != IncrementMode::None);
+
+    const Byte operand = Mode == IncrementMode::Increment ? 1 : -1;
+
+    auto& z            = mmap.GetTempLo();
+    Byte  z_           = z + operand;
+
+    bool Z             = z_ == 0;
+    bool N             = Mode == IncrementMode::Decrement;
+    bool H             = ((z ^ 1 ^ z_) & 0x10) != 0;
+    z                  = z_;
+
+    Nibble flag        = Z << 3 | N << 2 | H << 1;
+    // Preserve carry flag
+    mmap.WriteFlag((mmap.ReadFlag() & 0b0001) | (flag & 0b1110));
+
+    return BasicAluResultSet::DefaultResultSuccess();
 }
 
 template <RegisterType Destination, RegisterType Operand>
@@ -298,6 +321,15 @@ using SingleStep8 = Instruction<
     IncrementPC,
     LoadIRPC>;
 
+template <IncrementMode Mode>
+using SingleStepIndirect = Instruction<
+    /*Ticks=*/12,
+    LoadIndirectReg8TempLo<RegisterType::HL>, // [HL] -> Z
+    SingleStepTempLoWithFlag<Mode>,
+    LoadReg8TempLoIndirect<RegisterType::HL>, // Z -> [HL]
+    IncrementPC,
+    LoadIRPC>;
+
 using Inc_BC_Decoder           = Instantiate<InstructionDecoder<"inc bc", 0x03, SingleStep16<RegisterType::BC, IncrementMode::Increment>>>::Type;
 using Inc_B_Decoder            = Instantiate<InstructionDecoder<"inc b", 0x04, SingleStep8<RegisterType::B, IncrementMode::Increment>>>::Type;
 using Dec_B_Decoder            = Instantiate<InstructionDecoder<"dec b", 0x05, SingleStep8<RegisterType::B, IncrementMode::Decrement>>>::Type;
@@ -317,7 +349,8 @@ using Dec_HL_Decoder           = Instantiate<InstructionDecoder<"dec hl", 0x2B, 
 using Inc_L_Decoder            = Instantiate<InstructionDecoder<"inc l", 0x2C, SingleStep8<RegisterType::L, IncrementMode::Increment>>>::Type;
 using Dec_L_Decoder            = Instantiate<InstructionDecoder<"dec l", 0x2D, SingleStep8<RegisterType::L, IncrementMode::Decrement>>>::Type;
 using Inc_SP_Decoder           = Instantiate<InstructionDecoder<"inc sp", 0x33, SingleStep16<RegisterType::SP, IncrementMode::Increment>>>::Type;
-// TODO: inc [hl] and dec [hl] need to be handled separately
+using Inc_IndirectHL_Decoder   = Instantiate<InstructionDecoder<"inc [hl]", 0x34, SingleStepIndirect<IncrementMode::Increment>>>::Type;
+using Dec_IndirectHL__Decoder  = Instantiate<InstructionDecoder<"dec [hl]", 0x35, SingleStepIndirect<IncrementMode::Decrement>>>::Type;
 using Dec_SP_Decoder           = Instantiate<InstructionDecoder<"dec sp", 0x3B, SingleStep16<RegisterType::SP, IncrementMode::Decrement>>>::Type;
 using Inc_A_Decoder            = Instantiate<InstructionDecoder<"inc a", 0x3C, SingleStep8<RegisterType::A, IncrementMode::Increment>>>::Type;
 using Dec_A_Decoder            = Instantiate<InstructionDecoder<"dec a", 0x3D, SingleStep8<RegisterType::A, IncrementMode::Decrement>>>::Type;

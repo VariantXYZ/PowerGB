@@ -46,6 +46,8 @@ SUPPORTED_OPCODES = ([
     (0x31,"ld"), # LD SP, nnnn
     (0x32,"ld"), # LD [HL-], A
     (0x33,"alu"), # INC SP
+    (0x34,"alu"), # INC [HL]
+    (0x35,"alu"), # DEC [HL]
     (0x36,"ld"), # LD [HL], nn
     (0x3A,"ld"), # LD A, [HL-]
     (0x3B,"alu"), # DEC SP
