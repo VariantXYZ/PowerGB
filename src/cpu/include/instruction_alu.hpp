@@ -240,6 +240,86 @@ inline BasicAluResultSet OrReg(MemoryMap& mmap) noexcept
                              }>(mmap);
 }
 
+template <RegisterType Destination, bool Circular, bool Zero>
+inline BasicAluResultSet RotateLeft(MemoryMap& mmap) noexcept
+{
+    auto result = mmap.ReadByte(Destination);
+    if (result.IsFailure())
+    {
+        return result;
+    }
+
+    auto& d    = static_cast<const Byte&>(result);
+    auto  flag = mmap.ReadFlag();
+
+    // C is b7 in both the circular and non-circular case
+    // In non-cicular, oldC becomes bit 0
+    bool oldC  = flag & 0b0001;
+    bool C     = (d & 0b10000000) != 0;
+    // Other flags are just set to 0 here
+    flag       = C;
+
+    // If Zero is not determined, then we just set it to 0 (for RLCA, RLA)
+    // Z if d is 0
+    bool Z     = d == 0;
+    if constexpr (Zero)
+    {
+
+        flag = flag | (Z << 3);
+    }
+
+    mmap.WriteFlag(flag);
+
+    if constexpr (Circular)
+    {
+        return mmap.WriteByte(Destination, static_cast<Byte>((d << 1) | C));
+    }
+    else
+    {
+        return mmap.WriteByte(Destination, static_cast<Byte>((d << 1) | oldC));
+    }
+}
+
+template <RegisterType Destination, bool Circular, bool Zero>
+inline BasicAluResultSet RotateRight(MemoryMap& mmap) noexcept
+{
+    auto result = mmap.ReadByte(Destination);
+    if (result.IsFailure())
+    {
+        return result;
+    }
+
+    auto& d    = static_cast<const Byte&>(result);
+    auto  flag = mmap.ReadFlag();
+
+    // C is b7 in both the circular and non-circular case
+    // In non-cicular, oldC becomes bit 0
+    bool oldC  = flag & 0b0001;
+    bool C     = (d & 0b00000001) != 0;
+    // Other flags are just set to 0 here
+    flag       = C;
+
+    // If Zero is not determined, then we just set it to 0 (for RLCA, RLA)
+    // Z if d is 0
+    bool Z     = d == 0;
+    if constexpr (Zero)
+    {
+
+        flag = flag | (Z << 3);
+    }
+
+    mmap.WriteFlag(flag);
+
+    if constexpr (Circular)
+    {
+        return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1) | C << 7));
+    }
+    else
+    {
+        return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1) | oldC << 7));
+    }
+}
+
 template <auto Destination, auto Operand, std::size_t Ticks = IsRegister16Bit<Operand> ? 8 : 4>
     requires(IsRegister8Bit<Destination> && (IsRegister8Bit<Operand> || IsRegister16Bit<Operand>))
 using Add = Instruction<
@@ -330,18 +410,36 @@ using SingleStepIndirect = Instruction<
     IncrementPC,
     LoadIRPC>;
 
+template <RegisterType Destination, bool Circular, bool Zero>
+using Rl = Instruction<
+    /*Ticks*/ 4,
+    RotateLeft<Destination, Circular, Zero>,
+    IncrementPC,
+    LoadIRPC>;
+
+template <RegisterType Destination, bool Circular, bool Zero>
+using Rr = Instruction<
+    /*Ticks*/ 4,
+    RotateRight<Destination, Circular, Zero>,
+    IncrementPC,
+    LoadIRPC>;
+
 using Inc_BC_Decoder           = Instantiate<InstructionDecoder<"inc bc", 0x03, SingleStep16<RegisterType::BC, IncrementMode::Increment>>>::Type;
 using Inc_B_Decoder            = Instantiate<InstructionDecoder<"inc b", 0x04, SingleStep8<RegisterType::B, IncrementMode::Increment>>>::Type;
 using Dec_B_Decoder            = Instantiate<InstructionDecoder<"dec b", 0x05, SingleStep8<RegisterType::B, IncrementMode::Decrement>>>::Type;
+using RLCA_Decoder             = Instantiate<InstructionDecoder<"rlca", 0x07, Rl<RegisterType::A, true, false>>>::Type;
 using Dec_BC_Decoder           = Instantiate<InstructionDecoder<"dec bc", 0x0B, SingleStep16<RegisterType::BC, IncrementMode::Decrement>>>::Type;
 using Inc_C_Decoder            = Instantiate<InstructionDecoder<"inc c", 0x0C, SingleStep8<RegisterType::C, IncrementMode::Increment>>>::Type;
 using Dec_C_Decoder            = Instantiate<InstructionDecoder<"dec c", 0x0D, SingleStep8<RegisterType::C, IncrementMode::Decrement>>>::Type;
+using RRCA_Decoder             = Instantiate<InstructionDecoder<"rrca", 0x0F, Rr<RegisterType::A, true, false>>>::Type;
 using Inc_DE_Decoder           = Instantiate<InstructionDecoder<"inc de", 0x13, SingleStep16<RegisterType::DE, IncrementMode::Increment>>>::Type;
 using Inc_D_Decoder            = Instantiate<InstructionDecoder<"inc d", 0x14, SingleStep8<RegisterType::D, IncrementMode::Increment>>>::Type;
 using Dec_D_Decoder            = Instantiate<InstructionDecoder<"dec d", 0x15, SingleStep8<RegisterType::D, IncrementMode::Decrement>>>::Type;
+using RLA_Decoder              = Instantiate<InstructionDecoder<"rla", 0x17, Rl<RegisterType::A, false, false>>>::Type;
 using Dec_DE_Decoder           = Instantiate<InstructionDecoder<"dec de", 0x1B, SingleStep16<RegisterType::DE, IncrementMode::Decrement>>>::Type;
 using Inc_E_Decoder            = Instantiate<InstructionDecoder<"inc e", 0x1C, SingleStep8<RegisterType::E, IncrementMode::Increment>>>::Type;
 using Dec_E_Decoder            = Instantiate<InstructionDecoder<"dec e", 0x1D, SingleStep8<RegisterType::E, IncrementMode::Decrement>>>::Type;
+using RRA_Decoder              = Instantiate<InstructionDecoder<"rra", 0x1F, Rr<RegisterType::A, false, false>>>::Type;
 using Inc_HL_Decoder           = Instantiate<InstructionDecoder<"inc hl", 0x23, SingleStep16<RegisterType::HL, IncrementMode::Increment>>>::Type;
 using Inc_H_Decoder            = Instantiate<InstructionDecoder<"inc h", 0x24, SingleStep8<RegisterType::H, IncrementMode::Increment>>>::Type;
 using Dec_H_Decoder            = Instantiate<InstructionDecoder<"dec h", 0x25, SingleStep8<RegisterType::H, IncrementMode::Decrement>>>::Type;

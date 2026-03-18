@@ -15,23 +15,27 @@ SUPPORTED_OPCODES = ([
     (0x04,"alu"), # INC B
     (0x05,"alu"), # DEC B
     (0x06,"ld"), # LD B, nn
+    (0x07,"alu"), # RLCA
     (0x08,"ld"), # LD [nnnn], sp
     (0x0A,"ld"), # LD A, [BC]
     (0x0B,"alu"), # DEC BC
     (0x0C,"alu"), # INC C
     (0x0D,"alu"), # DEC C
     (0x0E,"ld"), # LD C, nn
+    (0x0F,"alu"), # RRCA
     (0x11,"ld"), # LD DE, nnnn
     (0x12,"ld"), # LD [DE], A
     (0x13,"alu"), # INC DE
     (0x14,"alu"), # INC D
     (0x15,"alu"), # DEC D
     (0x16,"ld"), # LD D, nn
+    (0x17,"alu"), # RLA
     (0x1A,"ld"), # LD A, [DE]
     (0x1B,"alu"), # DEC DE
     (0x1C,"alu"), # INC E
     (0x1D,"alu"), # DEC E
     (0x1E,"ld"), # LD E, nn
+    (0x1F,"alu"), # RRA
     (0x21,"ld"), # LD HL, nnnn
     (0x22,"ld"), # LD HL+, A
     (0x23,"alu"), # INC HL
