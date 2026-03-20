@@ -219,6 +219,22 @@ inline LoadRegResultSet LoadReg16Temp(memory::MemoryMap& mmap) noexcept
     return result;
 }
 
+// Reg16 -> WZ
+template <auto Source>
+    requires(IsRegister16Bit<Source>)
+inline LoadRegResultSet LoadTempReg16(memory::MemoryMap& mmap) noexcept
+{
+    auto r1 = mmap.ReadWord(Source);
+    if (r1.IsFailure())
+    {
+        return r1;
+    }
+    auto& val        = static_cast<const Word&>(r1);
+    mmap.GetTempHi() = val.HighByte();
+    mmap.GetTempLo() = val.LowByte();
+    return r1;
+}
+
 // [WZ] <- Reg16 (2 bytes)
 template <RegisterType Source>
     requires(IsRegister16Bit<Source>)

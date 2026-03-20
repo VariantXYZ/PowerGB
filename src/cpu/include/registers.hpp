@@ -35,13 +35,20 @@ enum RegisterType
     HL,
     PC,
     SP,
+
+    // Temp
+    TempLo,
+    TempHi,
 };
 
 template <RegisterType R>
 concept IsRegister8Bit = R < AF;
 
 template <RegisterType R>
-concept IsRegister16Bit = !IsRegister8Bit<R>;
+concept IsRegister16Bit = R >= AF && R <= SP;
+
+template <RegisterType R>
+concept IsRegisterTemp = R == TempLo || R == TempHi;
 
 template <RegisterType T, bool IsHigh>
     requires(IsRegister16Bit<T>)

@@ -17,6 +17,7 @@ SUPPORTED_OPCODES = ([
     (0x06,"ld"), # LD B, nn
     (0x07,"alu"), # RLCA
     (0x08,"ld"), # LD [nnnn], sp
+    (0x09,"alu"), # ADD HL, BC
     (0x0A,"ld"), # LD A, [BC]
     (0x0B,"alu"), # DEC BC
     (0x0C,"alu"), # INC C
@@ -30,6 +31,7 @@ SUPPORTED_OPCODES = ([
     (0x15,"alu"), # DEC D
     (0x16,"ld"), # LD D, nn
     (0x17,"alu"), # RLA
+    (0x19,"alu"), # ADD HL, DE
     (0x1A,"ld"), # LD A, [DE]
     (0x1B,"alu"), # DEC DE
     (0x1C,"alu"), # INC E
@@ -42,6 +44,7 @@ SUPPORTED_OPCODES = ([
     (0x24,"alu"), # INC H
     (0x25,"alu"), # DEC H
     (0x26,"ld"), # LD H, nn
+    (0x29,"alu"), # ADD HL, HL
     (0x2A,"ld"), # LD A, [HL+]
     (0x2B,"alu"), # DEC HL
     (0x2C,"alu"), # INC L
@@ -53,6 +56,7 @@ SUPPORTED_OPCODES = ([
     (0x34,"alu"), # INC [HL]
     (0x35,"alu"), # DEC [HL]
     (0x36,"ld"), # LD [HL], nn
+    (0x39,"alu"), # ADD HL, SP
     (0x3A,"ld"), # LD A, [HL-]
     (0x3B,"alu"), # DEC SP
     (0x3C,"alu"), # INC A
