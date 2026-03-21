@@ -115,9 +115,6 @@ private:
     //// Interrupt Enable
     Block<8, 8> _IE;
 
-    //// Interrupt Master Enable
-    bool _IME{true};
-
     //// Accumulator
     Block<8, 8> _A;
 
@@ -138,6 +135,15 @@ private:
     // Internal-instruction temporary
     Block<16, 8> _WZ;
 
+    // CPU Internal State
+    // TODO: Should move these into a dedicated state class instead of in the register file
+
+    //// Interrupt Master Enable
+    bool _IME{true};
+
+    //// Active instruction prefix
+    Byte _prefix = 0x00;
+
 protected:
     friend memory::MemoryMap;
 
@@ -145,22 +151,25 @@ protected:
     constexpr Nibble& F() { return _F[0]; }
 
     // 8-bit reference
-    constexpr Byte& IR() { return _IR[0]; }
-    constexpr Byte& IE() { return _IE[0]; }
-    constexpr Byte& A() { return _A[0]; }
-    constexpr Byte& B() { return _BC[0]; }
-    constexpr Byte& C() { return _BC[1]; }
-    constexpr Byte& D() { return _DE[0]; }
-    constexpr Byte& E() { return _DE[1]; }
-    constexpr Byte& H() { return _HL[0]; }
-    constexpr Byte& L() { return _HL[1]; }
+    constexpr Byte& IR() noexcept { return _IR[0]; }
+    constexpr Byte& IE() noexcept { return _IE[0]; }
+    constexpr Byte& A() noexcept { return _A[0]; }
+    constexpr Byte& B() noexcept { return _BC[0]; }
+    constexpr Byte& C() noexcept { return _BC[1]; }
+    constexpr Byte& D() noexcept { return _DE[0]; }
+    constexpr Byte& E() noexcept { return _DE[1]; }
+    constexpr Byte& H() noexcept { return _HL[0]; }
+    constexpr Byte& L() noexcept { return _HL[1]; }
 
     // 16-bit reference
     constexpr Word& PC() { return _PC[0]; }
     constexpr Word& SP() { return _SP[0]; }
 
-    constexpr bool&       IME() { return _IME; }
-    constexpr const bool& IME() const { return _IME; }
+    constexpr bool&       IME() noexcept { return _IME; }
+    constexpr const bool& IME() const noexcept { return _IME; }
+
+    constexpr Byte&       Prefix() noexcept { return _prefix; }
+    constexpr const Byte& Prefix() const noexcept { return _prefix; }
 
     // Temporary reference
     constexpr Byte&      W() { return _WZ[0]; }
@@ -192,29 +201,40 @@ public:
 
     constexpr void Reset() noexcept
     {
-        PC()  = 0;
-        SP()  = 0;
-        IR()  = 0;
-        IE()  = 0;
-        A()   = 0;
-        B()   = 0;
-        C()   = 0;
-        D()   = 0;
-        E()   = 0;
-        H()   = 0;
-        L()   = 0;
-        F()   = 0;
-        IME() = true;
+        PC()     = 0;
+        SP()     = 0;
+        IR()     = 0;
+        IE()     = 0;
+        A()      = 0;
+        B()      = 0;
+        C()      = 0;
+        D()      = 0;
+        E()      = 0;
+        H()      = 0;
+        L()      = 0;
+        F()      = 0;
+        IME()    = true;
+        Prefix() = 0x00;
     }
 
     constexpr void EnableIME() noexcept
     {
-        _IME = true;
+        IME() = true;
     }
 
     constexpr void DisableIME() noexcept
     {
-        _IME = false;
+        IME() = false;
+    }
+
+    constexpr void SetPrefix(Byte value) noexcept
+    {
+        Prefix() = value;
+    }
+
+    constexpr void ResetPrefix() noexcept
+    {
+        Prefix() = 0x00;
     }
 };
 

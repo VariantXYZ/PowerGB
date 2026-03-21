@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
 #include <cpu/include/decoder.hpp>
 #include <cpu/include/instruction.hpp>
 #include <cpu/include/registers.hpp>
@@ -123,5 +121,10 @@ using RLCA_Decoder = Instantiate<InstructionDecoder<"rlca", 0x07, Rl<RegisterTyp
 using RRCA_Decoder = Instantiate<InstructionDecoder<"rrca", 0x0F, Rr<RegisterType::A, true, false>>>::Type;
 using RLA_Decoder  = Instantiate<InstructionDecoder<"rla", 0x17, Rl<RegisterType::A, false, false>>>::Type;
 using RRA_Decoder  = Instantiate<InstructionDecoder<"rra", 0x1F, Rr<RegisterType::A, false, false>>>::Type;
+
+// CB Prefix
+using RLC_B_Decoder = Instantiate<InstructionDecoder<"rlc b", 0x00, Rl<RegisterType::B, true, true>, 0xCB>>::Type;
+static_assert(std::is_same_v<RLC_B_Decoder::RegistryType, instruction::detail::InstructionRegistryTagPrefixCB>);
+static_assert(instruction::InstructionRegistryPrefixCB::Lengths[0x00] > 0);
 
 } // namespace pgb::cpu::instruction

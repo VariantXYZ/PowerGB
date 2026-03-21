@@ -577,4 +577,19 @@ const Word MemoryMap::GetTemp() const noexcept { return _registers.WZ(); }
 Byte&      MemoryMap::GetTempLo() noexcept { return _registers.Z(); }
 Byte&      MemoryMap::GetTempHi() noexcept { return _registers.W(); }
 
+const Byte& MemoryMap::GetActivePrefix() const noexcept
+{
+    return _registers.Prefix();
+}
+
+void MemoryMap::SetActivePrefix(Byte value) noexcept
+{
+    _registers.SetPrefix(value);
+}
+
+void MemoryMap::ResetActivePrefix() noexcept
+{
+    _registers.ResetPrefix();
+}
+
 } // namespace pgb::memory
