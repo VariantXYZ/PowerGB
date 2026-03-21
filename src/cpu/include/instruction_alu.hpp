@@ -109,7 +109,7 @@ inline BasicAluResultSet AddReg(MemoryMap& mmap) noexcept
                                  bool Z           = SetZero ? valueCasted == 0 : ((flag & 0b1000) != 0);
                                  bool N           = false;
                                  bool H           = ((dstValue ^ srcValue ^ valueCasted) & 0x10) != 0;
-                                 bool C           = value > 0xFF;
+                                 bool C           = (value > 0xFF);
                                  return Z << 3 | N << 2 | H << 1 | C << 0;
                              }>(mmap);
 }
@@ -134,7 +134,7 @@ inline BasicAluResultSet SubReg(MemoryMap& mmap) noexcept
                                  bool Z           = valueCasted == 0;
                                  bool N           = true;
                                  bool H           = ((dstValue ^ srcValue ^ valueCasted) & 0x10) != 0;
-                                 bool C           = value < 0;
+                                 bool C           = (value < 0);
                                  return Z << 3 | N << 2 | H << 1 | C << 0;
                              }>(mmap);
 }

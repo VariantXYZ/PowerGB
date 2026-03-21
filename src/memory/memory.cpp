@@ -569,27 +569,4 @@ MemoryMap::ModifyStateRegisterResultSet MemoryMap::DecrementPC() noexcept
     return ModifyStateRegisterResultSet::DefaultResultSuccess(_registers.PC());
 }
 
-void MemoryMap::EnableIME() noexcept { _registers.EnableIME(); }
-void MemoryMap::DisableIME() noexcept { _registers.DisableIME(); }
-bool MemoryMap::IMEEnabled() const noexcept { return _registers.IME(); }
-
-const Word MemoryMap::GetTemp() const noexcept { return _registers.WZ(); }
-Byte&      MemoryMap::GetTempLo() noexcept { return _registers.Z(); }
-Byte&      MemoryMap::GetTempHi() noexcept { return _registers.W(); }
-
-const Byte& MemoryMap::GetActivePrefix() const noexcept
-{
-    return _registers.Prefix();
-}
-
-void MemoryMap::SetActivePrefix(Byte value) noexcept
-{
-    _registers.SetPrefix(value);
-}
-
-void MemoryMap::ResetActivePrefix() noexcept
-{
-    _registers.ResetPrefix();
-}
-
 } // namespace pgb::memory

@@ -277,17 +277,18 @@ public:
     ModifyStateRegisterResultSet IncrementPC() noexcept;
     ModifyStateRegisterResultSet DecrementPC() noexcept;
 
-    void EnableIME() noexcept;
-    void DisableIME() noexcept;
-    bool IMEEnabled() const noexcept;
+    // Quick shims to adjust CPU state
+    inline constexpr void EnableIME() noexcept { _registers.EnableIME(); }
+    inline constexpr void DisableIME() noexcept { _registers.DisableIME(); }
+    inline constexpr bool IMEEnabled() const noexcept { return _registers.IME(); }
 
-    const Word GetTemp() const noexcept;
-    Byte&      GetTempLo() noexcept;
-    Byte&      GetTempHi() noexcept;
+    inline constexpr Word  GetTemp() const noexcept { return _registers.WZ(); }
+    inline constexpr Byte& GetTempLo() noexcept { return _registers.Z(); }
+    inline constexpr Byte& GetTempHi() noexcept { return _registers.W(); }
 
-    const Byte& GetActivePrefix() const noexcept;
-    void        SetActivePrefix(Byte) noexcept;
-    void        ResetActivePrefix() noexcept;
+    inline constexpr Byte& GetActivePrefix() const noexcept { return _registers.Prefix(); }
+    inline constexpr void  SetActivePrefix(Byte value) noexcept { _registers.SetPrefix(value); }
+    inline constexpr void  ResetActivePrefix() noexcept { _registers.ResetPrefix(); }
 };
 
 } // namespace pgb::memory

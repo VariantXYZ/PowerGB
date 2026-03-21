@@ -208,7 +208,19 @@ SUPPORTED_OPCODES = ([
     (0xFA,"ld"), # LD A, [nnnn]
 
     # CB Prefix
-    (0xCB00,"rsb") # RLC B
+    (0xCB00,"rsb"), # RLC B
+    (0xCB01,"rsb"), # RLC C
+    (0xCB02,"rsb"), # RLC D
+    (0xCB03,"rsb"), # RLC E
+    (0xCB04,"rsb"), # RLC H
+    (0xCB05,"rsb"), # RLC L
+
+    (0xCB10,"rsb"), # RL B
+    (0xCB11,"rsb"), # RL C
+    (0xCB12,"rsb"), # RL D
+    (0xCB13,"rsb"), # RL E
+    (0xCB14,"rsb"), # RL H
+    (0xCB15,"rsb"), # RL L
 ])
 
 for info in SUPPORTED_OPCODES:
