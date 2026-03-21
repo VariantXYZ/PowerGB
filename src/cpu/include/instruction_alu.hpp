@@ -434,38 +434,20 @@ using SingleStepIndirect = Instruction<
     IncrementPC,
     LoadIRPC>;
 
-template <RegisterType Destination, bool Circular, bool Zero>
-using Rl = Instruction<
-    /*Ticks*/ 4,
-    RotateLeft<Destination, Circular, Zero>,
-    IncrementPC,
-    LoadIRPC>;
-
-template <RegisterType Destination, bool Circular, bool Zero>
-using Rr = Instruction<
-    /*Ticks*/ 4,
-    RotateRight<Destination, Circular, Zero>,
-    IncrementPC,
-    LoadIRPC>;
-
 using Inc_BC_Decoder           = Instantiate<InstructionDecoder<"inc bc", 0x03, SingleStep16<RegisterType::BC, IncrementMode::Increment>>>::Type;
 using Inc_B_Decoder            = Instantiate<InstructionDecoder<"inc b", 0x04, SingleStep8<RegisterType::B, IncrementMode::Increment>>>::Type;
 using Dec_B_Decoder            = Instantiate<InstructionDecoder<"dec b", 0x05, SingleStep8<RegisterType::B, IncrementMode::Decrement>>>::Type;
-using RLCA_Decoder             = Instantiate<InstructionDecoder<"rlca", 0x07, Rl<RegisterType::A, true, false>>>::Type;
 using Add_HL_BC_Decoder        = Instantiate<InstructionDecoder<"add hl, bc", 0x09, Add16<RegisterType::HL, RegisterType::BC>>>::Type;
 using Dec_BC_Decoder           = Instantiate<InstructionDecoder<"dec bc", 0x0B, SingleStep16<RegisterType::BC, IncrementMode::Decrement>>>::Type;
 using Inc_C_Decoder            = Instantiate<InstructionDecoder<"inc c", 0x0C, SingleStep8<RegisterType::C, IncrementMode::Increment>>>::Type;
 using Dec_C_Decoder            = Instantiate<InstructionDecoder<"dec c", 0x0D, SingleStep8<RegisterType::C, IncrementMode::Decrement>>>::Type;
-using RRCA_Decoder             = Instantiate<InstructionDecoder<"rrca", 0x0F, Rr<RegisterType::A, true, false>>>::Type;
 using Inc_DE_Decoder           = Instantiate<InstructionDecoder<"inc de", 0x13, SingleStep16<RegisterType::DE, IncrementMode::Increment>>>::Type;
 using Inc_D_Decoder            = Instantiate<InstructionDecoder<"inc d", 0x14, SingleStep8<RegisterType::D, IncrementMode::Increment>>>::Type;
 using Dec_D_Decoder            = Instantiate<InstructionDecoder<"dec d", 0x15, SingleStep8<RegisterType::D, IncrementMode::Decrement>>>::Type;
-using RLA_Decoder              = Instantiate<InstructionDecoder<"rla", 0x17, Rl<RegisterType::A, false, false>>>::Type;
 using Add_HL_DE_Decoder        = Instantiate<InstructionDecoder<"add hl, de", 0x19, Add16<RegisterType::HL, RegisterType::DE>>>::Type;
 using Dec_DE_Decoder           = Instantiate<InstructionDecoder<"dec de", 0x1B, SingleStep16<RegisterType::DE, IncrementMode::Decrement>>>::Type;
 using Inc_E_Decoder            = Instantiate<InstructionDecoder<"inc e", 0x1C, SingleStep8<RegisterType::E, IncrementMode::Increment>>>::Type;
 using Dec_E_Decoder            = Instantiate<InstructionDecoder<"dec e", 0x1D, SingleStep8<RegisterType::E, IncrementMode::Decrement>>>::Type;
-using RRA_Decoder              = Instantiate<InstructionDecoder<"rra", 0x1F, Rr<RegisterType::A, false, false>>>::Type;
 using Inc_HL_Decoder           = Instantiate<InstructionDecoder<"inc hl", 0x23, SingleStep16<RegisterType::HL, IncrementMode::Increment>>>::Type;
 using Inc_H_Decoder            = Instantiate<InstructionDecoder<"inc h", 0x24, SingleStep8<RegisterType::H, IncrementMode::Increment>>>::Type;
 using Dec_H_Decoder            = Instantiate<InstructionDecoder<"dec h", 0x25, SingleStep8<RegisterType::H, IncrementMode::Decrement>>>::Type;
@@ -475,7 +457,7 @@ using Dec_L_Decoder            = Instantiate<InstructionDecoder<"dec l", 0x2D, S
 using Add_HL_HL_Decoder        = Instantiate<InstructionDecoder<"add hl, hl", 0x29, Add16<RegisterType::HL, RegisterType::HL>>>::Type;
 using Inc_SP_Decoder           = Instantiate<InstructionDecoder<"inc sp", 0x33, SingleStep16<RegisterType::SP, IncrementMode::Increment>>>::Type;
 using Inc_IndirectHL_Decoder   = Instantiate<InstructionDecoder<"inc [hl]", 0x34, SingleStepIndirect<IncrementMode::Increment>>>::Type;
-using Dec_IndirectHL__Decoder  = Instantiate<InstructionDecoder<"dec [hl]", 0x35, SingleStepIndirect<IncrementMode::Decrement>>>::Type;
+using Dec_IndirectHL_Decoder   = Instantiate<InstructionDecoder<"dec [hl]", 0x35, SingleStepIndirect<IncrementMode::Decrement>>>::Type;
 using Add_HL_SP_Decoder        = Instantiate<InstructionDecoder<"add hl, sp", 0x39, AddSp<RegisterType::HL>>>::Type;
 using Dec_SP_Decoder           = Instantiate<InstructionDecoder<"dec sp", 0x3B, SingleStep16<RegisterType::SP, IncrementMode::Decrement>>>::Type;
 using Inc_A_Decoder            = Instantiate<InstructionDecoder<"inc a", 0x3C, SingleStep8<RegisterType::A, IncrementMode::Increment>>>::Type;

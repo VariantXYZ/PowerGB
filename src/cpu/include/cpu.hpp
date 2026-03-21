@@ -3,3 +3,4 @@
 #include <cpu/include/instruction_alu.hpp>
 #include <cpu/include/instruction_ld.hpp>
 #include <cpu/include/instruction_nop.hpp>
+#include <cpu/include/instruction_rsb.hpp>
