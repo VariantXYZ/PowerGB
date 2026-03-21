@@ -64,7 +64,7 @@ constexpr auto Append() noexcept
     {
         // As we go down the list, make sure this type isn't already registered'
         static_assert(!std::is_same<T, decltype(Get(detail::Nth<Tag, N>{}))>::value, "Type is already registered");
-        Append<T, Tag, N + 1>();
+        return Append<T, Tag, N + 1>();
     }
     else if constexpr (N == 0)
     {

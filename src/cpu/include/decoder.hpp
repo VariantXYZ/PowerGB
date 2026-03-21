@@ -89,8 +89,7 @@ struct InstructionRegistry
 
 } // namespace detail
 
-// 0 parameter instructions
-template <util::StringLiteral Name, std::uint_fast8_t OpCode, InstructionType InstructionHandler, bool Prefixed = false>
+template <util::StringLiteral Name, std::uint_fast8_t OpCode, InstructionType InstructionHandler, std::uint_fast8_t Prefix = 0x00>
 class InstructionDecoder
 {
 public:
@@ -102,10 +101,17 @@ public:
 
     constexpr static std::size_t Execute(memory::MemoryMap& mmap) noexcept
     {
-        return InstructionHandler::ExecuteAll(mmap);
+        std::size_t r = InstructionHandler::ExecuteAll(mmap);
+
+        if constexpr (Prefix != 0x00)
+        {
+            mmap.ResetActivePrefix();
+        }
+
+        return r;
     }
 
-    using RegistryType = std::conditional_t<Prefixed, detail::InstructionRegistryTagPrefixCB, detail::InstructionRegistryTagNoPrefix>;
+    using RegistryType = std::conditional_t<Prefix == 0xCB, detail::InstructionRegistryTagPrefixCB, detail::InstructionRegistryTagNoPrefix>;
 
 private:
     inline static constexpr bool _registered = registry::Append<InstructionDecoder, RegistryType>();
@@ -113,7 +119,7 @@ private:
     static_assert(_registered);
 };
 
-// Helper function to facilitate ODR-use within an alias statement to guarantee it's added to the registry'
+// Helper function to facilitate ODR-use within an alias statement to guarantee it's added to the registry
 // e.g., `using X_Y_Decoder = Instantiate<InstructionDecoder<...>>::Type`
 template <class T>
 struct Instantiate

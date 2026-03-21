@@ -25,13 +25,13 @@ ifneq '' '$(findstring clang,$(COMPILER_VERSION))'
 # Rely on lld for clang release, otherwise use mold for iteration time
 RELEASE_CC := -flto=thin
 RELEASE_LD := -flto=thin -fuse-ld=lld -Wl,--thinlto-cache-dir=$(BASE_DIR)/.thinlto_cache
-DEBUG_CC :=
+DEBUG_CC := -g
 DEBUG_LD := $(MOLD_LD)
 else ifneq '' '$(findstring g++,$(COMPILER_VERSION))'
 # In gcc's case, default to mold as the linker if available
 RELEASE_CC := -flto
 RELEASE_LD := -flto $(MOLD_LD)
-DEBUG_CC := -flto
+DEBUG_CC := -flto -g
 DEBUG_LD := -flto $(MOLD_LD)
 else
 endif

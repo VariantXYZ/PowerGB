@@ -284,6 +284,10 @@ public:
     const Word GetTemp() const noexcept;
     Byte&      GetTempLo() noexcept;
     Byte&      GetTempHi() noexcept;
+
+    const Byte& GetActivePrefix() const noexcept;
+    void        SetActivePrefix(Byte) noexcept;
+    void        ResetActivePrefix() noexcept;
 };
 
 } // namespace pgb::memory
