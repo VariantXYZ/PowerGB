@@ -55,6 +55,6 @@ void print_missing_instructions()
         output_fn.write(f"static_assert(InstructionRegistryNoPrefix::Callbacks[0x{int(opcode, 16):02X}] == nullptr || InstructionRegistryNoPrefix::Lengths[0x{int(opcode, 16):02X}] == {length});\n")
 
     for opcode in cbprefixed:
-        length = unprefixed[opcode]["bytes"]
+        length = cbprefixed[opcode]["bytes"]
         output_fn.write(f"static_assert(InstructionRegistryPrefixCB::Callbacks[0x{int(opcode, 16):02X}] == nullptr || InstructionRegistryPrefixCB::Lengths[0x{int(opcode, 16):02X}] == {length});\n")
 

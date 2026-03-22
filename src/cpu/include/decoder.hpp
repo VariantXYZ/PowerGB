@@ -97,7 +97,7 @@ public:
     constexpr static auto Instruction = Name.value;
     constexpr static auto Opcode      = OpCode;
     constexpr static auto Ticks       = InstructionHandler::Ticks;
-    constexpr static auto Length      = InstructionHandler::Length;
+    constexpr static auto Length      = InstructionHandler::Length + (Prefix != 0x00 ? 1 : 0);
 
     constexpr static std::size_t Execute(memory::MemoryMap& mmap) noexcept
     {
