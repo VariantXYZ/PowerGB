@@ -3,7 +3,10 @@ export LC_CTYPE=C
 # Build parameters
 PROJECT_NAME := powergb
 BASE_DIR := .
-BUILD_DIR := $(BASE_DIR)/build
+# Debug or Release
+BUILD_TYPE := Debug
+BASE_BUILD_DIR = $(BASE_DIR)/build
+BUILD_DIR := $(BASE_BUILD_DIR)/$(BUILD_TYPE)
 SRC_DIR := $(BASE_DIR)/src
 TEST_DIR := $(SRC_DIR)/test
 COMMON_SRC_DIR := $(SRC_DIR)/common
@@ -24,15 +27,15 @@ COMPILER_VERSION = $(shell $(CXX) --version)
 ifneq '' '$(findstring clang,$(COMPILER_VERSION))'
 # Rely on lld for clang release, otherwise use mold for iteration time
 RELEASE_CC := -flto=thin
-RELEASE_LD := -flto=thin -fuse-ld=lld -Wl,--thinlto-cache-dir=$(BASE_DIR)/.thinlto_cache
+RELEASE_LD := -flto=thin -fuse-ld=lld -Wl,--thinlto-cache-dir=$(BASE_DIR)/.thinlto_cache/$(BUILD_TYPE)
 DEBUG_CC := -g
 DEBUG_LD := $(MOLD_LD)
 else ifneq '' '$(findstring g++,$(COMPILER_VERSION))'
 # In gcc's case, default to mold as the linker if available
 RELEASE_CC := -flto
 RELEASE_LD := -flto $(MOLD_LD)
-DEBUG_CC := -flto -g
-DEBUG_LD := -flto $(MOLD_LD)
+DEBUG_CC := -g
+DEBUG_LD := $(MOLD_LD)
 else
 endif
 
@@ -91,7 +94,7 @@ default: $(TESTS_BASIC)
 build_all_tests: $(TESTS_BASIC) $(TESTS_SM83)
 clean:
 	rm -r $(BASE_DIR)/.thinlto_cache || exit 0
-	rm -r $(BUILD_DIR) || exit 0
+	rm -r $(BASE_BUILD_DIR) || exit 0
 
 run_all_tests: run_all_tests_basic run_all_tests_sm83
 	echo "All tests finished"
