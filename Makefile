@@ -121,7 +121,8 @@ $(BUILD_DIR)/%$(EXE_TYPE): $(BUILD_DIR)/$$(firstword $$(subst /, ,$$*)).$$(lastw
 	$(LD) $(LD_OPT_FLAGS) $(LDFLAGS) -o $@ $^
 
 # Create library archives for each module
-$(BUILD_DIR)/lib$(PROJECT_NAME)_%$(LIB_TYPE): $(filter $*%$(INT_TYPE),$(OBJECTS))
+.SECONDEXPANSION:
+$(BUILD_DIR)/lib$(PROJECT_NAME)_%$(LIB_TYPE): $$(filter $(BUILD_DIR)/$$*.$$(pc)$(INT_TYPE),$(OBJECTS)) | $(BUILD_DIR)
 	$(AR) rvs $@ $?
 
 # Build objects & don't delete intermediate files
