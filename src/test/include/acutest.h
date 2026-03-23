@@ -1804,7 +1804,7 @@ acutest_under_debugger_(void)
 }
 
 int
-main(int argc, char** argv)
+main_(int argc, char** argv)
 {
     int i, index;
     int exit_code = 1;
@@ -1989,6 +1989,15 @@ main(int argc, char** argv)
 
 #ifdef __cplusplus
     }  /* extern "C" */
+#endif
+
+#ifndef TEST_NO_MAIN
+// main must not be declared with external linkage
+int
+main(int argc, char** argv)
+{
+    return main_(argc, argv);
+}
 #endif
 
 #endif  /* #ifndef ACUTEST_H */
