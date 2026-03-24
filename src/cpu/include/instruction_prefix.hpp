@@ -1,6 +1,7 @@
 #pragma once
 
 #include <common/result.hpp>
+#include <cpu/include/decoder.hpp>
 #include <cpu/include/instruction.hpp>
 #include <memory/include/memory.hpp>
 

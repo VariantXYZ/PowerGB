@@ -12,7 +12,7 @@ namespace pgb::cpu
 {
 
 // Note that the reference to the registries must be referenced after the instructions are loaded
-inline constexpr std::size_t ExecuteActiveDecoder(uint_fast8_t opCode, memory::MemoryMap& mmap) noexcept
+inline constexpr std::size_t ExecuteActiveDecoder(std::uint_fast8_t opCode, memory::MemoryMap& mmap) noexcept
 {
     switch (mmap.GetActivePrefix())
     {
