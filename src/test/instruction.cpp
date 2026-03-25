@@ -22,22 +22,30 @@ using namespace pgb;
 using namespace pgb::memory;
 
 using Op0ResultSet = memory::MemoryMap::AccessResultSet;
-Op0ResultSet op0(memory::MemoryMap& mmap) noexcept
+struct op0
 {
-    return mmap.WriteByte({0, 0xFFFF}, 0xFF);
-}
+    static Op0ResultSet Execute(memory::MemoryMap& mmap) noexcept
+    {
+        return mmap.WriteByte({0, 0xFFFF}, 0xFF);
+    }
+};
 
 using Op1ResultSet = common::ResultSet<void, common::ResultSuccess, common::ResultFailure>;
-constexpr Op1ResultSet op1(memory::MemoryMap&) noexcept
+struct op1
 {
-    return Op1ResultSet::DefaultResultSuccess();
-}
+    static constexpr Op1ResultSet Execute(memory::MemoryMap&) noexcept
+    {
+        return Op1ResultSet::DefaultResultSuccess();
+    }
+};
 
-using Op2ResultSet = common::ResultSet<void, common::ResultSuccess, common::ResultFailure>;
-constexpr Op1ResultSet op2(memory::MemoryMap&) noexcept
+struct op2
 {
-    return Op1ResultSet::DefaultResultFailure();
-}
+    static constexpr Op1ResultSet Execute(memory::MemoryMap&) noexcept
+    {
+        return Op1ResultSet::DefaultResultFailure();
+    }
+};
 
 static auto registers = cpu::RegisterFile();
 static auto mmap      = MemoryMap(registers, MaxRomBankCount, MaxVramBankCount, MaxEramBankCount, MaxWramBankCount);

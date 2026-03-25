@@ -36,105 +36,105 @@ using InstructionLoadRegisterVoidResultSet = LoadResultSet<void>;
 
 // 8 -> 8
 template <auto Destination, auto Source>
-    requires(LdOperand<Destination> && LdOperand<Source> && LdOperandIs8Bit<Destination> && LdOperandIs8Bit<Source>)
-inline constexpr InstructionLoadRegister8ResultSet Load(MemoryMap& mmap) noexcept
+struct Load
 {
-    auto src = mmap.ReadByte(Source);
-    if (src.IsFailure())
+    // 8 -> 8
+    static inline constexpr InstructionLoadRegister8ResultSet Execute(MemoryMap& mmap) noexcept
+        requires(LdOperand<Destination> && LdOperand<Source> && LdOperandIs8Bit<Destination> && LdOperandIs8Bit<Source>)
     {
-        return src;
-    }
-    return mmap.WriteByte(Destination, static_cast<const Byte>(src));
-}
-
-// 16 -> 16
-template <auto Destination, auto Source>
-    requires(LdOperand<Destination> && LdOperand<Source> && !LdOperandIs8Bit<Destination> && !LdOperandIs8Bit<Source>)
-inline constexpr InstructionLoadRegister16ResultSet Load(MemoryMap& mmap) noexcept
-{
-    auto src = mmap.ReadWord(Source);
-    if (src.IsFailure())
-    {
-        return src;
-    }
-    return mmap.WriteWord(Destination, static_cast<const Word>(src));
-}
-
-// [Reg16] -> 8
-template <auto Destination, auto Source>
-    requires(IsRegister8Bit<Destination> && IsRegister16Bit<Source> && Destination != RegisterType::F)
-inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
-{
-    auto src = mmap.ReadWord(Source);
-    if (src.IsFailure())
-    {
-        return src;
+        auto src = mmap.ReadByte(Source);
+        if (src.IsFailure())
+        {
+            return src;
+        }
+        return mmap.WriteByte(Destination, static_cast<const Byte>(src));
     }
 
-    const Word address = static_cast<Word>(src);
-
-    auto result        = mmap.ReadByte(static_cast<uint_fast16_t>(address));
-    if (result.IsFailure())
+    // 16 -> 16
+    static inline constexpr InstructionLoadRegister16ResultSet Execute(MemoryMap& mmap) noexcept
+        requires(LdOperand<Destination> && LdOperand<Source> && !LdOperandIs8Bit<Destination> && !LdOperandIs8Bit<Source>)
     {
-        return result;
+        auto src = mmap.ReadWord(Source);
+        if (src.IsFailure())
+        {
+            return src;
+        }
+        return mmap.WriteWord(Destination, static_cast<const Word>(src));
     }
 
-    return mmap.WriteByte(Destination, static_cast<const Byte>(result));
-}
+    // [Reg16] -> 8
+    static inline constexpr InstructionLoadRegisterVoidResultSet Execute(MemoryMap& mmap) noexcept
+        requires(IsRegister8Bit<Destination> && IsRegister16Bit<Source> && Destination != RegisterType::F)
+    {
+        auto src = mmap.ReadWord(Source);
+        if (src.IsFailure())
+        {
+            return src;
+        }
 
-template <auto Destination, auto Source>
-    requires(IsRegister8Bit<Destination> && IsRegister16Bit<Source> && Destination == RegisterType::F)
-inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
-{
-    auto src = mmap.ReadWord(Source);
-    if (src.IsFailure())
-    {
-        return src;
-    }
-    const Word address = static_cast<Word>(src);
-    auto       result  = mmap.ReadByte(static_cast<uint_fast16_t>(address));
-    if (result.IsFailure())
-    {
-        return result;
-    }
-    mmap.WriteFlagByte(static_cast<const Byte>(result));
-    return InstructionLoadRegisterVoidResultSet::DefaultResultSuccess();
-}
+        const Word address = static_cast<Word>(src);
 
-// 8 -> [Reg16]
-template <auto Destination, auto Source>
-    requires(IsRegister8Bit<Source> && IsRegister16Bit<Destination> && Source != RegisterType::F)
-inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
-{
-    auto src = mmap.ReadByte(Source);
-    if (src.IsFailure())
-    {
-        return src;
+        auto result        = mmap.ReadByte(static_cast<uint_fast16_t>(address));
+        if (result.IsFailure())
+        {
+            return result;
+        }
+
+        return mmap.WriteByte(Destination, static_cast<const Byte>(result));
     }
 
-    auto dstAddr = mmap.ReadWord(Destination);
-    if (dstAddr.IsFailure())
+    // [Reg16] -> Flag
+    static inline constexpr InstructionLoadRegisterVoidResultSet Execute(MemoryMap& mmap) noexcept
+        requires(IsRegister8Bit<Destination> && IsRegister16Bit<Source> && Destination == RegisterType::F)
     {
-        return dstAddr;
+        auto src = mmap.ReadWord(Source);
+        if (src.IsFailure())
+        {
+            return src;
+        }
+        const Word address = static_cast<Word>(src);
+        auto       result  = mmap.ReadByte(static_cast<uint_fast16_t>(address));
+        if (result.IsFailure())
+        {
+            return result;
+        }
+        mmap.WriteFlagByte(static_cast<const Byte>(result));
+        return InstructionLoadRegisterVoidResultSet::DefaultResultSuccess();
     }
-    const Word w = static_cast<Word>(dstAddr);
 
-    return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), static_cast<const Byte>(src));
-}
-
-template <auto Destination, auto Source>
-    requires(IsRegister8Bit<Source> && IsRegister16Bit<Destination> && Source == RegisterType::F)
-inline constexpr InstructionLoadRegisterVoidResultSet Load(MemoryMap& mmap) noexcept
-{
-    auto src     = mmap.ReadFlagByte();
-    auto dstAddr = mmap.ReadWord(Destination);
-    if (dstAddr.IsFailure())
+    // 8 -> [Reg16]
+    static inline constexpr InstructionLoadRegisterVoidResultSet Execute(MemoryMap& mmap) noexcept
+        requires(IsRegister8Bit<Source> && IsRegister16Bit<Destination> && Source != RegisterType::F)
     {
-        return dstAddr;
+        auto src = mmap.ReadByte(Source);
+        if (src.IsFailure())
+        {
+            return src;
+        }
+
+        auto dstAddr = mmap.ReadWord(Destination);
+        if (dstAddr.IsFailure())
+        {
+            return dstAddr;
+        }
+        const Word w = static_cast<Word>(dstAddr);
+
+        return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), static_cast<const Byte>(src));
     }
-    const Word w = static_cast<Word>(dstAddr);
-    return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), static_cast<const Byte>(src));
-}
+
+    static inline constexpr InstructionLoadRegisterVoidResultSet Execute(MemoryMap& mmap) noexcept
+        requires(IsRegister8Bit<Source> && IsRegister16Bit<Destination> && Source == RegisterType::F)
+    {
+        auto src     = mmap.ReadFlagByte();
+        auto dstAddr = mmap.ReadWord(Destination);
+        if (dstAddr.IsFailure())
+        {
+            return dstAddr;
+        }
+        const Word w = static_cast<Word>(dstAddr);
+        return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), static_cast<const Byte>(src));
+    }
+};
 
 template <auto Destination, auto Source, std::size_t Ticks = 4>
     requires(LdOperand<Destination> && LdOperand<Source>)
@@ -202,8 +202,8 @@ using LoadAIndirect = Instruction<
     LoadTempLoPC,
     IncrementPC,
     LoadTempHiPC,
-    ReadFromMemory ? LoadTempLoTemp : NoOp<LoadRegResultSet>,
-    ReadFromMemory ? LoadReg8TempLo<RegisterType::A> : LoadTempIndirect<RegisterType::A>,
+    std::conditional_t<ReadFromMemory, LoadTempLoTemp, NoOp<LoadRegResultSet>>,
+    std::conditional_t<ReadFromMemory, LoadReg8TempLo<RegisterType::A>, LoadTempIndirect<RegisterType::A>>,
     IncrementPC,
     LoadIRPC>;
 
@@ -213,21 +213,21 @@ using LoadHAIndirect = Instruction<
     IncrementPC,
     LoadTempLoPC,
     LoadTempImm8<true, 0xFF>,
-    ReadFromMemory ? LoadTempLoTemp : NoOp<LoadRegResultSet>,
-    ReadFromMemory ? LoadReg8TempLo<RegisterType::A> : LoadTempIndirect<RegisterType::A>,
+    std::conditional_t<ReadFromMemory, LoadTempLoTemp, NoOp<LoadRegResultSet>>,
+    std::conditional_t<ReadFromMemory, LoadReg8TempLo<RegisterType::A>, LoadTempIndirect<RegisterType::A>>,
     IncrementPC,
     LoadIRPC>;
 
 template <bool ReadFromMemory, RegisterType Source>
     requires(IsRegister8Bit<Source>)
-using LoadHAIndirectReg = Instruction <
-                          8,
-      LoadTempImm8<true, 0xFF>,
-      LoadTempReg8<false, Source>,
-      ReadFromMemory ? LoadTempLoTemp : NoOp<LoadRegResultSet>,
-      ReadFromMemory ? LoadReg8TempLo<RegisterType::A> : LoadTempIndirect<RegisterType::A>,
-      IncrementPC,
-      LoadIRPC > ;
+using LoadHAIndirectReg = Instruction<
+    8,
+    LoadTempImm8<true, 0xFF>,
+    LoadTempReg8<false, Source>,
+    std::conditional_t<ReadFromMemory, LoadTempLoTemp, NoOp<LoadRegResultSet>>,
+    std::conditional_t<ReadFromMemory, LoadReg8TempLo<RegisterType::A>, LoadTempIndirect<RegisterType::A>>,
+    IncrementPC,
+    LoadIRPC>;
 
 template <RegisterType Source>
     requires(IsRegister16Bit<Source>)

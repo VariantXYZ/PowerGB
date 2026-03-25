@@ -4,6 +4,7 @@
 #include <tuple>
 
 #include <common/result.hpp>
+#include <common/util.hpp>
 #include <cpu/include/registers.hpp>
 #include <memory/include/memory.hpp>
 
@@ -14,21 +15,8 @@ namespace pgb::cpu
 // Here, it is defined as:
 // * A set of 'Operands'
 // * A set of 'Operations' (one per tick) that may affect the memory state
-template <common::ResultSetType RS>
-class Operation
-{
-public:
-    using ResultSetType = RS;
-    using FunctionType  = ResultSetType (*)(memory::MemoryMap&) noexcept;
-    FunctionType _fn;
-
-    consteval inline Operation(FunctionType fn) noexcept : _fn(fn) {}
-
-    constexpr inline RS operator()(memory::MemoryMap& mmap) const noexcept
-    {
-        return _fn(mmap);
-    }
-};
+template <typename Op>
+concept Operation = common::ReturnsResultSet<Op::Execute, memory::MemoryMap&>;
 
 enum IncrementMode
 {
@@ -45,246 +33,283 @@ using LoadRegResultSet      = memory::MemoryMap::BaseAccessResultSet<void, memor
 
 // nop
 template <common::ResultSetType R>
-inline R NoOp(memory::MemoryMap&) noexcept
+struct NoOp
 {
-    return R::DefaultResultSuccess();
-}
+    static inline R Execute(memory::MemoryMap&) noexcept
+    {
+        return R::DefaultResultSuccess();
+    }
+};
 
 // PC++
-inline IncrementPCResultSet IncrementPC(memory::MemoryMap& mmap) noexcept
+struct IncrementPC
 {
-    auto pcIncResult = mmap.IncrementPC();
-    return pcIncResult;
-}
+    static inline IncrementPCResultSet Execute(memory::MemoryMap& mmap) noexcept
+    {
+        auto pcIncResult = mmap.IncrementPC();
+        return pcIncResult;
+    }
+};
+
+// IR <- [PC]
+struct LoadIRPC
+{
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
+    {
+        auto pc     = mmap.ReadPC();
+        auto result = mmap.ReadByte(pc);
+        if (result.IsSuccess())
+        {
+            mmap.WriteByte(cpu::RegisterType::IR, result);
+        }
+        return result;
+    }
+};
 
 // Reg++ or Reg--
 template <RegisterType T, IncrementMode Mode>
-    requires(IsRegister16Bit<T>)
-inline IncrementRegResultSet SingleStepRegister(memory::MemoryMap& mmap) noexcept
+struct SingleStepRegister
 {
-    if (Mode == IncrementMode::None)
+    static inline IncrementRegResultSet Execute(memory::MemoryMap& mmap) noexcept
+        requires(IsRegister16Bit<T>)
     {
-        return IncrementRegResultSet::DefaultResultSuccess();
+        if (Mode == IncrementMode::None)
+        {
+            return IncrementRegResultSet::DefaultResultSuccess();
+        }
+
+        auto getResult = mmap.ReadWord(T);
+        if (getResult.IsSuccess())
+        {
+            auto value     = static_cast<const Word>(getResult) + (Mode == IncrementMode::Increment ? 1 : -1);
+            auto setResult = mmap.WriteWord(T, value);
+            return setResult;
+        }
+        return getResult;
     }
 
-    auto getResult = mmap.ReadWord(T);
-    if (getResult.IsSuccess())
+    static inline IncrementRegResultSet Execute(memory::MemoryMap& mmap) noexcept
+        requires(IsRegister8Bit<T>)
     {
-        auto value     = static_cast<const Word>(getResult) + (Mode == IncrementMode::Increment ? 1 : -1);
-        auto setResult = mmap.WriteWord(T, value);
-        return setResult;
-    }
-    return getResult;
-}
+        if (Mode == IncrementMode::None)
+        {
+            return IncrementRegResultSet::DefaultResultSuccess();
+        }
 
-template <RegisterType T, IncrementMode Mode>
-    requires(IsRegister8Bit<T>)
-inline IncrementRegResultSet SingleStepRegister(memory::MemoryMap& mmap) noexcept
-{
-    if (Mode == IncrementMode::None)
-    {
-        return IncrementRegResultSet::DefaultResultSuccess();
+        auto getResult = mmap.ReadByte(T);
+        if (getResult.IsSuccess())
+        {
+            auto value     = static_cast<const Byte>(getResult) + (Mode == IncrementMode::Increment ? 1 : -1);
+            auto setResult = mmap.WriteByte(T, value);
+            return setResult;
+        }
+        return getResult;
     }
-
-    auto getResult = mmap.ReadByte(T);
-    if (getResult.IsSuccess())
-    {
-        auto value     = static_cast<const Byte>(getResult) + (Mode == IncrementMode::Increment ? 1 : -1);
-        auto setResult = mmap.WriteByte(T, value);
-        return setResult;
-    }
-    return getResult;
-}
+};
 
 // Temp++ or Temp--
 template <IncrementMode Mode>
-inline IncrementRegResultSet SingleStepTemp(memory::MemoryMap& mmap) noexcept
+struct SingleStepTemp
 {
-    if (Mode == IncrementMode::None)
+    static inline IncrementRegResultSet Execute(memory::MemoryMap& mmap) noexcept
     {
+        if (Mode == IncrementMode::None)
+        {
+            return IncrementRegResultSet::DefaultResultSuccess();
+        }
+
+        auto wz = mmap.GetTemp();
+        wz++;
+        mmap.GetTempHi() = wz.HighByte();
+        mmap.GetTempLo() = wz.LowByte();
+
         return IncrementRegResultSet::DefaultResultSuccess();
     }
+};
 
-    auto wz = mmap.GetTemp();
-    wz++;
-    mmap.GetTempHi() = wz.HighByte();
-    mmap.GetTempLo() = wz.LowByte();
-
-    return IncrementRegResultSet::DefaultResultSuccess();
-}
-
-// IR <- [PC]
-inline LoadRegResultSet LoadIRPC(memory::MemoryMap& mmap) noexcept
+// Temp8 <- [PC];
+template <bool IsTempHi>
+struct LoadTemp8PC
 {
-    auto pc     = mmap.ReadPC();
-    auto result = mmap.ReadByte(pc);
-    if (result.IsSuccess())
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
     {
-        mmap.WriteByte(cpu::RegisterType::IR, result);
+        auto pc     = mmap.ReadPC();
+        auto result = mmap.ReadByte(pc);
+        if (result.IsSuccess())
+        {
+            auto& x = IsTempHi ? mmap.GetTempHi() : mmap.GetTempLo();
+            x       = result;
+        }
+        return result;
     }
-    return result;
-}
-
-// Z <- [PC];
-inline LoadRegResultSet LoadTempLoPC(memory::MemoryMap& mmap) noexcept
-{
-    auto pc     = mmap.ReadPC();
-    auto result = mmap.ReadByte(pc);
-    if (result.IsSuccess())
-    {
-        auto& Z = mmap.GetTempLo();
-        Z       = result;
-    }
-    return result;
-}
+};
+// Z <- [PC]
+using LoadTempLoPC = LoadTemp8PC<false>;
 // W <- [PC];
-inline LoadRegResultSet LoadTempHiPC(memory::MemoryMap& mmap) noexcept
-{
-    auto pc     = mmap.ReadPC();
-    auto result = mmap.ReadByte(pc);
-    if (result.IsSuccess())
-    {
-        auto& W = mmap.GetTempHi();
-        W       = result;
-    }
-    return result;
-}
+using LoadTempHiPC = LoadTemp8PC<true>;
+
 // Z <- [WZ];
-inline LoadRegResultSet LoadTempLoTemp(memory::MemoryMap& mmap) noexcept
+struct LoadTempLoTemp
 {
-    auto wz     = mmap.GetTemp();
-    auto result = mmap.ReadByte(wz);
-    if (result.IsSuccess())
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
     {
-        auto& Z = mmap.GetTempLo();
-        Z       = result;
+        auto wz     = mmap.GetTemp();
+        auto result = mmap.ReadByte(wz);
+        if (result.IsSuccess())
+        {
+            auto& Z = mmap.GetTempLo();
+            Z       = result;
+        }
+        return result;
     }
-    return result;
-}
+};
 
 // Z -> Reg8
 template <auto Destination>
     requires(IsRegister8Bit<Destination>)
-inline LoadRegResultSet LoadReg8TempLo(memory::MemoryMap& mmap) noexcept
+struct LoadReg8TempLo
 {
-    auto result = mmap.WriteByte(Destination, mmap.GetTempLo());
-    return result;
-}
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
+    {
+        auto result = mmap.WriteByte(Destination, mmap.GetTempLo());
+        return result;
+    }
+};
 
 // Z -> [Reg16]
 template <auto Destination>
     requires(IsRegister16Bit<Destination>)
-inline LoadRegResultSet LoadReg8TempLoIndirect(memory::MemoryMap& mmap) noexcept
+struct LoadReg8TempLoIndirect
 {
-    auto dstAddr = mmap.ReadWord(Destination);
-    if (dstAddr.IsFailure())
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
     {
-        return dstAddr;
+        auto dstAddr = mmap.ReadWord(Destination);
+        if (dstAddr.IsFailure())
+        {
+            return dstAddr;
+        }
+        const Word w = static_cast<Word>(dstAddr);
+        return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), mmap.GetTempLo());
     }
-    const Word w = static_cast<Word>(dstAddr);
-    return mmap.WriteByte(static_cast<std::uint_fast16_t>(w), mmap.GetTempLo());
-}
+};
 
 // Z <- [Reg16]
 template <auto Source>
     requires(IsRegister16Bit<Source>)
-inline LoadRegResultSet LoadIndirectReg8TempLo(memory::MemoryMap& mmap) noexcept
+struct LoadIndirectReg8TempLo
 {
-    auto srcAddr = mmap.ReadWord(Source);
-    if (srcAddr.IsFailure())
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
     {
-        return srcAddr;
+        auto srcAddr = mmap.ReadWord(Source);
+        if (srcAddr.IsFailure())
+        {
+            return srcAddr;
+        }
+
+        const Word w      = static_cast<Word>(srcAddr);
+        auto       result = mmap.ReadByte(w);
+
+        if (result.IsFailure())
+        {
+            return result;
+        }
+
+        auto& z = mmap.GetTempLo();
+        z       = static_cast<Byte>(result);
+
+        return LoadRegResultSet::DefaultResultSuccess();
     }
-
-    const Word w      = static_cast<Word>(srcAddr);
-    auto       result = mmap.ReadByte(w);
-
-    if (result.IsFailure())
-    {
-        return result;
-    }
-
-    auto& z = mmap.GetTempLo();
-    z       = static_cast<Byte>(result);
-
-    return LoadRegResultSet::DefaultResultSuccess();
-}
+};
 
 // WZ -> Reg16
 template <auto Destination>
     requires(IsRegister16Bit<Destination>)
-inline LoadRegResultSet LoadReg16Temp(memory::MemoryMap& mmap) noexcept
+struct LoadReg16Temp
 {
-    auto result = mmap.WriteWord(Destination, mmap.GetTemp());
-    return result;
-}
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
+    {
+        auto result = mmap.WriteWord(Destination, mmap.GetTemp());
+        return result;
+    }
+};
 
 // Reg16 -> WZ
 template <auto Source>
     requires(IsRegister16Bit<Source>)
-inline LoadRegResultSet LoadTempReg16(memory::MemoryMap& mmap) noexcept
+struct LoadTempReg16
 {
-    auto r1 = mmap.ReadWord(Source);
-    if (r1.IsFailure())
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
     {
+        auto r1 = mmap.ReadWord(Source);
+        if (r1.IsFailure())
+        {
+            return r1;
+        }
+        auto& val        = static_cast<const Word&>(r1);
+        mmap.GetTempHi() = val.HighByte();
+        mmap.GetTempLo() = val.LowByte();
         return r1;
     }
-    auto& val        = static_cast<const Word&>(r1);
-    mmap.GetTempHi() = val.HighByte();
-    mmap.GetTempLo() = val.LowByte();
-    return r1;
-}
+};
 
-// [WZ] <- Reg16 (2 bytes)
 template <RegisterType Source>
-    requires(IsRegister16Bit<Source>)
-inline LoadRegResultSet LoadTempIndirect(memory::MemoryMap& mmap) noexcept
+struct LoadTempIndirect
 {
-    auto wz     = mmap.GetTemp();
-    auto result = mmap.ReadWord(Source);
-    if (result.IsSuccess())
+    // [WZ] <- Reg16 (2 bytes)
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
+        requires(IsRegister16Bit<Source>)
     {
-        return mmap.WriteWordLE(wz, result);
+        auto wz     = mmap.GetTemp();
+        auto result = mmap.ReadWord(Source);
+        if (result.IsSuccess())
+        {
+            return mmap.WriteWordLE(wz, result);
+        }
+        return result;
     }
-    return result;
-}
 
-// [WZ] <- Reg8
-template <RegisterType Source>
-    requires(IsRegister8Bit<Source>)
-inline LoadRegResultSet LoadTempIndirect(memory::MemoryMap& mmap) noexcept
-{
-    auto wz     = mmap.GetTemp();
-    auto result = mmap.ReadByte(Source);
-    if (result.IsSuccess())
+    // [WZ] <- Reg8
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
+        requires(IsRegister8Bit<Source>)
     {
-        return mmap.WriteByte(wz, result);
+        auto wz     = mmap.GetTemp();
+        auto result = mmap.ReadByte(Source);
+        if (result.IsSuccess())
+        {
+            return mmap.WriteByte(wz, result);
+        }
+        return result;
     }
-    return result;
-}
+};
 
 // Imm8 -> Z
 template <bool IsTempHi, const Byte Source>
-inline LoadRegResultSet LoadTempImm8(memory::MemoryMap& mmap) noexcept
+struct LoadTempImm8
 {
-    auto& t = IsTempHi ? mmap.GetTempHi() : mmap.GetTempLo();
-    t       = Source;
-    return LoadRegResultSet::DefaultResultSuccess();
-}
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
+    {
+        auto& t = IsTempHi ? mmap.GetTempHi() : mmap.GetTempLo();
+        t       = Source;
+        return LoadRegResultSet::DefaultResultSuccess();
+    }
+};
 
 // Reg8 -> Temp
 template <bool IsTempHi, RegisterType Source>
     requires(IsRegister8Bit<Source>)
-inline LoadRegResultSet LoadTempReg8(memory::MemoryMap& mmap) noexcept
+struct LoadTempReg8
 {
-    auto& t = IsTempHi ? mmap.GetTempHi() : mmap.GetTempLo();
-    auto  r = mmap.ReadByte(Source);
-    if (r.IsSuccess())
+    static inline LoadRegResultSet Execute(memory::MemoryMap& mmap) noexcept
     {
-        t = static_cast<const Byte&>(r);
+        auto& t = IsTempHi ? mmap.GetTempHi() : mmap.GetTempLo();
+        auto  r = mmap.ReadByte(Source);
+        if (r.IsSuccess())
+        {
+            t = static_cast<const Byte&>(r);
+        }
+        return r;
     }
-    return r;
-}
+};
 
 template <std::size_t Ticks_, Operation... Operations>
 class Instruction
@@ -292,11 +317,11 @@ class Instruction
 private:
     using OperationVisitor                          = bool (*)(memory::MemoryMap&) noexcept;
     static constexpr OperationVisitor _operations[] = {[](memory::MemoryMap& memory) noexcept
-                                                       { return Operations(memory).IsSuccess(); }...};
+                                                       { return Operations::Execute(memory).IsSuccess(); }...};
 
 public:
     // An easy way to check lengths is to just see how many times we call IncrementPC (just use its type to figure it out)
-    static constexpr std::size_t Length = ((std::is_same_v<typename decltype(Operations)::ResultSetType, IncrementPCResultSet> ? 1 : 0) + ...);
+    static constexpr std::size_t Length = ((std::is_same_v<decltype(Operations::Execute(std::declval<memory::MemoryMap&>())), IncrementPCResultSet> ? 1 : 0) + ...);
     static constexpr std::size_t Ticks  = Ticks_;
     Instruction()                       = delete;
 
@@ -305,7 +330,7 @@ public:
     constexpr static std::size_t ExecuteAll(memory::MemoryMap& memory) noexcept
     {
         std::size_t t = 0;
-        (void)((Operations(memory).IsSuccess() ? (++t, true) : false) && ...);
+        (void)((Operations::Execute(memory).IsSuccess() ? (++t, true) : false) && ...);
         return t == sizeof...(Operations) ? Ticks : t;
     }
 
@@ -313,7 +338,7 @@ public:
     // Ignoring the results should allow the compiler to more heavily inline everything
     constexpr static void ExecuteAllForce(memory::MemoryMap& memory) noexcept
     {
-        (void)((Operations(memory)), ...);
+        (void)((Operations::Execute(memory)), ...);
     }
 
     // Execute specific operation
@@ -321,7 +346,7 @@ public:
     constexpr static auto ExecuteCycle(memory::MemoryMap& memory) noexcept
         requires(T < sizeof...(Operations))
     {
-        return std::get<T>(std::forward_as_tuple(Operations...))(memory);
+        return std::get<T>(std::forward_as_tuple(Operations::Execute...))(memory);
     }
 
     // Execute specific operation, does not retain the result value

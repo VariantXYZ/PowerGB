@@ -14,6 +14,8 @@ TEST_LIST = {
 
 using namespace pgb::cpu::instruction;
 
+#pragma GCC diagnostic ignored "-Waddress"
+
 void print_missing_instructions()
 {
     unsigned char countUnprefixed = 0xFF;

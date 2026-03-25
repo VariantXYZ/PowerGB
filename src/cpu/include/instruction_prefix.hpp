@@ -13,11 +13,14 @@ namespace pgb::cpu::instruction
 using PrefixResultSet = common::ResultSet<void, common::ResultSuccess, common::ResultFailure>;
 
 template <Byte Prefix>
-inline constexpr PrefixResultSet HandlePrefix(memory::MemoryMap& mmap) noexcept
+struct HandlePrefix
 {
-    mmap.SetActivePrefix(Prefix);
-    return PrefixResultSet::DefaultResultSuccess();
-}
+    static inline constexpr PrefixResultSet Execute(memory::MemoryMap& mmap) noexcept
+    {
+        mmap.SetActivePrefix(Prefix);
+        return PrefixResultSet::DefaultResultSuccess();
+    }
+};
 
 template <Byte P>
 using Prefix = Instruction<

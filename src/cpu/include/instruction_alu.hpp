@@ -28,6 +28,9 @@ using BasicAluResultSet             = AluResultSet<void, memory::MemoryMap::Resu
 using BasicAluOperationCallback     = std::int_fast32_t (*)(Byte /*Destination*/, Byte /*Operand*/, bool /*Carry bit*/);
 using BasicAluOperationFlagCallback = Nibble (*)(std::int_fast32_t /*Result*/, Byte /*Destination*/, Byte /*Operand*/);
 
+namespace
+{
+
 template <RegisterType Destination, auto Operand, auto Operation, auto Flag>
     requires(IsRegister8Bit<Destination> && (IsRegister8Bit<Operand> || IsRegister16Bit<Operand> || std::is_same_v<decltype(Operand), Byte> || IsRegisterTemp<Operand>))
 inline BasicAluResultSet BasicAluOperation(MemoryMap& mmap) noexcept
@@ -94,14 +97,14 @@ inline BasicAluResultSet AddReg(MemoryMap& mmap) noexcept
 {
     return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte srcValue, Nibble flag)
                              {
-                                 if constexpr (Carry)
-                                 {
-                                     return dstValue + srcValue + (flag & 0x1);
-                                 }
-                                 else
-                                 {
-                                     return dstValue + srcValue;
-                                 } },
+        if constexpr (Carry)
+        {
+            return dstValue + srcValue + (flag & 0x1);
+        }
+        else
+        {
+            return dstValue + srcValue;
+        } },
                              [](std::int_fast32_t value, Byte dstValue, Byte srcValue, Nibble flag)
                              {
                                  auto valueCasted = static_cast<Byte>(value);
@@ -119,14 +122,14 @@ inline BasicAluResultSet SubReg(MemoryMap& mmap) noexcept
 {
     return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte srcValue, Nibble flag)
                              {
-                                 if constexpr (Carry)
-                                 {
-                                     return dstValue - srcValue - (flag & 0x1);
-                                 }
-                                 else
-                                 {
-                                     return dstValue - srcValue;
-                                 } },
+        if constexpr (Carry)
+        {
+            return dstValue - srcValue - (flag & 0x1);
+        }
+        else
+        {
+            return dstValue - srcValue;
+        } },
                              [](std::int_fast32_t value, Byte dstValue, Byte srcValue, Nibble /*unused*/)
                              {
                                  auto valueCasted = static_cast<Byte>(value);
@@ -139,116 +142,154 @@ inline BasicAluResultSet SubReg(MemoryMap& mmap) noexcept
                              }>(mmap);
 }
 
+} // namespace
+
+template <RegisterType Destination, auto Operand, bool Carry, bool SetZero = true>
+struct AddRegOp
+{
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        return AddReg<Destination, Operand, Carry, SetZero>(mmap);
+    }
+};
+
+template <RegisterType Destination, auto Operand, bool Carry>
+struct SubRegOp
+{
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        return SubReg<Destination, Operand, Carry>(mmap);
+    }
+};
+
 template <RegisterType Destination, IncrementMode Mode>
     requires(IsRegister8Bit<Destination>)
-inline BasicAluResultSet SingleStepRegisterWithFlag(MemoryMap& mmap) noexcept
+struct SingleStepRegisterWithFlag
 {
-    static_assert(Mode != IncrementMode::None);
-    auto flag   = mmap.ReadFlag();
-    auto result = Mode == IncrementMode::Increment ? AddReg<Destination, (Byte)1, false>(mmap) : SubReg<Destination, (Byte)1, false>(mmap);
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        static_assert(Mode != IncrementMode::None);
+        auto flag   = mmap.ReadFlag();
+        auto result = Mode == IncrementMode::Increment ? AddReg<Destination, (Byte)1, false>(mmap) : SubReg<Destination, (Byte)1, false>(mmap);
 
-    // 'C' flag is not affected by 8-bit single step instructions
-    mmap.WriteFlag((mmap.ReadFlag() & 0b1110) | (flag & 0b0001));
-    return result;
-}
+        // 'C' flag is not affected by 8-bit single step instructions
+        mmap.WriteFlag((mmap.ReadFlag() & 0b1110) | (flag & 0b0001));
+        return result;
+    }
+};
 
 template <IncrementMode Mode>
-inline BasicAluResultSet SingleStepTempLoWithFlag(MemoryMap& mmap) noexcept
+struct SingleStepTempLoWithFlag
 {
-    static_assert(Mode != IncrementMode::None);
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        static_assert(Mode != IncrementMode::None);
 
-    const Byte operand = Mode == IncrementMode::Increment ? 1 : -1;
+        const Byte operand = Mode == IncrementMode::Increment ? 1 : -1;
 
-    auto& z            = mmap.GetTempLo();
-    Byte  z_           = z + operand;
+        auto& z            = mmap.GetTempLo();
+        Byte  z_           = z + operand;
 
-    bool Z             = z_ == 0;
-    bool N             = Mode == IncrementMode::Decrement;
-    bool H             = ((z ^ 1 ^ z_) & 0x10) != 0;
-    z                  = z_;
+        bool Z             = z_ == 0;
+        bool N             = Mode == IncrementMode::Decrement;
+        bool H             = ((z ^ 1 ^ z_) & 0x10) != 0;
+        z                  = z_;
 
-    Nibble flag        = Z << 3 | N << 2 | H << 1;
-    // Preserve carry flag
-    mmap.WriteFlag((mmap.ReadFlag() & 0b0001) | (flag & 0b1110));
+        Nibble flag        = Z << 3 | N << 2 | H << 1;
+        // Preserve carry flag
+        mmap.WriteFlag((mmap.ReadFlag() & 0b0001) | (flag & 0b1110));
 
-    return BasicAluResultSet::DefaultResultSuccess();
-}
+        return BasicAluResultSet::DefaultResultSuccess();
+    }
+};
 
 template <RegisterType Destination, RegisterType Operand>
-inline BasicAluResultSet CpReg(MemoryMap& mmap) noexcept
+struct CpReg
 {
-    // Sub but without any non-flag writes
-    return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte /*unused*/, Nibble /*unused*/)
-                             { return dstValue; },
-                             [](std::int_fast32_t /*unused*/, Byte dstValue, Byte srcValue, Nibble /*unused*/)
-                             {
-                                 auto value       = dstValue - srcValue;
-                                 auto valueCasted = static_cast<Byte>(value);
-                                 // Flags
-                                 bool Z           = valueCasted == 0;
-                                 bool N           = true;
-                                 bool H           = ((dstValue ^ srcValue ^ valueCasted) & 0x10) != 0;
-                                 bool C           = value < 0;
-                                 return Z << 3 | N << 2 | H << 1 | C << 0;
-                             }>(mmap);
-}
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        // Sub but without any non-flag writes
+        return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte /*unused*/, Nibble /*unused*/)
+                                 { return dstValue; },
+                                 [](std::int_fast32_t /*unused*/, Byte dstValue, Byte srcValue, Nibble /*unused*/)
+                                 {
+                                     auto value       = dstValue - srcValue;
+                                     auto valueCasted = static_cast<Byte>(value);
+                                     // Flags
+                                     bool Z           = valueCasted == 0;
+                                     bool N           = true;
+                                     bool H           = ((dstValue ^ srcValue ^ valueCasted) & 0x10) != 0;
+                                     bool C           = value < 0;
+                                     return Z << 3 | N << 2 | H << 1 | C << 0;
+                                 }>(mmap);
+    }
+};
 
 template <RegisterType Destination, RegisterType Operand>
-inline BasicAluResultSet AndReg(MemoryMap& mmap) noexcept
+struct AndReg
 {
-    return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte srcValue, Nibble /*unused*/)
-                             { return dstValue & srcValue; },
-                             [](std::int_fast32_t value, Byte /*unused*/, Byte /*unused*/, Nibble /*unused*/)
-                             {
-                                 auto valueCasted = static_cast<Byte>(value);
-                                 // Flags
-                                 bool Z           = valueCasted == 0;
-                                 bool N           = false;
-                                 bool H           = true;
-                                 bool C           = false;
-                                 return Z << 3 | N << 2 | H << 1 | C << 0;
-                             }>(mmap);
-}
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte srcValue, Nibble /*unused*/)
+                                 { return dstValue & srcValue; },
+                                 [](std::int_fast32_t value, Byte /*unused*/, Byte /*unused*/, Nibble /*unused*/)
+                                 {
+                                     auto valueCasted = static_cast<Byte>(value);
+                                     // Flags
+                                     bool Z           = valueCasted == 0;
+                                     bool N           = false;
+                                     bool H           = true;
+                                     bool C           = false;
+                                     return Z << 3 | N << 2 | H << 1 | C << 0;
+                                 }>(mmap);
+    }
+};
 
 template <RegisterType Destination, RegisterType Operand>
-inline BasicAluResultSet XorReg(MemoryMap& mmap) noexcept
+struct XorReg
 {
-    return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte srcValue, Nibble /*unused*/)
-                             { return dstValue ^ srcValue; },
-                             [](std::int_fast32_t value, Byte /*unused*/, Byte /*unused*/, Nibble /*unused*/)
-                             {
-                                 auto valueCasted = static_cast<Byte>(value);
-                                 // Flags
-                                 bool Z           = valueCasted == 0;
-                                 bool N           = false;
-                                 bool H           = false;
-                                 bool C           = false;
-                                 return Z << 3 | N << 2 | H << 1 | C << 0;
-                             }>(mmap);
-}
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte srcValue, Nibble /*unused*/)
+                                 { return dstValue ^ srcValue; },
+                                 [](std::int_fast32_t value, Byte /*unused*/, Byte /*unused*/, Nibble /*unused*/)
+                                 {
+                                     auto valueCasted = static_cast<Byte>(value);
+                                     // Flags
+                                     bool Z           = valueCasted == 0;
+                                     bool N           = false;
+                                     bool H           = false;
+                                     bool C           = false;
+                                     return Z << 3 | N << 2 | H << 1 | C << 0;
+                                 }>(mmap);
+    }
+};
 
 template <RegisterType Destination, RegisterType Operand>
-inline BasicAluResultSet OrReg(MemoryMap& mmap) noexcept
+struct OrReg
 {
-    return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte srcValue, Nibble /*unused*/)
-                             { return dstValue | srcValue; },
-                             [](std::int_fast32_t value, Byte /*unused*/, Byte /*unused*/, Nibble /*unused*/)
-                             {
-                                 auto valueCasted = static_cast<Byte>(value);
-                                 // Flags
-                                 bool Z           = valueCasted == 0;
-                                 bool N           = false;
-                                 bool H           = false;
-                                 bool C           = false;
-                                 return Z << 3 | N << 2 | H << 1 | C << 0;
-                             }>(mmap);
-}
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        return BasicAluOperation<Destination, Operand, [](Byte dstValue, Byte srcValue, Nibble /*unused*/)
+                                 { return dstValue | srcValue; },
+                                 [](std::int_fast32_t value, Byte /*unused*/, Byte /*unused*/, Nibble /*unused*/)
+                                 {
+                                     auto valueCasted = static_cast<Byte>(value);
+                                     // Flags
+                                     bool Z           = valueCasted == 0;
+                                     bool N           = false;
+                                     bool H           = false;
+                                     bool C           = false;
+                                     return Z << 3 | N << 2 | H << 1 | C << 0;
+                                 }>(mmap);
+    }
+};
 
 template <auto Destination, auto Operand, std::size_t Ticks = IsRegister16Bit<Operand> ? 8 : 4>
     requires(IsRegister8Bit<Destination> && (IsRegister8Bit<Operand> || IsRegister16Bit<Operand>))
 using Add = Instruction<
     /*Ticks*/ Ticks,
-    AddReg<Destination, Operand, false>,
+    AddRegOp<Destination, Operand, false>,
     IncrementPC,
     LoadIRPC>;
 
@@ -256,7 +297,7 @@ template <auto Destination, auto Operand, std::size_t Ticks = IsRegister16Bit<Op
     requires(IsRegister8Bit<Destination> && (IsRegister8Bit<Operand> || IsRegister16Bit<Operand>))
 using Adc = Instruction<
     /*Ticks*/ Ticks,
-    AddReg<Destination, Operand, true>,
+    AddRegOp<Destination, Operand, true>,
     IncrementPC,
     LoadIRPC>;
 
@@ -264,8 +305,8 @@ template <RegisterType Destination, RegisterType Operand>
     requires(IsRegister16Bit<Destination> && IsRegister16Bit<Operand>)
 using Add16 = Instruction<
     8,
-    AddReg<GetRegisterComponent<Destination, false>(), GetRegisterComponent<Operand, false>(), false, false>,
-    AddReg<GetRegisterComponent<Destination, true>(), GetRegisterComponent<Operand, true>(), true, false>,
+    AddRegOp<GetRegisterComponent<Destination, false>(), GetRegisterComponent<Operand, false>(), false, false>,
+    AddRegOp<GetRegisterComponent<Destination, true>(), GetRegisterComponent<Operand, true>(), true, false>,
     IncrementPC,
     LoadIRPC>;
 
@@ -275,8 +316,8 @@ template <RegisterType Destination>
 using AddSp = Instruction<
     8,
     LoadTempReg16<RegisterType::SP>,
-    AddReg<GetRegisterComponent<Destination, false>(), RegisterType::TempLo, false, false>,
-    AddReg<GetRegisterComponent<Destination, true>(), RegisterType::TempHi, true, false>,
+    AddRegOp<GetRegisterComponent<Destination, false>(), RegisterType::TempLo, false, false>,
+    AddRegOp<GetRegisterComponent<Destination, true>(), RegisterType::TempHi, true, false>,
     IncrementPC,
     LoadIRPC>;
 
@@ -284,7 +325,7 @@ template <auto Destination, auto Operand, std::size_t Ticks = IsRegister16Bit<Op
     requires(IsRegister8Bit<Destination> && (IsRegister8Bit<Operand> || IsRegister16Bit<Operand>))
 using Sub = Instruction<
     /*Ticks*/ Ticks,
-    SubReg<Destination, Operand, false>,
+    SubRegOp<Destination, Operand, false>,
     IncrementPC,
     LoadIRPC>;
 
@@ -292,7 +333,7 @@ template <auto Destination, auto Operand, std::size_t Ticks = IsRegister16Bit<Op
     requires(IsRegister8Bit<Destination> && (IsRegister8Bit<Operand> || IsRegister16Bit<Operand>))
 using Sbc = Instruction<
     /*Ticks*/ Ticks,
-    SubReg<Destination, Operand, true>,
+    SubRegOp<Destination, Operand, true>,
     IncrementPC,
     LoadIRPC>;
 

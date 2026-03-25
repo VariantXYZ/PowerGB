@@ -2,10 +2,10 @@
 
 #include <concepts>
 #include <cstddef>
+#include <iterator>
 #include <tuple>
 #include <type_traits>
 #include <variant>
-#include <iterator>
 
 #include <common/util.hpp>
 
@@ -60,8 +60,8 @@ private:
     struct Empty
     {
     };
-    using TypeWrapper = std::conditional_t<std::is_void_v<Type>, Empty, Type>;
-    [[no_unique_address]] const TypeWrapper _value = {};
+    using TypeWrapper                                = std::conditional_t<std::is_void_v<Type>, Empty, Type>;
+    [[no_unique_address]] const TypeWrapper _value   = {};
 
     using DefaultResultType                          = std::tuple_element_t<0, std::tuple<Results...>>;
 
@@ -96,8 +96,7 @@ public:
         using NewResultSetType    = ResultSet<T, R...>;
         using NewResultSetVisitor = NewResultSetType (*)(T, std::size_t);
         NewResultSetVisitor fn[]  = {[](T t, std::size_t idx)
-                                     { return NewResultSetType(Results(_isSuccessVisitor[idx]), t); }...
-        };
+                                     { return NewResultSetType(Results(_isSuccessVisitor[idx]), t); }...};
         return fn[_result.index()](static_cast<T>(_value), _result.index());
     }
 
@@ -108,8 +107,7 @@ public:
         using NewResultSetType    = ResultSet<T, R...>;
         using NewResultSetVisitor = NewResultSetType (*)(std::size_t);
         NewResultSetVisitor fn[]  = {[](std::size_t idx)
-                                     { return NewResultSetType(Results(_isSuccessVisitor[idx])); }...
-        };
+                                     { return NewResultSetType(Results(_isSuccessVisitor[idx])); }...};
         // Casting to void throws away the underlying value
         return fn[_result.index()](_result.index());
     }
@@ -192,6 +190,12 @@ concept ResultSetType =
         {
             ResultSet{r}
         } -> std::same_as<R>;
+    };
+
+template <auto Fn, typename... Args>
+concept ReturnsResultSet =
+    requires(Args&&... args) {
+        { Fn(args...) } -> ResultSetType;
     };
 
 } // namespace pgb::common

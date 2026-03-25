@@ -24,83 +24,89 @@ using RsbResultSet =
 using BasicRsbResultSet = RsbResultSet<void, memory::MemoryMap::ResultRegisterOverflow>;
 
 template <RegisterType Destination, bool Circular, bool Zero>
-inline BasicRsbResultSet RotateLeft(MemoryMap& mmap) noexcept
+struct RotateLeft
 {
-    auto result = mmap.ReadByte(Destination);
-    if (result.IsFailure())
+    static inline BasicRsbResultSet Execute(MemoryMap& mmap) noexcept
     {
-        return result;
+        auto result = mmap.ReadByte(Destination);
+        if (result.IsFailure())
+        {
+            return result;
+        }
+
+        auto& d    = static_cast<const Byte&>(result);
+        auto  flag = mmap.ReadFlag();
+
+        // C is b7 in both the circular and non-circular case
+        // In non-cicular, oldC becomes bit 0
+        bool oldC  = flag & 0b0001;
+        bool C     = (d & 0b10000000) != 0;
+        // Other flags are just set to 0 here
+        flag       = C;
+
+        // If Zero is not determined, then we just set it to 0 (for RLCA, RLA)
+        // Z if the new value will be 0
+        bool Z     = ((d & 0b01111111) == 0) && (Circular ? C != 0b1 : oldC != 0b1);
+        if constexpr (Zero)
+        {
+            flag = flag | (Z << 3);
+        }
+
+        mmap.WriteFlag(flag);
+
+        if constexpr (Circular)
+        {
+            return mmap.WriteByte(Destination, static_cast<Byte>((d << 1) | C));
+        }
+        else
+        {
+            return mmap.WriteByte(Destination, static_cast<Byte>((d << 1) | oldC));
+        }
     }
-
-    auto& d    = static_cast<const Byte&>(result);
-    auto  flag = mmap.ReadFlag();
-
-    // C is b7 in both the circular and non-circular case
-    // In non-cicular, oldC becomes bit 0
-    bool oldC  = flag & 0b0001;
-    bool C     = (d & 0b10000000) != 0;
-    // Other flags are just set to 0 here
-    flag       = C;
-
-    // If Zero is not determined, then we just set it to 0 (for RLCA, RLA)
-    // Z if the new value will be 0
-    bool Z     = ((d & 0b01111111) == 0) && (Circular ? C != 0b1 : oldC != 0b1);
-    if constexpr (Zero)
-    {
-        flag = flag | (Z << 3);
-    }
-
-    mmap.WriteFlag(flag);
-
-    if constexpr (Circular)
-    {
-        return mmap.WriteByte(Destination, static_cast<Byte>((d << 1) | C));
-    }
-    else
-    {
-        return mmap.WriteByte(Destination, static_cast<Byte>((d << 1) | oldC));
-    }
-}
+};
 
 template <RegisterType Destination, bool Circular, bool Zero>
-inline BasicRsbResultSet RotateRight(MemoryMap& mmap) noexcept
+struct RotateRight
 {
-    auto result = mmap.ReadByte(Destination);
-    if (result.IsFailure())
+    static inline BasicRsbResultSet Execute(MemoryMap& mmap) noexcept
     {
-        return result;
+        auto result = mmap.ReadByte(Destination);
+        if (result.IsFailure())
+        {
+            return result;
+        }
+
+        auto& d    = static_cast<const Byte&>(result);
+        auto  flag = mmap.ReadFlag();
+
+        // C is b7 in both the circular and non-circular case
+        // In non-cicular, oldC becomes bit 0
+        bool oldC  = flag & 0b0001;
+        bool C     = (d & 0b00000001) != 0;
+        // Other flags are just set to 0 here
+        flag       = C;
+
+        // If Zero is not determined, then we just set it to 0 (for RLCA, RLA)
+        // Z if the new value will be 0
+        bool Z     = ((d & 0b11111110) == 0) && (Circular ? C != 0b1 : oldC != 0b1);
+        if constexpr (Zero)
+        {
+
+            flag = flag | (Z << 3);
+        }
+
+        mmap.WriteFlag(flag);
+
+        if constexpr (Circular)
+        {
+            return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1) | C << 7));
+        }
+        else
+        {
+            return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1) | oldC << 7));
+        }
     }
-
-    auto& d    = static_cast<const Byte&>(result);
-    auto  flag = mmap.ReadFlag();
-
-    // C is b7 in both the circular and non-circular case
-    // In non-cicular, oldC becomes bit 0
-    bool oldC  = flag & 0b0001;
-    bool C     = (d & 0b00000001) != 0;
-    // Other flags are just set to 0 here
-    flag       = C;
-
-    // If Zero is not determined, then we just set it to 0 (for RLCA, RLA)
-    // Z if the new value will be 0
-    bool Z     = ((d & 0b11111110) == 0) && (Circular ? C != 0b1 : oldC != 0b1);
-    if constexpr (Zero)
-    {
-
-        flag = flag | (Z << 3);
-    }
-
-    mmap.WriteFlag(flag);
-
-    if constexpr (Circular)
-    {
-        return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1) | C << 7));
-    }
-    else
-    {
-        return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1) | oldC << 7));
-    }
-}
+};
 
 template <RegisterType Destination, bool Circular, bool Zero>
 using Rl = Instruction<
