@@ -1034,7 +1034,7 @@ acutest_name_contains_word_(const char* name, const char* pattern)
 
     pattern_len = strlen(pattern);
 
-    substr = strstr(name, pattern);
+    substr = name == nullptr || pattern == nullptr ? nullptr : strstr(name, pattern);
     while(substr != NULL) {
         int starts_on_word_boundary = (substr == name || strchr(word_delim, substr[-1]) != NULL);
         int ends_on_word_boundary = (substr[pattern_len] == '\0' || strchr(word_delim, substr[pattern_len]) != NULL);
@@ -1077,7 +1077,7 @@ acutest_select_(const char* pattern)
 
     /* Try relaxed match. */
     for(i = 0; i < acutest_list_size_; i++) {
-        if(strstr(acutest_list_[i].name, pattern) != NULL) {
+        if(acutest_list_[i].name != nullptr && pattern != nullptr && strstr(acutest_list_[i].name, pattern) != NULL) {
             acutest_test_data_[i].state = ACUTEST_STATE_SELECTED;
             n++;
         }
