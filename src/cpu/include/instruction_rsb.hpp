@@ -8,6 +8,7 @@ using namespace pgb::memory;
 
 namespace pgb::cpu::instruction
 {
+
 template <typename T, ResultType... Results>
 using RsbResultSet =
     common::ResultSet<
@@ -23,13 +24,27 @@ using RsbResultSet =
 
 using BasicRsbResultSet = RsbResultSet<void, memory::MemoryMap::ResultRegisterOverflow>;
 
-template <RegisterType Destination, bool Circular, bool Zero>
-struct RotateLeft
+namespace
+{
+
+enum ShiftMode
+{
+    ShiftArithmetic,
+    ShiftLogical,
+    Rotate,
+    RotateCircular
+};
+
+template <RegisterType Destination, ShiftMode Mode, bool Zero>
+struct ShiftLeft
 {
     static inline BasicRsbResultSet Execute(MemoryMap& mmap) noexcept
         requires IsRegister8Bit<Destination>
     {
-        auto result = mmap.ReadByte(Destination);
+        constexpr bool Circular = Mode == ShiftMode::RotateCircular;
+        constexpr bool IsRotate = Mode == ShiftMode::Rotate || Mode == ShiftMode::RotateCircular;
+
+        auto result             = mmap.ReadByte(Destination);
         if (result.IsFailure())
         {
             return result;
@@ -47,7 +62,7 @@ struct RotateLeft
 
         // If Zero is not determined, then we just set it to 0 (for RLCA, RLA)
         // Z if the new value will be 0
-        bool Z     = ((d & 0b01111111) == 0) && (Circular ? C != 0b1 : oldC != 0b1);
+        bool Z     = ((d & 0b01111111) == 0) && (IsRotate ? (Circular ? C != 0b1 : oldC != 0b1) : true);
         if constexpr (Zero)
         {
             flag = flag | (Z << 3);
@@ -55,20 +70,30 @@ struct RotateLeft
 
         mmap.WriteFlag(flag);
 
-        if constexpr (Circular)
+        if constexpr (IsRotate)
         {
-            return mmap.WriteByte(Destination, static_cast<Byte>((d << 1) | C));
+            if constexpr (Circular)
+            {
+                return mmap.WriteByte(Destination, static_cast<Byte>((d << 1) | C));
+            }
+            else
+            {
+                return mmap.WriteByte(Destination, static_cast<Byte>((d << 1) | oldC));
+            }
         }
         else
         {
-            return mmap.WriteByte(Destination, static_cast<Byte>((d << 1) | oldC));
+            return mmap.WriteByte(Destination, static_cast<Byte>((d << 1)));
         }
     }
 
     static inline BasicRsbResultSet Execute(MemoryMap& mmap) noexcept
         requires IsRegister16Bit<Destination>
     {
-        auto addrResult = mmap.ReadWord(Destination);
+        constexpr bool Circular = Mode == ShiftMode::RotateCircular;
+        constexpr bool IsRotate = Mode == ShiftMode::Rotate || Mode == ShiftMode::RotateCircular;
+
+        auto addrResult         = mmap.ReadWord(Destination);
         if (addrResult.IsFailure())
         {
             return addrResult;
@@ -93,7 +118,7 @@ struct RotateLeft
 
         // If Zero is not determined, then we just set it to 0 (for RLCA, RLA)
         // Z if the new value will be 0
-        bool Z     = ((d & 0b01111111) == 0) && (Circular ? C != 0b1 : oldC != 0b1);
+        bool Z     = ((d & 0b01111111) == 0) && (IsRotate ? (Circular ? C != 0b1 : oldC != 0b1) : true);
         if constexpr (Zero)
         {
             flag = flag | (Z << 3);
@@ -101,24 +126,35 @@ struct RotateLeft
 
         mmap.WriteFlag(flag);
 
-        if constexpr (Circular)
+        if constexpr (IsRotate)
         {
-            return mmap.WriteByte(addr, static_cast<Byte>((d << 1) | C));
+            if constexpr (Circular)
+            {
+                return mmap.WriteByte(addr, static_cast<Byte>((d << 1) | C));
+            }
+            else
+            {
+                return mmap.WriteByte(addr, static_cast<Byte>((d << 1) | oldC));
+            }
         }
         else
         {
-            return mmap.WriteByte(addr, static_cast<Byte>((d << 1) | oldC));
+            return mmap.WriteByte(addr, static_cast<Byte>((d << 1)));
         }
     }
 };
 
-template <RegisterType Destination, bool Circular, bool Zero>
-struct RotateRight
+template <RegisterType Destination, ShiftMode Mode, bool Zero>
+struct ShiftRight
 {
     static inline BasicRsbResultSet Execute(MemoryMap& mmap) noexcept
         requires IsRegister8Bit<Destination>
     {
-        auto result = mmap.ReadByte(Destination);
+        constexpr bool Circular     = Mode == ShiftMode::RotateCircular;
+        constexpr bool IsRotate     = Mode == ShiftMode::Rotate || Mode == ShiftMode::RotateCircular;
+        constexpr bool IsArithmetic = Mode == ShiftMode::ShiftArithmetic;
+
+        auto result                 = mmap.ReadByte(Destination);
         if (result.IsFailure())
         {
             return result;
@@ -136,7 +172,7 @@ struct RotateRight
 
         // If Zero is not determined, then we just set it to 0 (for RLCA, RLA)
         // Z if the new value will be 0
-        bool Z     = ((d & 0b11111110) == 0) && (Circular ? C != 0b1 : oldC != 0b1);
+        bool Z     = ((d & 0b11111110) == 0) && (IsRotate ? (Circular ? C != 0b1 : oldC != 0b1) : true);
         if constexpr (Zero)
         {
 
@@ -145,20 +181,38 @@ struct RotateRight
 
         mmap.WriteFlag(flag);
 
-        if constexpr (Circular)
+        if constexpr (IsRotate)
         {
-            return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1) | C << 7));
+            if constexpr (Circular)
+            {
+                return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1) | C << 7));
+            }
+            else
+            {
+                return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1) | oldC << 7));
+            }
         }
         else
         {
-            return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1) | oldC << 7));
+            if constexpr (IsArithmetic)
+            {
+                return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1) | (d & 0b10000000)));
+            }
+            else
+            {
+                return mmap.WriteByte(Destination, static_cast<Byte>((d >> 1)));
+            }
         }
     }
 
     static inline BasicRsbResultSet Execute(MemoryMap& mmap) noexcept
         requires IsRegister16Bit<Destination>
     {
-        auto addrResult = mmap.ReadWord(Destination);
+        constexpr bool Circular     = Mode == ShiftMode::RotateCircular;
+        constexpr bool IsRotate     = Mode == ShiftMode::Rotate || Mode == ShiftMode::RotateCircular;
+        constexpr bool IsArithmetic = Mode == ShiftMode::ShiftArithmetic;
+
+        auto addrResult             = mmap.ReadWord(Destination);
         if (addrResult.IsFailure())
         {
             return addrResult;
@@ -184,22 +238,35 @@ struct RotateRight
 
         // If Zero is not determined, then we just set it to 0 (for RLCA, RLA)
         // Z if the new value will be 0
-        bool Z     = ((d & 0b11111110) == 0) && (Circular ? C != 0b1 : oldC != 0b1);
+        bool Z     = ((d & 0b11111110) == 0) && (IsRotate ? (Circular ? C != 0b1 : oldC != 0b1) : true);
         if constexpr (Zero)
         {
-
             flag = flag | (Z << 3);
         }
 
         mmap.WriteFlag(flag);
 
-        if constexpr (Circular)
+        if constexpr (IsRotate)
         {
-            return mmap.WriteByte(addr, static_cast<Byte>((d >> 1) | C << 7));
+            if constexpr (Circular)
+            {
+                return mmap.WriteByte(addr, static_cast<Byte>((d >> 1) | C << 7));
+            }
+            else
+            {
+                return mmap.WriteByte(addr, static_cast<Byte>((d >> 1) | oldC << 7));
+            }
         }
         else
         {
-            return mmap.WriteByte(addr, static_cast<Byte>((d >> 1) | oldC << 7));
+            if constexpr (IsArithmetic)
+            {
+                return mmap.WriteByte(addr, static_cast<Byte>((d >> 1) | (d & 0b10000000)));
+            }
+            else
+            {
+                return mmap.WriteByte(addr, static_cast<Byte>((d >> 1)));
+            }
         }
     }
 };
@@ -207,16 +274,39 @@ struct RotateRight
 template <RegisterType Destination, bool Circular, bool Zero>
 using Rl = Instruction<
     /*Ticks*/ IsRegister8Bit<Destination> ? 4 : 12,
-    RotateLeft<Destination, Circular, Zero>,
+    ShiftLeft<Destination, Circular ? ShiftMode::RotateCircular : ShiftMode::Rotate, Zero>,
     IncrementPC,
     LoadIRPC>;
 
 template <RegisterType Destination, bool Circular, bool Zero>
 using Rr = Instruction<
     /*Ticks*/ IsRegister8Bit<Destination> ? 4 : 12,
-    RotateRight<Destination, Circular, Zero>,
+    ShiftRight<Destination, Circular ? ShiftMode::RotateCircular : ShiftMode::Rotate, Zero>,
     IncrementPC,
     LoadIRPC>;
+
+template <RegisterType Destination>
+using Sla = Instruction<
+    /*Ticks*/ IsRegister8Bit<Destination> ? 4 : 12,
+    ShiftLeft<Destination, ShiftMode::ShiftArithmetic, true>,
+    IncrementPC,
+    LoadIRPC>;
+
+template <RegisterType Destination>
+using Sra = Instruction<
+    /*Ticks*/ IsRegister8Bit<Destination> ? 4 : 12,
+    ShiftRight<Destination, ShiftMode::ShiftArithmetic, true>,
+    IncrementPC,
+    LoadIRPC>;
+
+template <RegisterType Destination>
+using Srl = Instruction<
+    /*Ticks*/ IsRegister8Bit<Destination> ? 4 : 12,
+    ShiftRight<Destination, ShiftMode::ShiftLogical, true>,
+    IncrementPC,
+    LoadIRPC>;
+
+} // namespace
 
 using RLCA_Decoder           = Instantiate<InstructionDecoder<"rlca", 0x07, Rl<RegisterType::A, true, false>>>::Type;
 using RRCA_Decoder           = Instantiate<InstructionDecoder<"rrca", 0x0F, Rr<RegisterType::A, true, false>>>::Type;
@@ -240,7 +330,6 @@ using RRC_H_Decoder          = Instantiate<InstructionDecoder<"rrc h", 0x0C, Rr<
 using RRC_L_Decoder          = Instantiate<InstructionDecoder<"rrc l", 0x0D, Rr<RegisterType::L, true, true>, 0xCB>>::Type;
 using RRC_IndirectHL_Decoder = Instantiate<InstructionDecoder<"rrc [hl]", 0x0E, Rr<RegisterType::HL, true, true>, 0xCB>>::Type;
 using RRC_A_Decoder          = Instantiate<InstructionDecoder<"rrc a", 0x0F, Rr<RegisterType::A, true, true>, 0xCB>>::Type;
-
 using RL_B_Decoder           = Instantiate<InstructionDecoder<"rl b", 0x10, Rl<RegisterType::B, false, true>, 0xCB>>::Type;
 using RL_C_Decoder           = Instantiate<InstructionDecoder<"rl c", 0x11, Rl<RegisterType::C, false, true>, 0xCB>>::Type;
 using RL_D_Decoder           = Instantiate<InstructionDecoder<"rl d", 0x12, Rl<RegisterType::D, false, true>, 0xCB>>::Type;
@@ -249,7 +338,6 @@ using RL_H_Decoder           = Instantiate<InstructionDecoder<"rl h", 0x14, Rl<R
 using RL_L_Decoder           = Instantiate<InstructionDecoder<"rl l", 0x15, Rl<RegisterType::L, false, true>, 0xCB>>::Type;
 using RL_IndirectHL_Decoder  = Instantiate<InstructionDecoder<"rl [hl]", 0x16, Rl<RegisterType::HL, false, true>, 0xCB>>::Type;
 using RL_A_Decoder           = Instantiate<InstructionDecoder<"rl a", 0x17, Rl<RegisterType::A, false, true>, 0xCB>>::Type;
-
 using RR_B_Decoder           = Instantiate<InstructionDecoder<"rr b", 0x18, Rr<RegisterType::B, false, true>, 0xCB>>::Type;
 using RR_C_Decoder           = Instantiate<InstructionDecoder<"rr c", 0x19, Rr<RegisterType::C, false, true>, 0xCB>>::Type;
 using RR_D_Decoder           = Instantiate<InstructionDecoder<"rr d", 0x1A, Rr<RegisterType::D, false, true>, 0xCB>>::Type;
@@ -258,5 +346,30 @@ using RR_H_Decoder           = Instantiate<InstructionDecoder<"rr h", 0x1C, Rr<R
 using RR_L_Decoder           = Instantiate<InstructionDecoder<"rr l", 0x1D, Rr<RegisterType::L, false, true>, 0xCB>>::Type;
 using RR_IndirectHL_Decoder  = Instantiate<InstructionDecoder<"rr [hl]", 0x1E, Rr<RegisterType::HL, false, true>, 0xCB>>::Type;
 using RR_A_Decoder           = Instantiate<InstructionDecoder<"rr a", 0x1F, Rr<RegisterType::A, false, true>, 0xCB>>::Type;
+using SLA_B_Decoder          = Instantiate<InstructionDecoder<"sla b", 0x20, Sla<RegisterType::B>, 0xCB>>::Type;
+using SLA_C_Decoder          = Instantiate<InstructionDecoder<"sla c", 0x21, Sla<RegisterType::C>, 0xCB>>::Type;
+using SLA_D_Decoder          = Instantiate<InstructionDecoder<"sla d", 0x22, Sla<RegisterType::D>, 0xCB>>::Type;
+using SLA_E_Decoder          = Instantiate<InstructionDecoder<"sla e", 0x23, Sla<RegisterType::E>, 0xCB>>::Type;
+using SLA_H_Decoder          = Instantiate<InstructionDecoder<"sla h", 0x24, Sla<RegisterType::H>, 0xCB>>::Type;
+using SLA_L_Decoder          = Instantiate<InstructionDecoder<"sla l", 0x25, Sla<RegisterType::L>, 0xCB>>::Type;
+using SLA_IndirectHL_Decoder = Instantiate<InstructionDecoder<"sla [hl]", 0x26, Sla<RegisterType::HL>, 0xCB>>::Type;
+using SLA_A_Decoder          = Instantiate<InstructionDecoder<"sla a", 0x27, Sla<RegisterType::A>, 0xCB>>::Type;
+using SRA_B_Decoder          = Instantiate<InstructionDecoder<"sra b", 0x28, Sra<RegisterType::B>, 0xCB>>::Type;
+using SRA_C_Decoder          = Instantiate<InstructionDecoder<"sra c", 0x29, Sra<RegisterType::C>, 0xCB>>::Type;
+using SRA_D_Decoder          = Instantiate<InstructionDecoder<"sra d", 0x2A, Sra<RegisterType::D>, 0xCB>>::Type;
+using SRA_E_Decoder          = Instantiate<InstructionDecoder<"sra e", 0x2B, Sra<RegisterType::E>, 0xCB>>::Type;
+using SRA_H_Decoder          = Instantiate<InstructionDecoder<"sra h", 0x2C, Sra<RegisterType::H>, 0xCB>>::Type;
+using SRA_L_Decoder          = Instantiate<InstructionDecoder<"sra l", 0x2D, Sra<RegisterType::L>, 0xCB>>::Type;
+using SRA_IndirectHL_Decoder = Instantiate<InstructionDecoder<"sra [hl]", 0x2E, Sra<RegisterType::HL>, 0xCB>>::Type;
+using SRA_A_Decoder          = Instantiate<InstructionDecoder<"sra a", 0x2F, Sra<RegisterType::A>, 0xCB>>::Type;
+
+using SRL_B_Decoder          = Instantiate<InstructionDecoder<"srl b", 0x38, Srl<RegisterType::B>, 0xCB>>::Type;
+using SRL_C_Decoder          = Instantiate<InstructionDecoder<"srl c", 0x39, Srl<RegisterType::C>, 0xCB>>::Type;
+using SRL_D_Decoder          = Instantiate<InstructionDecoder<"srl d", 0x3A, Srl<RegisterType::D>, 0xCB>>::Type;
+using SRL_E_Decoder          = Instantiate<InstructionDecoder<"srl e", 0x3B, Srl<RegisterType::E>, 0xCB>>::Type;
+using SRL_H_Decoder          = Instantiate<InstructionDecoder<"srl h", 0x3C, Srl<RegisterType::H>, 0xCB>>::Type;
+using SRL_L_Decoder          = Instantiate<InstructionDecoder<"srl l", 0x3D, Srl<RegisterType::L>, 0xCB>>::Type;
+using SRL_IndirectHL_Decoder = Instantiate<InstructionDecoder<"srl [hl]", 0x3E, Srl<RegisterType::HL>, 0xCB>>::Type;
+using SRL_A_Decoder          = Instantiate<InstructionDecoder<"srl a", 0x3F, Srl<RegisterType::A>, 0xCB>>::Type;
 
 } // namespace pgb::cpu::instruction

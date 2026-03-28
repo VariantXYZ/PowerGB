@@ -240,7 +240,31 @@ SUPPORTED_OPCODES = ([
     (0xCB1D,"rsb"), # RR L
     (0xCB1E,"rsb"), # RR [HL]
     (0xCB1F,"rsb"), # RR A
+    (0xCB20,"rsb"), # SLA B
+    (0xCB21,"rsb"), # SLA C
+    (0xCB22,"rsb"), # SLA D
+    (0xCB23,"rsb"), # SLA E
+    (0xCB24,"rsb"), # SLA H
+    (0xCB25,"rsb"), # SLA L
+    (0xCB26,"rsb"), # SLA [HL]
+    (0xCB27,"rsb"), # SLA A
+    (0xCB28,"rsb"), # SRA B
+    (0xCB29,"rsb"), # SRA C
+    (0xCB2A,"rsb"), # SRA D
+    (0xCB2B,"rsb"), # SRA E
+    (0xCB2C,"rsb"), # SRA H
+    (0xCB2D,"rsb"), # SRA L
+    (0xCB2E,"rsb"), # SRA [HL]
+    (0xCB2F,"rsb"), # SRA A
 
+    (0xCB38,"rsb"), # SRL B
+    (0xCB39,"rsb"), # SRL C
+    (0xCB3A,"rsb"), # SRL D
+    (0xCB3B,"rsb"), # SRL E
+    (0xCB3C,"rsb"), # SRL H
+    (0xCB3D,"rsb"), # SRL L
+    (0xCB3E,"rsb"), # SRL [HL]
+    (0xCB3F,"rsb"), # SRL A
 ])
 
 for info in SUPPORTED_OPCODES:
