@@ -3,14 +3,14 @@
 
 #include <cpu/include/instructions.hpp>
 #include <cpu/include/registers.hpp>
-#include <memory/include/memory.hpp>
+#include <test/include/sm83_memory.hpp>
 
 using namespace pgb::common;
 using namespace pgb::memory;
 using namespace pgb::cpu;
 
 static auto registers = RegisterFile();
-static auto mmap      = MemoryMap(registers, MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
+static auto mmap      = MemoryMapTestSM83(registers);
 
 
 #define WriteRegisterWord(register, value) do { auto result = mmap.WriteWord(register, value); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); } while(0)
@@ -30,13 +30,13 @@ void test_check_implementation()
 }
 
 
-const bool skip_test_CB_2B_0000 = true;
+const bool skip_test_CB_2B_0000 = false;
 const bool skip_test_CB_2B_0001 = false;
 const bool skip_test_CB_2B_0002 = false;
 const bool skip_test_CB_2B_0003 = false;
-const bool skip_test_CB_2B_0004 = true;
+const bool skip_test_CB_2B_0004 = false;
 const bool skip_test_CB_2B_0005 = false;
-const bool skip_test_CB_2B_0006 = true;
+const bool skip_test_CB_2B_0006 = false;
 const bool skip_test_CB_2B_0007 = false;
 const bool skip_test_CB_2B_0008 = false;
 const bool skip_test_CB_2B_0009 = false;
@@ -46,17 +46,17 @@ const bool skip_test_CB_2B_000C = false;
 const bool skip_test_CB_2B_000D = false;
 const bool skip_test_CB_2B_000E = false;
 const bool skip_test_CB_2B_000F = false;
-const bool skip_test_CB_2B_0010 = true;
-const bool skip_test_CB_2B_0011 = true;
-const bool skip_test_CB_2B_0012 = true;
+const bool skip_test_CB_2B_0010 = false;
+const bool skip_test_CB_2B_0011 = false;
+const bool skip_test_CB_2B_0012 = false;
 const bool skip_test_CB_2B_0013 = false;
-const bool skip_test_CB_2B_0014 = true;
+const bool skip_test_CB_2B_0014 = false;
 const bool skip_test_CB_2B_0015 = false;
 const bool skip_test_CB_2B_0016 = false;
 const bool skip_test_CB_2B_0017 = false;
 const bool skip_test_CB_2B_0018 = false;
 const bool skip_test_CB_2B_0019 = false;
-const bool skip_test_CB_2B_001A = true;
+const bool skip_test_CB_2B_001A = false;
 const bool skip_test_CB_2B_001B = false;
 const bool skip_test_CB_2B_001C = false;
 const bool skip_test_CB_2B_001D = false;
@@ -65,28 +65,28 @@ const bool skip_test_CB_2B_001F = false;
 const bool skip_test_CB_2B_0020 = false;
 const bool skip_test_CB_2B_0021 = false;
 const bool skip_test_CB_2B_0022 = false;
-const bool skip_test_CB_2B_0023 = true;
+const bool skip_test_CB_2B_0023 = false;
 const bool skip_test_CB_2B_0024 = false;
 const bool skip_test_CB_2B_0025 = false;
 const bool skip_test_CB_2B_0026 = false;
-const bool skip_test_CB_2B_0027 = true;
+const bool skip_test_CB_2B_0027 = false;
 const bool skip_test_CB_2B_0028 = false;
 const bool skip_test_CB_2B_0029 = false;
 const bool skip_test_CB_2B_002A = false;
-const bool skip_test_CB_2B_002B = true;
-const bool skip_test_CB_2B_002C = true;
-const bool skip_test_CB_2B_002D = true;
+const bool skip_test_CB_2B_002B = false;
+const bool skip_test_CB_2B_002C = false;
+const bool skip_test_CB_2B_002D = false;
 const bool skip_test_CB_2B_002E = false;
 const bool skip_test_CB_2B_002F = false;
 const bool skip_test_CB_2B_0030 = false;
 const bool skip_test_CB_2B_0031 = false;
 const bool skip_test_CB_2B_0032 = false;
 const bool skip_test_CB_2B_0033 = false;
-const bool skip_test_CB_2B_0034 = true;
+const bool skip_test_CB_2B_0034 = false;
 const bool skip_test_CB_2B_0035 = false;
-const bool skip_test_CB_2B_0036 = true;
-const bool skip_test_CB_2B_0037 = true;
-const bool skip_test_CB_2B_0038 = true;
+const bool skip_test_CB_2B_0036 = false;
+const bool skip_test_CB_2B_0037 = false;
+const bool skip_test_CB_2B_0038 = false;
 const bool skip_test_CB_2B_0039 = false;
 const bool skip_test_CB_2B_003A = false;
 const bool skip_test_CB_2B_003B = false;
@@ -95,9 +95,9 @@ const bool skip_test_CB_2B_003D = false;
 const bool skip_test_CB_2B_003E = false;
 const bool skip_test_CB_2B_003F = false;
 const bool skip_test_CB_2B_0040 = false;
-const bool skip_test_CB_2B_0041 = true;
+const bool skip_test_CB_2B_0041 = false;
 const bool skip_test_CB_2B_0042 = false;
-const bool skip_test_CB_2B_0043 = true;
+const bool skip_test_CB_2B_0043 = false;
 const bool skip_test_CB_2B_0044 = false;
 const bool skip_test_CB_2B_0045 = false;
 const bool skip_test_CB_2B_0046 = false;
@@ -107,7 +107,7 @@ const bool skip_test_CB_2B_0049 = false;
 const bool skip_test_CB_2B_004A = false;
 const bool skip_test_CB_2B_004B = false;
 const bool skip_test_CB_2B_004C = false;
-const bool skip_test_CB_2B_004D = true;
+const bool skip_test_CB_2B_004D = false;
 const bool skip_test_CB_2B_004E = false;
 const bool skip_test_CB_2B_004F = false;
 const bool skip_test_CB_2B_0050 = false;
@@ -116,18 +116,18 @@ const bool skip_test_CB_2B_0052 = false;
 const bool skip_test_CB_2B_0053 = false;
 const bool skip_test_CB_2B_0054 = false;
 const bool skip_test_CB_2B_0055 = false;
-const bool skip_test_CB_2B_0056 = true;
+const bool skip_test_CB_2B_0056 = false;
 const bool skip_test_CB_2B_0057 = false;
-const bool skip_test_CB_2B_0058 = true;
+const bool skip_test_CB_2B_0058 = false;
 const bool skip_test_CB_2B_0059 = false;
 const bool skip_test_CB_2B_005A = false;
 const bool skip_test_CB_2B_005B = false;
 const bool skip_test_CB_2B_005C = false;
-const bool skip_test_CB_2B_005D = true;
+const bool skip_test_CB_2B_005D = false;
 const bool skip_test_CB_2B_005E = false;
 const bool skip_test_CB_2B_005F = false;
 const bool skip_test_CB_2B_0060 = false;
-const bool skip_test_CB_2B_0061 = true;
+const bool skip_test_CB_2B_0061 = false;
 const bool skip_test_CB_2B_0062 = false;
 const bool skip_test_CB_2B_0063 = false;
 const bool skip_test_CB_2B_0064 = false;
@@ -141,26 +141,26 @@ const bool skip_test_CB_2B_006B = false;
 const bool skip_test_CB_2B_006C = false;
 const bool skip_test_CB_2B_006D = false;
 const bool skip_test_CB_2B_006E = false;
-const bool skip_test_CB_2B_006F = true;
-const bool skip_test_CB_2B_0070 = true;
+const bool skip_test_CB_2B_006F = false;
+const bool skip_test_CB_2B_0070 = false;
 const bool skip_test_CB_2B_0071 = false;
-const bool skip_test_CB_2B_0072 = true;
+const bool skip_test_CB_2B_0072 = false;
 const bool skip_test_CB_2B_0073 = false;
 const bool skip_test_CB_2B_0074 = false;
 const bool skip_test_CB_2B_0075 = false;
-const bool skip_test_CB_2B_0076 = true;
-const bool skip_test_CB_2B_0077 = true;
+const bool skip_test_CB_2B_0076 = false;
+const bool skip_test_CB_2B_0077 = false;
 const bool skip_test_CB_2B_0078 = false;
 const bool skip_test_CB_2B_0079 = false;
 const bool skip_test_CB_2B_007A = false;
 const bool skip_test_CB_2B_007B = false;
-const bool skip_test_CB_2B_007C = true;
+const bool skip_test_CB_2B_007C = false;
 const bool skip_test_CB_2B_007D = false;
 const bool skip_test_CB_2B_007E = false;
 const bool skip_test_CB_2B_007F = false;
 const bool skip_test_CB_2B_0080 = false;
 const bool skip_test_CB_2B_0081 = false;
-const bool skip_test_CB_2B_0082 = true;
+const bool skip_test_CB_2B_0082 = false;
 const bool skip_test_CB_2B_0083 = false;
 const bool skip_test_CB_2B_0084 = false;
 const bool skip_test_CB_2B_0085 = false;
@@ -175,15 +175,15 @@ const bool skip_test_CB_2B_008D = false;
 const bool skip_test_CB_2B_008E = false;
 const bool skip_test_CB_2B_008F = false;
 const bool skip_test_CB_2B_0090 = false;
-const bool skip_test_CB_2B_0091 = true;
+const bool skip_test_CB_2B_0091 = false;
 const bool skip_test_CB_2B_0092 = false;
-const bool skip_test_CB_2B_0093 = true;
+const bool skip_test_CB_2B_0093 = false;
 const bool skip_test_CB_2B_0094 = false;
 const bool skip_test_CB_2B_0095 = false;
 const bool skip_test_CB_2B_0096 = false;
 const bool skip_test_CB_2B_0097 = false;
 const bool skip_test_CB_2B_0098 = false;
-const bool skip_test_CB_2B_0099 = true;
+const bool skip_test_CB_2B_0099 = false;
 const bool skip_test_CB_2B_009A = false;
 const bool skip_test_CB_2B_009B = false;
 const bool skip_test_CB_2B_009C = false;
@@ -196,30 +196,30 @@ const bool skip_test_CB_2B_00A2 = false;
 const bool skip_test_CB_2B_00A3 = false;
 const bool skip_test_CB_2B_00A4 = false;
 const bool skip_test_CB_2B_00A5 = false;
-const bool skip_test_CB_2B_00A6 = true;
+const bool skip_test_CB_2B_00A6 = false;
 const bool skip_test_CB_2B_00A7 = false;
 const bool skip_test_CB_2B_00A8 = false;
-const bool skip_test_CB_2B_00A9 = true;
+const bool skip_test_CB_2B_00A9 = false;
 const bool skip_test_CB_2B_00AA = false;
 const bool skip_test_CB_2B_00AB = false;
 const bool skip_test_CB_2B_00AC = false;
-const bool skip_test_CB_2B_00AD = true;
+const bool skip_test_CB_2B_00AD = false;
 const bool skip_test_CB_2B_00AE = false;
 const bool skip_test_CB_2B_00AF = false;
-const bool skip_test_CB_2B_00B0 = true;
+const bool skip_test_CB_2B_00B0 = false;
 const bool skip_test_CB_2B_00B1 = false;
 const bool skip_test_CB_2B_00B2 = false;
-const bool skip_test_CB_2B_00B3 = true;
+const bool skip_test_CB_2B_00B3 = false;
 const bool skip_test_CB_2B_00B4 = false;
 const bool skip_test_CB_2B_00B5 = false;
 const bool skip_test_CB_2B_00B6 = false;
 const bool skip_test_CB_2B_00B7 = false;
 const bool skip_test_CB_2B_00B8 = false;
-const bool skip_test_CB_2B_00B9 = true;
+const bool skip_test_CB_2B_00B9 = false;
 const bool skip_test_CB_2B_00BA = false;
-const bool skip_test_CB_2B_00BB = true;
+const bool skip_test_CB_2B_00BB = false;
 const bool skip_test_CB_2B_00BC = false;
-const bool skip_test_CB_2B_00BD = true;
+const bool skip_test_CB_2B_00BD = false;
 const bool skip_test_CB_2B_00BE = false;
 const bool skip_test_CB_2B_00BF = false;
 const bool skip_test_CB_2B_00C0 = false;
@@ -237,12 +237,12 @@ const bool skip_test_CB_2B_00CB = false;
 const bool skip_test_CB_2B_00CC = false;
 const bool skip_test_CB_2B_00CD = false;
 const bool skip_test_CB_2B_00CE = false;
-const bool skip_test_CB_2B_00CF = true;
+const bool skip_test_CB_2B_00CF = false;
 const bool skip_test_CB_2B_00D0 = false;
 const bool skip_test_CB_2B_00D1 = false;
 const bool skip_test_CB_2B_00D2 = false;
 const bool skip_test_CB_2B_00D3 = false;
-const bool skip_test_CB_2B_00D4 = true;
+const bool skip_test_CB_2B_00D4 = false;
 const bool skip_test_CB_2B_00D5 = false;
 const bool skip_test_CB_2B_00D6 = false;
 const bool skip_test_CB_2B_00D7 = false;
@@ -251,8 +251,8 @@ const bool skip_test_CB_2B_00D9 = false;
 const bool skip_test_CB_2B_00DA = false;
 const bool skip_test_CB_2B_00DB = false;
 const bool skip_test_CB_2B_00DC = false;
-const bool skip_test_CB_2B_00DD = true;
-const bool skip_test_CB_2B_00DE = true;
+const bool skip_test_CB_2B_00DD = false;
+const bool skip_test_CB_2B_00DE = false;
 const bool skip_test_CB_2B_00DF = false;
 const bool skip_test_CB_2B_00E0 = false;
 const bool skip_test_CB_2B_00E1 = false;
@@ -260,29 +260,29 @@ const bool skip_test_CB_2B_00E2 = false;
 const bool skip_test_CB_2B_00E3 = false;
 const bool skip_test_CB_2B_00E4 = false;
 const bool skip_test_CB_2B_00E5 = false;
-const bool skip_test_CB_2B_00E6 = true;
+const bool skip_test_CB_2B_00E6 = false;
 const bool skip_test_CB_2B_00E7 = false;
 const bool skip_test_CB_2B_00E8 = false;
 const bool skip_test_CB_2B_00E9 = false;
-const bool skip_test_CB_2B_00EA = true;
+const bool skip_test_CB_2B_00EA = false;
 const bool skip_test_CB_2B_00EB = false;
 const bool skip_test_CB_2B_00EC = false;
 const bool skip_test_CB_2B_00ED = false;
 const bool skip_test_CB_2B_00EE = false;
 const bool skip_test_CB_2B_00EF = false;
 const bool skip_test_CB_2B_00F0 = false;
-const bool skip_test_CB_2B_00F1 = true;
-const bool skip_test_CB_2B_00F2 = true;
-const bool skip_test_CB_2B_00F3 = true;
+const bool skip_test_CB_2B_00F1 = false;
+const bool skip_test_CB_2B_00F2 = false;
+const bool skip_test_CB_2B_00F3 = false;
 const bool skip_test_CB_2B_00F4 = false;
 const bool skip_test_CB_2B_00F5 = false;
 const bool skip_test_CB_2B_00F6 = false;
 const bool skip_test_CB_2B_00F7 = false;
-const bool skip_test_CB_2B_00F8 = true;
-const bool skip_test_CB_2B_00F9 = true;
-const bool skip_test_CB_2B_00FA = true;
+const bool skip_test_CB_2B_00F8 = false;
+const bool skip_test_CB_2B_00F9 = false;
+const bool skip_test_CB_2B_00FA = false;
 const bool skip_test_CB_2B_00FB = false;
-const bool skip_test_CB_2B_00FC = true;
+const bool skip_test_CB_2B_00FC = false;
 const bool skip_test_CB_2B_00FD = false;
 const bool skip_test_CB_2B_00FE = false;
 const bool skip_test_CB_2B_00FF = false;
@@ -292,31 +292,31 @@ const bool skip_test_CB_2B_0102 = false;
 const bool skip_test_CB_2B_0103 = false;
 const bool skip_test_CB_2B_0104 = false;
 const bool skip_test_CB_2B_0105 = false;
-const bool skip_test_CB_2B_0106 = true;
+const bool skip_test_CB_2B_0106 = false;
 const bool skip_test_CB_2B_0107 = false;
 const bool skip_test_CB_2B_0108 = false;
 const bool skip_test_CB_2B_0109 = false;
-const bool skip_test_CB_2B_010A = true;
+const bool skip_test_CB_2B_010A = false;
 const bool skip_test_CB_2B_010B = false;
-const bool skip_test_CB_2B_010C = true;
-const bool skip_test_CB_2B_010D = true;
-const bool skip_test_CB_2B_010E = true;
-const bool skip_test_CB_2B_010F = true;
-const bool skip_test_CB_2B_0110 = true;
+const bool skip_test_CB_2B_010C = false;
+const bool skip_test_CB_2B_010D = false;
+const bool skip_test_CB_2B_010E = false;
+const bool skip_test_CB_2B_010F = false;
+const bool skip_test_CB_2B_0110 = false;
 const bool skip_test_CB_2B_0111 = false;
-const bool skip_test_CB_2B_0112 = true;
+const bool skip_test_CB_2B_0112 = false;
 const bool skip_test_CB_2B_0113 = false;
 const bool skip_test_CB_2B_0114 = false;
-const bool skip_test_CB_2B_0115 = true;
+const bool skip_test_CB_2B_0115 = false;
 const bool skip_test_CB_2B_0116 = false;
 const bool skip_test_CB_2B_0117 = false;
 const bool skip_test_CB_2B_0118 = false;
 const bool skip_test_CB_2B_0119 = false;
 const bool skip_test_CB_2B_011A = false;
-const bool skip_test_CB_2B_011B = true;
+const bool skip_test_CB_2B_011B = false;
 const bool skip_test_CB_2B_011C = false;
 const bool skip_test_CB_2B_011D = false;
-const bool skip_test_CB_2B_011E = true;
+const bool skip_test_CB_2B_011E = false;
 const bool skip_test_CB_2B_011F = false;
 const bool skip_test_CB_2B_0120 = false;
 const bool skip_test_CB_2B_0121 = false;
@@ -331,12 +331,12 @@ const bool skip_test_CB_2B_0129 = false;
 const bool skip_test_CB_2B_012A = false;
 const bool skip_test_CB_2B_012B = false;
 const bool skip_test_CB_2B_012C = false;
-const bool skip_test_CB_2B_012D = true;
+const bool skip_test_CB_2B_012D = false;
 const bool skip_test_CB_2B_012E = false;
 const bool skip_test_CB_2B_012F = false;
-const bool skip_test_CB_2B_0130 = true;
+const bool skip_test_CB_2B_0130 = false;
 const bool skip_test_CB_2B_0131 = false;
-const bool skip_test_CB_2B_0132 = true;
+const bool skip_test_CB_2B_0132 = false;
 const bool skip_test_CB_2B_0133 = false;
 const bool skip_test_CB_2B_0134 = false;
 const bool skip_test_CB_2B_0135 = false;
@@ -345,19 +345,19 @@ const bool skip_test_CB_2B_0137 = false;
 const bool skip_test_CB_2B_0138 = false;
 const bool skip_test_CB_2B_0139 = false;
 const bool skip_test_CB_2B_013A = false;
-const bool skip_test_CB_2B_013B = true;
-const bool skip_test_CB_2B_013C = true;
+const bool skip_test_CB_2B_013B = false;
+const bool skip_test_CB_2B_013C = false;
 const bool skip_test_CB_2B_013D = false;
 const bool skip_test_CB_2B_013E = false;
-const bool skip_test_CB_2B_013F = true;
-const bool skip_test_CB_2B_0140 = true;
+const bool skip_test_CB_2B_013F = false;
+const bool skip_test_CB_2B_0140 = false;
 const bool skip_test_CB_2B_0141 = false;
 const bool skip_test_CB_2B_0142 = false;
 const bool skip_test_CB_2B_0143 = false;
 const bool skip_test_CB_2B_0144 = false;
 const bool skip_test_CB_2B_0145 = false;
 const bool skip_test_CB_2B_0146 = false;
-const bool skip_test_CB_2B_0147 = true;
+const bool skip_test_CB_2B_0147 = false;
 const bool skip_test_CB_2B_0148 = false;
 const bool skip_test_CB_2B_0149 = false;
 const bool skip_test_CB_2B_014A = false;
@@ -366,11 +366,11 @@ const bool skip_test_CB_2B_014C = false;
 const bool skip_test_CB_2B_014D = false;
 const bool skip_test_CB_2B_014E = false;
 const bool skip_test_CB_2B_014F = false;
-const bool skip_test_CB_2B_0150 = true;
+const bool skip_test_CB_2B_0150 = false;
 const bool skip_test_CB_2B_0151 = false;
 const bool skip_test_CB_2B_0152 = false;
 const bool skip_test_CB_2B_0153 = false;
-const bool skip_test_CB_2B_0154 = true;
+const bool skip_test_CB_2B_0154 = false;
 const bool skip_test_CB_2B_0155 = false;
 const bool skip_test_CB_2B_0156 = false;
 const bool skip_test_CB_2B_0157 = false;
@@ -381,20 +381,20 @@ const bool skip_test_CB_2B_015B = false;
 const bool skip_test_CB_2B_015C = false;
 const bool skip_test_CB_2B_015D = false;
 const bool skip_test_CB_2B_015E = false;
-const bool skip_test_CB_2B_015F = true;
+const bool skip_test_CB_2B_015F = false;
 const bool skip_test_CB_2B_0160 = false;
 const bool skip_test_CB_2B_0161 = false;
 const bool skip_test_CB_2B_0162 = false;
-const bool skip_test_CB_2B_0163 = true;
+const bool skip_test_CB_2B_0163 = false;
 const bool skip_test_CB_2B_0164 = false;
 const bool skip_test_CB_2B_0165 = false;
 const bool skip_test_CB_2B_0166 = false;
-const bool skip_test_CB_2B_0167 = true;
-const bool skip_test_CB_2B_0168 = true;
+const bool skip_test_CB_2B_0167 = false;
+const bool skip_test_CB_2B_0168 = false;
 const bool skip_test_CB_2B_0169 = false;
 const bool skip_test_CB_2B_016A = false;
 const bool skip_test_CB_2B_016B = false;
-const bool skip_test_CB_2B_016C = true;
+const bool skip_test_CB_2B_016C = false;
 const bool skip_test_CB_2B_016D = false;
 const bool skip_test_CB_2B_016E = false;
 const bool skip_test_CB_2B_016F = false;
@@ -402,9 +402,9 @@ const bool skip_test_CB_2B_0170 = false;
 const bool skip_test_CB_2B_0171 = false;
 const bool skip_test_CB_2B_0172 = false;
 const bool skip_test_CB_2B_0173 = false;
-const bool skip_test_CB_2B_0174 = true;
+const bool skip_test_CB_2B_0174 = false;
 const bool skip_test_CB_2B_0175 = false;
-const bool skip_test_CB_2B_0176 = true;
+const bool skip_test_CB_2B_0176 = false;
 const bool skip_test_CB_2B_0177 = false;
 const bool skip_test_CB_2B_0178 = false;
 const bool skip_test_CB_2B_0179 = false;
@@ -412,11 +412,11 @@ const bool skip_test_CB_2B_017A = false;
 const bool skip_test_CB_2B_017B = false;
 const bool skip_test_CB_2B_017C = false;
 const bool skip_test_CB_2B_017D = false;
-const bool skip_test_CB_2B_017E = true;
+const bool skip_test_CB_2B_017E = false;
 const bool skip_test_CB_2B_017F = false;
 const bool skip_test_CB_2B_0180 = false;
-const bool skip_test_CB_2B_0181 = true;
-const bool skip_test_CB_2B_0182 = true;
+const bool skip_test_CB_2B_0181 = false;
+const bool skip_test_CB_2B_0182 = false;
 const bool skip_test_CB_2B_0183 = false;
 const bool skip_test_CB_2B_0184 = false;
 const bool skip_test_CB_2B_0185 = false;
@@ -433,44 +433,44 @@ const bool skip_test_CB_2B_018F = false;
 const bool skip_test_CB_2B_0190 = false;
 const bool skip_test_CB_2B_0191 = false;
 const bool skip_test_CB_2B_0192 = false;
-const bool skip_test_CB_2B_0193 = true;
+const bool skip_test_CB_2B_0193 = false;
 const bool skip_test_CB_2B_0194 = false;
 const bool skip_test_CB_2B_0195 = false;
 const bool skip_test_CB_2B_0196 = false;
 const bool skip_test_CB_2B_0197 = false;
 const bool skip_test_CB_2B_0198 = false;
-const bool skip_test_CB_2B_0199 = true;
-const bool skip_test_CB_2B_019A = true;
+const bool skip_test_CB_2B_0199 = false;
+const bool skip_test_CB_2B_019A = false;
 const bool skip_test_CB_2B_019B = false;
 const bool skip_test_CB_2B_019C = false;
 const bool skip_test_CB_2B_019D = false;
-const bool skip_test_CB_2B_019E = true;
+const bool skip_test_CB_2B_019E = false;
 const bool skip_test_CB_2B_019F = false;
-const bool skip_test_CB_2B_01A0 = true;
+const bool skip_test_CB_2B_01A0 = false;
 const bool skip_test_CB_2B_01A1 = false;
-const bool skip_test_CB_2B_01A2 = true;
+const bool skip_test_CB_2B_01A2 = false;
 const bool skip_test_CB_2B_01A3 = false;
 const bool skip_test_CB_2B_01A4 = false;
-const bool skip_test_CB_2B_01A5 = true;
-const bool skip_test_CB_2B_01A6 = true;
+const bool skip_test_CB_2B_01A5 = false;
+const bool skip_test_CB_2B_01A6 = false;
 const bool skip_test_CB_2B_01A7 = false;
 const bool skip_test_CB_2B_01A8 = false;
-const bool skip_test_CB_2B_01A9 = true;
+const bool skip_test_CB_2B_01A9 = false;
 const bool skip_test_CB_2B_01AA = false;
-const bool skip_test_CB_2B_01AB = true;
-const bool skip_test_CB_2B_01AC = true;
+const bool skip_test_CB_2B_01AB = false;
+const bool skip_test_CB_2B_01AC = false;
 const bool skip_test_CB_2B_01AD = false;
 const bool skip_test_CB_2B_01AE = false;
 const bool skip_test_CB_2B_01AF = false;
-const bool skip_test_CB_2B_01B0 = true;
-const bool skip_test_CB_2B_01B1 = true;
+const bool skip_test_CB_2B_01B0 = false;
+const bool skip_test_CB_2B_01B1 = false;
 const bool skip_test_CB_2B_01B2 = false;
 const bool skip_test_CB_2B_01B3 = false;
 const bool skip_test_CB_2B_01B4 = false;
 const bool skip_test_CB_2B_01B5 = false;
-const bool skip_test_CB_2B_01B6 = true;
-const bool skip_test_CB_2B_01B7 = true;
-const bool skip_test_CB_2B_01B8 = true;
+const bool skip_test_CB_2B_01B6 = false;
+const bool skip_test_CB_2B_01B7 = false;
+const bool skip_test_CB_2B_01B8 = false;
 const bool skip_test_CB_2B_01B9 = false;
 const bool skip_test_CB_2B_01BA = false;
 const bool skip_test_CB_2B_01BB = false;
@@ -484,39 +484,39 @@ const bool skip_test_CB_2B_01C2 = false;
 const bool skip_test_CB_2B_01C3 = false;
 const bool skip_test_CB_2B_01C4 = false;
 const bool skip_test_CB_2B_01C5 = false;
-const bool skip_test_CB_2B_01C6 = true;
+const bool skip_test_CB_2B_01C6 = false;
 const bool skip_test_CB_2B_01C7 = false;
 const bool skip_test_CB_2B_01C8 = false;
 const bool skip_test_CB_2B_01C9 = false;
 const bool skip_test_CB_2B_01CA = false;
-const bool skip_test_CB_2B_01CB = true;
-const bool skip_test_CB_2B_01CC = true;
+const bool skip_test_CB_2B_01CB = false;
+const bool skip_test_CB_2B_01CC = false;
 const bool skip_test_CB_2B_01CD = false;
 const bool skip_test_CB_2B_01CE = false;
 const bool skip_test_CB_2B_01CF = false;
 const bool skip_test_CB_2B_01D0 = false;
 const bool skip_test_CB_2B_01D1 = false;
 const bool skip_test_CB_2B_01D2 = false;
-const bool skip_test_CB_2B_01D3 = true;
+const bool skip_test_CB_2B_01D3 = false;
 const bool skip_test_CB_2B_01D4 = false;
 const bool skip_test_CB_2B_01D5 = false;
-const bool skip_test_CB_2B_01D6 = true;
+const bool skip_test_CB_2B_01D6 = false;
 const bool skip_test_CB_2B_01D7 = false;
 const bool skip_test_CB_2B_01D8 = false;
 const bool skip_test_CB_2B_01D9 = false;
 const bool skip_test_CB_2B_01DA = false;
-const bool skip_test_CB_2B_01DB = true;
+const bool skip_test_CB_2B_01DB = false;
 const bool skip_test_CB_2B_01DC = false;
 const bool skip_test_CB_2B_01DD = false;
 const bool skip_test_CB_2B_01DE = false;
 const bool skip_test_CB_2B_01DF = false;
-const bool skip_test_CB_2B_01E0 = true;
-const bool skip_test_CB_2B_01E1 = true;
-const bool skip_test_CB_2B_01E2 = true;
+const bool skip_test_CB_2B_01E0 = false;
+const bool skip_test_CB_2B_01E1 = false;
+const bool skip_test_CB_2B_01E2 = false;
 const bool skip_test_CB_2B_01E3 = false;
 const bool skip_test_CB_2B_01E4 = false;
 const bool skip_test_CB_2B_01E5 = false;
-const bool skip_test_CB_2B_01E6 = true;
+const bool skip_test_CB_2B_01E6 = false;
 const bool skip_test_CB_2B_01E7 = false;
 const bool skip_test_CB_2B_01E8 = false;
 const bool skip_test_CB_2B_01E9 = false;
@@ -525,7 +525,7 @@ const bool skip_test_CB_2B_01EB = false;
 const bool skip_test_CB_2B_01EC = false;
 const bool skip_test_CB_2B_01ED = false;
 const bool skip_test_CB_2B_01EE = false;
-const bool skip_test_CB_2B_01EF = true;
+const bool skip_test_CB_2B_01EF = false;
 const bool skip_test_CB_2B_01F0 = false;
 const bool skip_test_CB_2B_01F1 = false;
 const bool skip_test_CB_2B_01F2 = false;
@@ -535,21 +535,21 @@ const bool skip_test_CB_2B_01F5 = false;
 const bool skip_test_CB_2B_01F6 = false;
 const bool skip_test_CB_2B_01F7 = false;
 const bool skip_test_CB_2B_01F8 = false;
-const bool skip_test_CB_2B_01F9 = true;
+const bool skip_test_CB_2B_01F9 = false;
 const bool skip_test_CB_2B_01FA = false;
-const bool skip_test_CB_2B_01FB = true;
+const bool skip_test_CB_2B_01FB = false;
 const bool skip_test_CB_2B_01FC = false;
 const bool skip_test_CB_2B_01FD = false;
 const bool skip_test_CB_2B_01FE = false;
-const bool skip_test_CB_2B_01FF = true;
+const bool skip_test_CB_2B_01FF = false;
 const bool skip_test_CB_2B_0200 = false;
 const bool skip_test_CB_2B_0201 = false;
 const bool skip_test_CB_2B_0202 = false;
-const bool skip_test_CB_2B_0203 = true;
+const bool skip_test_CB_2B_0203 = false;
 const bool skip_test_CB_2B_0204 = false;
 const bool skip_test_CB_2B_0205 = false;
-const bool skip_test_CB_2B_0206 = true;
-const bool skip_test_CB_2B_0207 = true;
+const bool skip_test_CB_2B_0206 = false;
+const bool skip_test_CB_2B_0207 = false;
 const bool skip_test_CB_2B_0208 = false;
 const bool skip_test_CB_2B_0209 = false;
 const bool skip_test_CB_2B_020A = false;
@@ -559,45 +559,45 @@ const bool skip_test_CB_2B_020D = false;
 const bool skip_test_CB_2B_020E = false;
 const bool skip_test_CB_2B_020F = false;
 const bool skip_test_CB_2B_0210 = false;
-const bool skip_test_CB_2B_0211 = true;
+const bool skip_test_CB_2B_0211 = false;
 const bool skip_test_CB_2B_0212 = false;
 const bool skip_test_CB_2B_0213 = false;
 const bool skip_test_CB_2B_0214 = false;
 const bool skip_test_CB_2B_0215 = false;
 const bool skip_test_CB_2B_0216 = false;
 const bool skip_test_CB_2B_0217 = false;
-const bool skip_test_CB_2B_0218 = true;
+const bool skip_test_CB_2B_0218 = false;
 const bool skip_test_CB_2B_0219 = false;
 const bool skip_test_CB_2B_021A = false;
 const bool skip_test_CB_2B_021B = false;
 const bool skip_test_CB_2B_021C = false;
 const bool skip_test_CB_2B_021D = false;
-const bool skip_test_CB_2B_021E = true;
-const bool skip_test_CB_2B_021F = true;
+const bool skip_test_CB_2B_021E = false;
+const bool skip_test_CB_2B_021F = false;
 const bool skip_test_CB_2B_0220 = false;
-const bool skip_test_CB_2B_0221 = true;
-const bool skip_test_CB_2B_0222 = true;
+const bool skip_test_CB_2B_0221 = false;
+const bool skip_test_CB_2B_0222 = false;
 const bool skip_test_CB_2B_0223 = false;
 const bool skip_test_CB_2B_0224 = false;
 const bool skip_test_CB_2B_0225 = false;
 const bool skip_test_CB_2B_0226 = false;
 const bool skip_test_CB_2B_0227 = false;
 const bool skip_test_CB_2B_0228 = false;
-const bool skip_test_CB_2B_0229 = true;
+const bool skip_test_CB_2B_0229 = false;
 const bool skip_test_CB_2B_022A = false;
 const bool skip_test_CB_2B_022B = false;
 const bool skip_test_CB_2B_022C = false;
 const bool skip_test_CB_2B_022D = false;
 const bool skip_test_CB_2B_022E = false;
 const bool skip_test_CB_2B_022F = false;
-const bool skip_test_CB_2B_0230 = true;
+const bool skip_test_CB_2B_0230 = false;
 const bool skip_test_CB_2B_0231 = false;
 const bool skip_test_CB_2B_0232 = false;
-const bool skip_test_CB_2B_0233 = true;
+const bool skip_test_CB_2B_0233 = false;
 const bool skip_test_CB_2B_0234 = false;
 const bool skip_test_CB_2B_0235 = false;
 const bool skip_test_CB_2B_0236 = false;
-const bool skip_test_CB_2B_0237 = true;
+const bool skip_test_CB_2B_0237 = false;
 const bool skip_test_CB_2B_0238 = false;
 const bool skip_test_CB_2B_0239 = false;
 const bool skip_test_CB_2B_023A = false;
@@ -605,123 +605,123 @@ const bool skip_test_CB_2B_023B = false;
 const bool skip_test_CB_2B_023C = false;
 const bool skip_test_CB_2B_023D = false;
 const bool skip_test_CB_2B_023E = false;
-const bool skip_test_CB_2B_023F = true;
+const bool skip_test_CB_2B_023F = false;
 const bool skip_test_CB_2B_0240 = false;
 const bool skip_test_CB_2B_0241 = false;
 const bool skip_test_CB_2B_0242 = false;
 const bool skip_test_CB_2B_0243 = false;
-const bool skip_test_CB_2B_0244 = true;
+const bool skip_test_CB_2B_0244 = false;
 const bool skip_test_CB_2B_0245 = false;
 const bool skip_test_CB_2B_0246 = false;
 const bool skip_test_CB_2B_0247 = false;
 const bool skip_test_CB_2B_0248 = false;
-const bool skip_test_CB_2B_0249 = true;
-const bool skip_test_CB_2B_024A = true;
-const bool skip_test_CB_2B_024B = true;
-const bool skip_test_CB_2B_024C = true;
+const bool skip_test_CB_2B_0249 = false;
+const bool skip_test_CB_2B_024A = false;
+const bool skip_test_CB_2B_024B = false;
+const bool skip_test_CB_2B_024C = false;
 const bool skip_test_CB_2B_024D = false;
-const bool skip_test_CB_2B_024E = true;
+const bool skip_test_CB_2B_024E = false;
 const bool skip_test_CB_2B_024F = false;
 const bool skip_test_CB_2B_0250 = false;
 const bool skip_test_CB_2B_0251 = false;
 const bool skip_test_CB_2B_0252 = false;
-const bool skip_test_CB_2B_0253 = true;
-const bool skip_test_CB_2B_0254 = true;
+const bool skip_test_CB_2B_0253 = false;
+const bool skip_test_CB_2B_0254 = false;
 const bool skip_test_CB_2B_0255 = false;
 const bool skip_test_CB_2B_0256 = false;
 const bool skip_test_CB_2B_0257 = false;
 const bool skip_test_CB_2B_0258 = false;
-const bool skip_test_CB_2B_0259 = true;
+const bool skip_test_CB_2B_0259 = false;
 const bool skip_test_CB_2B_025A = false;
 const bool skip_test_CB_2B_025B = false;
 const bool skip_test_CB_2B_025C = false;
 const bool skip_test_CB_2B_025D = false;
 const bool skip_test_CB_2B_025E = false;
-const bool skip_test_CB_2B_025F = true;
-const bool skip_test_CB_2B_0260 = true;
+const bool skip_test_CB_2B_025F = false;
+const bool skip_test_CB_2B_0260 = false;
 const bool skip_test_CB_2B_0261 = false;
 const bool skip_test_CB_2B_0262 = false;
 const bool skip_test_CB_2B_0263 = false;
 const bool skip_test_CB_2B_0264 = false;
 const bool skip_test_CB_2B_0265 = false;
 const bool skip_test_CB_2B_0266 = false;
-const bool skip_test_CB_2B_0267 = true;
+const bool skip_test_CB_2B_0267 = false;
 const bool skip_test_CB_2B_0268 = false;
 const bool skip_test_CB_2B_0269 = false;
-const bool skip_test_CB_2B_026A = true;
-const bool skip_test_CB_2B_026B = true;
+const bool skip_test_CB_2B_026A = false;
+const bool skip_test_CB_2B_026B = false;
 const bool skip_test_CB_2B_026C = false;
 const bool skip_test_CB_2B_026D = false;
 const bool skip_test_CB_2B_026E = false;
 const bool skip_test_CB_2B_026F = false;
 const bool skip_test_CB_2B_0270 = false;
-const bool skip_test_CB_2B_0271 = true;
-const bool skip_test_CB_2B_0272 = true;
-const bool skip_test_CB_2B_0273 = true;
+const bool skip_test_CB_2B_0271 = false;
+const bool skip_test_CB_2B_0272 = false;
+const bool skip_test_CB_2B_0273 = false;
 const bool skip_test_CB_2B_0274 = false;
 const bool skip_test_CB_2B_0275 = false;
-const bool skip_test_CB_2B_0276 = true;
+const bool skip_test_CB_2B_0276 = false;
 const bool skip_test_CB_2B_0277 = false;
 const bool skip_test_CB_2B_0278 = false;
 const bool skip_test_CB_2B_0279 = false;
 const bool skip_test_CB_2B_027A = false;
 const bool skip_test_CB_2B_027B = false;
 const bool skip_test_CB_2B_027C = false;
-const bool skip_test_CB_2B_027D = true;
+const bool skip_test_CB_2B_027D = false;
 const bool skip_test_CB_2B_027E = false;
 const bool skip_test_CB_2B_027F = false;
 const bool skip_test_CB_2B_0280 = false;
 const bool skip_test_CB_2B_0281 = false;
-const bool skip_test_CB_2B_0282 = true;
+const bool skip_test_CB_2B_0282 = false;
 const bool skip_test_CB_2B_0283 = false;
 const bool skip_test_CB_2B_0284 = false;
 const bool skip_test_CB_2B_0285 = false;
 const bool skip_test_CB_2B_0286 = false;
-const bool skip_test_CB_2B_0287 = true;
+const bool skip_test_CB_2B_0287 = false;
 const bool skip_test_CB_2B_0288 = false;
 const bool skip_test_CB_2B_0289 = false;
 const bool skip_test_CB_2B_028A = false;
 const bool skip_test_CB_2B_028B = false;
-const bool skip_test_CB_2B_028C = true;
-const bool skip_test_CB_2B_028D = true;
+const bool skip_test_CB_2B_028C = false;
+const bool skip_test_CB_2B_028D = false;
 const bool skip_test_CB_2B_028E = false;
-const bool skip_test_CB_2B_028F = true;
+const bool skip_test_CB_2B_028F = false;
 const bool skip_test_CB_2B_0290 = false;
 const bool skip_test_CB_2B_0291 = false;
 const bool skip_test_CB_2B_0292 = false;
 const bool skip_test_CB_2B_0293 = false;
-const bool skip_test_CB_2B_0294 = true;
-const bool skip_test_CB_2B_0295 = true;
+const bool skip_test_CB_2B_0294 = false;
+const bool skip_test_CB_2B_0295 = false;
 const bool skip_test_CB_2B_0296 = false;
 const bool skip_test_CB_2B_0297 = false;
 const bool skip_test_CB_2B_0298 = false;
-const bool skip_test_CB_2B_0299 = true;
+const bool skip_test_CB_2B_0299 = false;
 const bool skip_test_CB_2B_029A = false;
 const bool skip_test_CB_2B_029B = false;
 const bool skip_test_CB_2B_029C = false;
 const bool skip_test_CB_2B_029D = false;
 const bool skip_test_CB_2B_029E = false;
-const bool skip_test_CB_2B_029F = true;
+const bool skip_test_CB_2B_029F = false;
 const bool skip_test_CB_2B_02A0 = false;
 const bool skip_test_CB_2B_02A1 = false;
 const bool skip_test_CB_2B_02A2 = false;
 const bool skip_test_CB_2B_02A3 = false;
-const bool skip_test_CB_2B_02A4 = true;
-const bool skip_test_CB_2B_02A5 = true;
+const bool skip_test_CB_2B_02A4 = false;
+const bool skip_test_CB_2B_02A5 = false;
 const bool skip_test_CB_2B_02A6 = false;
 const bool skip_test_CB_2B_02A7 = false;
 const bool skip_test_CB_2B_02A8 = false;
-const bool skip_test_CB_2B_02A9 = true;
+const bool skip_test_CB_2B_02A9 = false;
 const bool skip_test_CB_2B_02AA = false;
-const bool skip_test_CB_2B_02AB = true;
+const bool skip_test_CB_2B_02AB = false;
 const bool skip_test_CB_2B_02AC = false;
-const bool skip_test_CB_2B_02AD = true;
+const bool skip_test_CB_2B_02AD = false;
 const bool skip_test_CB_2B_02AE = false;
 const bool skip_test_CB_2B_02AF = false;
 const bool skip_test_CB_2B_02B0 = false;
 const bool skip_test_CB_2B_02B1 = false;
-const bool skip_test_CB_2B_02B2 = true;
-const bool skip_test_CB_2B_02B3 = true;
+const bool skip_test_CB_2B_02B2 = false;
+const bool skip_test_CB_2B_02B3 = false;
 const bool skip_test_CB_2B_02B4 = false;
 const bool skip_test_CB_2B_02B5 = false;
 const bool skip_test_CB_2B_02B6 = false;
@@ -729,18 +729,18 @@ const bool skip_test_CB_2B_02B7 = false;
 const bool skip_test_CB_2B_02B8 = false;
 const bool skip_test_CB_2B_02B9 = false;
 const bool skip_test_CB_2B_02BA = false;
-const bool skip_test_CB_2B_02BB = true;
+const bool skip_test_CB_2B_02BB = false;
 const bool skip_test_CB_2B_02BC = false;
 const bool skip_test_CB_2B_02BD = false;
 const bool skip_test_CB_2B_02BE = false;
 const bool skip_test_CB_2B_02BF = false;
 const bool skip_test_CB_2B_02C0 = false;
-const bool skip_test_CB_2B_02C1 = true;
-const bool skip_test_CB_2B_02C2 = true;
+const bool skip_test_CB_2B_02C1 = false;
+const bool skip_test_CB_2B_02C2 = false;
 const bool skip_test_CB_2B_02C3 = false;
 const bool skip_test_CB_2B_02C4 = false;
 const bool skip_test_CB_2B_02C5 = false;
-const bool skip_test_CB_2B_02C6 = true;
+const bool skip_test_CB_2B_02C6 = false;
 const bool skip_test_CB_2B_02C7 = false;
 const bool skip_test_CB_2B_02C8 = false;
 const bool skip_test_CB_2B_02C9 = false;
@@ -748,20 +748,20 @@ const bool skip_test_CB_2B_02CA = false;
 const bool skip_test_CB_2B_02CB = false;
 const bool skip_test_CB_2B_02CC = false;
 const bool skip_test_CB_2B_02CD = false;
-const bool skip_test_CB_2B_02CE = true;
+const bool skip_test_CB_2B_02CE = false;
 const bool skip_test_CB_2B_02CF = false;
 const bool skip_test_CB_2B_02D0 = false;
 const bool skip_test_CB_2B_02D1 = false;
-const bool skip_test_CB_2B_02D2 = true;
+const bool skip_test_CB_2B_02D2 = false;
 const bool skip_test_CB_2B_02D3 = false;
-const bool skip_test_CB_2B_02D4 = true;
+const bool skip_test_CB_2B_02D4 = false;
 const bool skip_test_CB_2B_02D5 = false;
 const bool skip_test_CB_2B_02D6 = false;
 const bool skip_test_CB_2B_02D7 = false;
 const bool skip_test_CB_2B_02D8 = false;
 const bool skip_test_CB_2B_02D9 = false;
 const bool skip_test_CB_2B_02DA = false;
-const bool skip_test_CB_2B_02DB = true;
+const bool skip_test_CB_2B_02DB = false;
 const bool skip_test_CB_2B_02DC = false;
 const bool skip_test_CB_2B_02DD = false;
 const bool skip_test_CB_2B_02DE = false;
@@ -770,11 +770,11 @@ const bool skip_test_CB_2B_02E0 = false;
 const bool skip_test_CB_2B_02E1 = false;
 const bool skip_test_CB_2B_02E2 = false;
 const bool skip_test_CB_2B_02E3 = false;
-const bool skip_test_CB_2B_02E4 = true;
+const bool skip_test_CB_2B_02E4 = false;
 const bool skip_test_CB_2B_02E5 = false;
 const bool skip_test_CB_2B_02E6 = false;
-const bool skip_test_CB_2B_02E7 = true;
-const bool skip_test_CB_2B_02E8 = true;
+const bool skip_test_CB_2B_02E7 = false;
+const bool skip_test_CB_2B_02E8 = false;
 const bool skip_test_CB_2B_02E9 = false;
 const bool skip_test_CB_2B_02EA = false;
 const bool skip_test_CB_2B_02EB = false;
@@ -793,9 +793,9 @@ const bool skip_test_CB_2B_02F7 = false;
 const bool skip_test_CB_2B_02F8 = false;
 const bool skip_test_CB_2B_02F9 = false;
 const bool skip_test_CB_2B_02FA = false;
-const bool skip_test_CB_2B_02FB = true;
+const bool skip_test_CB_2B_02FB = false;
 const bool skip_test_CB_2B_02FC = false;
-const bool skip_test_CB_2B_02FD = true;
+const bool skip_test_CB_2B_02FD = false;
 const bool skip_test_CB_2B_02FE = false;
 const bool skip_test_CB_2B_02FF = false;
 const bool skip_test_CB_2B_0300 = false;
@@ -805,15 +805,15 @@ const bool skip_test_CB_2B_0303 = false;
 const bool skip_test_CB_2B_0304 = false;
 const bool skip_test_CB_2B_0305 = false;
 const bool skip_test_CB_2B_0306 = false;
-const bool skip_test_CB_2B_0307 = true;
+const bool skip_test_CB_2B_0307 = false;
 const bool skip_test_CB_2B_0308 = false;
 const bool skip_test_CB_2B_0309 = false;
-const bool skip_test_CB_2B_030A = true;
+const bool skip_test_CB_2B_030A = false;
 const bool skip_test_CB_2B_030B = false;
-const bool skip_test_CB_2B_030C = true;
+const bool skip_test_CB_2B_030C = false;
 const bool skip_test_CB_2B_030D = false;
 const bool skip_test_CB_2B_030E = false;
-const bool skip_test_CB_2B_030F = true;
+const bool skip_test_CB_2B_030F = false;
 const bool skip_test_CB_2B_0310 = false;
 const bool skip_test_CB_2B_0311 = false;
 const bool skip_test_CB_2B_0312 = false;
@@ -825,16 +825,16 @@ const bool skip_test_CB_2B_0317 = false;
 const bool skip_test_CB_2B_0318 = false;
 const bool skip_test_CB_2B_0319 = false;
 const bool skip_test_CB_2B_031A = false;
-const bool skip_test_CB_2B_031B = true;
-const bool skip_test_CB_2B_031C = true;
+const bool skip_test_CB_2B_031B = false;
+const bool skip_test_CB_2B_031C = false;
 const bool skip_test_CB_2B_031D = false;
 const bool skip_test_CB_2B_031E = false;
-const bool skip_test_CB_2B_031F = true;
+const bool skip_test_CB_2B_031F = false;
 const bool skip_test_CB_2B_0320 = false;
 const bool skip_test_CB_2B_0321 = false;
 const bool skip_test_CB_2B_0322 = false;
 const bool skip_test_CB_2B_0323 = false;
-const bool skip_test_CB_2B_0324 = true;
+const bool skip_test_CB_2B_0324 = false;
 const bool skip_test_CB_2B_0325 = false;
 const bool skip_test_CB_2B_0326 = false;
 const bool skip_test_CB_2B_0327 = false;
@@ -842,47 +842,47 @@ const bool skip_test_CB_2B_0328 = false;
 const bool skip_test_CB_2B_0329 = false;
 const bool skip_test_CB_2B_032A = false;
 const bool skip_test_CB_2B_032B = false;
-const bool skip_test_CB_2B_032C = true;
-const bool skip_test_CB_2B_032D = true;
+const bool skip_test_CB_2B_032C = false;
+const bool skip_test_CB_2B_032D = false;
 const bool skip_test_CB_2B_032E = false;
 const bool skip_test_CB_2B_032F = false;
-const bool skip_test_CB_2B_0330 = true;
+const bool skip_test_CB_2B_0330 = false;
 const bool skip_test_CB_2B_0331 = false;
-const bool skip_test_CB_2B_0332 = true;
+const bool skip_test_CB_2B_0332 = false;
 const bool skip_test_CB_2B_0333 = false;
 const bool skip_test_CB_2B_0334 = false;
 const bool skip_test_CB_2B_0335 = false;
 const bool skip_test_CB_2B_0336 = false;
 const bool skip_test_CB_2B_0337 = false;
 const bool skip_test_CB_2B_0338 = false;
-const bool skip_test_CB_2B_0339 = true;
+const bool skip_test_CB_2B_0339 = false;
 const bool skip_test_CB_2B_033A = false;
 const bool skip_test_CB_2B_033B = false;
 const bool skip_test_CB_2B_033C = false;
 const bool skip_test_CB_2B_033D = false;
-const bool skip_test_CB_2B_033E = true;
-const bool skip_test_CB_2B_033F = true;
+const bool skip_test_CB_2B_033E = false;
+const bool skip_test_CB_2B_033F = false;
 const bool skip_test_CB_2B_0340 = false;
 const bool skip_test_CB_2B_0341 = false;
-const bool skip_test_CB_2B_0342 = true;
-const bool skip_test_CB_2B_0343 = true;
+const bool skip_test_CB_2B_0342 = false;
+const bool skip_test_CB_2B_0343 = false;
 const bool skip_test_CB_2B_0344 = false;
-const bool skip_test_CB_2B_0345 = true;
+const bool skip_test_CB_2B_0345 = false;
 const bool skip_test_CB_2B_0346 = false;
 const bool skip_test_CB_2B_0347 = false;
 const bool skip_test_CB_2B_0348 = false;
-const bool skip_test_CB_2B_0349 = true;
+const bool skip_test_CB_2B_0349 = false;
 const bool skip_test_CB_2B_034A = false;
-const bool skip_test_CB_2B_034B = true;
+const bool skip_test_CB_2B_034B = false;
 const bool skip_test_CB_2B_034C = false;
 const bool skip_test_CB_2B_034D = false;
 const bool skip_test_CB_2B_034E = false;
-const bool skip_test_CB_2B_034F = true;
+const bool skip_test_CB_2B_034F = false;
 const bool skip_test_CB_2B_0350 = false;
 const bool skip_test_CB_2B_0351 = false;
 const bool skip_test_CB_2B_0352 = false;
 const bool skip_test_CB_2B_0353 = false;
-const bool skip_test_CB_2B_0354 = true;
+const bool skip_test_CB_2B_0354 = false;
 const bool skip_test_CB_2B_0355 = false;
 const bool skip_test_CB_2B_0356 = false;
 const bool skip_test_CB_2B_0357 = false;
@@ -894,34 +894,34 @@ const bool skip_test_CB_2B_035C = false;
 const bool skip_test_CB_2B_035D = false;
 const bool skip_test_CB_2B_035E = false;
 const bool skip_test_CB_2B_035F = false;
-const bool skip_test_CB_2B_0360 = true;
-const bool skip_test_CB_2B_0361 = true;
+const bool skip_test_CB_2B_0360 = false;
+const bool skip_test_CB_2B_0361 = false;
 const bool skip_test_CB_2B_0362 = false;
 const bool skip_test_CB_2B_0363 = false;
-const bool skip_test_CB_2B_0364 = true;
-const bool skip_test_CB_2B_0365 = true;
+const bool skip_test_CB_2B_0364 = false;
+const bool skip_test_CB_2B_0365 = false;
 const bool skip_test_CB_2B_0366 = false;
 const bool skip_test_CB_2B_0367 = false;
 const bool skip_test_CB_2B_0368 = false;
-const bool skip_test_CB_2B_0369 = true;
-const bool skip_test_CB_2B_036A = true;
-const bool skip_test_CB_2B_036B = true;
-const bool skip_test_CB_2B_036C = true;
+const bool skip_test_CB_2B_0369 = false;
+const bool skip_test_CB_2B_036A = false;
+const bool skip_test_CB_2B_036B = false;
+const bool skip_test_CB_2B_036C = false;
 const bool skip_test_CB_2B_036D = false;
 const bool skip_test_CB_2B_036E = false;
 const bool skip_test_CB_2B_036F = false;
-const bool skip_test_CB_2B_0370 = true;
+const bool skip_test_CB_2B_0370 = false;
 const bool skip_test_CB_2B_0371 = false;
 const bool skip_test_CB_2B_0372 = false;
 const bool skip_test_CB_2B_0373 = false;
 const bool skip_test_CB_2B_0374 = false;
-const bool skip_test_CB_2B_0375 = true;
+const bool skip_test_CB_2B_0375 = false;
 const bool skip_test_CB_2B_0376 = false;
 const bool skip_test_CB_2B_0377 = false;
 const bool skip_test_CB_2B_0378 = false;
 const bool skip_test_CB_2B_0379 = false;
-const bool skip_test_CB_2B_037A = true;
-const bool skip_test_CB_2B_037B = true;
+const bool skip_test_CB_2B_037A = false;
+const bool skip_test_CB_2B_037B = false;
 const bool skip_test_CB_2B_037C = false;
 const bool skip_test_CB_2B_037D = false;
 const bool skip_test_CB_2B_037E = false;
@@ -932,24 +932,24 @@ const bool skip_test_CB_2B_0382 = false;
 const bool skip_test_CB_2B_0383 = false;
 const bool skip_test_CB_2B_0384 = false;
 const bool skip_test_CB_2B_0385 = false;
-const bool skip_test_CB_2B_0386 = true;
-const bool skip_test_CB_2B_0387 = true;
+const bool skip_test_CB_2B_0386 = false;
+const bool skip_test_CB_2B_0387 = false;
 const bool skip_test_CB_2B_0388 = false;
 const bool skip_test_CB_2B_0389 = false;
-const bool skip_test_CB_2B_038A = true;
+const bool skip_test_CB_2B_038A = false;
 const bool skip_test_CB_2B_038B = false;
 const bool skip_test_CB_2B_038C = false;
 const bool skip_test_CB_2B_038D = false;
 const bool skip_test_CB_2B_038E = false;
 const bool skip_test_CB_2B_038F = false;
 const bool skip_test_CB_2B_0390 = false;
-const bool skip_test_CB_2B_0391 = true;
+const bool skip_test_CB_2B_0391 = false;
 const bool skip_test_CB_2B_0392 = false;
 const bool skip_test_CB_2B_0393 = false;
 const bool skip_test_CB_2B_0394 = false;
 const bool skip_test_CB_2B_0395 = false;
-const bool skip_test_CB_2B_0396 = true;
-const bool skip_test_CB_2B_0397 = true;
+const bool skip_test_CB_2B_0396 = false;
+const bool skip_test_CB_2B_0397 = false;
 const bool skip_test_CB_2B_0398 = false;
 const bool skip_test_CB_2B_0399 = false;
 const bool skip_test_CB_2B_039A = false;
@@ -958,15 +958,15 @@ const bool skip_test_CB_2B_039C = false;
 const bool skip_test_CB_2B_039D = false;
 const bool skip_test_CB_2B_039E = false;
 const bool skip_test_CB_2B_039F = false;
-const bool skip_test_CB_2B_03A0 = true;
+const bool skip_test_CB_2B_03A0 = false;
 const bool skip_test_CB_2B_03A1 = false;
-const bool skip_test_CB_2B_03A2 = true;
+const bool skip_test_CB_2B_03A2 = false;
 const bool skip_test_CB_2B_03A3 = false;
 const bool skip_test_CB_2B_03A4 = false;
-const bool skip_test_CB_2B_03A5 = true;
+const bool skip_test_CB_2B_03A5 = false;
 const bool skip_test_CB_2B_03A6 = false;
 const bool skip_test_CB_2B_03A7 = false;
-const bool skip_test_CB_2B_03A8 = true;
+const bool skip_test_CB_2B_03A8 = false;
 const bool skip_test_CB_2B_03A9 = false;
 const bool skip_test_CB_2B_03AA = false;
 const bool skip_test_CB_2B_03AB = false;
@@ -976,7 +976,7 @@ const bool skip_test_CB_2B_03AE = false;
 const bool skip_test_CB_2B_03AF = false;
 const bool skip_test_CB_2B_03B0 = false;
 const bool skip_test_CB_2B_03B1 = false;
-const bool skip_test_CB_2B_03B2 = true;
+const bool skip_test_CB_2B_03B2 = false;
 const bool skip_test_CB_2B_03B3 = false;
 const bool skip_test_CB_2B_03B4 = false;
 const bool skip_test_CB_2B_03B5 = false;
@@ -984,11 +984,11 @@ const bool skip_test_CB_2B_03B6 = false;
 const bool skip_test_CB_2B_03B7 = false;
 const bool skip_test_CB_2B_03B8 = false;
 const bool skip_test_CB_2B_03B9 = false;
-const bool skip_test_CB_2B_03BA = true;
+const bool skip_test_CB_2B_03BA = false;
 const bool skip_test_CB_2B_03BB = false;
 const bool skip_test_CB_2B_03BC = false;
 const bool skip_test_CB_2B_03BD = false;
-const bool skip_test_CB_2B_03BE = true;
+const bool skip_test_CB_2B_03BE = false;
 const bool skip_test_CB_2B_03BF = false;
 const bool skip_test_CB_2B_03C0 = false;
 const bool skip_test_CB_2B_03C1 = false;
@@ -996,40 +996,40 @@ const bool skip_test_CB_2B_03C2 = false;
 const bool skip_test_CB_2B_03C3 = false;
 const bool skip_test_CB_2B_03C4 = false;
 const bool skip_test_CB_2B_03C5 = false;
-const bool skip_test_CB_2B_03C6 = true;
+const bool skip_test_CB_2B_03C6 = false;
 const bool skip_test_CB_2B_03C7 = false;
 const bool skip_test_CB_2B_03C8 = false;
 const bool skip_test_CB_2B_03C9 = false;
 const bool skip_test_CB_2B_03CA = false;
 const bool skip_test_CB_2B_03CB = false;
 const bool skip_test_CB_2B_03CC = false;
-const bool skip_test_CB_2B_03CD = true;
+const bool skip_test_CB_2B_03CD = false;
 const bool skip_test_CB_2B_03CE = false;
-const bool skip_test_CB_2B_03CF = true;
+const bool skip_test_CB_2B_03CF = false;
 const bool skip_test_CB_2B_03D0 = false;
 const bool skip_test_CB_2B_03D1 = false;
 const bool skip_test_CB_2B_03D2 = false;
 const bool skip_test_CB_2B_03D3 = false;
-const bool skip_test_CB_2B_03D4 = true;
+const bool skip_test_CB_2B_03D4 = false;
 const bool skip_test_CB_2B_03D5 = false;
 const bool skip_test_CB_2B_03D6 = false;
-const bool skip_test_CB_2B_03D7 = true;
+const bool skip_test_CB_2B_03D7 = false;
 const bool skip_test_CB_2B_03D8 = false;
 const bool skip_test_CB_2B_03D9 = false;
 const bool skip_test_CB_2B_03DA = false;
-const bool skip_test_CB_2B_03DB = true;
+const bool skip_test_CB_2B_03DB = false;
 const bool skip_test_CB_2B_03DC = false;
 const bool skip_test_CB_2B_03DD = false;
 const bool skip_test_CB_2B_03DE = false;
 const bool skip_test_CB_2B_03DF = false;
-const bool skip_test_CB_2B_03E0 = true;
+const bool skip_test_CB_2B_03E0 = false;
 const bool skip_test_CB_2B_03E1 = false;
-const bool skip_test_CB_2B_03E2 = true;
-const bool skip_test_CB_2B_03E3 = true;
+const bool skip_test_CB_2B_03E2 = false;
+const bool skip_test_CB_2B_03E3 = false;
 const bool skip_test_CB_2B_03E4 = false;
 const bool skip_test_CB_2B_03E5 = false;
 const bool skip_test_CB_2B_03E6 = false;
-const bool skip_test_CB_2B_03E7 = true;
+const bool skip_test_CB_2B_03E7 = false;
 void test_CB_2B_0000(void);
 void test_CB_2B_0001(void);
 void test_CB_2B_0002(void);
@@ -3043,8 +3043,6 @@ void test_CB_2B_0000()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3103,8 +3101,6 @@ void test_CB_2B_0001()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3163,8 +3159,6 @@ void test_CB_2B_0002()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3223,8 +3217,6 @@ void test_CB_2B_0003()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3283,8 +3275,6 @@ void test_CB_2B_0004()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3343,8 +3333,6 @@ void test_CB_2B_0005()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3403,8 +3391,6 @@ void test_CB_2B_0006()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3463,8 +3449,6 @@ void test_CB_2B_0007()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3523,8 +3507,6 @@ void test_CB_2B_0008()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3583,8 +3565,6 @@ void test_CB_2B_0009()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3643,8 +3623,6 @@ void test_CB_2B_000A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3703,8 +3681,6 @@ void test_CB_2B_000B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3763,8 +3739,6 @@ void test_CB_2B_000C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3823,8 +3797,6 @@ void test_CB_2B_000D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3883,8 +3855,6 @@ void test_CB_2B_000E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -3943,8 +3913,6 @@ void test_CB_2B_000F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4003,8 +3971,6 @@ void test_CB_2B_0010()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4063,8 +4029,6 @@ void test_CB_2B_0011()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4123,8 +4087,6 @@ void test_CB_2B_0012()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4183,8 +4145,6 @@ void test_CB_2B_0013()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4243,8 +4203,6 @@ void test_CB_2B_0014()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4303,8 +4261,6 @@ void test_CB_2B_0015()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4363,8 +4319,6 @@ void test_CB_2B_0016()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4423,8 +4377,6 @@ void test_CB_2B_0017()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4483,8 +4435,6 @@ void test_CB_2B_0018()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4543,8 +4493,6 @@ void test_CB_2B_0019()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4603,8 +4551,6 @@ void test_CB_2B_001A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4663,8 +4609,6 @@ void test_CB_2B_001B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4723,8 +4667,6 @@ void test_CB_2B_001C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4783,8 +4725,6 @@ void test_CB_2B_001D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4843,8 +4783,6 @@ void test_CB_2B_001E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4903,8 +4841,6 @@ void test_CB_2B_001F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -4963,8 +4899,6 @@ void test_CB_2B_0020()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5023,8 +4957,6 @@ void test_CB_2B_0021()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5083,8 +5015,6 @@ void test_CB_2B_0022()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5143,8 +5073,6 @@ void test_CB_2B_0023()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5203,8 +5131,6 @@ void test_CB_2B_0024()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5263,8 +5189,6 @@ void test_CB_2B_0025()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5323,8 +5247,6 @@ void test_CB_2B_0026()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5383,8 +5305,6 @@ void test_CB_2B_0027()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5443,8 +5363,6 @@ void test_CB_2B_0028()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5503,8 +5421,6 @@ void test_CB_2B_0029()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5563,8 +5479,6 @@ void test_CB_2B_002A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5623,8 +5537,6 @@ void test_CB_2B_002B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5683,8 +5595,6 @@ void test_CB_2B_002C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5743,8 +5653,6 @@ void test_CB_2B_002D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5803,8 +5711,6 @@ void test_CB_2B_002E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5863,8 +5769,6 @@ void test_CB_2B_002F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5923,8 +5827,6 @@ void test_CB_2B_0030()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -5983,8 +5885,6 @@ void test_CB_2B_0031()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6043,8 +5943,6 @@ void test_CB_2B_0032()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6103,8 +6001,6 @@ void test_CB_2B_0033()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6163,8 +6059,6 @@ void test_CB_2B_0034()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6223,8 +6117,6 @@ void test_CB_2B_0035()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6283,8 +6175,6 @@ void test_CB_2B_0036()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6343,8 +6233,6 @@ void test_CB_2B_0037()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6403,8 +6291,6 @@ void test_CB_2B_0038()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6463,8 +6349,6 @@ void test_CB_2B_0039()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6523,8 +6407,6 @@ void test_CB_2B_003A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6583,8 +6465,6 @@ void test_CB_2B_003B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6643,8 +6523,6 @@ void test_CB_2B_003C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6703,8 +6581,6 @@ void test_CB_2B_003D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6763,8 +6639,6 @@ void test_CB_2B_003E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6823,8 +6697,6 @@ void test_CB_2B_003F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6883,8 +6755,6 @@ void test_CB_2B_0040()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -6943,8 +6813,6 @@ void test_CB_2B_0041()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7003,8 +6871,6 @@ void test_CB_2B_0042()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7063,8 +6929,6 @@ void test_CB_2B_0043()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7123,8 +6987,6 @@ void test_CB_2B_0044()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7183,8 +7045,6 @@ void test_CB_2B_0045()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7243,8 +7103,6 @@ void test_CB_2B_0046()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7303,8 +7161,6 @@ void test_CB_2B_0047()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7363,8 +7219,6 @@ void test_CB_2B_0048()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7423,8 +7277,6 @@ void test_CB_2B_0049()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7483,8 +7335,6 @@ void test_CB_2B_004A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7543,8 +7393,6 @@ void test_CB_2B_004B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7603,8 +7451,6 @@ void test_CB_2B_004C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7663,8 +7509,6 @@ void test_CB_2B_004D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7723,8 +7567,6 @@ void test_CB_2B_004E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7783,8 +7625,6 @@ void test_CB_2B_004F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7843,8 +7683,6 @@ void test_CB_2B_0050()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7903,8 +7741,6 @@ void test_CB_2B_0051()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -7963,8 +7799,6 @@ void test_CB_2B_0052()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8023,8 +7857,6 @@ void test_CB_2B_0053()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8083,8 +7915,6 @@ void test_CB_2B_0054()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8143,8 +7973,6 @@ void test_CB_2B_0055()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8203,8 +8031,6 @@ void test_CB_2B_0056()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8263,8 +8089,6 @@ void test_CB_2B_0057()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8323,8 +8147,6 @@ void test_CB_2B_0058()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8383,8 +8205,6 @@ void test_CB_2B_0059()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8443,8 +8263,6 @@ void test_CB_2B_005A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8503,8 +8321,6 @@ void test_CB_2B_005B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8563,8 +8379,6 @@ void test_CB_2B_005C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8623,8 +8437,6 @@ void test_CB_2B_005D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8683,8 +8495,6 @@ void test_CB_2B_005E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8743,8 +8553,6 @@ void test_CB_2B_005F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8803,8 +8611,6 @@ void test_CB_2B_0060()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8863,8 +8669,6 @@ void test_CB_2B_0061()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8923,8 +8727,6 @@ void test_CB_2B_0062()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -8983,8 +8785,6 @@ void test_CB_2B_0063()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9043,8 +8843,6 @@ void test_CB_2B_0064()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9103,8 +8901,6 @@ void test_CB_2B_0065()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9163,8 +8959,6 @@ void test_CB_2B_0066()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9223,8 +9017,6 @@ void test_CB_2B_0067()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9283,8 +9075,6 @@ void test_CB_2B_0068()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9343,8 +9133,6 @@ void test_CB_2B_0069()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9403,8 +9191,6 @@ void test_CB_2B_006A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9463,8 +9249,6 @@ void test_CB_2B_006B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9523,8 +9307,6 @@ void test_CB_2B_006C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9583,8 +9365,6 @@ void test_CB_2B_006D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9643,8 +9423,6 @@ void test_CB_2B_006E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9703,8 +9481,6 @@ void test_CB_2B_006F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9763,8 +9539,6 @@ void test_CB_2B_0070()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9823,8 +9597,6 @@ void test_CB_2B_0071()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9883,8 +9655,6 @@ void test_CB_2B_0072()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -9943,8 +9713,6 @@ void test_CB_2B_0073()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10003,8 +9771,6 @@ void test_CB_2B_0074()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10063,8 +9829,6 @@ void test_CB_2B_0075()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10123,8 +9887,6 @@ void test_CB_2B_0076()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10183,8 +9945,6 @@ void test_CB_2B_0077()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10243,8 +10003,6 @@ void test_CB_2B_0078()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10303,8 +10061,6 @@ void test_CB_2B_0079()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10363,8 +10119,6 @@ void test_CB_2B_007A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10423,8 +10177,6 @@ void test_CB_2B_007B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10483,8 +10235,6 @@ void test_CB_2B_007C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10543,8 +10293,6 @@ void test_CB_2B_007D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10603,8 +10351,6 @@ void test_CB_2B_007E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10663,8 +10409,6 @@ void test_CB_2B_007F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10723,8 +10467,6 @@ void test_CB_2B_0080()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10783,8 +10525,6 @@ void test_CB_2B_0081()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10843,8 +10583,6 @@ void test_CB_2B_0082()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10903,8 +10641,6 @@ void test_CB_2B_0083()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -10963,8 +10699,6 @@ void test_CB_2B_0084()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11023,8 +10757,6 @@ void test_CB_2B_0085()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11083,8 +10815,6 @@ void test_CB_2B_0086()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11143,8 +10873,6 @@ void test_CB_2B_0087()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11203,8 +10931,6 @@ void test_CB_2B_0088()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11263,8 +10989,6 @@ void test_CB_2B_0089()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11323,8 +11047,6 @@ void test_CB_2B_008A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11383,8 +11105,6 @@ void test_CB_2B_008B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11443,8 +11163,6 @@ void test_CB_2B_008C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11503,8 +11221,6 @@ void test_CB_2B_008D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11563,8 +11279,6 @@ void test_CB_2B_008E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11623,8 +11337,6 @@ void test_CB_2B_008F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11683,8 +11395,6 @@ void test_CB_2B_0090()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11743,8 +11453,6 @@ void test_CB_2B_0091()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11803,8 +11511,6 @@ void test_CB_2B_0092()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11863,8 +11569,6 @@ void test_CB_2B_0093()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11923,8 +11627,6 @@ void test_CB_2B_0094()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -11983,8 +11685,6 @@ void test_CB_2B_0095()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12043,8 +11743,6 @@ void test_CB_2B_0096()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12103,8 +11801,6 @@ void test_CB_2B_0097()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12163,8 +11859,6 @@ void test_CB_2B_0098()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12223,8 +11917,6 @@ void test_CB_2B_0099()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12283,8 +11975,6 @@ void test_CB_2B_009A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12343,8 +12033,6 @@ void test_CB_2B_009B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12403,8 +12091,6 @@ void test_CB_2B_009C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12463,8 +12149,6 @@ void test_CB_2B_009D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12523,8 +12207,6 @@ void test_CB_2B_009E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12583,8 +12265,6 @@ void test_CB_2B_009F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12643,8 +12323,6 @@ void test_CB_2B_00A0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12703,8 +12381,6 @@ void test_CB_2B_00A1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12763,8 +12439,6 @@ void test_CB_2B_00A2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12823,8 +12497,6 @@ void test_CB_2B_00A3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12883,8 +12555,6 @@ void test_CB_2B_00A4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -12943,8 +12613,6 @@ void test_CB_2B_00A5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13003,8 +12671,6 @@ void test_CB_2B_00A6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13063,8 +12729,6 @@ void test_CB_2B_00A7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13123,8 +12787,6 @@ void test_CB_2B_00A8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13183,8 +12845,6 @@ void test_CB_2B_00A9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13243,8 +12903,6 @@ void test_CB_2B_00AA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13303,8 +12961,6 @@ void test_CB_2B_00AB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13363,8 +13019,6 @@ void test_CB_2B_00AC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13423,8 +13077,6 @@ void test_CB_2B_00AD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13483,8 +13135,6 @@ void test_CB_2B_00AE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13543,8 +13193,6 @@ void test_CB_2B_00AF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13603,8 +13251,6 @@ void test_CB_2B_00B0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13663,8 +13309,6 @@ void test_CB_2B_00B1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13723,8 +13367,6 @@ void test_CB_2B_00B2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13783,8 +13425,6 @@ void test_CB_2B_00B3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13843,8 +13483,6 @@ void test_CB_2B_00B4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13903,8 +13541,6 @@ void test_CB_2B_00B5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -13963,8 +13599,6 @@ void test_CB_2B_00B6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14023,8 +13657,6 @@ void test_CB_2B_00B7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14083,8 +13715,6 @@ void test_CB_2B_00B8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14143,8 +13773,6 @@ void test_CB_2B_00B9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14203,8 +13831,6 @@ void test_CB_2B_00BA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14263,8 +13889,6 @@ void test_CB_2B_00BB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14323,8 +13947,6 @@ void test_CB_2B_00BC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14383,8 +14005,6 @@ void test_CB_2B_00BD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14443,8 +14063,6 @@ void test_CB_2B_00BE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14503,8 +14121,6 @@ void test_CB_2B_00BF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14563,8 +14179,6 @@ void test_CB_2B_00C0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14623,8 +14237,6 @@ void test_CB_2B_00C1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14683,8 +14295,6 @@ void test_CB_2B_00C2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14743,8 +14353,6 @@ void test_CB_2B_00C3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14803,8 +14411,6 @@ void test_CB_2B_00C4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14863,8 +14469,6 @@ void test_CB_2B_00C5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14923,8 +14527,6 @@ void test_CB_2B_00C6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -14983,8 +14585,6 @@ void test_CB_2B_00C7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15043,8 +14643,6 @@ void test_CB_2B_00C8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15103,8 +14701,6 @@ void test_CB_2B_00C9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15163,8 +14759,6 @@ void test_CB_2B_00CA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15223,8 +14817,6 @@ void test_CB_2B_00CB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15283,8 +14875,6 @@ void test_CB_2B_00CC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15343,8 +14933,6 @@ void test_CB_2B_00CD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15403,8 +14991,6 @@ void test_CB_2B_00CE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15463,8 +15049,6 @@ void test_CB_2B_00CF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15523,8 +15107,6 @@ void test_CB_2B_00D0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15583,8 +15165,6 @@ void test_CB_2B_00D1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15643,8 +15223,6 @@ void test_CB_2B_00D2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15703,8 +15281,6 @@ void test_CB_2B_00D3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15763,8 +15339,6 @@ void test_CB_2B_00D4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15823,8 +15397,6 @@ void test_CB_2B_00D5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15883,8 +15455,6 @@ void test_CB_2B_00D6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -15943,8 +15513,6 @@ void test_CB_2B_00D7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16003,8 +15571,6 @@ void test_CB_2B_00D8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16063,8 +15629,6 @@ void test_CB_2B_00D9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16123,8 +15687,6 @@ void test_CB_2B_00DA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16183,8 +15745,6 @@ void test_CB_2B_00DB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16243,8 +15803,6 @@ void test_CB_2B_00DC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16303,8 +15861,6 @@ void test_CB_2B_00DD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16363,8 +15919,6 @@ void test_CB_2B_00DE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16423,8 +15977,6 @@ void test_CB_2B_00DF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16483,8 +16035,6 @@ void test_CB_2B_00E0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16543,8 +16093,6 @@ void test_CB_2B_00E1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16603,8 +16151,6 @@ void test_CB_2B_00E2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16663,8 +16209,6 @@ void test_CB_2B_00E3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16723,8 +16267,6 @@ void test_CB_2B_00E4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16783,8 +16325,6 @@ void test_CB_2B_00E5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16843,8 +16383,6 @@ void test_CB_2B_00E6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16903,8 +16441,6 @@ void test_CB_2B_00E7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -16963,8 +16499,6 @@ void test_CB_2B_00E8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17023,8 +16557,6 @@ void test_CB_2B_00E9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17083,8 +16615,6 @@ void test_CB_2B_00EA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17143,8 +16673,6 @@ void test_CB_2B_00EB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17203,8 +16731,6 @@ void test_CB_2B_00EC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17263,8 +16789,6 @@ void test_CB_2B_00ED()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17323,8 +16847,6 @@ void test_CB_2B_00EE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17383,8 +16905,6 @@ void test_CB_2B_00EF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17443,8 +16963,6 @@ void test_CB_2B_00F0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17503,8 +17021,6 @@ void test_CB_2B_00F1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17563,8 +17079,6 @@ void test_CB_2B_00F2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17623,8 +17137,6 @@ void test_CB_2B_00F3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17683,8 +17195,6 @@ void test_CB_2B_00F4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17743,8 +17253,6 @@ void test_CB_2B_00F5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17803,8 +17311,6 @@ void test_CB_2B_00F6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17863,8 +17369,6 @@ void test_CB_2B_00F7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17923,8 +17427,6 @@ void test_CB_2B_00F8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -17983,8 +17485,6 @@ void test_CB_2B_00F9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18043,8 +17543,6 @@ void test_CB_2B_00FA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18103,8 +17601,6 @@ void test_CB_2B_00FB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18163,8 +17659,6 @@ void test_CB_2B_00FC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18223,8 +17717,6 @@ void test_CB_2B_00FD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18283,8 +17775,6 @@ void test_CB_2B_00FE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18343,8 +17833,6 @@ void test_CB_2B_00FF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18403,8 +17891,6 @@ void test_CB_2B_0100()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18463,8 +17949,6 @@ void test_CB_2B_0101()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18523,8 +18007,6 @@ void test_CB_2B_0102()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18583,8 +18065,6 @@ void test_CB_2B_0103()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18643,8 +18123,6 @@ void test_CB_2B_0104()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18703,8 +18181,6 @@ void test_CB_2B_0105()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18763,8 +18239,6 @@ void test_CB_2B_0106()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18823,8 +18297,6 @@ void test_CB_2B_0107()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18883,8 +18355,6 @@ void test_CB_2B_0108()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -18943,8 +18413,6 @@ void test_CB_2B_0109()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19003,8 +18471,6 @@ void test_CB_2B_010A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19063,8 +18529,6 @@ void test_CB_2B_010B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19123,8 +18587,6 @@ void test_CB_2B_010C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19183,8 +18645,6 @@ void test_CB_2B_010D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19243,8 +18703,6 @@ void test_CB_2B_010E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19303,8 +18761,6 @@ void test_CB_2B_010F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19363,8 +18819,6 @@ void test_CB_2B_0110()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19423,8 +18877,6 @@ void test_CB_2B_0111()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19483,8 +18935,6 @@ void test_CB_2B_0112()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19543,8 +18993,6 @@ void test_CB_2B_0113()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19603,8 +19051,6 @@ void test_CB_2B_0114()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19663,8 +19109,6 @@ void test_CB_2B_0115()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19723,8 +19167,6 @@ void test_CB_2B_0116()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19783,8 +19225,6 @@ void test_CB_2B_0117()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19843,8 +19283,6 @@ void test_CB_2B_0118()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19903,8 +19341,6 @@ void test_CB_2B_0119()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -19963,8 +19399,6 @@ void test_CB_2B_011A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20023,8 +19457,6 @@ void test_CB_2B_011B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20083,8 +19515,6 @@ void test_CB_2B_011C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20143,8 +19573,6 @@ void test_CB_2B_011D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20203,8 +19631,6 @@ void test_CB_2B_011E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20263,8 +19689,6 @@ void test_CB_2B_011F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20323,8 +19747,6 @@ void test_CB_2B_0120()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20383,8 +19805,6 @@ void test_CB_2B_0121()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20443,8 +19863,6 @@ void test_CB_2B_0122()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20503,8 +19921,6 @@ void test_CB_2B_0123()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20563,8 +19979,6 @@ void test_CB_2B_0124()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20623,8 +20037,6 @@ void test_CB_2B_0125()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20683,8 +20095,6 @@ void test_CB_2B_0126()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20743,8 +20153,6 @@ void test_CB_2B_0127()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20803,8 +20211,6 @@ void test_CB_2B_0128()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20863,8 +20269,6 @@ void test_CB_2B_0129()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20923,8 +20327,6 @@ void test_CB_2B_012A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -20983,8 +20385,6 @@ void test_CB_2B_012B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21043,8 +20443,6 @@ void test_CB_2B_012C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21103,8 +20501,6 @@ void test_CB_2B_012D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21163,8 +20559,6 @@ void test_CB_2B_012E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21223,8 +20617,6 @@ void test_CB_2B_012F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21283,8 +20675,6 @@ void test_CB_2B_0130()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21343,8 +20733,6 @@ void test_CB_2B_0131()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21403,8 +20791,6 @@ void test_CB_2B_0132()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21463,8 +20849,6 @@ void test_CB_2B_0133()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21523,8 +20907,6 @@ void test_CB_2B_0134()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21583,8 +20965,6 @@ void test_CB_2B_0135()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21643,8 +21023,6 @@ void test_CB_2B_0136()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21703,8 +21081,6 @@ void test_CB_2B_0137()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21763,8 +21139,6 @@ void test_CB_2B_0138()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21823,8 +21197,6 @@ void test_CB_2B_0139()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21883,8 +21255,6 @@ void test_CB_2B_013A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -21943,8 +21313,6 @@ void test_CB_2B_013B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22003,8 +21371,6 @@ void test_CB_2B_013C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22063,8 +21429,6 @@ void test_CB_2B_013D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22123,8 +21487,6 @@ void test_CB_2B_013E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22183,8 +21545,6 @@ void test_CB_2B_013F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22243,8 +21603,6 @@ void test_CB_2B_0140()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22303,8 +21661,6 @@ void test_CB_2B_0141()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22363,8 +21719,6 @@ void test_CB_2B_0142()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22423,8 +21777,6 @@ void test_CB_2B_0143()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22483,8 +21835,6 @@ void test_CB_2B_0144()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22543,8 +21893,6 @@ void test_CB_2B_0145()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22603,8 +21951,6 @@ void test_CB_2B_0146()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22663,8 +22009,6 @@ void test_CB_2B_0147()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22723,8 +22067,6 @@ void test_CB_2B_0148()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22783,8 +22125,6 @@ void test_CB_2B_0149()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22843,8 +22183,6 @@ void test_CB_2B_014A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22903,8 +22241,6 @@ void test_CB_2B_014B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -22963,8 +22299,6 @@ void test_CB_2B_014C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23023,8 +22357,6 @@ void test_CB_2B_014D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23083,8 +22415,6 @@ void test_CB_2B_014E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23143,8 +22473,6 @@ void test_CB_2B_014F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23203,8 +22531,6 @@ void test_CB_2B_0150()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23263,8 +22589,6 @@ void test_CB_2B_0151()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23323,8 +22647,6 @@ void test_CB_2B_0152()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23383,8 +22705,6 @@ void test_CB_2B_0153()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23443,8 +22763,6 @@ void test_CB_2B_0154()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23503,8 +22821,6 @@ void test_CB_2B_0155()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23563,8 +22879,6 @@ void test_CB_2B_0156()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23623,8 +22937,6 @@ void test_CB_2B_0157()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23683,8 +22995,6 @@ void test_CB_2B_0158()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23743,8 +23053,6 @@ void test_CB_2B_0159()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23803,8 +23111,6 @@ void test_CB_2B_015A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23863,8 +23169,6 @@ void test_CB_2B_015B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23923,8 +23227,6 @@ void test_CB_2B_015C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -23983,8 +23285,6 @@ void test_CB_2B_015D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24043,8 +23343,6 @@ void test_CB_2B_015E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24103,8 +23401,6 @@ void test_CB_2B_015F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24163,8 +23459,6 @@ void test_CB_2B_0160()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24223,8 +23517,6 @@ void test_CB_2B_0161()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24283,8 +23575,6 @@ void test_CB_2B_0162()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24343,8 +23633,6 @@ void test_CB_2B_0163()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24403,8 +23691,6 @@ void test_CB_2B_0164()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24463,8 +23749,6 @@ void test_CB_2B_0165()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24523,8 +23807,6 @@ void test_CB_2B_0166()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24583,8 +23865,6 @@ void test_CB_2B_0167()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24643,8 +23923,6 @@ void test_CB_2B_0168()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24703,8 +23981,6 @@ void test_CB_2B_0169()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24763,8 +24039,6 @@ void test_CB_2B_016A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24823,8 +24097,6 @@ void test_CB_2B_016B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24883,8 +24155,6 @@ void test_CB_2B_016C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -24943,8 +24213,6 @@ void test_CB_2B_016D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25003,8 +24271,6 @@ void test_CB_2B_016E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25063,8 +24329,6 @@ void test_CB_2B_016F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25123,8 +24387,6 @@ void test_CB_2B_0170()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25183,8 +24445,6 @@ void test_CB_2B_0171()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25243,8 +24503,6 @@ void test_CB_2B_0172()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25303,8 +24561,6 @@ void test_CB_2B_0173()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25363,8 +24619,6 @@ void test_CB_2B_0174()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25423,8 +24677,6 @@ void test_CB_2B_0175()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25483,8 +24735,6 @@ void test_CB_2B_0176()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25543,8 +24793,6 @@ void test_CB_2B_0177()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25603,8 +24851,6 @@ void test_CB_2B_0178()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25663,8 +24909,6 @@ void test_CB_2B_0179()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25723,8 +24967,6 @@ void test_CB_2B_017A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25783,8 +25025,6 @@ void test_CB_2B_017B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25843,8 +25083,6 @@ void test_CB_2B_017C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25903,8 +25141,6 @@ void test_CB_2B_017D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -25963,8 +25199,6 @@ void test_CB_2B_017E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26023,8 +25257,6 @@ void test_CB_2B_017F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26083,8 +25315,6 @@ void test_CB_2B_0180()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26143,8 +25373,6 @@ void test_CB_2B_0181()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26203,8 +25431,6 @@ void test_CB_2B_0182()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26263,8 +25489,6 @@ void test_CB_2B_0183()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26323,8 +25547,6 @@ void test_CB_2B_0184()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26383,8 +25605,6 @@ void test_CB_2B_0185()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26443,8 +25663,6 @@ void test_CB_2B_0186()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26503,8 +25721,6 @@ void test_CB_2B_0187()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26563,8 +25779,6 @@ void test_CB_2B_0188()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26623,8 +25837,6 @@ void test_CB_2B_0189()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26683,8 +25895,6 @@ void test_CB_2B_018A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26743,8 +25953,6 @@ void test_CB_2B_018B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26803,8 +26011,6 @@ void test_CB_2B_018C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26863,8 +26069,6 @@ void test_CB_2B_018D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26923,8 +26127,6 @@ void test_CB_2B_018E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -26983,8 +26185,6 @@ void test_CB_2B_018F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27043,8 +26243,6 @@ void test_CB_2B_0190()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27103,8 +26301,6 @@ void test_CB_2B_0191()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27163,8 +26359,6 @@ void test_CB_2B_0192()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27223,8 +26417,6 @@ void test_CB_2B_0193()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27283,8 +26475,6 @@ void test_CB_2B_0194()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27343,8 +26533,6 @@ void test_CB_2B_0195()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27403,8 +26591,6 @@ void test_CB_2B_0196()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27463,8 +26649,6 @@ void test_CB_2B_0197()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27523,8 +26707,6 @@ void test_CB_2B_0198()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27583,8 +26765,6 @@ void test_CB_2B_0199()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27643,8 +26823,6 @@ void test_CB_2B_019A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27703,8 +26881,6 @@ void test_CB_2B_019B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27763,8 +26939,6 @@ void test_CB_2B_019C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27823,8 +26997,6 @@ void test_CB_2B_019D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27883,8 +27055,6 @@ void test_CB_2B_019E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -27943,8 +27113,6 @@ void test_CB_2B_019F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28003,8 +27171,6 @@ void test_CB_2B_01A0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28063,8 +27229,6 @@ void test_CB_2B_01A1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28123,8 +27287,6 @@ void test_CB_2B_01A2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28183,8 +27345,6 @@ void test_CB_2B_01A3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28243,8 +27403,6 @@ void test_CB_2B_01A4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28303,8 +27461,6 @@ void test_CB_2B_01A5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28363,8 +27519,6 @@ void test_CB_2B_01A6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28423,8 +27577,6 @@ void test_CB_2B_01A7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28483,8 +27635,6 @@ void test_CB_2B_01A8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28543,8 +27693,6 @@ void test_CB_2B_01A9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28603,8 +27751,6 @@ void test_CB_2B_01AA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28663,8 +27809,6 @@ void test_CB_2B_01AB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28723,8 +27867,6 @@ void test_CB_2B_01AC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28783,8 +27925,6 @@ void test_CB_2B_01AD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28843,8 +27983,6 @@ void test_CB_2B_01AE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28903,8 +28041,6 @@ void test_CB_2B_01AF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -28963,8 +28099,6 @@ void test_CB_2B_01B0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29023,8 +28157,6 @@ void test_CB_2B_01B1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29083,8 +28215,6 @@ void test_CB_2B_01B2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29143,8 +28273,6 @@ void test_CB_2B_01B3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29203,8 +28331,6 @@ void test_CB_2B_01B4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29263,8 +28389,6 @@ void test_CB_2B_01B5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29323,8 +28447,6 @@ void test_CB_2B_01B6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29383,8 +28505,6 @@ void test_CB_2B_01B7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29443,8 +28563,6 @@ void test_CB_2B_01B8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29503,8 +28621,6 @@ void test_CB_2B_01B9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29563,8 +28679,6 @@ void test_CB_2B_01BA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29623,8 +28737,6 @@ void test_CB_2B_01BB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29683,8 +28795,6 @@ void test_CB_2B_01BC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29743,8 +28853,6 @@ void test_CB_2B_01BD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29803,8 +28911,6 @@ void test_CB_2B_01BE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29863,8 +28969,6 @@ void test_CB_2B_01BF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29923,8 +29027,6 @@ void test_CB_2B_01C0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -29983,8 +29085,6 @@ void test_CB_2B_01C1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30043,8 +29143,6 @@ void test_CB_2B_01C2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30103,8 +29201,6 @@ void test_CB_2B_01C3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30163,8 +29259,6 @@ void test_CB_2B_01C4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30223,8 +29317,6 @@ void test_CB_2B_01C5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30283,8 +29375,6 @@ void test_CB_2B_01C6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30343,8 +29433,6 @@ void test_CB_2B_01C7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30403,8 +29491,6 @@ void test_CB_2B_01C8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30463,8 +29549,6 @@ void test_CB_2B_01C9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30523,8 +29607,6 @@ void test_CB_2B_01CA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30583,8 +29665,6 @@ void test_CB_2B_01CB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30643,8 +29723,6 @@ void test_CB_2B_01CC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30703,8 +29781,6 @@ void test_CB_2B_01CD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30763,8 +29839,6 @@ void test_CB_2B_01CE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30823,8 +29897,6 @@ void test_CB_2B_01CF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30883,8 +29955,6 @@ void test_CB_2B_01D0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -30943,8 +30013,6 @@ void test_CB_2B_01D1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31003,8 +30071,6 @@ void test_CB_2B_01D2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31063,8 +30129,6 @@ void test_CB_2B_01D3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31123,8 +30187,6 @@ void test_CB_2B_01D4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31183,8 +30245,6 @@ void test_CB_2B_01D5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31243,8 +30303,6 @@ void test_CB_2B_01D6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31303,8 +30361,6 @@ void test_CB_2B_01D7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31363,8 +30419,6 @@ void test_CB_2B_01D8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31423,8 +30477,6 @@ void test_CB_2B_01D9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31483,8 +30535,6 @@ void test_CB_2B_01DA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31543,8 +30593,6 @@ void test_CB_2B_01DB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31603,8 +30651,6 @@ void test_CB_2B_01DC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31663,8 +30709,6 @@ void test_CB_2B_01DD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31723,8 +30767,6 @@ void test_CB_2B_01DE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31783,8 +30825,6 @@ void test_CB_2B_01DF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31843,8 +30883,6 @@ void test_CB_2B_01E0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31903,8 +30941,6 @@ void test_CB_2B_01E1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -31963,8 +30999,6 @@ void test_CB_2B_01E2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32023,8 +31057,6 @@ void test_CB_2B_01E3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32083,8 +31115,6 @@ void test_CB_2B_01E4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32143,8 +31173,6 @@ void test_CB_2B_01E5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32203,8 +31231,6 @@ void test_CB_2B_01E6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32263,8 +31289,6 @@ void test_CB_2B_01E7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32323,8 +31347,6 @@ void test_CB_2B_01E8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32383,8 +31405,6 @@ void test_CB_2B_01E9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32443,8 +31463,6 @@ void test_CB_2B_01EA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32503,8 +31521,6 @@ void test_CB_2B_01EB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32563,8 +31579,6 @@ void test_CB_2B_01EC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32623,8 +31637,6 @@ void test_CB_2B_01ED()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32683,8 +31695,6 @@ void test_CB_2B_01EE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32743,8 +31753,6 @@ void test_CB_2B_01EF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32803,8 +31811,6 @@ void test_CB_2B_01F0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32863,8 +31869,6 @@ void test_CB_2B_01F1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32923,8 +31927,6 @@ void test_CB_2B_01F2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -32983,8 +31985,6 @@ void test_CB_2B_01F3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33043,8 +32043,6 @@ void test_CB_2B_01F4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33103,8 +32101,6 @@ void test_CB_2B_01F5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33163,8 +32159,6 @@ void test_CB_2B_01F6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33223,8 +32217,6 @@ void test_CB_2B_01F7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33283,8 +32275,6 @@ void test_CB_2B_01F8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33343,8 +32333,6 @@ void test_CB_2B_01F9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33403,8 +32391,6 @@ void test_CB_2B_01FA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33463,8 +32449,6 @@ void test_CB_2B_01FB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33523,8 +32507,6 @@ void test_CB_2B_01FC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33583,8 +32565,6 @@ void test_CB_2B_01FD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33643,8 +32623,6 @@ void test_CB_2B_01FE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33703,8 +32681,6 @@ void test_CB_2B_01FF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33763,8 +32739,6 @@ void test_CB_2B_0200()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33823,8 +32797,6 @@ void test_CB_2B_0201()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33883,8 +32855,6 @@ void test_CB_2B_0202()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -33943,8 +32913,6 @@ void test_CB_2B_0203()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34003,8 +32971,6 @@ void test_CB_2B_0204()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34063,8 +33029,6 @@ void test_CB_2B_0205()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34123,8 +33087,6 @@ void test_CB_2B_0206()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34183,8 +33145,6 @@ void test_CB_2B_0207()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34243,8 +33203,6 @@ void test_CB_2B_0208()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34303,8 +33261,6 @@ void test_CB_2B_0209()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34363,8 +33319,6 @@ void test_CB_2B_020A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34423,8 +33377,6 @@ void test_CB_2B_020B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34483,8 +33435,6 @@ void test_CB_2B_020C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34543,8 +33493,6 @@ void test_CB_2B_020D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34603,8 +33551,6 @@ void test_CB_2B_020E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34663,8 +33609,6 @@ void test_CB_2B_020F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34723,8 +33667,6 @@ void test_CB_2B_0210()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34783,8 +33725,6 @@ void test_CB_2B_0211()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34843,8 +33783,6 @@ void test_CB_2B_0212()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34903,8 +33841,6 @@ void test_CB_2B_0213()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -34963,8 +33899,6 @@ void test_CB_2B_0214()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35023,8 +33957,6 @@ void test_CB_2B_0215()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35083,8 +34015,6 @@ void test_CB_2B_0216()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35143,8 +34073,6 @@ void test_CB_2B_0217()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35203,8 +34131,6 @@ void test_CB_2B_0218()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35263,8 +34189,6 @@ void test_CB_2B_0219()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35323,8 +34247,6 @@ void test_CB_2B_021A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35383,8 +34305,6 @@ void test_CB_2B_021B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35443,8 +34363,6 @@ void test_CB_2B_021C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35503,8 +34421,6 @@ void test_CB_2B_021D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35563,8 +34479,6 @@ void test_CB_2B_021E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35623,8 +34537,6 @@ void test_CB_2B_021F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35683,8 +34595,6 @@ void test_CB_2B_0220()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35743,8 +34653,6 @@ void test_CB_2B_0221()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35803,8 +34711,6 @@ void test_CB_2B_0222()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35863,8 +34769,6 @@ void test_CB_2B_0223()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35923,8 +34827,6 @@ void test_CB_2B_0224()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -35983,8 +34885,6 @@ void test_CB_2B_0225()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36043,8 +34943,6 @@ void test_CB_2B_0226()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36103,8 +35001,6 @@ void test_CB_2B_0227()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36163,8 +35059,6 @@ void test_CB_2B_0228()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36223,8 +35117,6 @@ void test_CB_2B_0229()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36283,8 +35175,6 @@ void test_CB_2B_022A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36343,8 +35233,6 @@ void test_CB_2B_022B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36403,8 +35291,6 @@ void test_CB_2B_022C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36463,8 +35349,6 @@ void test_CB_2B_022D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36523,8 +35407,6 @@ void test_CB_2B_022E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36583,8 +35465,6 @@ void test_CB_2B_022F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36643,8 +35523,6 @@ void test_CB_2B_0230()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36703,8 +35581,6 @@ void test_CB_2B_0231()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36763,8 +35639,6 @@ void test_CB_2B_0232()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36823,8 +35697,6 @@ void test_CB_2B_0233()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36883,8 +35755,6 @@ void test_CB_2B_0234()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -36943,8 +35813,6 @@ void test_CB_2B_0235()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37003,8 +35871,6 @@ void test_CB_2B_0236()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37063,8 +35929,6 @@ void test_CB_2B_0237()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37123,8 +35987,6 @@ void test_CB_2B_0238()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37183,8 +36045,6 @@ void test_CB_2B_0239()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37243,8 +36103,6 @@ void test_CB_2B_023A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37303,8 +36161,6 @@ void test_CB_2B_023B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37363,8 +36219,6 @@ void test_CB_2B_023C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37423,8 +36277,6 @@ void test_CB_2B_023D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37483,8 +36335,6 @@ void test_CB_2B_023E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37543,8 +36393,6 @@ void test_CB_2B_023F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37603,8 +36451,6 @@ void test_CB_2B_0240()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37663,8 +36509,6 @@ void test_CB_2B_0241()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37723,8 +36567,6 @@ void test_CB_2B_0242()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37783,8 +36625,6 @@ void test_CB_2B_0243()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37843,8 +36683,6 @@ void test_CB_2B_0244()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37903,8 +36741,6 @@ void test_CB_2B_0245()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -37963,8 +36799,6 @@ void test_CB_2B_0246()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38023,8 +36857,6 @@ void test_CB_2B_0247()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38083,8 +36915,6 @@ void test_CB_2B_0248()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38143,8 +36973,6 @@ void test_CB_2B_0249()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38203,8 +37031,6 @@ void test_CB_2B_024A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38263,8 +37089,6 @@ void test_CB_2B_024B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38323,8 +37147,6 @@ void test_CB_2B_024C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38383,8 +37205,6 @@ void test_CB_2B_024D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38443,8 +37263,6 @@ void test_CB_2B_024E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38503,8 +37321,6 @@ void test_CB_2B_024F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38563,8 +37379,6 @@ void test_CB_2B_0250()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38623,8 +37437,6 @@ void test_CB_2B_0251()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38683,8 +37495,6 @@ void test_CB_2B_0252()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38743,8 +37553,6 @@ void test_CB_2B_0253()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38803,8 +37611,6 @@ void test_CB_2B_0254()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38863,8 +37669,6 @@ void test_CB_2B_0255()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38923,8 +37727,6 @@ void test_CB_2B_0256()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -38983,8 +37785,6 @@ void test_CB_2B_0257()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39043,8 +37843,6 @@ void test_CB_2B_0258()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39103,8 +37901,6 @@ void test_CB_2B_0259()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39163,8 +37959,6 @@ void test_CB_2B_025A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39223,8 +38017,6 @@ void test_CB_2B_025B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39283,8 +38075,6 @@ void test_CB_2B_025C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39343,8 +38133,6 @@ void test_CB_2B_025D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39403,8 +38191,6 @@ void test_CB_2B_025E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39463,8 +38249,6 @@ void test_CB_2B_025F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39523,8 +38307,6 @@ void test_CB_2B_0260()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39583,8 +38365,6 @@ void test_CB_2B_0261()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39643,8 +38423,6 @@ void test_CB_2B_0262()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39703,8 +38481,6 @@ void test_CB_2B_0263()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39763,8 +38539,6 @@ void test_CB_2B_0264()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39823,8 +38597,6 @@ void test_CB_2B_0265()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39883,8 +38655,6 @@ void test_CB_2B_0266()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -39943,8 +38713,6 @@ void test_CB_2B_0267()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40003,8 +38771,6 @@ void test_CB_2B_0268()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40063,8 +38829,6 @@ void test_CB_2B_0269()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40123,8 +38887,6 @@ void test_CB_2B_026A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40183,8 +38945,6 @@ void test_CB_2B_026B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40243,8 +39003,6 @@ void test_CB_2B_026C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40303,8 +39061,6 @@ void test_CB_2B_026D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40363,8 +39119,6 @@ void test_CB_2B_026E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40423,8 +39177,6 @@ void test_CB_2B_026F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40483,8 +39235,6 @@ void test_CB_2B_0270()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40543,8 +39293,6 @@ void test_CB_2B_0271()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40603,8 +39351,6 @@ void test_CB_2B_0272()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40663,8 +39409,6 @@ void test_CB_2B_0273()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40723,8 +39467,6 @@ void test_CB_2B_0274()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40783,8 +39525,6 @@ void test_CB_2B_0275()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40843,8 +39583,6 @@ void test_CB_2B_0276()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40903,8 +39641,6 @@ void test_CB_2B_0277()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -40963,8 +39699,6 @@ void test_CB_2B_0278()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41023,8 +39757,6 @@ void test_CB_2B_0279()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41083,8 +39815,6 @@ void test_CB_2B_027A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41143,8 +39873,6 @@ void test_CB_2B_027B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41203,8 +39931,6 @@ void test_CB_2B_027C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41263,8 +39989,6 @@ void test_CB_2B_027D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41323,8 +40047,6 @@ void test_CB_2B_027E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41383,8 +40105,6 @@ void test_CB_2B_027F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41443,8 +40163,6 @@ void test_CB_2B_0280()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41503,8 +40221,6 @@ void test_CB_2B_0281()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41563,8 +40279,6 @@ void test_CB_2B_0282()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41623,8 +40337,6 @@ void test_CB_2B_0283()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41683,8 +40395,6 @@ void test_CB_2B_0284()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41743,8 +40453,6 @@ void test_CB_2B_0285()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41803,8 +40511,6 @@ void test_CB_2B_0286()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41863,8 +40569,6 @@ void test_CB_2B_0287()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41923,8 +40627,6 @@ void test_CB_2B_0288()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -41983,8 +40685,6 @@ void test_CB_2B_0289()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42043,8 +40743,6 @@ void test_CB_2B_028A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42103,8 +40801,6 @@ void test_CB_2B_028B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42163,8 +40859,6 @@ void test_CB_2B_028C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42223,8 +40917,6 @@ void test_CB_2B_028D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42283,8 +40975,6 @@ void test_CB_2B_028E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42343,8 +41033,6 @@ void test_CB_2B_028F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42403,8 +41091,6 @@ void test_CB_2B_0290()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42463,8 +41149,6 @@ void test_CB_2B_0291()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42523,8 +41207,6 @@ void test_CB_2B_0292()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42583,8 +41265,6 @@ void test_CB_2B_0293()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42643,8 +41323,6 @@ void test_CB_2B_0294()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42703,8 +41381,6 @@ void test_CB_2B_0295()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42763,8 +41439,6 @@ void test_CB_2B_0296()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42823,8 +41497,6 @@ void test_CB_2B_0297()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42883,8 +41555,6 @@ void test_CB_2B_0298()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -42943,8 +41613,6 @@ void test_CB_2B_0299()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43003,8 +41671,6 @@ void test_CB_2B_029A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43063,8 +41729,6 @@ void test_CB_2B_029B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43123,8 +41787,6 @@ void test_CB_2B_029C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43183,8 +41845,6 @@ void test_CB_2B_029D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43243,8 +41903,6 @@ void test_CB_2B_029E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43303,8 +41961,6 @@ void test_CB_2B_029F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43363,8 +42019,6 @@ void test_CB_2B_02A0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43423,8 +42077,6 @@ void test_CB_2B_02A1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43483,8 +42135,6 @@ void test_CB_2B_02A2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43543,8 +42193,6 @@ void test_CB_2B_02A3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43603,8 +42251,6 @@ void test_CB_2B_02A4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43663,8 +42309,6 @@ void test_CB_2B_02A5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43723,8 +42367,6 @@ void test_CB_2B_02A6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43783,8 +42425,6 @@ void test_CB_2B_02A7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43843,8 +42483,6 @@ void test_CB_2B_02A8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43903,8 +42541,6 @@ void test_CB_2B_02A9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -43963,8 +42599,6 @@ void test_CB_2B_02AA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44023,8 +42657,6 @@ void test_CB_2B_02AB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44083,8 +42715,6 @@ void test_CB_2B_02AC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44143,8 +42773,6 @@ void test_CB_2B_02AD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44203,8 +42831,6 @@ void test_CB_2B_02AE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44263,8 +42889,6 @@ void test_CB_2B_02AF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44323,8 +42947,6 @@ void test_CB_2B_02B0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44383,8 +43005,6 @@ void test_CB_2B_02B1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44443,8 +43063,6 @@ void test_CB_2B_02B2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44503,8 +43121,6 @@ void test_CB_2B_02B3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44563,8 +43179,6 @@ void test_CB_2B_02B4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44623,8 +43237,6 @@ void test_CB_2B_02B5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44683,8 +43295,6 @@ void test_CB_2B_02B6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44743,8 +43353,6 @@ void test_CB_2B_02B7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44803,8 +43411,6 @@ void test_CB_2B_02B8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44863,8 +43469,6 @@ void test_CB_2B_02B9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44923,8 +43527,6 @@ void test_CB_2B_02BA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -44983,8 +43585,6 @@ void test_CB_2B_02BB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45043,8 +43643,6 @@ void test_CB_2B_02BC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45103,8 +43701,6 @@ void test_CB_2B_02BD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45163,8 +43759,6 @@ void test_CB_2B_02BE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45223,8 +43817,6 @@ void test_CB_2B_02BF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45283,8 +43875,6 @@ void test_CB_2B_02C0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45343,8 +43933,6 @@ void test_CB_2B_02C1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45403,8 +43991,6 @@ void test_CB_2B_02C2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45463,8 +44049,6 @@ void test_CB_2B_02C3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45523,8 +44107,6 @@ void test_CB_2B_02C4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45583,8 +44165,6 @@ void test_CB_2B_02C5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45643,8 +44223,6 @@ void test_CB_2B_02C6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45703,8 +44281,6 @@ void test_CB_2B_02C7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45763,8 +44339,6 @@ void test_CB_2B_02C8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45823,8 +44397,6 @@ void test_CB_2B_02C9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45883,8 +44455,6 @@ void test_CB_2B_02CA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -45943,8 +44513,6 @@ void test_CB_2B_02CB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46003,8 +44571,6 @@ void test_CB_2B_02CC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46063,8 +44629,6 @@ void test_CB_2B_02CD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46123,8 +44687,6 @@ void test_CB_2B_02CE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46183,8 +44745,6 @@ void test_CB_2B_02CF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46243,8 +44803,6 @@ void test_CB_2B_02D0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46303,8 +44861,6 @@ void test_CB_2B_02D1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46363,8 +44919,6 @@ void test_CB_2B_02D2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46423,8 +44977,6 @@ void test_CB_2B_02D3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46483,8 +45035,6 @@ void test_CB_2B_02D4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46543,8 +45093,6 @@ void test_CB_2B_02D5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46603,8 +45151,6 @@ void test_CB_2B_02D6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46663,8 +45209,6 @@ void test_CB_2B_02D7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46723,8 +45267,6 @@ void test_CB_2B_02D8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46783,8 +45325,6 @@ void test_CB_2B_02D9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46843,8 +45383,6 @@ void test_CB_2B_02DA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46903,8 +45441,6 @@ void test_CB_2B_02DB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -46963,8 +45499,6 @@ void test_CB_2B_02DC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47023,8 +45557,6 @@ void test_CB_2B_02DD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47083,8 +45615,6 @@ void test_CB_2B_02DE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47143,8 +45673,6 @@ void test_CB_2B_02DF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47203,8 +45731,6 @@ void test_CB_2B_02E0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47263,8 +45789,6 @@ void test_CB_2B_02E1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47323,8 +45847,6 @@ void test_CB_2B_02E2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47383,8 +45905,6 @@ void test_CB_2B_02E3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47443,8 +45963,6 @@ void test_CB_2B_02E4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47503,8 +46021,6 @@ void test_CB_2B_02E5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47563,8 +46079,6 @@ void test_CB_2B_02E6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47623,8 +46137,6 @@ void test_CB_2B_02E7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47683,8 +46195,6 @@ void test_CB_2B_02E8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47743,8 +46253,6 @@ void test_CB_2B_02E9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47803,8 +46311,6 @@ void test_CB_2B_02EA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47863,8 +46369,6 @@ void test_CB_2B_02EB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47923,8 +46427,6 @@ void test_CB_2B_02EC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -47983,8 +46485,6 @@ void test_CB_2B_02ED()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48043,8 +46543,6 @@ void test_CB_2B_02EE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48103,8 +46601,6 @@ void test_CB_2B_02EF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48163,8 +46659,6 @@ void test_CB_2B_02F0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48223,8 +46717,6 @@ void test_CB_2B_02F1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48283,8 +46775,6 @@ void test_CB_2B_02F2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48343,8 +46833,6 @@ void test_CB_2B_02F3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48403,8 +46891,6 @@ void test_CB_2B_02F4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48463,8 +46949,6 @@ void test_CB_2B_02F5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48523,8 +47007,6 @@ void test_CB_2B_02F6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48583,8 +47065,6 @@ void test_CB_2B_02F7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48643,8 +47123,6 @@ void test_CB_2B_02F8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48703,8 +47181,6 @@ void test_CB_2B_02F9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48763,8 +47239,6 @@ void test_CB_2B_02FA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48823,8 +47297,6 @@ void test_CB_2B_02FB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48883,8 +47355,6 @@ void test_CB_2B_02FC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -48943,8 +47413,6 @@ void test_CB_2B_02FD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49003,8 +47471,6 @@ void test_CB_2B_02FE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49063,8 +47529,6 @@ void test_CB_2B_02FF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49123,8 +47587,6 @@ void test_CB_2B_0300()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49183,8 +47645,6 @@ void test_CB_2B_0301()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49243,8 +47703,6 @@ void test_CB_2B_0302()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49303,8 +47761,6 @@ void test_CB_2B_0303()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49363,8 +47819,6 @@ void test_CB_2B_0304()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49423,8 +47877,6 @@ void test_CB_2B_0305()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49483,8 +47935,6 @@ void test_CB_2B_0306()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49543,8 +47993,6 @@ void test_CB_2B_0307()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49603,8 +48051,6 @@ void test_CB_2B_0308()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49663,8 +48109,6 @@ void test_CB_2B_0309()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49723,8 +48167,6 @@ void test_CB_2B_030A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49783,8 +48225,6 @@ void test_CB_2B_030B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49843,8 +48283,6 @@ void test_CB_2B_030C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49903,8 +48341,6 @@ void test_CB_2B_030D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -49963,8 +48399,6 @@ void test_CB_2B_030E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50023,8 +48457,6 @@ void test_CB_2B_030F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50083,8 +48515,6 @@ void test_CB_2B_0310()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50143,8 +48573,6 @@ void test_CB_2B_0311()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50203,8 +48631,6 @@ void test_CB_2B_0312()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50263,8 +48689,6 @@ void test_CB_2B_0313()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50323,8 +48747,6 @@ void test_CB_2B_0314()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50383,8 +48805,6 @@ void test_CB_2B_0315()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50443,8 +48863,6 @@ void test_CB_2B_0316()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50503,8 +48921,6 @@ void test_CB_2B_0317()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50563,8 +48979,6 @@ void test_CB_2B_0318()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50623,8 +49037,6 @@ void test_CB_2B_0319()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50683,8 +49095,6 @@ void test_CB_2B_031A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50743,8 +49153,6 @@ void test_CB_2B_031B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50803,8 +49211,6 @@ void test_CB_2B_031C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50863,8 +49269,6 @@ void test_CB_2B_031D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50923,8 +49327,6 @@ void test_CB_2B_031E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -50983,8 +49385,6 @@ void test_CB_2B_031F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51043,8 +49443,6 @@ void test_CB_2B_0320()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51103,8 +49501,6 @@ void test_CB_2B_0321()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51163,8 +49559,6 @@ void test_CB_2B_0322()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51223,8 +49617,6 @@ void test_CB_2B_0323()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51283,8 +49675,6 @@ void test_CB_2B_0324()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51343,8 +49733,6 @@ void test_CB_2B_0325()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51403,8 +49791,6 @@ void test_CB_2B_0326()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51463,8 +49849,6 @@ void test_CB_2B_0327()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51523,8 +49907,6 @@ void test_CB_2B_0328()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51583,8 +49965,6 @@ void test_CB_2B_0329()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51643,8 +50023,6 @@ void test_CB_2B_032A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51703,8 +50081,6 @@ void test_CB_2B_032B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51763,8 +50139,6 @@ void test_CB_2B_032C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51823,8 +50197,6 @@ void test_CB_2B_032D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51883,8 +50255,6 @@ void test_CB_2B_032E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -51943,8 +50313,6 @@ void test_CB_2B_032F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52003,8 +50371,6 @@ void test_CB_2B_0330()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52063,8 +50429,6 @@ void test_CB_2B_0331()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52123,8 +50487,6 @@ void test_CB_2B_0332()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52183,8 +50545,6 @@ void test_CB_2B_0333()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52243,8 +50603,6 @@ void test_CB_2B_0334()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52303,8 +50661,6 @@ void test_CB_2B_0335()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52363,8 +50719,6 @@ void test_CB_2B_0336()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52423,8 +50777,6 @@ void test_CB_2B_0337()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52483,8 +50835,6 @@ void test_CB_2B_0338()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52543,8 +50893,6 @@ void test_CB_2B_0339()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52603,8 +50951,6 @@ void test_CB_2B_033A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52663,8 +51009,6 @@ void test_CB_2B_033B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52723,8 +51067,6 @@ void test_CB_2B_033C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52783,8 +51125,6 @@ void test_CB_2B_033D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52843,8 +51183,6 @@ void test_CB_2B_033E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52903,8 +51241,6 @@ void test_CB_2B_033F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -52963,8 +51299,6 @@ void test_CB_2B_0340()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53023,8 +51357,6 @@ void test_CB_2B_0341()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53083,8 +51415,6 @@ void test_CB_2B_0342()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53143,8 +51473,6 @@ void test_CB_2B_0343()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53203,8 +51531,6 @@ void test_CB_2B_0344()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53263,8 +51589,6 @@ void test_CB_2B_0345()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53323,8 +51647,6 @@ void test_CB_2B_0346()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53383,8 +51705,6 @@ void test_CB_2B_0347()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53443,8 +51763,6 @@ void test_CB_2B_0348()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53503,8 +51821,6 @@ void test_CB_2B_0349()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53563,8 +51879,6 @@ void test_CB_2B_034A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53623,8 +51937,6 @@ void test_CB_2B_034B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53683,8 +51995,6 @@ void test_CB_2B_034C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53743,8 +52053,6 @@ void test_CB_2B_034D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53803,8 +52111,6 @@ void test_CB_2B_034E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53863,8 +52169,6 @@ void test_CB_2B_034F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53923,8 +52227,6 @@ void test_CB_2B_0350()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -53983,8 +52285,6 @@ void test_CB_2B_0351()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54043,8 +52343,6 @@ void test_CB_2B_0352()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54103,8 +52401,6 @@ void test_CB_2B_0353()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54163,8 +52459,6 @@ void test_CB_2B_0354()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54223,8 +52517,6 @@ void test_CB_2B_0355()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54283,8 +52575,6 @@ void test_CB_2B_0356()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54343,8 +52633,6 @@ void test_CB_2B_0357()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54403,8 +52691,6 @@ void test_CB_2B_0358()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54463,8 +52749,6 @@ void test_CB_2B_0359()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54523,8 +52807,6 @@ void test_CB_2B_035A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54583,8 +52865,6 @@ void test_CB_2B_035B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54643,8 +52923,6 @@ void test_CB_2B_035C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54703,8 +52981,6 @@ void test_CB_2B_035D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54763,8 +53039,6 @@ void test_CB_2B_035E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54823,8 +53097,6 @@ void test_CB_2B_035F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54883,8 +53155,6 @@ void test_CB_2B_0360()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -54943,8 +53213,6 @@ void test_CB_2B_0361()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55003,8 +53271,6 @@ void test_CB_2B_0362()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55063,8 +53329,6 @@ void test_CB_2B_0363()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55123,8 +53387,6 @@ void test_CB_2B_0364()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55183,8 +53445,6 @@ void test_CB_2B_0365()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55243,8 +53503,6 @@ void test_CB_2B_0366()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55303,8 +53561,6 @@ void test_CB_2B_0367()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55363,8 +53619,6 @@ void test_CB_2B_0368()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55423,8 +53677,6 @@ void test_CB_2B_0369()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55483,8 +53735,6 @@ void test_CB_2B_036A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55543,8 +53793,6 @@ void test_CB_2B_036B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55603,8 +53851,6 @@ void test_CB_2B_036C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55663,8 +53909,6 @@ void test_CB_2B_036D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55723,8 +53967,6 @@ void test_CB_2B_036E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55783,8 +54025,6 @@ void test_CB_2B_036F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55843,8 +54083,6 @@ void test_CB_2B_0370()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55903,8 +54141,6 @@ void test_CB_2B_0371()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -55963,8 +54199,6 @@ void test_CB_2B_0372()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56023,8 +54257,6 @@ void test_CB_2B_0373()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56083,8 +54315,6 @@ void test_CB_2B_0374()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56143,8 +54373,6 @@ void test_CB_2B_0375()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56203,8 +54431,6 @@ void test_CB_2B_0376()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56263,8 +54489,6 @@ void test_CB_2B_0377()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56323,8 +54547,6 @@ void test_CB_2B_0378()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56383,8 +54605,6 @@ void test_CB_2B_0379()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56443,8 +54663,6 @@ void test_CB_2B_037A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56503,8 +54721,6 @@ void test_CB_2B_037B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56563,8 +54779,6 @@ void test_CB_2B_037C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56623,8 +54837,6 @@ void test_CB_2B_037D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56683,8 +54895,6 @@ void test_CB_2B_037E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56743,8 +54953,6 @@ void test_CB_2B_037F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56803,8 +55011,6 @@ void test_CB_2B_0380()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56863,8 +55069,6 @@ void test_CB_2B_0381()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56923,8 +55127,6 @@ void test_CB_2B_0382()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -56983,8 +55185,6 @@ void test_CB_2B_0383()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57043,8 +55243,6 @@ void test_CB_2B_0384()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57103,8 +55301,6 @@ void test_CB_2B_0385()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57163,8 +55359,6 @@ void test_CB_2B_0386()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57223,8 +55417,6 @@ void test_CB_2B_0387()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57283,8 +55475,6 @@ void test_CB_2B_0388()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57343,8 +55533,6 @@ void test_CB_2B_0389()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57403,8 +55591,6 @@ void test_CB_2B_038A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57463,8 +55649,6 @@ void test_CB_2B_038B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57523,8 +55707,6 @@ void test_CB_2B_038C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57583,8 +55765,6 @@ void test_CB_2B_038D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57643,8 +55823,6 @@ void test_CB_2B_038E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57703,8 +55881,6 @@ void test_CB_2B_038F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57763,8 +55939,6 @@ void test_CB_2B_0390()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57823,8 +55997,6 @@ void test_CB_2B_0391()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57883,8 +56055,6 @@ void test_CB_2B_0392()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -57943,8 +56113,6 @@ void test_CB_2B_0393()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58003,8 +56171,6 @@ void test_CB_2B_0394()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58063,8 +56229,6 @@ void test_CB_2B_0395()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58123,8 +56287,6 @@ void test_CB_2B_0396()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58183,8 +56345,6 @@ void test_CB_2B_0397()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58243,8 +56403,6 @@ void test_CB_2B_0398()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58303,8 +56461,6 @@ void test_CB_2B_0399()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58363,8 +56519,6 @@ void test_CB_2B_039A()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58423,8 +56577,6 @@ void test_CB_2B_039B()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58483,8 +56635,6 @@ void test_CB_2B_039C()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58543,8 +56693,6 @@ void test_CB_2B_039D()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58603,8 +56751,6 @@ void test_CB_2B_039E()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58663,8 +56809,6 @@ void test_CB_2B_039F()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58723,8 +56867,6 @@ void test_CB_2B_03A0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58783,8 +56925,6 @@ void test_CB_2B_03A1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58843,8 +56983,6 @@ void test_CB_2B_03A2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58903,8 +57041,6 @@ void test_CB_2B_03A3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -58963,8 +57099,6 @@ void test_CB_2B_03A4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59023,8 +57157,6 @@ void test_CB_2B_03A5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59083,8 +57215,6 @@ void test_CB_2B_03A6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59143,8 +57273,6 @@ void test_CB_2B_03A7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59203,8 +57331,6 @@ void test_CB_2B_03A8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59263,8 +57389,6 @@ void test_CB_2B_03A9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59323,8 +57447,6 @@ void test_CB_2B_03AA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59383,8 +57505,6 @@ void test_CB_2B_03AB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59443,8 +57563,6 @@ void test_CB_2B_03AC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59503,8 +57621,6 @@ void test_CB_2B_03AD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59563,8 +57679,6 @@ void test_CB_2B_03AE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59623,8 +57737,6 @@ void test_CB_2B_03AF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59683,8 +57795,6 @@ void test_CB_2B_03B0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59743,8 +57853,6 @@ void test_CB_2B_03B1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59803,8 +57911,6 @@ void test_CB_2B_03B2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59863,8 +57969,6 @@ void test_CB_2B_03B3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59923,8 +58027,6 @@ void test_CB_2B_03B4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -59983,8 +58085,6 @@ void test_CB_2B_03B5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60043,8 +58143,6 @@ void test_CB_2B_03B6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60103,8 +58201,6 @@ void test_CB_2B_03B7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60163,8 +58259,6 @@ void test_CB_2B_03B8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60223,8 +58317,6 @@ void test_CB_2B_03B9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60283,8 +58375,6 @@ void test_CB_2B_03BA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60343,8 +58433,6 @@ void test_CB_2B_03BB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60403,8 +58491,6 @@ void test_CB_2B_03BC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60463,8 +58549,6 @@ void test_CB_2B_03BD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60523,8 +58607,6 @@ void test_CB_2B_03BE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60583,8 +58665,6 @@ void test_CB_2B_03BF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60643,8 +58723,6 @@ void test_CB_2B_03C0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60703,8 +58781,6 @@ void test_CB_2B_03C1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60763,8 +58839,6 @@ void test_CB_2B_03C2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60823,8 +58897,6 @@ void test_CB_2B_03C3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60883,8 +58955,6 @@ void test_CB_2B_03C4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -60943,8 +59013,6 @@ void test_CB_2B_03C5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61003,8 +59071,6 @@ void test_CB_2B_03C6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61063,8 +59129,6 @@ void test_CB_2B_03C7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61123,8 +59187,6 @@ void test_CB_2B_03C8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61183,8 +59245,6 @@ void test_CB_2B_03C9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61243,8 +59303,6 @@ void test_CB_2B_03CA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61303,8 +59361,6 @@ void test_CB_2B_03CB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61363,8 +59419,6 @@ void test_CB_2B_03CC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61423,8 +59477,6 @@ void test_CB_2B_03CD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61483,8 +59535,6 @@ void test_CB_2B_03CE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61543,8 +59593,6 @@ void test_CB_2B_03CF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61603,8 +59651,6 @@ void test_CB_2B_03D0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61663,8 +59709,6 @@ void test_CB_2B_03D1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61723,8 +59767,6 @@ void test_CB_2B_03D2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61783,8 +59825,6 @@ void test_CB_2B_03D3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61843,8 +59883,6 @@ void test_CB_2B_03D4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61903,8 +59941,6 @@ void test_CB_2B_03D5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -61963,8 +59999,6 @@ void test_CB_2B_03D6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62023,8 +60057,6 @@ void test_CB_2B_03D7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62083,8 +60115,6 @@ void test_CB_2B_03D8()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62143,8 +60173,6 @@ void test_CB_2B_03D9()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62203,8 +60231,6 @@ void test_CB_2B_03DA()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62263,8 +60289,6 @@ void test_CB_2B_03DB()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62323,8 +60347,6 @@ void test_CB_2B_03DC()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62383,8 +60405,6 @@ void test_CB_2B_03DD()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62443,8 +60463,6 @@ void test_CB_2B_03DE()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62503,8 +60521,6 @@ void test_CB_2B_03DF()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62563,8 +60579,6 @@ void test_CB_2B_03E0()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62623,8 +60637,6 @@ void test_CB_2B_03E1()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62683,8 +60695,6 @@ void test_CB_2B_03E2()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62743,8 +60753,6 @@ void test_CB_2B_03E3()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62803,8 +60811,6 @@ void test_CB_2B_03E4()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62863,8 +60869,6 @@ void test_CB_2B_03E5()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62923,8 +60927,6 @@ void test_CB_2B_03E6()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 
@@ -62983,8 +60985,6 @@ void test_CB_2B_03E7()
         return;
     }
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 

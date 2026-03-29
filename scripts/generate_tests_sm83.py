@@ -341,9 +341,9 @@ SUPPORTED_OPCODES = ([
 def check_illegal_address(address):
     # Accesses go through the memory map, so a 'flat map' doesn't really work
     # TODO: Maybe consider creating a virtual memory map class that supports the 'flat map' structure
-    assert address <= 0xFFFF
-    if (address >= 0xFEA0 and address <= 0xFEFF) or (address >= 0xE000 and address <= 0xFDFF):
-        return True
+    # assert address <= 0xFFFF
+    # if (address >= 0xFEA0 and address <= 0xFEFF) or (address >= 0xE000 and address <= 0xFDFF):
+    #     return True
     return False
 
 for info in SUPPORTED_OPCODES:
@@ -363,14 +363,14 @@ for info in SUPPORTED_OPCODES:
         output_fn.write(f"#include <test/include/acutest.h>\n\n")
         output_fn.write(f"#include <cpu/include/instructions.hpp>\n")
         output_fn.write(f"#include <cpu/include/registers.hpp>\n")
-        output_fn.write(f"#include <memory/include/memory.hpp>\n\n")
+        output_fn.write(f"#include <test/include/sm83_memory.hpp>\n\n")
 
         output_fn.write(f"using namespace pgb::common;\n")
         output_fn.write(f"using namespace pgb::memory;\n")
         output_fn.write(f"using namespace pgb::cpu;\n\n")
 
         output_fn.write(f"static auto registers = RegisterFile();\n")
-        output_fn.write(f"static auto mmap      = MemoryMap(registers, MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);\n\n")
+        output_fn.write(f"static auto mmap      = MemoryMapTestSM83(registers);\n\n")
 
         output_fn.write(f"""
 #define WriteRegisterWord(register, value) do {{ auto result = mmap.WriteWord(register, value); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); }} while(0)
@@ -406,8 +406,6 @@ void test_{test_name}()
         return;
     }}
     mmap.Reset();
-    auto mmapResult = mmap.Initialize(MinRomBankCount, MinVramBankCount, 1, MinWramBankCount);
-    TEST_ASSERT_(mmapResult.IsSuccess(), "%s", mmapResult.GetStatusDescription());
 
     // Initial state
 """)

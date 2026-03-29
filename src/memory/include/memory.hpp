@@ -201,7 +201,7 @@ public:
     InitializeResultSet Initialize(std::size_t romBankCount, std::size_t vramBankCount, std::size_t eramBankCount, std::size_t wramBankCount) noexcept;
 
     // Sets all memory regions to 0
-    void Reset() noexcept;
+    virtual void Reset() noexcept;
 
     bool IsInitialized() { return _isInitialized; }
 
@@ -223,7 +223,7 @@ public:
     // ResultAccessReadOnlyProhibitedAddress is never a failure case.
     virtual AccessResultSet ReadByte(const MemoryAddress&) const noexcept;
     // Same as above, but use the active bank
-    AccessResultSet ReadByte(const std::uint_fast16_t) const noexcept;
+    virtual AccessResultSet ReadByte(const std::uint_fast16_t) const noexcept;
 
     // Write a byte at a specific address if it is accessible and returns the previous value.
     // If the address is not accessible, the function will propagate the AccessByte error.
@@ -231,21 +231,21 @@ public:
     // Note that this function will write as long as the address is within a valid range and the address is not ReadOnlyProhibited.
     virtual WriteAccessResultSet WriteByte(const MemoryAddress&, const Byte&) noexcept;
     // Same as above, but use the active bank
-    WriteAccessResultSet WriteByte(const std::uint_fast16_t, const Byte&) noexcept;
+    virtual WriteAccessResultSet WriteByte(const std::uint_fast16_t, const Byte&) noexcept;
 
     // Access a word at a specific address, the stored result is a value and only valid if it is marked successful.
     // Treats the value in memory as being stored as little endian, so a byteswap will happen prior to returning.
     // The result behavior is the same as ReadByte except it can also return ResultAccessCrossesRegionBoundary which will never be a failure (consider it a warning).
     virtual WordAccessResultSet ReadWordLE(const MemoryAddress&) const noexcept;
     // Same as above, but use the active bank
-    WordAccessResultSet ReadWordLE(const std::uint_fast16_t) const noexcept;
+    virtual WordAccessResultSet ReadWordLE(const std::uint_fast16_t) const noexcept;
 
     // Write a word at a specific address if it is accessible and returns the previous value.
     // Treats the value in memory as being stored as little endian, so a byteswap will happen prior to storing.
     // The result behavior is the same as WriteByte, except ReadWordLE is used instead of ReadByte.
     virtual WordAccessResultSet WriteWordLE(const MemoryAddress&, const Word&) noexcept;
     // Same as above, but use the active bank
-    WordAccessResultSet WriteWordLE(const std::uint_fast16_t, const Word&) noexcept;
+    virtual WordAccessResultSet WriteWordLE(const std::uint_fast16_t, const Word&) noexcept;
 
     // Read byte stored in 8-bit register, the stored result is a value and only valid if it is marked successful.
     // Returns ResultAccessRegisterInvalidWidth if this register is not accessible at that width.
