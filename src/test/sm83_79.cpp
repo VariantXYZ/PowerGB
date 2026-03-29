@@ -18,8 +18,8 @@ static auto mmap      = MemoryMap(registers, MinRomBankCount, MinVramBankCount, 
 #define WriteRegisterFlag(value) do { TEST_ASSERT(static_cast<const Byte>(mmap.WriteFlagByte(static_cast<const Byte&>(value))) == 0x00); } while(0)
 #define WriteMemory(address, value) do { auto result = mmap.WriteByte(address, value); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); } while(0)
 
-#define CheckRegisterWord(register, value) do { auto result = mmap.ReadWord(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Word&>(result) == value); } while(0)
-#define CheckRegisterByte(register, value) do { auto result = mmap.ReadByte(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Byte&>(result) == value); } while(0)
+#define CheckRegisterWord(register, value) do { auto result = mmap.ReadWord(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT_(static_cast<const Word&>(result) == value, "0x%X != 0x%X", static_cast<const Word&>(result).data, value); } while(0)
+#define CheckRegisterByte(register, value) do { auto result = mmap.ReadByte(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT_(static_cast<const Byte&>(result) == value, "0x%X != 0x%X", static_cast<const Byte&>(result).data, value); } while(0)
 #define CheckRegisterFlag(value) do { TEST_ASSERT_(static_cast<const Byte>(mmap.ReadFlagByte()) == value, "0x%hhx != 0x%hhx", static_cast<const Byte>(mmap.ReadFlagByte()).data, value); } while(0)
 #define CheckMemory(address, value) do { auto result = mmap.ReadByte(address); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT_(static_cast<const Byte&>(result) == value, "%hhu != %hhu", static_cast<const Byte&>(result).data, value); } while(0)
 

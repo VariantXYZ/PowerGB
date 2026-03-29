@@ -256,7 +256,14 @@ SUPPORTED_OPCODES = ([
     (0xCB2D,"rsb"), # SRA L
     (0xCB2E,"rsb"), # SRA [HL]
     (0xCB2F,"rsb"), # SRA A
-
+    (0xCB30,"rsb"), # SWAP B
+    (0xCB31,"rsb"), # SWAP C
+    (0xCB32,"rsb"), # SWAP D
+    (0xCB33,"rsb"), # SWAP E
+    (0xCB34,"rsb"), # SWAP H
+    (0xCB35,"rsb"), # SWAP L
+    (0xCB36,"rsb"), # SWAP [HL]
+    (0xCB37,"rsb"), # SWAP A
     (0xCB38,"rsb"), # SRL B
     (0xCB39,"rsb"), # SRL C
     (0xCB3A,"rsb"), # SRL D
@@ -299,8 +306,8 @@ for info in SUPPORTED_OPCODES:
 #define WriteRegisterFlag(value) do {{ TEST_ASSERT(static_cast<const Byte>(mmap.WriteFlagByte(static_cast<const Byte&>(value))) == 0x00); }} while(0)
 #define WriteMemory(address, value) do {{ auto result = mmap.WriteByte(address, value); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); }} while(0)
 
-#define CheckRegisterWord(register, value) do {{ auto result = mmap.ReadWord(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Word&>(result) == value); }} while(0)
-#define CheckRegisterByte(register, value) do {{ auto result = mmap.ReadByte(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT(static_cast<const Byte&>(result) == value); }} while(0)
+#define CheckRegisterWord(register, value) do {{ auto result = mmap.ReadWord(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT_(static_cast<const Word&>(result) == value, "0x%X != 0x%X", static_cast<const Word&>(result).data, value); }} while(0)
+#define CheckRegisterByte(register, value) do {{ auto result = mmap.ReadByte(register); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT_(static_cast<const Byte&>(result) == value, "0x%X != 0x%X", static_cast<const Byte&>(result).data, value); }} while(0)
 #define CheckRegisterFlag(value) do {{ TEST_ASSERT_(static_cast<const Byte>(mmap.ReadFlagByte()) == value, "0x%hhx != 0x%hhx", static_cast<const Byte>(mmap.ReadFlagByte()).data, value); }} while(0)
 #define CheckMemory(address, value) do {{ auto result = mmap.ReadByte(address); TEST_ASSERT_(result.IsSuccess(), "%s", result.GetStatusDescription()); TEST_ASSERT_(static_cast<const Byte&>(result) == value, "%hhu != %hhu", static_cast<const Byte&>(result).data, value); }} while(0)
 

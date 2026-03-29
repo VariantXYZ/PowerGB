@@ -130,6 +130,9 @@ generate_tests_sm83: $(TEST_DIR_SM83)
 generate_tests_length:
 	$(PYTHON) $(SCRIPTS_DIR)/generate_tests_length.py "$(TEST_DIR)/instruction_length.cpp"
 
+generate_compile_commands:
+	$(BASE_DIR)/generate_compile_commands.sh
+
 # Link executables
 # Dependency is the same named object and all libraries
 .SECONDEXPANSION:
