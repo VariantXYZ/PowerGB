@@ -272,7 +272,79 @@ SUPPORTED_OPCODES = ([
     (0xCB3D,"rsb"), # SRL L
     (0xCB3E,"rsb"), # SRL [HL]
     (0xCB3F,"rsb"), # SRL A
+    (0xCB40,"rsb"), # BIT 0, B
+    (0xCB41,"rsb"), # BIT 0, C
+    (0xCB42,"rsb"), # BIT 0, D
+    (0xCB43,"rsb"), # BIT 0, E
+    (0xCB44,"rsb"), # BIT 0, H
+    (0xCB45,"rsb"), # BIT 0, L
+    (0xCB46,"rsb"), # BIT 0, [HL]
+    (0xCB47,"rsb"), # BIT 0, A
+    (0xCB48,"rsb"), # BIT 1, B
+    (0xCB49,"rsb"), # BIT 1, C
+    (0xCB4A,"rsb"), # BIT 1, D
+    (0xCB4B,"rsb"), # BIT 1, E
+    (0xCB4C,"rsb"), # BIT 1, H
+    (0xCB4D,"rsb"), # BIT 1, L
+    (0xCB4E,"rsb"), # BIT 1, [HL]
+    (0xCB4F,"rsb"), # BIT 1, A
+    (0xCB50,"rsb"), # BIT 2, B
+    (0xCB51,"rsb"), # BIT 2, C
+    (0xCB52,"rsb"), # BIT 2, D
+    (0xCB53,"rsb"), # BIT 2, E
+    (0xCB54,"rsb"), # BIT 2, H
+    (0xCB55,"rsb"), # BIT 2, L
+    (0xCB56,"rsb"), # BIT 2, [HL]
+    (0xCB57,"rsb"), # BIT 2, A
+    (0xCB58,"rsb"), # BIT 3, B
+    (0xCB59,"rsb"), # BIT 3, C
+    (0xCB5A,"rsb"), # BIT 3, D
+    (0xCB5B,"rsb"), # BIT 3, E
+    (0xCB5C,"rsb"), # BIT 3, H
+    (0xCB5D,"rsb"), # BIT 3, L
+    (0xCB5E,"rsb"), # BIT 3, [HL]
+    (0xCB5F,"rsb"), # BIT 3, A
+    (0xCB60,"rsb"), # BIT 4, B
+    (0xCB61,"rsb"), # BIT 4, C
+    (0xCB62,"rsb"), # BIT 4, D
+    (0xCB63,"rsb"), # BIT 4, E
+    (0xCB64,"rsb"), # BIT 4, H
+    (0xCB65,"rsb"), # BIT 4, L
+    (0xCB66,"rsb"), # BIT 4, [HL]
+    (0xCB67,"rsb"), # BIT 4, A
+    (0xCB68,"rsb"), # BIT 5, B
+    (0xCB69,"rsb"), # BIT 5, C
+    (0xCB6A,"rsb"), # BIT 5, D
+    (0xCB6B,"rsb"), # BIT 5, E
+    (0xCB6C,"rsb"), # BIT 5, H
+    (0xCB6D,"rsb"), # BIT 5, L
+    (0xCB6E,"rsb"), # BIT 5, [HL]
+    (0xCB6F,"rsb"), # BIT 5, A
+    (0xCB70,"rsb"), # BIT 6, B
+    (0xCB71,"rsb"), # BIT 6, C
+    (0xCB72,"rsb"), # BIT 6, D
+    (0xCB73,"rsb"), # BIT 6, E
+    (0xCB74,"rsb"), # BIT 6, H
+    (0xCB75,"rsb"), # BIT 6, L
+    (0xCB76,"rsb"), # BIT 6, [HL]
+    (0xCB77,"rsb"), # BIT 6, A
+    (0xCB78,"rsb"), # BIT 7, B
+    (0xCB79,"rsb"), # BIT 7, C
+    (0xCB7A,"rsb"), # BIT 7, D
+    (0xCB7B,"rsb"), # BIT 7, E
+    (0xCB7C,"rsb"), # BIT 7, H
+    (0xCB7D,"rsb"), # BIT 7, L
+    (0xCB7E,"rsb"), # BIT 7, [HL]
+    (0xCB7F,"rsb"), # BIT 7, A
 ])
+
+def check_illegal_address(address):
+    # Accesses go through the memory map, so a 'flat map' doesn't really work
+    # TODO: Maybe consider creating a virtual memory map class that supports the 'flat map' structure
+    assert address <= 0xFFFF
+    if (address >= 0xFEA0 and address <= 0xFEFF) or (address >= 0xE000 and address <= 0xFDFF):
+        return True
+    return False
 
 for info in SUPPORTED_OPCODES:
     opcode = info[0]
@@ -344,8 +416,7 @@ void test_{test_name}()
             for val in test['initial']:
                 if val in ("pc", "sp"):
                     address = test['initial'][val]
-                    assert address <= 0xFFFF
-                    if address >= 0xFEA0 and address <= 0xFEFF:
+                    if not skip_test and check_illegal_address(address):
                         # Don't bother with tests that write to illegal locations
                         skip_test = True
                     test_content.append(f"    WriteRegisterWord(RegisterType::{val.upper()}, 0x{address:04X});")
@@ -363,8 +434,7 @@ void test_{test_name}()
                 elif val == "ram":
                     for ram in sorted(test['initial'][val], key=lambda x: x[0], reverse=True):
                         address = ram[0]
-                        assert address <= 0xFFFF
-                        if address >= 0xFEA0 and address <= 0xFEFF:
+                        if not skip_test and check_illegal_address(address):
                             # Don't bother with tests that write to illegal locations
                             skip_test = True
                         test_content.append(f"    WriteMemory(0x{ram[0]:04X}, 0x{ram[1]:02X});")
@@ -395,8 +465,7 @@ void test_{test_name}()
             for val in test['final']:
                 if val in ("pc", "sp"):
                     address = test['final'][val]
-                    assert address <= 0xFFFF
-                    if address >= 0xFEA0 and address <= 0xFEFF:
+                    if not skip_test and check_illegal_address(address):
                         # Don't bother with tests that write to illegal locations
                         skip_test = True
                     test_content.append(f"    CheckRegisterWord(RegisterType::{val.upper()}, 0x{address:04X});")
@@ -414,8 +483,7 @@ void test_{test_name}()
                 elif val == "ram":
                     for ram in sorted(test['final'][val], key=lambda x: x[0], reverse=False):
                         address = ram[0]
-                        assert address <= 0xFFFF
-                        if address >= 0xFEA0 and address <= 0xFEFF:
+                        if not skip_test and check_illegal_address(address):
                             # Don't bother with tests that write to illegal locations
                             skip_test = True
                         test_content.append(f"    CheckMemory(0x{ram[0]:04X}, 0x{ram[1]:02X});")

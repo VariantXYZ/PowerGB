@@ -52,7 +52,7 @@ concept IsRegisterTemp = R == TempLo || R == TempHi;
 
 template <RegisterType T, bool IsHigh>
     requires(IsRegister16Bit<T>)
-inline constexpr RegisterType GetRegisterComponent()
+inline constexpr RegisterType GetRegisterComponent() noexcept
 {
     static_assert(T == RegisterType::AF || T == RegisterType::BC || T == RegisterType::DE || T == RegisterType::HL);
     switch (T)
@@ -148,10 +148,17 @@ protected:
     friend memory::MemoryMap;
 
     // Flag reference
-    constexpr Nibble& F() { return _F[0]; }
+    constexpr Nibble& F() noexcept { return _F[0]; }
+    constexpr void    SetFZ(bool bit) noexcept { _F[0] = (_F[0] & 0b0111) | bit << 3; }
+    constexpr void    SetFN(bool bit) noexcept { _F[0] = (_F[0] & 0b1011) | bit << 2; }
+    constexpr void    SetFH(bool bit) noexcept { _F[0] = (_F[0] & 0b1101) | bit << 1; }
+    constexpr void    SetFC(bool bit) noexcept { _F[0] = (_F[0] & 0b1110) | bit << 0; }
 
     // 8-bit reference
-    constexpr Byte& IR() noexcept { return _IR[0]; }
+    constexpr Byte& IR() noexcept
+    {
+        return _IR[0];
+    }
     constexpr Byte& IE() noexcept { return _IE[0]; }
     constexpr Byte& A() noexcept { return _A[0]; }
     constexpr Byte& B() noexcept { return _BC[0]; }
@@ -172,32 +179,36 @@ protected:
     constexpr const Byte& Prefix() const noexcept { return _prefix; }
 
     // Temporary reference
-    constexpr Byte&      W() { return _WZ[0]; }
-    constexpr Byte&      Z() { return _WZ[1]; }
-    constexpr const Word WZ() const { return _WZ.Word<0>(); }
+    constexpr Byte&      W() noexcept { return _WZ[0]; }
+    constexpr Byte&      Z() noexcept { return _WZ[1]; }
+    constexpr const Word WZ() const noexcept { return _WZ.Word<0>(); }
 
 public:
     // Flag read
-    constexpr const Nibble& F() const { return _F[0]; }
+    constexpr const Nibble& F() const noexcept { return _F[0]; }
+    constexpr bool          FZ() const noexcept { return (_F[0] & 0b1000) != 0; }
+    constexpr bool          FN() const noexcept { return (_F[0] & 0b0100) != 0; }
+    constexpr bool          FH() const noexcept { return (_F[0] & 0b0010) != 0; }
+    constexpr bool          FC() const noexcept { return (_F[0] & 0b0001) != 0; }
 
     // 8-bit reads
-    constexpr const Byte& IR() const { return _IR[0]; }
-    constexpr const Byte& IE() const { return _IE[0]; }
-    constexpr const Byte& A() const { return _A[0]; }
-    constexpr const Byte& B() const { return _BC[0]; }
-    constexpr const Byte& C() const { return _BC[1]; }
-    constexpr const Byte& D() const { return _DE[0]; }
-    constexpr const Byte& E() const { return _DE[1]; }
-    constexpr const Byte& H() const { return _HL[0]; }
-    constexpr const Byte& L() const { return _HL[1]; }
+    constexpr const Byte& IR() const noexcept { return _IR[0]; }
+    constexpr const Byte& IE() const noexcept { return _IE[0]; }
+    constexpr const Byte& A() const noexcept { return _A[0]; }
+    constexpr const Byte& B() const noexcept { return _BC[0]; }
+    constexpr const Byte& C() const noexcept { return _BC[1]; }
+    constexpr const Byte& D() const noexcept { return _DE[0]; }
+    constexpr const Byte& E() const noexcept { return _DE[1]; }
+    constexpr const Byte& H() const noexcept { return _HL[0]; }
+    constexpr const Byte& L() const noexcept { return _HL[1]; }
 
     // 16-bit reads
-    constexpr const Word  AF() const { return Word(_A[0], Byte(_F[0], 0)); }
-    constexpr const Word  BC() const { return _BC.Word<0>(); }
-    constexpr const Word  DE() const { return _DE.Word<0>(); }
-    constexpr const Word  HL() const { return _HL.Word<0>(); }
-    constexpr const Word& PC() const { return _PC[0]; }
-    constexpr const Word& SP() const { return _SP[0]; }
+    constexpr const Word  AF() const noexcept { return Word(_A[0], Byte(_F[0], 0)); }
+    constexpr const Word  BC() const noexcept { return _BC.Word<0>(); }
+    constexpr const Word  DE() const noexcept { return _DE.Word<0>(); }
+    constexpr const Word  HL() const noexcept { return _HL.Word<0>(); }
+    constexpr const Word& PC() const noexcept { return _PC[0]; }
+    constexpr const Word& SP() const noexcept { return _SP[0]; }
 
     constexpr void Reset() noexcept
     {

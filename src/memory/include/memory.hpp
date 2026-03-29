@@ -263,6 +263,11 @@ public:
     // Returns ResultAccessRegisterInvalidWidth if this register is not accessible at that width.
     Register16AccessResultSet WriteWord(const cpu::RegisterType&, const Word&) noexcept;
 
+    // Increments/Decrements PC register, returns the current value of PC
+    // Returns ResultRegisterOverflow if the value would overflow into an unexpected bank.
+    ModifyStateRegisterResultSet IncrementPC() noexcept;
+    ModifyStateRegisterResultSet DecrementPC() noexcept;
+
     const Byte ReadFlagByte() const noexcept;
     Byte       WriteFlagByte(const Byte&) noexcept;
 
@@ -272,15 +277,53 @@ public:
     const Word& ReadPC() const noexcept;
     const Byte& ReadIR() const noexcept;
 
-    // Increments/Decrements PC register, returns the current value of PC
-    // Returns ResultRegisterOverflow if the value would overflow into an unexpected bank.
-    ModifyStateRegisterResultSet IncrementPC() noexcept;
-    ModifyStateRegisterResultSet DecrementPC() noexcept;
-
     // Quick shims to adjust CPU state
+
+    enum FlagBit
+    {
+        Zero,      // Z
+        Subtract,  // N
+        HalfCarry, // H
+        Carry,     // C
+    };
+
+    [[nodiscard]] inline constexpr bool ReadFlagBit(FlagBit type) const noexcept
+    {
+        switch (type)
+        {
+        case Zero:
+            return _registers.FZ();
+        case Subtract:
+            return _registers.FN();
+        case HalfCarry:
+            return _registers.FH();
+        case Carry:
+            return _registers.FC();
+        }
+    }
+
+    inline constexpr void WriteFlagBit(FlagBit type, bool value) noexcept
+    {
+        switch (type)
+        {
+        case Zero:
+            _registers.SetFZ(value);
+            break;
+        case Subtract:
+            _registers.SetFN(value);
+            break;
+        case HalfCarry:
+            _registers.SetFH(value);
+            break;
+        case Carry:
+            _registers.SetFC(value);
+            break;
+        }
+    }
+
+    inline constexpr bool IMEEnabled() const noexcept { return _registers.IME(); }
     inline constexpr void EnableIME() noexcept { _registers.EnableIME(); }
     inline constexpr void DisableIME() noexcept { _registers.DisableIME(); }
-    inline constexpr bool IMEEnabled() const noexcept { return _registers.IME(); }
 
     inline constexpr Word  GetTemp() const noexcept { return _registers.WZ(); }
     inline constexpr Byte& GetTempLo() noexcept { return _registers.Z(); }
