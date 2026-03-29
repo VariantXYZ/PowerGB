@@ -25,11 +25,24 @@ endif
 # Set flags based on compiler (gcc vs clang)
 COMPILER_VERSION = $(shell $(CXX) --version)
 ifneq '' '$(findstring clang,$(COMPILER_VERSION))'
-# Rely on lld for clang release, otherwise use mold for iteration time
+
+TARGET_TRIPLE := $(shell $(CXX) -dumpmachine 2>/dev/null)
+THINLTO_CACHE_DIR := $(BASE_DIR)/.thinlto_cache/$(BUILD_TYPE)
+
+ifneq (,$(findstring apple-darwin,$(TARGET_TRIPLE)))
+# This is an annoying workaround because ld64 will not automatically create one
+$(shell mkdir -p $(THINLTO_CACHE_DIR))
+LTO_CACHE_FLAG := -Wl,-cache_path_lto,$(THINLTO_CACHE_DIR)
+else ifneq (,$(findstring linux,$(TARGET_TRIPLE)))
+LTO_CACHE_FLAG := -Wl,--thinlto-cache-dir=$(THINLTO_CACHE_DIR)
+endif
+
+# Rely on system linker for clang release builds, otherwise use mold for iteration time
 RELEASE_CC := -flto=thin
-RELEASE_LD := -flto=thin -fuse-ld=lld -Wl,--thinlto-cache-dir=$(BASE_DIR)/.thinlto_cache/$(BUILD_TYPE)
+RELEASE_LD := -flto=thin $(LTO_CACHE_FLAG)
 DEBUG_CC := -g
 DEBUG_LD := $(MOLD_LD)
+
 else ifneq '' '$(findstring g++,$(COMPILER_VERSION))'
 # In gcc's case, default to mold as the linker if available
 RELEASE_CC := -flto
