@@ -139,7 +139,7 @@ public:
         }
         else
         {
-            return {0, absoluteAddress};
+            return {0, static_cast<uint_fast16_t>(absoluteAddress)};
         }
     }
 
