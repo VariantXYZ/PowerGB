@@ -221,7 +221,7 @@ public:
     // ResultAccessInvalidAddress is always a failure case.
     // ResultAccessProhibitedAddress is sometimes returned as a failure case.
     // ResultAccessReadOnlyProhibitedAddress is never a failure case.
-    AccessResultSet ReadByte(const MemoryAddress&) const noexcept;
+    virtual AccessResultSet ReadByte(const MemoryAddress&) const noexcept;
     // Same as above, but use the active bank
     AccessResultSet ReadByte(const std::uint_fast16_t) const noexcept;
 
@@ -229,21 +229,21 @@ public:
     // If the address is not accessible, the function will propagate the AccessByte error.
     // If access returns ResultAccessReadOnlyProhibitedAddress, the result of this function is a failure and the read value is in the result.
     // Note that this function will write as long as the address is within a valid range and the address is not ReadOnlyProhibited.
-    WriteAccessResultSet WriteByte(const MemoryAddress&, const Byte&) noexcept;
+    virtual WriteAccessResultSet WriteByte(const MemoryAddress&, const Byte&) noexcept;
     // Same as above, but use the active bank
     WriteAccessResultSet WriteByte(const std::uint_fast16_t, const Byte&) noexcept;
 
     // Access a word at a specific address, the stored result is a value and only valid if it is marked successful.
     // Treats the value in memory as being stored as little endian, so a byteswap will happen prior to returning.
     // The result behavior is the same as ReadByte except it can also return ResultAccessCrossesRegionBoundary which will never be a failure (consider it a warning).
-    WordAccessResultSet ReadWordLE(const MemoryAddress&) const noexcept;
+    virtual WordAccessResultSet ReadWordLE(const MemoryAddress&) const noexcept;
     // Same as above, but use the active bank
     WordAccessResultSet ReadWordLE(const std::uint_fast16_t) const noexcept;
 
     // Write a word at a specific address if it is accessible and returns the previous value.
     // Treats the value in memory as being stored as little endian, so a byteswap will happen prior to storing.
     // The result behavior is the same as WriteByte, except ReadWordLE is used instead of ReadByte.
-    WordAccessResultSet WriteWordLE(const MemoryAddress&, const Word&) noexcept;
+    virtual WordAccessResultSet WriteWordLE(const MemoryAddress&, const Word&) noexcept;
     // Same as above, but use the active bank
     WordAccessResultSet WriteWordLE(const std::uint_fast16_t, const Word&) noexcept;
 
@@ -263,6 +263,11 @@ public:
     // Returns ResultAccessRegisterInvalidWidth if this register is not accessible at that width.
     Register16AccessResultSet WriteWord(const cpu::RegisterType&, const Word&) noexcept;
 
+    // Increments/Decrements PC register, returns the current value of PC
+    // Returns ResultRegisterOverflow if the value would overflow into an unexpected bank.
+    ModifyStateRegisterResultSet IncrementPC() noexcept;
+    ModifyStateRegisterResultSet DecrementPC() noexcept;
+
     const Byte ReadFlagByte() const noexcept;
     Byte       WriteFlagByte(const Byte&) noexcept;
 
@@ -272,15 +277,53 @@ public:
     const Word& ReadPC() const noexcept;
     const Byte& ReadIR() const noexcept;
 
-    // Increments/Decrements PC register, returns the current value of PC
-    // Returns ResultRegisterOverflow if the value would overflow into an unexpected bank.
-    ModifyStateRegisterResultSet IncrementPC() noexcept;
-    ModifyStateRegisterResultSet DecrementPC() noexcept;
-
     // Quick shims to adjust CPU state
+
+    enum FlagBit
+    {
+        Zero,      // Z
+        Subtract,  // N
+        HalfCarry, // H
+        Carry,     // C
+    };
+
+    [[nodiscard]] inline constexpr bool ReadFlagBit(FlagBit type) const noexcept
+    {
+        switch (type)
+        {
+        case Zero:
+            return _registers.FZ();
+        case Subtract:
+            return _registers.FN();
+        case HalfCarry:
+            return _registers.FH();
+        case Carry:
+            return _registers.FC();
+        }
+    }
+
+    inline constexpr void WriteFlagBit(FlagBit type, bool value) noexcept
+    {
+        switch (type)
+        {
+        case Zero:
+            _registers.SetFZ(value);
+            break;
+        case Subtract:
+            _registers.SetFN(value);
+            break;
+        case HalfCarry:
+            _registers.SetFH(value);
+            break;
+        case Carry:
+            _registers.SetFC(value);
+            break;
+        }
+    }
+
+    inline constexpr bool IMEEnabled() const noexcept { return _registers.IME(); }
     inline constexpr void EnableIME() noexcept { _registers.EnableIME(); }
     inline constexpr void DisableIME() noexcept { _registers.DisableIME(); }
-    inline constexpr bool IMEEnabled() const noexcept { return _registers.IME(); }
 
     inline constexpr Word  GetTemp() const noexcept { return _registers.WZ(); }
     inline constexpr Byte& GetTempLo() noexcept { return _registers.Z(); }
