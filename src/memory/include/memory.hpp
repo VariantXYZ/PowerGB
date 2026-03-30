@@ -332,6 +332,10 @@ public:
     inline constexpr Byte& GetActivePrefix() const noexcept { return _registers.Prefix(); }
     inline constexpr void  SetActivePrefix(Byte value) noexcept { _registers.SetPrefix(value); }
     inline constexpr void  ResetActivePrefix() noexcept { _registers.ResetPrefix(); }
+
+    inline constexpr bool& UseAlternativeTicks() const noexcept { return _registers.UseAlternative(); }
+    inline constexpr void  SetAlternativeTicks() noexcept { _registers.SetAlternative(); }
+    inline constexpr void  ResetAlternativeTIcks() noexcept { _registers.ResetAlternative(); }
 };
 
 } // namespace pgb::memory

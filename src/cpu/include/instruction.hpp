@@ -311,7 +311,26 @@ struct LoadTempReg8
     }
 };
 
-template <std::size_t Ticks_, Operation... Operations>
+template <typename T>
+concept HasAlternativeTicks = requires {
+    // Requires that T::size is a valid expression and can be converted to size_t
+    { T::AlternativeTicks } -> std::convertible_to<std::size_t>;
+};
+
+// Use NTTP for supporting base/alternative ticks
+struct TicksType
+{
+    std::size_t BaseTicks;
+    std::size_t AlternativeTicks;
+
+    consteval TicksType(std::size_t base, std::size_t alternative = 0)
+    {
+        BaseTicks        = base;
+        AlternativeTicks = alternative;
+    }
+};
+
+template <TicksType Ticks_, Operation... Operations>
 class Instruction
 {
 private:
@@ -321,24 +340,52 @@ private:
 
 public:
     // An easy way to check lengths is to just see how many times we call IncrementPC (just use its type to figure it out)
-    static constexpr std::size_t Length = ((std::is_same_v<decltype(Operations::Execute(std::declval<memory::MemoryMap&>())), IncrementPCResultSet> ? 1 : 0) + ...);
-    static constexpr std::size_t Ticks  = Ticks_;
-    Instruction()                       = delete;
+    static constexpr std::size_t Length           = ((std::is_same_v<decltype(Operations::Execute(std::declval<memory::MemoryMap&>())), IncrementPCResultSet> ? 1 : 0) + ...);
+
+    static constexpr std::size_t Ticks            = Ticks_.BaseTicks;
+    static constexpr std::size_t AlternativeTicks = Ticks_.AlternativeTicks;
+
+    Instruction()                                 = delete;
 
     // Execute all operations until a failure occurs
     // Returns the failing operation index, otherwise the total number of ticks expected
+    template <bool Force = false>
     constexpr static std::size_t ExecuteAll(memory::MemoryMap& memory) noexcept
     {
-        std::size_t t = 0;
-        (void)((Operations::Execute(memory).IsSuccess() ? (++t, true) : false) && ...);
-        return t == sizeof...(Operations) ? Ticks : t;
-    }
+        if constexpr (Force)
+        {
+            (void)((Operations::Execute(memory)), ...);
 
-    // Execute all operations ignoring the result value
-    // Ignoring the results should allow the compiler to more heavily inline everything
-    constexpr static void ExecuteAllForce(memory::MemoryMap& memory) noexcept
-    {
-        (void)((Operations::Execute(memory)), ...);
+            if constexpr (AlternativeTicks != 0)
+            {
+                if (memory.UseAlternativeTicks()) [[unlikely]]
+                {
+                    return AlternativeTicks;
+                }
+            }
+            return Ticks;
+        }
+        else
+        {
+            std::size_t t = 0;
+            (void)((Operations::Execute(memory).IsSuccess() ? (++t, true) : false) && ...);
+
+            if (t == sizeof...(Operations)) [[likely]]
+            {
+                if constexpr (AlternativeTicks != 0)
+                {
+                    if (memory.UseAlternativeTicks()) [[unlikely]]
+                    {
+                        return AlternativeTicks;
+                    }
+                }
+                return Ticks;
+            }
+            else
+            {
+                return t;
+            }
+        }
     }
 
     // Execute specific operation

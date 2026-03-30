@@ -93,11 +93,12 @@ template <util::StringLiteral Name, std::uint_fast8_t OpCode, InstructionType In
 class InstructionDecoder
 {
 public:
-    InstructionDecoder()              = delete;
-    constexpr static auto Instruction = Name.value;
-    constexpr static auto Opcode      = OpCode;
-    constexpr static auto Ticks       = InstructionHandler::Ticks;
-    constexpr static auto Length      = InstructionHandler::Length + (Prefix != 0x00 ? 1 : 0);
+    InstructionDecoder()                   = delete;
+    constexpr static auto Instruction      = Name.value;
+    constexpr static auto Opcode           = OpCode;
+    constexpr static auto Ticks            = InstructionHandler::Ticks;
+    constexpr static auto AlternativeTicks = InstructionHandler::AlternativeTicks;
+    constexpr static auto Length           = InstructionHandler::Length + (Prefix != 0x00 ? 1 : 0);
 
     constexpr static std::size_t Execute(memory::MemoryMap& mmap) noexcept
     {

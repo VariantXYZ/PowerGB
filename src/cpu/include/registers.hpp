@@ -144,6 +144,9 @@ private:
     //// Active instruction prefix
     Byte _prefix;
 
+    //// A bit of a hack, but keep track of whether we're using the base or alternative tick
+    bool _alternative{false};
+
 protected:
     friend memory::MemoryMap;
 
@@ -177,6 +180,9 @@ protected:
 
     constexpr Byte&       Prefix() noexcept { return _prefix; }
     constexpr const Byte& Prefix() const noexcept { return _prefix; }
+
+    constexpr bool&       UseAlternative() noexcept { return _alternative; }
+    constexpr const bool& UseAlternative() const noexcept { return _alternative; }
 
     // Temporary reference
     constexpr Byte&      W() noexcept { return _WZ[0]; }
@@ -212,20 +218,21 @@ public:
 
     constexpr void Reset() noexcept
     {
-        PC()     = 0;
-        SP()     = 0;
-        IR()     = 0;
-        IE()     = 0;
-        A()      = 0;
-        B()      = 0;
-        C()      = 0;
-        D()      = 0;
-        E()      = 0;
-        H()      = 0;
-        L()      = 0;
-        F()      = 0;
-        IME()    = true;
-        Prefix() = 0x00;
+        PC()             = 0;
+        SP()             = 0;
+        IR()             = 0;
+        IE()             = 0;
+        A()              = 0;
+        B()              = 0;
+        C()              = 0;
+        D()              = 0;
+        E()              = 0;
+        H()              = 0;
+        L()              = 0;
+        F()              = 0;
+        IME()            = true;
+        Prefix()         = 0x00;
+        UseAlternative() = false;
     }
 
     constexpr void EnableIME() noexcept
@@ -246,6 +253,16 @@ public:
     constexpr void ResetPrefix() noexcept
     {
         Prefix() = 0x00;
+    }
+
+    constexpr void SetAlternative() noexcept
+    {
+        UseAlternative() = true;
+    }
+
+    constexpr void ResetAlternative() noexcept
+    {
+        UseAlternative() = false;
     }
 };
 
