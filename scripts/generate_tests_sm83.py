@@ -192,6 +192,7 @@ SUPPORTED_OPCODES = ([
     (0xBE,"alu"), # CP A, [HL]
     (0xBF,"alu"), # CP A, A
     (0xC1,"ld"), # POP BC
+    (0xC3,"cf"), # JP nnnn
     (0xC5,"ld"), # PUSH BC
     (0xD1,"ld"), # POP DE
     (0xD5,"ld"), # PUSH DE

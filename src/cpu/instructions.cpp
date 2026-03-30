@@ -4,6 +4,7 @@
 // The compile-time computation of the instruction registry is quite high, so isolate it to a single TU
 #include <cpu/include/instruction.hpp>
 #include <cpu/include/instruction_alu.hpp>
+#include <cpu/include/instruction_cf.hpp>
 #include <cpu/include/instruction_ld.hpp>
 #include <cpu/include/instruction_nop.hpp>
 #include <cpu/include/instruction_prefix.hpp>
