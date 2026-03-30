@@ -24,7 +24,7 @@ using namespace pgb::cpu::instruction;
 void print_missing_instructions()
 {
     unsigned char countUnprefixed = 0xFF;
-    unsigned char countPrefixCB = 0xFF;
+    unsigned char countPrefixCB   = 0xFF;
     for (unsigned char i = 0; i < 0xFF; ++i)
     {
         if (InstructionRegistryNoPrefix::Callbacks[i] == nullptr)
@@ -42,8 +42,8 @@ void print_missing_instructions()
             printf("Missing Instruction CB %02X\n", i);
         }
     }
-    printf("Unprefixed: %u/256 instructions implemented\n", countUnprefixed);
-    printf("Prefix CB: %u/256 instructions implemented\n", countPrefixCB);
+    printf("Unprefixed: %u/256 instructions implemented\n", countUnprefixed + 1);
+    printf("Prefix CB: %u/256 instructions implemented\n", countPrefixCB + 1);
 }
 
 static_assert(InstructionRegistryNoPrefix::Callbacks[0x00] == nullptr || InstructionRegistryNoPrefix::Lengths[0x00] == 1);
