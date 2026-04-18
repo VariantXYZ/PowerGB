@@ -3069,7 +3069,6 @@ void test_C5_0000()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3125,7 +3124,6 @@ void test_C5_0001()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3181,7 +3179,6 @@ void test_C5_0002()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3237,7 +3234,6 @@ void test_C5_0003()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3293,7 +3289,6 @@ void test_C5_0004()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3349,7 +3344,6 @@ void test_C5_0005()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3405,7 +3399,6 @@ void test_C5_0006()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3461,7 +3454,6 @@ void test_C5_0007()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3517,7 +3509,6 @@ void test_C5_0008()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3573,7 +3564,6 @@ void test_C5_0009()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3629,7 +3619,6 @@ void test_C5_000A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3685,7 +3674,6 @@ void test_C5_000B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3741,7 +3729,6 @@ void test_C5_000C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3797,7 +3784,6 @@ void test_C5_000D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3853,7 +3839,6 @@ void test_C5_000E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3909,7 +3894,6 @@ void test_C5_000F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -3965,7 +3949,6 @@ void test_C5_0010()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4021,7 +4004,6 @@ void test_C5_0011()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4077,7 +4059,6 @@ void test_C5_0012()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4133,7 +4114,6 @@ void test_C5_0013()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4189,7 +4169,6 @@ void test_C5_0014()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4245,7 +4224,6 @@ void test_C5_0015()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4301,7 +4279,6 @@ void test_C5_0016()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4357,7 +4334,6 @@ void test_C5_0017()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4413,7 +4389,6 @@ void test_C5_0018()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4469,7 +4444,6 @@ void test_C5_0019()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4525,7 +4499,6 @@ void test_C5_001A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4581,7 +4554,6 @@ void test_C5_001B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4637,7 +4609,6 @@ void test_C5_001C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4693,7 +4664,6 @@ void test_C5_001D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4749,7 +4719,6 @@ void test_C5_001E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4805,7 +4774,6 @@ void test_C5_001F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4861,7 +4829,6 @@ void test_C5_0020()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4917,7 +4884,6 @@ void test_C5_0021()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -4973,7 +4939,6 @@ void test_C5_0022()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5029,7 +4994,6 @@ void test_C5_0023()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5085,7 +5049,6 @@ void test_C5_0024()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5141,7 +5104,6 @@ void test_C5_0025()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5197,7 +5159,6 @@ void test_C5_0026()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5253,7 +5214,6 @@ void test_C5_0027()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5309,7 +5269,6 @@ void test_C5_0028()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5365,7 +5324,6 @@ void test_C5_0029()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5421,7 +5379,6 @@ void test_C5_002A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5477,7 +5434,6 @@ void test_C5_002B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5533,7 +5489,6 @@ void test_C5_002C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5589,7 +5544,6 @@ void test_C5_002D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5645,7 +5599,6 @@ void test_C5_002E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5701,7 +5654,6 @@ void test_C5_002F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5757,7 +5709,6 @@ void test_C5_0030()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5813,7 +5764,6 @@ void test_C5_0031()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5869,7 +5819,6 @@ void test_C5_0032()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5925,7 +5874,6 @@ void test_C5_0033()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -5981,7 +5929,6 @@ void test_C5_0034()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6037,7 +5984,6 @@ void test_C5_0035()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6093,7 +6039,6 @@ void test_C5_0036()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6149,7 +6094,6 @@ void test_C5_0037()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6205,7 +6149,6 @@ void test_C5_0038()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6261,7 +6204,6 @@ void test_C5_0039()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6317,7 +6259,6 @@ void test_C5_003A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6373,7 +6314,6 @@ void test_C5_003B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6429,7 +6369,6 @@ void test_C5_003C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6485,7 +6424,6 @@ void test_C5_003D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6541,7 +6479,6 @@ void test_C5_003E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6597,7 +6534,6 @@ void test_C5_003F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6653,7 +6589,6 @@ void test_C5_0040()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6709,7 +6644,6 @@ void test_C5_0041()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6765,7 +6699,6 @@ void test_C5_0042()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6821,7 +6754,6 @@ void test_C5_0043()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6877,7 +6809,6 @@ void test_C5_0044()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6933,7 +6864,6 @@ void test_C5_0045()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -6989,7 +6919,6 @@ void test_C5_0046()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7045,7 +6974,6 @@ void test_C5_0047()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7101,7 +7029,6 @@ void test_C5_0048()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7157,7 +7084,6 @@ void test_C5_0049()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7213,7 +7139,6 @@ void test_C5_004A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7269,7 +7194,6 @@ void test_C5_004B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7325,7 +7249,6 @@ void test_C5_004C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7381,7 +7304,6 @@ void test_C5_004D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7437,7 +7359,6 @@ void test_C5_004E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7493,7 +7414,6 @@ void test_C5_004F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7549,7 +7469,6 @@ void test_C5_0050()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7605,7 +7524,6 @@ void test_C5_0051()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7661,7 +7579,6 @@ void test_C5_0052()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7717,7 +7634,6 @@ void test_C5_0053()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7773,7 +7689,6 @@ void test_C5_0054()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7829,7 +7744,6 @@ void test_C5_0055()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7885,7 +7799,6 @@ void test_C5_0056()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7941,7 +7854,6 @@ void test_C5_0057()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -7997,7 +7909,6 @@ void test_C5_0058()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8053,7 +7964,6 @@ void test_C5_0059()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8109,7 +8019,6 @@ void test_C5_005A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8165,7 +8074,6 @@ void test_C5_005B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8221,7 +8129,6 @@ void test_C5_005C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8277,7 +8184,6 @@ void test_C5_005D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8333,7 +8239,6 @@ void test_C5_005E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8389,7 +8294,6 @@ void test_C5_005F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8445,7 +8349,6 @@ void test_C5_0060()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8501,7 +8404,6 @@ void test_C5_0061()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8557,7 +8459,6 @@ void test_C5_0062()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8613,7 +8514,6 @@ void test_C5_0063()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8669,7 +8569,6 @@ void test_C5_0064()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8725,7 +8624,6 @@ void test_C5_0065()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8781,7 +8679,6 @@ void test_C5_0066()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8837,7 +8734,6 @@ void test_C5_0067()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8893,7 +8789,6 @@ void test_C5_0068()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -8949,7 +8844,6 @@ void test_C5_0069()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9005,7 +8899,6 @@ void test_C5_006A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9061,7 +8954,6 @@ void test_C5_006B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9117,7 +9009,6 @@ void test_C5_006C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9173,7 +9064,6 @@ void test_C5_006D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9229,7 +9119,6 @@ void test_C5_006E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9285,7 +9174,6 @@ void test_C5_006F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9341,7 +9229,6 @@ void test_C5_0070()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9397,7 +9284,6 @@ void test_C5_0071()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9453,7 +9339,6 @@ void test_C5_0072()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9509,7 +9394,6 @@ void test_C5_0073()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9565,7 +9449,6 @@ void test_C5_0074()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9621,7 +9504,6 @@ void test_C5_0075()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9677,7 +9559,6 @@ void test_C5_0076()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9733,7 +9614,6 @@ void test_C5_0077()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9789,7 +9669,6 @@ void test_C5_0078()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9845,7 +9724,6 @@ void test_C5_0079()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9901,7 +9779,6 @@ void test_C5_007A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -9957,7 +9834,6 @@ void test_C5_007B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10013,7 +9889,6 @@ void test_C5_007C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10069,7 +9944,6 @@ void test_C5_007D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10125,7 +9999,6 @@ void test_C5_007E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10181,7 +10054,6 @@ void test_C5_007F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10237,7 +10109,6 @@ void test_C5_0080()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10293,7 +10164,6 @@ void test_C5_0081()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10349,7 +10219,6 @@ void test_C5_0082()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10405,7 +10274,6 @@ void test_C5_0083()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10461,7 +10329,6 @@ void test_C5_0084()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10517,7 +10384,6 @@ void test_C5_0085()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10573,7 +10439,6 @@ void test_C5_0086()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10629,7 +10494,6 @@ void test_C5_0087()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10685,7 +10549,6 @@ void test_C5_0088()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10741,7 +10604,6 @@ void test_C5_0089()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10797,7 +10659,6 @@ void test_C5_008A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10853,7 +10714,6 @@ void test_C5_008B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10909,7 +10769,6 @@ void test_C5_008C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -10965,7 +10824,6 @@ void test_C5_008D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11021,7 +10879,6 @@ void test_C5_008E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11077,7 +10934,6 @@ void test_C5_008F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11133,7 +10989,6 @@ void test_C5_0090()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11189,7 +11044,6 @@ void test_C5_0091()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11245,7 +11099,6 @@ void test_C5_0092()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11301,7 +11154,6 @@ void test_C5_0093()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11357,7 +11209,6 @@ void test_C5_0094()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11413,7 +11264,6 @@ void test_C5_0095()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11469,7 +11319,6 @@ void test_C5_0096()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11525,7 +11374,6 @@ void test_C5_0097()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11581,7 +11429,6 @@ void test_C5_0098()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11637,7 +11484,6 @@ void test_C5_0099()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11693,7 +11539,6 @@ void test_C5_009A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11749,7 +11594,6 @@ void test_C5_009B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11805,7 +11649,6 @@ void test_C5_009C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11861,7 +11704,6 @@ void test_C5_009D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11917,7 +11759,6 @@ void test_C5_009E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -11973,7 +11814,6 @@ void test_C5_009F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12029,7 +11869,6 @@ void test_C5_00A0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12085,7 +11924,6 @@ void test_C5_00A1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12141,7 +11979,6 @@ void test_C5_00A2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12197,7 +12034,6 @@ void test_C5_00A3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12253,7 +12089,6 @@ void test_C5_00A4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12309,7 +12144,6 @@ void test_C5_00A5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12365,7 +12199,6 @@ void test_C5_00A6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12421,7 +12254,6 @@ void test_C5_00A7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12477,7 +12309,6 @@ void test_C5_00A8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12533,7 +12364,6 @@ void test_C5_00A9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12589,7 +12419,6 @@ void test_C5_00AA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12645,7 +12474,6 @@ void test_C5_00AB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12701,7 +12529,6 @@ void test_C5_00AC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12757,7 +12584,6 @@ void test_C5_00AD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12813,7 +12639,6 @@ void test_C5_00AE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12869,7 +12694,6 @@ void test_C5_00AF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12925,7 +12749,6 @@ void test_C5_00B0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -12981,7 +12804,6 @@ void test_C5_00B1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13037,7 +12859,6 @@ void test_C5_00B2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13093,7 +12914,6 @@ void test_C5_00B3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13149,7 +12969,6 @@ void test_C5_00B4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13205,7 +13024,6 @@ void test_C5_00B5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13261,7 +13079,6 @@ void test_C5_00B6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13317,7 +13134,6 @@ void test_C5_00B7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13373,7 +13189,6 @@ void test_C5_00B8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13429,7 +13244,6 @@ void test_C5_00B9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13485,7 +13299,6 @@ void test_C5_00BA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13541,7 +13354,6 @@ void test_C5_00BB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13597,7 +13409,6 @@ void test_C5_00BC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13653,7 +13464,6 @@ void test_C5_00BD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13709,7 +13519,6 @@ void test_C5_00BE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13765,7 +13574,6 @@ void test_C5_00BF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13821,7 +13629,6 @@ void test_C5_00C0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13877,7 +13684,6 @@ void test_C5_00C1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13933,7 +13739,6 @@ void test_C5_00C2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -13989,7 +13794,6 @@ void test_C5_00C3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14045,7 +13849,6 @@ void test_C5_00C4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14101,7 +13904,6 @@ void test_C5_00C5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14157,7 +13959,6 @@ void test_C5_00C6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14213,7 +14014,6 @@ void test_C5_00C7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14269,7 +14069,6 @@ void test_C5_00C8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14325,7 +14124,6 @@ void test_C5_00C9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14381,7 +14179,6 @@ void test_C5_00CA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14437,7 +14234,6 @@ void test_C5_00CB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14493,7 +14289,6 @@ void test_C5_00CC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14549,7 +14344,6 @@ void test_C5_00CD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14605,7 +14399,6 @@ void test_C5_00CE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14661,7 +14454,6 @@ void test_C5_00CF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14717,7 +14509,6 @@ void test_C5_00D0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14773,7 +14564,6 @@ void test_C5_00D1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14829,7 +14619,6 @@ void test_C5_00D2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14885,7 +14674,6 @@ void test_C5_00D3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14941,7 +14729,6 @@ void test_C5_00D4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -14997,7 +14784,6 @@ void test_C5_00D5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15053,7 +14839,6 @@ void test_C5_00D6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15109,7 +14894,6 @@ void test_C5_00D7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15165,7 +14949,6 @@ void test_C5_00D8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15221,7 +15004,6 @@ void test_C5_00D9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15277,7 +15059,6 @@ void test_C5_00DA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15333,7 +15114,6 @@ void test_C5_00DB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15389,7 +15169,6 @@ void test_C5_00DC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15445,7 +15224,6 @@ void test_C5_00DD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15501,7 +15279,6 @@ void test_C5_00DE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15557,7 +15334,6 @@ void test_C5_00DF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15613,7 +15389,6 @@ void test_C5_00E0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15669,7 +15444,6 @@ void test_C5_00E1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15725,7 +15499,6 @@ void test_C5_00E2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15781,7 +15554,6 @@ void test_C5_00E3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15837,7 +15609,6 @@ void test_C5_00E4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15893,7 +15664,6 @@ void test_C5_00E5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -15949,7 +15719,6 @@ void test_C5_00E6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16005,7 +15774,6 @@ void test_C5_00E7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16061,7 +15829,6 @@ void test_C5_00E8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16117,7 +15884,6 @@ void test_C5_00E9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16173,7 +15939,6 @@ void test_C5_00EA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16229,7 +15994,6 @@ void test_C5_00EB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16285,7 +16049,6 @@ void test_C5_00EC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16341,7 +16104,6 @@ void test_C5_00ED()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16397,7 +16159,6 @@ void test_C5_00EE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16453,7 +16214,6 @@ void test_C5_00EF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16509,7 +16269,6 @@ void test_C5_00F0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16565,7 +16324,6 @@ void test_C5_00F1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16621,7 +16379,6 @@ void test_C5_00F2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16677,7 +16434,6 @@ void test_C5_00F3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16733,7 +16489,6 @@ void test_C5_00F4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16789,7 +16544,6 @@ void test_C5_00F5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16845,7 +16599,6 @@ void test_C5_00F6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16901,7 +16654,6 @@ void test_C5_00F7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -16957,7 +16709,6 @@ void test_C5_00F8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17013,7 +16764,6 @@ void test_C5_00F9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17069,7 +16819,6 @@ void test_C5_00FA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17125,7 +16874,6 @@ void test_C5_00FB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17181,7 +16929,6 @@ void test_C5_00FC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17237,7 +16984,6 @@ void test_C5_00FD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17293,7 +17039,6 @@ void test_C5_00FE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17349,7 +17094,6 @@ void test_C5_00FF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17405,7 +17149,6 @@ void test_C5_0100()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17461,7 +17204,6 @@ void test_C5_0101()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17517,7 +17259,6 @@ void test_C5_0102()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17573,7 +17314,6 @@ void test_C5_0103()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17629,7 +17369,6 @@ void test_C5_0104()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17685,7 +17424,6 @@ void test_C5_0105()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17741,7 +17479,6 @@ void test_C5_0106()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17797,7 +17534,6 @@ void test_C5_0107()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17853,7 +17589,6 @@ void test_C5_0108()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17909,7 +17644,6 @@ void test_C5_0109()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -17965,7 +17699,6 @@ void test_C5_010A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18021,7 +17754,6 @@ void test_C5_010B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18077,7 +17809,6 @@ void test_C5_010C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18133,7 +17864,6 @@ void test_C5_010D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18189,7 +17919,6 @@ void test_C5_010E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18245,7 +17974,6 @@ void test_C5_010F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18301,7 +18029,6 @@ void test_C5_0110()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18357,7 +18084,6 @@ void test_C5_0111()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18413,7 +18139,6 @@ void test_C5_0112()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18469,7 +18194,6 @@ void test_C5_0113()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18525,7 +18249,6 @@ void test_C5_0114()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18581,7 +18304,6 @@ void test_C5_0115()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18637,7 +18359,6 @@ void test_C5_0116()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18693,7 +18414,6 @@ void test_C5_0117()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18749,7 +18469,6 @@ void test_C5_0118()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18805,7 +18524,6 @@ void test_C5_0119()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18861,7 +18579,6 @@ void test_C5_011A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18917,7 +18634,6 @@ void test_C5_011B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -18973,7 +18689,6 @@ void test_C5_011C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19029,7 +18744,6 @@ void test_C5_011D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19085,7 +18799,6 @@ void test_C5_011E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19141,7 +18854,6 @@ void test_C5_011F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19197,7 +18909,6 @@ void test_C5_0120()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19253,7 +18964,6 @@ void test_C5_0121()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19309,7 +19019,6 @@ void test_C5_0122()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19365,7 +19074,6 @@ void test_C5_0123()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19421,7 +19129,6 @@ void test_C5_0124()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19477,7 +19184,6 @@ void test_C5_0125()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19533,7 +19239,6 @@ void test_C5_0126()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19589,7 +19294,6 @@ void test_C5_0127()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19645,7 +19349,6 @@ void test_C5_0128()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19701,7 +19404,6 @@ void test_C5_0129()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19757,7 +19459,6 @@ void test_C5_012A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19813,7 +19514,6 @@ void test_C5_012B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19869,7 +19569,6 @@ void test_C5_012C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19925,7 +19624,6 @@ void test_C5_012D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -19981,7 +19679,6 @@ void test_C5_012E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20037,7 +19734,6 @@ void test_C5_012F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20093,7 +19789,6 @@ void test_C5_0130()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20149,7 +19844,6 @@ void test_C5_0131()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20205,7 +19899,6 @@ void test_C5_0132()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20261,7 +19954,6 @@ void test_C5_0133()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20317,7 +20009,6 @@ void test_C5_0134()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20373,7 +20064,6 @@ void test_C5_0135()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20429,7 +20119,6 @@ void test_C5_0136()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20485,7 +20174,6 @@ void test_C5_0137()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20541,7 +20229,6 @@ void test_C5_0138()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20597,7 +20284,6 @@ void test_C5_0139()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20653,7 +20339,6 @@ void test_C5_013A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20709,7 +20394,6 @@ void test_C5_013B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20765,7 +20449,6 @@ void test_C5_013C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20821,7 +20504,6 @@ void test_C5_013D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20877,7 +20559,6 @@ void test_C5_013E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20933,7 +20614,6 @@ void test_C5_013F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -20989,7 +20669,6 @@ void test_C5_0140()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21045,7 +20724,6 @@ void test_C5_0141()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21101,7 +20779,6 @@ void test_C5_0142()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21157,7 +20834,6 @@ void test_C5_0143()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21213,7 +20889,6 @@ void test_C5_0144()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21269,7 +20944,6 @@ void test_C5_0145()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21325,7 +20999,6 @@ void test_C5_0146()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21381,7 +21054,6 @@ void test_C5_0147()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21437,7 +21109,6 @@ void test_C5_0148()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21493,7 +21164,6 @@ void test_C5_0149()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21549,7 +21219,6 @@ void test_C5_014A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21605,7 +21274,6 @@ void test_C5_014B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21661,7 +21329,6 @@ void test_C5_014C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21717,7 +21384,6 @@ void test_C5_014D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21773,7 +21439,6 @@ void test_C5_014E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21829,7 +21494,6 @@ void test_C5_014F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21885,7 +21549,6 @@ void test_C5_0150()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21941,7 +21604,6 @@ void test_C5_0151()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -21997,7 +21659,6 @@ void test_C5_0152()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22053,7 +21714,6 @@ void test_C5_0153()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22109,7 +21769,6 @@ void test_C5_0154()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22165,7 +21824,6 @@ void test_C5_0155()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22221,7 +21879,6 @@ void test_C5_0156()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22277,7 +21934,6 @@ void test_C5_0157()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22333,7 +21989,6 @@ void test_C5_0158()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22389,7 +22044,6 @@ void test_C5_0159()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22445,7 +22099,6 @@ void test_C5_015A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22501,7 +22154,6 @@ void test_C5_015B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22557,7 +22209,6 @@ void test_C5_015C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22613,7 +22264,6 @@ void test_C5_015D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22669,7 +22319,6 @@ void test_C5_015E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22725,7 +22374,6 @@ void test_C5_015F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22781,7 +22429,6 @@ void test_C5_0160()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22837,7 +22484,6 @@ void test_C5_0161()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22893,7 +22539,6 @@ void test_C5_0162()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -22949,7 +22594,6 @@ void test_C5_0163()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23005,7 +22649,6 @@ void test_C5_0164()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23061,7 +22704,6 @@ void test_C5_0165()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23117,7 +22759,6 @@ void test_C5_0166()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23173,7 +22814,6 @@ void test_C5_0167()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23229,7 +22869,6 @@ void test_C5_0168()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23285,7 +22924,6 @@ void test_C5_0169()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23341,7 +22979,6 @@ void test_C5_016A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23397,7 +23034,6 @@ void test_C5_016B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23453,7 +23089,6 @@ void test_C5_016C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23509,7 +23144,6 @@ void test_C5_016D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23565,7 +23199,6 @@ void test_C5_016E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23621,7 +23254,6 @@ void test_C5_016F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23677,7 +23309,6 @@ void test_C5_0170()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23733,7 +23364,6 @@ void test_C5_0171()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23789,7 +23419,6 @@ void test_C5_0172()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23845,7 +23474,6 @@ void test_C5_0173()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23901,7 +23529,6 @@ void test_C5_0174()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -23957,7 +23584,6 @@ void test_C5_0175()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24013,7 +23639,6 @@ void test_C5_0176()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24069,7 +23694,6 @@ void test_C5_0177()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24125,7 +23749,6 @@ void test_C5_0178()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24181,7 +23804,6 @@ void test_C5_0179()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24237,7 +23859,6 @@ void test_C5_017A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24293,7 +23914,6 @@ void test_C5_017B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24349,7 +23969,6 @@ void test_C5_017C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24405,7 +24024,6 @@ void test_C5_017D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24461,7 +24079,6 @@ void test_C5_017E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24517,7 +24134,6 @@ void test_C5_017F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24573,7 +24189,6 @@ void test_C5_0180()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24629,7 +24244,6 @@ void test_C5_0181()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24685,7 +24299,6 @@ void test_C5_0182()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24741,7 +24354,6 @@ void test_C5_0183()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24797,7 +24409,6 @@ void test_C5_0184()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24853,7 +24464,6 @@ void test_C5_0185()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24909,7 +24519,6 @@ void test_C5_0186()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -24965,7 +24574,6 @@ void test_C5_0187()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25021,7 +24629,6 @@ void test_C5_0188()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25077,7 +24684,6 @@ void test_C5_0189()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25133,7 +24739,6 @@ void test_C5_018A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25189,7 +24794,6 @@ void test_C5_018B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25245,7 +24849,6 @@ void test_C5_018C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25301,7 +24904,6 @@ void test_C5_018D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25357,7 +24959,6 @@ void test_C5_018E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25413,7 +25014,6 @@ void test_C5_018F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25469,7 +25069,6 @@ void test_C5_0190()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25525,7 +25124,6 @@ void test_C5_0191()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25581,7 +25179,6 @@ void test_C5_0192()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25637,7 +25234,6 @@ void test_C5_0193()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25693,7 +25289,6 @@ void test_C5_0194()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25749,7 +25344,6 @@ void test_C5_0195()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25805,7 +25399,6 @@ void test_C5_0196()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25861,7 +25454,6 @@ void test_C5_0197()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25917,7 +25509,6 @@ void test_C5_0198()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -25973,7 +25564,6 @@ void test_C5_0199()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26029,7 +25619,6 @@ void test_C5_019A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26085,7 +25674,6 @@ void test_C5_019B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26141,7 +25729,6 @@ void test_C5_019C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26197,7 +25784,6 @@ void test_C5_019D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26253,7 +25839,6 @@ void test_C5_019E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26309,7 +25894,6 @@ void test_C5_019F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26365,7 +25949,6 @@ void test_C5_01A0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26421,7 +26004,6 @@ void test_C5_01A1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26477,7 +26059,6 @@ void test_C5_01A2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26533,7 +26114,6 @@ void test_C5_01A3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26589,7 +26169,6 @@ void test_C5_01A4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26645,7 +26224,6 @@ void test_C5_01A5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26701,7 +26279,6 @@ void test_C5_01A6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26757,7 +26334,6 @@ void test_C5_01A7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26813,7 +26389,6 @@ void test_C5_01A8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26869,7 +26444,6 @@ void test_C5_01A9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26925,7 +26499,6 @@ void test_C5_01AA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -26981,7 +26554,6 @@ void test_C5_01AB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27037,7 +26609,6 @@ void test_C5_01AC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27093,7 +26664,6 @@ void test_C5_01AD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27149,7 +26719,6 @@ void test_C5_01AE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27205,7 +26774,6 @@ void test_C5_01AF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27261,7 +26829,6 @@ void test_C5_01B0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27317,7 +26884,6 @@ void test_C5_01B1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27373,7 +26939,6 @@ void test_C5_01B2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27429,7 +26994,6 @@ void test_C5_01B3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27485,7 +27049,6 @@ void test_C5_01B4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27541,7 +27104,6 @@ void test_C5_01B5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27597,7 +27159,6 @@ void test_C5_01B6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27653,7 +27214,6 @@ void test_C5_01B7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27709,7 +27269,6 @@ void test_C5_01B8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27765,7 +27324,6 @@ void test_C5_01B9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27821,7 +27379,6 @@ void test_C5_01BA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27877,7 +27434,6 @@ void test_C5_01BB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27933,7 +27489,6 @@ void test_C5_01BC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -27989,7 +27544,6 @@ void test_C5_01BD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28045,7 +27599,6 @@ void test_C5_01BE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28101,7 +27654,6 @@ void test_C5_01BF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28157,7 +27709,6 @@ void test_C5_01C0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28213,7 +27764,6 @@ void test_C5_01C1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28269,7 +27819,6 @@ void test_C5_01C2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28325,7 +27874,6 @@ void test_C5_01C3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28381,7 +27929,6 @@ void test_C5_01C4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28437,7 +27984,6 @@ void test_C5_01C5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28493,7 +28039,6 @@ void test_C5_01C6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28549,7 +28094,6 @@ void test_C5_01C7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28605,7 +28149,6 @@ void test_C5_01C8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28661,7 +28204,6 @@ void test_C5_01C9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28717,7 +28259,6 @@ void test_C5_01CA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28773,7 +28314,6 @@ void test_C5_01CB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28829,7 +28369,6 @@ void test_C5_01CC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28885,7 +28424,6 @@ void test_C5_01CD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28941,7 +28479,6 @@ void test_C5_01CE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -28997,7 +28534,6 @@ void test_C5_01CF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29053,7 +28589,6 @@ void test_C5_01D0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29109,7 +28644,6 @@ void test_C5_01D1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29165,7 +28699,6 @@ void test_C5_01D2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29221,7 +28754,6 @@ void test_C5_01D3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29277,7 +28809,6 @@ void test_C5_01D4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29333,7 +28864,6 @@ void test_C5_01D5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29389,7 +28919,6 @@ void test_C5_01D6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29445,7 +28974,6 @@ void test_C5_01D7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29501,7 +29029,6 @@ void test_C5_01D8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29557,7 +29084,6 @@ void test_C5_01D9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29613,7 +29139,6 @@ void test_C5_01DA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29669,7 +29194,6 @@ void test_C5_01DB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29725,7 +29249,6 @@ void test_C5_01DC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29781,7 +29304,6 @@ void test_C5_01DD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29837,7 +29359,6 @@ void test_C5_01DE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29893,7 +29414,6 @@ void test_C5_01DF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -29949,7 +29469,6 @@ void test_C5_01E0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30005,7 +29524,6 @@ void test_C5_01E1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30061,7 +29579,6 @@ void test_C5_01E2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30117,7 +29634,6 @@ void test_C5_01E3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30173,7 +29689,6 @@ void test_C5_01E4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30229,7 +29744,6 @@ void test_C5_01E5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30285,7 +29799,6 @@ void test_C5_01E6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30341,7 +29854,6 @@ void test_C5_01E7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30397,7 +29909,6 @@ void test_C5_01E8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30453,7 +29964,6 @@ void test_C5_01E9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30509,7 +30019,6 @@ void test_C5_01EA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30565,7 +30074,6 @@ void test_C5_01EB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30621,7 +30129,6 @@ void test_C5_01EC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30677,7 +30184,6 @@ void test_C5_01ED()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30733,7 +30239,6 @@ void test_C5_01EE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30789,7 +30294,6 @@ void test_C5_01EF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30845,7 +30349,6 @@ void test_C5_01F0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30901,7 +30404,6 @@ void test_C5_01F1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -30957,7 +30459,6 @@ void test_C5_01F2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31013,7 +30514,6 @@ void test_C5_01F3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31069,7 +30569,6 @@ void test_C5_01F4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31125,7 +30624,6 @@ void test_C5_01F5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31181,7 +30679,6 @@ void test_C5_01F6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31237,7 +30734,6 @@ void test_C5_01F7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31293,7 +30789,6 @@ void test_C5_01F8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31349,7 +30844,6 @@ void test_C5_01F9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31405,7 +30899,6 @@ void test_C5_01FA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31461,7 +30954,6 @@ void test_C5_01FB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31517,7 +31009,6 @@ void test_C5_01FC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31573,7 +31064,6 @@ void test_C5_01FD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31629,7 +31119,6 @@ void test_C5_01FE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31685,7 +31174,6 @@ void test_C5_01FF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31741,7 +31229,6 @@ void test_C5_0200()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31797,7 +31284,6 @@ void test_C5_0201()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31853,7 +31339,6 @@ void test_C5_0202()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31909,7 +31394,6 @@ void test_C5_0203()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -31965,7 +31449,6 @@ void test_C5_0204()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32021,7 +31504,6 @@ void test_C5_0205()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32077,7 +31559,6 @@ void test_C5_0206()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32133,7 +31614,6 @@ void test_C5_0207()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32189,7 +31669,6 @@ void test_C5_0208()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32245,7 +31724,6 @@ void test_C5_0209()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32301,7 +31779,6 @@ void test_C5_020A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32357,7 +31834,6 @@ void test_C5_020B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32413,7 +31889,6 @@ void test_C5_020C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32469,7 +31944,6 @@ void test_C5_020D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32525,7 +31999,6 @@ void test_C5_020E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32581,7 +32054,6 @@ void test_C5_020F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32637,7 +32109,6 @@ void test_C5_0210()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32693,7 +32164,6 @@ void test_C5_0211()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32749,7 +32219,6 @@ void test_C5_0212()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32805,7 +32274,6 @@ void test_C5_0213()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32861,7 +32329,6 @@ void test_C5_0214()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32917,7 +32384,6 @@ void test_C5_0215()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -32973,7 +32439,6 @@ void test_C5_0216()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33029,7 +32494,6 @@ void test_C5_0217()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33085,7 +32549,6 @@ void test_C5_0218()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33141,7 +32604,6 @@ void test_C5_0219()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33197,7 +32659,6 @@ void test_C5_021A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33253,7 +32714,6 @@ void test_C5_021B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33309,7 +32769,6 @@ void test_C5_021C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33365,7 +32824,6 @@ void test_C5_021D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33421,7 +32879,6 @@ void test_C5_021E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33477,7 +32934,6 @@ void test_C5_021F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33533,7 +32989,6 @@ void test_C5_0220()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33589,7 +33044,6 @@ void test_C5_0221()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33645,7 +33099,6 @@ void test_C5_0222()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33701,7 +33154,6 @@ void test_C5_0223()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33757,7 +33209,6 @@ void test_C5_0224()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33813,7 +33264,6 @@ void test_C5_0225()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33869,7 +33319,6 @@ void test_C5_0226()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33925,7 +33374,6 @@ void test_C5_0227()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -33981,7 +33429,6 @@ void test_C5_0228()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34037,7 +33484,6 @@ void test_C5_0229()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34093,7 +33539,6 @@ void test_C5_022A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34149,7 +33594,6 @@ void test_C5_022B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34205,7 +33649,6 @@ void test_C5_022C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34261,7 +33704,6 @@ void test_C5_022D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34317,7 +33759,6 @@ void test_C5_022E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34373,7 +33814,6 @@ void test_C5_022F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34429,7 +33869,6 @@ void test_C5_0230()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34485,7 +33924,6 @@ void test_C5_0231()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34541,7 +33979,6 @@ void test_C5_0232()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34597,7 +34034,6 @@ void test_C5_0233()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34653,7 +34089,6 @@ void test_C5_0234()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34709,7 +34144,6 @@ void test_C5_0235()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34765,7 +34199,6 @@ void test_C5_0236()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34821,7 +34254,6 @@ void test_C5_0237()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34877,7 +34309,6 @@ void test_C5_0238()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34933,7 +34364,6 @@ void test_C5_0239()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -34989,7 +34419,6 @@ void test_C5_023A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35045,7 +34474,6 @@ void test_C5_023B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35101,7 +34529,6 @@ void test_C5_023C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35157,7 +34584,6 @@ void test_C5_023D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35213,7 +34639,6 @@ void test_C5_023E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35269,7 +34694,6 @@ void test_C5_023F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35325,7 +34749,6 @@ void test_C5_0240()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35381,7 +34804,6 @@ void test_C5_0241()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35437,7 +34859,6 @@ void test_C5_0242()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35493,7 +34914,6 @@ void test_C5_0243()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35549,7 +34969,6 @@ void test_C5_0244()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35605,7 +35024,6 @@ void test_C5_0245()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35661,7 +35079,6 @@ void test_C5_0246()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35717,7 +35134,6 @@ void test_C5_0247()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35773,7 +35189,6 @@ void test_C5_0248()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35829,7 +35244,6 @@ void test_C5_0249()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35885,7 +35299,6 @@ void test_C5_024A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35941,7 +35354,6 @@ void test_C5_024B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -35997,7 +35409,6 @@ void test_C5_024C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36053,7 +35464,6 @@ void test_C5_024D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36109,7 +35519,6 @@ void test_C5_024E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36165,7 +35574,6 @@ void test_C5_024F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36221,7 +35629,6 @@ void test_C5_0250()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36277,7 +35684,6 @@ void test_C5_0251()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36333,7 +35739,6 @@ void test_C5_0252()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36389,7 +35794,6 @@ void test_C5_0253()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36445,7 +35849,6 @@ void test_C5_0254()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36501,7 +35904,6 @@ void test_C5_0255()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36557,7 +35959,6 @@ void test_C5_0256()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36613,7 +36014,6 @@ void test_C5_0257()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36669,7 +36069,6 @@ void test_C5_0258()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36725,7 +36124,6 @@ void test_C5_0259()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36781,7 +36179,6 @@ void test_C5_025A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36837,7 +36234,6 @@ void test_C5_025B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36893,7 +36289,6 @@ void test_C5_025C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -36949,7 +36344,6 @@ void test_C5_025D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37005,7 +36399,6 @@ void test_C5_025E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37061,7 +36454,6 @@ void test_C5_025F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37117,7 +36509,6 @@ void test_C5_0260()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37173,7 +36564,6 @@ void test_C5_0261()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37229,7 +36619,6 @@ void test_C5_0262()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37285,7 +36674,6 @@ void test_C5_0263()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37341,7 +36729,6 @@ void test_C5_0264()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37397,7 +36784,6 @@ void test_C5_0265()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37453,7 +36839,6 @@ void test_C5_0266()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37509,7 +36894,6 @@ void test_C5_0267()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37565,7 +36949,6 @@ void test_C5_0268()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37621,7 +37004,6 @@ void test_C5_0269()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37677,7 +37059,6 @@ void test_C5_026A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37733,7 +37114,6 @@ void test_C5_026B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37789,7 +37169,6 @@ void test_C5_026C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37845,7 +37224,6 @@ void test_C5_026D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37901,7 +37279,6 @@ void test_C5_026E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -37957,7 +37334,6 @@ void test_C5_026F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38013,7 +37389,6 @@ void test_C5_0270()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38069,7 +37444,6 @@ void test_C5_0271()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38125,7 +37499,6 @@ void test_C5_0272()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38181,7 +37554,6 @@ void test_C5_0273()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38237,7 +37609,6 @@ void test_C5_0274()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38293,7 +37664,6 @@ void test_C5_0275()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38349,7 +37719,6 @@ void test_C5_0276()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38405,7 +37774,6 @@ void test_C5_0277()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38461,7 +37829,6 @@ void test_C5_0278()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38517,7 +37884,6 @@ void test_C5_0279()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38573,7 +37939,6 @@ void test_C5_027A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38629,7 +37994,6 @@ void test_C5_027B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38685,7 +38049,6 @@ void test_C5_027C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38741,7 +38104,6 @@ void test_C5_027D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38797,7 +38159,6 @@ void test_C5_027E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38853,7 +38214,6 @@ void test_C5_027F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38909,7 +38269,6 @@ void test_C5_0280()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -38965,7 +38324,6 @@ void test_C5_0281()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39021,7 +38379,6 @@ void test_C5_0282()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39077,7 +38434,6 @@ void test_C5_0283()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39133,7 +38489,6 @@ void test_C5_0284()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39189,7 +38544,6 @@ void test_C5_0285()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39245,7 +38599,6 @@ void test_C5_0286()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39301,7 +38654,6 @@ void test_C5_0287()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39357,7 +38709,6 @@ void test_C5_0288()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39413,7 +38764,6 @@ void test_C5_0289()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39469,7 +38819,6 @@ void test_C5_028A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39525,7 +38874,6 @@ void test_C5_028B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39581,7 +38929,6 @@ void test_C5_028C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39637,7 +38984,6 @@ void test_C5_028D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39693,7 +39039,6 @@ void test_C5_028E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39749,7 +39094,6 @@ void test_C5_028F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39805,7 +39149,6 @@ void test_C5_0290()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39861,7 +39204,6 @@ void test_C5_0291()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39917,7 +39259,6 @@ void test_C5_0292()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -39973,7 +39314,6 @@ void test_C5_0293()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40029,7 +39369,6 @@ void test_C5_0294()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40085,7 +39424,6 @@ void test_C5_0295()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40141,7 +39479,6 @@ void test_C5_0296()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40197,7 +39534,6 @@ void test_C5_0297()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40253,7 +39589,6 @@ void test_C5_0298()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40309,7 +39644,6 @@ void test_C5_0299()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40365,7 +39699,6 @@ void test_C5_029A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40421,7 +39754,6 @@ void test_C5_029B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40477,7 +39809,6 @@ void test_C5_029C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40533,7 +39864,6 @@ void test_C5_029D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40589,7 +39919,6 @@ void test_C5_029E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40645,7 +39974,6 @@ void test_C5_029F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40701,7 +40029,6 @@ void test_C5_02A0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40757,7 +40084,6 @@ void test_C5_02A1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40813,7 +40139,6 @@ void test_C5_02A2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40869,7 +40194,6 @@ void test_C5_02A3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40925,7 +40249,6 @@ void test_C5_02A4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -40981,7 +40304,6 @@ void test_C5_02A5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41037,7 +40359,6 @@ void test_C5_02A6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41093,7 +40414,6 @@ void test_C5_02A7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41149,7 +40469,6 @@ void test_C5_02A8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41205,7 +40524,6 @@ void test_C5_02A9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41261,7 +40579,6 @@ void test_C5_02AA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41317,7 +40634,6 @@ void test_C5_02AB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41373,7 +40689,6 @@ void test_C5_02AC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41429,7 +40744,6 @@ void test_C5_02AD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41485,7 +40799,6 @@ void test_C5_02AE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41541,7 +40854,6 @@ void test_C5_02AF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41597,7 +40909,6 @@ void test_C5_02B0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41653,7 +40964,6 @@ void test_C5_02B1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41709,7 +41019,6 @@ void test_C5_02B2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41765,7 +41074,6 @@ void test_C5_02B3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41821,7 +41129,6 @@ void test_C5_02B4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41877,7 +41184,6 @@ void test_C5_02B5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41933,7 +41239,6 @@ void test_C5_02B6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -41989,7 +41294,6 @@ void test_C5_02B7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42045,7 +41349,6 @@ void test_C5_02B8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42101,7 +41404,6 @@ void test_C5_02B9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42157,7 +41459,6 @@ void test_C5_02BA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42213,7 +41514,6 @@ void test_C5_02BB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42269,7 +41569,6 @@ void test_C5_02BC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42325,7 +41624,6 @@ void test_C5_02BD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42381,7 +41679,6 @@ void test_C5_02BE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42437,7 +41734,6 @@ void test_C5_02BF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42493,7 +41789,6 @@ void test_C5_02C0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42549,7 +41844,6 @@ void test_C5_02C1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42605,7 +41899,6 @@ void test_C5_02C2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42661,7 +41954,6 @@ void test_C5_02C3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42717,7 +42009,6 @@ void test_C5_02C4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42773,7 +42064,6 @@ void test_C5_02C5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42829,7 +42119,6 @@ void test_C5_02C6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42885,7 +42174,6 @@ void test_C5_02C7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42941,7 +42229,6 @@ void test_C5_02C8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -42997,7 +42284,6 @@ void test_C5_02C9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43053,7 +42339,6 @@ void test_C5_02CA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43109,7 +42394,6 @@ void test_C5_02CB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43165,7 +42449,6 @@ void test_C5_02CC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43221,7 +42504,6 @@ void test_C5_02CD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43277,7 +42559,6 @@ void test_C5_02CE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43333,7 +42614,6 @@ void test_C5_02CF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43389,7 +42669,6 @@ void test_C5_02D0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43445,7 +42724,6 @@ void test_C5_02D1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43501,7 +42779,6 @@ void test_C5_02D2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43557,7 +42834,6 @@ void test_C5_02D3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43613,7 +42889,6 @@ void test_C5_02D4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43669,7 +42944,6 @@ void test_C5_02D5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43725,7 +42999,6 @@ void test_C5_02D6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43781,7 +43054,6 @@ void test_C5_02D7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43837,7 +43109,6 @@ void test_C5_02D8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43893,7 +43164,6 @@ void test_C5_02D9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -43949,7 +43219,6 @@ void test_C5_02DA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44005,7 +43274,6 @@ void test_C5_02DB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44061,7 +43329,6 @@ void test_C5_02DC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44117,7 +43384,6 @@ void test_C5_02DD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44173,7 +43439,6 @@ void test_C5_02DE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44229,7 +43494,6 @@ void test_C5_02DF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44285,7 +43549,6 @@ void test_C5_02E0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44341,7 +43604,6 @@ void test_C5_02E1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44397,7 +43659,6 @@ void test_C5_02E2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44453,7 +43714,6 @@ void test_C5_02E3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44509,7 +43769,6 @@ void test_C5_02E4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44565,7 +43824,6 @@ void test_C5_02E5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44621,7 +43879,6 @@ void test_C5_02E6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44677,7 +43934,6 @@ void test_C5_02E7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44733,7 +43989,6 @@ void test_C5_02E8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44789,7 +44044,6 @@ void test_C5_02E9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44845,7 +44099,6 @@ void test_C5_02EA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44901,7 +44154,6 @@ void test_C5_02EB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -44957,7 +44209,6 @@ void test_C5_02EC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45013,7 +44264,6 @@ void test_C5_02ED()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45069,7 +44319,6 @@ void test_C5_02EE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45125,7 +44374,6 @@ void test_C5_02EF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45181,7 +44429,6 @@ void test_C5_02F0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45237,7 +44484,6 @@ void test_C5_02F1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45293,7 +44539,6 @@ void test_C5_02F2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45349,7 +44594,6 @@ void test_C5_02F3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45405,7 +44649,6 @@ void test_C5_02F4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45461,7 +44704,6 @@ void test_C5_02F5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45517,7 +44759,6 @@ void test_C5_02F6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45573,7 +44814,6 @@ void test_C5_02F7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45629,7 +44869,6 @@ void test_C5_02F8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45685,7 +44924,6 @@ void test_C5_02F9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45741,7 +44979,6 @@ void test_C5_02FA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45797,7 +45034,6 @@ void test_C5_02FB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45853,7 +45089,6 @@ void test_C5_02FC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45909,7 +45144,6 @@ void test_C5_02FD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -45965,7 +45199,6 @@ void test_C5_02FE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46021,7 +45254,6 @@ void test_C5_02FF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46077,7 +45309,6 @@ void test_C5_0300()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46133,7 +45364,6 @@ void test_C5_0301()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46189,7 +45419,6 @@ void test_C5_0302()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46245,7 +45474,6 @@ void test_C5_0303()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46301,7 +45529,6 @@ void test_C5_0304()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46357,7 +45584,6 @@ void test_C5_0305()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46413,7 +45639,6 @@ void test_C5_0306()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46469,7 +45694,6 @@ void test_C5_0307()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46525,7 +45749,6 @@ void test_C5_0308()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46581,7 +45804,6 @@ void test_C5_0309()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46637,7 +45859,6 @@ void test_C5_030A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46693,7 +45914,6 @@ void test_C5_030B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46749,7 +45969,6 @@ void test_C5_030C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46805,7 +46024,6 @@ void test_C5_030D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46861,7 +46079,6 @@ void test_C5_030E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46917,7 +46134,6 @@ void test_C5_030F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -46973,7 +46189,6 @@ void test_C5_0310()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47029,7 +46244,6 @@ void test_C5_0311()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47085,7 +46299,6 @@ void test_C5_0312()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47141,7 +46354,6 @@ void test_C5_0313()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47197,7 +46409,6 @@ void test_C5_0314()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47253,7 +46464,6 @@ void test_C5_0315()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47309,7 +46519,6 @@ void test_C5_0316()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47365,7 +46574,6 @@ void test_C5_0317()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47421,7 +46629,6 @@ void test_C5_0318()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47477,7 +46684,6 @@ void test_C5_0319()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47533,7 +46739,6 @@ void test_C5_031A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47589,7 +46794,6 @@ void test_C5_031B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47645,7 +46849,6 @@ void test_C5_031C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47701,7 +46904,6 @@ void test_C5_031D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47757,7 +46959,6 @@ void test_C5_031E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47813,7 +47014,6 @@ void test_C5_031F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47869,7 +47069,6 @@ void test_C5_0320()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47925,7 +47124,6 @@ void test_C5_0321()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -47981,7 +47179,6 @@ void test_C5_0322()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48037,7 +47234,6 @@ void test_C5_0323()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48093,7 +47289,6 @@ void test_C5_0324()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48149,7 +47344,6 @@ void test_C5_0325()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48205,7 +47399,6 @@ void test_C5_0326()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48261,7 +47454,6 @@ void test_C5_0327()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48317,7 +47509,6 @@ void test_C5_0328()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48373,7 +47564,6 @@ void test_C5_0329()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48429,7 +47619,6 @@ void test_C5_032A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48485,7 +47674,6 @@ void test_C5_032B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48541,7 +47729,6 @@ void test_C5_032C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48597,7 +47784,6 @@ void test_C5_032D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48653,7 +47839,6 @@ void test_C5_032E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48709,7 +47894,6 @@ void test_C5_032F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48765,7 +47949,6 @@ void test_C5_0330()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48821,7 +48004,6 @@ void test_C5_0331()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48877,7 +48059,6 @@ void test_C5_0332()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48933,7 +48114,6 @@ void test_C5_0333()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -48989,7 +48169,6 @@ void test_C5_0334()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49045,7 +48224,6 @@ void test_C5_0335()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49101,7 +48279,6 @@ void test_C5_0336()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49157,7 +48334,6 @@ void test_C5_0337()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49213,7 +48389,6 @@ void test_C5_0338()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49269,7 +48444,6 @@ void test_C5_0339()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49325,7 +48499,6 @@ void test_C5_033A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49381,7 +48554,6 @@ void test_C5_033B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49437,7 +48609,6 @@ void test_C5_033C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49493,7 +48664,6 @@ void test_C5_033D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49549,7 +48719,6 @@ void test_C5_033E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49605,7 +48774,6 @@ void test_C5_033F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49661,7 +48829,6 @@ void test_C5_0340()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49717,7 +48884,6 @@ void test_C5_0341()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49773,7 +48939,6 @@ void test_C5_0342()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49829,7 +48994,6 @@ void test_C5_0343()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49885,7 +49049,6 @@ void test_C5_0344()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49941,7 +49104,6 @@ void test_C5_0345()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -49997,7 +49159,6 @@ void test_C5_0346()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50053,7 +49214,6 @@ void test_C5_0347()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50109,7 +49269,6 @@ void test_C5_0348()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50165,7 +49324,6 @@ void test_C5_0349()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50221,7 +49379,6 @@ void test_C5_034A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50277,7 +49434,6 @@ void test_C5_034B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50333,7 +49489,6 @@ void test_C5_034C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50389,7 +49544,6 @@ void test_C5_034D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50445,7 +49599,6 @@ void test_C5_034E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50501,7 +49654,6 @@ void test_C5_034F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50557,7 +49709,6 @@ void test_C5_0350()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50613,7 +49764,6 @@ void test_C5_0351()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50669,7 +49819,6 @@ void test_C5_0352()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50725,7 +49874,6 @@ void test_C5_0353()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50781,7 +49929,6 @@ void test_C5_0354()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50837,7 +49984,6 @@ void test_C5_0355()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50893,7 +50039,6 @@ void test_C5_0356()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -50949,7 +50094,6 @@ void test_C5_0357()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51005,7 +50149,6 @@ void test_C5_0358()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51061,7 +50204,6 @@ void test_C5_0359()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51117,7 +50259,6 @@ void test_C5_035A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51173,7 +50314,6 @@ void test_C5_035B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51229,7 +50369,6 @@ void test_C5_035C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51285,7 +50424,6 @@ void test_C5_035D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51341,7 +50479,6 @@ void test_C5_035E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51397,7 +50534,6 @@ void test_C5_035F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51453,7 +50589,6 @@ void test_C5_0360()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51509,7 +50644,6 @@ void test_C5_0361()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51565,7 +50699,6 @@ void test_C5_0362()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51621,7 +50754,6 @@ void test_C5_0363()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51677,7 +50809,6 @@ void test_C5_0364()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51733,7 +50864,6 @@ void test_C5_0365()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51789,7 +50919,6 @@ void test_C5_0366()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51845,7 +50974,6 @@ void test_C5_0367()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51901,7 +51029,6 @@ void test_C5_0368()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -51957,7 +51084,6 @@ void test_C5_0369()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52013,7 +51139,6 @@ void test_C5_036A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52069,7 +51194,6 @@ void test_C5_036B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52125,7 +51249,6 @@ void test_C5_036C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52181,7 +51304,6 @@ void test_C5_036D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52237,7 +51359,6 @@ void test_C5_036E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52293,7 +51414,6 @@ void test_C5_036F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52349,7 +51469,6 @@ void test_C5_0370()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52405,7 +51524,6 @@ void test_C5_0371()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52461,7 +51579,6 @@ void test_C5_0372()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52517,7 +51634,6 @@ void test_C5_0373()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52573,7 +51689,6 @@ void test_C5_0374()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52629,7 +51744,6 @@ void test_C5_0375()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52685,7 +51799,6 @@ void test_C5_0376()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52741,7 +51854,6 @@ void test_C5_0377()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52797,7 +51909,6 @@ void test_C5_0378()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52853,7 +51964,6 @@ void test_C5_0379()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52909,7 +52019,6 @@ void test_C5_037A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -52965,7 +52074,6 @@ void test_C5_037B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53021,7 +52129,6 @@ void test_C5_037C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53077,7 +52184,6 @@ void test_C5_037D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53133,7 +52239,6 @@ void test_C5_037E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53189,7 +52294,6 @@ void test_C5_037F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53245,7 +52349,6 @@ void test_C5_0380()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53301,7 +52404,6 @@ void test_C5_0381()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53357,7 +52459,6 @@ void test_C5_0382()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53413,7 +52514,6 @@ void test_C5_0383()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53469,7 +52569,6 @@ void test_C5_0384()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53525,7 +52624,6 @@ void test_C5_0385()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53581,7 +52679,6 @@ void test_C5_0386()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53637,7 +52734,6 @@ void test_C5_0387()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53693,7 +52789,6 @@ void test_C5_0388()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53749,7 +52844,6 @@ void test_C5_0389()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53805,7 +52899,6 @@ void test_C5_038A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53861,7 +52954,6 @@ void test_C5_038B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53917,7 +53009,6 @@ void test_C5_038C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -53973,7 +53064,6 @@ void test_C5_038D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54029,7 +53119,6 @@ void test_C5_038E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54085,7 +53174,6 @@ void test_C5_038F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54141,7 +53229,6 @@ void test_C5_0390()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54197,7 +53284,6 @@ void test_C5_0391()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54253,7 +53339,6 @@ void test_C5_0392()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54309,7 +53394,6 @@ void test_C5_0393()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54365,7 +53449,6 @@ void test_C5_0394()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54421,7 +53504,6 @@ void test_C5_0395()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54477,7 +53559,6 @@ void test_C5_0396()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54533,7 +53614,6 @@ void test_C5_0397()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54589,7 +53669,6 @@ void test_C5_0398()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54645,7 +53724,6 @@ void test_C5_0399()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54701,7 +53779,6 @@ void test_C5_039A()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54757,7 +53834,6 @@ void test_C5_039B()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54813,7 +53889,6 @@ void test_C5_039C()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54869,7 +53944,6 @@ void test_C5_039D()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54925,7 +53999,6 @@ void test_C5_039E()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -54981,7 +54054,6 @@ void test_C5_039F()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55037,7 +54109,6 @@ void test_C5_03A0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55093,7 +54164,6 @@ void test_C5_03A1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55149,7 +54219,6 @@ void test_C5_03A2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55205,7 +54274,6 @@ void test_C5_03A3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55261,7 +54329,6 @@ void test_C5_03A4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55317,7 +54384,6 @@ void test_C5_03A5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55373,7 +54439,6 @@ void test_C5_03A6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55429,7 +54494,6 @@ void test_C5_03A7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55485,7 +54549,6 @@ void test_C5_03A8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55541,7 +54604,6 @@ void test_C5_03A9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55597,7 +54659,6 @@ void test_C5_03AA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55653,7 +54714,6 @@ void test_C5_03AB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55709,7 +54769,6 @@ void test_C5_03AC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55765,7 +54824,6 @@ void test_C5_03AD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55821,7 +54879,6 @@ void test_C5_03AE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55877,7 +54934,6 @@ void test_C5_03AF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55933,7 +54989,6 @@ void test_C5_03B0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -55989,7 +55044,6 @@ void test_C5_03B1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56045,7 +55099,6 @@ void test_C5_03B2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56101,7 +55154,6 @@ void test_C5_03B3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56157,7 +55209,6 @@ void test_C5_03B4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56213,7 +55264,6 @@ void test_C5_03B5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56269,7 +55319,6 @@ void test_C5_03B6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56325,7 +55374,6 @@ void test_C5_03B7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56381,7 +55429,6 @@ void test_C5_03B8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56437,7 +55484,6 @@ void test_C5_03B9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56493,7 +55539,6 @@ void test_C5_03BA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56549,7 +55594,6 @@ void test_C5_03BB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56605,7 +55649,6 @@ void test_C5_03BC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56661,7 +55704,6 @@ void test_C5_03BD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56717,7 +55759,6 @@ void test_C5_03BE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56773,7 +55814,6 @@ void test_C5_03BF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56829,7 +55869,6 @@ void test_C5_03C0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56885,7 +55924,6 @@ void test_C5_03C1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56941,7 +55979,6 @@ void test_C5_03C2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -56997,7 +56034,6 @@ void test_C5_03C3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57053,7 +56089,6 @@ void test_C5_03C4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57109,7 +56144,6 @@ void test_C5_03C5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57165,7 +56199,6 @@ void test_C5_03C6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57221,7 +56254,6 @@ void test_C5_03C7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57277,7 +56309,6 @@ void test_C5_03C8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57333,7 +56364,6 @@ void test_C5_03C9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57389,7 +56419,6 @@ void test_C5_03CA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57445,7 +56474,6 @@ void test_C5_03CB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57501,7 +56529,6 @@ void test_C5_03CC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57557,7 +56584,6 @@ void test_C5_03CD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57613,7 +56639,6 @@ void test_C5_03CE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57669,7 +56694,6 @@ void test_C5_03CF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57725,7 +56749,6 @@ void test_C5_03D0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57781,7 +56804,6 @@ void test_C5_03D1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57837,7 +56859,6 @@ void test_C5_03D2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57893,7 +56914,6 @@ void test_C5_03D3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -57949,7 +56969,6 @@ void test_C5_03D4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58005,7 +57024,6 @@ void test_C5_03D5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58061,7 +57079,6 @@ void test_C5_03D6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58117,7 +57134,6 @@ void test_C5_03D7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58173,7 +57189,6 @@ void test_C5_03D8()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58229,7 +57244,6 @@ void test_C5_03D9()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58285,7 +57299,6 @@ void test_C5_03DA()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58341,7 +57354,6 @@ void test_C5_03DB()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58397,7 +57409,6 @@ void test_C5_03DC()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58453,7 +57464,6 @@ void test_C5_03DD()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58509,7 +57519,6 @@ void test_C5_03DE()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58565,7 +57574,6 @@ void test_C5_03DF()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58621,7 +57629,6 @@ void test_C5_03E0()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58677,7 +57684,6 @@ void test_C5_03E1()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58733,7 +57739,6 @@ void test_C5_03E2()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58789,7 +57794,6 @@ void test_C5_03E3()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58845,7 +57849,6 @@ void test_C5_03E4()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58901,7 +57904,6 @@ void test_C5_03E5()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -58957,7 +57959,6 @@ void test_C5_03E6()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 
@@ -59013,7 +58014,6 @@ void test_C5_03E7()
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
         auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));
         TEST_ASSERT(ticks == 16);
     }
 

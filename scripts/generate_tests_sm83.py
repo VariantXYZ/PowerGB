@@ -192,10 +192,14 @@ SUPPORTED_OPCODES = ([
     (0xBE,"alu"), # CP A, [HL]
     (0xBF,"alu"), # CP A, A
     (0xC1,"ld"), # POP BC
+    (0xC2,"cf"), # JP NZ, nnnn
     (0xC3,"cf"), # JP nnnn
     (0xC5,"ld"), # PUSH BC
+    (0xCA,"cf"), # JP Z, nnnn
     (0xD1,"ld"), # POP DE
+    (0xD2,"cf"), # JP NC, nnnn
     (0xD5,"ld"), # PUSH DE
+    (0xDA,"cf"), # JP C, nnnn
     (0xE0,"ld"), # LDH [nn], A
     (0xE1,"ld"), # POP HL
     (0xE5,"ld"), # PUSH HL
@@ -574,8 +578,7 @@ void test_{test_name}()
     {{
         auto resultByte = mmap.ReadByte(mmap.ReadPC());
         TEST_ASSERT_(resultByte.IsSuccess(), "%s", resultByte.GetStatusDescription());
-        auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);
-        TEST_ASSERT(ticks == GetInstructionTicks(static_cast<const Byte&>(resultByte), 0x00));""")
+        auto ticks = ExecuteActiveDecoder(static_cast<const Byte&>(resultByte), mmap);""")
             if prefix == 0x00:
                 test_content.append(f"""        TEST_ASSERT(ticks == {len(test['cycles']) * 4});""")
             else:

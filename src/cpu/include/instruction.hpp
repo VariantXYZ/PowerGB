@@ -352,6 +352,11 @@ public:
     template <bool Force = false>
     constexpr static std::size_t ExecuteAll(memory::MemoryMap& memory) noexcept
     {
+        if constexpr (AlternativeTicks != 0)
+        {
+            memory.ResetAlternativeTIcks();
+        }
+
         if constexpr (Force)
         {
             (void)((Operations::Execute(memory)), ...);
