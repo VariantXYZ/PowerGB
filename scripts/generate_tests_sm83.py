@@ -31,6 +31,7 @@ SUPPORTED_OPCODES = ([
     (0x15,"alu"), # DEC D
     (0x16,"ld"), # LD D, nn
     (0x17,"rsb"), # RLA
+    (0x18,"cf"), # JR nn
     (0x19,"alu"), # ADD HL, DE
     (0x1A,"ld"), # LD A, [DE]
     (0x1B,"alu"), # DEC DE

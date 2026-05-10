@@ -51,6 +51,26 @@ struct IncrementPC
     }
 };
 
+// Reg16 <- Reg16 + Temp
+template <RegisterType R>
+    requires(IsRegister16Bit<R>)
+struct AddRegisterTemp
+{
+    static inline IncrementRegResultSet Execute(memory::MemoryMap& mmap) noexcept
+
+    {
+        auto getResult = mmap.ReadWord(R);
+        auto temp      = mmap.GetTemp();
+
+        if (getResult.IsSuccess())
+        {
+            auto value = static_cast<const Word>(getResult) + temp;
+            return mmap.WriteWord(R, value);
+        }
+        return getResult;
+    }
+};
+
 // IR <- [PC]
 struct LoadIRPC
 {

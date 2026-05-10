@@ -4,8 +4,6 @@
 #include <cpu/include/instruction.hpp>
 #include <cpu/include/registers.hpp>
 
-#include <cstdint>
-
 using namespace pgb::memory;
 
 namespace pgb::cpu::instruction
@@ -42,6 +40,31 @@ struct PCNoOp
     static inline IncrementPCResultSet Execute(memory::MemoryMap&) noexcept
     {
         return IncrementPCResultSet::DefaultResultSuccess();
+    }
+};
+
+// Reg16 <- Reg16 + Signed(TempLo)
+template <RegisterType R>
+    requires(IsRegister16Bit<R>)
+struct SignedAddTempLo
+{
+    static inline IncrementRegResultSet Execute(memory::MemoryMap& mmap) noexcept
+    {
+        auto getResult = mmap.ReadWord(R);
+        if (getResult.IsSuccess())
+        {
+            const auto templo   = mmap.GetTempLo();
+            auto valuehi  = static_cast<const Word>(getResult).HighByte();
+            auto valuelo  = static_cast<const Word>(getResult).LowByte();
+            const Byte resultlo = templo + valuelo;
+            bool carry    = (resultlo < templo) || (resultlo < valuelo);
+            bool sign     = (templo & 0b10000000) != 0;
+            long adj      = (carry && !sign)   ? 1
+                            : (!carry && sign) ? -1
+                                               : 0;
+            return mmap.WriteWord(R, {valuehi + adj, resultlo});
+        }
+        return getResult;
     }
 };
 
@@ -115,12 +138,21 @@ using JumpCond = Instruction<
     ConditionalPCOperation<Cond, LoadReg16Temp<RegisterType::PC>, IncrementPC>,
     LoadIRPC>;
 
+using JumpRelative = Instruction<
+    /*Ticks=*/12,
+    IncrementPC,
+    LoadTempLoPC,
+    SignedAddTempLo<RegisterType::PC>,
+    IncrementPC,
+    LoadIRPC>;
+
 } // namespace
 
-using JP_NZ_Decoder = Instantiate<InstructionDecoder<"jp NZ, nnnn", 0xC2, JumpCond<NZ, 16, 12>>>::Type;
-using JP_Z_Decoder = Instantiate<InstructionDecoder<"jp Z, nnnn", 0xCA, JumpCond<Z, 16, 12>>>::Type;
-using JP_Decoder   = Instantiate<InstructionDecoder<"jp nnnn", 0xC3, Jump>>::Type;
-using JP_NC_Decoder = Instantiate<InstructionDecoder<"jp NC, nnnn", 0xD2, JumpCond<NC, 16, 12>>>::Type;
-using JP_C_Decoder = Instantiate<InstructionDecoder<"jp C, nnnn", 0xDA, JumpCond<C, 16, 12>>>::Type;
+using JR_Imm8_Decoder = Instantiate<InstructionDecoder<"jr nn", 0x18, JumpRelative>>::Type;
+using JP_NZ_Decoder   = Instantiate<InstructionDecoder<"jp NZ, nnnn", 0xC2, JumpCond<NZ, 16, 12>>>::Type;
+using JP_Z_Decoder    = Instantiate<InstructionDecoder<"jp Z, nnnn", 0xCA, JumpCond<Z, 16, 12>>>::Type;
+using JP_Decoder      = Instantiate<InstructionDecoder<"jp nnnn", 0xC3, Jump>>::Type;
+using JP_NC_Decoder   = Instantiate<InstructionDecoder<"jp NC, nnnn", 0xD2, JumpCond<NC, 16, 12>>>::Type;
+using JP_C_Decoder    = Instantiate<InstructionDecoder<"jp C, nnnn", 0xDA, JumpCond<C, 16, 12>>>::Type;
 
 } // namespace pgb::cpu::instruction
