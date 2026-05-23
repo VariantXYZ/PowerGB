@@ -13,6 +13,7 @@ with open(file_path, 'r') as input_fn, open(test_path, 'w', encoding='utf-8') as
     output_fn.write(f"#include <cstdio>\n\n")
     output_fn.write(f"""#include <cpu/include/instruction.hpp>
 #include <cpu/include/instruction_alu.hpp>
+#include <cpu/include/instruction_cf.hpp>
 #include <cpu/include/instruction_ld.hpp>
 #include <cpu/include/instruction_nop.hpp>
 #include <cpu/include/instruction_prefix.hpp>
