@@ -39,24 +39,28 @@ SUPPORTED_OPCODES = ([
     (0x1D,"alu"), # DEC E
     (0x1E,"ld"), # LD E, nn
     (0x1F,"rsb"), # RRA
+    (0x20,"cf"), # JR NZ, nn
     (0x21,"ld"), # LD HL, nnnn
     (0x22,"ld"), # LD HL+, A
     (0x23,"alu"), # INC HL
     (0x24,"alu"), # INC H
     (0x25,"alu"), # DEC H
     (0x26,"ld"), # LD H, nn
+    (0x28,"cf"), # JR Z, nn
     (0x29,"alu"), # ADD HL, HL
     (0x2A,"ld"), # LD A, [HL+]
     (0x2B,"alu"), # DEC HL
     (0x2C,"alu"), # INC L
     (0x2D,"alu"), # DEC L
     (0x2E,"ld"), # LD L, nn
+    (0x30,"cf"), # JR NC, nn
     (0x31,"ld"), # LD SP, nnnn
     (0x32,"ld"), # LD [HL-], A
     (0x33,"alu"), # INC SP
     (0x34,"alu"), # INC [HL]
     (0x35,"alu"), # DEC [HL]
     (0x36,"ld"), # LD [HL], nn
+    (0x38,"cf"), # JR C, nn
     (0x39,"alu"), # ADD HL, SP
     (0x3A,"ld"), # LD A, [HL-]
     (0x3B,"alu"), # DEC SP
