@@ -279,7 +279,7 @@ public:
 
     // Quick shims to adjust CPU state
 
-    enum FlagBit
+    enum FlagBit : std::uint_fast8_t
     {
         Zero,      // Z
         Subtract,  // N

@@ -46,6 +46,7 @@ SUPPORTED_OPCODES = ([
     (0x24,"alu"), # INC H
     (0x25,"alu"), # DEC H
     (0x26,"ld"), # LD H, nn
+    (0x27,"alu"), # DAA
     (0x28,"cf"), # JR Z, nn
     (0x29,"alu"), # ADD HL, HL
     (0x2A,"ld"), # LD A, [HL+]
@@ -53,6 +54,7 @@ SUPPORTED_OPCODES = ([
     (0x2C,"alu"), # INC L
     (0x2D,"alu"), # DEC L
     (0x2E,"ld"), # LD L, nn
+    (0x2F,"alu"), # CPL
     (0x30,"cf"), # JR NC, nn
     (0x31,"ld"), # LD SP, nnnn
     (0x32,"ld"), # LD [HL-], A
@@ -60,6 +62,7 @@ SUPPORTED_OPCODES = ([
     (0x34,"alu"), # INC [HL]
     (0x35,"alu"), # DEC [HL]
     (0x36,"ld"), # LD [HL], nn
+    (0x37,"alu"), # SCF
     (0x38,"cf"), # JR C, nn
     (0x39,"alu"), # ADD HL, SP
     (0x3A,"ld"), # LD A, [HL-]
@@ -67,6 +70,7 @@ SUPPORTED_OPCODES = ([
     (0x3C,"alu"), # INC A
     (0x3D,"alu"), # DEC A
     (0x3E,"ld"), # LD A, nn
+    (0x3F,"alu"), # CCF
     # 0x40 to 0x7F is the main load block
     (0x40,"ld"), # LD B, B
     (0x41,"ld"), # LD B, C

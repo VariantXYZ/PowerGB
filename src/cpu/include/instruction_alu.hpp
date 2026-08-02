@@ -142,6 +142,95 @@ inline BasicAluResultSet SubReg(MemoryMap& mmap) noexcept
                              }>(mmap);
 }
 
+template <MemoryMap::FlagBit T, bool V>
+struct SetFlag
+{
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        mmap.WriteFlagBit(T, V);
+        return BasicAluResultSet::DefaultResultSuccess();
+    }
+};
+
+template <MemoryMap::FlagBit T>
+struct InvertFlag
+{
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        bool flag = !mmap.ReadFlagBit(T);
+        mmap.WriteFlagBit(T, flag);
+        return BasicAluResultSet::DefaultResultSuccess();
+    }
+};
+
+template <RegisterType R>
+    requires(IsRegister8Bit<R>)
+struct InvertRegister
+{
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        auto r = mmap.ReadByte(R);
+        if (r.IsFailure())
+        {
+            return r;
+        }
+
+        auto v = static_cast<Byte>(r);
+        return mmap.WriteByte(R, ~v);
+    }
+};
+
+template <RegisterType R>
+    requires(IsRegister8Bit<R>)
+struct DecimalAdjust
+{
+    static inline BasicAluResultSet Execute(MemoryMap& mmap) noexcept
+    {
+        const auto C = mmap.ReadFlagBit(MemoryMap::FlagBit::Carry);
+        const auto N = mmap.ReadFlagBit(MemoryMap::FlagBit::Subtract);
+        const auto H = mmap.ReadFlagBit(MemoryMap::FlagBit::HalfCarry);
+
+        auto r       = mmap.ReadByte(R);
+        if (r.IsFailure())
+        {
+            return r;
+        }
+
+        const auto A           = static_cast<const Byte>(r);
+
+        std::uint_fast8_t adj  = 0;
+        std::uint_fast8_t adja = 0;
+
+        if (N)
+        {
+            adj |= H ? 0x6 : 0x0;
+            adj |= C ? 0x60 : 0x0;
+
+            adja = A - adj;
+        }
+        else
+        {
+            if (H || ((A & 0xF) > 0x9))
+            {
+                adj += 0x6;
+            }
+
+            if (C || (A > 0x99))
+            {
+                adj += 0x60;
+                mmap.WriteFlagBit(MemoryMap::FlagBit::Carry, true);
+            }
+
+            adja = A + adj;
+        }
+
+        mmap.WriteFlagBit(MemoryMap::FlagBit::Zero, adja == 0);
+        mmap.WriteFlagBit(MemoryMap::FlagBit::HalfCarry, false);
+
+        return mmap.WriteByte(R, adja);
+    }
+};
+
 } // namespace
 
 template <RegisterType Destination, auto Operand, bool Carry, bool SetZero = true>
@@ -395,6 +484,38 @@ using SingleStepIndirect = Instruction<
     IncrementPC,
     LoadIRPC>;
 
+using SetCarryFlag = Instruction<
+    /*Ticks*/ 4,
+    SetFlag<MemoryMap::FlagBit::Carry, true>,
+    SetFlag<MemoryMap::FlagBit::Subtract, false>,
+    SetFlag<MemoryMap::FlagBit::HalfCarry, false>,
+    IncrementPC,
+    LoadIRPC>;
+
+using ComplementCarryFlag = Instruction<
+    /*Ticks*/ 4,
+    InvertFlag<MemoryMap::FlagBit::Carry>,
+    SetFlag<MemoryMap::FlagBit::Subtract, false>,
+    SetFlag<MemoryMap::FlagBit::HalfCarry, false>,
+    IncrementPC,
+    LoadIRPC>;
+
+template <RegisterType R>
+    requires IsRegister8Bit<R>
+using ComplementRegister = Instruction<
+    /*Ticks*/ 4,
+    InvertRegister<R>,
+    SetFlag<MemoryMap::FlagBit::Subtract, true>,
+    SetFlag<MemoryMap::FlagBit::HalfCarry, true>,
+    IncrementPC,
+    LoadIRPC>;
+
+using DecimalAdjustAccumulator = Instruction<
+    /*Ticks*/ 4,
+    DecimalAdjust<RegisterType::A>,
+    IncrementPC,
+    LoadIRPC>;
+
 using Inc_BC_Decoder           = Instantiate<InstructionDecoder<"inc bc", 0x03, SingleStep16<RegisterType::BC, IncrementMode::Increment>>>::Type;
 using Inc_B_Decoder            = Instantiate<InstructionDecoder<"inc b", 0x04, SingleStep8<RegisterType::B, IncrementMode::Increment>>>::Type;
 using Dec_B_Decoder            = Instantiate<InstructionDecoder<"dec b", 0x05, SingleStep8<RegisterType::B, IncrementMode::Decrement>>>::Type;
@@ -412,17 +533,22 @@ using Dec_E_Decoder            = Instantiate<InstructionDecoder<"dec e", 0x1D, S
 using Inc_HL_Decoder           = Instantiate<InstructionDecoder<"inc hl", 0x23, SingleStep16<RegisterType::HL, IncrementMode::Increment>>>::Type;
 using Inc_H_Decoder            = Instantiate<InstructionDecoder<"inc h", 0x24, SingleStep8<RegisterType::H, IncrementMode::Increment>>>::Type;
 using Dec_H_Decoder            = Instantiate<InstructionDecoder<"dec h", 0x25, SingleStep8<RegisterType::H, IncrementMode::Decrement>>>::Type;
+using Daa_Decoder              = Instantiate<InstructionDecoder<"daa", 0x27, DecimalAdjustAccumulator>>::Type;
+using Add_HL_HL_Decoder        = Instantiate<InstructionDecoder<"add hl, hl", 0x29, Add16<RegisterType::HL, RegisterType::HL>>>::Type;
 using Dec_HL_Decoder           = Instantiate<InstructionDecoder<"dec hl", 0x2B, SingleStep16<RegisterType::HL, IncrementMode::Decrement>>>::Type;
 using Inc_L_Decoder            = Instantiate<InstructionDecoder<"inc l", 0x2C, SingleStep8<RegisterType::L, IncrementMode::Increment>>>::Type;
 using Dec_L_Decoder            = Instantiate<InstructionDecoder<"dec l", 0x2D, SingleStep8<RegisterType::L, IncrementMode::Decrement>>>::Type;
-using Add_HL_HL_Decoder        = Instantiate<InstructionDecoder<"add hl, hl", 0x29, Add16<RegisterType::HL, RegisterType::HL>>>::Type;
+using Cpl_Decoder              = Instantiate<InstructionDecoder<"cpl", 0x2F, ComplementRegister<RegisterType::A>>>::Type;
+
 using Inc_SP_Decoder           = Instantiate<InstructionDecoder<"inc sp", 0x33, SingleStep16<RegisterType::SP, IncrementMode::Increment>>>::Type;
 using Inc_IndirectHL_Decoder   = Instantiate<InstructionDecoder<"inc [hl]", 0x34, SingleStepIndirect<IncrementMode::Increment>>>::Type;
 using Dec_IndirectHL_Decoder   = Instantiate<InstructionDecoder<"dec [hl]", 0x35, SingleStepIndirect<IncrementMode::Decrement>>>::Type;
+using Scf_Decoder              = Instantiate<InstructionDecoder<"scf", 0x37, SetCarryFlag>>::Type;
 using Add_HL_SP_Decoder        = Instantiate<InstructionDecoder<"add hl, sp", 0x39, AddSp<RegisterType::HL>>>::Type;
 using Dec_SP_Decoder           = Instantiate<InstructionDecoder<"dec sp", 0x3B, SingleStep16<RegisterType::SP, IncrementMode::Decrement>>>::Type;
 using Inc_A_Decoder            = Instantiate<InstructionDecoder<"inc a", 0x3C, SingleStep8<RegisterType::A, IncrementMode::Increment>>>::Type;
 using Dec_A_Decoder            = Instantiate<InstructionDecoder<"dec a", 0x3D, SingleStep8<RegisterType::A, IncrementMode::Decrement>>>::Type;
+using Ccf_Decoder              = Instantiate<InstructionDecoder<"ccf", 0x3F, ComplementCarryFlag>>::Type;
 
 using Add_A_B_Decoder          = Instantiate<InstructionDecoder<"add a, b", 0x80, Add<RegisterType::A, RegisterType::B>>>::Type;
 using Add_A_C_Decoder          = Instantiate<InstructionDecoder<"add a, c", 0x81, Add<RegisterType::A, RegisterType::C>>>::Type;
