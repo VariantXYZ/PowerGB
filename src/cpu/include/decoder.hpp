@@ -37,7 +37,7 @@ struct DecoderHelper<registry::List<Decoders...>>
     // Doing this also lets us flag errors for unsupported opcodes
     static constexpr std::size_t Size = 0xFF + 1;
 
-    static constexpr auto CreateCallbackMap() noexcept
+    static consteval auto CreateCallbackMap() noexcept
     {
         // Initialize all elements to nullptr by default
         std::array<std::size_t (*)(memory::MemoryMap&) noexcept, Size> callbacks{nullptr};
@@ -47,7 +47,7 @@ struct DecoderHelper<registry::List<Decoders...>>
         return callbacks;
     }
 
-    static constexpr auto CreateTicksMap() noexcept
+    static consteval auto CreateTicksMap() noexcept
     {
         // Initialize all elements to 0 by default
         std::array<std::size_t, Size> ticks{0};
@@ -57,7 +57,7 @@ struct DecoderHelper<registry::List<Decoders...>>
         return ticks;
     }
 
-    static constexpr auto CreateLengthsMap() noexcept
+    static consteval auto CreateLengthsMap() noexcept
     {
         // Initialize all elements to 0 by default
         std::array<std::size_t, Size> lengths{0};
